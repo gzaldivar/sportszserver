@@ -1,0 +1,75 @@
+<div class="row">
+	<div class="span10 offset1">
+		<h4>News item for sport <%= @sport.sport_name %></h4>
+		<%= simple_form_for [@sport, @newsfeed] do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<div class="row">
+		        <div class="span2">
+		          <%= f.input :title, hint: "Enter title text for news item" %>
+		        </div>
+	        <div class="span4 offset1">
+	          <%= f.input :external_url,  label: "External URL:", required: false, hint: "Enter Url of external site if news item has more details on another site" %>
+	        </div>
+		    </div>
+		    <div class="row">
+				<div class="span2">
+					<%= f.input	:news, as: :text, hint:	"Enter news text" %>
+				</div>
+				<div class="span4 offset1">
+            		<div class="row">
+              			<div class="span4">
+                			<% if @team %>
+                				<h3><em>News item is for team <%= @team %></em></h3>
+			            		<div class="row">
+			              			<div class="span4">
+			                			<% if @schedule %>
+			                				<h3><em>News item is for schedule <%= @schedule %></em></h3>
+			                			<% else %>
+			    					    	<%= f.input	:gameschedule, collection: @schedules.collect{ |t| [t.game_name, t.id] }, label: "Coach", hint: "Coach News ..." %>
+			                			<% end %>
+			              			</div>
+			            		</div>
+                			<% else %>
+    					    	<%= f.input	:team, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Team", hint: "Team News ..." %>
+                			<% end %>
+              			</div>
+            		</div>
+            		<div class="row">
+              			<div class="span4">
+                			<% if @athlete %>
+                				<h3><em>News item is for team <%= @athlete %></em></h3>
+                			<% else %>
+    					    	<%= f.input	:athlete, collection: @athletes.collect{ |t| [t.name, t.id] }, label: "Athlete", hint: "Athlete News ..." %>
+                			<% end %>
+              			</div>
+            		</div>
+            		<div class="row">
+              			<div class="span4">
+                			<% if @coach %>
+                				<h3><em>News item is for team <%= @coach %></em></h3>
+                			<% else %>
+    					    	<%= f.input	:coach, collection: @coaches.collect{ |t| [t.full_name, t.id] }, label: "Coach", hint: "Coach News ..." %>
+                			<% end %>
+              			</div>
+            		</div>
+	            	<div class="row">
+	              		<div class="span4">
+	                		<h5>Global site news?</h5>
+	              		</div>
+	              	<div class="span1">
+	                 	<%= f.check_box :allsports %>
+	              	</div><p>
+              		<div class="span6">
+                		<em>Hint: Checking this box will make this news item available across the entire site. If you are administering a multi sport site it will appear on the main page in addition to this sport.</em>
+              		</div>
+	            	</div><p>
+			</div>
+  		</div>
+      <div class="row">
+  			<div class="span1 offset4">
+  				<%= f.button :submit, "Submit", class: "btn btn-medium btn-primary" %>
+  			</div>
+      </div>
+		<% end %>	
+	</div>	
+</div>

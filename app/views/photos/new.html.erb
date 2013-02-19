@@ -1,0 +1,19 @@
+<% provide(:title, "New Photo") %>
+<div class="row">
+  <div class="span10">
+      <h2>Upload file</h2>
+      <%= form_tag "https://sportsite_solutions.s3.amazonaws.com", method: 'post', multipart: true, authenticity_token: false do  %>
+        <%= hidden_field_tag "key", value=@key %>
+        <%= hidden_field_tag "AWSAccessKeyId", value=AWS.config.access_key_id %>
+        <%= hidden_field_tag "acl", value='public-read' %>
+        <%= hidden_field_tag "policy", value=@policy %>
+        <%= hidden_field_tag "signature", value=@signature %>
+        <%= hidden_field_tag "success_action_status", value="200" %>
+        <%= hidden_field_tag "Content-Type", value="image/jpeg, image/jpg, image/png" %>
+        <%= file_field_tag :file %><br/>
+        <div class="row">
+          <%= submit_tag "submit" %>
+        </div>
+      <% end %>
+  </div>
+</div>

@@ -1,0 +1,32 @@
+	<tbody>
+		<tr>
+      <% if athlete.pic.blank? %>
+        <td><%= link_to image_tag('Photo_Not_Available.jpg'), [@sport, athlete] %></td>
+      <% else %>
+        <td><%= link_to image_tag(athlete.pic.url(:thumb)), [@sport, athlete] %></td>
+      <% end %>
+			<td><%= athlete.number %></td>
+			<td><%= link_to athlete.lastname, [@sport, athlete] %></td>
+			<td><%= link_to athlete.firstname, [@sport, athlete] %></td>
+			<td><%= athlete.middlename %></td>
+			<td><%= athlete.position %></td>
+			<td><%= athlete.height %></td>
+			<td><%= athlete.weight %></td>
+			<td><%= athlete.year %></td>
+			<% if athlete.team == "Unassigned" %>
+				<td>Unassinged</td>
+			<% else %>
+				<td><%= @sport.teams.find(athlete.team).team_name %></td>
+			<% end %>
+			<% if site_owner? %>
+				<td><%= link_to "Edit", edit_sport_athlete_path(@sport, athlete),  class: "btn btn-mini btn-warning" %></td>
+				<td><%= link_to "Delete", sport_athlete_path(@sport, athlete),  method:	:delete,  
+										class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %></td>
+			<% end %>
+      <td>
+        <% if photos.any? %>
+          <%= link_to "Photos", photos_path(sport: @sport.id, athlete: athlete.id), class: "btn btn-mini btn-primary" %>              
+        <% end %>
+      </td>
+		</tr>
+	</tbody>

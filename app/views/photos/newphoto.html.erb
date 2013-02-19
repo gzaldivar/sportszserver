@@ -1,0 +1,43 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - New Photo") %>
+<p>
+<div class="row">
+	<div class="span8 offset1">
+		<h3>Photos processed in last 24 hours:</h3>
+	</div>
+</div>
+<div id="photos">
+    <%= render @photos %>
+</div>
+<div class="clear">
+</div>
+<p>
+<div class="row">
+	<div class="span8 offset1">
+    <br/>
+    Upload photos.<p><p>
+      Photo scaling will be processed in the background. Your photo will also be sized for display on mobile devices and other platforms.<p>
+	  Go ahead and upload the original and we will take care of sizing the photo for proper display<br/<p><p>
+		You can choose more than one photo and upload them at the same time.<p><p>
+	<h4>
+		<% if !@team.nil? %>
+			Uploaded photos will be tagged for team <em><%= @team.team_name %></em>
+		<% elsif !@athlete.nil? %>
+			Uploaded photos will be tagged for player <em><%= @athlete.name %></em>
+			<% if @athlete.team != "Unassigned" %>
+				and for team <em><%= @sport.teams.find(@athlete.team).team_name %></em>
+			<% end %>
+		<% end %>
+	</h4>
+    
+    <%= s3_uploader_form post: sport_photos_url, as: "photo[image_url]", key: "uploads/photos/#{@id}/#{@prefix}/${filename}", id:  "myS3Uploader" do %>
+      <%= file_field_tag :file, multiple: true %>
+    <% end %>
+    
+	<script id="template-upload" type="text/x-tmpl">
+		<div id="file-{%=o.unique_id%}" class="upload">
+		  {%=o.name%}
+		  <div class="progress"><div class="bar" style="width: 0%"></div></div>
+		</div>
+	</script>    
+  </div>
+</div>

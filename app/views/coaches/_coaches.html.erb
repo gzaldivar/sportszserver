@@ -1,0 +1,43 @@
+<table class="table table-hover">
+	<thead> 
+		<tr>
+      <th>Photo</th>
+			<th>Last Name</th>
+			<th>First Name</th>
+			<th>Middle Name</th>
+			<th>Speciality</th>
+			<th>Experience</th>
+			<th>Coaches</th>
+			<% if site_owner? %>
+				<th>Update?</th>
+				<th>Remove?</th>
+			<% end %>
+		</tr>
+	</thead>
+	<tbody>
+		<% coaches.each do |c| %>
+			<tr>
+        <td><% if c.coachpic.blank? %>
+              <%= link_to image_tag('Photo_Not_Available.jpg'), c %>
+            <% else %>
+              <%= link_to image_tag(c.coachpic.url(:thumb)), [@sport, c] %>
+            <% end %>
+				<td><%= link_to c.lastname, [@sport, c] %></td>
+				<td><%= link_to c.firstname, [@sport, c] %></td>
+				<td><%= c.middlename %></td>
+				<td><%= c.speciality %></td>
+				<td><%= c.years_on_staff %></td>
+				<% if c.team == "Unassigned" %>
+					<td>Unassigned</td>
+				<% else %>
+					<td><%= @sport.teams.find(c.team).team_name %></td>
+				<% end %>
+				<% if site_owner? %>
+          <td><%= link_to "Edit", edit_sport_coach_path(@sport, c), class: "btn btn-mini btn-warning" %></td>
+          <td><%= link_to "Delete", sport_coach_path(@sport, c),  method:	:delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %></td>
+				<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+

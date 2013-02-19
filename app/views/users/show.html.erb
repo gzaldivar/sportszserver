@@ -1,0 +1,32 @@
+<% provide(:title, 'User ' + @user.name) %>
+<p>
+<div class="row">
+	<div class="span10" id="backcolor">
+	  <aside class="span4 offset1">
+	    <section>
+	      <h3>
+	      <% if current_user.avatar_file_name.nil? %>
+	      	<%= image_tag 'photo_not_available.png' %>
+	      <% else %>
+	      	<%= image_tag current_user.avatar.url(:thumb) %>
+	      <% end %>
+	      <%= current_user.name %><br/><p>
+	      <%= link_to 'Edit', edit_user_path(id: current_user.id) %>
+	      </h3>
+	    </section>
+	  </aside>
+	    <div class="row">
+	  		<div class="span4">
+	        <% if current_user.confirmed_at.nil? %>
+	          <h3>An email has been sent to <%= current_user.email %>. Please confirm your account by replying to the email.</h3>
+	        <% end %>
+	      </div>
+	      <p>
+	      <div class="row">
+	        <div class="span1 offset4">
+	          <%= link_to "Edit", edit_user_path(current_user), class: "btn btn-medium btn-primary" %>
+	        </div>
+	      </div>
+	  	</div>
+	</div>
+</div>

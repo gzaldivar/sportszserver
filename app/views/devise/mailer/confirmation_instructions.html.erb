@@ -1,0 +1,13 @@
+<% provide(:title, "Resend confirmation instructions") %>
+
+<div class="row">
+  	<div class="span7" style="background-color:#ffffff;position:relative;top:0;left:100px;">
+		<div class="row">
+		  	<div class="span4 offset2">
+				<p>You can confirm your account email through the link below:</p>
+
+				<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
+			</div>
+		</div>
+	</div>
+</div>

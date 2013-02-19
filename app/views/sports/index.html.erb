@@ -1,0 +1,77 @@
+<% provide(:title, "Sport Site Solutions - Find Site") %>
+<p> 
+<div class="row">
+  <div class="span10" style="background-color:#ffffff;">
+    <div class="row">
+     	<div class="span10 offset2">
+        <h3>Find Site:</h3>
+        <%= form_tag sites_path, class: "form-horizontal", method: 'get' do %>
+          <div class="row">
+            <div class="span2">
+              <%= label_tag "Sport Name: " %>
+          		<%= text_field_tag "name" %>
+            </div>
+            <div class="span2 offset1">
+              <%= label_tag "Season: " %>
+          		<%= text_field_tag "season" %>
+            </div>
+          </div>
+          <p>
+          <div class="row">
+            <div class="span2">
+              <%= label_tag "team: " %>
+          		<%= text_field_tag "team" %>
+            </div>
+            <div class="span2 offset1">
+              <%= label_tag "Male/Female Sport: " %>
+              <%= select_tag "sex", "<option>Male</option><option>Female</option>".html_safe %>
+            </div>
+          </div><br/>
+          <div class="row">
+            <div class="span1 offset2">
+              <%= submit_tag  "Search", class: "btn btn-medium btn-primary", name: nil %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span10">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Sport Name</th>
+              <th>Season</th>
+              <th>Teams</th>
+              <th>Male/Female</th>
+              <th>Year</th>
+              <th>Banner</th>
+            </tr>
+          </thead>
+          <tbody>
+    		<% if @sports.any? %>
+              <% @sports.each do |s| %>
+				<tr>
+                <td><%= link_to s.name, s %></td>
+                <td><%= s.season %></td>
+				<td>
+				<% s.teams.each do |t| %>
+                	<%= t %><p>
+				<% end %>
+				</td>
+                <td><%= s.year %></td>
+                <td>
+				<% if !s.banner_thumburl.nil? %>
+					<%= link_to (image_tag s.banner_thumburl), s %></td>
+				<% else %>
+					<% current_site.banner_thumburl %>
+				<% end %>
+				</tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

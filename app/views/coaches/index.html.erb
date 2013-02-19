@@ -1,0 +1,19 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Coaches") %>
+<div class="row">
+  <div class="span10">
+		<ul class="homesites">
+			<div class="row">
+				<div class="span10">
+					<%= render 'coaches', coaches:  @coaches %>
+				</div>
+			</div>   
+		</ul>
+		<div class="row">
+      <div class="span2 offset4">
+				<%= link_to "Add Coach", new_sport_coach_path(@sport), class: "btn btn-medium btn-primary" %>
+			</div>
+		</div>
+	</div>
+</div>
+
+

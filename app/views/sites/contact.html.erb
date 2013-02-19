@@ -1,0 +1,16 @@
+<% if current_site? %>
+	<% provide(:title, current_site.sitename + " - Contact") %>
+	<h1><%= current_site.sitename + " Contact Page" %></h1>
+	<p>Questions or comments?</p>
+		<p>Contact <%= current_site.sitename %> at<br>
+		<p><%= current_site.contactemail %></p>
+		<p>We will get back to you as soon as we can!</p>
+	</p>
+<% else %>
+	<% provide(:title, "Contact SportzSoftware.com") %>
+	<h1>Contact Us</h1>
+	<p>
+		Questions? Send us a message with your suggestions below.
+		---- email goes here -----
+	</p>
+<% end %>

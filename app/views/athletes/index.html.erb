@@ -1,0 +1,46 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - All Athletes") %>
+<p>
+<div class="row">
+  <div class="span10">
+      <div class="row">
+        <div class="span10 offset1">
+          <%= form_tag sport_athletes_path(@sport), class: "form-search", method: 'get' do %>
+            <div class="row">
+              <div class="span4">
+                <%= label_tag "Number: " %>
+                <%= text_field_tag  'number', value=params[:number] %>
+              </div>
+              <div class="spann3">
+                <%= label_tag "Last Name: " %>
+                <%= text_field_tag  'lastname', value=params[:lastname] %>
+              </div>
+              <div class="span2">
+                <%= submit_tag  "Search", class: "btn btn-medium btn-primary", name: nil %>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+			<ul class="homesites">
+				<div class="row">
+					<div class="span10">
+            <table class="table table-hover">
+              <%= render 'athleteheader' %>
+              <% @athletes.each do |a| %>
+   						  <%= render 'athlete', athlete: a, photos:  Photo.where(athletes: a.id) %>
+              <% end %>
+            </table>
+					</div>
+				</div>   
+			</ul>
+      <% if site_owner? %>
+  			<div class="row">
+  				<div class="span8 offset4">
+  					<%= link_to "Add Athlete", new_sport_athlete_path(@sport), class: "btn btn-medium btn-primary" %>
+  				</div>
+  			</div>
+      <% end %>
+	</div>
+</div>
+
+

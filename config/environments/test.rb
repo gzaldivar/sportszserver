@@ -28,6 +28,13 @@ Sportzserver::Application.configure do
   # The :test delivery method accumulates sent emails in the
   # ActionMailer::Base.deliveries array.
   config.action_mailer.delivery_method = :test
+  config.action_mailer.default_url_options = { :host => 'yourhost.com' }
+  # ActionMailer Config
+  # Setup for production - deliveries, no errors raised
+ # config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.raise_delivery_errors = false
+  config.action_mailer.default :charset => "utf-8"
 
 
   # Print deprecation notices to the stderr

@@ -6,8 +6,9 @@ gem 'rails', '3.2.11'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'aws-sdk'
-gem 'mongoid'
-gem 'multi_json', '1.3.6'
+gem 'mongoid', "~> 3.0.0"
+gem 'mongoid_search'
+gem 'multi_json'
 gem 'json'
 
 group :development do
@@ -34,6 +35,7 @@ gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.5'
 gem 'devise'
 gem 'area'
+gem 'mongoid-paperclip', :require => "mongoid_paperclip"
 
 # Gems used only for assets and not required
 # in production environments by default.
@@ -48,7 +50,8 @@ group :assets do
   gem 'therubyracer', :platform => :ruby
 end
 
-gem 'jquery-rails'
+gem 'jquery-rails', '2.1.4'
+gem 'jquery-fileupload-rails'
 gem 's3_direct_upload'
 gem "mediaelement_rails"
 
@@ -57,7 +60,7 @@ group :test do
   gem 'capybara', '1.1.2'
   gem 'factory_girl_rails'
   gem 'cucumber-rails', '1.2.1', :require => false
-  gem 'database_cleaner', '0.7.0'
+#  gem 'database_cleaner'
 end
 
 group :production do

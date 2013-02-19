@@ -1,0 +1,17 @@
+<div class="row">
+  	<div class="span10" id="bodycolor">
+  		<div class="span6 offset3">
+        <h3>Create new contact:</h3>
+        <p>
+  			<%= simple_form_for [@site, @contact] do |f| %>
+  				<%= f.input :title,	hint: "Title for contact. ex: Head Coach, Athletic Director, League President, etc." %>
+  				<%= f.input :name, 	hint: "Enter the name of the contact. Can be anything you like." %>
+  				<%= f.input :phone, required: false %>
+  				<%= f.input :mobile, required: false %>
+  				<%= f.input :fax, required: false %>
+  				<%= f.input :email %>
+  				<%= f.submit "Submit", class: "btn btn-medium btn-primary" %>
+  			<% end %>
+  		</div>
+	</div>
+</div>

@@ -1,0 +1,51 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Game Schedule") %>
+<div class="row">
+  <div class="span10">
+		<table class="table table-hover">
+				<thead> 
+					<tr>
+						<th>Team</th>
+						<th>Game</th>
+						<th>Date</th>
+						<th>Home/Away</th>
+						<th>Opponent</th>
+						<th>Time</th>
+						<th>Location</th>
+						<th>Event</th>
+						<% if site_owner? %>
+							<th>Update?</th>
+							<th>Remove?</th>
+						<% end %>
+					</tr>
+				</thead>
+        <% @gameschedules.each_with_index do |g, count| %>
+          <tbody>
+          	<tr>
+          		<td><%= @team.title + " " + @team.mascot %></td>
+          		<td><%= count += 1 %></td>
+          		<td><%= g.gamedate.strftime("%m/%d/%Y") %></td>
+          		<td><%= g.homeaway %></td>
+          		<td><%= g.opponent %></td>
+          		<td><%= g.starttime.strftime("%I:%M%p") %></td>
+          		<td><%= g.location %></td>
+          		<td><%= g.event %></td>
+          		<% if site_owner? %>
+          			<td><%= link_to "Edit", edit_sport_team_gameschedule_path(@sport, @team, g), class: "btn btn-mini btn-warning" %></td>
+          			<td><%= link_to "Delete", [@sport, @team, g],  method:	:delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %></td>
+          		<% end %>
+          	</tr>
+          </tbody>
+        <% end %>
+		</table>
+	</div>
+</div>
+<div class="row">
+  <div class="center">
+		<div class="span1 offset4">
+			<% if site_owner? %>
+				<%= link_to "Add", new_sport_team_gameschedule_path(@sport, @team), class: "btn btn-primary" %>	
+			<% end %>
+		</div>
+	</div>
+</div>
+

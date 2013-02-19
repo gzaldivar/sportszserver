@@ -1,0 +1,77 @@
+<% provide(:title, "Sport Site Solutions - Find Site") %>
+<p> 
+<div class="row">
+  <div class="span10" style="background-color:#ffffff;">
+    <div class="row">
+     	<div class="span10 offset2">
+        <h3>Find Site:</h3>
+        <%= form_tag sites_path, class: "form-horizontal", method: 'get' do %>
+          <div class="row">
+            <div class="span2">
+              <%= label_tag "Zip Code: " %>
+          		<%= text_field_tag "zip" %>
+            </div>
+            <div class="span2 offset1">
+              <%= label_tag "City: " %>
+          		<%= text_field_tag "city" %>
+            </div>
+          </div>
+          <p>
+          <div class="row">
+            <div class="span2">
+              <%= label_tag "State: " %>
+          		<%= select_tag :state, options_for_select(us_states), include_blank: true %>
+            </div>
+            <div class="span2 offset1">
+              <%= label_tag "Site Name: " %>
+              <%= text_field_tag "sitename" %>
+            </div>
+          </div><br/>
+          <div class="row">
+            <div class="span1 offset2">
+              <%= submit_tag  "Search", class: "btn btn-medium btn-primary", name: nil %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+    <div class="row">
+      <div class="span10">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th>Site Name</th>
+              <th>Mascot</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Zip</th>
+              <th>Banner</th>
+              <% if user_signed_in? %>
+                <th>Default Site</th>
+              <% end %>
+            </tr>
+          </thead>
+          <tbody>
+    		<% if @sites.any? %>
+              <% @sites.each do |s| %>
+				        <tr>
+                  <td><%= link_to s.sitename, s %></td>
+                  <td><%= s.mascot %></td>
+                  <td><%= s.city %></td>
+                  <td><%= s.state %></td>
+                  <td><%= s.zip %></td>
+                  <td><%= link_to (image_tag s.banner.url(:thumb)), s %></td>
+                  <% if user_signed_in? and (current_user.default_site == s.id) %>
+  					         <td><em>Default</em></td>
+  				        <% elsif user_signed_in?%>
+                    <td><%= link_to "Set As Default", site_user_path(s), class: "btn btn-mini btn-primary" %></td>
+                  <% end %>
+				        </tr>
+              <% end %>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

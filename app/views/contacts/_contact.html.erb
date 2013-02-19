@@ -1,0 +1,32 @@
+<div class="row">
+	<div class="span6 offset2">
+		<% if !contact.title.nil? %>
+			<%= contact.title %><br/>
+		<% end %>
+		<%= contact.name %><br/>
+		<% if !contact.phone.nil? %>
+			Phone:&nbsp
+			<%= contact.phone %><br/>
+		<% end %>
+		<% if !contact.mobile.nil? %>
+			Mobile:&nbsp
+			<%= contact.mobile %><br/>
+		<% end %>
+		<% if !contact.fax.nil? %>
+			Fax:&nbsp
+			<%= contact.fax %><br/>
+		<% end %>
+		Email:&nbsp
+		<%= contact.email %><p>
+		<% if site_owner? %>
+			<div class="row">
+				<div class="span1">
+					<%= link_to "Edit", edit_site_contact_path(@site, contact), class: "btn btn-mini btn-primary" %>
+				</div>
+				<div class="span2">
+					<%= link_to "Delete", site_contact_path(@site, contact), method: :delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>

@@ -1,0 +1,28 @@
+<div class="row">
+  <div class="span8 offset2">
+    Enter new team information:
+    <%= simple_form_for [@sport, @team] do |t| %>
+      <div class="row">
+        <div class="span8">
+          <%= t.input :title, hint: "Varsity, Freshman, Pee Wee ...." %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span8">
+          <% if current_site.mascot.blank? %>
+            No global site Mascot defined. You must enter one for the team.
+            <%= t.input :mascot, label: "Team Mascot", required: true %>
+          <% else %>
+            Use the site mascot?
+            <%= t.input :mascot, label: "Team Mascot", required: true, input_html: { value: current_site.mascot } %>
+          <% end %>
+        </div>
+      </div>
+      <div class="row">
+        <div class="span1 offset2">
+          <%= t.button :submit, 'Submit', class:  "btn btn-medium btn-primary", id: "submitbtn" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,92 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
+<p>
+<div class="row">   
+  <div class="span10">
+		<%= render 'shared/error_messages', object:	@athlete %>
+	</div>
+</div>
+<div class="row">
+	<div class="span4">
+	<% if !@athlete.pic.blank? %> 
+		<%= image_tag @athlete.pic.url(:medium) %>
+	<% else %>
+		<%= image_tag 'Photo_Not_Available.jpg' %>
+	<% end %>
+	</div>
+	<div class="span6">
+    <table class="table">
+    	<thead> 
+        <tr>
+    			<th>Number</th>
+    			<th>Last Name</th>
+    			<th>First Name</th>
+    			<th>Middle Name</th>
+    			<th>Position</th>
+        </tr>
+      </thead>
+      <tbody>
+    		<tr>
+    			<td><%= @athlete.number %></td>
+    			<td><%= link_to @athlete.lastname, [@sport, @athlete] %></td>
+    			<td><%= link_to @athlete.firstname, [@sport, @athlete] %></td>
+    			<td><%= @athlete.middlename %></td>
+    			<td><%= @athlete.position %></td>
+        </tr>
+      </tbody>
+    </table>
+    <table class="table">
+      <thead>
+        <tr>
+    			<th>Height</th>
+    			<th>Weight</th>
+    			<th>Year</th>
+    			<th>Roster</th>
+          <th>Photos</th>              
+    		</tr>
+    	</thead>
+    	<tbody>
+        <tr>
+    			<td><%= @athlete.height %></td>
+    			<td><%= @athlete.weight %></td>
+    			<td><%= @athlete.year %></td>
+				<% if @athlete.team == "Unassigned" %>
+					<td>Unassinged</td>
+				<% else %>
+    				<td><%= get_athlete_team(@sport, @athlete.team) %></td>
+				<% end %>
+          <td>
+            <% if Photo.where(athletes: @athlete.id).any? %>
+              <%= link_to "Photos", photos_path(sport: @sport.id, athlete: @athlete.id), class: "btn btn-mini btn-primary" %>              
+            <% end %>
+          </td>
+    		</tr>
+    	</tbody>
+    </table>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span4 offset1">
+		<h3>Athletes Bio:</h3><p>
+		<%= @athlete.bio %>
+	</div>
+</div>
+<p>
+<div class="row">
+  <div class="span8 offset2">
+		<%= link_to	"Add Photo", newathlete_sport_photo_path(@sport, @athlete), class:	"btn btn-medium btn-primary" %>&nbsp;  
+		<% if site_owner? %>
+      <%= link_to "Edit", edit_sport_athlete_path(@sport, @athlete),  class: "btn btn-medium btn-warning" %>&nbsp;
+			<%= link_to "Delete", sport_athlete_path(@sport, @athlete),  method:	:delete,  class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>&nbsp;
+			<%= link_to "Add News", new_sport_newsfeed_path(@sport),  class: "btn btn-medium btn-info" %>&nbsp;
+		<% end %>
+    <% if signed_in? %>
+		<% if @athlete.followers.has_key?(current_user.id.to_s) %>
+			<%= link_to "Stop Following Player", unfollow_sport_athlete_path(@sport, @athlete),  class: "btn btn-medium btn-warning" %>
+		<% else %>
+			<%= link_to "Follow Player", follow_sport_athlete_path(@sport, @athlete),  class: "btn btn-medium btn-info" %>
+		<% end %>
+    <% end %>
+  </div>
+</div>
+

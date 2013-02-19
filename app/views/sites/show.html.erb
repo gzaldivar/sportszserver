@@ -1,0 +1,117 @@
+<% provide(:title, current_site.sitename) %>
+<p>
+<div class="row">
+	<div class="span12">
+    <div class="span8">
+      <h5>
+      <div class="span2">
+        <% if @fall.any? %>
+          <table class="table table-bordered">
+            <thead>
+              <th>Fall</th>
+            </thead>
+            <tbody>
+              <% @fall.each do |f| %>
+                <td><em><%= link_to f.name, sport_path(id: f.id) %></em></td>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+      <div class="span2">
+        <% if @winter.any? %>
+          <table class="table table-bordered">
+            <thead>
+              <th>Winter</th>
+            </thead>
+            <tbody>
+              <% @winter.each do |w| %>
+                  <td><em><%= link_to w.name, sport_path(id: w.id) %></em></td>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+      <div class="span2">
+        <% if @spring.any? %>
+          <table class="table table-bordered">
+            <thead>
+              <th>Spring</th>
+            </thead>
+            <tbody>
+              <% @spring.each do |s| %>
+                <td><em><%= link_to s.name, sport_path(id: s.id) %></em></td>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+      <div class="span2">
+        <% if @summer.any? %>
+          <table class="table table-bordered">
+            <thead>
+              <th>Summer</th>
+            </thead>
+            <tbody>
+              <% @summer.each do |s| %>
+                <td><em><%= link_to s.name, sport_path(id: s.id) %></em></td>
+              <% end %>
+            </tbody>
+          </table>
+        <% end %>
+      </div>
+      </h5>
+    </div>
+    <h4>
+    <div class="span2 bs-docs-sidebar">
+      <ul class="nav nav-list bs-docs-sidenav">
+        <li><a href="/">Home</a></li>
+        <li><%= link_to "Male Sports", male_sites_path %></li>
+        <li><%= link_to "Female Sports", female_sites_path %></li>
+        <li class="divider"></li>
+        <li><a tabindex="-1" href="#">Address</a></li>
+        <li><a tabindex="-1" href="#">Staff</a></li>
+      </ul>
+    </div>
+    </h4>
+  </div>
+</div><p>
+<% if site_owner? %>
+  <div class="row">
+    <div class="span2 offset4">
+      <%= link_to "Add Sport", new_sport_path, class: "btn btn-medium btn-primary" %>
+    </div>
+  </div><p><br/>
+<% end %>
+<div class="row">
+  <div class="span2">
+    <div id="follow">
+      <table class="table table-bordered">
+        <thead>
+        </thead>
+        <tbody>
+          <td><% if !@site.logo.url(:thumb).blank? %>
+            <%= image_tag current_site.logo.url(:thumb) %>
+            <% end %></td>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="span6 offset1">
+    <%= render 'newsfeeds/newsfeed', feed: @newsfeed %>
+    <div class="row">
+      <div class="span2 offset1">
+        <%= link_to "All Site News", allnews_sites_path, class: "btn btn-medium btn-primary" %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+	<% if site_owner? %>
+    <div class="span2 offset4">
+			<%= link_to "Edit Site", edit_site_path(id: current_site.id), class: "btn btn-medium btn-primary" %>
+		</div>
+	<% end %>
+</div>
+
+

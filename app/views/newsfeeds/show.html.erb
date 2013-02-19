@@ -1,0 +1,13 @@
+<% provide(:title, current_site.sitename + " - News Item") %>
+<p>
+	<% item=[]
+	  if !@newsfeed.kind_of?(Array) 
+	    item[0] = @newsfeed  
+	  else
+	    item = @newsfeed 
+	  end %>
+<div class ="row">
+	<div class="span10 offset1">
+  		<%= render 'newsfeed', feed: item %>
+	</div>
+</div>

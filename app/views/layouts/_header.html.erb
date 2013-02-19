@@ -1,0 +1,115 @@
+<header class="navbar navbar-inverse navbar-fixed-top">
+  <div class="navbar-inner">
+    <div class="container">
+      <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </a>
+      <% if current_site? %>
+      	<a class="brand" href=<%= "/sites/" + current_site.id %>><%= current_site.sitename %></a>      	
+      <% else %>
+		<a class="brand" href="/">Sports Page Site</a>      
+      <% end %>
+			<div class="nav-collapse">
+				<ul class="nav pull-left">
+          			<% if @sport.nil? %>
+			            <li class="disabled"><%= link_to "Schedule", "#" %></li>
+			      			<li class="disabled"><%= link_to "Rosters", "#" %></li>
+			      			<li class="disabled"><%= link_to "Coaching Staff", "#" %></li>
+			        		<li class="disabled"><%= link_to "Stats", "#" %></li>
+			        		<!--li><a href="#">Booster</a></li-->
+			        		<% if current_site? and site_owner? %>
+			        			<li class="disabled"><%= link_to "Manage Players", "#" %></li>
+			        		<% end %>
+			        <% elsif @sport.teams.count == 0 %>
+			            <li><%= link_to "Schedule", "#" %></li>
+			      			<li><%= link_to "Rosters", "#" %></li>
+			      			<li><%= link_to "Coaching Staff", "#" %></li>
+			        		<li><%= link_to "Stats", "#"%></li>
+			        		<li><a href="#">Booster</a></li-->
+			        <% else %>
+		      			<li id="fat-menu" class="dropdown">
+		      				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		      				Schedule <b class="caret"></b>
+		      				</a>
+		      				<ul class="dropdown-menu">
+		        				<% @sport.teams.each do |t| %>
+		        					<li><%= link_to (t.title + " " + t.mascot), sport_team_gameschedules_path(@sport, t) %></li>
+		        					<li class="divider"></li>
+		        				<% end %>	
+		      				</ul>
+		      			</li>
+		      			<li id="fat-menu" class="dropdown">
+		      				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		      				Roster <b class="caret"></b>
+		      				</a>
+		      				<ul class="dropdown-menu">
+			      				<% @sport.teams.each do |t| %>
+			      					<li><%= link_to (t.title + " " + t.mascot), sport_athletes_path(@sport, team_id: t) %></li>
+			      					<li class="divider"></li>
+			      				<% end %>	
+		      				</ul>
+		      			</li>
+		      			<li id="fat-menu" class="dropdown">
+		      				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		      				Coaching Staff <b class="caret"></b>
+		      				</a>
+		      				<ul class="dropdown-menu">
+			      				<% @sport.teams.each do |t| %>
+			      					<li><%= link_to (t.title + " " + t.mascot), sport_coaches_path(@sport, team_id: t)%></li>
+			      					<li class="divider"></li>
+			      				<% end %>	
+		      				</ul>
+		      			</li>
+		      			<li id="fat-menu" class="dropdown">
+		      				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		      				Photos<b class="caret"></b>
+		      				</a>
+		      				<ul class="dropdown-menu">
+			      				<% @sport.teams.each do |t| %>
+			      					<li><%= link_to (t.title + " " + t.mascot), sport_photos_path(@sport, team_id: t)%></li>
+			      					<li class="divider"></li>
+			      				<% end %>	
+								<li><%= link_to "Search", sport_photos_path(@sport) %></li>
+		      				</ul>
+		      			</li>
+		            	<li><%= link_to " Video", sport_photos_path(@sport) %></li>
+          			<% end %>
+	        </ul>
+	        <ul class="nav pull-right">
+				<% if signed_in? %>
+					<li id="fat-menu" class="dropdown">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+			            <% if user_signed_in? %>
+			                <%= current_user.email %> <b class="caret"></b>
+	              		<% end %>
+					</a>
+					<ul class="dropdown-menu">
+	                	<% if user_signed_in? %>
+							<li><%= link_to "Profile", user_path(current_user) %></li>
+							<% if site_owner? and !@sport.nil?%>
+						  		<li class="dropdown-submenu">
+						    		<a tabindex="-1" href="#">Admin</a>
+						    			<ul class="dropdown-menu">
+						        			<li><%= link_to "Manage Players", sport_athletes_path(@sport) %></li>
+											<li class="divider"></li>
+											<li><%= link_to "Manage Coaches", sport_coaches_path(@sport) %></li>
+						    			</ul>
+									</a>
+								</li>
+							<% end %>
+							<li class="divider"></li>
+								<li><%= link_to "Sign out", destroy_user_session_path, method: "delete" %></li>
+                			<% end %>
+						</ul>
+					</li>
+				<% elsif !signed_in? %>
+					<li><%= link_to "Sign in", new_user_session_path %></li>
+				<% end %>
+			</ul>
+		</div>
+    </div>
+  </div>
+</header>
+

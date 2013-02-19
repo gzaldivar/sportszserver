@@ -1,0 +1,32 @@
+<div class="row">
+	<div class="span10 offset1">
+		<%= simple_form_for [@sport, @team, @gameschedule], html: { class: 'form-horizontal' } do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<%= f.input :startdate, as: :string, input_html: { class: 'datepicker', :value => @gameschedule.try(:gamedate).try(:strftime,'%m/%d/%Y') } %>
+			<%= f.input :gamedate, :as => :hidden, :input_html => { :id => 'recorded-at-alt'} %>
+			<!--%= f.input :gamedate,  as: :date, start_year: Date.today.year, start_month: Date.today, 
+			 			ignore_time: true %-->
+			<%= f.input	:starttime, label: "Start Time:", as: :time, ignore_date:  true %>
+			<div class="row">
+				<div class="span4">
+					<%= f.input :homeaway, label: "Home or Away?" %>
+				</div>
+				<div class="span4">
+					<%= f.input	:opponent %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span4">
+					<%= f.input :location %>
+				</div>
+				<div class="span4">
+					<%= f.input	:event, hint:	"Senior day, Homecoming, etc.", required: false %>	
+				</div>
+			</div>
+			<p>
+			<div class="span2 offset3">
+				<%= f.button :submit, "Submit", class: "btn btn-medium btn-primary" %>
+			</div>
+		<% end %>	
+	</div>	
+</div>

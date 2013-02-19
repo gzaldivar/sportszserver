@@ -1,0 +1,5 @@
+<% if @newsfeed.nil? %>
+  alert("No news items for #{@athlete.nil? ? @team : @athlete.full_name}!")
+<% else %>
+  $("#sportfeed").append("<%= j render 'newsfeeds/newsfeed', feed: @newsfeed %>");
+<% end %>

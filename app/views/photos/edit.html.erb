@@ -1,0 +1,85 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Edit Photo") %>
+<p>
+<div class="row">
+	<div class="span8 offset1">
+		<%= image_tag @photo.large_url %>
+  </div>
+</div>
+<p>
+<div class="row">
+  <div class="span6">
+    <%= simple_form_for [@sport, @photo] do |f| %>
+		<%= render 'shared/error_messages', object: f.object %>
+	      <div class="row">
+	        <div class="span2 offset1">
+	          <%= f.input :teamid, collection:	@sport.teams.collect{ |t| [t.team_name, t.id] }, label: "Tag photo for team", hint: "Tag photo for team"%>
+	        </div>
+	        <div class="span2 offset1">
+		        Current athletes tagged:&nbsp:
+				<% if @athlete_tags.empty? %>
+					<h4>None</h4>
+				<% else %>
+			        <% @athlete_tags.each do |a| %>
+			            <%= a.full_name %>
+			        <% end %>
+				<% end %>
+	        </div>
+	      </div>
+			<br/>
+	      <div class="row">
+	        <div class="span2 offset1">
+	          Tag athletes:
+	        </div>
+	        <div class="span2 offset1">
+	    		<%= collection_select(:athlete,	:id,	@athletes, :id, :full_name, prompt:  "Tag Athlete" ) %>
+	        </div>
+	      </div>
+	      <div class="row">
+			<div class="span2 offset1">
+				<%= f.input	:displayname,	label:	"Photo Name" %>
+        	</div>
+				<div class="span2 offset1">
+					<%= f.input	:description,	as: :text, label:	"Photo Description" %>
+				</div>
+			</div><br/>
+			<div class="row">
+				<div class="span1 offset2">
+					<%= f.button :submit, 'Update', class:	"btn btn-medium btn-primary" %>
+			</div>
+        	<% if site_owner? || (signed_in? && (current_user.id == @photo.owner)) %>
+	          <div class="row">
+	            <div class="span1 offset1">
+	              <%= link_to "Delete", sport_photo_path(@photo, @photo), method: :delete, class: "btn btn-medium btn-danger", data: { confirm: "You sure?" }%>
+	            </div>
+	          </div>
+        	<% end %>
+			</div>
+		<% end %>	
+	</div>	
+<!--/div></br-->
+  <div class="span3 offset1">
+	<h4>Manage Photo Tags</h4>
+    <div class="row">
+    	<div class="span2">
+			Untag athlete:
+    		<%= simple_form_for @photo, url:	untagathlete_sport_photos_path(@sport), html: { method: :post} do |f| %>
+    			<p>
+          <%= f.hidden_field :id, value: @photo.id %>
+    			<%= collection_select(:athlete,	:name,	@athlete_tags, :id, :full_name) %>
+    			<%= f.button :submit, 'Untag', class:	"btn btn-medium btn-warning" %>
+    		<% end %>
+    	</div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="span2 offset1">
+  		<% if !@photo.teamid.nil? %>
+        <h4>Remove team tag?<p>
+  			<!--%= @sport.teams.find(@photo.teamid).team_name %--><p>
+        <%= link_to "Untag", untagteam_sport_photo_path(@sport, team: @photo.teamid, id:  @photo.id), class:	"btn btn-medium btn-warning",
+            data: { confirm: "You sure? All players will also be untagged!" }  %>
+        </h4>
+  		<% end %>
+    </div>
+  </div>
+</div>

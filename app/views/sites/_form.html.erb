@@ -1,0 +1,138 @@
+<div class="row">
+  <div class="span10" id="backcolor">
+  	<div class="span8 offset1">
+      <%= simple_form_for @site, html: { multipart: true } do |f| %>
+  			<%= render 'shared/error_messages', object: @site %>
+  			<div class="row">
+  				<div class="span2">
+  				  <%= f.input	:sitename, label: "Site Name:" %>
+          </div> 
+          <div class="span2 offset1">
+            <%= f.input :mascot, required: false, hint: "Mascot will be used for all teams. Use this if all your teams have the same mascot. If your teams 
+                                                        have different mascots. Ex: Pee Lions, Jr. Pee Wee Mustangs ... include the mascot when you create the team next page" %>
+          </div>
+  				<div class="span2 offset1">
+  				  <%= f.input :zip %>
+          </div>
+        </div><p>
+        <% if !@sports.nil? and @sports.any? %>
+          <div class="row">
+            <h3>Current Site Sports:&nbsp
+            <%= link_to "Add Sport", new_sport_path, class: "btn btn-medium btn-primary" %></h3>
+            <table class="table table-striped">
+              <thead>
+                <th>Fall</th><th>Winter</th><th>Spring</th><th>Summer</th>
+              </thead>
+              <tbody>
+                <td>
+                  <% @sports.each do |s| %>
+                    <% if s.season == "Fall" %>
+                      <%= s.name %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <% @sports.each do |s| %>
+                    <% if s.season == "Winter" %>
+                      <%= s.name %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <% @sports.each do |s| %>
+                    <% if s.season == "Spring" %>
+                      <%= s.name %>
+                    <% end %>
+                  <% end %>
+                </td>
+                <td>
+                  <% @sports.each do |s| %>
+                    <% if s.season == "Summer" %>
+                      <%= s.name %>
+                    <% end %>
+                  <% end %>
+                </td>
+              </tbody>
+            </table>
+          </div><p>
+        <% end %>
+  			<div class="row">
+          <div class="span2">
+            Allow user managed pics
+          </div>
+          <div class="span1">
+            <%= f.check_box :enable_user_pics %>
+          </div>
+          <div class="span4 offset1">
+            If you enable pics for a user they will be able to upload, edit and delete the pics they own. You can leave this unchecked and choose 
+            to only have an admin manage pics. If you check this and assign a user to review pics, then users will be able to upload pics but they will 
+            not be viewable until a user you designate as site reviewer approves them. Admins always have site review rights.
+          </div>
+        </div><p>
+        <div class="row">
+          <div class="span2">
+            Allow user managed videos
+          </div>
+          <div class="span1">
+            <%= f.check_box :enable_user_video %>
+          </div>
+          <div class="span4 offset1">
+            If you enable videos for a user they will be able to upload, edit and delete the vidoes they own. You can leave this unchecked and choose 
+            to only have an admin manage videos. If you check this and assign a user to review videos, then users will be able to upload videos but they will 
+            not be viewable until a user you designate as site reviewer approves them. Admins always have site review rights.
+          </div>
+        </div><p>
+        <div id="loading">
+          <div id="loadingcontent">
+              <p id="loadingspinner">
+                  Creating Site ....
+              </p>
+          </div>
+        </div>
+        <div class="row">
+          <div class="span3">
+          <%= f.input :sportsexdefault, collection: ["Male", "Female"], label: "Display Male or Female Sports as default:" %>
+          </div>
+          <div class="span4 offset1">
+            You need to set this if you are supporting multiple sports with your site. For example, If you choose "Male" then male sports will be displayed 
+            your page is first visited. There will be a menu item your visitors will use to toggle between male and female sports.
+          </div>
+        </div><p>
+        <div class="row">
+          <div class="span6">
+            Enter site banner image:<p>
+ 					  <% if !@site.banner.blank? %>
+              Current banner:<p>
+  						<%= image_tag @site.banner.url(:thumb) %>
+            <% end %>
+  				  <%= f.file_field :banner %>
+          </div>
+        </div><p>
+        <div class="row">
+          <div class="span3">
+            Enter site Logo image:<p>
+    				<% if !@site.logo.blank? %>
+              Current logo:<p>
+    					<%= image_tag @site.logo.url(:thumb) %>
+            <% end %>
+  				  <%= f.file_field :logo %>
+          </div>
+          <div class="span3 offset1">
+            BACKGROUND. Background for the page. White will be used if not entered.
+            <% if !@site.background.blank? %>
+              Current background:<p>
+              <%= image_tag @site.background.url(:thumb) %>
+            <% end %>
+  				  <%= f.file_field :background %>
+          </div>
+        </div><p>
+        <div class="row">
+  				<div class="span1 offset3">
+  					<%= f.submit "Submit", class: "btn btn-medium btn-primary", id: "submitbtn" %>
+  				</div>
+        </div>
+  		<% end %>
+  	</div>
+  </div>
+</div>
+

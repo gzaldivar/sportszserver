@@ -1,0 +1,52 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - " + @coach.full_name) %>
+<p>
+<div class="row">
+	<div class="span4">
+	<% if !@coach.coachpic.blank? %> 
+		<%= image_tag @coach.coachpic.url(:medium) %>
+	<% else %>
+		<%= image_tag 'Photo_Not_Available.jpg' %>
+	<% end %>
+	</div>
+	<div class="span5">
+    <div class="row">
+  		<table class="table table-hover">
+  			<thead> 
+  				<tr>
+  					<th>Last Name</th>
+  					<th>First Name</th>
+  					<th>Middle Name</th>
+  					<th>Speciality</th>
+  					<th>Experience</th>
+  					<th>Coaches</th>
+  				</tr>
+  			</thead>
+  			<tbody>
+  				<tr>
+  					<td><%= @coach.lastname %></td>
+  					<td><%= @coach.firstname %></td>
+  					<td><%= @coach.middlename %></td>
+  					<td><%= @coach.speciality %></td>
+  					<td><%= @coach.years_on_staff %></td>
+  					<td><%= @sport.teams.find(@coach.team).team_name %></td>
+  				</tr>
+  			</tbody>
+  		</table>
+    </div>
+    <div class="row">
+  		<h3>Coaches Bio:</h3><p>
+  		<h4><%= @coach.bio %></h4>
+    </div>
+	</div>
+</div><br/>      
+<div class="row">
+  <div class="span4 offset5">
+		<% if site_owner? %>
+      <%= link_to "Edit", edit_sport_coach_path(@sport, @coach),  class: "btn btn-medium btn-warning" %>&nbsp;
+			<%= link_to "Delete", sport_coach_path(@sport, @coach),  method:	:delete,  class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>&nbsp;
+			<%= link_to "Add News", new_sport_newsfeed_path(@sport),  class: "btn btn-medium btn-info" %>&nbsp;
+		<% end %>
+  </div>
+</div>
+<p>
+

@@ -1,0 +1,58 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Photo</th>
+      <th>Photo date</th>
+      <th>Photo Name</th>
+      <th>Team</th>
+      <th>Athletes</th>
+      <th>Game</th>
+      <th>Status</th>
+      <th>Errors?</th>
+    </tr>
+  </thead>
+	<ul class="homesites">
+		<tbody>
+		  <tr>
+			<div class="row">
+				<div class="span2">
+				    <% if !photo.processing && !photo.thumbnail_url.nil? %>
+				      <td><%= link_to image_tag(photo.thumbnail_url), sport_photo_path(@sport, photo) %>
+					<% elsif !photo.original_url.nil? %>
+					  <td><%= link_to image_tag(photo.original_url), sport_photo_path(@sport, photo) %>
+				    <% else %>
+				      <td><%= image_tag('Photo_Not_Available.jpg') %></td>
+				    <% end %>
+				</div>
+			</div>
+		    <td><%= photo.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>
+		    <td><%= link_to photo.displayname, sport_photo_path(@sport, photo) %></td>
+		  	<% if !photo.teamid.nil? %>
+		  		<td><%= @sport.teams.find(photo.teamid).team_name %></td>
+			<% else %>
+				<td></td>
+			<% end %>
+		    <% if !photo.players.nil? and photo.players.any? %>
+			    <td>
+			      <% photo.players.each do |p| %>
+			      	<%= @sport.athletes.find(p).full_name %><p>
+			      <% end %>
+			    </td>
+		    <% else %>
+		    	<td></td> 
+		    <% end %>
+			<% if !photo.schedule.nil? %>
+		    	<td><%= @sport.teams.find(photo.teamid).gameschedules.find(photo.schedule).game_name %></td>
+			<% else %>
+				<td></td>
+			<% end %>
+		    <% if photo.processing? %>
+		      <td>Processing</td>
+		    <% else %>
+		      <td>Complete</td>
+		    <% end %>
+		    <td><%= photo.error_status %>
+		  </tr>
+		</tbody>
+	</ul>
+</table>

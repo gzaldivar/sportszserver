@@ -14,9 +14,10 @@ class Sport
   has_many :athletes, dependent: :destroy
   has_many :coaches, dependent: :destroy
   has_many :photos
+  has_many :photo_errors
+  has_many :photo_queues
   embeds_many :teams
   embeds_many :newsfeeds
-  accepts_nested_attributes_for :teams, allow_destroy: true
 
   has_mongoid_attached_file :sport_banner,
     :storage        => :s3,

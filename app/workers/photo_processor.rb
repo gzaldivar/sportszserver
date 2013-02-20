@@ -6,11 +6,7 @@ class PhotoProcessor
   def self.perform(photo_id)
     item = PhotoQueue.find(photo_id)
     
-    if item.modelname == "athletes"
-      photo = Athlete.find(item.modelid)
-    elsif item.modelname == "coaches"
-      photo = Coach.find(item.modelid)
-    elsif item.modelname == "photos"
+    if item.modelname == "photos"
       photo = Photo.find(item.modelid)
     end
     
@@ -20,7 +16,7 @@ class PhotoProcessor
       s3 = AWS::S3.new
       bucket = s3.buckets[S3DirectUpload.config.bucket]
       obj = bucket.objects[photo.filepath]
-      img_path = photopath + "/temp/" + photo.filename
+      img_path = photopath + "/" + SecureRandom.hex(10) + photo.filename
       
       File.open(img_path, 'wb') do |file|
         obj.read do |chunk|
@@ -44,29 +40,32 @@ class PhotoProcessor
         # write thumbnail to S3
         
         tobj = bucket.objects[item.modelname + "/" + photo.id + "/thumbnail/" + photo.filename]
-        thumb.write(photopath + "/thumb/" + photo.id + ".jpg")
-        tobj.write(Pathname.new(photopath + "/thumb/" + photo.id + ".jpg"))    # upload the thumbnail to S3
+        temp_thumb_filename = photopath + "/" + SecureRandom.hex(10) + photo.id + ".jpg"
+        thumb.write(temp_thumb_filename)
+        tobj.write(Pathname.new(temp_thumb_filename))    # upload the thumbnail to S3
         photo.thumbnail_url = tobj.url_for(:read, expires:  473040000)
         
         # write medium to S3
         
         mobj = bucket.objects[item.modelname + "/" + photo.id + "/medium/" + photo.filename]
-        medium.write(photopath + "/medium/" + photo.id + ".jpg")
-        mobj.write(Pathname.new(photopath + "/medium/" + photo.id + ".jpg"))    # upload the medium to S3
+        temp_medium_filename = photopath + "/" + SecureRandom.hex(10) + photo.id + ".jpg"
+        medium.write(temp_medium_filename)
+        mobj.write(Pathname.new(temp_medium_filename))    # upload the medium to S3
         photo.medium_url = mobj.url_for(:read, expires:  473040000)
         
         # write large to S3
         
         lobj = bucket.objects[item.modelname + "/" + photo.id + "/large/" + photo.filename]
-        large.write(photopath + "/large/" + photo.id + ".jpg")
-        lobj.write(Pathname.new(photopath + "/large/" + photo.id + ".jpg"))    # upload the large to S3
+        temp_large_filename = photopath + "/" + SecureRandom.hex(10) + photo.id + ".jpg"
+        large.write(temp_large_filename)
+        lobj.write(Pathname.new(temp_large_filename))    # upload the large to S3
         photo.large_url = lobj.url_for(:read, expires:  473040000)
   
         # remove temporary files
         
-        FileUtils.rm(photopath + "/thumb/" + photo.id + ".jpg")
-        FileUtils.rm(photopath + "/medium/" + photo.id + ".jpg")
-        FileUtils.rm(photopath + "/large/" + photo.id + ".jpg")
+        FileUtils.rm(temp_large_filename)
+        FileUtils.rm(temp_medium_filename)
+        FileUtils.rm(temp_thumb_filename)
         FileUtils.rm(img_path)
         
         if item.modelname == "photos"
@@ -81,7 +80,7 @@ class PhotoProcessor
         
         item.delete
       else
-        error = PhotoError.new
+        error = item.sport.photo_errors.new
         if item.modelname == "photos"
           photo.error_status = true
           obj.delete
@@ -96,7 +95,7 @@ class PhotoProcessor
       
       photo.save
     rescue Exception => e
-      error = PhotoError.new
+      error = item.sport.photo_errors.new
       if item.modelname == "photos"
         photo.error_status = true
       end

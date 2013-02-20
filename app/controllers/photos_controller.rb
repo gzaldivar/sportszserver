@@ -27,6 +27,8 @@ class PhotosController < ApplicationController
       pics = @sport.photos.where(:players.in => [params[:athlete][:id].to_s])
     elsif !params[:number].nil? && !params[:number][:id].blank?
       pics = @sport.photos.where(:players.in => [params[:number][:id].to_s])
+    else
+      pics = []
     end
     
     if pics.any?
@@ -42,7 +44,31 @@ class PhotosController < ApplicationController
       format.js
     end
   end
+  
+  def newschedule
+    @gameschedule = Gameschedule.find(params[:id].to_s)
+    team = @sport.teams.find(@gameschedule.team_id)
+    @prefix = "t_" + team.id + "_g_" + @gameschedule.id + "_s_" + @sport.id
     
+    time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+    time = time.to_time.yesterday.to_date.iso8601
+    @photos = []
+    
+    @sport.photos.where(teamid: team.id, schedule: @gameschedule.id.to_s, :updated_at.gt => time, 
+                        owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
+      @photos[cnt] = q
+    end
+    
+    @id = @gameschedule.id
+    
+    respond_to do |format|
+      format.html { render  'newphoto' }
+      format.xml
+      format.json 
+      format.js
+    end    
+  end
+  
   def newathlete
     @athlete = @sport.athletes.find(params[:id].to_s)
     @prefix = "t_" + @athlete.team + "_a_" + @athlete.id + "_s_" + @sport.id
@@ -120,6 +146,8 @@ class PhotosController < ApplicationController
       when "a"
         @photo.players = Array.new
         @photo.players.push(tags[cnt+=1])
+      when "g"
+        @photo.schedule = tags[cnt+=1]
       end
     end
             
@@ -130,7 +158,7 @@ class PhotosController < ApplicationController
     end
     
     if @photo.save!
-      queue = PhotoQueue.new(modelid: @photo.id, modelname: "photos", sport: @sport.id)
+      queue = @sport.photo_queues.new(modelid: @photo.id, modelname: "photos")
       if queue.save!
         Resque.enqueue(PhotoProcessor, queue.id)
       else
@@ -146,7 +174,11 @@ class PhotosController < ApplicationController
       format.json 
       format.js
     end
-end
+  end
+  
+  def updategameschedule
+    @gameschedules = @sport.teams.find(params[:teamid]).gameschedules
+  end
   
   def edit
     @athletes = []
@@ -162,6 +194,13 @@ end
     if !@photo.players.nil? and @photo.players.any?
       @photo.players.each_with_index do |p, cnt|
         @athlete_tags[cnt] = Athlete.find(p)
+      end
+    end
+    @teams = @sport.teams
+    @gameschedules = []
+    @teams.each do |t|
+      t.gameschedules.each_with_index do |g, cnt|
+        @gameschedules[cnt] = g
       end
     end
   end

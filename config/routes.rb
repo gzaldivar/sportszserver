@@ -35,14 +35,14 @@ Sportzserver::Application.routes.draw do
     
     resources :photos, only: [:edit, :create, :update, :destroy, :index, :show] do
       member do
-        get :newteam
-        get :newathlete
+        get :newteam, :newathlete, :newschedule
         get :slideshow
         get :untagteam
       end
 
       collection do
         post  :untagathlete
+        get :updategameschedule
       end
     end
 

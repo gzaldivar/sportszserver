@@ -16,6 +16,9 @@
 							<th>Update?</th>
 							<th>Remove?</th>
 						<% end %>
+						<% if user_signed_in? and user_pics_ok? %>
+							<th>Photos</th>
+						<% end %>
 					</tr>
 				</thead>
         <% @gameschedules.each_with_index do |g, count| %>
@@ -33,6 +36,9 @@
           			<td><%= link_to "Edit", edit_sport_team_gameschedule_path(@sport, @team, g), class: "btn btn-mini btn-warning" %></td>
           			<td><%= link_to "Delete", [@sport, @team, g],  method:	:delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %></td>
           		<% end %>
+				<% if user_signed_in? and user_pics_ok? %>
+					<td><%= link_to "Photo", newschedule_sport_photo_path(@sport, g), class: "btn btn-mini btn-primary" %></td>
+				<% end %>
           	</tr>
           </tbody>
         <% end %>

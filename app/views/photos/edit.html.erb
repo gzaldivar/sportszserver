@@ -6,16 +6,29 @@
   </div>
 </div>
 <p>
+<script>
+  $(document).ready(function() {
+    $('#select_team').change(function() {
+      $.ajax({
+        url: "<%= updategameschedule_sport_photos_path %>",
+        data: {
+          teamid : $('#select_team').val()
+        },
+        dataType: "script"
+      });
+    });
+  });
+</script>
 <div class="row">
   <div class="span6">
     <%= simple_form_for [@sport, @photo] do |f| %>
 		<%= render 'shared/error_messages', object: f.object %>
 	      <div class="row">
 	        <div class="span2 offset1">
-	          <%= f.input :teamid, collection:	@sport.teams.collect{ |t| [t.team_name, t.id] }, label: "Tag photo for team", hint: "Tag photo for team"%>
+				<%= f.input :teamid, collection:	@teams.collect{ |t| [t.team_name, t.id] }, label: "Tag photo for team", input_html: {id: "select_team"}  %>
 	        </div>
 	        <div class="span2 offset1">
-		        Current athletes tagged:&nbsp:
+		        Current athletes tagged:&nbsp
 				<% if @athlete_tags.empty? %>
 					<h4>None</h4>
 				<% else %>
@@ -26,11 +39,13 @@
 	        </div>
 	      </div>
 			<br/>
-	      <div class="row">
+		 <div class="row">
+				<div class="span2 offset1">
+					<%= f.input :schedule, collection: @gameschedules.collect{ |t| [t.game_name, t.id] }, label: "Tag game", prompt: "Tag Game", input_html: { id: "gameschedules_select"} %>
+				</div><p>
 	        <div class="span2 offset1">
-	          Tag athletes:
-	        </div>
-	        <div class="span2 offset1">
+	          Tag athletes:&nbsp<br/>
+				<!--%= f.input :athlete, collection: @athletes.collect{ |t| [t.full_name, t.id] }, label: "Tag athletes", prompt: "Tag Athlete", hint: "Tag athletes" %-->
 	    		<%= collection_select(:athlete,	:id,	@athletes, :id, :full_name, prompt:  "Tag Athlete" ) %>
 	        </div>
 	      </div>
@@ -46,7 +61,7 @@
 				<div class="span1 offset2">
 					<%= f.button :submit, 'Update', class:	"btn btn-medium btn-primary" %>
 			</div>
-        	<% if site_owner? || (signed_in? && (current_user.id == @photo.owner)) %>
+        	<% if site_owner? || (user_signed_in? && (current_user.id == @photo.owner)) %>
 	          <div class="row">
 	            <div class="span1 offset1">
 	              <%= link_to "Delete", sport_photo_path(@photo, @photo), method: :delete, class: "btn btn-medium btn-danger", data: { confirm: "You sure?" }%>

@@ -2,7 +2,15 @@
 <p>
 <div class="row">
 	<div class="span8 offset1">
-		<h3>Photos processed in last 24 hours:</h3>
+		<h3>
+		<% if @team %>
+			<%= @team.team_name %>
+		<% elsif @athlete %>
+			<%= @athlete.full_name %>
+		<% elsif @gameschedule %>
+			<%= @gameschedule.game_name %>
+		<% end %>
+		&nbsp- Photos processed in last 24 hours:</h3>
 	</div>
 </div>
 <div id="photos">

@@ -7,6 +7,8 @@ class PhotoError
   field :modelid, type: String
   field :sport, type: String
   
+  belongs_to :sport
+  
   validates_presence_of :error_message
   validates_presence_of :modelname
   validates_presence_of :modelid

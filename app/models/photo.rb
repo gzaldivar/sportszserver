@@ -36,7 +36,7 @@ class Photo
   search_in :players, :displayname
 
   def photodir
-    "#{Rails.root}/public/system/pictemp"
+    "#{Rails.root}/tmp"
   end
 
   def storephoto(uploaded_io)

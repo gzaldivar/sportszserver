@@ -4,7 +4,8 @@ class PhotoQueue
   
   field :modelname, type: String
   field :modelid, type: String
-  field :sport, type: String
+  
+  belongs_to :sport
   
   index(  { modelid: 1 }, { unique: false } )
   

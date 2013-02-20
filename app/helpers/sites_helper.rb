@@ -25,6 +25,10 @@ module SitesHelper
     cookies.delete(:remember_site)
   end
   
+  def user_pics_ok?
+    current_site.enable_user_pics
+  end
+  
   def us_states
     [
       ['Alabama', 'AL'],

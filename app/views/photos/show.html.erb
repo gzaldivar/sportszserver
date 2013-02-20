@@ -46,7 +46,7 @@
             	<td></td>
           <% end %>
 		  <% if !@photo.schedule.nil? %>
-          		<td><%= @sport.teams.find(photo.teamid).gameschedules.find(photo.schedule).game_name %></td>
+          		<td><%= @sport.teams.find(@photo.teamid).gameschedules.find(@photo.schedule).game_name %></td>
 		  <% else %>
 				<td></td>
 		  <% end %>

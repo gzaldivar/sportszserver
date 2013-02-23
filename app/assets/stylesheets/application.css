@@ -10,6 +10,7 @@
  *
  *= require s3_direct_upload_progress_bars
  *= require mediaelement_rails
-  *= require_self
+ *= require mediaelement_rails/mejs-skins
+ *= require_self
  *= require_tree
 */

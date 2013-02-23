@@ -42,7 +42,7 @@
   	</div>
 	<div class="row">
 		<div class="span3 offset4">
-			<% if !@team.nil? %>
+			<% if !@team.nil? and user_signed_in? and user_pics_ok? %>
 				<%= link_to "Add Team Photo", newteam_sport_photo_path(@sport, @team), class: "btn btn-medium btn-primary" %>
 			<% end %>
 		</div>

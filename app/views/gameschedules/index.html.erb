@@ -19,6 +19,9 @@
 						<% if user_signed_in? and user_pics_ok? %>
 							<th>Photos</th>
 						<% end %>
+						<% if user_signed_in? and user_videos_ok? %>
+							<th>Photos</th>
+						<% end %>
 					</tr>
 				</thead>
         <% @gameschedules.each_with_index do |g, count| %>
@@ -38,6 +41,9 @@
           		<% end %>
 				<% if user_signed_in? and user_pics_ok? %>
 					<td><%= link_to "Photo", newschedule_sport_photo_path(@sport, g), class: "btn btn-mini btn-primary" %></td>
+				<% end %>
+				<% if user_signed_in? and user_videos_ok? %>
+					<td><%= link_to "Video", newschedule_sport_videoclip_path(@sport, g), class: "btn btn-mini btn-primary" %></td>
 				<% end %>
           	</tr>
           </tbody>

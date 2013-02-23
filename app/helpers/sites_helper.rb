@@ -29,6 +29,10 @@ module SitesHelper
     current_site.enable_user_pics
   end
   
+  def user_videos_ok?
+    current_site.enable_user_video
+  end
+  
   def us_states
     [
       ['Alabama', 'AL'],

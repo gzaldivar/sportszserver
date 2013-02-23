@@ -1,0 +1,2 @@
+module VideoclipsHelper
+end

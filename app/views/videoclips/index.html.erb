@@ -1,0 +1,50 @@
+<% provide(:title, current_site.sitename + " Videoclips" ) %>
+<p>
+<div class="row">
+    <div class="span9 offset1">
+        <%= form_tag sport_videoclips_path, class: "form-horizontal", method: 'get' do %>
+            <div class="row">
+                <div class="span2">
+                    <%= label_tag "Team: " %>
+                    <%= select(:team, :id, @sport.teams.collect{ |t| [t.team_name, t.id] }, include_blank: true ) %>
+                </div>
+                <% if !@team.nil? %>
+                    <div class="span2 offset1">
+                        <%= label_tag "Game: " %>
+                        <%= select(:game, :schedule_id, @team.gameschedules.collect{ |t| [t.game_name, t.id] }, include_blank: true ) %>
+                    </div>
+                <% end %>
+                <% if user_signed_in? %>
+                    <div class="span2 offset1">
+                        <%= label_tag "My Video Clips: " %>
+                        <%= check_box_tag "username" %>
+                    </div>
+                <% end %>
+            </div>
+            <div class="row">
+                <div class="span2">
+                    <%= label_tag "Player Number: " %>
+                    <%= select(:number, :id, @sport.athletes.collect{ |t| [t.number, t.id] }, include_blank: true ) %>
+                </div>
+                <div class="span2 offset1">
+                    <%= label_tag "Player Name: " %>
+                    <%= select(:athlete, :id, @sport.athletes.collect{ |t| [t.name, t.id] }, include_blank: true ) %>
+                </div>
+            </div>
+            <br/>
+            <div class="row">
+                <div class="span1 offset3">
+                  <%= submit_tag  "Search", class: "btn btn-medium btn-primary", name: nil %>
+                </div>
+            </div>
+        <% end %>
+        <%= render @videoclips %>
+    </div>
+    <div class="row">
+        <div class="span3 offset4">
+            <% if !@team.nil? and user_signed_in? and user_pics_ok? %>
+                <%= link_to "Add Team Video Clip", newteam_sport_videoclip_path(@sport, @team), class: "btn btn-medium btn-primary" %>
+            <% end %>
+        </div>
+    </div>
+</div>

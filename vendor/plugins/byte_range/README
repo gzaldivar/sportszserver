@@ -1,0 +1,16 @@
+= About =
+Http Byte-Range is required by the iPhone for streaming video, but mongrel and webrick do not support it. Motionbox has created this plugin to make it easier to develop for the iPhone in Rails.
+
+Currently, byte-range support is limited to only what is necessary to support the iPhone. This means only single ranges such as 0-10.
+
+= Installation =
+Install the plugin by typing
+  script/plugin install http://http-byte-range.googlecode.com/svn/trunk/plugins/byte_range
+
+With the plugin installed, add the following line to your ApplicationController.
+  include ByteRange
+
+To test your installation, load Rails and then use curl to get any page.
+  curl --include -r0-2 http://localhost:3000/
+
+The headers that are returned should show a Content-Length of 3.

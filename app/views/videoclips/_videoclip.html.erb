@@ -1,0 +1,50 @@
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th>Video Clip</th>
+      <th>Date</th>
+      <th>Name</th>
+      <th>Team</th>
+      <th>Athletes</th>
+      <th>Game</th>
+      <th>Errors?</th>
+    </tr>
+  </thead>
+	<ul class="homesites">
+		<tbody>
+		  <tr>
+			<div class="row">
+				<div class="span1">
+				    <% if !videoclip.poster_url.nil? %>
+				    	<td><%= link_to image_tag(videoclip.poster_url), sport_videoclip_path(@sport, videoclip) %>
+				    <% else %>
+				    	<td><%= image_tag('VideoNotAvailable.jpg') %></td>
+				    <% end %>
+				</div>
+			</div>
+		    <td><%= videoclip.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>
+		    <td><%= link_to videoclip.displayname, sport_videoclip_path(@sport, videoclip) %></td>
+		  	<% if !videoclip.teamid.nil? %>
+		  		<td><%= @sport.teams.find(videoclip.teamid).team_name %></td>
+			<% else %>
+				<td></td>
+			<% end %>
+		    <% if !videoclip.players.nil? and videoclip.players.any? %>
+			    <td>
+			      <% videoclip.players.each do |p| %>
+			      	<%= @sport.athletes.find(p).full_name %><p>
+			      <% end %>
+			    </td>
+		    <% else %>
+		    	<td></td> 
+		    <% end %>
+			<% if !videoclip.schedule.nil? and !videoclip.schedule.blank? %>
+		    	<td><%= @sport.teams.find(videoclip.teamid).gameschedules.find(videoclip.schedule).game_name %></td>
+			<% else %>
+				<td></td>
+			<% end %>
+		    <td><%= videoclip.error_status %>
+		  </tr>
+		</tbody>
+	</ul>
+</table>

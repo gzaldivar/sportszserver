@@ -1,0 +1,5 @@
+<% if @videoclip.new_record? %>
+  alert("Failed to upload video clip: <%= j @videoclip.errors.full_messages.join(', ').html_safe %>");
+<% else %>
+  $("#videoclips").append("<%= j render(@videoclip) %>");
+<% end %>

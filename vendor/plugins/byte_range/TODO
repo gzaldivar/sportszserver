@@ -1,0 +1,5 @@
+Though the plugin technically works and is complete, it would be nice to polish it a bit. Here are the remaining tasks.
+
+* Add tests.
+* Clean the code.
+* Support the full HTTP Byte-Range specification.

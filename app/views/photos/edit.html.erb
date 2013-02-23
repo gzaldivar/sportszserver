@@ -73,10 +73,9 @@
 	</div>	
 <!--/div></br-->
   <div class="span3 offset1">
-	<h4>Manage Photo Tags</h4>
     <div class="row">
     	<div class="span2">
-			Untag athlete:
+			Untag Athlete:
     		<%= simple_form_for @photo, url:	untagathlete_sport_photos_path(@sport), html: { method: :post} do |f| %>
     			<p>
           <%= f.hidden_field :id, value: @photo.id %>
@@ -86,15 +85,15 @@
     	</div>
     </div>
   </div>
-  <div class="row">
+  <!--div class="row">
     <div class="span2 offset1">
   		<% if !@photo.teamid.nil? %>
-        <h4>Remove team tag?<p>
+        <h4>Remove team tag?<p-->
   			<!--%= @sport.teams.find(@photo.teamid).team_name %--><p>
-        <%= link_to "Untag", untagteam_sport_photo_path(@sport, team: @photo.teamid, id:  @photo.id), class:	"btn btn-medium btn-warning",
-            data: { confirm: "You sure? All players will also be untagged!" }  %>
-        </h4>
+        <!--%= link_to "Untag", untagteam_sport_photo_path(@sport, team: @photo.teamid, id:  @photo.id), class:	"btn btn-medium btn-warning",
+            data: { confirm: "You sure? All players will also be untagged!" }  %-->
+        <!--/h4>
   		<% end %>
     </div>
-  </div>
+  </div-->
 </div>

@@ -1,0 +1,52 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - New Photo") %>
+<p>
+<div class="row">
+	<div class="span8 offset1">
+		<h3>
+		<% if @team %>
+			<%= @team.team_name %>
+		<% elsif @athlete %>
+			<%= @athlete.full_name %>
+		<% elsif @gameschedule %>
+			<%= @gameschedule.game_name %>
+		<% end %>
+		&nbsp- Videos uploaded in last 24 hours:</h3>
+	</div>
+</div>
+<div id="videoclips">
+    <%= render @videoclips %>
+</div>
+<div class="clear">
+</div>
+<p>
+<div class="row">
+	<div class="span8 offset1">
+    <br/>
+    <h4>Upload Video Clips.</h4><p><p>
+      	Video clip should already be processed as h.264 in an MP4 container with AAC audio which is what iPhone, iPad and other mobile devices expect. This will also allow the video to be played in browsers. Although this sounds daunting it realy is not. You can use a tool like Handbrake 
+      	<%= link_to "http://handbrake.fr" %> to process the video. It comes with presets that match the iPhone. If you pick that preset, you should be ok.<p>
+      	We will check to make sure the video is the right format and can be played online and on mobile devices. You will know there is an error since the uploaded video will lack a poster and there will be a link that you can follow to see what was wrong. The poster will be taken from the first frame of the video and will be displayed before the video is played back<p>
+      	Video clips are also limited to <b>20 seconds</b>. Although this seems small, it is intended to provide enough time for a play, round, etc. capturing highlights of the action. Clips that are short also provide a better user experience since it avoids significant delays in buffering, etc. when your users are mobile and trying to watch the clip.
+	<h4>
+		<% if !@team.nil? %>
+			Uploaded video clips will be tagged for team <em><%= @team.team_name %></em>
+		<% elsif !@athlete.nil? %>
+			Uploaded video clips will be tagged for player <em><%= @athlete.name %></em>
+			<% if @athlete.team != "Unassigned" %>
+				and for team <em><%= @sport.teams.find(@athlete.team).team_name %></em>
+			<% end %>
+		<% end %>
+	</h4>
+    
+    <%= s3_uploader_form post: sport_videoclips_url, as: "videoclip[image_url]", key: "uploads/videoclips/#{@id}/#{@prefix}/${filename}", id:  "myS3Uploader" do %>
+      <%= file_field_tag :file, multiple: true %>
+    <% end %>
+    
+	<script id="template-upload" type="text/x-tmpl">
+		<div id="file-{%=o.unique_id%}" class="upload">
+		  {%=o.name%}
+		  <div class="progress"><div class="bar" style="width: 0%"></div></div>
+		</div>
+	</script>    
+  </div>
+</div>

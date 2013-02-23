@@ -5,6 +5,7 @@ gem 'rails', '3.2.11'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+gem 'thin'
 gem 'aws-sdk'
 gem 'mongoid', "~> 3.0.0"
 gem 'mongoid_search'
@@ -54,6 +55,7 @@ gem 'jquery-rails', '2.1.4'
 gem 'jquery-fileupload-rails'
 gem 's3_direct_upload'
 gem "mediaelement_rails"
+# gem 'videojs_rails'
 
 group :test do
   gem 'mongoid-rspec'
@@ -70,6 +72,7 @@ end
 gem 'resque', :require => "resque/server"
 gem 'rmagick'
 gem 'rabl'
+gem 'streamio-ffmpeg'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

@@ -16,7 +16,7 @@ Sportzserver::Application.routes.draw do
    
   resources :sports do
     resources :teams,   only: [:new, :create, :edit, :update, :destroy] do
-      resources :gameschedules
+      resources :gameschedules, only: [:new, :create, :edit, :update, :index, :destroy]
     end
     
     resources :newsfeeds 
@@ -41,7 +41,18 @@ Sportzserver::Application.routes.draw do
       end
 
       collection do
-        post  :untagathlete
+        post :untagathlete
+        get :updategameschedule
+      end
+    end
+    
+    resources :videoclips, only: [:edit, :create, :update, :destroy, :index, :show] do
+      member do
+        get :newteam, :newathlete, :newschedule, :untagteam
+      end
+
+      collection do
+        post :untagathlete
         get :updategameschedule
       end
     end

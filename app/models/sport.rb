@@ -14,6 +14,7 @@ class Sport
   has_many :athletes, dependent: :destroy
   has_many :coaches, dependent: :destroy
   has_many :photos
+  has_many :videoclips
   has_many :photo_errors
   has_many :photo_queues
   embeds_many :teams

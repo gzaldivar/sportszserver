@@ -13,4 +13,12 @@ module SportsHelper
     end
   end
   
+  def sports_list
+    [
+      ['Football', 'Football'],
+      ['Basketball', 'Basketball'],
+      ['Baseball', 'Baseball']
+    ]
+  end
+  
 end

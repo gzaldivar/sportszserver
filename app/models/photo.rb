@@ -22,7 +22,7 @@ class Photo
   field :owner, type: String
   field :players, type: Array
   
-  index(  { teamid: 1 }, { unique: false } )
+  index({ teamid: 1 }, { unique: false } )
   index( { schedule: 1 } , { unique: false } )
   index( { owner: 1 } , { unique: false } )
   

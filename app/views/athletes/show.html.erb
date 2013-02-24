@@ -55,8 +55,8 @@
     				<td><%= get_athlete_team(@sport, @athlete.team) %></td>
 				<% end %>
           <td>
-            <% if Photo.where(athletes: @athlete.id).any? %>
-              <%= link_to "Photos", photos_path(sport: @sport.id, athlete: @athlete.id), class: "btn btn-mini btn-primary" %>              
+            <% if Photo.where(players: @athlete.id.to_s).any? %>
+            	<%= link_to "Photos", sport_photos_path(@sport, athlete: { id: @athlete.id } ), class: "btn btn-mini btn-primary" %>              
             <% end %>
           </td>
     		</tr>

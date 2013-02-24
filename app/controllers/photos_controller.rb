@@ -25,8 +25,10 @@ class PhotosController < ApplicationController
       @team = @sport.teams.find(params[:team][:id].to_s)
     elsif !params[:athlete].nil? and !params[:athlete][:id].blank?
       pics = @sport.photos.where(:players.in => [params[:athlete][:id].to_s])
+      @athlete = @sport.athletes.find(params[:athlete][:id].to_s)
     elsif !params[:number].nil? && !params[:number][:id].blank?
       pics = @sport.photos.where(:players.in => [params[:number][:id].to_s])
+      @athlete = @sport.athletes.find(params[:number][:id].to_s)
     else
       pics = []
     end

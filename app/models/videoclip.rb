@@ -33,7 +33,7 @@ class Videoclip
   
   search_in :players, :displayname
   
-  belongs_to :sport
+  belongs_to :sport, index: true
   
   index( { teamid: 1 }, { unique: false } )
   index( { schedule: 1 } , { unique: false } )

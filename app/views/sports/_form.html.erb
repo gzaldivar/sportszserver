@@ -1,37 +1,39 @@
 <div class="row">
 	<div class="span10 offset1">
     <%= simple_form_for @sport,  html: { multipart: true } do |f| %>
-			<%= render 'shared/error_messages', object: f.object %>
-			<div class="row">
-				<div class="span2">
-					<%= f.input :name,	label:	"Sport Name" %>
-				</div>
-				<div class="span2 offset1">
-					<%= f.input :year,  hint: "Year should be 2012, 2013, etc." %>
-				</div>
-        <div class="span2 offset1">
-					<%= f.input	:season, collection: ["Fall","Winter","Spring","Summer"], required: false, 
-                               hint:	"Only enter season if you are creating a multi sport site. If this site is a single sport site, season will not be used" %>
-				</div>
-      </div><p>
-      <div class="row">
-        <div class="span8 offset 1">
-          <h4>Current teams:</h4><p>
-          <% if @sport.teams.count >= 1 %>
-            <%= render 'teams/team', sport: @sport, team: @sport.teams %>
-          <% else %>
-            None
-          <% end %><p>
-          <%= link_to "Add Team", new_sport_team_path(@sport), class: "btn btn-medium btn-primary" %>
-       </div>
-      </div>
-      <div class="row"> 
- 				<div class="span2">
-					<% if !@sport.sport_logo.blank? %>
-						<h4>Sport Logo image</h4>
-						<%= image_tag @sport.sport_logo.url(:thumb)%>
-          <% else %>
-            This is the site logo that will be used for this sport. You can enter one for this sport only. It will appear only on sport pages. The site logo will be used for all other pages.
+		<%= render 'shared/error_messages', object: f.object %>
+		<div class="row">
+			<div class="span2">
+				<%= f.input :name,	label:	"Sport Name" %>
+			</div>
+			<div class="span2 offset1">
+				<%= f.input :year,  hint: "Year should be 2012, 2013, etc." %>
+			</div>
+        	<div class="span2 offset1">
+				<%= f.input	:season, collection: ["Fall","Winter","Spring","Summer"], required: false, 
+                             hint:	"Only enter season if you are creating a multi sport site. If this site is a single sport site, season will not be used" %>
+			</div>
+      	</div><p>
+      	<div class="row">
+        	<div class="span8 offset 1">
+          		<h4>Current teams:</h4><p>
+          		<% if @sport.teams.count >= 1 %>
+            		<%= render 'teams/team', sport: @sport, team: @sport.teams %>
+          		<% else %>
+            		None
+          		<% end %><p>
+				<% if !@sport.created_at.nil?%>
+          			<%= link_to "Add Team", new_sport_team_path(@sport), class: "btn btn-medium btn-primary" %>
+				<% end %>
+       		</div>
+      	</div>
+      	<div class="row"> 
+ 			<div class="span2">
+				<% if !@sport.sport_logo.blank? %>
+					<h4>Sport Logo image</h4>
+					<%= image_tag @sport.sport_logo.url(:thumb)%>
+          		<% else %>
+            		This is the site logo that will be used for this sport. You can enter one for this sport only. It will appear only on sport pages. The site logo will be used for all other pages.
             <% if current_site.logo.url.blank? %>
               <%= image_tag "NotAvailable.jpg" %>
             <% else %>

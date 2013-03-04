@@ -19,15 +19,12 @@
 			      			<li class="disabled"><%= link_to "Coaching Staff", "#" %></li>
 			        		<li class="disabled"><%= link_to "Photos", "#" %></li>
 			        		<li class="disabled"><a href="#">Video Clips</a></li>
-			        		<% if current_site? and site_owner? %>
-			        			<li class="disabled"><%= link_to "Manage Players", "#" %></li>
-			        		<% end %>
 			        <% elsif @sport.teams.count == 0 %>
 			            <li><%= link_to "Schedule", "#" %></li>
 			      			<li><%= link_to "Rosters", "#" %></li>
 			      			<li><%= link_to "Coaching Staff", "#" %></li>
 			        		<li><%= link_to "Photos", "#"%></li>
-			        		<li><a href="#">Video Clips</a></li-->
+			        		<li><a href="#">Video Clips</a></li>
 			        <% else %>
 		      			<li id="fat-menu" class="dropdown">
 		      				<a href="#" class="dropdown-toggle" data-toggle="dropdown">

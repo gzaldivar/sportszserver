@@ -1,0 +1,83 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
+<p>
+<div class="row">
+	<div class="span10">
+		<%= render 'tabs', header: "defense" %>
+		<p>
+		<% if params[:games].nil? %>
+			<h4>Defensive stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
+			<p>
+			<table class="table table-bordered">
+				<em>
+				<thead>
+					<th>Tackles</th>
+					<th>Assists</th>
+					<th>Sacks</th>
+					<th>Passes Defended</th>
+					<th>Interceptions</th>
+					<th>Int Yards</th>
+					<th>Int Long</th>
+					<th>Int TD</th>
+					<th>Fumbles Recovered</th>
+				</thead>
+				</em>
+				<tbody>
+					<td><%= @defense.defense_tackles %></td>
+					<td><%= @defense.defense_assists %></td>
+					<td><%= @defense.defense_sacks %></td>
+					<td><%= @defense.defense_pass_defended %></td>
+					<td><%= @defense.defense_interceptions %></td>
+					<td><%= @defense.defense_int_yards %></td>
+					<td><%= @defense.defense_int_long %></td>
+					<td><%= @defense.defense_int_td %></td>
+					<td><%= @defense.defense_fumbles_recovered %></td>
+				</tbody>
+			</table>
+			<div class="span4 offset3">
+				<%= link_to "Add defense Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "defense"), class: "btn btn-mini btn-primary" %>
+				<% if @stats.count > 0 %>
+					<%= link_to "Game Stats", defense_sport_athlete_football_stats_path(@sport, @athlete, games: "games"), 
+						class: "btn btn-mini btn-primary" %>
+				<% end %>
+			</div>
+		<% else %>
+			<p>
+			<h4>List of defensive game statistics for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
+			<p>
+			<% @stats.each do |s| %>
+				<% if !s.football_defenses.nil? %>
+					<em><%= link_to s.gameschedule.game_name, [@sport, @athlete, s, s.football_defenses] %></em>
+					<table class="table table-bordered">
+						<em>
+						<thead>
+							<th>Tackles</th>
+							<th>Assists</th>
+							<th>Sacks</th>
+							<th>Passes Defended</th>
+							<th>Interceptions</th>
+							<th>Int Yards</th>
+							<th>Int Long</th>
+							<th>Int TD</th>
+							<th>Fumbles Recovered</th>
+						</thead>
+						</em>
+						<tbody>
+							<td><%= s.football_defenses.tackles %></td>
+							<td><%= s.football_defenses.assists %></td>
+							<td><%= s.football_defenses.sacks %></td>
+							<td><%= s.football_defenses.pass_defended %></td>
+							<td><%= s.football_defenses.interceptions %></td>
+							<td><%= s.football_defenses.int_yards %></td>
+							<td><%= s.football_defenses.int_long %></td>
+							<td><%= s.football_defenses.int_td %></td>
+							<td><%= s.football_defenses.fumbles_recovered %></td>
+						</tbody>
+					</table>
+				<% end %>
+			<% end %>	
+			<div class="span4 offset4">
+				<%= link_to "Defense Totals", defense_sport_athlete_football_stats_path(@sport, @athlete, id: "passing"), class: "btn btn-mini btn-primary" %>
+			</div>
+		<% end %>
+	</div>
+</div>

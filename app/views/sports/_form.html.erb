@@ -1,19 +1,32 @@
 <div class="row">
 	<div class="span10 offset1">
     <%= simple_form_for @sport,  html: { multipart: true } do |f| %>
-		<%= render 'shared/error_messages', object: f.object %>
-		<div class="row">
-			<div class="span2">
-				<%= f.input :name,	label:	"Sport Name" %>
-			</div>
-			<div class="span2 offset1">
-				<%= f.input :year,  hint: "Year should be 2012, 2013, etc." %>
-			</div>
-        	<div class="span2 offset1">
-				<%= f.input	:season, collection: ["Fall","Winter","Spring","Summer"], required: false, 
-                             hint:	"Only enter season if you are creating a multi sport site. If this site is a single sport site, season will not be used" %>
-			</div>
-      	</div><p>
+		  <%= render 'shared/error_messages', object: f.object %>
+      <div class="row">
+        <div class="span9">
+          <% if @sport.has_stats? %>
+            <h4><%= @sport.name %></h4>
+          <% elsif @sport.name %>
+            <%= f.input :name,  label:  "Sport Name", hint: "Enter sport name. Will not have a stat package but all other features will be available." %>
+          <% else %>
+              <%= label_tag "Sport Name: " %>
+              <%= select_tag :sportname, options_for_select(sports_list), include_blank: true %>
+              <!--%= f.input :sportname,  collection: sports_list, include_blank: true, label:  "Sport Name", hint: %-->
+              These sports have a stat package. If you want to provide stats you should select the sport here.
+              <%= f.input :name,  label:  "Sport Name", hint: "Enter sport name. Will not have a stat package but all other features will be available." %>
+          <% end %>
+        </div>
+      </div>
+      <p>
+      <div class="row">
+  			<div class="span2">
+  				<%= f.input :year,  hint: "Year should be 2012, 2013, etc." %>
+  			</div>
+        <div class="span2 offset1">
+  				<%= f.input	:season, collection: ["Fall","Winter","Spring","Summer"], required: false, 
+                               hint:	"Only enter season if you are creating a multi sport site. If this site is a single sport site, season will not be used" %>
+  			</div>
+      </div><p>
       	<div class="row">
         	<div class="span8 offset 1">
           		<h4>Current teams:</h4><p>
@@ -33,7 +46,7 @@
 					<h4>Sport Logo image</h4>
 					<%= image_tag @sport.sport_logo.url(:thumb)%>
           		<% else %>
-            		This is the site logo that will be used for this sport. You can enter one for this sport only. It will appear only on sport pages. The site logo will be used for all other pages.
+            		This is the site logo that will be used for this sport. You can enter one for this sport only. It will appear only on sport pages. The site logo will be used for all other pages. Remember that logos should be 640x960 pixels so that we can size them for mobile devices also.
             <% if current_site.logo.url.blank? %>
               <%= image_tag "NotAvailable.jpg" %>
             <% else %>
@@ -59,7 +72,7 @@
 						<h4>Sport banner image</h4>
 						<%= image_tag @sport.sport_banner.url(:medium) %>
           <% else %>
-            <h4>Using the site banner and not a team banner. You can change it below.</h4>
+            Using the site banner and not a team banner. You can change it below. Remember that banners's should be 1000x150 pixels. 
             <% if current_site.banner.url(:medium).blank? %>
               <%= image_tag "NotAvailable.jpg" %>
             <% else %>

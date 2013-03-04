@@ -9,12 +9,15 @@ class SportsController < ApplicationController
   end
   
   def create
-    @sport =  current_site.sports.build(params[:sport])      
+    @sport = current_site.sports.build(params[:sport])
+    if @sport.name.nil? and (!params[:sportname].nil? or !params[:sportname].blank?)
+      @sport.name = params[:sportname]
+      @sport.has_stats = true
+    end
     if @sport.save
       redirect_to @sport
     else
-      flash[:error] = "Error saving sport information"
-      redirect_to :back
+       redirect_to :back, error: "Error saving sport information"
     end
   end
   

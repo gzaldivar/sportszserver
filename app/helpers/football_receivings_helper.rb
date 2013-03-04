@@ -1,0 +1,2 @@
+module FootballReceivingsHelper
+end

@@ -1,0 +1,182 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
+<p>
+<div class="row">
+	<div class="span9 offset1">
+		<p>
+		<%= render 'tabs_game' %>
+		<% if !@specialteams.fgattempts.nil? or !@specialteams.xpattempts.nil? %>
+			<p>
+			<h4>Place kicking game statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for<br/>
+				<%= @stat.gameschedule.game_name %></h4>
+			<p>
+			<h5>Field Goal Statistics</h5>
+			<table class="table table-bordered">
+				<em>
+				<thead>
+					<th>FG Attempts</th>
+					<th>FG Made</th>
+					<th>FG Blocked</th>
+					<th>FG Long</th>
+				</thead>
+			</em>
+				<tbody>
+					<td><%= @specialteams.fgattempts %></td>
+					<td><%= @specialteams.fgmade %></td>
+					<td><%= @specialteams.fgblocked %></td>
+					<td><%= @specialteams.fglong %></td>
+				</tbody>
+			</table>
+			<p>
+			<h5>Extra Point Statistics</h5>
+			<table class="table table-bordered">
+				<em>			
+					<th>Extra Point Attempts</th>
+					<th>Extra Points Made</th>
+					<th>Missed</th>
+					<th>Blocked</th>
+				</thead>
+				</em>
+				<tbody>
+					<td><%= @specialteams.xpattempts %></td>
+					<td><%= @specialteams.xpmade %></td>
+					<td><%= @specialteams.xpmissed %></td>
+					<td><%= @specialteams.xpblocked %></td>
+				</tbody>
+			</table>
+			<div class="span2 offset3">
+				<%= link_to "Edit", editkicker_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat, @specialteams), 
+							class: "btn btn-mini btn-primary" %>
+				<%= link_to "Delete", sport_athlete_football_stat_football_specialteam_path(@sport, @athlete, @stat, @specialteams), 
+							method: :delete, class: "btn btn-mini btn-danger" %>
+			</div>
+		<% end %>
+		<br/><p>
+		<% if !@specialteams.punts.nil? %>
+			<p>
+			<h4>Punting game statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for<br/>
+				<%= @stat.gameschedule.game_name %></h4>
+			<p>
+			<h5>Punting Statistics</h5>
+			<table class="table table-bordered">
+				<em>
+				<thead>
+					<th>Punts</th>
+					<th>Punts Blocked</th>
+					<th>Punts Yards</th>
+					<th>Punts Long</th>
+				</thead>
+			</em>
+				<tbody>
+					<td><%= @specialteams.punts %></td>
+					<td><%= @specialteams.punts_blocked %></td>
+					<td><%= @specialteams.punts_yards %></td>
+					<td><%= @specialteams.punts_long %></td>
+				</tbody>
+			</table>
+			<p>
+			<div class="span2 offset3">
+				<%= link_to "Edit", editpunter_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat, @specialteams), 
+							class: "btn btn-mini btn-primary" %>
+				<%= link_to "Delete", sport_athlete_football_stat_football_specialteam_path(@sport, @athlete, @stat, @specialteams), method: :delete, 
+							class: "btn btn-mini btn-danger" %>
+			</div>
+		<% end %>
+		<br/><p>
+		<% if !@specialteams.koattempts.nil? %>
+			<p>
+			<h4>Kickoff statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for<br/>
+				<%= @stat.gameschedule.game_name %></h4>
+			<p>
+			<h5>Kickoff Statistics</h5>
+			<table class="table table-bordered">
+				<em>
+				<thead>
+					<th>Kickoff Attempts</th>
+					<th>Touchbacks</th>
+					<th>Return Yards</th>
+				</thead>
+			</em>
+				<tbody>
+					<td><%= @specialteams.koattempts %></td>
+					<td><%= @specialteams.kotouchbacks %></td>
+					<td><%= @specialteams.koreturned %></td>
+				</tbody>
+			</table>
+			<p>
+			<div class="span2 offset3">
+				<%= link_to "Edit", editkickoff_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat, @specialteams), 
+							class: "btn btn-mini btn-primary" %>
+				<%= link_to "Delete", sport_athlete_football_stat_football_specialteam_path(@sport, @athlete, @stat, @specialteams), method: :delete, 
+							class: "btn btn-mini btn-danger" %>
+			</div>
+		<% end %>
+		<br/><p>
+		<% if !@specialteams.punt_return.nil? %>
+			<p>
+			<h4>Punt Return statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for<br/>
+				<%= @stat.gameschedule.game_name %></h4>
+			<p>
+			<h5>Punt Return Statistics</h5>
+			<table class="table table-bordered">
+				<em>
+				<thead>
+					<th>Punt Returns</th>
+					<th>Return Yards</th>
+					<th>Return TD</th>
+					<th>Longest</th>
+				</thead>
+			</em>
+				<tbody>
+					<td><%= @specialteams.punt_return %></td>
+					<td><%= @specialteams.punt_returnyards %></td>
+					<td><%= @specialteams.punt_returntd %></td>
+					<td><%= @specialteams.punt_returnlong %></td>
+				</tbody>
+			</table>
+			<p>
+			<div class="span2 offset3">
+				<%= link_to "Edit", editpuntreturn_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat, @specialteams), 
+							class: "btn btn-mini btn-primary" %>
+				<%= link_to "Delete", sport_athlete_football_stat_football_specialteam_path(@sport, @athlete, @stat, @specialteams), method: :delete, 
+							class: "btn btn-mini btn-danger" %>
+			</div>
+		<% end %>
+		<br/><p>
+		<% if !@specialteams.koreturns.nil? %>
+			<p>
+			<h4>Kickoff Return statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for<br/>
+				<%= @stat.gameschedule.game_name %></h4>
+			<p>
+			<h5>Kickoff Return Statistics</h5>
+			<table class="table table-bordered">
+				<em>
+				<thead>
+					<th>Kickoff Returns</th>
+					<th>Kickoff Return Yards</th>
+					<th>Kickoff Return TD</th>
+					<th>Longest Return</th>
+				</thead>
+			</em>
+				<tbody>
+					<td><%= @specialteams.koreturns %></td>
+					<td><%= @specialteams.koyards %></td>
+					<td><%= @specialteams.kotd %></td>
+					<td><%= @specialteams.kolong %></td>
+				</tbody>
+			</table>
+			<p>
+			<div class="span2 offset3">
+				<%= link_to "Edit", editkoreturn_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat, @specialteams), 
+							class: "btn btn-mini btn-primary" %>
+				<%= link_to "Delete", sport_athlete_football_stat_football_specialteam_path(@sport, @athlete, @stat, @specialteams), method: :delete, 
+							class: "btn btn-mini btn-danger" %>
+			</div>
+		<% end %>
+		<br/><p>
+		<div class="row">
+			<div class="span1 offset3">
+				<%= link_to "Totals", specialteams_sport_athlete_football_stats_path(@sport, @athlete), class: "btn btn-mini btn-primary" %>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,22 @@
+<%= simple_form_for [@sport, @team, @gameschedule, @gamelog] do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+	<div class="row">
+		<div class="span6">
+			<% if @sport.name == "Football" %>
+				<%= f.input :period, collection: quarters, hint: "Enter quarter, half, inning, etc." %>
+				<%= f.input :score, collection: football_score, hint: "TD, FG, XP" %>
+			<% elsif @sport.name == "Basketball" %>
+				<%= f.input :period, collection: halfs, hint: "Enter quarter, half, inning, etc." %>
+			<% end %>
+			<p>
+			<%= f.input :time, hint: "Time on clock if there is one for logged event" %>
+			<p>
+			<%= f.input :logentry, required: true, label: "Game Log Entry", input_html: {size: 60, style: 'width: 750px'}, 
+						hint: "Ex. C. Zaldivar 25 yards to J. Cody TD" %>
+		</div>
+	</div>
+	<p>
+	<div class="span2 offset3">
+		<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+	</div>
+<% end %>

@@ -1,0 +1,10 @@
+<%= simple_form_for [@sport, @athlete, @stat, @specialteams] do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+	<%= f.input :koattempts, label: "Punt Attempts", required: true %>
+	<p>
+	<%= f.input :kotouchbacks, required: true, label: "Total Punt Yards" %>
+	<p>
+	<%= f.input :koreturned, required: true, label: "Longest" %>
+	<p>
+	<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+<% end %>

@@ -19,12 +19,59 @@
 				<div class="span4">
 					<%= f.input :location %>
 				</div>
-				<div class="span4">
+				<div class="span5">
 					<%= f.input	:event, hint:	"Senior day, Homecoming, etc.", required: false %>	
 				</div>
 			</div>
 			<p>
-			<div class="span2 offset3">
+			<h5>Game Score:</h5>
+			<p>
+			<div class="row">
+				<div class="span1">
+					<%= f.input :homeq1, label: "Q1 Score", input_html: { style: "width: 50px" } %>
+				</div>
+				<div class="span1 offset1">
+					<%= f.input :homeq2, label: "Q2 Score", input_html: { style: "width: 50px" } %>
+				</div>
+				<div class="span1 offset1">
+					<%= f.input :homeq3, label: "Q3 Score", input_html: { style: "width: 50px" }%>
+				</div>
+				<div class="span1 offset1">
+					<%= f.input :homeq4, label: "Q4 Score", input_html: { style: "width: 50px" } %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="span4">
+					<h4><%= @team.team_name %>: <%= @gameschedule.homeq1 + @gameschedule.homeq2 + @gameschedule.homeq3 + @gameschedule.homeq4 %></h4>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="span1">
+					<%= f.input :opponentq1, label: "Q1 Score", input_html: { style: "width: 50px" } %>
+				</div>
+				<div class="span1 offset1">
+					<%= f.input :opponentq2, label: "Q2 Score", input_html: { style: "width: 50px" } %>
+				</div>
+				<div class="span1 offset1">
+					<%= f.input :opponentq3, label: "Q3 Score", input_html: { style: "width: 50px" }%>
+				</div>
+				<div class="span1 offset1">
+					<%= f.input :opponentq4, label: "Q4 Score", input_html: { style: "width: 50px" } %>
+				</div>
+			</div>
+			<p>
+			<% if !@gameschedule.opponent.nil? %>
+				<div class="row">
+					<div class="span4">
+						<h4><%= @gameschedule.opponent %>: <%= @gameschedule.opponentq1 + @gameschedule.opponentq2 + @gameschedule.opponentq3 + 
+								@gameschedule.opponentq4 %></h4>
+					</div>
+				</div>
+			<% end %>
+			<p>
+			<div class="span1 offset3">
 				<%= f.button :submit, "Submit", class: "btn btn-medium btn-primary" %>
 			</div>
 		<% end %>	

@@ -1,0 +1,37 @@
+<ul class="nav nav-tabs">
+	<% if header == "passing" %>
+  		<li class="active">
+    		<%= link_to "Passing", passing_sport_athlete_football_stats_path(@sport, @athlete) %>
+  		</li>
+  	<% else %>
+  		<li><%= link_to "Passing", passing_sport_athlete_football_stats_path(@sport, @athlete) %></li>
+  	<% end %>
+  	<% if header == "rushing" %>
+  		<li class="active">
+  			<%= link_to "Rushing", rushing_sport_athlete_football_stats_path(@sport, @athlete) %>
+  		</li>
+  	<% else %>
+  		<li><%= link_to "Rushing", rushing_sport_athlete_football_stats_path(@sport, @athlete) %></li>
+  	<% end %>
+  	<% if header == "receiving" %>
+  		<li class="active">
+  			<%= link_to "Receiving", receiving_sport_athlete_football_stats_path(@sport, @athlete) %>
+  		</li>
+  	<% else %>
+  		<li><%= link_to "Receiving", receiving_sport_athlete_football_stats_path(@sport, @athlete) %></li>
+  	<% end %>
+  	<% if header == "defense" %>
+  		<li class="active">
+  			<%= link_to "Defense", defense_sport_athlete_football_stats_path(@sport, @athlete) %>
+  		</li>
+  	<% else %>
+  		<li><%= link_to "Defense", defense_sport_athlete_football_stats_path(@sport, @athlete) %></li>
+  	<% end %>
+    <% if header == "specialteams" %>
+      <li class="active">
+        <%= link_to "Special Teams", specialteams_sport_athlete_football_stats_path(@sport, @athlete) %>
+      </li>
+    <% else %>
+      <li><%= link_to "Special Teams", specialteams_sport_athlete_football_stats_path(@sport, @athlete) %></li>
+    <% end %>
+</ul>

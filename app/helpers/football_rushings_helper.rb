@@ -1,0 +1,2 @@
+module FootballRushingsHelper
+end

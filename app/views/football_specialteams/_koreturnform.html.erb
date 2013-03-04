@@ -1,0 +1,23 @@
+<%= simple_form_for [@sport, @athlete, @stat, @specialteams] do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+	<div class="row">
+		<div class="span2">
+			<%= f.input :koreturns, required: true, label: "Kickoff Returns" %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :kotd, required: true, label: "Kickoff Return for TD" %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span2">
+			<%= f.input :kolong, required: true, label: "Kickoff Longest Return" %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :koyards, required: true, label: "Kickoff Return Yards" %>
+		</div>
+	</div>
+	<p>
+	<div class="span2 offset2">
+		<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+	</div>
+<% end %>

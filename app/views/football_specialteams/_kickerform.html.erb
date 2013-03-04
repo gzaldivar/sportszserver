@@ -1,0 +1,39 @@
+<%= simple_form_for [@sport, @athlete, @stat, @specialteams] do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+	<div class="row">
+		<div class="span2">
+			<%= f.input :fgattempts, label: "Field Goal Attempts", required: true %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :fgmade, required: true, label: "Field Goals Made" %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span2">
+			<%= f.input :fgblocked, required: true, label: "Blocked" %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :fglong, required: true, label: "Longest" %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span2 ">
+			<%= f.input :xpattempts, required: true, label: "Extra Point Attempts" %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :xpmade, required: true, label: "Extra Points Made" %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span2 ">
+			<%= f.input :xpmissed, required: true, label: "Extra Point Missed" %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :xpblocked, required: true, label: "Extra Points Blocked" %>
+		</div>
+	</div>
+	<p>
+	<div class="span2 offset2">
+		<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+	</div>
+<% end %>

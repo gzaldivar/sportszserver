@@ -11,7 +11,22 @@ class Gameschedule
   field :live, type: Boolean
   field :live_url, type: String
 
+  field :homeq1, type: Integer, default: 0
+  field :homeq2, type: Integer, default: 0
+  field :homeq3, type: Integer, default: 0
+  field :homeq4, type: Integer, default: 0
+  field :homeh1, type: Integer, default: 0
+  field :homeh2, type: Integer, default: 0
+  field :opponentq1, type: Integer, default: 0
+  field :opponentq2, type: Integer, default: 0
+  field :opponentq3, type: Integer, default: 0
+  field :opponentq4, type: Integer, default: 0
+  field :opponenth1, type: Integer, default: 0
+  field :opponenth2, type: Integer, default: 0
+
   belongs_to :team, index: true
+  has_many :football_stats
+  embeds_many :gamelogs
 
   validates_presence_of :starttime
   validates_presence_of :gamedate
@@ -20,7 +35,7 @@ class Gameschedule
   validates :homeaway, presence: true, format: { with: /Home|Away|home|away/ }
   
   def game_name
-    gamedate.strftime("%m/%d/%Y") + " " + opponent
+    gamedate.strftime("%m/%d/%Y") + " vs " + opponent
   end
 
 end

@@ -1,0 +1,91 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Schedule Details") %>
+<p>
+<div class="row">
+  	<div class="span9 offset1">
+  		<table class="table table-bordered">
+	  		<% if @sport.name == "Football" %>
+	  			<h4>
+	           		Date: <%= @gameschedule.gamedate.strftime("%m/%d/%Y") %>
+	           		<p>
+	         		<%= @team.title + " " + @team.mascot %>
+	         		vs.
+	          		<%= @gameschedule.opponent %> at 
+	          		<em><%= @gameschedule.location %></em>
+	          		<p>
+	          		Game time: <%= @gameschedule.starttime.strftime("%I:%M%p") %>
+	          		<%= @gameschedule.event %>
+          		</h4>
+          		<p>
+  				Game Summary
+	  			<thead>
+	  				<th>Team</th>
+	  				<th>Q1</th>
+	  				<th>Q2</th>
+	  				<th>Q3</th>
+	  				<th>Q4</th>
+	  				<th>Final</th>
+	  			</thead>
+	  			<tbody>
+	  				<tr>
+		  				<td><%= @team.team_name %></td>
+		  				<td><%= @gameschedule.homeq1 %></td>
+		  				<td><%= @gameschedule.homeq2 %></td>
+		  				<td><%= @gameschedule.homeq3 %></td>
+		  				<td><%= @gameschedule.homeq4 %></td>
+		  				<td><%= @gameschedule.homeq1 + @gameschedule.homeq2 + @gameschedule.homeq3 + @gameschedule.homeq4 %></td>
+		  			</tr>
+		  			<tr>
+		  				<td><%= @gameschedule.opponent %></td>
+		  				<td><%= @gameschedule.opponentq1 %></td>
+		  				<td><%= @gameschedule.opponentq2 %></td>
+		  				<td><%= @gameschedule.opponentq3 %></td>
+		  				<td><%= @gameschedule.opponentq4 %></td>
+		  				<td><%= @gameschedule.opponentq1 + @gameschedule.opponentq2 + @gameschedule.opponentq3 + @gameschedule.opponentq4 %></td>
+		  			</tr>
+	  			</tbody>
+	  		<% elsif @sport.name == "Basketball" %>
+	  			<thead>
+	  				<th>First Half</th>
+	  				<th>Second Half</th>
+	  			</thead>
+	  			<tbody>
+	  				<td><%= @gameschedule.h1 %></td>
+	  				<td><%= @gameschedule.h2 %></td>
+	  			</tbody>
+	  		<% else %>
+	  		<% end %>
+	  	</table>
+	  	<% if site_owner? %>
+	  		<div class="center">
+	  			<%= link_to "Edit", edit_sport_team_gameschedule_path(@sport, @team, @gameschedule), 
+	  					class: "btn btn-medium btn-warning" %>
+	  			<%= link_to "Delete", [@sport, @team, @gameschedule],  method:	:delete, class: "btn btn-medium btn-danger",
+	  			 		data: { confirm: "You sure?" } %>
+				<%= link_to "Add", new_sport_team_gameschedule_path(@sport, @team), class: "btn btn-primary" %>	
+			</div>
+		<% end %>	  	
+	  	<p>
+	  	<h4><em>Game Log</em></h4>
+	  	<p>
+		<% @gamelogs.each do |g| %>
+			<div class="row">
+				<div class="span8">
+				 	<%= g.period %>
+				 	<%= g.time %>
+				 	<%= g.logentry %>
+				 	<%= g.score %>
+				 	<% if site_owner? %>
+				 		<%= link_to "Delete", [@sport, @team, @gameschedule, g], method: :delete,
+				 					class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
+				 	<% end %>
+				 </div>
+			</div>
+		<% end %>
+		<% if site_owner? %>
+		  	<h6>Enter Optional Game log entry. Entries will be ordered first to last by time.</h6><br/>
+		  		<em><h5>Keep in mind that game log scoring is not automatically computed for period scoring. This is due to the fact
+		  			that game logs are optional.</h5></em></h6>
+	  		<%= render "gamelogs/gamelog_form" %>
+		<% end %>
+	</div>
+</div>

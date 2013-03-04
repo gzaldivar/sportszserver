@@ -11,6 +11,10 @@ class AthletesController < ApplicationController
   def create
     athlete = @sport.athletes.build(params[:athlete]) 
     update_team(athlete)
+    if @sport.name == "Football"
+      update_postions(athlete)
+    end
+    update_height(athlete)
     if athlete.save
       respond_to do |format|
         format.html { redirect_to [@sport, athlete], notice: 'Athlete created!'}
@@ -33,6 +37,10 @@ class AthletesController < ApplicationController
   
   def update
     update_team(@athlete)
+    if @sport.name == "Football"
+      update_postions(@athlete)
+    end
+    update_height(@athlete)
     if @athlete.update_attributes(params[:athlete])
       respond_to do |format|
         format.html { redirect_to [@sport, @athlete], notice: "Update successful" }
@@ -119,5 +127,26 @@ class AthletesController < ApplicationController
         end
       end
 	  end
+
+    def update_postions(athlete)
+      if !params[:offpos].nil? and !params[:offpos].blank?
+        athlete.position = params[:offpos]
+      end
+      if !params[:defpos].nil? and !params[:defpos].blank?
+        athlete.position = athlete.position + "/" + params[:defpos]
+      end
+      if !params[:special_teamspos].nil? and !params[:special_teamspos].blank?
+        athlete.position = athlete.position + "/" + params[:special_teamspos]
+      end
+    end
+
+    def update_height(athlete)
+      if !params[:feet].nil?
+        athlete.height = params[:feet]
+      end
+      if !params[:inches].nil?
+        athlete.height = athlete.height + "-" + params[:inches]
+      end
+    end
     
 end

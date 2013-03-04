@@ -1,0 +1,44 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
+<p>
+<div class="row">
+	<div class="span9 offset1">
+		<p>
+		<%= render 'tabs_game' %>
+		<p>
+		<h4>Passing game statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for <%= @stat.gameschedule.game_name %></h4>
+		<p>
+		<table class="table table-bordered">
+			<em>
+			<thead>
+				<th>Passing Attempts</th>
+				<th>Passing Completions</th>
+				<th>Completion Percentage</th>
+				<th>Passing Yards</th>
+			</thead>
+			</em>
+			<tbody>
+				<td><%= @fbpassing.attempts %></td>
+				<td><%= @fbpassing.completions %></td>
+				<td><%= @fbpassing.comp_percentage %></td>
+				<td><%= @fbpassing.yards %></td>
+			</tbody>
+		</table>
+		<table class="table table-bordered">
+			<thead>
+				<th>Passing TD</th>
+				<th>Interceptions</th>
+				<th>Sacks</th>
+				<th>Yards Lost</th>
+			</thead>
+			<tbody>
+				<td><%= @fbpassing.td %></td>
+				<td><%= @fbpassing.interceptions %></td>
+				<td><%= @fbpassing.sacks %></td>
+				<td><%= @fbpassing.yards_lost %></td>
+			</tbody>
+		</table>
+		<div class="span2 offset4">
+			<%= link_to "Edit", edit_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @fbpassing), class: "btn btn-medium btn-primary" %>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,18 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
+<p>
+<div class="row">
+	<div class="span8 offset4">
+		<h4>Select Game to enter stats:</h4>
+		<p>
+		<%= simple_form_for [@sport, @athlete, @stat] do |f| %>
+			<%= f.input :stattype, as: :hidden, input_html: { value: @stattype } %>
+			<%= select_tag :game, options_for_select(@games.collect{ |t| [t.game_name, t.id] })%>
+			<p>
+			<% if @stattype == "specialteams" %>
+				<%= select_tag :specialteams, options_for_select(special_teams_list) %>
+			<% end %>
+			<p>
+			<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+		<% end %>
+	</div>
+</div>

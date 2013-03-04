@@ -4,6 +4,8 @@ class Sport
   include Mongoid::Paperclip
 
   field :name, type: String
+  field :sportname, type: String
+  field :has_stats, type: Boolean, default: false
   field :year, type: String
   field :season, type: String
   field :sex, type: String

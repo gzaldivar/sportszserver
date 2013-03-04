@@ -33,12 +33,7 @@ class Athlete
 
     belongs_to :sport, index: true
     has_many :photos
-    
-    # Stats packages - Vary depending on the sport the athlete is assigned to
-    
-    has_many :football_passings, dependent: :destroy
-    has_many :football_receivings, dependent: :destroy
-    has_many :football_rushings, dependent: :destroy
+    has_many :football_stats    
     
     validates :number, presence: true, numericality: { greater_than: 0 }
     validates :lastname, presence: true, format: { with: /^[a-zA-Z\d\s]*$/ }

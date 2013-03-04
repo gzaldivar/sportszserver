@@ -1,0 +1,267 @@
+1361736059
+Application	/Users/dirctdt/Development/rails/sportzserver/config/application.rb	  class Application 
+ApplicationController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/application_controller.rb	class ApplicationController 
+ApplicationHelper	/Users/dirctdt/Development/rails/sportzserver/app/helpers/application_helper.rb	module ApplicationHelper
+Athlete	/Users/dirctdt/Development/rails/sportzserver/app/models/athlete.rb	class Athlete
+AthletesController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb	class AthletesController 
+AthletesHelper	/Users/dirctdt/Development/rails/sportzserver/app/helpers/athletes_helper.rb	module AthletesHelper
+Coach	/Users/dirctdt/Development/rails/sportzserver/app/models/coach.rb	class Coach
+CoachesController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/coaches_controller.rb	class CoachesController 
+CoachesHelper	/Users/dirctdt/Development/rails/sportzserver/app/helpers/coaches_helper.rb	module CoachesHelper
+Contact	/Users/dirctdt/Development/rails/sportzserver/app/models/contact.rb	class Contact
+ContactsController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/contacts_controller.rb	class ContactsController 
+ContactsHelper	/Users/dirctdt/Development/rails/sportzserver/app/helpers/contacts_helper.rb	module ContactsHelper
+FbpassingTotal	/Users/dirctdt/Development/rails/sportzserver/app/models/fbpassing_total.rb	class FbpassingTotal
+FootballDefense	/Users/dirctdt/Development/rails/sportzserver/app/models/football_defense.rb	class FootballDefense
+FootballPassing	/Users/dirctdt/Development/rails/sportzserver/app/models/football_passing.rb	class FootballPassing
+FootballReceiving	/Users/dirctdt/Development/rails/sportzserver/app/models/football_receiving.rb	class FootballReceiving
+FootballRushing	/Users/dirctdt/Development/rails/sportzserver/app/models/football_rushing.rb	class FootballRushing
+FootballSpecialTeams	/Users/dirctdt/Development/rails/sportzserver/app/models/football_special_teams.rb	class FootballSpecialTeams
+GET 'show'	/Users/dirctdt/Development/rails/sportzserver/spec/controllers/users_controller_spec.rb	describe "GET 'show'" do
+Gameschedule	/Users/dirctdt/Development/rails/sportzserver/app/models/gameschedule.rb	class Gameschedule
+GameschedulesController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/gameschedules_controller.rb	class GameschedulesController 
+GameschedulesHelper	/Users/dirctdt/Development/rails/sportzserver/app/helpers/gameschedules_helper.rb	module GameschedulesHelper
+Newsfeed	/Users/dirctdt/Development/rails/sportzserver/app/models/newsfeed.rb	class Newsfeed
+NewsfeedsController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/newsfeeds_controller.rb	class NewsfeedsController 
+NewsfeedsHelper	/Users/dirctdt/Development/rails/sportzserver/app/helpers/newsfeeds_helper.rb	module NewsfeedsHelper
+Photo	/Users/dirctdt/Development/rails/sportzserver/app/models/photo.rb	class Photo
+PhotoError	/Users/dirctdt/Development/rails/sportzserver/app/models/photo_error.rb	class PhotoError
+PhotoProcessor	/Users/dirctdt/Development/rails/sportzserver/app/workers/photo_processor.rb	class PhotoProcessor
+PhotoQueue	/Users/dirctdt/Development/rails/sportzserver/app/models/photo_queue.rb	class PhotoQueue
+PhotosController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	class PhotosController 
+PhotosHelper	/Users/dirctdt/Development/rails/sportzserver/app/helpers/photos_helper.rb	module PhotosHelper
+RegistrationsController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/users/registrations_controller.rb	class Users::RegistrationsController 
+Site	/Users/dirctdt/Development/rails/sportzserver/app/models/site.rb	class Site
+SitesController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	class SitesController 
+SitesHelper	/Users/dirctdt/Development/rails/sportzserver/app/helpers/sites_helper.rb	module SitesHelper
+Spinner	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function Spinner(o)
+Sport	/Users/dirctdt/Development/rails/sportzserver/app/models/sport.rb	class Sport
+SportsController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sports_controller.rb	class SportsController 
+SportsHelper	/Users/dirctdt/Development/rails/sportzserver/app/helpers/sports_helper.rb	module SportsHelper
+Sportzserver	/Users/dirctdt/Development/rails/sportzserver/config/application.rb	module Sportzserver
+Team	/Users/dirctdt/Development/rails/sportzserver/app/models/team.rb	class Team
+TeamsController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/teams_controller.rb	class TeamsController 
+TeamsHelper	/Users/dirctdt/Development/rails/sportzserver/app/helpers/teams_helper.rb	module TeamsHelper
+TokensController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/api/V1/tokens_controller.rb	class Api::V1::TokensController 
+User	/Users/dirctdt/Development/rails/sportzserver/app/models/user.rb	class User
+UsersController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/users_controller.rb	class UsersController 
+UsersHelper	/Users/dirctdt/Development/rails/sportzserver/app/helpers/users_helper.rb	module UsersHelper
+VALID_EMAIL_REGEX	/Users/dirctdt/Development/rails/sportzserver/app/models/contact.rb	  VALID_EMAIL_REGEX =
+Videoclip	/Users/dirctdt/Development/rails/sportzserver/app/models/videoclip.rb	class Videoclip
+VideoclipsController	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	class VideoclipsController 
+VideoclipsHelper	/Users/dirctdt/Development/rails/sportzserver/app/helpers/videoclips_helper.rb	module VideoclipsHelper
+about	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def about
+addAnimation	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function addAnimation(alpha, trail, i, lines)
+admin_sites?	/Users/dirctdt/Development/rails/sportzserver/app/controllers/users_controller.rb		  def admin_sites? 
+after_sign_in_path_for	/Users/dirctdt/Development/rails/sportzserver/app/controllers/application_controller.rb	    def after_sign_in_path_for(resource)
+after_sign_out_path_for	/Users/dirctdt/Development/rails/sportzserver/app/controllers/application_controller.rb	    def after_sign_out_path_for(resource)
+allnews	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def allnews
+anim	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function anim()
+clear_site	/Users/dirctdt/Development/rails/sportzserver/app/helpers/sites_helper.rb	  def clear_site
+contact	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def contact
+copy	/Users/dirctdt/Development/rails/sportzserver/app/controllers/coaches_controller.rb		def copy
+correct_athlete	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb	    def correct_athlete
+correct_coach	/Users/dirctdt/Development/rails/sportzserver/app/controllers/coaches_controller.rb	    def correct_coach
+correct_contact	/Users/dirctdt/Development/rails/sportzserver/app/controllers/contacts_controller.rb	    def correct_contact
+correct_feeditem	/Users/dirctdt/Development/rails/sportzserver/app/controllers/newsfeeds_controller.rb	    def correct_feeditem
+correct_photo	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	    def correct_photo
+correct_site	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	    def correct_site
+correct_sport	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sports_controller.rb	    def correct_sport
+correct_video	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  	def correct_video
+create	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  def create
+create	/Users/dirctdt/Development/rails/sportzserver/app/controllers/users/registrations_controller.rb	  def create
+create	/Users/dirctdt/Development/rails/sportzserver/app/controllers/teams_controller.rb		def create
+create	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sports_controller.rb	  def create
+create	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def create
+create	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def create 
+create	/Users/dirctdt/Development/rails/sportzserver/app/controllers/newsfeeds_controller.rb	  def create
+create	/Users/dirctdt/Development/rails/sportzserver/app/controllers/gameschedules_controller.rb	  def create
+create	/Users/dirctdt/Development/rails/sportzserver/app/controllers/contacts_controller.rb	  def create
+create	/Users/dirctdt/Development/rails/sportzserver/app/controllers/coaches_controller.rb		def create
+create	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb	  def create
+create	/Users/dirctdt/Development/rails/sportzserver/app/controllers/api/V1/tokens_controller.rb	  def create
+createEl	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function createEl(tag, prop)
+css	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function css(el, prop)
+current_site	/Users/dirctdt/Development/rails/sportzserver/app/helpers/sites_helper.rb	  def current_site
+current_site=	/Users/dirctdt/Development/rails/sportzserver/app/helpers/sites_helper.rb	  def current_site=(site)
+current_site?	/Users/dirctdt/Development/rails/sportzserver/app/helpers/sites_helper.rb	  def current_site?
+delete_athlete_photo	/Users/dirctdt/Development/rails/sportzserver/app/helpers/photos_helper.rb	  def delete_athlete_photo(athlete_id)
+delete_contacts	/Users/dirctdt/Development/rails/sportzserver/app/helpers/contacts_helper.rb		def delete_contacts(siteid)
+deleteclips	/Users/dirctdt/Development/rails/sportzserver/app/models/videoclip.rb	  def deleteclips
+deletephoto	/Users/dirctdt/Development/rails/sportzserver/app/models/photo.rb	  def deletephoto
+deletesport	/Users/dirctdt/Development/rails/sportzserver/app/helpers/sports_helper.rb	  def deletesport(sport)
+destroy	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  def destroy
+destroy	/Users/dirctdt/Development/rails/sportzserver/app/controllers/teams_controller.rb		def destroy
+destroy	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sports_controller.rb	  def destroy
+destroy	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def destroy
+destroy	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def destroy
+destroy	/Users/dirctdt/Development/rails/sportzserver/app/controllers/newsfeeds_controller.rb	  def destroy
+destroy	/Users/dirctdt/Development/rails/sportzserver/app/controllers/gameschedules_controller.rb	  def destroy
+destroy	/Users/dirctdt/Development/rails/sportzserver/app/controllers/contacts_controller.rb	  def destroy
+destroy	/Users/dirctdt/Development/rails/sportzserver/app/controllers/coaches_controller.rb		def destroy
+destroy	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb	  def destroy
+destroy	/Users/dirctdt/Development/rails/sportzserver/app/controllers/api/V1/tokens_controller.rb	  def destroy
+edit	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  def edit
+edit	/Users/dirctdt/Development/rails/sportzserver/app/controllers/users_controller.rb		def edit
+edit	/Users/dirctdt/Development/rails/sportzserver/app/controllers/teams_controller.rb		def edit
+edit	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sports_controller.rb	  def edit
+edit	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def edit
+edit	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def edit
+edit	/Users/dirctdt/Development/rails/sportzserver/app/controllers/newsfeeds_controller.rb	  def edit
+edit	/Users/dirctdt/Development/rails/sportzserver/app/controllers/gameschedules_controller.rb	  def edit
+edit	/Users/dirctdt/Development/rails/sportzserver/app/controllers/contacts_controller.rb	  def edit
+edit	/Users/dirctdt/Development/rails/sportzserver/app/controllers/coaches_controller.rb		def edit
+edit	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb	  def edit
+feed	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sports_controller.rb	  def feed
+female	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def female
+fill	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function fill(color, shadow)
+follow	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb	  def follow
+full_name	/Users/dirctdt/Development/rails/sportzserver/app/models/coach.rb	    def full_name
+full_name	/Users/dirctdt/Development/rails/sportzserver/app/models/athlete.rb	    def full_name
+full_title	/Users/dirctdt/Development/rails/sportzserver/app/helpers/application_helper.rb		def full_title(page_title)
+game_name	/Users/dirctdt/Development/rails/sportzserver/app/models/gameschedule.rb	  def game_name
+get_athlete_team	/Users/dirctdt/Development/rails/sportzserver/app/helpers/athletes_helper.rb	  def get_athlete_team(sport, team)
+get_coaches	/Users/dirctdt/Development/rails/sportzserver/app/helpers/coaches_helper.rb	  def get_coaches(sport)
+get_site	/Users/dirctdt/Development/rails/sportzserver/app/controllers/contacts_controller.rb	    def get_site
+get_site_news	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	    def get_site_news(number)
+get_sport	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  	def get_sport
+get_sport	/Users/dirctdt/Development/rails/sportzserver/app/controllers/teams_controller.rb			def get_sport
+get_sport	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	    def get_sport
+get_sport	/Users/dirctdt/Development/rails/sportzserver/app/controllers/newsfeeds_controller.rb	    def get_sport
+get_sport	/Users/dirctdt/Development/rails/sportzserver/app/controllers/gameschedules_controller.rb	    def get_sport
+get_sport	/Users/dirctdt/Development/rails/sportzserver/app/controllers/coaches_controller.rb	    def get_sport
+get_sport	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb			def get_sport
+get_team_coaches	/Users/dirctdt/Development/rails/sportzserver/app/helpers/coaches_helper.rb	  def get_team_coaches(sport, team)
+grp	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function grp()
+help	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def help
+home	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def home
+index	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  def index
+index	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sports_controller.rb	  def index
+index	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def index
+index	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def index
+index	/Users/dirctdt/Development/rails/sportzserver/app/controllers/newsfeeds_controller.rb	  def index
+index	/Users/dirctdt/Development/rails/sportzserver/app/controllers/gameschedules_controller.rb	  def index
+index	/Users/dirctdt/Development/rails/sportzserver/app/controllers/contacts_controller.rb	  def index
+index	/Users/dirctdt/Development/rails/sportzserver/app/controllers/coaches_controller.rb	  def index
+index	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb	  def index
+info	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def info
+ins	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function ins(parent /* child1, child2, ...*/)
+male	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def male
+merge	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function merge(obj)
+mobileinfo	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def mobileinfo
+name	/Users/dirctdt/Development/rails/sportzserver/app/models/athlete.rb	    def name
+new	/Users/dirctdt/Development/rails/sportzserver/app/controllers/teams_controller.rb		def new
+new	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sports_controller.rb	  def new
+new	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def new
+new	/Users/dirctdt/Development/rails/sportzserver/app/controllers/newsfeeds_controller.rb	  def new
+new	/Users/dirctdt/Development/rails/sportzserver/app/controllers/gameschedules_controller.rb	  def new
+new	/Users/dirctdt/Development/rails/sportzserver/app/controllers/contacts_controller.rb	  def new
+new	/Users/dirctdt/Development/rails/sportzserver/app/controllers/coaches_controller.rb	  def new
+new	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb	  def new 
+newathlete	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  def newathlete
+newathlete	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def newathlete
+newschedule	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  def newschedule
+newschedule	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def newschedule
+newteam	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  def newteam
+newteam	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def newteam
+password encryption	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	describe "password encryption" do
+password validations	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	describe "password validations" do
+passwords	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	describe "passwords" do
+perform	/Users/dirctdt/Development/rails/sportzserver/app/workers/photo_processor.rb	  def self.perform(photo_id)
+photodir	/Users/dirctdt/Development/rails/sportzserver/app/models/photo.rb	  def photodir
+policy_data	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	    def policy_data
+pos	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function pos(el)
+returns http success	/Users/dirctdt/Development/rails/sportzserver/spec/controllers/users_controller_spec.rb	it "returns http success" do
+s3_upload_policy_document	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	    def s3_upload_policy_document
+s3_upload_signature	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	    def s3_upload_signature
+seg	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function seg(i, dx, filter)
+sex should be	/Users/dirctdt/Development/rails/sportzserver/spec/models/sport_spec.rb	it "sex should be" do
+should accept valid email addresses	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	it "should accept valid email addresses" do
+should accept valid email addresses	/Users/dirctdt/Development/rails/sportzserver/spec/models/contact_spec.rb	it "should accept valid email addresses" do
+should add a team to the sport	/Users/dirctdt/Development/rails/sportzserver/spec/models/sport_spec.rb	it "should add a team to the sport" do
+should create a new instance given a valid attribute	/Users/dirctdt/Development/rails/sportzserver/spec/models/videoclip_spec.rb	it "should create a new instance given a valid attribute" do
+should create a new instance given a valid attribute	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	it "should create a new instance given a valid attribute" do
+should create a new instance given a valid attribute	/Users/dirctdt/Development/rails/sportzserver/spec/models/team_spec.rb	it "should create a new instance given a valid attribute" do
+should create a new instance given a valid attribute	/Users/dirctdt/Development/rails/sportzserver/spec/models/sport_spec.rb	it "should create a new instance given a valid attribute" do
+should create a new instance given a valid attribute	/Users/dirctdt/Development/rails/sportzserver/spec/models/contact_spec.rb	it "should create a new instance given a valid attribute" do
+should create a new passing total	/Users/dirctdt/Development/rails/sportzserver/spec/models/fbpassing_total_spec.rb	it "should create a new passing total" do
+should create a passing record	/Users/dirctdt/Development/rails/sportzserver/spec/models/football_receiving_spec.rb	it "should create a passing record" do
+should create a passing record	/Users/dirctdt/Development/rails/sportzserver/spec/models/football_passing_spec.rb	it "should create a passing record" do
+should create a schedule	/Users/dirctdt/Development/rails/sportzserver/spec/models/gameschedule_spec.rb	it "should create a schedule" do
+should find all team game schedules	/Users/dirctdt/Development/rails/sportzserver/spec/models/gameschedule_spec.rb	it "should find all team game schedules" do
+should have a filename	/Users/dirctdt/Development/rails/sportzserver/spec/models/videoclip_spec.rb	it "should have a filename" do
+should have a mascot	/Users/dirctdt/Development/rails/sportzserver/spec/models/team_spec.rb	it "should have a mascot" do
+should have a password attribute	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	it "should have a password attribute" do
+should have a password confirmation attribute	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	it "should have a password confirmation attribute" do
+should have a title	/Users/dirctdt/Development/rails/sportzserver/spec/models/team_spec.rb	it "should have a title" do
+should have an encrypted password attribute	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	it "should have an encrypted password attribute" do
+should have completions	/Users/dirctdt/Development/rails/sportzserver/spec/models/football_passing_spec.rb	it "should have completions" do
+should have long	/Users/dirctdt/Development/rails/sportzserver/spec/models/football_receiving_spec.rb	it "should have long" do
+should have yards	/Users/dirctdt/Development/rails/sportzserver/spec/models/football_receiving_spec.rb	it "should have yards" do
+should have yards	/Users/dirctdt/Development/rails/sportzserver/spec/models/football_passing_spec.rb	it "should have yards" do
+should reject invalid email addresses	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	it "should reject invalid email addresses" do
+should reject invalid email addresses	/Users/dirctdt/Development/rails/sportzserver/spec/models/contact_spec.rb	it "should reject invalid email addresses" do
+should reject short passwords	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	it "should reject short passwords" do
+should require a matching password confirmation	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	it "should require a matching password confirmation" do
+should require a name	/Users/dirctdt/Development/rails/sportzserver/spec/models/sport_spec.rb	it "should require a name" do
+should require a name	/Users/dirctdt/Development/rails/sportzserver/spec/models/contact_spec.rb	it "should require a name" do
+should require a password	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	it "should require a password" do
+should require a season	/Users/dirctdt/Development/rails/sportzserver/spec/models/sport_spec.rb	it "should require a season" do
+should require a sex	/Users/dirctdt/Development/rails/sportzserver/spec/models/sport_spec.rb	it "should require a sex" do
+should require a team mascot	/Users/dirctdt/Development/rails/sportzserver/spec/models/sport_spec.rb	it "should require a team mascot" do
+should require a team name	/Users/dirctdt/Development/rails/sportzserver/spec/models/sport_spec.rb	it "should require a team name" do
+should require a title	/Users/dirctdt/Development/rails/sportzserver/spec/models/contact_spec.rb	it "should require a title" do
+should require a year	/Users/dirctdt/Development/rails/sportzserver/spec/models/sport_spec.rb	it "should require a year" do
+should require an email address	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	it "should require an email address" do
+should require an email address	/Users/dirctdt/Development/rails/sportzserver/spec/models/contact_spec.rb	it "should require an email address" do
+should require attempts	/Users/dirctdt/Development/rails/sportzserver/spec/models/football_passing_spec.rb	it "should require attempts" do
+should require receptions	/Users/dirctdt/Development/rails/sportzserver/spec/models/football_receiving_spec.rb	it "should require receptions" do
+should set the encrypted password attribute	/Users/dirctdt/Development/rails/sportzserver/spec/models/user_spec.rb	it "should set the encrypted password attribute" do
+show	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  def show
+show	/Users/dirctdt/Development/rails/sportzserver/app/controllers/users_controller.rb		def show
+show	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sports_controller.rb	  def show
+show	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def show
+show	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def show
+show	/Users/dirctdt/Development/rails/sportzserver/app/controllers/newsfeeds_controller.rb	  def show
+show	/Users/dirctdt/Development/rails/sportzserver/app/controllers/gameschedules_controller.rb	  def show
+show	/Users/dirctdt/Development/rails/sportzserver/app/controllers/contacts_controller.rb	  def show
+show	/Users/dirctdt/Development/rails/sportzserver/app/controllers/coaches_controller.rb		def show
+show	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb	  def show
+site	/Users/dirctdt/Development/rails/sportzserver/app/controllers/users_controller.rb		def site
+site_owner?	/Users/dirctdt/Development/rails/sportzserver/app/helpers/users_helper.rb		def site_owner?
+site_visit	/Users/dirctdt/Development/rails/sportzserver/app/helpers/sites_helper.rb	  def site_visit(site)
+slideshow	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def slideshow
+sport_name	/Users/dirctdt/Development/rails/sportzserver/app/models/sport.rb	  def sport_name
+sports_list	/Users/dirctdt/Development/rails/sportzserver/app/helpers/sports_helper.rb	  def sports_list
+storephoto	/Users/dirctdt/Development/rails/sportzserver/app/models/photo.rb	  def storephoto(uploaded_io)
+team_name	/Users/dirctdt/Development/rails/sportzserver/app/models/team.rb	  def team_name
+unfollow	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb	  def unfollow
+untagathlete	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  def untagathlete
+untagathlete	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def untagathlete
+untagteam	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  def untagteam
+untagteam	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def untagteam
+update	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  def update
+update	/Users/dirctdt/Development/rails/sportzserver/app/controllers/users_controller.rb	  def update
+update	/Users/dirctdt/Development/rails/sportzserver/app/controllers/teams_controller.rb		def update
+update	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sports_controller.rb	  def update
+update	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def update
+update	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def update
+update	/Users/dirctdt/Development/rails/sportzserver/app/controllers/newsfeeds_controller.rb	  def update
+update	/Users/dirctdt/Development/rails/sportzserver/app/controllers/gameschedules_controller.rb	  def update
+update	/Users/dirctdt/Development/rails/sportzserver/app/controllers/contacts_controller.rb	  def update
+update	/Users/dirctdt/Development/rails/sportzserver/app/controllers/coaches_controller.rb		def update
+update	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb	  def update
+update_team	/Users/dirctdt/Development/rails/sportzserver/app/controllers/coaches_controller.rb			def update_team(coach)
+update_team	/Users/dirctdt/Development/rails/sportzserver/app/controllers/athletes_controller.rb			def update_team(athlete)
+updateabout	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def updateabout
+updatecontact	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def updatecontact
+updategameschedule	/Users/dirctdt/Development/rails/sportzserver/app/controllers/videoclips_controller.rb	  def updategameschedule
+updategameschedule	/Users/dirctdt/Development/rails/sportzserver/app/controllers/photos_controller.rb	  def updategameschedule
+uploadpage	/Users/dirctdt/Development/rails/sportzserver/app/controllers/sites_controller.rb	  def uploadpage
+us_states	/Users/dirctdt/Development/rails/sportzserver/app/helpers/sites_helper.rb	  def us_states
+user_pics_ok?	/Users/dirctdt/Development/rails/sportzserver/app/helpers/sites_helper.rb	  def user_pics_ok?
+user_videos_ok?	/Users/dirctdt/Development/rails/sportzserver/app/helpers/sites_helper.rb	  def user_videos_ok?
+vendor	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function vendor(el, prop)
+videopath	/Users/dirctdt/Development/rails/sportzserver/app/models/videoclip.rb	  def videopath
+vml	/Users/dirctdt/Development/rails/sportzserver/app/assets/javascripts/spin.js	function vml(tag, attr)
+year should be a number	/Users/dirctdt/Development/rails/sportzserver/spec/models/sport_spec.rb	it "year should be a number" do

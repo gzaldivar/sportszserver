@@ -12,10 +12,7 @@
 						<th>Time</th>
 						<th>Location</th>
 						<th>Event</th>
-						<% if site_owner? %>
-							<th>Update?</th>
-							<th>Remove?</th>
-						<% end %>
+						<th>Summary</th>
 						<% if user_signed_in? and user_pics_ok? %>
 							<th>Photos</th>
 						<% end %>
@@ -27,18 +24,15 @@
         <% @gameschedules.each_with_index do |g, count| %>
           <tbody>
           	<tr>
-          		<td><%= @team.title + " " + @team.mascot %></td>
-          		<td><%= count += 1 %></td>
+          		<td><%= link_to (@team.title + " " + @team.mascot), [@sport, @team, g] %></td>
+          		<td><%= link_to (count += 1), [@sport, @team, g] %></td>
           		<td><%= g.gamedate.strftime("%m/%d/%Y") %></td>
           		<td><%= g.homeaway %></td>
           		<td><%= g.opponent %></td>
           		<td><%= g.starttime.strftime("%I:%M%p") %></td>
           		<td><%= g.location %></td>
           		<td><%= g.event %></td>
-          		<% if site_owner? %>
-          			<td><%= link_to "Edit", edit_sport_team_gameschedule_path(@sport, @team, g), class: "btn btn-mini btn-warning" %></td>
-          			<td><%= link_to "Delete", [@sport, @team, g],  method:	:delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %></td>
-          		<% end %>
+          		<td><%= link_to "Summary", sport_team_gameschedule_path(@sport, @team, g), class: "btn btn-mini btn-primary" %></td>
 				<% if user_signed_in? and user_pics_ok? %>
 					<td><%= link_to "Photo", newschedule_sport_photo_path(@sport, g), class: "btn btn-mini btn-primary" %></td>
 				<% end %>

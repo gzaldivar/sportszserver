@@ -1,0 +1,12 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
+<p>
+<div class="row">
+	<div class="span9 offset1">
+		<p>
+		<%= render 'tabs_game' %>
+		<p>
+		<h4>Edit rushing statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for <%= @stat.gameschedule.game_name %></h4>
+		<p>
+		<%= render 'form' %>
+	</div>
+</div>

@@ -1,0 +1,29 @@
+<%= simple_form_for [@sport, @athlete, @stat, @rushing] do |f| %>
+	<%= render 'shared/error_messages', object: @rushing %>
+	<div class="row">
+		<div class="span2">
+			<%= f.input :attempts, label: "Rushing Attempts", required: true %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :yards, required: true %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :longest, required: true %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span2">
+			<%= f.input :td, required: true, label: "Touchdowns" %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :fumbles, required: true %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :fumbles_lost, required: true %>
+		</div>
+	</div>
+	<p>
+	<div class="span2 offset3">
+		<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+	</div>
+<% end %>

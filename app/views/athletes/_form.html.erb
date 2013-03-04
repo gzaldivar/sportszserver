@@ -17,12 +17,20 @@
 				<div class="span2">
 					<%= f.input	:middlename, required: false,	label:	"Middle name" %>
 				</div>
-				<div class="span3 offset1">
-					<%= f.input :position %>
+				<div class="span2 offset1">
+					<div class="input string required"><label class="string required" for="athlete_feet"><abbr title="required">*</abbr> Height Feet:</label>					
+					</div>
+					<%= select_tag "feet", options_for_select(height_feet), include_blank: true %>
 				</div>
-				<div class="span4">
-					<%= f.input	:height %>	
+				<div class="span2 offset1">
+					<div class="input string required"><label class="string required" for="athlete_inches"><abbr title="required">*</abbr> Height Inches:</label>					
+					</div>
+					<%= select_tag "inches", options_for_select(height_inches), include_blank: true %>
+					<!--%= f.input	:height %-->	
 				</div>
+			</div>
+			<div class="row">
+				<%= render 'position', f: f %>
 			</div>
 			<div class="row">
 				<div class="span2">

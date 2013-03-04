@@ -9,6 +9,7 @@ class ApplicationController < ActionController::Base
   include AthletesHelper
   include CoachesHelper
   include UsersHelper
+  include FootballStatsHelper
 
   private
   

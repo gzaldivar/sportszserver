@@ -16,8 +16,70 @@ module SportsHelper
   def sports_list
     [
       ['Football', 'Football'],
-      ['Basketball', 'Basketball'],
-      ['Baseball', 'Baseball']
+      ['Basketball', 'Basketball']
+#      ['Baseball', 'Baseball']
+    ]
+  end
+
+  def offense_football_positions
+    [
+      ['Wide Receiver', 'WR'],
+      ['Offesnsive Line', 'OL'],
+      ['Running Back', 'RB'],
+      ['Fullback', 'FB'],
+      ['Quarterback', 'QB'],
+      ['Center', 'C'],
+      ['Tight End', 'TE']
+    ]
+  end
+
+  def defense_football_positions
+    [
+      ['Defensive Back', 'DB'],
+      ['Defensive Line', 'DL'],
+      ['Line Backer', 'LB'],
+      ['Corner', 'CR'],
+      ['Safety', 'S']
+    ]
+  end
+
+  def specialteams_football_positions
+    [      
+      ['Kicker', 'K'],
+      ['Punter', 'P']
+    ]
+  end
+
+  def football_score
+    [
+      ["TD", 6],
+      ["FG", 3],
+      ["XP", 1]
+    ]
+  end
+
+  def basketball_positions
+    [
+      ['Center','C'],
+      ['Guard', 'G'],
+      ['Forward', 'F'],
+      ['Guard/Forward', 'G/F']
+    ]
+  end
+
+  def quarters
+    [
+      ["First", "Q1"],
+      ["Second", "Q2"],
+      ["Third", "Q3"],
+      ["Fourth", "Q4"]
+    ]
+  end
+
+  def halfs
+    [
+      ["First Half", "1"],
+      ["Second Half", "2"]
     ]
   end
   

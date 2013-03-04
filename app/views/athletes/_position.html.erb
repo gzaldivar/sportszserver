@@ -1,0 +1,28 @@
+<% if @sport.has_stats? %>
+	<% if @sport.name == "Football" %>
+		<div class="span2">
+			<div class="input string required"><label class="string required" for="athlete_offpos"><abbr title="required">*</abbr>Offense Position:</label>					
+			</div>
+			<%= select_tag "offpos", options_for_select(offense_football_positions), include_blank: true %>
+			<!--%= f.input :offpos, collection: offense_football_positions, include_blank: true, label: "Offense Position:" %-->
+		</div>
+		<div class="span2 offset1">
+			<div class="input string required"><label class="string required" for="athlete_defpos"><abbr title="required">*</abbr>Defense Position:</label>					
+			</div>
+			<%= select_tag "defpos", options_for_select(defense_football_positions), include_blank: true %>
+			<!--%= f.input :defpos, collection: defense_football_positions, include_blank: true, label: "Defense Position:" %-->
+		</div>
+		<div class="span2 offset1">
+			<div class="input string required"><label class="string required" for="athlete_special_teamspos">Special Teams Position:</label>					
+			</div>			
+			<%= select_tag "special_teamspos", options_for_select(specialteams_football_positions), include_blank: true %>
+			<!--%= f.input :special_teamspos, collection: specialteams_football_positions, label: "Special Teams Position:" %-->
+		</div>
+	<% elsif @sport.name == "Basketball" %>
+		<%= f.input :position, collecton: basketball_positions, include_blank: true %>
+	<% end %>
+<% else %>
+	<div class="span3 offset1">
+		<%= f.input :position %>
+	</div>
+<% end %>

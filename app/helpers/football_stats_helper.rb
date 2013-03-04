@@ -1,0 +1,2 @@
+module FootballStatsHelper
+end

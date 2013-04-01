@@ -6,4 +6,6 @@ child :gamelogs do
 	node(:id) { |o| o.id.to_s }
 	attribute :logentry, :period, :time, :score
 end
-extends 'gameschedules/stats'
+if !@stats.nil?
+	extends 'gameschedules/stats'
+end

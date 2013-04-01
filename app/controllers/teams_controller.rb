@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_filter :authenticate_user!,   only: [:new, :create, :edit, :update, :destroy]
+  before_filter :authenticate_user!,   only: [:new, :create, :edit, :update, :destroy, :index, :show]
   before_filter :get_sport
 
 	def new
@@ -25,6 +25,14 @@ class TeamsController < ApplicationController
 		else
 			redirect_to @sport, error: "Error updating team"
 		end
+	end
+
+	def index
+		@teams = @sport.teams.all.entries
+	end
+
+	def show
+		@team = @sport.teams.find(params[:id])
 	end
 
 	def destroy

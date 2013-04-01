@@ -7,7 +7,7 @@
         </div>
       </div><p>
       <div class="row">
-        <% if f.athlete or f.coach %>
+        <% if !f.athlete.blank? or !f.coach.blank? %>
           <div class="span2">
             <% if f.athlete %>
               <%= link_to image_tag(f.sport.athletes.find(f.athlete).pic.url(:thumb)), sport_athlete_path(f.sport, f.athlete) %>
@@ -17,7 +17,7 @@
           </div>
           <div class="span4">
         <% else %>
-          <div class="span10">
+          <div class="span6">
         <% end %>
       	<h5><%= f.news %></h5>
       	</div>

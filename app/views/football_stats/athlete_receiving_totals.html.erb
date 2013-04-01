@@ -7,28 +7,7 @@
 		<% if params[:games].nil? %>
 			<h4>Receiving stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
 			<p>
-			<table class="table table-bordered">
-				<em>
-				<thead>
-					<th>Receptions</th>
-					<th>Receiving Yards</th>
-					<th>Average</th>
-					<th>Receiving TD</th>
-					<th>Longest</th>
-					<th>Fumbles</th>
-					<th>Fumbles Lost</th>
-				</thead>
-				</em>
-				<tbody>
-					<td><%= @receiving.receiving_receptions %></td>
-					<td><%= @receiving.receiving_yards %></td>
-					<td><%= @receiving.receiving_average %></td>
-					<td><%= @receiving.receiving_tds %></td>
-					<td><%= @receiving.receiving_longest %></td>
-					<td><%= @receiving.receiving_fumbles %></td>
-					<td><%= @receiving.receiving_fumbles_lost %></td>
-				</tbody>
-			</table>
+			<%= render 'receiving_totals', receiving: @receiving %>
 			<div class="span4 offset3">
 				<%= link_to "Add Receiving Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "receiving"), class: "btn btn-mini btn-primary" %>
 				<% if @stats.count > 0 %>

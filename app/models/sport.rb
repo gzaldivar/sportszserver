@@ -52,7 +52,7 @@ class Sport
   validates :sex, presence: true, format: { with: /Male|Female/ }
   validates_attachment_content_type :sport_banner, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_attachment_content_type :sport_logo, content_type: ['image/jpg', 'image/jpeg', 'image/png']
-  
+   
   def sport_name
     if mascot.nil?
       name

@@ -7,30 +7,7 @@
 		<% if params[:games].nil? %>
 			<h4>Passing stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
 			<p>
-			<table class="table table-bordered">
-				<em>
-				<thead>
-					<th>Passing Attempts</th>
-					<th>Passing Completions</th>
-					<th>Completion Percentage</th>
-					<th>Passing Yards</th>
-					<th>Passing TD</th>
-					<th>Passing Int</th>
-					<th>Sacks</th>
-					<th>Yards Lost</th>
-				</thead>
-				</em>
-				<tbody>
-					<td><%= @passing.passing_attempts %></td>
-					<td><%= @passing.passing_completions %></td>
-					<td><%= @passing.passing_comp_percentage %></td>
-					<td><%= @passing.passing_yards %></td>
-					<td><%= @passing.passing_tds %></td>
-					<td><%= @passing.passing_int %></td>
-					<td><%= @passing.passing_sacks %></td>
-					<td><%= @passing.passing_yards_lost %></td>
-				</tbody>
-			</table>
+			<%= render 'passing_totals', passing: @passing %>
 			<div class="span4 offset3">
 				<%= link_to "Add Passing Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "passing"), class: "btn btn-mini btn-primary" %>
 				<% if @stats.count > 0 %>

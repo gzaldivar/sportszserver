@@ -17,7 +17,7 @@ group :development do
   gem 'rspec-rails', '2.9.0'
   gem 'better_errors'
   gem 'binding_of_caller'
-  gem 'meta_request', '0.2.1'
+  gem 'meta_request'
 	gem 'annotate', '2.5.0'
 end
 

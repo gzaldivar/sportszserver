@@ -22,7 +22,7 @@ class SportsController < ApplicationController
   end
   
   def show
-    @newsfeed = @sport.newsfeeds.limit(10).asc(:updated_at)
+    @newsfeed = @sport.newsfeeds.limit(10).desc(:updated_at)
     @athletes = @sport.athletes
     @followed = []
     if signed_in?
@@ -37,10 +37,9 @@ class SportsController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.xml
-      format.json 
-      format.js
-    end
+#      format.json {  render status: 200, json: { id: @sport.id , season: @sport.season, name: @sport.name, sex: @sport.sex, teams: @sport.teams} }
+      format.json
+     end
   end
   
   def index

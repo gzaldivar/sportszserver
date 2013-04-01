@@ -70,9 +70,9 @@
 		<% @gamelogs.each do |g| %>
 			<div class="row">
 				<div class="span8">
-				 	<%= g.period %>
-				 	<%= g.time %>
-				 	<%= g.logentry %>
+				 	<%= g.period %>:
+				 	<%= g.time %> - 
+				 	<%= g.logentry %> - 
 				 	<%= g.score %>
 				 	<% if site_owner? %>
 				 		<%= link_to "Delete", [@sport, @team, @gameschedule, g], method: :delete,
@@ -83,9 +83,39 @@
 		<% end %>
 		<% if site_owner? %>
 		  	<h6>Enter Optional Game log entry. Entries will be ordered first to last by time.</h6><br/>
-		  		<em><h5>Keep in mind that game log scoring is not automatically computed for period scoring. This is due to the fact
-		  			that game logs are optional.</h5></em></h6>
+		  		<em><h5>Keep in mind that game log scoring is not automatically computed for period scoring. This is because game logs are optional.</h5></em></h6>
 	  		<%= render "gamelogs/gamelog_form" %>
+		<% end %>
+		<% if !@stats.nil? %>
+		  	<p>
+		  	<h4><em>Game Statistics</em></h4>
+		  	<p>
+		  	<h5>Passing</h5>
+			<%= render 'football_stats/passing_totals', passing: @stats %>
+		  	<p>
+		  	<h5>Rushing</h5>
+			<%= render 'football_stats/rushing_totals', rushing: @stats %>
+		  	<p>
+		  	<h5>Receiving</h5>
+			<%= render 'football_stats/receiving_totals', receiving: @stats %>
+		  	<p>
+		  	<h5>Defense</h5>
+			<%= render 'football_stats/defense_totals', defense: @stats %>
+		  	<p>
+		  	<h5>Special Teams Placekicking</h5>
+			<%= render 'football_stats/specialteams_fgtotals', specialteam: @stats %>
+		  	<p>
+		  	<h5>Special Teams Kickoff</h5>
+			<%= render 'football_stats/specialteams_kototals', specialteam: @stats %>
+		  	<p>
+		  	<h5>Special Teams Punts</h5>
+			<%= render 'football_stats/specialteams_punt_totals', specialteam: @stats %>
+		  	<p>
+		  	<h5>Special Teams Punt Returns</h5>
+			<%= render 'football_stats/specialteams_punt_return_totals', specialteam: @stats %>
+		  	<p>
+		  	<h5>Special Teams Kickoff Returns</h5>
+			<%= render 'football_stats/specialteams_koreturn_totals', specialteam: @stats %>
 		<% end %>
 	</div>
 </div>

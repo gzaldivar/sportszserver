@@ -8,30 +8,7 @@
 			<% if @specialteam.specialteams_fgattempts > 0 %>
 				<h5>Place Kicking stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
 				<p>
-				<table class="table table-bordered">
-					<em>
-					<thead>
-						<th>FG Attempts</th>
-						<th>FG Made</th>
-						<th>FG Blocked</th>
-						<th>FG Long</th>
-						<th>Extra Point Attempts</th>
-						<th>Extra Points Made</th>
-						<th>Missed</th>
-						<th>Blocked</th>
-					</thead>
-					</em>
-					<tbody>
-						<td><%= @specialteam.specialteams_fgattempts %></td>
-						<td><%= @specialteam.specialteams_fgmade %></td>
-						<td><%= @specialteam.specialteams_fgblocked %></td>
-						<td><%= @specialteam.specialteams_fglong %></td>
-						<td><%= @specialteam.specialteams_xpattempts %></td>
-						<td><%= @specialteam.specialteams_xpmade %></td>
-						<td><%= @specialteam.specialteams_xpmissed %></td>
-						<td><%= @specialteam.specialteams_xpblocked %></td>
-					</tbody>
-				</table>
+				<%= render 'specialteams_fgtotals', specialteam: @specialteam %>
 			<% else %>
 				<h5>No place kicker special team stats entered.</h5>
 			<% end %>
@@ -39,20 +16,7 @@
 			<% if @specialteam.specialteams_koattempts > 0 %>
 				<h5>Kickoff Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
 				<p>
-				<table class="table table-bordered">
-					<em>
-					<thead>
-						<th>Kickoffs</th>
-						<th>Touchbacks</th>
-						<th>Returned</th>
-					</thead>
-					</em>
-					<tbody>
-						<td><%= @specialteam.specialteams_koattempts %></td>
-						<td><%= @specialteam.specialteams_kotouchbacks %></td>
-						<td><%= @specialteam.specialteams_koreturned %></td>
-					</tbody>
-				</table>
+				<%= render 'specialteams_kototals', specialteam: @specialteam %>
 			<% else %>
 				<h5>No Kickoff special team stats entered.</h5>
 			<% end %>
@@ -60,45 +24,15 @@
 			<% if @specialteam.specialteams_punts > 0 %>
 				<h5>Punt Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
 				<p>
-				<table class="table table-bordered">
-					<em>
-					<thead>
-						<th>Punts</th>
-						<th>Yards</th>
-						<th>Long</th>
-						<th>Blocked</th>
-					</thead>
-					</em>
-					<tbody>
-						<td><%= @specialteam.specialteams_punts %></td>
-						<td><%= @specialteam.specialteams_punts_yards %></td>
-						<td><%= @specialteam.specialteams_punts_long %></td>
-						<td><%= @specialteam.specialteams_punts_blocked %></td>
-					</tbody>
-				</table>
+				<%= render 'specialteams_punt_totals', specialteam: @specialteam %>
 			<% else %>
 				<h5>No punt special team stats entered.</h5>
 			<% end %>
 			<br/>
 			<% if @specialteam.specialteams_punt_return > 0 %>
-				<h5>Punt Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
+				<h5>Punt Return Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
 				<p>
-				<table class="table table-bordered">
-					<em>
-					<thead>
-						<th>Punt Returns</th>
-						<th>Return Yards</th>
-						<th>Return TD</th>
-						<th>Return Long</th>
-					</thead>
-					</em>
-					<tbody>
-						<td><%= @specialteam.specialteams_punt_return %></td>
-						<td><%= @specialteam.specialteams_punt_returnyards %></td>
-						<td><%= @specialteam.specialteams_punt_returntd %></td>
-						<td><%= @specialteam.specialteams_punt_returnlong %></td>
-					</tbody>
-				</table>
+				<%= render 'specialteams_punt_return_totals', specialteam: @specialteam %>
 			<% else %>
 				<h5>No punt return special team stats entered.</h5>
 			<% end %>
@@ -106,22 +40,7 @@
 			<% if @specialteam.specialteams_koreturns > 0 %>
 				<h5>Kickoff Return Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
 				<p>
-				<table class="table table-bordered">
-					<em>
-					<thead>
-						<th>Kickoff Returns</th>
-						<th>Return TD</th>
-						<th>Return Yards</th>
-						<th>Return Long</th>
-					</thead>
-					</em>
-					<tbody>
-						<td><%= @specialteam.specialteams_koreturns %></td>
-						<td><%= @specialteam.specialteams_kotd %></td>
-						<td><%= @specialteam.specialteams_koyards %></td>
-						<td><%= @specialteam.specialteams_kolong %></td>
-					</tbody>
-				</table>
+				<%= render 'specialteams_koreturn_totals', specialteam: @specialteam %>
 			<% else %>
 				<h5>No kickoff return special team stats entered.</h5>
 			<% end %>
@@ -182,9 +101,9 @@
 							</thead>
 							</em>
 							<tbody>
-								<td><%= @s.football_specialteams.koattempts %></td>
-								<td><%= @s.football_specialteams.kotouchbacks %></td>
-								<td><%= @s.football_specialteams.koreturned %></td>
+								<td><%= s.football_specialteams.koattempts %></td>
+								<td><%= s.football_specialteams.kotouchbacks %></td>
+								<td><%= s.football_specialteams.koreturned %></td>
 							</tbody>
 						</table>
 					<% else %>
@@ -204,10 +123,10 @@
 							</thead>
 							</em>
 							<tbody>
-								<td><%= @s.football_specialteams.punts %></td>
-								<td><%= @s.football_specialteams.punts_yards %></td>
-								<td><%= @s.football_specialteams.punts_long %></td>
-								<td><%= @s.football_specialteams.punts_blocked %></td>
+								<td><%= s.football_specialteams.punts %></td>
+								<td><%= s.football_specialteams.punts_yards %></td>
+								<td><%= s.football_specialteams.punts_long %></td>
+								<td><%= s.football_specialteams.punts_blocked %></td>
 							</tbody>
 						</table>
 					<% else %>
@@ -227,10 +146,10 @@
 							</thead>
 							</em>
 							<tbody>
-								<td><%= @s.football_specialteams.punt_return %></td>
-								<td><%= @s.football_specialteams.punt_returnyards %></td>
-								<td><%= @s.football_specialteams.punt_returntd %></td>
-								<td><%= @s.football_specialteams.punt_returnlong %></td>
+								<td><%= s.football_specialteams.punt_return %></td>
+								<td><%= s.football_specialteams.punt_returnyards %></td>
+								<td><%= s.football_specialteams.punt_returntd %></td>
+								<td><%= s.football_specialteams.punt_returnlong %></td>
 							</tbody>
 						</table>
 					<% else %>
@@ -250,10 +169,10 @@
 							</thead>
 							</em>
 							<tbody>
-								<td><%= @s.football_specialteams.koreturns %></td>
-								<td><%= @s.football_specialteams.kotd %></td>
-								<td><%= @s.football_specialteams.koyards %></td>
-								<td><%= @s.football_specialteams.kolong %></td>
+								<td><%= s.football_specialteams.koreturns %></td>
+								<td><%= s.football_specialteams.kotd %></td>
+								<td><%= s.football_specialteams.koyards %></td>
+								<td><%= s.football_specialteams.kolong %></td>
 							</tbody>
 						</table>
 					<% else %>

@@ -3,9 +3,9 @@ class Gamelog
   include Mongoid::Timestamps
 
   field :logentry, type: String
-  field :period, type: Integer
+  field :period, type: String
   field :time, type: String
-  field :score, type: Integer
+  field :score, type: String
 
   embedded_in :gameschedule
 

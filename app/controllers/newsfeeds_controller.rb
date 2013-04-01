@@ -29,19 +29,19 @@ class NewsfeedsController < ApplicationController
   
   def index
     if (!params[:team].nil? and !params[:team][:id].blank?)
-      @newsfeed = @sport.newsfeeds.where(team: params[:team][:id].to_s).limit(20).asc(:updated_at)
+      @newsfeed = @sport.newsfeeds.where(team: params[:team][:id].to_s).limit(20).desc(:updated_at)
     elsif !params[:athlete].nil? and !params[:athlete][:id].blank?
-      @newsfeed = @sport.newsfeeds.where(athlete: params[:athlete][:id].to_s).limit(20).asc(:updated_at)
+      @newsfeed = @sport.newsfeeds.where(athlete: params[:athlete][:id].to_s).limit(20).desc(:updated_at)
     elsif !params[:coach].nil? and !params[:coach][:id].blank?
-      @newsfeed = @sport.newsfeeds.where(coach: params[:coach][:id].to_s).limit(20).asc(:updated_at)
+      @newsfeed = @sport.newsfeeds.where(coach: params[:coach][:id].to_s).limit(20).desc(:updated_at)
     elsif !params[:player].nil? and !params[:player].blank?
-      @newsfeed = @sport.newsfeeds.where(athlete: params[:player].to_s).limit(20).asc(:updated_at)
+      @newsfeed = @sport.newsfeeds.where(athlete: params[:player].to_s).limit(20).desc(:updated_at)
     elsif !params[:teamname].nil? and !params[:teamname].blank?
-      @newsfeed = @sport.newsfeeds.where(team: params[:teamname].to_s).limit(20).asc(:updated_at)
+      @newsfeed = @sport.newsfeeds.where(team: params[:teamname].to_s).limit(20).desc(:updated_at)
     elsif !params[:coachname].nil? and !params[:coachname].blank?
-      @newsfeed = @sport.newsfeeds.where(coach: params[:coachname].to_s).limit(20).asc(:updated_at)      
+      @newsfeed = @sport.newsfeeds.where(coach: params[:coachname].to_s).limit(20).desc(:updated_at)      
     else
-      @newsfeed = @sport.newsfeeds.limit(40).asc(:updated_at)
+      @newsfeed = @sport.newsfeeds.limit(40).desc(:updated_at)
     end
     
     @coaches = @sport.coaches

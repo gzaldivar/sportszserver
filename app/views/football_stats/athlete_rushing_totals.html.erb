@@ -7,28 +7,7 @@
 		<% if params[:games].nil? %>
 			<h4>Rushing stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
 			<p>
-			<table class="table table-bordered">
-				<em>
-				<thead>
-					<th>Rushing Attempts</th>
-					<th>Rushing Yards</th>
-					<th>Average</th>
-					<th>Rushing TD</th>
-					<th>Longest</th>
-					<th>Fumbles</th>
-					<th>Fumbles Lost</th>
-				</thead>
-				</em>
-				<tbody>
-					<td><%= @rushing.rushing_attempts %></td>
-					<td><%= @rushing.rushing_yards %></td>
-					<td><%= @rushing.rushing_average %></td>
-					<td><%= @rushing.rushing_tds %></td>
-					<td><%= @rushing.rushing_longest %></td>
-					<td><%= @rushing.rushing_fumbles %></td>
-					<td><%= @rushing.rushing_fumbles_lost %></td>
-				</tbody>
-			</table>
+			<%= render 'rushing_totals', rushing: @rushing %>
 			<div class="span4 offset3">
 				<%= link_to "Add Rushing Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "rushing"), class: "btn btn-mini btn-primary" %>
 				<% if @stats.count > 0 %>

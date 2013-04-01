@@ -41,6 +41,8 @@ class User
   ## Token authenticatable
   field :authentication_token, :type => String
 
+  before_save :ensure_authentication_token
+
   has_many :sites
 
   index({ email: 1 }, { unique: true, background: true })
@@ -60,6 +62,6 @@ class User
     
   validates_attachment_content_type :avatar, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_presence_of :name
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at, :authentication_token
 
 end

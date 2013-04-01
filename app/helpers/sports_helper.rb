@@ -52,9 +52,9 @@ module SportsHelper
 
   def football_score
     [
-      ["TD", 6],
-      ["FG", 3],
-      ["XP", 1]
+      ["TD", "TD"],
+      ["FG", "FG"],
+      ["XP", "XP"]
     ]
   end
 

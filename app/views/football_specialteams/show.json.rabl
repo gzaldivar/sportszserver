@@ -1,0 +1,2 @@
+object @specialteams
+attribute :fgattempts, :fgmade, :fglong, :fgblocked, :xpattempts, :xpmade, :xpblocked, :xpmissed, :punts, :punts_blocked, :punts_yards, :punts_long, :koattempts, :kotouchbacks, :koreturned, :punt_return, :punt_returnyards, :punt_returntd, :punt_returnlong, :koreturn, :koyards, :kolong, :kotd

@@ -33,8 +33,20 @@ class GameschedulesController < ApplicationController
   end
 
   def show
-      @gamelogs = @gameschedule.gamelogs.all.asc(:period, :time)
-      @gamelog = @gameschedule.gamelogs.build
+    @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
+    @gamelog = @gameschedule.gamelogs.build
+    if @sport.name == "Football"
+      @stats = AthleteFootballStatsTotal.new
+      @stats.passing_totals(@gameschedule)
+      @stats.rushing_totals(@gameschedule)
+      @stats.receiving_totals(@gameschedule)
+      @stats.defense_totals(@gameschedule)
+      @stats.specialteams_totals(@gameschedule)
+    end
+    respond_to do |format|
+      format.html
+      format.json
+    end
   end
   
   def edit

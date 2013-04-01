@@ -15,7 +15,7 @@ Sportzserver::Application.routes.draw do
   end  
    
   resources :sports do
-    resources :teams,   only: [:new, :create, :edit, :update, :destroy] do
+    resources :teams,   only: [:new, :create, :edit, :update, :destroy, :index, :show] do
       resources :gameschedules, only: [:show, :new, :create, :edit, :update, :index, :destroy] do
         resources :gamelogs, only: [:create, :destroy]
       end
@@ -26,7 +26,7 @@ Sportzserver::Application.routes.draw do
     resources :athletes do
       resources :football_stats, only: [:create] do
         collection do
-          get :passing, :rushing, :receiving, :defense, :specialteams 
+          get :passing, :rushing, :receiving, :defense, :specialteams, :showdata
         end
 
         member do

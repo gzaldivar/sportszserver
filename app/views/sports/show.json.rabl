@@ -1,3 +1,4 @@
 object @sport
-
-attribute :id, :season, :name, :sex, :teams
+node(:id) { |o| o.id.to_s }
+attributes :season, :name, :sex
+node(:sport_logo) { |t| t.sport_logo(:large) }

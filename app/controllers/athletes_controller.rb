@@ -28,6 +28,12 @@ class AthletesController < ApplicationController
   end
   
   def show
+  if @athlete.team == "Unassigned"
+    @team = nil
+  else 
+    @team = @sport.teams.find(@athlete.team)
+  end 
+
     @photos = Photo.where(athletes: @athlete.id)
   end
   
@@ -72,13 +78,13 @@ class AthletesController < ApplicationController
     if !params[:lastname].blank? && !params[:number].blank?
       players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:lastname].to_s + " " + params[:number].to_s, match: :all)
     elsif !params[:lastname].blank?
-      players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:lastname].to_s)
+      players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:lastname].to_s).asc(:number)
     elsif !params[:number].blank?
       players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:number].to_s)
     elsif params[:team_id]
-      players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:team_id].to_s)
+      players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:team_id].to_s).asc(:number)
     else
-      players = Athlete.where(sport_id: params[:sport_id])
+      players = Athlete.where(sport_id: params[:sport_id]).asc(:number)
     end
     
     players.each_with_index do |p, cnt|

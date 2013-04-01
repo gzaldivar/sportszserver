@@ -1,7 +1,7 @@
 class SitesController < ApplicationController
   respond_to :html, :json, :xml
   before_filter :authenticate_user!,     only: [:new, :create, :edit, :update, :destroy, :uploadpage, :updateabout]
-  before_filter :site_owner?,           only: [:edit, :update, :destroy, :updateabout, :uploadpage,:male, :female]
+  before_filter :site_owner?,           only: [:edit, :update, :destroy, :updateabout, :uploadpage, :male, :female]
   before_filter :correct_site,          only: [:contact, :show, :update, :edit, :destroy, :updateabout, :uploadpage]
    
   def home
@@ -122,7 +122,8 @@ class SitesController < ApplicationController
       respond_to do |format|
         format.html { render 'show'}
         format.xml
-        format.json
+        format.json { render status: 200, json: { id: @site.id, sitename: @site.sitename, mascot: @site.mascot, 
+                      logo_thumburl: @site.logo_thumburl } }
         format.js
       end
     elsif @sports.count == 1

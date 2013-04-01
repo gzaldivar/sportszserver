@@ -7,32 +7,7 @@
 		<% if params[:games].nil? %>
 			<h4>Defensive stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
 			<p>
-			<table class="table table-bordered">
-				<em>
-				<thead>
-					<th>Tackles</th>
-					<th>Assists</th>
-					<th>Sacks</th>
-					<th>Passes Defended</th>
-					<th>Interceptions</th>
-					<th>Int Yards</th>
-					<th>Int Long</th>
-					<th>Int TD</th>
-					<th>Fumbles Recovered</th>
-				</thead>
-				</em>
-				<tbody>
-					<td><%= @defense.defense_tackles %></td>
-					<td><%= @defense.defense_assists %></td>
-					<td><%= @defense.defense_sacks %></td>
-					<td><%= @defense.defense_pass_defended %></td>
-					<td><%= @defense.defense_interceptions %></td>
-					<td><%= @defense.defense_int_yards %></td>
-					<td><%= @defense.defense_int_long %></td>
-					<td><%= @defense.defense_int_td %></td>
-					<td><%= @defense.defense_fumbles_recovered %></td>
-				</tbody>
-			</table>
+			<%= render 'defense_totals', defense: @defense %>
 			<div class="span4 offset3">
 				<%= link_to "Add defense Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "defense"), class: "btn btn-mini btn-primary" %>
 				<% if @stats.count > 0 %>

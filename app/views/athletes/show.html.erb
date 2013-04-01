@@ -66,10 +66,10 @@
       			<td><%= @athlete.height %></td>
       			<td><%= @athlete.weight %></td>
         			<td><%= @athlete.year %></td>
-    				<% if @athlete.team == "Unassigned" %>
+    				<% if @team.nil? %>
     					<td>Unassinged</td>
     				<% else %>
-        				<td><%= get_athlete_team(@sport, @athlete.team) %></td>
+        				<td><%= @team.team_name %></td>
     				<% end %>
             <td>
               <% if Photo.where(players: @athlete.id.to_s).any? %>

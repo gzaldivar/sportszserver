@@ -1,5 +1,5 @@
 class FootballStatsController < ApplicationController
-	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new]
+	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new, :showdata]
 	before_filter	:site_owner?,	        only: [:destroy, :update, :create, :edit, :new]
   	before_filter 	:get_sport_athlete
 
@@ -75,6 +75,28 @@ class FootballStatsController < ApplicationController
 			else
 				redirect_to edit_sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, @stat.football_defenses)
 			end			
+		end
+	end
+
+	def showdata
+		if params[:game].nil?
+			@stats = AthleteFootballStatsTotal.new
+			@stats.passing_totals(@athlete)
+			@stats.rushing_totals(@athlete)
+			@stats.receiving_totals(@athlete)
+			@stats.defense_totals(@athlete)
+			@stats.specialteams_totals(@athlete)
+		else			
+			@gamestats = @athlete.football_stats.where(gameschedule_id: params[:game].to_s).first
+#				@pass = s.football_passings
+#				@rush = s.football_rushings
+#				@rec = s.football_receivings
+#				@def = s.football_defenses
+#				@spec = s.football_specialteams
+#			end
+		end
+		respond_to do |format|
+			format.json
 		end
 	end
 

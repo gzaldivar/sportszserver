@@ -17,6 +17,10 @@ class ContactsController < ApplicationController
   end
   
   def show
+    respond_to do |format|
+      format.html
+      format.json
+    end
   end
   
   def edit
@@ -44,6 +48,11 @@ class ContactsController < ApplicationController
     @contacts = []
     @site.contacts.each_with_index do |c, cnt|
       @contacts[cnt] = c
+    end
+
+    respond_to do |format|
+      format.html
+      format.json
     end
   end
 

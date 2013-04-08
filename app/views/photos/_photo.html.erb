@@ -41,7 +41,7 @@
 		    <% else %>
 		    	<td></td> 
 		    <% end %>
-			<% if !photo.schedule.nil? %>
+			<% if !photo.schedule.nil? and !photo.schedule.blank? %>
 		    	<td><%= @sport.teams.find(photo.teamid).gameschedules.find(photo.schedule).game_name %></td>
 			<% else %>
 				<td></td>

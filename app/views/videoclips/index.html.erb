@@ -11,7 +11,7 @@
                 <% if !@team.nil? %>
                     <div class="span2 offset1">
                         <%= label_tag "Game: " %>
-                        <%= select(:game, :schedule_id, @team.gameschedules.collect{ |t| [t.game_name, t.id] }, include_blank: true ) %>
+                        <%= select(:game, :id, @team.gameschedules.collect{ |t| [t.game_name, t.id] }, include_blank: true ) %>
                     </div>
                 <% end %>
                 <% if user_signed_in? %>

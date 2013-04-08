@@ -46,7 +46,7 @@
 	        <div class="span2 offset1">
 	          Tag athletes:&nbsp<br/>
 				<!--%= f.input :athlete, collection: @athletes.collect{ |t| [t.full_name, t.id] }, label: "Tag athletes", prompt: "Tag Athlete", hint: "Tag athletes" %-->
-	    		<%= collection_select(:athlete,	:id,	@athletes, :id, :full_name, prompt:  "Tag Athlete" ) %>
+	    		<%= collection_select(:athlete,	:id, @athletes, :id, :full_name, prompt:  "Tag Athlete" ) %>
 	        </div>
 	      </div>
 	      <div class="row">

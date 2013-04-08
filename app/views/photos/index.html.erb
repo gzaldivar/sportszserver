@@ -11,7 +11,7 @@
 				<% if !@team.nil? %>
 					<div class="span2 offset1">
 			          	<%= label_tag "Game: " %>
-			      		<%= select(:game, :schedule_id, @team.gameschedules.collect{ |t| [t.game_name, t.id] }, include_blank: true ) %>
+			      		<%= select(:game, :id, @team.gameschedules.collect{ |t| [t.game_name, t.id] }, include_blank: true ) %>
 					</div>
 				<% end %>
 				<% if user_signed_in? %>
@@ -36,6 +36,13 @@
 		        <div class="span1 offset3">
 		          <%= submit_tag  "Search", class: "btn btn-medium btn-primary", name: nil %>
 		        </div>
+				<div class="span2 offset1">
+					<% if !@team.nil? and user_signed_in? and user_pics_ok? %>
+						<%= link_to "Add Team Photo", newteam_sport_photo_path(@sport, @team), class: "btn btn-medium btn-primary" %>
+					<% elsif !@athlete.nil? %>
+						<%= link_to "Add Athlete Photo", newathlete_sport_photo_path(@sport, @athlete), class: "btn btn-medium btn-primary" %>
+					<% end %>
+				</div>
 		    </div>
 	    <% end %>
 		<%= render @photos %>

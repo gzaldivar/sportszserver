@@ -14,11 +14,24 @@ class PhotosController < ApplicationController
     if !params[:team_id].nil? and !params[:team_id].blank?
       pics = @sport.photos.where(teamid: params[:team_id].to_s)
       @team = @sport.teams.find(params[:team_id].to_s)
+    elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:number].nil? && !params[:number][:id].blank? && 
+          !params[:game].nil? && !params[:game][:id].blank?
+      pics = @sport.photos.where(teamid: params[:team][:id].to_s, schedule: params[:game][:id].to_s, 
+                                 :players.in => [params[:number][:id].to_s])
+      @team = @sport.teams.find(params[:team][:id].to_s)
+    elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:athlete].nil? && !params[:athlete][:id].blank? && 
+          !params[:game].nil? && !params[:game][:id].blank?
+      pics = @sport.photos.where(teamid: params[:team][:id].to_s, schedule: params[:game][:id].to_s, 
+                                 :players.in => [params[:athlete][:id].to_s])
+      @team = @sport.teams.find(params[:team][:id].to_s)
     elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:number].nil? && !params[:number][:id].blank?
       pics = @sport.photos.where(teamid: params[:team][:id].to_s, :players.in => [params[:number][:id].to_s])
       @team = @sport.teams.find(params[:team][:id].to_s)
     elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:athlete].nil? && !params[:athlete][:id].blank?
       pics = @sport.photos.where(teamid: params[:team][:id].to_s, :players.in => [params[:athlete][:id].to_s])
+      @team = @sport.teams.find(params[:team][:id].to_s)
+    elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:game].nil? && !params[:game][:id].blank?
+      pics = @sport.photos.where(teamid: params[:team][:id].to_s, schedule: params[:game][:id].to_s)
       @team = @sport.teams.find(params[:team][:id].to_s)
     elsif !params[:team].nil? && !params[:team][:id].blank?
       pics = @sport.photos.where(teamid: params[:team][:id].to_s)
@@ -33,7 +46,7 @@ class PhotosController < ApplicationController
       pics = []
     end
     
-    if pics.any?
+    if !pics.nil? and pics.any?
       pics.each_with_index do |p, cnt|
         @photos[cnt] = p
       end
@@ -200,12 +213,12 @@ class PhotosController < ApplicationController
     end
     @teams = @sport.teams
     @gameschedules = []
-    @teams.each do |t|
-      t.gameschedules.each_with_index do |g, cnt|
+#    @teams.each do |t|
+      @teams.first.gameschedules.each_with_index do |g, cnt|
         @gameschedules[cnt] = g
       end
     end
-  end
+#  end
   
   def update
     if @photo.update_attributes(params[:photo])

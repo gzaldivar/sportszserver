@@ -88,12 +88,6 @@ class FootballStatsController < ApplicationController
 			@stats.specialteams_totals(@athlete)
 		else			
 			@gamestats = @athlete.football_stats.where(gameschedule_id: params[:game].to_s).first
-#				@pass = s.football_passings
-#				@rush = s.football_rushings
-#				@rec = s.football_receivings
-#				@def = s.football_defenses
-#				@spec = s.football_specialteams
-#			end
 		end
 		respond_to do |format|
 			format.json

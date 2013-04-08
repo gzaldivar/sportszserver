@@ -1,6 +1,6 @@
 child :football_stats do
 	child :football_passings do
-		attributes :attempts, :completions, :comp_percentage, :td, :sacks, :yards_lost, :interceptions
+		attributes :attempts, :completions, :yards, :comp_percentage, :td, :sacks, :yards_lost, :interceptions
 	end
 	child :football_rushings do
 		attributes :attempts, :yards, :average, :td, :longest, :fumbles, :fumbles_lost

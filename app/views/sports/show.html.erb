@@ -10,16 +10,16 @@
       <% end %>
       <table class="table table-bordered">
         <thead>
-        <th>No.</th>
-        <th>Name</th>
-		<th>Remove</th>
+          <th>No.</th>
+          <th>Name</th>
+		      <th>Remove</th>
         </thead>
         <% if !@followed.nil? and @followed.any? %>
           <% @followed.each do |f| %>
             <tbody>
               <td><%= link_to f.number, sport_athlete_path(@sport, f) %></td>
               <td><%= link_to f.lastname, sport_athlete_path(@sport, f) %></td>
-			  <td><%= link_to "Remove", unfollow_sport_athlete_path(@sport, f) %></td>
+			       <td><%= link_to "Remove", unfollow_sport_athlete_path(@sport, f) %></td>
             </tbody>
           <% end %>
         <% end %>
@@ -38,6 +38,15 @@
             <% end %></td>
           </tbody>
         </table>
+     </div>
+     <div class="row">
+      <table class="table table-bordered">
+        <thead>
+        </thead>
+        <tbody>
+          <td><%= image_tag @sport.sponsors.first.sponsorpic.url(:medium) %></td>
+        </tbody>
+      </table>
      </div>
   </div>
   <div class="span5 offset1">
@@ -64,7 +73,7 @@
     <div class="row">
       <div class="span4 offset1">
         <%= link_to "Sport News", sport_newsfeeds_path(@sport), class: "btn btn-medium btn-primary" %>
-        <% if site_owner? %>
+        <% if isAdmin? %>
           <%= link_to "Add News Item", new_sport_newsfeed_path(@sport), class: "btn btn-medium btn-primary" %>
         <% end %>
       </div>
@@ -72,7 +81,7 @@
   </div>
 </div>
 <p>
-<% if site_owner? %>
+<% if isAdmin? %>
   <div class="row">
     <div class="span2 offset2">
       <%= link_to "Edit Sport", edit_sport_path(id: @sport.id), class: "btn btn-medium btn-primary" %>

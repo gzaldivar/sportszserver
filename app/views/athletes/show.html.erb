@@ -113,7 +113,7 @@
     <% if user_signed_in? and user_videos_ok? %>
 		  <%= link_to	"Add Video", newathlete_sport_videoclip_path(@sport, @athlete), class:	"btn btn-medium btn-primary" %>&nbsp;  
     <% end %>
-	<% if site_owner? %>
+	<% if isAdmin? %>
       	<%= link_to "Edit", edit_sport_athlete_path(@sport, @athlete),  class: "btn btn-medium btn-warning" %>&nbsp;
 			<%= link_to "Delete", sport_athlete_path(@sport, @athlete),  method:	:delete,  class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>&nbsp;
 			<%= link_to "Add News", new_sport_newsfeed_path(@sport),  class: "btn btn-medium btn-info" %>&nbsp;

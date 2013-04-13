@@ -18,7 +18,7 @@
 			<% else %>
 				<td><%= @sport.teams.find(athlete.team).team_name %></td>
 			<% end %>
-			<% if site_owner? %>
+			<% if isAdmin? %>
 				<td><%= link_to "Edit", edit_sport_athlete_path(@sport, athlete),  class: "btn btn-mini btn-warning" %></td>
 				<td><%= link_to "Delete", sport_athlete_path(@sport, athlete),  method:	:delete,  
 										class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %></td>

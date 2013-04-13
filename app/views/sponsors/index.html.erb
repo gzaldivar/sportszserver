@@ -1,0 +1,21 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Sponsors") %>
+<div class="row">
+  <div class="span10">
+		<ul class="homesites">
+			<div class="row">
+				<div class="span10">
+					<%= render 'sponsors', sponsors:  @sponsors %>
+				</div>
+			</div>   
+		</ul>
+		<div class="row">
+      		<div class="span2 offset4">
+      			<% if isAdmin? %>
+					<%= link_to "Add Sponsor", new_sport_sponsor_path(@sport), class: "btn btn-medium btn-primary" %>
+				<% end %>
+			</div>
+		</div>
+	</div>
+</div>
+
+

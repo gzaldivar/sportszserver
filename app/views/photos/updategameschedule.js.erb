@@ -1,1 +1,1 @@
-$('#gameschedules_select').html("<%= escape_javascript(options_for_select(@gameschedules.collect{ |t| [t.game_name, t.id] })) %>");
+$('#gameschedules_select').html("<%= escape_javascript(select('photo', 'schedule', @gameschedules.collect{ |t| [t.game_name, t.id] }, {include_blank: true})) %>");

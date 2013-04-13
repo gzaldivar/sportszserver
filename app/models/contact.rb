@@ -5,9 +5,9 @@ class Contact
   field	:title,		type: String
 	field	:name,		type: String
 	field	:phone,		type: String
-	field 	:mobile,	type: String
+	field :mobile,	type: String
 	field	:fax,		type: String
-	field 	:email,		type: String
+	field :email,		type: String
 
   belongs_to	:site, index: true
 

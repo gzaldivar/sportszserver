@@ -17,7 +17,7 @@ class SportsController < ApplicationController
     if @sport.save
       redirect_to @sport
     else
-       redirect_to :back, error: "Error saving sport information"
+       redirect_to :back, alert: "Error saving sport information"
     end
   end
   
@@ -49,8 +49,7 @@ class SportsController < ApplicationController
         @sports[cnt] = s
       end
     else
-      flash[:error] = "No site parameter"
-      redirect_to :back
+      redirect_to :back, alert: "No site parameter"
     end
     
     respond_to do |format|
@@ -66,8 +65,7 @@ class SportsController < ApplicationController
     if @sport.update_attributes(params[:sport])
       redirect_to @sport
     else
-      flash[:error] = "Error updating sport"
-      redirect_to :back
+      redirect_to :back, alert: "Error updating sport"
     end
   end
   

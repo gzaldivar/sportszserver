@@ -45,7 +45,7 @@
             <% if f.external_url %>
               <%= link_to f.external_url, f.external_url %>&nbsp
             <% end %>
-      			<% if site_owner? %>
+      			<% if isAdmin? %>
       				<%= link_to "Edit", edit_sport_newsfeed_path(f.sport, f),  class: "btn btn-mini btn-warning" %>
       				<%= link_to "Delete", sport_newsfeed_path(f.sport, f),  method:	:delete,  class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
       			<% end %>

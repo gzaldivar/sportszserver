@@ -1,0 +1,71 @@
+<script>
+  $(document).ready(function() {
+    $('#select_team').change(function() {
+      $.ajax({
+        url: "<%= updateforteams_sport_blogs_path %>",
+        data: {
+          teamid : $('#select_team').val()
+        },
+        dataType: "script"
+      });
+    });
+  });
+</script>
+<div class="row">
+	<div class="span10 offset1">
+		<%= simple_form_for [@sport, @blog] do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<div class="row">
+		        <div class="span2">
+		          <%= f.input :title, hint: "Enter Blog Title" %>
+		        </div>
+	        	<div class="span4 offset1">
+	          		<%= f.input :external_url,  label: "External URL:", required: false, hint: "Enter Url of external site if blog item points to another site" %>
+	        	</div>
+		    </div>
+		    <div class="row">
+				<div class="span2">
+					<%= f.input	:entry, as: :text, hint:	"Enter Blog Entry:" %>
+				</div>
+				<div class="span4 offset1">
+            		<div class="row">
+              			<div class="span4">
+					    	<%= f.input	:team, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Team", hint: "Blog for Team ...", input_html: { id: "select_team" } %>
+					    </div>
+					</div>
+            		<div class="row">
+              			<div class="span4">
+    					    <%= f.input	:game, collection: @gameschedules.collect{ |t| [t.game_name, t.id] }, label: "Game", hint: "Blog for Game .....", input_html: { id: "gameschedules_select"} %>
+              			</div>
+            		</div>
+             		<div class="row">
+              			<div class="span4">
+                			<% if @athlete %>
+                				<h3><em>News item is for team <%= @athlete %></em></h3>
+                			<% else %>
+    					    	<%= f.input	:athlete, collection: @athletes.collect{ |t| [t.name, t.id] }, label: "Athlete", hint: "Athlete News ...", input_html: { id: "athletes_select"} %>
+                			<% end %>
+              			</div>
+            		</div>
+            		<div class="row">
+              			<div class="span4">
+                			<% if @coach %>
+                				<h3><em>News item is for team <%= @coach %></em></h3>
+                			<% else %>
+    					    	<%= f.input	:coach, collection: @coaches.collect{ |t| [t.full_name, t.id] }, label: "Coach", hint: "Coach News ...", input_html: { id: "coaches_select"} %>
+                			<% end %>
+              			</div>
+            		</div>
+					<p>
+	            </div>
+	            <p>
+			</div>
+  		</div>
+      	<div class="row">
+  			<div class="span1 offset4">
+  				<%= f.button :submit, "Submit", class: "btn btn-medium btn-primary" %>
+  			</div>
+      	</div>
+		<% end %>	
+	</div>	
+</div>

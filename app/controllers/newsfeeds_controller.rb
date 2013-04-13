@@ -20,7 +20,7 @@ class NewsfeedsController < ApplicationController
         format.xml
       end
     else
-      redirect_to :back, error: "Error creating news item for #{@sport.sport_name}"
+      redirect_to :back, alert: "Error creating news item for #{@sport.sport_name}"
     end
   end
   
@@ -64,7 +64,7 @@ class NewsfeedsController < ApplicationController
     if @newsfeed.update_attributes(params[:newsfeed])
       redirect_to [@sport, @newsfeed], notice: "Update sucessful!"
     else
-      redirect_to :back, error: "Error updating news feed item."
+      redirect_to :back, alert: "Error updating news feed item."
     end
   end
   
@@ -72,7 +72,7 @@ class NewsfeedsController < ApplicationController
     if @newsfeed.delete
       redirect_to :back, notice: "News item delete successful!"
     else
-      redirect_to :back, error: "Error deleting news item"
+      redirect_to :back, alert: "Error deleting news item"
     end
   end
   

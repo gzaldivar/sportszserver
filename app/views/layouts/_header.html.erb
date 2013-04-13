@@ -83,6 +83,24 @@
 								<li><%= link_to "Search", sport_videoclips_path(@sport) %></li>
 		      				</ul>
 		      			</li>
+		      			<li id="fat-menu" class="dropdown">
+		      				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		      				The Pit<b class="caret"></b>
+		      				</a>
+		      				<ul class="dropdown-menu">
+						  		<li class="dropdown-submenu">
+						    		<a tabindex="-1" href="#">Blog</a>
+						    			<ul class="dropdown-menu">
+			      							<% @sport.teams.each do |t| %>
+		      									<li><%= link_to (t.title + " " + t.mascot), sport_blogs_path(@sport, team_id: t) %></li>
+			      								<li class="divider"></li>
+		      								<% end %>
+		      							</ul>
+		      						</a>
+		      					<li class="divider"></li>
+								<li><%= link_to "Practice Calendar", '#' %></li>
+		      				</ul>
+		      			</li>
           			<% end %>
 	        </ul>
 	        <ul class="nav pull-right">
@@ -95,14 +113,18 @@
 					</a>
 					<ul class="dropdown-menu">
 	                	<% if user_signed_in? %>
-							<li><%= link_to "Profile", user_path(current_user) %></li>
-							<% if site_owner? and !@sport.nil? and @sport.teams.count > 0 %>
+							<li><%= link_to "My Profile", user_path(current_user) %></li>
+							<% if isAdmin? and !@sport.nil? and @sport.teams.count > 0 %>
 						  		<li class="dropdown-submenu">
 						    		<a tabindex="-1" href="#">Admin</a>
 						    			<ul class="dropdown-menu">
 						        			<li><%= link_to "Manage Players", sport_athletes_path(@sport) %></li>
 											<li class="divider"></li>
 											<li><%= link_to "Manage Coaches", sport_coaches_path(@sport) %></li>
+											<li class="divider"></li>
+											<li><%= link_to "Manage Users", users_path(site: current_site) %></li>
+											<li class="divider"></li>
+											<li><%= link_to "Manage Sponsors", sport_sponsors_path(@sport) %></li>
 						    			</ul>
 									</a>
 								</li>

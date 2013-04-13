@@ -19,6 +19,8 @@ class Sport
   has_many :videoclips
   has_many :photo_errors
   has_many :photo_queues
+  has_many :sponsors
+  has_many :blogs
   embeds_many :teams
   embeds_many :newsfeeds
 

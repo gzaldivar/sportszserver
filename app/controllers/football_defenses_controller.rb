@@ -1,6 +1,5 @@
 class FootballDefensesController < ApplicationController
-	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new]
-	before_filter	:site_owner?,	        only: [:destroy, :update, :create, :edit, :new]
+	before_filter	[:authenticate_user!, :site_owner?],	only: [:destroy, :update, :create, :edit, :new]
   	before_filter 	:get_sport_athlete_stat, only: [:new, :playbyplay, :create, :show, :edit, :update, :destroy]
   	before_filter	:correct_stat,			only: [:show, :edit, :update, :destroy]
 
@@ -20,7 +19,7 @@ class FootballDefensesController < ApplicationController
 		     end
 		else
 			puts 'got here'
-			redirect_to :back, error: "Error creating football defense stats"
+			redirect_to :back, alert: "Error creating football defense stats"
 		end
 	end
 
@@ -37,7 +36,7 @@ class FootballDefensesController < ApplicationController
 		        format.json 
 		     end
 		else
-			redirect_to :back, error: "Error updating stats for " + @athlete.full_name
+			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name
 		end
 	end
 

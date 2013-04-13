@@ -33,7 +33,7 @@
 					</div>
 				</div>   
 			</ul>
-      <% if site_owner? %>
+      <% if isAdmin? %>
   			<div class="row">
   				<div class="span8 offset4">
   					<%= link_to "Add Athlete", new_sport_athlete_path(@sport), class: "btn btn-medium btn-primary" %>

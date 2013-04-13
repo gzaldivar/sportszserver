@@ -1,6 +1,5 @@
 class AthletesController < ApplicationController  
-	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new]
-	before_filter	:site_owner?,	        only: [:destroy, :update, :create, :edit, :new]
+	before_filter	[:authenticate_user!, :site_owner?],	only: [:destroy, :update, :create, :edit, :new]
   before_filter :get_sport
   before_filter :correct_athlete,     only: [:show, :edit, :update, :destroy, :follow, :unfollow]
   
@@ -23,16 +22,16 @@ class AthletesController < ApplicationController
         format.js
       end
     else     
-      redirect_to :back, error: "Error creating athlete"
+      redirect_to :back, alert: "Error creating athlete"
     end
   end
   
   def show
-  if @athlete.team == "Unassigned"
-    @team = nil
-  else 
-    @team = @sport.teams.find(@athlete.team)
-  end 
+    if @athlete.team == "Unassigned"
+      @team = nil
+    else 
+      @team = @sport.teams.find(@athlete.team)
+    end 
 
     @photos = Photo.where(athletes: @athlete.id)
   end
@@ -55,7 +54,7 @@ class AthletesController < ApplicationController
         format.js
       end
     else
-      redirect_to :back, error: "Update fialed!"
+      redirect_to :back, alert: "Update fialed!"
     end        
   end
   
@@ -83,6 +82,7 @@ class AthletesController < ApplicationController
       players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:number].to_s)
     elsif params[:team_id]
       players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:team_id].to_s).asc(:number)
+      @team = @sport.teams.find(params[:team_id])
     else
       players = Athlete.where(sport_id: params[:sport_id]).asc(:number)
     end

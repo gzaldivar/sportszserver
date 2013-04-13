@@ -1,0 +1,84 @@
+<div class="row">
+	<div class="span10 offset1">
+		<%= simple_form_for [@sport, @sponsor] do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<div class="row">
+				<div class="span4">
+					<%= f.input :name, label: "Sponsor Name:", input_html: { style: 'width: 400px' } %>
+				</div>
+				<div class="span4 offset1">
+					<%= f.input	:addrnum, required: true, label:	"Number:" %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span4">
+					<%= f.input :street, input_html: { style: 'width: 400px' } %>
+				</div>
+				<div class="span4 offset1">
+					<%= f.input :city, input_html: { style: 'width: 310px' } %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span2">
+					<%= f.input :state, required: true, collection: us_states %>
+				</div>
+				<div class="span2 offset1">
+					<%= f.input :zip %>
+				</div>
+				<div class="span2 offset1">
+					<%= f.input	:phone %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span2">
+					<%= f.input	:fax %>
+				</div>
+				<div class="span2 offset1">
+					<%= f.input	:mobile %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span8">
+					<%= f.input :adurl, label: "Ad Url", hint: "Target URL when user selects the ad", input_html: { style: 'width: 450px' } %>
+				</div>
+			</div>
+	        <div id="loading">
+	          <div id="loadingcontent">
+	              <p id="loadingspinner">
+	                  Updating Sponsor Info ....
+	              </p>
+	          </div>
+	        </div>
+			<div class="row">
+				<div class="span4">
+					<%= f.input	:contactemail,	label:	"Email:", input_html: { style: 'width: 450px' } %>
+				</div>
+				<div class="span3 offset1">
+					<%= f.input :priority, as: :radio_buttons, label: "Sponsorship Priority:", hint: "Select if you want your sponorship ads to take prioirty over ads displayed from an ad server on your mobile app", :selected => (@sponsor.priority? ? true : false) %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span3">
+					<h4>Current sponser ad image</h4>
+					<% if !@sponsor.sponsorpic.blank? %>
+						<%= image_tag @sponsor.sponsorpic.url(:medium) %>
+		          	<% elsif !@sponsor.sponsorpic.blank? %>
+		            	<%= image_tag @sponsor.sponsorpic.url(:orignal) %>
+		          	<% else %>
+		            	<%= image_tag "Photo_Not_Available.jpg" %>
+					<%end %>
+					<%= f.input	:sponsorpic, label: "Sponsor Ad Image:", hint:	"The ad will be processed so that it renders correctly on mobile platforms." %>
+				</div>
+				<div class="span2 offset1">
+					<%= collection_select(:sponsor, :team_id, @sport.teams, :id, :team_name, prompt: true) %>
+				</div>
+				<div class="span2 offset1">
+					<%= f.input :teamonly, as: :radio_buttons, label: "Team Sponsor?" %>
+				</div>
+			</div>
+			<div class="span2 offset4">
+				<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary", id: "submitbtn" %>
+			</div>
+		<% end %>	
+	</div>	
+</div>

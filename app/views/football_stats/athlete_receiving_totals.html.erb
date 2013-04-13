@@ -9,7 +9,9 @@
 			<p>
 			<%= render 'receiving_totals', receiving: @receiving %>
 			<div class="span4 offset3">
-				<%= link_to "Add Receiving Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "receiving"), class: "btn btn-mini btn-primary" %>
+				<% if isAdmin? %>
+					<%= link_to "Add Receiving Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "receiving"), class: "btn btn-mini btn-primary" %>
+				<% end %>
 				<% if @stats.count > 0 %>
 					<%= link_to "Game Stats", receiving_sport_athlete_football_stats_path(@sport, @athlete, games: "games"), 
 						class: "btn btn-mini btn-primary" %>

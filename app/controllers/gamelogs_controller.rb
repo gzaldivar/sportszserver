@@ -10,7 +10,7 @@ class GamelogsController < ApplicationController
           format.json
         end
       else
-        redirect_to :back, error: "Error creating game log"
+        redirect_to :back, alert: "Error creating game log"
       end 		
   	end
 

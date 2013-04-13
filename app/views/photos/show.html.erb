@@ -63,7 +63,7 @@
 <br/>
 <div class="row">
   <div class="span5 offset4">
-    <% if site_owner? or (user_signed_in? and (current_user.id == @photo.owner) and enable_user_pics? ) %>
+    <% if isAdmin? or (user_signed_in? and (current_user.id == @photo.owner) and enable_user_pics? ) %>
       <%= link_to	"Edit Photo", edit_sport_photo_path(@sport, @photo), class:	"btn btn-medium btn-primary" %>
     <% end %>
   </div>

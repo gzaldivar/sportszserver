@@ -1,0 +1,85 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @sponsor.name) %>
+<p>
+<div class="row">   
+  <div class="span10">
+		<%= render 'shared/error_messages', object:	@sponsor %>
+	</div>
+</div>
+<div class="row">
+	<div class="span4">
+	<% if !@sponsor.sponsorpic.blank? %> 
+		<%= image_tag @sponsor.sponsorpic.url(:medium) %>
+	<% else %>
+		<%= image_tag 'Photo_Not_Available.jpg' %>
+	<% end %>
+	</div>
+  <div class="span6">
+    <div class="row">
+      <table class="table">
+      	<thead> 
+          <tr>
+      			<th>Name</th>
+      			<th>Email</th>
+            <th>Sponsor Priority</th>
+            <th>Team?</th>           
+         </tr>
+        </thead>
+        <tbody>
+      		<tr>
+      			<td><%= @sponsor.name %></td>
+      			<td><%= @sponsor.contactemail %></td>
+            <td><%= @sponsor.priority %></td>
+            <% if !@sponsor.team_id.nil? %>
+              <td><%= @sport.teams.find(@sponsor.team_id).team_name %></td>
+            <% else %>
+              <td>None</td>
+            <% end %>
+         </tr>
+        </tbody>
+      </table>
+      <table class="table">
+        <thead>
+          <tr>
+      			<th>Address</th>
+      			<th>City</th>
+      			<th>State</th>
+      			<th>Phone</th>
+            <th>Fax</th>
+            <th>Mobile</th>  
+      		</tr>
+      	</thead>
+      	<tbody>
+          <tr>
+      			<td><%= @sponsor.addrnum.to_s + " " + @sponsor.street %></td>
+      			<td><%= @sponsor.city %></td>
+        		<td><%= @sponsor.state %></td>
+        		<td><%= @sponsor.phone %></td>
+            <td><%= @sponsor.fax %></td>
+            <td><%= @sponsor.mobile %></td>
+      		</tr>
+      	</tbody>
+      </table>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Ad Target URL</th>
+          </tr>
+        </thead>
+        <tbody>
+          <td><%= @sponsor.adurl %></td>
+        </tbody>
+      </table>
+  	</div>
+  </div>
+  <p>
+</div>
+<p>
+<div class="row">
+  <div class="span4 offset4">
+	<% if isAdmin? %>
+      <%= link_to "Edit", edit_sport_sponsor_path(@sport, @sponsor),  class: "btn btn-medium btn-warning" %>&nbsp;
+			<%= link_to "Delete", sport_sponsor_path(@sport, @sponsor),  method:	:delete,  class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>&nbsp;
+		<% end %>
+  </div>
+</div>
+

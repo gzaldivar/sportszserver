@@ -2,9 +2,9 @@ Sportzserver::Application.routes.draw do
 
   devise_for :users, controllers: {registrations: "users/registrations"}
 
-  resources :users, only: [:edit, :update, :show] do
+  resources :users, only: [:edit, :update, :show, :index] do
     member do
-      get   :site
+      get   :site, :disable, :enable
     end
   end
 
@@ -15,6 +15,14 @@ Sportzserver::Application.routes.draw do
   end  
    
   resources :sports do
+    resources :sponsors
+
+    resources :blogs do
+      collection do
+        get :updateforteams
+      end
+    end
+    
     resources :teams,   only: [:new, :create, :edit, :update, :destroy, :index, :show] do
       resources :gameschedules, only: [:show, :new, :create, :edit, :update, :index, :destroy] do
         resources :gamelogs, only: [:create, :destroy]
@@ -117,7 +125,7 @@ Sportzserver::Application.routes.draw do
     end
     
     collection do
-      get  :male, :female, :mobileinfo, :allnews
+      get  :male, :female, :mobileinfo, :allnews, :pricing
     end
   end
   
@@ -128,6 +136,7 @@ Sportzserver::Application.routes.draw do
   match '/contacts', to: 'sites#contact'
   match '/about',   to: 'sites#about'
   match '/info',    to: 'sites#info'
+  match '/pricing',  to: 'sites#pricing'
   match '/mobileinfo',  to: 'sites#mobileinfo'
   match '/user/root',  to: 'sites#show'
 

@@ -1,0 +1,13 @@
+<% provide(:title, @sport.sport_name + " - Blog") %>
+<p>
+	<% item=[]
+	  if !@blog.kind_of?(Array) 
+	    item[0] = @blog  
+	  else
+	    item = @blog 
+	  end %>
+<div class ="row">
+	<div class="span10 offset1">
+  		<%= render 'blog', blog: item %>
+	</div>
+</div>

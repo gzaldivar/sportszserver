@@ -76,7 +76,7 @@
     </h4>
   </div>
 </div><p>
-<% if site_owner? %>
+<% if isAdmin? %>
   <div class="row">
     <div class="span2 offset4">
       <%= link_to "Add Sport", new_sport_path, class: "btn btn-medium btn-primary" %>
@@ -107,7 +107,7 @@
   </div>
 </div>
 <div class="row">
-	<% if site_owner? %>
+	<% if isAdmin? %>
     <div class="span2 offset4">
 			<%= link_to "Edit Site", edit_site_path(id: current_site.id), class: "btn btn-medium btn-primary" %>
 		</div>

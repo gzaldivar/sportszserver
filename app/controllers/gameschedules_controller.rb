@@ -1,6 +1,6 @@
 class GameschedulesController < ApplicationController
 	before_filter	:authenticate_user!,  only: [:destroy, :new, :edit, :update, :create]
-  before_filter :site_owner?,          only: [:destroy, :new, :edit, :update, :create]
+  before_filter :site_owner?,         only: [:destroy, :new, :edit, :update, :create]
   before_filter :get_sport
   before_filter :get_schedule,        only: [:show, :edit, :update, :destroy]
   
@@ -27,7 +27,7 @@ class GameschedulesController < ApplicationController
         format.js
       end
     else
-      redirect_to :back, error: "Error creating game schedule"
+      redirect_to :back, alert: "Error creating game schedule"
     end
 
   end
@@ -70,7 +70,7 @@ class GameschedulesController < ApplicationController
         format.js
       end
     else
-      redirect_to :back, error: "Error updating game schedule"
+      redirect_to :back, alert: "Error updating game schedule"
     end
   end
   
@@ -92,7 +92,7 @@ class GameschedulesController < ApplicationController
     if @gameschedule.destroy
       redirect_to :back, notice: "Schedule deleted!"
     else
-      redirect_to :back, error: "Error deleting schedule"
+      redirect_to :back, alert: "Error deleting schedule"
     end
   end
   

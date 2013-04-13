@@ -1,0 +1,48 @@
+<% provide(:title, 'Users') %>
+<p>
+<div class="row">
+	<div class="span10">
+		<%= form_tag users_path, class: "form-search", method: 'get' do %>
+			<div class="row">
+			  	<div class="span4">
+			    	<%= label_tag "Name: " %>
+			    	<%= text_field_tag  'name', value=params[:name] %>
+			  	</div>
+				<div class="spann3">
+			    	<%= label_tag "email: " %>
+			    	<%= text_field_tag  'email', value=params[:email] %>
+				</div>
+				<div class="span2">
+			    	<%= submit_tag  "Search", class: "btn btn-medium btn-primary", name: nil %>
+			  	</div>
+			</div>
+		<% end %>
+		<p>
+		<table class="table">
+			<thead>
+				<th>Avatar</th>
+				<th>Username</th>
+				<th>Email</th>
+				<th>Disable</th>
+			</thead>
+			<tbody>
+				<% @users.each do |u| %>
+					<tr>
+						<% if u.avatar_file_name.nil? %>
+							<td><%= link_to image_tag("photo_not_available.png"), u  %></td>
+						<% else %>
+							<td><%= link_to image_tag(u.avatar.url(:thumb)), u  %></td>
+						<% end %>
+						<td><%= link_to u.name, u %></td>
+						<td><%= link_to u.email, u %></td>
+						<% if u.disable %>
+							<td><%= link_to "Enable User", enable_user_path(u), class: "btn btn-mini btn-danger" %></td>
+						<% else %>
+							<td><%= link_to "Disable User", disable_user_path(u), class: "btn btn-mini btn-danger" %></td>
+						<% end %>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>

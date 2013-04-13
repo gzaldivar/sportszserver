@@ -10,7 +10,7 @@
 				<%= render @contacts %>
 			<% end %>
 			<p>
-			<% if site_owner? %>
+			<% if isAdmin? %>
 				<div class="row">
 					<div class="span2 offset3">
 						<%= link_to "Add Contact", new_site_contact_path(current_site), class: "btn btn-medium btn-primary" %>

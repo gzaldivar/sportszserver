@@ -1,32 +1,41 @@
 <% provide(:title, 'User ' + @user.name) %>
 <p>
 <div class="row">
-	<div class="span10" id="backcolor">
-	  <aside class="span4 offset1">
-	    <section>
-	      <h3>
-	      <% if current_user.avatar_file_name.nil? %>
-	      	<%= image_tag 'photo_not_available.png' %>
-	      <% else %>
-	      	<%= image_tag current_user.avatar.url(:thumb) %>
-	      <% end %>
-	      <%= current_user.name %><br/><p>
-	      <%= link_to 'Edit', edit_user_path(id: current_user.id) %>
-	      </h3>
-	    </section>
-	  </aside>
+	<div class="span8 offset1" id="backcolor">
+	      	<% if @user.admin %>
+	      		<div class="row">
+	      			<div class="span10">
+	      				<h4>Administrator for <%= current_site.sitename %></h4>
+	      			</div>
+	      		</div>
+	      	<% end %>
+	      	<p>
+	      	<h3>
+	      	<% if @user.avatar_file_name.nil? %>
+	      		<%= image_tag 'photo_not_available.png' %>
+	      	<% else %>
+	      		<%= image_tag @user.avatar.url(:thumb) %>
+	      	<% end %>
+	      	<%= @user.name %><br/><p>
+	  		</h3>
+	      	Email: <%= @user.email %><p>
+	      	<p>
+	      	<em>
+	      	<% if @user.disable %>
+	      		User Disabled
+	      	<% else %>
+	      		User Enabled
+	      	<% end %>
+	      	</em>
+	      	<p>
+	      	<%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-medium btn-primary" %>
 	    <div class="row">
 	  		<div class="span4">
-	        <% if current_user.confirmed_at.nil? %>
-	          <h3>An email has been sent to <%= current_user.email %>. Please confirm your account by replying to the email.</h3>
+	        <% if @user.confirmed_at.nil? %>
+	          <h3>An email has been sent to <%= @user.email %>. Please confirm your account by replying to the email.</h3>
 	        <% end %>
 	      </div>
 	      <p>
-	      <div class="row">
-	        <div class="span1 offset4">
-	          <%= link_to "Edit", edit_user_path(current_user), class: "btn btn-medium btn-primary" %>
-	        </div>
-	      </div>
 	  	</div>
 	</div>
 </div>

@@ -56,6 +56,9 @@ class SitesController < ApplicationController
   def info
   end
 
+  def pricing
+  end
+
   def mobileinfo
   end
   
@@ -138,6 +141,7 @@ class SitesController < ApplicationController
     @site.city = @site.zip.to_region(city: true)
     @site.state = @site.zip.to_region(state: true)
     @site.contactemail = current_user.email
+    @site.adminid = current_user.id
 
     if @site.save
       current_user.mysites = { @site.id => @site.sitename }
@@ -153,8 +157,8 @@ class SitesController < ApplicationController
         format.js
       end
     else
-    	flash[:error] = "Error creating site"
-      redirect_to :back
+    	
+      redirect_to :back, alert: "Error creating site"
     end
   end
   
@@ -208,12 +212,11 @@ class SitesController < ApplicationController
           format.js
         end
       else
-        flash[:error] = "Error updating site information"
-        redirect_to :back
+        
+        redirect_to :back, alert: "Error updating site information"
       end
     else
-      flash[:error] = "Invalid zip code"
-      redirect_to :back
+      redirect_to :back, alert: "Invalid zip code"
     end
   end
 

@@ -41,7 +41,7 @@
 </div><br/>      
 <div class="row">
   <div class="span4 offset5">
-		<% if site_owner? %>
+		<% if isAdmin? %>
       <%= link_to "Edit", edit_sport_coach_path(@sport, @coach),  class: "btn btn-medium btn-warning" %>&nbsp;
 			<%= link_to "Delete", sport_coach_path(@sport, @coach),  method:	:delete,  class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>&nbsp;
 			<%= link_to "Add News", new_sport_newsfeed_path(@sport),  class: "btn btn-medium btn-info" %>&nbsp;

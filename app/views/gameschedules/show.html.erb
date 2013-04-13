@@ -55,7 +55,7 @@
 	  		<% else %>
 	  		<% end %>
 	  	</table>
-	  	<% if site_owner? %>
+	  	<% if isAdmin? %>
 	  		<div class="center">
 	  			<%= link_to "Edit", edit_sport_team_gameschedule_path(@sport, @team, @gameschedule), 
 	  					class: "btn btn-medium btn-warning" %>
@@ -74,14 +74,14 @@
 				 	<%= g.time %> - 
 				 	<%= g.logentry %> - 
 				 	<%= g.score %>
-				 	<% if site_owner? %>
+				 	<% if isAdmin? %>
 				 		<%= link_to "Delete", [@sport, @team, @gameschedule, g], method: :delete,
 				 					class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
 				 	<% end %>
 				 </div>
 			</div>
 		<% end %>
-		<% if site_owner? %>
+		<% if isAdmin? %>
 		  	<h6>Enter Optional Game log entry. Entries will be ordered first to last by time.</h6><br/>
 		  		<em><h5>Keep in mind that game log scoring is not automatically computed for period scoring. This is because game logs are optional.</h5></em></h6>
 	  		<%= render "gamelogs/gamelog_form" %>

@@ -280,7 +280,7 @@ class VideoclipsController < ApplicationController
         format.js
       end
     else
-      redirect_to [@sport, @videoclip], error: "Update failed!"
+      redirect_to [@sport, @videoclip], alert: "Update failed!"
     end
   end
 
@@ -290,7 +290,7 @@ class VideoclipsController < ApplicationController
 	  	@videoclip.destroy
 	  	redirect_to sport_videoclips_path(@sport), notice: "Videoclip delete sucessful!"
 	  rescue => e
-	  	redirect_to :back, error: "Error deleting video " + e.message
+	  	redirect_to :back, alert: "Error deleting video " + e.message
 	  end
   end
 

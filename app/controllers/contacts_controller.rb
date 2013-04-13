@@ -1,6 +1,5 @@
 class ContactsController < ApplicationController
-  before_filter :authenticate_user!,   only: [:new, :create, :edit, :update, :destroy]
-  before_filter :site_owner?,           only: [:new, :create, :edit, :update, :destroy]
+  before_filter [:authenticate_user!, :site_owner?],  only: [:new, :create, :edit, :update, :destroy]
   before_filter :get_site
   before_filter :correct_contact,       only: [:show, :update, :edit, :destroy]
 
@@ -12,7 +11,7 @@ class ContactsController < ApplicationController
     if @contact = @site.contacts.create!(params[:contact])
       redirect_to [@site, @contact], notice: "Contact created!"
     else
-      redirect_to :back, error: e.message
+      redirect_to :back, alert: e.message
     end
   end
   
@@ -31,7 +30,7 @@ class ContactsController < ApplicationController
     if contact.update_attributes(params[:contact])      
       redirect_to [@site,contact], notice: "Contact updated!"
     else
-      redirect_to :back, error: "Error updating contact"
+      redirect_to :back, alert: "Error updating contact"
     end
   end
   

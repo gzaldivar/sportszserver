@@ -26,6 +26,7 @@ class Site
 
   field :sportsexdefault,    	type: String, default:  "Male"
   field :season,				type: String
+  field :adminid, type: String
 
   search_in :sitename, :mascot, :state, :zip, :city
 
@@ -67,7 +68,6 @@ class Site
 
   has_many :contacts, dependent: :destroy
   has_many :sports, dependent: :destroy
-  has_many :newsfeeds, dependent: :destroy
   belongs_to :user
 
   validates :zip, presence: true, format: { with: /^[0-9]{5}(-[0-9]{4})?$/ }

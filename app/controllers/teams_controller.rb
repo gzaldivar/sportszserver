@@ -10,7 +10,7 @@ class TeamsController < ApplicationController
 		if @team = @sport.teams.create!(params[:team])
 			redirect_to @sport, notice: "Added #{@team.title} #{@team.mascot}!"
 		else
-			redirect_to @sport, error: "Error adding team"
+			redirect_to @sport, alert: "Error adding team"
 		end
 	end
 
@@ -23,7 +23,7 @@ class TeamsController < ApplicationController
 		if team.update_attributes(params[:team])
 			redirect_to @sport, notice: "Team updated"
 		else
-			redirect_to @sport, error: "Error updating team"
+			redirect_to @sport, alert: "Error updating team"
 		end
 	end
 

@@ -1,6 +1,7 @@
 class User
   include Mongoid::Document
   include Mongoid::Paperclip
+  include Mongoid::Timestamps
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -50,6 +51,8 @@ class User
   field :admin, type: Boolean, default: false
   field :mysites, type: Hash
   field :default_site, type: String
+  field :teamid, type: String
+  field :disable, type: Boolean, default: false
   
   has_mongoid_attached_file :avatar,
     :storage        => :s3,
@@ -62,6 +65,6 @@ class User
     
   validates_attachment_content_type :avatar, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_presence_of :name
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at, :authentication_token
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at, :authentication_token, :teamid
 
 end

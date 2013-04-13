@@ -39,11 +39,13 @@
 				<td><%= @defense.fumbles_recovered %></td>
 			</tbody>
 		</table>
-		<div class="span2 offset3">
-			<%= link_to "Edit", edit_sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, @defense), 
-						class: "btn btn-medium btn-primary" %>
-			<%= link_to "Delete", sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, @defense), 
-						method: :delete, class: "btn btn-medium btn-danger" %>
-		</div>
+		<% if isAdmin? %>
+			<div class="span2 offset3">
+				<%= link_to "Edit", edit_sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, @defense), 
+							class: "btn btn-medium btn-primary" %>
+				<%= link_to "Delete", sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, @defense), 
+							method: :delete, class: "btn btn-medium btn-danger" %>
+			</div>
+		<% end %>
 	</div>
 </div>

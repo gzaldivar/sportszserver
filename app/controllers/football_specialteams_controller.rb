@@ -1,6 +1,5 @@
 class FootballSpecialteamsController < ApplicationController
-	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new]
-	before_filter	:site_owner?,	        only: [:destroy, :update, :create, :edit, :new]
+	before_filter	[:authenticate_user!, :site_owner?],	only: [:destroy, :update, :create, :edit, :new]
   	before_filter 	:get_sport_athlete_stat
   	before_filter	:correct_stat,			only: [:show, :editkicker, :editpunter, :editkoreturn, :editpuntreturn, :editkickoff, 
   												   :update, :destroy]
@@ -36,7 +35,7 @@ class FootballSpecialteamsController < ApplicationController
 		        format.json 
 		     end
 		else
-			redirect_to :back, error: "Error creating football specialteams stats"
+			redirect_to :back, alert: "Error creating football specialteams stats"
 		end
 	end
 
@@ -65,7 +64,7 @@ class FootballSpecialteamsController < ApplicationController
 		        format.json 
 		     end
 		else
-			redirect_to :back, error: "Error updating stats for " + @athlete.full_name
+			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name
 		end
 	end
 

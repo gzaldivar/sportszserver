@@ -33,10 +33,12 @@
 				<td><%= @receiving.fumbles_lost %></td>
 			</tbody>
 		</table>
-		<div class="span2 offset3">
-			<%= link_to "Edit", edit_sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat, @receiving), class: "btn btn-medium btn-primary" %>
-			<%= link_to "Delete", sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat, @receiving), method: :delete, 
-						class: "btn btn-medium btn-danger" %>
-		</div>
+		<% if isAdmin? %>
+			<div class="span2 offset3">
+				<%= link_to "Edit", edit_sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat, @receiving), class: "btn btn-medium btn-primary" %>
+				<%= link_to "Delete", sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat, @receiving), method: :delete, 
+							class: "btn btn-medium btn-danger" %>
+			</div>
+		<% end %>
 	</div>
 </div>

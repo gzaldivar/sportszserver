@@ -1,6 +1,5 @@
 class CoachesController < ApplicationController
-	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new]
-	before_filter	:site_owner?,	        only: [:destroy, :update, :create, :edit, :new, :index]
+	before_filter	[:authenticate_user!, :site_owner?],	only: [:destroy, :update, :create, :edit, :new]
   before_filter :get_sport
 	before_filter	:correct_coach,	      only:	[:show, :edit, :update, :destroy]
 	
@@ -19,7 +18,7 @@ class CoachesController < ApplicationController
         format.js
       end
     else      
-      redirect_to :back, notice: "Error saving coach."
+      redirect_to :back, flash: { error: "Error saving coach." }
     end
 	end
 	
@@ -36,6 +35,7 @@ class CoachesController < ApplicationController
     @coaches = []
     if params[:team_id]
       coach = @sport.coaches.where(team: params[:team_id].to_s)
+      @team = @sport.teams.find(params[:team_id])
     else
       coach = @sport.coaches.all
     end
@@ -64,7 +64,7 @@ class CoachesController < ApplicationController
     if @coach.update_attributes(params[:coach])      
       redirect_to [@sport, @coach], notice: 'Update successful!'
     else
-      redirect_to :back, notice: 'Error updating coach information for ' + @sport.name
+      redirect_to :back, flash: { error: 'Error updating coach information for ' + @sport.name }
     end        
 	end
 	

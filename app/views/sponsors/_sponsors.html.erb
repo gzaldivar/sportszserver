@@ -1,0 +1,55 @@
+<table class="table table-hover">
+	<thead> 
+		<tr>
+      		<th>Ad Image</th>
+			<th>Name</th>
+			<th>Address</th>
+			<th>City</th>
+			<th>State</th>
+			<th>Zip</th>
+			<th>Phone</th>
+			<!--th>Fax</th>
+			<th>Mobile</th>
+			<th>Email</th>
+			<th>Sponsor Priority</td>
+			<th>Team</th>
+			<th>Ad URL</th-->
+			<% if site_owner? %>
+				<th>Update?</th>
+				<!--th>Remove?</th-->
+			<% end %>
+		</tr>
+	</thead>
+	<tbody>
+		<% sponsors.each do |s| %>
+			<tr>
+        		<td><% if s.sponsorpic.blank? %>
+              		<%= link_to image_tag('Photo_Not_Available.jpg'), c %>
+            	<% else %>
+              		<%= link_to image_tag(s.sponsorpic.url(:thumb)), [@sport, s] %>
+            	<% end %>
+				<td><%= link_to s.name, [@sport, s] %></td>
+				<td><%= s.addrnum.to_s + " " + s.street %></td>
+				<td><%= s.city %></td>
+				<td><%= s.state %></td>
+				<td><%= s.zip %></td>
+				<td><%= s.phone %></td>
+				<!--td><%= s.fax %></td>
+				<td><%= s.mobile %></td>
+				<td><%= s.contactemail %></td>
+				<td><%= s.priority %></td>
+				<% if !s.team_id.nil? %>
+					<td><%= @sport.teams.find(s.team_id).team_name %></td>
+				<% else %>
+					<td>None</td>
+				<% end %>
+				<td><%= s.adurl %></td-->
+				<% if site_owner? %>
+          			<td><%= link_to "Edit", edit_sport_sponsor_path(@sport, s), class: "btn btn-mini btn-warning" %></td>
+          			<!--td><%= link_to "Delete", sport_sponsor_path(@sport, s),  method:	:delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %></td-->
+				<% end %>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+

@@ -177,7 +177,7 @@ class PhotosController < ApplicationController
       if queue.save!
         Resque.enqueue(PhotoProcessor, queue.id)
       else
-        flash[:error] = "Error putting photo in queue!"
+        flash[:alert] = "Error putting photo in queue!"
       end
     end
   end
@@ -237,7 +237,7 @@ class PhotosController < ApplicationController
         format.js
       end
     else
-      redirect_to [@sport, @photo], error: "Update failed!"
+      redirect_to [@sport, @photo], alert: "Update failed!"
     end
   end
   

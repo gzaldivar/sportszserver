@@ -10,7 +10,7 @@
 		</ul>
 		<div class="row">
       		<div class="span2 offset4">
-      			<% if site_owner? %>
+      			<% if site_owner? or team_manager?(@team.id.to_s) %>
 					<%= link_to "Add Coach", new_sport_coach_path(@sport), class: "btn btn-medium btn-primary" %>
 				<% end %>
 			</div>

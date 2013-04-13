@@ -6,6 +6,11 @@
   </div>
 </div>
 <div class="row">
+	<div class="span2 offset3">
+		<%= link_to "New Blog", new_sport_blog_path(@sport), class: "btn btn-medium btn-primary" %>
+	</div>
+</div>
+<div class="row">
 	<div class="span10">
 		<% if @blogs.any? %>
 		    <div class="row">
@@ -43,11 +48,6 @@
 		    <p>
 		<% else %>
 			<h4>There are no news items for the entered search criteria.</h4><p>
-		<% end %>
-<div class="row">
-	<div class="span2 offset3">
-		<% if isAdmin? %>
-		  <%= link_to "Add Blog Item", new_sport_blog_path(@sport), class: "btn btn-medium btn-primary" %>
 		<% end %>
 	</div>
 </div>

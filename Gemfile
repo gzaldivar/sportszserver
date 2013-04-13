@@ -73,6 +73,7 @@ gem 'resque', :require => "resque/server"
 gem 'rmagick'
 gem 'rabl'
 gem 'streamio-ffmpeg'
+gem "simple_calendar", "~> 0.1.5"
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

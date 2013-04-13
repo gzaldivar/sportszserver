@@ -29,7 +29,11 @@ Sportzserver::Application.routes.draw do
       end
     end
     
-    resources :newsfeeds 
+    resources :newsfeeds do
+      collection do
+        get :updateteams
+      end
+    end
   
     resources :athletes do
       resources :football_stats, only: [:create] do

@@ -9,6 +9,7 @@ class NewsfeedsController < ApplicationController
     @athletes = @sport.athletes
     @coaches = @sport.coaches
     @teams = @sport.teams
+    @schedules = []
   end
   
   def create
@@ -55,9 +56,16 @@ class NewsfeedsController < ApplicationController
   end
   
   def edit
-    @athletes = @sport.athletes
-    @coaches = @sport.coaches
     @teams = @sport.teams
+    if !@newsfeed.team.nil? and !@newsfeed.team.blank?
+      @athletes = @sport.athletes.where(team: @newsfeed.team).entries
+      @coaches = @sport.coaches.where(team: @newsfeed.team).entries
+      @schedules = @sport.teams.find(@newsfeed.team).gameschedules.asc(:gamedate).entries
+    else
+      @athletes = @sport.athletes
+      @coaches = @sport.coaches
+      @schedules = []
+    end
   end
   
   def update
@@ -76,6 +84,13 @@ class NewsfeedsController < ApplicationController
     end
   end
   
+  def updateteams
+      @gameschedules = @sport.teams.find(params[:teamid]).gameschedules
+      @athletes = @sport.athletes.where(team: params[:teamid].to_s).entries
+      @coaches = @sport.coaches.where(team: params[:teamid].to_s).entries
+  end
+
+
   private
   
     def get_sport

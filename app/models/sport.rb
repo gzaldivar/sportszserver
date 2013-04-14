@@ -12,15 +12,16 @@ class Sport
   field :mascot, type: String
 
   belongs_to :site
-  has_many :newsfeeds
+  has_many :newsfeeds, dependent: :destroy
   has_many :athletes, dependent: :destroy
   has_many :coaches, dependent: :destroy
-  has_many :photos
-  has_many :videoclips
-  has_many :photo_errors
-  has_many :photo_queues
-  has_many :sponsors
-  has_many :blogs
+  has_many :photos, dependent: :destroy
+  has_many :videoclips, dependent: :destroy
+  has_many :photo_errors, dependent: :destroy
+  has_many :photo_queues, dependent: :destroy
+  has_many :sponsors, dependent: :destroy
+  has_many :blogs, dependent: :destroy
+  has_many :events, dependent: :destroy
   embeds_many :teams
   embeds_many :newsfeeds
 

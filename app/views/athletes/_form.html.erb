@@ -52,9 +52,12 @@
 	        </div>
 			<div class="row">
 				<div class="span2">
-					<%= f.input	:bio,	as: :text, required: false, hint:	"Some info about the athlete" %>
+					<%= f.input	:bio,	as: :text, required: false, hint:	"Some info about the athlete", 
+								input_html: { style: 'width: 800px;height: 100px' } %>
 				</div>
-				<div class="span2 offset1">
+			</div>
+			<div class="row">
+				<div class="span2">
 					<div class="row">
 		        		<% if !@sport.teams.empty? %>
 		          			<div class="span2">

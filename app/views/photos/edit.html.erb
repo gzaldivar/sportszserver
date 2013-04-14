@@ -54,7 +54,8 @@
 				<%= f.input	:displayname,	label:	"Photo Name" %>
         	</div>
 				<div class="span2 offset1">
-					<%= f.input	:description,	as: :text, label:	"Photo Description" %>
+					<%= f.input	:description, as: :text, label:	"Photo Description", 
+								input_html: { style: 'width: 500px;height: 200px' } %>
 				</div>
 			</div><br/>
 			<div class="row">

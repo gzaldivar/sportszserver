@@ -16,13 +16,18 @@ Sportzserver::Application.routes.draw do
    
   resources :sports do
     resources :sponsors
+    resources :events 
 
     resources :blogs do
       collection do
         get :updateforteams
       end
+      
+      member do
+        get :comment
+      end
     end
-    
+
     resources :teams,   only: [:new, :create, :edit, :update, :destroy, :index, :show] do
       resources :gameschedules, only: [:show, :new, :create, :edit, :update, :index, :destroy] do
         resources :gamelogs, only: [:create, :destroy]

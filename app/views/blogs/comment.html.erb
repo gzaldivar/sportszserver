@@ -1,0 +1,40 @@
+<% provide(:title, @sport.sport_name + " - Blog Comment") %>
+<p>
+<div class="row">
+	<div class="span10 offset1">
+		<%= simple_form_for [@sport, @blog], :url => sport_blogs_path, :method => :post do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<div class="row">
+				<div class="span4">
+					Blog Title Commenting on:<p>
+					<%= @oldblog.title %><p>
+					Blog Entry:<p>
+					<%= @oldblog.entry %>
+				</div>
+				<%= f.input :title, as: :hidden, input_html: { value: "RE:" + @oldblog.title } %>
+				<%= f.input :blogger, as: :hidden, input_html: { value: current_user.id.to_s } %>
+				<%= f.input :external_url, as: :hidden, input_html: { value: @oldblog.external_url } %>
+				<% if !@oldblog.team.nil? and !@oldblog.team.blank? %>
+					<%= f.input :team, as: :hidden, input_html: { value: @oldblog.team } %>
+				<% end %>
+				<% if !@oldblog.athlete.nil? and !@oldblog.athlete.blank? %>
+					<%= f.input :athlete, as: :hidden, input_html: { value: @oldblog.athlete } %>
+				<% end %>
+				<% if !@oldblog.coach.nil? and !@oldblog.coach.blank? %>
+					<%= f.input :coach, as: :hidden, input_html: { value: "RE:" + @oldblog.coach } %>
+				<% end %>
+				<% if !@oldblog.game.nil? and !@oldblog.game.blank? %>
+					<%= f.input :game, as: :hidden, input_html: { value: @oldblog.game } %>
+				<% end %>
+				<div class="span4 offset1">
+					<%= f.input	:entry, as: :text, label:	"Add Comment:" %>
+				</div>
+			</div>
+      		<div class="row">
+  				<div class="span1 offset4">
+  					<%= f.button :submit, "Submit", class: "btn btn-medium btn-primary" %>
+  				</div>
+      		</div>
+		<% end %>	
+	</div>	
+</div>

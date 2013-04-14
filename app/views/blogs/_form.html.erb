@@ -15,8 +15,9 @@
 	<div class="span10 offset1">
 		<%= simple_form_for [@sport, @blog] do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
+      <%= f.input :blogger, as: :hidden, :input_html => { value: current_user.id.to_s } %>
 			<div class="row">
-		        <div class="span2">
+		        <div class="span4">
 		          <%= f.input :title, hint: "Enter Blog Title" %>
 		        </div>
 	        	<div class="span4 offset1">
@@ -24,9 +25,9 @@
 	        	</div>
 		    </div>
 		    <div class="row">
-				<div class="span2">
-					<%= f.input	:entry, as: :text, hint:	"Enter Blog Entry:" %>
-				</div>
+  				<div class="span4">
+  					<%= f.input	:entry, as: :text, hint:	"Enter Blog Entry:", input_html: { style: 'width: 400px;height: 200px' } %>
+  				</div>
 				<div class="span4 offset1">
             		<div class="row">
               			<div class="span4">
@@ -61,11 +62,11 @@
 	            <p>
 			</div>
   		</div>
-      	<div class="row">
+      <div class="row">
   			<div class="span1 offset4">
   				<%= f.button :submit, "Submit", class: "btn btn-medium btn-primary" %>
   			</div>
-      	</div>
+      </div>
 		<% end %>	
 	</div>	
 </div>

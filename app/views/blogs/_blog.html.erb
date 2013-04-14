@@ -4,16 +4,17 @@
             <div class="row">
                 <div class="span10">
                     <h4><font color="blue"><%= b.title %></font></h4>
-                    <em>Blogger: <%= current_user.name %>
+                    <% user = User.find(b.blogger) %>
+                    <em>Blogger: <%= user.name %>
                     </em>
                 </div>
             </div><p>
             <div class="row">
                 <div class="span2">
-                  <% if current_user.avatar.blank? %>
-                    <%= link_to image_tag("Photo_Not_Available.jpg"), user_path(current_user) %>
+                  <% if user.avatar.blank? %>
+                    <%= link_to image_tag("Photo_Not_Available.jpg"), user_path(user) %>
                   <% else %>
-                    <%= link_to image_tag(current_user.avatar.url(:thumb)), sport_athlete_path(b.sport, b.athlete) %>
+                    <%= link_to image_tag(user.avatar.url(:thumb)), sport_athlete_path(b.sport, b.athlete) %>
                   <% end %>
                 </div>
                 <div class="span6">
@@ -26,19 +27,20 @@
             Tags:<p>
       		<%= link_to b.sport.name, sport_path(b.sport) %>&nbsp
             <% if !b.team.nil? and !b.team.blank? %>
-              <%= b.sport.teams.find(b.team).team_name %>&nbsp
+              <%= @sport.teams.find(b.team).team_name %>&nbsp
             <% end %>
             <% if !b.game.nil? and !b.game.blank? %>
               <%= link_to Gameschedule.find(b.game).game_name, sport_team_gameschedule_path(@sport, @sport.teams.find(b.team), b.game) %>
             <% end %>
             <% if !b.athlete.nil? and !b.athlete.blank? %>
 			  Athlete:
-              <%= link_to b.sport.athletes.find(b.athlete).full_name, sport_athlete_path(b.sport, b.athlete) %>&nbsp
+              <%= link_to @sport.athletes.find(b.athlete).full_name, sport_athlete_path(b.sport, b.athlete) %>&nbsp
             <% end %>
             <% if !b.coach.nil? and !b.coach.blank? %>
       		  Coach:
-              <%= link_to b.sport.coaches.find(b.coach).full_name, sport_coach_path(b.sport, b.coach) %>
+              <%= link_to @sport.coaches.find(b.coach).full_name, sport_coach_path(b.sport, b.coach) %>
             <% end %>
+            <%= link_to "Comment", comment_sport_blog_path(@sport, b), class: "btn btn-mini btn-info" %>
             <p>
           </em>
           </div>
@@ -52,7 +54,7 @@
         </div>
         <div class="row">
           <div class="span4 offset2">
-      			<% if isAdmin? %>
+      			<% if isAdmin? or (current_user == user) %>
       				<%= link_to "Edit", edit_sport_blog_path(b.sport, b),  class: "btn btn-mini btn-warning" %>
       				<%= link_to "Delete", sport_blog_path(b.sport, b),  method:	:delete,  class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
       			<% end %>

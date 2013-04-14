@@ -1,13 +1,18 @@
 <% provide(:title, @sport.sport_name + " - Blogs") %>
 <p>
 <div class="row">
+	<div class="span2 offset6">
+		<%= link_to "New Blog Entry", new_sport_blog_path(@sport), class: "btn btn-medium btn-primary" %>
+	</div>
+</div>
+<div class="row">
   <div class="span10 offset1">
     <%= render 'blog', blog: @blogs %>
   </div>
 </div>
 <div class="row">
-	<div class="span2 offset3">
-		<%= link_to "New Blog", new_sport_blog_path(@sport), class: "btn btn-medium btn-primary" %>
+	<div class="span2 offset6">
+		<%= link_to "New Blog Entry", new_sport_blog_path(@sport), class: "btn btn-medium btn-primary" %>
 	</div>
 </div>
 <div class="row">

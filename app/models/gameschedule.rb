@@ -38,4 +38,8 @@ class Gameschedule
     gamedate.strftime("%m/%d/%Y") + " vs " + opponent
   end
 
+  def start_time
+    starttime
+  end
+
 end

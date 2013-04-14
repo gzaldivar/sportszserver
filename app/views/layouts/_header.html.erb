@@ -95,10 +95,21 @@
 		      									<li><%= link_to (t.title + " " + t.mascot), sport_blogs_path(@sport, team_id: t) %></li>
 			      								<li class="divider"></li>
 		      								<% end %>
+		      								<li><%= link_to "All", sport_blogs_path(@sport) %></li>
 		      							</ul>
 		      						</a>
 		      					<li class="divider"></li>
-								<li><%= link_to "Practice Calendar", '#' %></li>
+						  		<li class="dropdown-submenu">
+						    		<a tabindex="-1" href="#">Event Calendar</a>
+						    			<ul class="dropdown-menu">
+			      							<% @sport.teams.each do |t| %>
+		      									<li><%= link_to (t.title + " " + t.mascot), sport_events_path(@sport, team_id: t) %></li>
+			      								<li class="divider"></li>
+		      								<% end %>
+		      								<li><%= link_to "All", sport_events_path(@sport) %></li>
+		      							</ul>
+		      						</a>
+		      					</li>
 		      				</ul>
 		      			</li>
           			<% end %>

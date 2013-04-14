@@ -1,0 +1,22 @@
+<% provide(:title, @sport.sport_name + " - New Event") %>
+<p>
+<div class="row">
+	<div class="span2 offset2">
+		<%= link_to "New Event", new_sport_event_path(@sport), class: "btn btn-medium btn-primary" %>
+	</div>
+	<!--div class="span2 offset1">
+	    <%= form_tag sport_events_path, class: "form-horizontal", method: 'get' do %>
+			<%= label_tag "Game Schedule: " %>
+			<%= select(:team, :id, @sport.teams.collect{ |t| [t.team_name, t.id] }, include_blank: true ) %>
+			<p>
+			<%= submit_tag  "Team Schedule", class: "btn btn-medium btn-primary", name: nil %>
+		<% end %>
+	</div-->
+</div>
+	<div class="row">
+		<div class="span10">
+			<%= calendar @events do |event| %>
+	  			<div><%= link_to event.name, [@sport, event] %></div>
+			<% end %>
+		</div>
+	</div>

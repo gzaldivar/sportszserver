@@ -1,8 +1,8 @@
 class BlogsController < ApplicationController
-    before_filter :authenticate_user!,  only: [:new, :create, :edit, :update, :destroy, :index, :show]
+    before_filter :authenticate_user!,  only: [:new, :create, :edit, :update, :destroy]
     before_filter :site_owner?,			    only: [:destroy]
   	before_filter :get_sport
-  	before_filter :get_blog,			      only: [:edit, :update, :show, :destroy]
+  	before_filter :get_blog,			      only: [:edit, :update, :show, :destroy, :comment]
 
   	def new
   		@blog = Blog.new
@@ -12,10 +12,16 @@ class BlogsController < ApplicationController
       @gameschedules = []
   	end
 
+    def comment
+      select_teams(@blog)
+      @oldblog = @blog
+      @blog = Blog.new
+    end
+
   	def create
       begin 
         blog = @sport.blogs.create!(params[:blog])
-        redirect_to [@sport, blog], notice: "Added #{@blog.title}!"
+        redirect_to [@sport, blog], notice: "Added #{blog.title}!"
       rescue Exception => e
         redirect_to :back, alert: "Error adding Blog " + e.message
       end
@@ -92,4 +98,17 @@ class BlogsController < ApplicationController
   		def get_blog
   			@blog = @sport.blogs.find(params[:id])
   		end
+
+      def select_teams(blog)
+        @teams = @sport.teams
+        if !blog.team.nil?
+            @athletes = @sport.athletes.where(team: blog.team).entries
+            @coaches = @sport.coaches.where(team: blog.team).entries
+            @gameschedules = @sport.teams.find(blog.team).gameschedules
+        else
+            @athletes = @sport.athletes
+            @coaches = @sport.coaches
+            @gameschedules = []
+        end
+      end
 end

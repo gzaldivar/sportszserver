@@ -9,7 +9,7 @@
 			<p>
 			<%= render 'defense_totals', defense: @defense %>
 			<div class="span4 offset3">
-				<% if isAdmin? %>
+				<% if isAdmin?or isTeamManager?(@athlete) %>
 					<%= link_to "Add defense Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "defense"), class: "btn btn-mini btn-primary" %>
 				<% end %>
 				<% if @stats.count > 0 %>

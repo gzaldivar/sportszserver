@@ -37,7 +37,7 @@
 				<td><%= @fbpassing.yards_lost %></td>
 			</tbody>
 		</table>
-		<% if isAdmin? %>
+		<% if isAdmin? or isTeamManager?(@athlete) %>
 			<div class="span2 offset4">
 				<%= link_to "Edit", edit_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @fbpassing), class: "btn btn-medium btn-primary" %>
 				<%= link_to "Delete", sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @fbpassing), method: :delete, 

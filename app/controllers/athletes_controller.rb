@@ -1,7 +1,11 @@
 class AthletesController < ApplicationController  
-	before_filter	[:authenticate_user!, :site_owner?],	only: [:destroy, :update, :create, :edit, :new]
+	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new]
+ #  before_filter :site_owner?,         only: [:destroy, :update, :create, :edit, :new]
   before_filter :get_sport
   before_filter :correct_athlete,     only: [:show, :edit, :update, :destroy, :follow, :unfollow]
+  before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
+    controller.team_manager?(@athlete, nil)
+  end
   
   def new    
     @athlete = Athlete.new

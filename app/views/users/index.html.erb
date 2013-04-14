@@ -23,6 +23,7 @@
 				<th>Avatar</th>
 				<th>Username</th>
 				<th>Email</th>
+				<th>Manager</th>
 				<th>Disable</th>
 			</thead>
 			<tbody>
@@ -35,6 +36,11 @@
 						<% end %>
 						<td><%= link_to u.name, u %></td>
 						<td><%= link_to u.email, u %></td>
+						<% if !u.teamid.nil? and !u.teamid.blank? %>
+							<td><%= find_team(u.teamid.to_s).team_name %></td>
+						<% else %>
+							<td>None</td>
+						<% end %>
 						<% if u.disable %>
 							<td><%= link_to "Enable User", enable_user_path(u), class: "btn btn-mini btn-danger" %></td>
 						<% else %>

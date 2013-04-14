@@ -20,6 +20,10 @@
 	  		</h3>
 	      	Email: <%= @user.email %><p>
 	      	<p>
+	      	<% if !@user.teamid.nil? and !@user.teamid.blank? %>
+	      		Team Manager: <%= find_team(@user.teamid).team_name %>
+	      	<% end %>
+	      	<p>
 	      	<em>
 	      	<% if @user.disable %>
 	      		User Disabled
@@ -28,7 +32,9 @@
 	      	<% end %>
 	      	</em>
 	      	<p>
-	      	<%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-medium btn-primary" %>
+	      	<% if isUserAdmin?(@user) or (!current_user.nil?  and (@user.id == current_user.id)) %>
+	      		<%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-medium btn-primary" %>
+	      	<% end %>
 	    <div class="row">
 	  		<div class="span4">
 	        <% if @user.confirmed_at.nil? %>

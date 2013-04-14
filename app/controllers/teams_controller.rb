@@ -1,5 +1,6 @@
 class TeamsController < ApplicationController
   before_filter :authenticate_user!,   only: [:new, :create, :edit, :update, :destroy, :index, :show]
+  before_filter :site_owner?,           only: [:new, :create, :edit, :update, :destroy]
   before_filter :get_sport
 
 	def new

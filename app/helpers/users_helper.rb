@@ -3,12 +3,14 @@ module UsersHelper
 	def site_owner?
 	  	if current_site? and !current_user.nil? and current_user.admin?
 		  	if current_user.id.to_s != current_site.adminid
-		  		redirect_to :back, alert: "You are not the site owner"
+		  		not_authorized
+#		  		redirect_to :back, alert: "You are not the site owner"
 		  	else
 		  		return true
 		  	end
 	  	else
-	    	redirect_to :back, notice: "Action not allowed"
+	  		not_authorized
+#	    	redirect_to :back, notice: "Action not allowed"
     	end
 	end
 
@@ -18,6 +20,10 @@ module UsersHelper
 		else
 			return nil
 		end
+	end
+
+	def isUserAdmin?(user)
+		user.admin
 	end
 
 	def user_enabled?

@@ -33,7 +33,7 @@
 				<td><%= @receiving.fumbles_lost %></td>
 			</tbody>
 		</table>
-		<% if isAdmin? %>
+		<% if isAdmin? or isTeamManager?(@athlete) %>
 			<div class="span2 offset3">
 				<%= link_to "Edit", edit_sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat, @receiving), class: "btn btn-medium btn-primary" %>
 				<%= link_to "Delete", sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat, @receiving), method: :delete, 

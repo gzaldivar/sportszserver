@@ -27,13 +27,13 @@
 							<h4><em>Email: <%= @user.email %></em></h4>
 						</div>
 						<p>
-						<!--div class="span4 offset1">
+						<div class="span4 offset1">
 							<%= f.input :teamid, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Manage Team", 
 										input_html: {id: "select_team"}  %>
 						</div>
 					</div>
 					<p>
-					<div class="row"-->
+					<div class="row">
 						<div class="span4 offset1">
 							<%= f.input :disable, as: :radio_buttons %>
 						</div>

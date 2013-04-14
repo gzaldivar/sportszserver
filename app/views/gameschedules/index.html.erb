@@ -48,7 +48,7 @@
 <div class="row">
   <div class="center">
 		<div class="span1 offset4">
-			<% if isAdmin? %>
+			<% if isAdmin? or isTeamManager?(@gameschedules.first) %>
 				<%= link_to "Add", new_sport_team_gameschedule_path(@sport, @team), class: "btn btn-primary" %>	
 			<% end %>
 		</div>

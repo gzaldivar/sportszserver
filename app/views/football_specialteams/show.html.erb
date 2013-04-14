@@ -43,7 +43,7 @@
 					<td><%= @specialteams.xpblocked %></td>
 				</tbody>
 			</table>
-			<% if isAdmin? %>
+			<% if isAdmin? or isTeamManager?(@athlete) %>
 				<div class="span2 offset3">
 					<%= link_to "Edit", editkicker_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat, @specialteams), class: "btn btn-mini btn-primary" %>
 					<%= link_to "Delete", sport_athlete_football_stat_football_specialteam_path(@sport, @athlete, @stat, @specialteams), 
@@ -75,7 +75,7 @@
 				</tbody>
 			</table>
 			<p>
-			<% if isAdmin? %>
+			<% if isAdmin? or isTeamManager?(@athlete) %>
 				<div class="span2 offset3">
 					<%= link_to "Edit", editpunter_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat, @specialteams), class: "btn btn-mini btn-primary" %>
 					<%= link_to "Delete", sport_athlete_football_stat_football_specialteam_path(@sport, @athlete, @stat, @specialteams), method: :delete, class: "btn btn-mini btn-danger" %>
@@ -104,7 +104,7 @@
 				</tbody>
 			</table>
 			<p>
-			<% if isAdmin? %>
+			<% if isAdmin? or isTeamManager?(@athlete) %>
 				<div class="span2 offset3">
 					<%= link_to "Edit", editkickoff_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat, @specialteams), class: "btn btn-mini btn-primary" %>
 					<%= link_to "Delete", sport_athlete_football_stat_football_specialteam_path(@sport, @athlete, @stat, @specialteams), method: :delete, class: "btn btn-mini btn-danger" %>
@@ -135,7 +135,7 @@
 				</tbody>
 			</table>
 			<p>
-			<% if isAdmin? %>
+			<% if isAdmin? or isTeamManager?(@athlete) %>
 				<div class="span2 offset3">
 					<%= link_to "Edit", editpuntreturn_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat, @specialteams), class: "btn btn-mini btn-primary" %>
 					<%= link_to "Delete", sport_athlete_football_stat_football_specialteam_path(@sport, @athlete, @stat, @specialteams), method: :delete, class: "btn btn-mini btn-danger" %>
@@ -166,7 +166,7 @@
 				</tbody>
 			</table>
 			<p>
-			<% if isAdmin? %>
+			<% if isAdmin? or isTeamManager?(@athlete) %>
 				<div class="span2 offset3">
 					<%= link_to "Edit", editkoreturn_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat, @specialteams), class: "btn btn-mini btn-primary" %>
 					<%= link_to "Delete", sport_athlete_football_stat_football_specialteam_path(@sport, @athlete, @stat, @specialteams), method: :delete, class: "btn btn-mini btn-danger" %>

@@ -81,8 +81,6 @@
 					<h4>Current player image</h4>
 					<% if !@athlete.pic.blank? %>
 						<%= image_tag @athlete.pic.url(:medium) %>
-		          	<% elsif !@athlete.pic.blank? %>
-		            	<%= image_tag @athlete.pic.url(:orignal) %>
 		          	<% else %>
 		            	<%= image_tag "Photo_Not_Available.jpg" %>
 					<%end %>

@@ -1,5 +1,9 @@
 Sportzserver::Application.routes.draw do
 
+  unless Rails.application.config.consider_all_requests_local
+    match '*not_found', to: 'errors#error_404'
+  end
+  
   devise_for :users, controllers: {registrations: "users/registrations"}
 
   resources :users, only: [:edit, :update, :show, :index] do

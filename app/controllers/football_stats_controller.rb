@@ -1,7 +1,9 @@
 class FootballStatsController < ApplicationController
 	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new, :showdata]
-	before_filter	:site_owner?,	        only: [:destroy, :update, :create, :edit, :new]
   	before_filter 	:get_sport_athlete
+	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
+		controller.team_manager?(@athlete, nil)
+	end
 
 	def newstat
 		@stattype = params[:id]

@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
 	before_filter :authenticate_user!,	only: [:site, :edit, :update, :index, :disable, :enable]
   before_filter :get_user, only: [:edit, :show, :update, :disable, :enable]
+  before_filter :owner, only: [:edit, :update]
 
 	def show
 	end
@@ -68,6 +69,12 @@ class UsersController < ApplicationController
 
     def get_user
       @user = User.find(params[:id])
+    end
+
+    def owner
+      if isUserAdmin?(@user) or (!current_user.nil? and (@user.id == current_user.id))
+        return true
+      end
     end
 
 end

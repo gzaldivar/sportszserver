@@ -8,7 +8,7 @@
 			<th>Speciality</th>
 			<th>Experience</th>
 			<th>Coaches</th>
-			<% if site_owner? %>
+			<% if isAdmin? %>
 				<th>Update?</th>
 				<th>Remove?</th>
 			<% end %>
@@ -32,9 +32,11 @@
 				<% else %>
 					<td><%= @sport.teams.find(c.team).team_name %></td>
 				<% end %>
-				<% if site_owner? %>
-          <td><%= link_to "Edit", edit_sport_coach_path(@sport, c), class: "btn btn-mini btn-warning" %></td>
-          <td><%= link_to "Delete", sport_coach_path(@sport, c),  method:	:delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %></td>
+				<% if isAdmin? or isTeamManager?(c) %>
+		          <td><%= link_to "Edit", edit_sport_coach_path(@sport, c), class: "btn btn-mini btn-warning" %></td>
+		        <% end %>
+		        <% if isAdmin? %>
+		          <td><%= link_to "Delete", sport_coach_path(@sport, c),  method:	:delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %></td>
 				<% end %>
 			</tr>
 		<% end %>

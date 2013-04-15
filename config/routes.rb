@@ -20,7 +20,12 @@ Sportzserver::Application.routes.draw do
    
   resources :sports do
     resources :sponsors
-    resources :events 
+
+    resources :events do
+      collection do
+        get :newteam
+      end
+    end
 
     resources :blogs do
       collection do

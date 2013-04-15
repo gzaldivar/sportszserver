@@ -92,7 +92,7 @@ class GameschedulesController < ApplicationController
   
   def destroy
     if @gameschedule.destroy
-      redirect_to :back, notice: "Schedule deleted!"
+      redirect_to sport_team_gameschedules_path(@sport, @team), notice: "Schedule deleted!"
     else
       redirect_to :back, alert: "Error deleting schedule"
     end

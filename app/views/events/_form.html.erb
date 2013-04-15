@@ -4,12 +4,12 @@
 			<%= render 'shared/error_messages', object: f.object %>
             <div class="row">
                 <div class="span2">
-                    <%= f.input :startdate, as: :string, label: "Start", input_html: { class: 'datepicker', 
+                    <%= f.input :date_string, as: :string, label: "Start", input_html: { class: 'datepicker', 
                                 :value => @event.try(:start_time).try(:strftime,'%m/%d/%Y') } %>
                     <%= f.input :start_time, :as => :hidden, :input_html => { :id => 'recorded-at-alt'} %>
                 </div>
                  <div class="span2 offset2">
-                    <%= f.input :enddate, as: :string, label: "End", input_html: { class: 'enddatepicker', 
+                    <%= f.input :string_date, as: :string, label: "End", input_html: { class: 'enddatepicker', 
                                 :value => @event.try(:end_time).try(:strftime,'%m/%d/%Y') } %>
                     <%= f.input :end_time, :as => :hidden, :input_html => { :id => 'recorded-at-alt-end'} %>
                  </div>
@@ -23,6 +23,11 @@
                 </div>
             </div>
             <%= f.input :owner, as: :hidden, input_html: { value: current_user.id.to_s } %>
+            <p>
+            <% if !@team.nil? %>
+                Event for team: <em><strong><%= @team.team_name %></strong></em>
+                <%= f.input :team_id, as: :hidden, input_html: { value: @team.id } %>
+            <% end %>
             <div class="row">
   			    <div class="span1 offset3">
                     <%= f.button :submit, "Submit", class: "btn btn-medium btn-primary" %>

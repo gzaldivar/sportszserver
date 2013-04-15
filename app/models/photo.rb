@@ -18,15 +18,16 @@ class Photo
   field :error_status, type: Boolean
   
   field :teamid,  type: String
-  field :schedule,  type: String
+#  field :schedule,  type: String
   field :owner, type: String
   field :players, type: Array
   
   index({ teamid: 1 }, { unique: false } )
-  index( { schedule: 1 } , { unique: false } )
+#  index( { schedule: 1 } , { unique: false } )
   index( { owner: 1 } , { unique: false } )
   
   belongs_to :sport, index: true
+  belongs_to :gameschedule
   
   validates_presence_of :filename
   validates_presence_of :filepath

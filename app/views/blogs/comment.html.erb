@@ -14,17 +14,17 @@
 				<%= f.input :title, as: :hidden, input_html: { value: "RE:" + @oldblog.title } %>
 				<%= f.input :blogger, as: :hidden, input_html: { value: current_user.id.to_s } %>
 				<%= f.input :external_url, as: :hidden, input_html: { value: @oldblog.external_url } %>
-				<% if !@oldblog.team.nil? and !@oldblog.team.blank? %>
-					<%= f.input :team, as: :hidden, input_html: { value: @oldblog.team } %>
+				<% if !@oldblog.team_id.nil? and !@oldblog.team_id.blank? %>
+					<%= f.input :team_id, as: :hidden, input_html: { value: @oldblog.team_id } %>
 				<% end %>
-				<% if !@oldblog.athlete.nil? and !@oldblog.athlete.blank? %>
-					<%= f.input :athlete, as: :hidden, input_html: { value: @oldblog.athlete } %>
+				<% if !@oldblog.athlete_id.nil? and !@oldblog.athlete_id.blank? %>
+					<%= f.input :athlete_id, as: :hidden, input_html: { value: @oldblog.athlete_id } %>
 				<% end %>
 				<% if !@oldblog.coach.nil? and !@oldblog.coach.blank? %>
 					<%= f.input :coach, as: :hidden, input_html: { value: "RE:" + @oldblog.coach } %>
 				<% end %>
-				<% if !@oldblog.game.nil? and !@oldblog.game.blank? %>
-					<%= f.input :game, as: :hidden, input_html: { value: @oldblog.game } %>
+				<% if !@oldblog.gameschedule.nil? and !@oldblog.gameschedule.blank? %>
+					<%= f.input :gameschedule, as: :hidden, input_html: { value: @oldblog.gameschedule } %>
 				<% end %>
 				<div class="span4 offset1">
 					<%= f.input	:entry, as: :text, label:	"Add Comment:" %>

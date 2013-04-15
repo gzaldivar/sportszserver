@@ -6,14 +6,14 @@ class Newsfeed
   field   :title, 		type: String
   field   :news,		type: String
   field   :external_url, type: String
-  field   :athlete,		type: String
-  field   :coach,		type: String
-  field   :gameschedule,		type: String
-  field   :team,		type: String
   field   :owner,   type: String
   field   :allsports,	type: Boolean
   
-  embedded_in :sport
+  belongs_to :sport
+  belongs_to :athlete
+  belongs_to :coach
+  belongs_to :team
+  belongs_to :gameschedule
   
   index(  { team: 1 }, { unique: false } )
   index( { gameschedule: 1 } , { unique: false } )

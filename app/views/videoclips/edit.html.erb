@@ -41,7 +41,7 @@
 			<br/>
 		 <div class="row">
 				<div class="span2 offset1">
-					<%= f.input :schedule, collection: @gameschedules.collect{ |t| [t.game_name, t.id] }, label: "Tag game", prompt: "Tag Game", input_html: { id: "gameschedules_select"} %>
+					<%= f.input :gameschedule_id, collection: @gameschedules.collect{ |t| [t.game_name, t.id] }, label: "Tag game", prompt: "Tag Game", input_html: { id: "gameschedules_select"} %>
 				</div><p>
 	        <div class="span2 offset1">
 	          Tag athletes:&nbsp<br/>

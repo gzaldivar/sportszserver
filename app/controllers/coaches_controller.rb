@@ -11,33 +11,30 @@ class CoachesController < ApplicationController
   end
 	
 	def create
-    coach = @sport.coaches.build(params[:coach])
-	  update_team(coach)
-    if coach.save                 
+    if coach = @sport.coaches.create(params[:coach])                 
       respond_to do |format|
         format.html { redirect_to [@sport, coach], notice: 'Coach created!' }
-        format.xml
         format.json 
-        format.js
       end
     else      
-      redirect_to :back, flash: { error: "Error saving coach." }
+      redirect_to :back, alert: "Error saving coach."
     end
 	end
 	
 	def show
+    if !@coach.team_id.nil?
+      @team = @sport.teams.find(@coach.team_id)
+    end
     respond_to do |format|
       format.html 
-      format.xml
       format.json 
-      format.js
     end
 	end
   
   def index
     @coaches = []
     if params[:team_id]
-      coach = @sport.coaches.where(team: params[:team_id].to_s)
+      coach = @sport.coaches.where(team_id: params[:team_id].to_s)
       @team = @sport.teams.find(params[:team_id])
     else
       coach = @sport.coaches.all
@@ -63,11 +60,10 @@ class CoachesController < ApplicationController
 	end
 	
 	def update
-	  update_team(@coach)
     if @coach.update_attributes(params[:coach])      
       redirect_to [@sport, @coach], notice: 'Update successful!'
     else
-      redirect_to :back, flash: { error: 'Error updating coach information for ' + @sport.name }
+      redirect_to :back, alert: 'Error updating coach information for ' + @sport.name
     end        
 	end
 	
@@ -88,16 +84,5 @@ class CoachesController < ApplicationController
     def get_sport
       @sport = Sport.find(params[:sport_id])
     end
-
-		def update_team(coach)
-      if !params[:coachteam][:team].blank?
-        team = @sport.teams.find(params[:coachteam][:team].to_s)
-        if params[:unassign]
-          coach.team = "Unassigned"
-        else 
-          coach.team = team.id
-        end
-      end
-	  end
 
 end

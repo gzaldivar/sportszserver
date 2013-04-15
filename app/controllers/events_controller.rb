@@ -10,6 +10,13 @@ class EventsController < ApplicationController
 		@event = Event.new
 	end
 
+	def newteam
+		@event = Event.new
+		@team = @sport.teams.find(params[:team_id])
+		@event.team_id = @team.id
+		render 'new'
+	end
+
 	def create
 		begin 
 			@event = @sport.events.create!(params[:event])
@@ -52,8 +59,14 @@ class EventsController < ApplicationController
 	end
 
 	def destroy
-		@event.destroy
-		redirect_to @sport, notice: "event delete sucessful!"
+		if @event.team_id.nil?
+			@event.destroy
+			redirect_to sport_events_path(@sport), notice: "event delete sucessful!"
+		else
+			@team = @sport.teams.find(@event.team_id)
+			@event.destroy
+			redirect_to sport_events_path(@sport, @team), notice: "Event deleted for " + @team.team_name
+		end
 	end
 
 	private

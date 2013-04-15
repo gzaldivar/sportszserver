@@ -28,7 +28,11 @@
   					<td><%= @coach.middlename %></td>
   					<td><%= @coach.speciality %></td>
   					<td><%= @coach.years_on_staff %></td>
-  					<td><%= @sport.teams.find(@coach.team).team_name %></td>
+            <% if @team.nil? %>
+              <td>Unassigned</td>
+            <% else %>
+  					 <td><%= @team.team_name %></td>
+            <% end %>
   				</tr>
   			</tbody>
   		</table>

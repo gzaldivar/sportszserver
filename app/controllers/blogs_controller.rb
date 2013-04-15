@@ -79,8 +79,14 @@ class BlogsController < ApplicationController
   	end
 
   	def destroy
-  		@blog.destroy
-      redirect_to @sport, notice: "Blog entry deleted"
+      if @blog.team.nil?
+        @blog.destroy
+        redirect_to sport_blogs_path(@sport), notice: "Blog delete sucessful!"
+      else
+        @team = @sport.teams.find(@blog.team)
+        @blog.destroy
+        redirect_to sport_blogs_path(@sport, team_id: @team), notice: "Blog deleted for " + @team.team_name
+      end
   	end
 
     def updateforteams
@@ -101,10 +107,10 @@ class BlogsController < ApplicationController
 
       def select_teams(blog)
         @teams = @sport.teams
-        if !blog.team.nil?
-            @athletes = @sport.athletes.where(team: blog.team).entries
-            @coaches = @sport.coaches.where(team: blog.team).entries
-            @gameschedules = @sport.teams.find(blog.team).gameschedules
+        if !blog.team_id.nil?
+            @athletes = @sport.athletes.where(team_id: blog.team_id).entries
+            @coaches = @sport.coaches.where(team_id: blog.team_id).entries
+            @gameschedules = @sport.teams.find(blog.team_id).gameschedules
         else
             @athletes = @sport.athletes
             @coaches = @sport.coaches

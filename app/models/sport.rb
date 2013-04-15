@@ -23,7 +23,7 @@ class Sport
   has_many :blogs, dependent: :destroy
   has_many :events, dependent: :destroy
   embeds_many :teams
-  embeds_many :newsfeeds
+#  embeds_many :newsfeeds
 
   has_mongoid_attached_file :sport_banner,
     :storage        => :s3,

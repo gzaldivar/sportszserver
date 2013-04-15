@@ -51,31 +51,37 @@
 	          </div>
 	        </div>
 			<div class="row">
-				<div class="span2">
+				<div class="span8">
 					<%= f.input	:bio,	as: :text, required: false, hint:	"Some info about the athlete", 
 								input_html: { style: 'width: 800px;height: 100px' } %>
 				</div>
 			</div>
+			<p>
 			<div class="row">
 				<div class="span2">
 					<div class="row">
 		        		<% if !@sport.teams.empty? %>
 		          			<div class="span2">
-								<label class="string required" for="athteam_team"></abbr>Assign to Team:</label>
-								<% if @athlete.team == "Unassigned" %>
-									<%= select("athteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true } ) %>
+								<!--label class="string required" for="athteam_team"></abbr>Assign to Team:</label-->
+								Assigned Team: 
+								<% if @athlete.team_id.nil?  %>
+									Unassigned
+									<!--%= select("", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true } ) %-->
 								<% else %>
-		            				<%= select("athteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, selected: @sport.teams.find(@athlete.team).id ) %>
+									<%= @sport.teams.find(@athlete.team_id).team_name %>
+		            				<!--%= select("athteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, selected: @sport.teams.find(@athlete.team).id ) %-->
 								<% end %>
+								<%= f.input :team_id, collection: @sport.teams.collect{ |t| [t.team_name, t.id] }, 
+											input_html: { include_blank: true } %>
 		          			</div>
 		        		<% end %>
 					</div>
-					<div class="row">
+					<!--div class="row">
 						<div class="span2">
 							<label class="string required" for="unassign"></abbr>Assign to no team:</label>
 							<%= check_box_tag :unassign %>
 						</div>
-					</div>
+					</div-->
 				</div>
 				<div class="span3 offset1">
 					<h4>Current player image</h4>

@@ -38,8 +38,8 @@
 		    <% else %>
 		    	<td></td> 
 		    <% end %>
-			<% if !videoclip.schedule.nil? and !videoclip.schedule.blank? %>
-		    	<td><%= @sport.teams.find(videoclip.teamid).gameschedules.find(videoclip.schedule).game_name %></td>
+			<% if !videoclip.gameschedule.nil? and !videoclip.gameschedule.blank? %>
+		    	<td><%= @sport.teams.find(videoclip.teamid).gameschedules.find(videoclip.gameschedule).game_name %></td>
 			<% else %>
 				<td></td>
 			<% end %>

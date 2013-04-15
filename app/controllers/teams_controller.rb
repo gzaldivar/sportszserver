@@ -2,6 +2,7 @@ class TeamsController < ApplicationController
   before_filter :authenticate_user!,   only: [:new, :create, :edit, :update, :destroy, :index, :show]
   before_filter :site_owner?,           only: [:new, :create, :edit, :update, :destroy]
   before_filter :get_sport
+  before_filter :get_team				only: [:edit, :update, :show, :destroy]
 
 	def new
 		@team = Team.new
@@ -16,12 +17,10 @@ class TeamsController < ApplicationController
 	end
 
 	def edit
-		@team = @sport.teams.find(params[:id])
 	end
 
 	def update
-		team = @sport.teams.find(params[:id])
-		if team.update_attributes(params[:team])
+		if @team.update_attributes(params[:team])
 			redirect_to @sport, notice: "Team updated"
 		else
 			redirect_to @sport, alert: "Error updating team"
@@ -33,11 +32,11 @@ class TeamsController < ApplicationController
 	end
 
 	def show
-		@team = @sport.teams.find(params[:id])
 	end
 
 	def destroy
-		@sport.teams.find(params[:id]).destroy
+		destroy_team(@team.id.to_s)
+		@@team.destroy
 		redirect_to @sport, notice: "Team delete sucessful!"
 	end
 
@@ -47,4 +46,18 @@ class TeamsController < ApplicationController
 			@sport = Sport.find(params[:sport_id])
 		end
 
+		def get_team
+			@team = @sport.teams.find(params[:id])
+		end
+
+		def destroy_team(team)
+			@sport.photos.where(teamid: team).each do |p|
+				p.teamid = nil
+				p.save
+			end
+			@sport.videoclips.where(teamid: team).each do |v|
+				v.teamid = nil
+				v.save
+			end
+		end
 end

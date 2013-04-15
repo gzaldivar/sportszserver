@@ -18,7 +18,7 @@
 		<% coaches.each do |c| %>
 			<tr>
         <td><% if c.coachpic.blank? %>
-              <%= link_to image_tag('Photo_Not_Available.jpg'), c %>
+              <%= link_to image_tag('Tiny_Photo_Not_Available.png'), [@sport, c] %>
             <% else %>
               <%= link_to image_tag(c.coachpic.url(:thumb)), [@sport, c] %>
             <% end %>
@@ -27,10 +27,10 @@
 				<td><%= c.middlename %></td>
 				<td><%= c.speciality %></td>
 				<td><%= c.years_on_staff %></td>
-				<% if c.team == "Unassigned" %>
+				<% if c.team_id.nil? %>
 					<td>Unassigned</td>
 				<% else %>
-					<td><%= @sport.teams.find(c.team).team_name %></td>
+					<td><%= @sport.teams.find(c.team_id).team_name %></td>
 				<% end %>
 				<% if isAdmin? or isTeamManager?(c) %>
 		          <td><%= link_to "Edit", edit_sport_coach_path(@sport, c), class: "btn btn-mini btn-warning" %></td>

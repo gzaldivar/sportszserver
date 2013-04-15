@@ -37,13 +37,15 @@
 			<p>
 			<div class="row">
 		        <div class="span2">
-					<% if @coach.team == "Unassigned" %>
+					<% if @coach.team_id.nil? %>
 						Team: Unassigned
-						<%= select("coachteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true } ) %>
+						<!--%= select("coachteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true } ) %-->
 					<% else %>
-						<%= @sport.teams.find(@coach.team).team_name %>
-        				<%= select("coachteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, selected: @sport.teams.find(@coach.team).id ) %>
+						<%= @sport.teams.find(@coach.team_id).team_name %>
+						<!--%= @sport.teams.find(@coach.team).team_name %-->
+        				<!--%= select("coachteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, selected: @sport.teams.find(@coach.team).id ) %-->
 					<% end %>
+					<%= f.input :team_id, collection: @sport.teams.collect{ |t| [t.team_name, t.id] }, input_html: { include_blank: true } %>
 		        </div>
 				<div class="span4 offset1">
 					<h4>Current coach image</h4>

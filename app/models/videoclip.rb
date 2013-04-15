@@ -27,16 +27,17 @@ class Videoclip
   field :error_message, type: String
 
   field :teamid,  type: String
-  field :schedule,  type: String
+#  field :schedule,  type: String
   field :owner, type: String
   field :players, type: Array
   
   search_in :players, :displayname
   
   belongs_to :sport, index: true
+  belongs_to :gameschedule
   
   index( { teamid: 1 }, { unique: false } )
-  index( { schedule: 1 } , { unique: false } )
+#  index( { schedule: 1 } , { unique: false } )
   index( { owner: 1 } , { unique: false } )
 
   validates_presence_of :filename

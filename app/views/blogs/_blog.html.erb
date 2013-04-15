@@ -12,9 +12,9 @@
             <div class="row">
                 <div class="span2">
                   <% if user.avatar.blank? %>
-                    <%= link_to image_tag("Photo_Not_Available.jpg"), user_path(user) %>
+                    <%= link_to image_tag("Tiny_Photo_Not_Available.png"), user_path(user) %>
                   <% else %>
-                    <%= link_to image_tag(user.avatar.url(:thumb)), sport_athlete_path(b.sport, b.athlete) %>
+                    <%= link_to image_tag(user.avatar.url(:tiny)), sport_athlete_path(b.sport, b.athlete), width: '10', height: '10' %>
                   <% end %>
                 </div>
                 <div class="span6">
@@ -26,15 +26,15 @@
           <em>
             Tags:<p>
       		<%= link_to b.sport.name, sport_path(b.sport) %>&nbsp
-            <% if !b.team.nil? and !b.team.blank? %>
-              <%= @sport.teams.find(b.team).team_name %>&nbsp
+            <% if !b.team_id.nil? and !b.team_id.blank? %>
+              <%= @sport.teams.find(b.team_id).team_name %>&nbsp
             <% end %>
-            <% if !b.game.nil? and !b.game.blank? %>
-              <%= link_to Gameschedule.find(b.game).game_name, sport_team_gameschedule_path(@sport, @sport.teams.find(b.team), b.game) %>
+            <% if !b.gameschedule.nil? and !b.gameschedule.blank? %>
+              <%= link_to Gameschedule.find(b.gameschedule).game_name, sport_team_gameschedule_path(@sport, @sport.teams.find(b.team_id), b.gameschedule) %>
             <% end %>
-            <% if !b.athlete.nil? and !b.athlete.blank? %>
+            <% if !b.athlete_id.nil? and !b.athlete_id.blank? %>
 			  Athlete:
-              <%= link_to @sport.athletes.find(b.athlete).full_name, sport_athlete_path(b.sport, b.athlete) %>&nbsp
+              <%= link_to @sport.athletes.find(b.athlete_id).full_name, sport_athlete_path(@sport, b.athlete_id) %>&nbsp
             <% end %>
             <% if !b.coach.nil? and !b.coach.blank? %>
       		  Coach:

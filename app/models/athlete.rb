@@ -14,7 +14,7 @@ class Athlete
   field :year, type: String
   field :season, type: String
   field :bio, type: String
-  field :team, type: String,  default: "Unassigned"
+#  field :team, type: String,  default: "Unassigned"
   field :followers, type: Hash, default: Hash[]
 
   search_in :lastname, :firstname, :middlename, :number, :team, :position
@@ -25,15 +25,18 @@ class Athlete
                          access_key_id: S3DirectUpload.config.access_key_id,
     					           secret_access_key: S3DirectUpload.config.secret_access_key },
     :styles => {
-#      :original => ['1920x1680', :jpg],
+      :tiny     => ['50x50',      :jpg],
       :thumb    => ['125x125',   :jpg],
       :medium   => ['320x480',    :jpg],
-      :large    => ['640x960',   :jpg]
+      :large    => ['640x960',    :jpg]
     }
 
     belongs_to :sport, index: true
+    belongs_to :team
     has_many :photos
-    has_many :football_stats    
+    has_many :football_stats, dependent: :destroy
+    has_many :blogs
+    has_many :newsfeeds
     
     validates :number, presence: true, numericality: { greater_than: 0 }
     validates :lastname, presence: true, format: { with: /^[a-zA-Z\d\s]*$/ }

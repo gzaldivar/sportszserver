@@ -16,12 +16,12 @@ class PhotosController < ApplicationController
       @team = @sport.teams.find(params[:team_id].to_s)
     elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:number].nil? && !params[:number][:id].blank? && 
           !params[:game].nil? && !params[:game][:id].blank?
-      pics = @sport.photos.where(teamid: params[:team][:id].to_s, schedule: params[:game][:id].to_s, 
+      pics = @sport.photos.where(teamid: params[:team][:id].to_s, gameschedule: params[:game][:id].to_s, 
                                  :players.in => [params[:number][:id].to_s])
       @team = @sport.teams.find(params[:team][:id].to_s)
     elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:athlete].nil? && !params[:athlete][:id].blank? && 
           !params[:game].nil? && !params[:game][:id].blank?
-      pics = @sport.photos.where(teamid: params[:team][:id].to_s, schedule: params[:game][:id].to_s, 
+      pics = @sport.photos.where(teamid: params[:team][:id].to_s, gameschedule: params[:game][:id].to_s, 
                                  :players.in => [params[:athlete][:id].to_s])
       @team = @sport.teams.find(params[:team][:id].to_s)
     elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:number].nil? && !params[:number][:id].blank?
@@ -162,7 +162,7 @@ class PhotosController < ApplicationController
         @photo.players = Array.new
         @photo.players.push(tags[cnt+=1])
       when "g"
-        @photo.schedule = tags[cnt+=1]
+        @photo.gameschedule_id = tags[cnt+=1]
       end
     end
             

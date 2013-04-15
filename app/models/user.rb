@@ -60,7 +60,8 @@ class User
                          access_key_id: S3DirectUpload.config.access_key_id,
     					           secret_access_key: S3DirectUpload.config.secret_access_key },
     :styles => {
-      :thumb    => ['125x125',   :jpg],
+      :tiny    => ['50x50',   :jpg],
+      :thumb    => ['100x100',   :jpg]
     }
     
   validates_attachment_content_type :avatar, content_type: ['image/jpg', 'image/jpeg', 'image/png']

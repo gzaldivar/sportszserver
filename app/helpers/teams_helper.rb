@@ -11,7 +11,7 @@ module TeamsHelper
 	end
 
 	def team_manager?(item, team)
-		if item.nil? and (team.id.to_s == current_user.teamid)
+		if item.nil? and !team.nil? and (team.id.to_s == current_user.teamid)
 			return true
 		elsif item.respond_to?('team') and (current_user.teamid == item.team)
 			return true

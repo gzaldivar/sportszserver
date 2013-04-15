@@ -13,7 +13,7 @@ class AthletesController < ApplicationController
   
   def create
     athlete = @sport.athletes.build(params[:athlete]) 
-    update_team(athlete)
+#    update_team(athlete)
     if @sport.name == "Football"
       update_postions(athlete)
     end
@@ -31,10 +31,10 @@ class AthletesController < ApplicationController
   end
   
   def show
-    if @athlete.team == "Unassigned"
+    if @athlete.team_id.nil? or @athlete.team_id.blank?
       @team = nil
     else 
-      @team = @sport.teams.find(@athlete.team)
+      @team = @sport.teams.find(@athlete.team_id)
     end 
 
     @photos = Photo.where(athletes: @athlete.id)
@@ -45,7 +45,7 @@ class AthletesController < ApplicationController
   end
   
   def update
-    update_team(@athlete)
+#    update_team(@athlete)
     if @sport.name == "Football"
       update_postions(@athlete)
     end
@@ -63,7 +63,7 @@ class AthletesController < ApplicationController
   end
   
   def destroy
-#    delete_athlete_photo(@athlete.id)
+    destroy_athlete(@athlete.id.to_s)
 #    @athlete.deletephoto
     @athlete.destroy    
           
@@ -85,7 +85,7 @@ class AthletesController < ApplicationController
     elsif !params[:number].blank?
       players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:number].to_s)
     elsif params[:team_id]
-      players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:team_id].to_s).asc(:number)
+      players = Athlete.where(sport_id: params[:sport_id], team_id: params[:team_id]).asc(:number)
       @team = @sport.teams.find(params[:team_id])
     else
       players = Athlete.where(sport_id: params[:sport_id]).asc(:number)
@@ -156,6 +156,17 @@ class AthletesController < ApplicationController
       end
       if !params[:inches].nil?
         athlete.height = athlete.height + "-" + params[:inches]
+      end
+    end
+
+    def destroy_athlete(athlete)
+      @sport.photos.where(:players =>  athlete).each do |p|
+        p.players.delete_if {|item| item == athlete }
+        p.save
+      end
+      @sport.videoclips.where(players: athlete).each do |v|
+        v.players.delete_if {|item| item == athlete }
+        v.save
       end
     end
     

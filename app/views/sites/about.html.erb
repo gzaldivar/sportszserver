@@ -5,19 +5,16 @@
 		<h1>About Us</h1>
 		<p>
 		SportzSoftware.com specializes in providing software solutions to 
-		athletic programs alieviating them of the need to manage their web sites with 
-		custom solutions. We provide you with a template model where you
-		enter the data and your site is automatically created.</p>
+		athletic programs allowing them to make their sports programs content available via mobile devices in addition to the web. We provide you with a template model alleviating you from the need to manually manage your web sites with 
+		custom solutions. You enter the data and your site is automatically created and available to your users via our iPhone/iPad app.</p>
 		<p>
-		We also allow your site vistors to display Photos, follow players, and watch live games if you choose to provide that capability.
-		<p>
-		We are not a simple outsource team web site. What we provide is the capability for your to monetize and sell your product - your team.  When you work with us, you will reach your fan base on mobile devices, connected TV's in addition to the web. You become your own broadcaster!</p>
+		When you work with us, you will reach your fan base on mobile devices and in the future connected TV's in addition to a web site.</p>
 		<p>
 		You own the site and the product. We provide the technology. The rest is up to you!
 		<p>
 		Thanks for looking at us and considering our solution for your needs.
 		<br/>
-		<% if admin_signed_in? %>
+		<% if isAdmin? %>
 			<div class="span6 offset2"%>
 				<h4>Enter your own About Page:
 				<%= link_to "Replace", updateabout_site_path(current_site), class: "btn btn-medium btn-primary" %><p>

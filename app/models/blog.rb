@@ -5,14 +5,14 @@ class Blog
   
   field :title, type: String
   field :entry, type: String
-  field :athlete, type: String
-  field :game, type: String
-  field :team, type: String
-  field :coach, type: String
   field :external_url, type: String
   field :blogger, type: String
 
   belongs_to :sport
+  belongs_to :team
+  belongs_to :athlete
+  belongs_to :coach
+  belongs_to :gameschedule
 
   validates_presence_of :title
   validates_presence_of :entry, :blogger

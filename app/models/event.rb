@@ -3,15 +3,17 @@ class Event
   include Mongoid::Timestamps
 
   field :start_time, type: DateTime
-  field :startdate, type: Date
+#  field :startdate, type: Date
   field :end_time, type: DateTime
-  field :enddate, type: Date
+#  field :enddate, type: Date
   field :name, type: String
   field :desc, type: String
   field :owner, type: String
-  field :team, type: String
+
+  attr_accessor :date_string, :string_date
 
   belongs_to :sport
+  belongs_to :team
 
   validates_presence_of :name, :start_time, :end_time, :owner
 

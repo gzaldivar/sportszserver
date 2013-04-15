@@ -13,10 +13,10 @@
 			<td><%= athlete.height %></td>
 			<td><%= athlete.weight %></td>
 			<td><%= athlete.year %></td>
-			<% if athlete.team == "Unassigned" %>
+			<% if athlete.team_id.nil? or athlete.team_id.blank? %>
 				<td>Unassinged</td>
 			<% else %>
-				<td><%= @sport.teams.find(athlete.team).team_name %></td>
+				<td><%= @sport.teams.find(athlete.team_id).team_name %></td>
 			<% end %>
 			<% if isAdmin? or isTeamManager?(athlete) %>
 				<td><%= link_to "Edit", edit_sport_athlete_path(@sport, athlete),  class: "btn btn-mini btn-warning" %></td>

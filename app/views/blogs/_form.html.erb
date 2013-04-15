@@ -31,12 +31,12 @@
 				<div class="span4 offset1">
             		<div class="row">
               			<div class="span4">
-					    	<%= f.input	:team, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Team", hint: "Blog for Team ...", input_html: { id: "select_team" } %>
+					    	<%= f.input	:team_id, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Team", hint: "Blog for Team ...", input_html: { id: "select_team" } %>
 					    </div>
 					</div>
             		<div class="row">
               			<div class="span4">
-    					    <%= f.input	:game, collection: @gameschedules.collect{ |t| [t.game_name, t.id] }, label: "Game", hint: "Blog for Game .....", input_html: { id: "gameschedules_select"} %>
+    					    <%= f.input	:gameschedule, collection: @gameschedules.collect{ |t| [t.game_name, t.id] }, label: "Game", hint: "Blog for Game .....", input_html: { id: "gameschedules_select"} %>
               			</div>
             		</div>
              		<div class="row">
@@ -44,7 +44,7 @@
                 			<% if @athlete %>
                 				<h3><em>News item is for team <%= @athlete %></em></h3>
                 			<% else %>
-    					    	<%= f.input	:athlete, collection: @athletes.collect{ |t| [t.name, t.id] }, label: "Athlete", hint: "Athlete News ...", input_html: { id: "athletes_select"} %>
+    					    	<%= f.input	:athlete_id, collection: @athletes.collect{ |t| [t.name, t.id] }, label: "Athlete", hint: "Athlete News ...", input_html: { id: "athletes_select"} %>
                 			<% end %>
               			</div>
             		</div>

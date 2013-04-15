@@ -27,6 +27,10 @@ class Gameschedule
   belongs_to :team, index: true
   has_many :football_stats
   embeds_many :gamelogs
+  has_many :blogs
+  has_many :gameschedules
+  has_many :photos
+  has_many :videoclips
 
   validates_presence_of :starttime
   validates_presence_of :gamedate

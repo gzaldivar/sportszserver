@@ -8,11 +8,21 @@
       </div><p>
       <div class="row">
         <% if !f.athlete.blank? or !f.coach.blank? %>
-          <div class="span2">
-            <% if f.athlete %>
-              <%= link_to image_tag(f.sport.athletes.find(f.athlete).pic.url(:thumb)), sport_athlete_path(f.sport, f.athlete) %>
-            <% else %>
-              <%= link_to image_tag(f.sport.coach.find(f.coach).coachpic.url(:thumb)), sport_coach_path(f.sport, f.coach) %>
+          <div class="span1">
+            <% if !f.athlete.nil? and !f.athlete.blank? %>
+              <% athlete = f.sport.athletes.find(f.athlete) %>
+              <% if athlete.pic.blank? %>
+                <%= link_to image_tag("Tiny_Photo_Not_Available.png"), sport_athlete_path(f.sport, athlete) %> 
+              <% else %>    
+                <%= link_to image_tag(athlete.pic.url(:tiny)), sport_athlete_path(f.sport, athlete) %>
+              <% end %>
+            <% elsif !f.coach.nil? and !f.coach.blank? %>
+              <% coach = f.sport.coaches.find(f.coach) %>
+              <% if coach.coachpic.blank? %>
+                <%= link_to image_tag("Tiny_Photo_Not_Available.png"), sport_coach_path(f.sport, coach) %> 
+              <% else %>    
+                <%= link_to image_tag(coach.coachpic.url(:tiny)), sport_coach_path(f.sport, coach) %>
+              <% end %>
             <% end %>
           </div>
           <div class="span4">

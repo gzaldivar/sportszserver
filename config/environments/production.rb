@@ -55,17 +55,17 @@ Sportzserver::Application.configure do
 #  ActionMailer::Base.smtp_settings = {
   config.action_mailer.smtp_settings = {
     :enable_starttls_auto => true,
-    :address => ‘smtpout.secureserver.net’,
-    :domain  => ‘www.sportzteams.com’,
+    :address => 'smtpout.secureserver.net',
+    :domain  => 'www.sportzteams.com',
     :port      => 80,
-    :user_name => ‘info@sportzteams.com’,
+    :user_name => 'info@sportzteams.com',
     :password => 'bryan101',
     :authentication => :plain
+  }
   # Disable delivery errors, bad email addresses will be ignored
   config.action_mailer.raise_delivery_errors = false
 
   config.action_mailer.default_url_options = { :host => 'sportzteams.com:3000' }
-  }
   config.action_mailer.perform_deliveries = true
  # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"

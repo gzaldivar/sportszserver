@@ -54,10 +54,10 @@ Sportzserver::Application.configure do
   config.action_mailer.default_url_options = { :host => 'sportzteams.com:3000' }
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
-  config.action_mailer.delivery_method = :smtp
-#  ActionMailer::Base.delivery_method = :smtp
-#  ActionMailer::Base.smtp_settings = {
-  config.action_mailer.smtp_settings = {
+#  config.action_mailer.delivery_method = :smtp
+  ActionMailer::Base.delivery_method = :smtp
+  ActionMailer::Base.smtp_settings = {
+#  config.action_mailer.smtp_settings = {
     :address => ‘smtpout.secureserver.net’,
     :domain  => ‘www.sportzteams.com’,
     :port      => 80,

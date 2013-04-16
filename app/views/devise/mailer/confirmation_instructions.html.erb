@@ -4,7 +4,11 @@
   	<div class="span7" style="background-color:#ffffff;position:relative;top:0;left:100px;">
 		<div class="row">
 		  	<div class="span4 offset2">
-				<p>You can confirm your account email through the link below:</p>
+		  		<% if current_site? %>
+		  			<p>Welcome to <%= current_site.sitename %>! You can confirm your account email for <%= current_site.sitename %> through the link below:</p>
+		  		<% else %>
+					<p>Welcome to sportzteams.com. You can confirm your account email through the link below:</p>
+				<% end %>
 
 				<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>
 			</div>

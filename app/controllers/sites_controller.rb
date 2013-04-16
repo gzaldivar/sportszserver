@@ -2,7 +2,7 @@ class SitesController < ApplicationController
   respond_to :html, :json, :xml
   before_filter :authenticate_user!,     only: [:new, :create, :edit, :update, :destroy, :uploadpage, :updateabout]
   before_filter :site_owner?,           only: [:edit, :update, :destroy, :updateabout, :uploadpage, :male, :female]
-  before_filter :correct_site,          only: [:contact, :show, :update, :edit, :destroy, :updateabout, :uploadpage]
+  before_filter :correct_site,          only: [:show, :update, :edit, :destroy, :updateabout, :uploadpage]
    
   def home
     clear_site
@@ -50,7 +50,11 @@ class SitesController < ApplicationController
   end
   
   def contact
-    redirect_to site_contacts_path(@site)
+    if current_site?
+      redirect_to site_contacts_path(current_site)
+    else
+      render 'contacts/index'
+    end
   end
   
   def info

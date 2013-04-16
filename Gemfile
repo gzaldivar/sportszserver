@@ -1,4 +1,4 @@
-source 'https://rubygems.org'
+source 'http://rubygems.org'
 
 gem 'rails', '3.2.11'
 
@@ -45,7 +45,7 @@ group :assets do
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
+  gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
   gem 'therubyracer', :platform => :ruby
@@ -89,3 +89,5 @@ gem "simple_calendar", "~> 0.1.5"
 
 # To use debugger
 # gem 'debugger'
+gem 'rubber'
+gem 'open4'

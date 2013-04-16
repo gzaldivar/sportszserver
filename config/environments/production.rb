@@ -48,22 +48,23 @@ Sportzserver::Application.configure do
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
   # config.assets.precompile += %w( search.js )
 
-  # Disable delivery errors, bad email addresses will be ignored
-  config.action_mailer.raise_delivery_errors = false
-
-  config.action_mailer.default_url_options = { :host => 'sportzteams.com:3000' }
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised
 #  config.action_mailer.delivery_method = :smtp
   ActionMailer::Base.delivery_method = :smtp
-  ActionMailer::Base.smtp_settings = {
-#  config.action_mailer.smtp_settings = {
+#  ActionMailer::Base.smtp_settings = {
+  config.action_mailer.smtp_settings = {
+    :enable_starttls_auto => true,
     :address => ‘smtpout.secureserver.net’,
     :domain  => ‘www.sportzteams.com’,
     :port      => 80,
     :user_name => ‘info@sportzteams.com’,
     :password => 'bryan101',
     :authentication => :plain
+  # Disable delivery errors, bad email addresses will be ignored
+  config.action_mailer.raise_delivery_errors = false
+
+  config.action_mailer.default_url_options = { :host => 'sportzteams.com:3000' }
   }
   config.action_mailer.perform_deliveries = true
  # config.action_mailer.raise_delivery_errors = false

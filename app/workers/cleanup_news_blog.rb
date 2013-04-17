@@ -21,3 +21,4 @@ class CleanupNewsBlog
   	end
 
   end
+end

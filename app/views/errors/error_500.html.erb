@@ -5,7 +5,7 @@
 		<h2>Error 500</h2>
 		<h3>We are sorry, the content you requested cannot be found!
 		<p>
-		You tried to access '#{@not_found_path}', which is not a valid page.
+		You tried to access <%= @not_found_path %>, which is not a valid page.
 		<p>
 		<% if current_site? %>
 			Want to <%= link_to current_site.sitename, current_site %> go back to our home page and try again?

@@ -1,9 +1,5 @@
 Sportzserver::Application.routes.draw do
 
-  unless Rails.application.config.consider_all_requests_local
-    match '*not_found', to: 'errors#error_404'
-  end
-  
   devise_for :users, controllers: {registrations: "users/registrations"}
 
   resources :users, only: [:edit, :update, :show, :index] do
@@ -167,6 +163,10 @@ Sportzserver::Application.routes.draw do
     mount Resque::Server, :at => "/resque"
   end
 
+  unless Rails.application.config.consider_all_requests_local
+    match '*not_found', to: 'errors#error_404'
+  end
+  
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

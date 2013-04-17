@@ -78,6 +78,13 @@ test:
         # low amounts for fast failures.
         max_retries: 1
         retry_interval: 0
+#production:
+#  uri: <%= ENV['MONGOHQ_URL'] %>
+#  identity_map_enabled: true
 production:
-  uri: <%= ENV['MONGOHQ_URL'] %>
-  identity_map_enabled: true
+  sessions:
+    default:
+      uri: <%= ENV['MONGOHQ_URL'] %>
+      options:
+        skip_version_check: true
+        safe: true

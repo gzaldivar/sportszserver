@@ -36,7 +36,7 @@ class TeamsController < ApplicationController
 
 	def destroy
 		destroy_team(@team.id.to_s)
-		@@team.destroy
+		@team.destroy
 		redirect_to @sport, notice: "Team delete sucessful!"
 	end
 

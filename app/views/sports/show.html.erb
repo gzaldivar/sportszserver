@@ -87,6 +87,10 @@
   <div class="row">
     <div class="span2 offset2">
       <%= link_to "Edit Sport", edit_sport_path(id: @sport.id), class: "btn btn-medium btn-primary" %>
+      <p>
+      <% if @sport.teams.blank? %>
+        <strong>No teams entered.</strong> Click Edit Sport to add teams!
+      <% end %>
     </div>
     &nbsp
     <div class="span2 offset1">

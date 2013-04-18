@@ -118,7 +118,7 @@
   				  <%= f.file_field :logo %>
           </div>
           <div class="span3 offset1">
-            BACKGROUND. Background for the page. White will be used if not entered. REMEMBER, this will be used as the background for mobile app.
+            BACKGROUND. Background for the page. White will be used if not entered.
             <% if !@site.background.blank? %>
               Current background:<p>
               <%= image_tag @site.background.url(:thumb) %>

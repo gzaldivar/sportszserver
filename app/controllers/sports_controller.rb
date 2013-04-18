@@ -9,15 +9,16 @@ class SportsController < ApplicationController
   end
   
   def create
-    @sport = current_site.sports.build(params[:sport])
-    if @sport.name.nil? and (!params[:sportname].nil? or !params[:sportname].blank?)
-      @sport.name = params[:sportname]
-      @sport.has_stats = true
-    end
-    if @sport.save
+    begin
+      @sport = current_site.sports.build(params[:sport])
+      if @sport.name.nil? and (!params[:sportname].nil? or !params[:sportname].blank?)
+        @sport.name = params[:sportname]
+        @sport.has_stats = true
+      end
+      @sport.save!
       redirect_to @sport
-    else
-       redirect_to :back, alert: "Error saving sport information"
+    rescue Exception => e
+      redirect_to :back, alert: "Error saving sport information " + e.message
     end
   end
   
@@ -62,9 +63,10 @@ class SportsController < ApplicationController
   end
   
   def update
-    if @sport.update_attributes(params[:sport])
+    begin
+      @sport.update_attributes(params[:sport])
       redirect_to @sport
-    else
+    rescue Exception => e
       redirect_to :back, alert: "Error updating sport"
     end
   end

@@ -19,7 +19,7 @@
 			      			<li class="disabled"><%= link_to "Coaching Staff", "#" %></li>
 			        		<li class="disabled"><%= link_to "Photos", "#" %></li>
 			        		<li class="disabled"><a href="#">Video Clips</a></li>
-			        <% elsif !sport.teams.nil? and @sport.teams.count == 0 %>
+			        <% elsif !@sport.teams.nil? and @sport.teams.count == 0 %>
 			            <li><%= link_to "Schedule", "#" %></li>
 			      			<li><%= link_to "Rosters", "#" %></li>
 			      			<li><%= link_to "Coaching Staff", "#" %></li>

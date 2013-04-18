@@ -3,6 +3,7 @@ class Sport
   include Mongoid::Timestamps
   include Mongoid::Paperclip
 
+ 
   field :name, type: String
   field :sportname, type: String
   field :has_stats, type: Boolean, default: false
@@ -23,7 +24,6 @@ class Sport
   has_many :blogs, dependent: :destroy
   has_many :events, dependent: :destroy
   embeds_many :teams
-#  embeds_many :newsfeeds
 
   has_mongoid_attached_file :sport_banner,
     :storage        => :s3,
@@ -49,7 +49,8 @@ class Sport
       :large    => ['640x960',   :jpg]
     }
 
-  validates_presence_of :name
+  validate :nameofsport
+#  validates_presence_of :name
   validates :year, presence: true, format: { with: /^[0-9]{4}$/ }
   validates_presence_of :season
   validates :sex, presence: true, format: { with: /Male|Female/ }
@@ -63,5 +64,12 @@ class Sport
       name + " " + mascot
     end
   end
+
+  private
+    def nameofsport
+      unless sportname.blank? and name.blank?
+        errors.add(:sports, "Sport name cannot be blank")
+      end
+    end
   
 end

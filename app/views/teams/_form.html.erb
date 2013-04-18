@@ -7,10 +7,11 @@
           <%= t.input :title, hint: "Varsity, Freshman, Pee Wee ...." %>
         </div>
       </div>
+      <p>
       <div class="row">
         <div class="span8">
           <% if current_site.mascot.blank? %>
-            No global site Mascot defined. You must enter one for the team.
+            <h4><em><strong>No global site Mascot defined. You must enter one for the team.</strong></em></h4>
             <%= t.input :mascot, label: "Team Mascot", required: true %>
           <% else %>
             Use the site mascot?

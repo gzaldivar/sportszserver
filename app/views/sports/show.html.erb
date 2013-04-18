@@ -39,15 +39,17 @@
           </tbody>
         </table>
      </div>
-     <div class="row">
-      <table class="table table-bordered">
-        <thead>
-        </thead>
-        <tbody>
-          <td><%= image_tag @sport.sponsors.first.sponsorpic.url(:medium) %></td>
-        </tbody>
-      </table>
-     </div>
+    <% if !@sport.sponsors.blank? %>
+       <div class="row">
+        <table class="table table-bordered">
+          <thead>
+          </thead>
+          <tbody>
+            <td><%= image_tag @sport.sponsors.first.sponsorpic.url(:medium) %></td>
+          </tbody>
+        </table>
+       </div>
+    <% end %>
   </div>
   <div class="span5 offset1">
   <h3>News for <%= current_site.sitename + " " + @sport.name %></h3>

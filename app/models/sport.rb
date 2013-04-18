@@ -43,7 +43,7 @@ class Sport
                          access_key_id: S3DirectUpload.config.access_key_id,
     					           secret_access_key: S3DirectUpload.config.secret_access_key },
     :styles => {
-      :original => ['1920x1680', :jpg],
+#      :original => ['1920x1680', :jpg],
       :thumb    => ['125x125',   :jpg],
       :medium   => ['320x480',    :jpg],
       :large    => ['640x960',   :jpg]

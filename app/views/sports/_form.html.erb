@@ -13,7 +13,7 @@
               <%= select_tag :sportname, options_for_select(sports_list), include_blank: true %>
               <!--%= f.input :sportname,  collection: sports_list, include_blank: true, label:  "Sport Name", hint: %-->
               These sports have a stat package. If you want to provide stats you should select the sport here.
-              <%= f.input :name,  label:  "Sport Name", hint: "Enter sport name. Will not have a stat package but all other features will be available." %>
+              <%= f.input :name, required: false, label:  "Sport Name", hint: "Enter sport name. Will not have a stat package but all other features will be available." %>
           <% end %>
         </div>
       </div>

@@ -1,5 +1,5 @@
 <% if @sport.has_stats? %>
-	<% if @sport.name == "Football" %>
+	<% if @sport.sportname == "Football" %>
 		<div class="span2">
 			<div class="input string required"><label class="string required" for="athlete_offpos"><abbr title="required">*</abbr>Offense Position:</label>					
 			</div>
@@ -30,7 +30,7 @@
 			<% end %>
 			<!--%= f.input :special_teamspos, collection: specialteams_football_positions, label: "Special Teams Position:" %-->
 		</div>
-	<% elsif @sport.name == "Basketball" %>
+	<% elsif @sport.sportname == "Basketball" %>
 		<%= f.input :position, collecton: basketball_positions, include_blank: true %>
 	<% end %>
 <% else %>

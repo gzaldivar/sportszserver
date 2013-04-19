@@ -10,7 +10,7 @@ class AthletesController < ApplicationController
   def new    
     @athlete = Athlete.new
     @height = []
-    if @sport.name == "Football"
+    if @sport.sportname == "Football"
       @position = []
     end
   end

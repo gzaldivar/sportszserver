@@ -32,7 +32,7 @@
 		<% elsif !@athlete.nil? %>
 			Uploaded photos will be tagged for player <em><%= @athlete.name %></em>
 			<% if @athlete.team != "Unassigned" %>
-				and for team <em><%= @sport.teams.find(@athlete.team).team_name %></em>
+				and for team <em><%= @sport.teams.find(@athlete.team_id).team_name %></em>
 			<% end %>
 		<% end %>
 	</h4>

@@ -15,9 +15,18 @@ class CleanupNewsBlog
    		time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
     	blogdate = time.to_time.prev_month.to_date.iso8601
 
-   		s.blogs.where(:updated.lt => blogdate).each do |b|
+   		s.blogs.where(:updated_at.lt => blogdate).each do |b|
    			b.destroy
    		end
+
+      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+      alertdate = time.to_time.prev_week.to_date.iso8601
+
+      s.athletes.each do |a|
+        a.athletes.alerts.where(:updated_at.lt => alertdate).each do |alert|
+          alert.destroy
+        end
+      end
   	end
 
   end

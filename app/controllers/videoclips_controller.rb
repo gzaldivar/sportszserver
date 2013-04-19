@@ -154,7 +154,7 @@ class VideoclipsController < ApplicationController
       # put review logic here !!!!!!!
       
       if user_signed_in?
-        @videoclip.owner = current_user.id
+        @videoclip.user_id = current_user.id
       end
      
       filepath = "videos/" + @videoclip.id + "/" + SecureRandom.hex(10)

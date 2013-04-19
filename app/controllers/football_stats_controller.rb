@@ -8,7 +8,7 @@ class FootballStatsController < ApplicationController
 	def newstat
 		@stattype = params[:id]
 		if @athlete.team != "Unassigned"
-			@games = @sport.teams.find(@athlete.team).gameschedules
+			@games = @sport.teams.find(@athlete.team_id).gameschedules
 		else
 			redirect_to :back, alert: "Athlete is unnassigned to a team. Stats must be associated with a game which can only be played by teams"
 		end

@@ -69,8 +69,10 @@ class PhotoProcessor
         FileUtils.rm(img_path)
         
         if item.modelname == "photos"
-          newobj = obj.move_to(item.modelname + "/" + photo.id + "/original/" + photo.filename)
-          photo.original_url = newobj.url_for(:read, expires:  473040000)
+#          newobj = obj.move_to(item.modelname + "/" + photo.id + "/original/" + photo.filename)
+          obj.delete
+          photo.original_url = nil
+#          photo.original_url = newobj.url_for(:read, expires:  473040000)
         end
         photo.filepath = item.modelname + '/' + photo.id + '/' + photo.filename
         

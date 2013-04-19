@@ -2,6 +2,8 @@ class Photo
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Search
+
+  after_save :send_alerts
   
   field :filename, type: String
   field :filepath, type: String
@@ -19,7 +21,7 @@ class Photo
   
   field :teamid,  type: String
 #  field :schedule,  type: String
-  field :owner, type: String
+#  field :owner, type: String
   field :players, type: Array
   
   index({ teamid: 1 }, { unique: false } )
@@ -28,6 +30,8 @@ class Photo
   
   belongs_to :sport, index: true
   belongs_to :gameschedule
+  belongs_to :user
+  has_many :alerts
   
   validates_presence_of :filename
   validates_presence_of :filepath
@@ -70,5 +74,18 @@ class Photo
     bucket.objects[self.filepath + "/medium/" + self.filename].delete
     bucket.objects[self.filepath + "/thumbnail/" + self.filename].delete
   end
+
+  private
+
+    def send_alerts
+        if !self.players.nil?
+            self.players.each do |p|
+              player = Athlete.find(p)
+              player.followers.each do |user, name|
+                player.alerts.create!(user: user, photo: self.id)
+              end
+            end
+        end
+    end
   
 end

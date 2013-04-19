@@ -25,11 +25,11 @@ class FootballRushingsController < ApplicationController
 	def show
 	end
 
-	def edit		
+	def edit
 	end
 
 	def update
-		if @rushing.update_attributes(params[:football_rushing])
+		if @rushing.update_attributes!(params[:football_rushing])
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @rushing], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json 

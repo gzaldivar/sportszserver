@@ -69,7 +69,7 @@ class PhotosController < ApplicationController
     time = time.to_time.yesterday.to_date.iso8601
     @photos = []
     
-    @sport.photos.where(teamid: team.id, schedule: @gameschedule.id.to_s, :updated_at.gt => time, 
+    @sport.photos.where(teamid: team.id, gameschedule: @gameschedule.id.to_s, :updated_at.gt => time, 
                         owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
       @photos[cnt] = q
     end
@@ -86,13 +86,13 @@ class PhotosController < ApplicationController
   
   def newathlete
     @athlete = @sport.athletes.find(params[:id].to_s)
-    @prefix = "t_" + @athlete.team + "_a_" + @athlete.id + "_s_" + @sport.id
+    @prefix = "t_" + @athlete.team_id + "_a_" + @athlete.id + "_s_" + @sport.id
     
     time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
     time = time.to_time.yesterday.to_date.iso8601
     @photos = []
     
-    @sport.photos.where(teamid: @athlete.team, :players.in =>  [@athlete.id.to_s], :updated_at.gt => time, 
+    @sport.photos.where(teamid: @athlete.team_id, :players.in =>  [@athlete.id.to_s], :updated_at.gt => time, 
                         owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
       @photos[cnt] = q
     end
@@ -169,7 +169,7 @@ class PhotosController < ApplicationController
     # put review logic here !!!!!!!
     
     if user_signed_in?
-      @photo.owner = current_user.id
+      @photo.user_id = current_user.id
     end
     
     if @photo.save!

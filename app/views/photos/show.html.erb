@@ -7,12 +7,12 @@
 </div>
 <div class="row">
 	<div class="span8 offset1">
-  	<% if @photo.original_url.nil? %> 
-  		<%= image_tag 'Photo_Not_Available.jpg' %>
-    <% elsif @photo.large_url.nil? %>
+    <% if !@photo.large_url.nil? %>
+      <%= image_tag(@photo.large_url) %>
+    <% elsif !@photo.original_url.nil?%>
       <%= image_tag(@photo.original_url) %>
-    <% else %>
-  		<%= image_tag(@photo.large_url) %>
+    <% else %> 
+      <%= image_tag 'Photo_Not_Available.jpg' %>
   	<% end %>
   </div>
 </div><br/>
@@ -63,7 +63,7 @@
 <br/>
 <div class="row">
   <div class="span5 offset4">
-    <% if isAdmin? or (user_signed_in? and (current_user.id == @photo.owner) and enable_user_pics? ) %>
+    <% if isAdmin? or (user_signed_in? and (current_user.id == @photo.user_id) and enable_user_pics? ) %>
       <%= link_to	"Edit Photo", edit_sport_photo_path(@sport, @photo), class:	"btn btn-medium btn-primary" %>
     <% end %>
   </div>

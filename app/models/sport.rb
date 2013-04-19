@@ -59,9 +59,17 @@ class Sport
    
   def sport_name
     if mascot.nil?
-      name
+      if name.nil?
+        sportname
+      else
+        name
+      end
     else
-      name + " " + mascot
+      if name.nil?
+        sportname + " " + mascot
+      else
+        name + " " + mascot
+      end
     end
   end
 

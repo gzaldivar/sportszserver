@@ -1,0 +1,88 @@
+<% provide(:title, @sport.sport_name + " " + @athlete.name + " - Alerts") %>
+<p>
+<div class="row">
+	<div class="span2">
+		Alerts for Athlete:
+	</div>
+	<% if !@athlete.pic.blank? %>
+		<div class="span2">
+			<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+		</div>
+	<% end %>
+	<div class="span2">
+		<%= link_to @athlete.name, sport_athlete_path(@sport, @athlete) %>
+	</div>
+</div>
+<p>
+<div class="row">
+  <div class="span10">
+  	<% if @alerts.blank? %>
+  		<h4>No Alerts for athlete: <%= @athlete.name %></h4>
+  	<% else %>
+	  	<% @alerts.each do |a| %>
+	  		<% if !a.photo.blank? %>
+			  	<table class="table table-striped">
+			  		<thead>
+			  			<th>Time</th>
+			  			<th>Photo</th>
+			  			<th>Clear Alert</th>
+			  		</thead>
+			  		<tbody>
+			  			<td><%= a.updated_at.strftime("%Y-%d-%m %H:%M:%S") %></td>
+			  			<td><%= link_to @sport.photos.find(a.photo_id).displayname, sport_photo_path(@sport, a.photo_id) %></td>
+			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+			  		</tbody>
+			  	</table>
+			<% elsif !a.videoclip.blank? %>
+			  	<table class="table table-striped">
+			  		<thead>
+			  			<th>Time</th>
+			  			<th>Video Clip</th>
+			  			<th>Clear Alert</th>
+			  		</thead>
+			  		<tbody>
+			  			<td><%= a.updated_at.strftime("%m/%d/%Y") %></td>
+			  			<td><%= link_to @sport.videoclips.find(a.videoclip_id).displayname, sport_videoclip_path(@sport, a.videoclip_id) %></td>
+			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+			  		</tbody>
+			  	</table>
+			<% elsif !a.blog.blank? %>
+			  	<table class="table table-striped">
+			  		<thead>
+			  			<th>Time</th>
+			  			<th>Blog</th>
+			  			<th>Clear Alert</th>
+			  		</thead>
+			  		<tbody>
+			  			<td><%= a.updated_at.strftime("%m/%d/%Y") %></td>
+			  			<td><%= link_to @sport.blogs.find(a.blog_id).title, sport_blog_path(@sport, a.bog_id) %></td>
+			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+			  		</tbody>
+			  	</table>
+			<% else %>
+			  	<table class="table table-striped">
+			  		<thead>
+			  			<th>Time</th>
+			  			<th>Message</th>
+			  			<th>Clear Alert</th>
+			  		</thead>
+			  		<tbody>
+			  			<td><%= a.updated_at.strftime("%Y-%d-%m %H:%M:%S") %></td>
+			  			<td><%= link_to a.message, sport_athlete_path(@sport, @athlete) %></td>
+			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+			  		</tbody>
+			  	</table>
+			<% end %>
+		<% end %>
+	<% end %>
+  </div>
+</div>
+<div class="row">
+	<div class="span10">
+		<h4><em><%= link_to "Back to " + current_site.sitename + " " + @sport.sport_name, @sport %></em></h4>
+	</div>
+</div>

@@ -9,6 +9,10 @@ class AthletesController < ApplicationController
   
   def new    
     @athlete = Athlete.new
+    @height = []
+    if @sport.name == "Football"
+      @position = []
+    end
   end
   
   def create
@@ -42,6 +46,18 @@ class AthletesController < ApplicationController
   
   def edit
     @sport = Sport.find(@athlete.sport)
+    if @athlete.height != '-'
+      @height = @athlete.height.split('-')
+    else
+      @height = []
+    end
+    if @sport.name == "Football"
+      if @athlete.position.nil?
+        @position = []
+      else
+        @position = @athlete.position.split('/')
+      end
+    end
   end
   
   def update

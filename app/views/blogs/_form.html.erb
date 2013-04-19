@@ -15,7 +15,7 @@
 	<div class="span10 offset1">
 		<%= simple_form_for [@sport, @blog] do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
-      <%= f.input :blogger, as: :hidden, :input_html => { value: current_user.id.to_s } %>
+      <%= f.input :user, as: :hidden, :input_html => { value: current_user.id } %>
 			<div class="row">
 		        <div class="span4">
 		          <%= f.input :title, hint: "Enter Blog Title" %>

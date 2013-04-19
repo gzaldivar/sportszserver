@@ -2,7 +2,10 @@ class FootballReceiving
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  include SendAlert
+
   before_save :comp_average
+  after_save :send_alerts
 
   field :receptions, type: Integer
   field :yards, type: Integer
@@ -26,4 +29,11 @@ class FootballReceiving
       self.average = Float(self.yards) / Float(self.receptions)
     end
   end
+
+ private
+
+    def send_alerts
+      send_stat_alerts(self.football_stat.athlete, self.football_stat.gameschedule, "Receiving Statistics Updated")
+    end
+
 end

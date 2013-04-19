@@ -69,6 +69,6 @@ module Sportzserver
         g.view_specs false
         g.helper_specs false
     end
-
+    config.autoload_paths += Dir["#{config.root}/lib/**/"]
   end
 end

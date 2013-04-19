@@ -20,12 +20,20 @@
 				<div class="span2 offset1">
 					<div class="input string required"><label class="string required" for="athlete_feet"><abbr title="required">*</abbr> Height Feet:</label>					
 					</div>
-					<%= select_tag "feet", options_for_select(height_feet), include_blank: true %>
+					<% if !@height.any? %>
+						<%= select_tag "feet", options_for_select(height_feet), include_blank: true %>
+					<% else %>
+						<%= select_tag "feet", options_for_select(height_feet, @height[0]), include_blank: true %>
+					<% end %>
 				</div>
 				<div class="span2 offset1">
 					<div class="input string required"><label class="string required" for="athlete_inches"><abbr title="required">*</abbr> Height Inches:</label>					
 					</div>
-					<%= select_tag "inches", options_for_select(height_inches), include_blank: true %>
+					<% if !@height.any? %>
+						<%= select_tag "inches", options_for_select(height_inches), include_blank: true %>
+					<% else %>
+						<%= select_tag "inches", options_for_select(height_inches, @height[1]), include_blank: true %>
+					<% end %>
 					<!--%= f.input	:height %-->	
 				</div>
 			</div>

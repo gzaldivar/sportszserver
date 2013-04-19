@@ -10,4 +10,5 @@ class FootballStat
   embeds_one :football_defenses
   embeds_one :football_specialteams
   embeds_one :football_receivings
+
 end

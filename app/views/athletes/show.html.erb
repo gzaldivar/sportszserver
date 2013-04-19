@@ -5,21 +5,27 @@
 		<%= render 'shared/error_messages', object:	@athlete %>
 	</div>
 </div>
-<div class="row">
-  <div class="span10">
-    <% if signed_in? %>
-      <h4>
-      <% if @athlete.followers.has_key?(current_user.id.to_s) %>
-        You are following this player:&nbsp
-        <%= link_to "Stop Following Player", unfollow_sport_athlete_path(@sport, @athlete),  class: "btn btn-medium btn-info" %><p>
-      <% else %>
-        Follow this player?&nbsp
-        <%= link_to "Follow Player", follow_sport_athlete_path(@sport, @athlete),  class: "btn btn-medium btn-info" %><p>
-      <% end %>
+<% if signed_in? %>
+  <div class="row">
+    <h4>
+      <div class="span5">
+        <% if @athlete.followers.has_key?(current_user.id.to_s) %>
+          You are following this player:&nbsp
+          <%= link_to "Stop Following", unfollow_sport_athlete_path(@sport, @athlete),  class: "btn btn-medium btn-info" %><p>
+        <% else %>
+          Follow this player?&nbsp
+          <%= link_to "Follow", follow_sport_athlete_path(@sport, @athlete),  class: "btn btn-medium btn-info" %><p>
+        <% end %>
+      </div>
+      <p>
+      <div class="span4 offset1">
+        <% if !@athlete.alerts.blank? %>
+          <%= link_to "Alerts", sport_athlete_alerts_path(@sport, @athlete), class: "btn btn-medium btn-inverse" %>
+        <% end %>
+      </div>
     </h4>
-    <% end %>
   </div>
-</div>
+<% end %>
 <div class="row">
 	<div class="span4">
 	<% if !@athlete.pic.blank? %> 

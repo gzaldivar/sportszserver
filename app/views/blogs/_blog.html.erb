@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="span10">
                     <h4><font color="blue"><%= b.title %></font></h4>
-                    <% user = User.find(b.blogger) %>
+                    <% user = User.find(b.user) %>
                     <em>Blogger: <%= user.name %>
                     </em>
                 </div>

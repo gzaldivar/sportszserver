@@ -2,7 +2,10 @@ class FootballPassing
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  include SendAlert
+
   before_save :comp_percent
+  after_save :send_alerts
 
   field :attempts, type: Integer
   field :completions, type: Integer
@@ -26,4 +29,11 @@ class FootballPassing
       self.comp_percentage = 0.0
     end
   end
+
+ private
+
+    def send_alerts
+      send_stat_alerts(self.football_stat.athlete, self.football_stat.gameschedule, "Passing Statistics Updated")
+    end
+
 end

@@ -12,14 +12,18 @@
         <thead>
           <th>No.</th>
           <th>Name</th>
-		      <th>Remove</th>
+		      <th>Alerts</th>
         </thead>
         <% if !@followed.nil? and @followed.any? %>
           <% @followed.each do |f| %>
             <tbody>
               <td><%= link_to f.number, sport_athlete_path(@sport, f) %></td>
               <td><%= link_to f.lastname, sport_athlete_path(@sport, f) %></td>
-			       <td><%= link_to "Remove", unfollow_sport_athlete_path(@sport, f) %></td>
+              <% if hasAlerts?(f, current_user) %>
+                <td><%= link_to "Alerts", sport_athlete_alerts_path(@sport, f), class: "btn btn-mini btn-inverse" %></td>
+              <% else %>
+                <td></td>
+              <% end %>
             </tbody>
           <% end %>
         <% end %>
@@ -39,13 +43,13 @@
           </tbody>
         </table>
      </div>
-    <% if !@sport.sponsors.blank? %>
+    <% if !@sponsor.nil? %>
        <div class="row">
         <table class="table table-bordered">
           <thead>
           </thead>
           <tbody>
-            <td><%= image_tag @sport.sponsors.first.sponsorpic.url(:medium) %></td>
+            <td><%= image_tag @sponsor.sponsorpic.url(:medium) %></td>
           </tbody>
         </table>
        </div>

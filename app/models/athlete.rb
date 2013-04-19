@@ -3,6 +3,8 @@ class Athlete
   include Mongoid::Timestamps
   include Mongoid::Paperclip
   include Mongoid::Search
+
+  after_save :send_alerts
   
   field :number, type: Integer
   field :lastname, type: String
@@ -37,6 +39,7 @@ class Athlete
     has_many :football_stats, dependent: :destroy
     has_many :blogs
     has_many :newsfeeds
+    has_many :alerts, dependent: :destroy
     
     validates :number, presence: true, numericality: { greater_than: 0 }
     validates :lastname, presence: true, format: { with: /^[a-zA-Z\d\s]*$/ }
@@ -56,4 +59,12 @@ class Athlete
     def name
       lastname + ", " + firstname + " " + middlename 
     end
+
+    private
+
+      def send_alerts
+          self.followers.each do |user, name|
+            self.alerts.create!(user: user, message: "Athlete info updated")
+          end
+      end
 end

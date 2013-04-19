@@ -1,6 +1,10 @@
 class FootballSpecialteam
   include Mongoid::Document
   include Mongoid::Timestamps
+
+  include SendAlert
+
+  after_save :send_alerts
   
 	field	:fgattempts, type: Integer 
 	field	:fgmade, type: Integer
@@ -63,4 +67,11 @@ class FootballSpecialteam
 	validates_numericality_of :kotd, allow_nil: true
 	validates_numericality_of :kolong, allow_nil: true
 	validates_numericality_of :koyards, allow_nil: true
+
+	private
+
+	    def send_alerts
+	      send_stat_alerts(self.football_stat.athlete, self.football_stat.gameschedule, "Special Teams Statistics Updated")
+	    end
+
 end

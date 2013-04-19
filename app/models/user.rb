@@ -45,6 +45,9 @@ class User
   before_save :ensure_authentication_token
 
   has_many :sites
+  has_many :alerts
+  has_many :photos
+  has_many :videoclips
 
   index({ email: 1 }, { unique: true, background: true })
   field :name

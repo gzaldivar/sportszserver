@@ -25,6 +25,7 @@ class SportsController < ApplicationController
   def show
     @newsfeed = @sport.newsfeeds.limit(10).desc(:updated_at)
     @athletes = @sport.athletes
+    @sponsor = @sport.sponsors.all.sample
     @followed = []
     if signed_in?
       cnt = 0

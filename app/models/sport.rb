@@ -75,7 +75,7 @@ class Sport
 
   private
     def nameofsport
-      unless sportname.blank? and name.blank?
+      if self.sportname.blank? and self.name.blank?
         errors.add(:sports, "Sport name cannot be blank")
       end
     end

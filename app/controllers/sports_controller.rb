@@ -11,8 +11,7 @@ class SportsController < ApplicationController
   def create
     begin
       @sport = current_site.sports.build(params[:sport])
-      if @sport.name.nil? and (!params[:sportname].nil? or !params[:sportname].blank?)
-        @sport.name = params[:sportname]
+      if !@sport.sportname.nil?
         @sport.has_stats = true
       end
       @sport.save!

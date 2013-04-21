@@ -70,7 +70,7 @@ class PhotosController < ApplicationController
     @photos = []
     
     @sport.photos.where(teamid: team.id, gameschedule: @gameschedule.id.to_s, :updated_at.gt => time, 
-                        owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
+                        user_id: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
       @photos[cnt] = q
     end
     
@@ -93,7 +93,7 @@ class PhotosController < ApplicationController
     @photos = []
     
     @sport.photos.where(teamid: @athlete.team_id, :players.in =>  [@athlete.id.to_s], :updated_at.gt => time, 
-                        owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
+                        user_id: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
       @photos[cnt] = q
     end
     
@@ -114,7 +114,7 @@ class PhotosController < ApplicationController
     time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
     time = time.to_time.yesterday.to_date.iso8601
     @photos = []    
-    @sport.photos.where(teamid: @team.id, :updated_at.gt => time, owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
+    @sport.photos.where(teamid: @team.id, :updated_at.gt => time, user_id: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
       @photos[cnt] = q
     end
     

@@ -162,7 +162,7 @@ Sportzserver::Application.routes.draw do
   match '/newkoreturn', to: 'football_specialteams#newkoreturn'
   match '/newpuntreturn', to: 'football_specialteams#newpuntreturn'
    
-  authenticate :user do
+  authenticate :user, lambda {|u| u.admin == true} do
     mount Resque::Server, :at => "/resque"
   end
 

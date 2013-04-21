@@ -35,7 +35,8 @@
 			<h4>There are no news items for the entered search criteria.</h4><p>
 		<% end %>
 <div class="row">
-	<div class="span2 offset3">
+	<%= render 'layouts/sponsor' %>
+	<div class="span2 offset1">
 		<% if isAdmin? %>
 		  <%= link_to "Add News Item", new_sport_newsfeed_path(@sport), class: "btn btn-medium btn-primary" %>
 		<% end %>

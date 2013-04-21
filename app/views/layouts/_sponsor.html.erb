@@ -1,0 +1,13 @@
+<div class="span2 offset1">
+    <% if !(@sponsor = sponsorad(@sport)).nil? %>
+       <div class="row">
+        <table class="table table-bordered">
+          <thead>
+          </thead>
+          <tbody>
+            <td><%= link_to image_tag(@sponsor.sponsorpic.url(:medium)), @sponsor.adurl %></td>
+          </tbody>
+        </table>
+       </div>
+    <% end %>
+</div>

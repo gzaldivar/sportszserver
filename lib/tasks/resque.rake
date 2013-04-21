@@ -6,7 +6,7 @@ if Rails.env.production?
 	end
 
 	desc "Alias for resque:work (To run workers on Heroku)"
-	task "jobs:work" => "resque:work"
+	task "workers:work" => "resque:work"
 else
 	task "resque:setup" => :environment
 end

@@ -50,7 +50,7 @@ group :assets do
   # gem 'therubyracer', :platforms => :ruby
 
   gem 'uglifier', '>= 1.0.3'
-  gem 'therubyracer', :platform => :ruby
+  # gem 'therubyracer', :platform => :ruby
 end
 
 gem 'jquery-rails', '2.1.4'

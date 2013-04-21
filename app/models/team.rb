@@ -1,12 +1,23 @@
 class Team
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Paperclip
 
  
   field :title, type: String
   field :mascot, type: String
 
+  has_mongoid_attached_file :team_logo,
+  :storage        => :s3,
+  :s3_credentials => { bucket: S3DirectUpload.config.bucket,
+                       access_key_id: S3DirectUpload.config.access_key_id,
+                       secret_access_key: S3DirectUpload.config.secret_access_key },
+  :styles => {
+    :thumb    => ['125x125',   :jpg]
+  }
+
   validates_presence_of :title
+  validates_attachment_content_type :team_logo, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_presence_of :mascot
 
   embedded_in :sport

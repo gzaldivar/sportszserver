@@ -49,8 +49,7 @@ class Sport
       :large    => ['640x960',   :jpg]
     }
 
-  validate :nameofsport
-#  validates_presence_of :name
+  validates_presence_of :name
   validates :year, presence: true, format: { with: /^[0-9]{4}$/ }
   validates_presence_of :season
   validates :sex, presence: true, format: { with: /Male|Female/ }
@@ -72,12 +71,5 @@ class Sport
       end
     end
   end
-
-  private
-    def nameofsport
-      if self.sportname.blank? and self.name.blank?
-        errors.add(:sports, "Sport name cannot be blank")
-      end
-    end
   
 end

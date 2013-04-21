@@ -12,7 +12,7 @@
 					<%= @oldblog.entry %>
 				</div>
 				<%= f.input :title, as: :hidden, input_html: { value: "RE:" + @oldblog.title } %>
-				<%= f.input :blogger, as: :hidden, input_html: { value: current_user.id.to_s } %>
+				<%= f.input :user, as: :hidden, input_html: { value: current_user.id.to_s } %>
 				<%= f.input :external_url, as: :hidden, input_html: { value: @oldblog.external_url } %>
 				<% if !@oldblog.team_id.nil? and !@oldblog.team_id.blank? %>
 					<%= f.input :team_id, as: :hidden, input_html: { value: @oldblog.team_id } %>

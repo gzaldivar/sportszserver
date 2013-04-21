@@ -242,7 +242,6 @@ class PhotosController < ApplicationController
   end
   
   def destroy
-    @photo.deletephoto
     @photo.delete
     redirect_to sport_photos_path(@sport), notice: "Photo deleted!"
   end

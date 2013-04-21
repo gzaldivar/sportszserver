@@ -66,7 +66,7 @@
         	<% if isAdmin? || (user_signed_in? && (current_user.id == @photo.owner)) %>
 	          <div class="row">
 	            <div class="span1 offset1">
-	              <%= link_to "Delete", sport_photo_path(@photo, @photo), method: :delete, class: "btn btn-medium btn-danger", data: { confirm: "You sure?" }%>
+	              <%= link_to "Delete", sport_photo_path(@sport, @photo), method: :delete, class: "btn btn-medium btn-danger", data: { confirm: "You sure?" }%>
 	            </div>
 	          </div>
         	<% end %>

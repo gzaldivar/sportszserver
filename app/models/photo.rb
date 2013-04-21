@@ -4,6 +4,7 @@ class Photo
   include Mongoid::Search
 
   after_save :send_alerts
+  before_destroy :deletephoto
   
   field :filename, type: String
   field :filepath, type: String
@@ -69,7 +70,7 @@ class Photo
   def deletephoto
     s3 = AWS::S3.new
     bucket = s3.buckets[S3DirectUpload.config.bucket]
-    bucket.objects[self.filepath + "/original/" + self.filename].delete
+#    bucket.objects[self.filepath + "/original/" + self.filename].delete
     bucket.objects[self.filepath + "/large/" + self.filename].delete
     bucket.objects[self.filepath + "/medium/" + self.filename].delete
     bucket.objects[self.filepath + "/thumbnail/" + self.filename].delete

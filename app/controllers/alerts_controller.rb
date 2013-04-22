@@ -4,6 +4,10 @@ class AlertsController < ApplicationController
 
 	def index
 		@alerts = @athlete.alerts.where(user_id: current_user.id.to_s).entries
+	  	respond_to do |format|
+	  		format.html
+	  		format.json
+	  	end
 	end
 
 	def destroy

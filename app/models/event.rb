@@ -8,12 +8,12 @@ class Event
 #  field :enddate, type: Date
   field :name, type: String
   field :desc, type: String
-  field :owner, type: String
 
   attr_accessor :date_string, :string_date
 
   belongs_to :sport
   belongs_to :team
+  belongs_to :user
 
   validates_presence_of :name, :start_time, :end_time, :owner
 

@@ -22,7 +22,7 @@
                     <%= f.input :desc, as: :text, label: "Event Description", input_html: { style: 'width: 400px;height: 200px' } %>
                 </div>
             </div>
-            <%= f.input :owner, as: :hidden, input_html: { value: current_user.id.to_s } %>
+            <%= f.input :user, as: :hidden, input_html: { value: current_user.id.to_s } %>
             <p>
             <% if !@team.nil? %>
                 Event for team: <em><strong><%= @team.team_name %></strong></em>

@@ -75,7 +75,11 @@ class BlogsController < ApplicationController
       end  		
   	end
 
-  	def show  		
+  	def show
+      respond_to do |format|
+        format.html
+        format.json
+      end
   	end
 
   	def destroy

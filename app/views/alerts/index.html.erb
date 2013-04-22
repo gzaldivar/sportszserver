@@ -57,7 +57,7 @@
 			  		</thead>
 			  		<tbody>
 			  			<td><%= a.updated_at.strftime("%m/%d/%Y") %></td>
-			  			<td><%= link_to @sport.blogs.find(a.blog_id).title, sport_blog_path(@sport, a.bog_id) %></td>
+			  			<td><%= link_to @sport.blogs.find(a.blog_id).title, sport_blog_path(@sport, a.blog_id) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
 			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
 			  		</tbody>

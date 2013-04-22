@@ -21,7 +21,7 @@
 					<%= f.input :athlete_id, as: :hidden, input_html: { value: @oldblog.athlete_id } %>
 				<% end %>
 				<% if !@oldblog.coach.nil? and !@oldblog.coach.blank? %>
-					<%= f.input :coach, as: :hidden, input_html: { value: "RE:" + @oldblog.coach } %>
+					<%= f.input :coach, as: :hidden, input_html: { value: @oldblog.coach } %>
 				<% end %>
 				<% if !@oldblog.gameschedule.nil? and !@oldblog.gameschedule.blank? %>
 					<%= f.input :gameschedule, as: :hidden, input_html: { value: @oldblog.gameschedule } %>

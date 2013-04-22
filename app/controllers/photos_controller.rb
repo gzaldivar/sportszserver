@@ -61,70 +61,82 @@ class PhotosController < ApplicationController
   end
   
   def newschedule
-    @gameschedule = Gameschedule.find(params[:id].to_s)
-    team = @sport.teams.find(@gameschedule.team_id)
-    @prefix = "t_" + team.id + "_g_" + @gameschedule.id + "_s_" + @sport.id
-    
-    time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
-    time = time.to_time.yesterday.to_date.iso8601
-    @photos = []
-    
-    @sport.photos.where(teamid: team.id, gameschedule: @gameschedule.id.to_s, :updated_at.gt => time, 
-                        user_id: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
-      @photos[cnt] = q
+    if roomformedia?(@sport)
+      @gameschedule = Gameschedule.find(params[:id].to_s)
+      team = @sport.teams.find(@gameschedule.team_id)
+      @prefix = "t_" + team.id + "_g_" + @gameschedule.id + "_s_" + @sport.id
+      
+      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+      time = time.to_time.yesterday.to_date.iso8601
+      @photos = []
+      
+      @sport.photos.where(teamid: team.id, gameschedule: @gameschedule.id.to_s, :updated_at.gt => time, 
+                          user_id: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
+        @photos[cnt] = q
+      end
+      
+      @id = @gameschedule.id
+      
+      respond_to do |format|
+        format.html { render  'newphoto' }
+        format.xml
+        format.json 
+        format.js
+      end
+    else
+      redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgradig or delete some media."
     end
-    
-    @id = @gameschedule.id
-    
-    respond_to do |format|
-      format.html { render  'newphoto' }
-      format.xml
-      format.json 
-      format.js
-    end    
   end
   
   def newathlete
-    @athlete = @sport.athletes.find(params[:id].to_s)
-    @prefix = "t_" + @athlete.team_id + "_a_" + @athlete.id + "_s_" + @sport.id
-    
-    time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
-    time = time.to_time.yesterday.to_date.iso8601
-    @photos = []
-    
-    @sport.photos.where(teamid: @athlete.team_id, :players.in =>  [@athlete.id.to_s], :updated_at.gt => time, 
-                        user_id: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
-      @photos[cnt] = q
-    end
-    
-    @id = @athlete.id
-    
-    respond_to do |format|
-      format.html { render  'newphoto' }
-      format.xml
-      format.json 
-      format.js
+    if roomformedia?(@sport)
+      @athlete = @sport.athletes.find(params[:id].to_s)
+      @prefix = "t_" + @athlete.team_id + "_a_" + @athlete.id + "_s_" + @sport.id
+      
+      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+      time = time.to_time.yesterday.to_date.iso8601
+      @photos = []
+      
+      @sport.photos.where(teamid: @athlete.team_id, :players.in =>  [@athlete.id.to_s], :updated_at.gt => time, 
+                          user_id: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
+        @photos[cnt] = q
+      end
+      
+      @id = @athlete.id
+      
+      respond_to do |format|
+        format.html { render  'newphoto' }
+        format.xml
+        format.json 
+        format.js
+      end
+    else
+      redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgradig or delete some media."
     end
   end
   
   def newteam
-    @team = @sport.teams.find(params[:id].to_s)
-    @prefix = "t_" + @team.id + "_s_" + @sport.id
-    
-    time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
-    time = time.to_time.yesterday.to_date.iso8601
-    @photos = []    
-    @sport.photos.where(teamid: @team.id, :updated_at.gt => time, user_id: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
-      @photos[cnt] = q
-    end
-    
-    @id = @sport.id.to_s + @team.id.to_s
-    
-    respond_to do |format|
-      format.html { render 'newphoto'}
-      format.xml
-      format.json 
-      format.js
+    if roomformedia?(@sport)
+      @team = @sport.teams.find(params[:id].to_s)
+      @prefix = "t_" + @team.id + "_s_" + @sport.id
+      
+      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+      time = time.to_time.yesterday.to_date.iso8601
+      @photos = []    
+      @sport.photos.where(teamid: @team.id, :updated_at.gt => time, user_id: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
+        @photos[cnt] = q
+      end
+      
+      @id = @sport.id.to_s + @team.id.to_s
+      
+      respond_to do |format|
+        format.html { render 'newphoto'}
+        format.xml
+        format.json 
+        format.js
+      end
+    else
+      redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgradig or delete some media."
     end
   end
     
@@ -242,6 +254,9 @@ class PhotosController < ApplicationController
   end
   
   def destroy
+    site = @sport.site
+    site.mediasize = site.mediasize - @photo.thumbsize - @photo.mediumsize - @photo.largesize
+    site.save
     @photo.delete
     redirect_to sport_photos_path(@sport), notice: "Photo deleted!"
   end
@@ -318,18 +333,6 @@ class PhotosController < ApplicationController
     
     def correct_photo
       @photo = Photo.find(params[:id])
-    end
-
-    def room?
-      if @sport.site.tier == "Basic" and @sport.site.mediasize > 300,000,000
-        return false
-      elsif @sport.site.tier == "Mobile" and @sport.site.mediasize > 1,000,000,000
-        return false
-      elsif @sport.site.tier == "All"
-        return true
-      else
-        return true
-      end
     end
     
 end

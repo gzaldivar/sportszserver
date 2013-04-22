@@ -28,7 +28,7 @@ class Site
   field :season,				type: String
   field :adminid, type: String
   field :tier, type: String, default: "Basic"
-  field :mediasize, type: Integer
+  field :mediasize, type: Integer, default: 0
 
   search_in :sitename, :mascot, :state, :zip, :city
 

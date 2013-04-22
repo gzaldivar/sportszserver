@@ -32,7 +32,19 @@ module SitesHelper
   def user_videos_ok?
     current_site.enable_user_video
   end
-  
+
+  def roomformedia?(sport)
+    if sport.site.tier == "Basic" and sport.site.mediasize > 300000000
+      return false
+    elsif sport.site.tier == "Mobile" and sport.site.mediasize > 1000000000
+      return false
+    elsif sport.site.tier == "All"
+      return true
+    else
+      return true
+    end
+  end
+ 
   def us_states
     [
       ['Alabama', 'AL'],

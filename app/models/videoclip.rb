@@ -4,6 +4,7 @@ class Videoclip
   include Mongoid::Search
   
   after_save :send_alerts
+  before_destroy :deleteclips
   
   field :filename, type: String
   field :filepath, type: String

@@ -4,71 +4,83 @@ class VideoclipsController < ApplicationController
 	before_filter :correct_video, 		only: [:edit, :update, :destroy, :show]
   
   def newathlete
-    @athlete = @sport.athletes.find(params[:id].to_s)
-    @prefix = "t_" + @athlete.team + "_a_" + @athlete.id + "_s_" + @sport.id
-    
-    time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
-    time = time.to_time.yesterday.to_date.iso8601
-    @videoclips = []
-    
-    @sport.videoclips.where(teamid: @athlete.team, :players.in =>  [@athlete.id.to_s], :updated_at.gt => time, 
-                            owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
-      @videoclips[cnt] = q
-    end
-    
-    @id = @athlete.id
-    
-    respond_to do |format|
-      format.html { render  'newvideo' }
-      format.xml
-      format.json 
-      format.js
+    if roomformedia?(@sport)
+      @athlete = @sport.athletes.find(params[:id].to_s)
+      @prefix = "t_" + @athlete.team + "_a_" + @athlete.id + "_s_" + @sport.id
+      
+      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+      time = time.to_time.yesterday.to_date.iso8601
+      @videoclips = []
+      
+      @sport.videoclips.where(teamid: @athlete.team, :players.in =>  [@athlete.id.to_s], :updated_at.gt => time, 
+                              owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
+        @videoclips[cnt] = q
+      end
+      
+      @id = @athlete.id
+      
+      respond_to do |format|
+        format.html { render  'newvideo' }
+        format.xml
+        format.json 
+        format.js
+      end
+    else
+      redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgradig or delete some media."
     end
   end
 
   def newteam
-    @team = @sport.teams.find(params[:id].to_s)
-    @prefix = "t_" + @team.id + "_s_" + @sport.id
-    
-    time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
-    time = time.to_time.yesterday.to_date.iso8601
-    @videoclips = []    
-    @sport.videoclips.where(teamid: @team.id, :updated_at.gt => time, owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
-      @videoclips[cnt] = q
+    if roomformedia?(@sport)
+      @team = @sport.teams.find(params[:id].to_s)
+      @prefix = "t_" + @team.id + "_s_" + @sport.id
+      
+      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+      time = time.to_time.yesterday.to_date.iso8601
+      @videoclips = []    
+      @sport.videoclips.where(teamid: @team.id, :updated_at.gt => time, owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
+        @videoclips[cnt] = q
+      end
+      
+      @id = @sport.id.to_s + @team.id.to_s
+      
+      respond_to do |format|
+        format.html { render 'newvideo'}
+        format.xml
+        format.json 
+        format.js
+      end  	
+    else
+      redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgradig or delete some media."
     end
-    
-    @id = @sport.id.to_s + @team.id.to_s
-    
-    respond_to do |format|
-      format.html { render 'newvideo'}
-      format.xml
-      format.json 
-      format.js
-    end  	
   end
 
   def newschedule
-    @gameschedule = Gameschedule.find(params[:id].to_s)
-    team = @sport.teams.find(@gameschedule.team_id)
-    @prefix = "t_" + team.id + "_g_" + @gameschedule.id + "_s_" + @sport.id
-    
-    time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
-    time = time.to_time.yesterday.to_date.iso8601
-    @videoclips = []
-    
-    @sport.videoclips.where(teamid: team.id, gameschedule: @gameschedule.id.to_s, :updated_at.gt => time, 
-                            owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
-      @videoclips[cnt] = q
+    if roomformedia?(@sport)
+      @gameschedule = Gameschedule.find(params[:id].to_s)
+      team = @sport.teams.find(@gameschedule.team_id)
+      @prefix = "t_" + team.id + "_g_" + @gameschedule.id + "_s_" + @sport.id
+      
+      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+      time = time.to_time.yesterday.to_date.iso8601
+      @videoclips = []
+      
+      @sport.videoclips.where(teamid: team.id, gameschedule: @gameschedule.id.to_s, :updated_at.gt => time, 
+                              owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
+        @videoclips[cnt] = q
+      end
+      
+      @id = @gameschedule.id
+      
+      respond_to do |format|
+        format.html { render  'newvideo' }
+        format.xml
+        format.json 
+        format.js
+      end    
+    else
+      redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgradig or delete some media."
     end
-    
-    @id = @gameschedule.id
-    
-    respond_to do |format|
-      format.html { render  'newvideo' }
-      format.xml
-      format.json 
-      format.js
-    end    
   end
 
   def create
@@ -170,6 +182,9 @@ class VideoclipsController < ApplicationController
       posterobj = bucket.objects[@videoclip.poster_filepath]
       posterobj.write(Pathname.new(poster_path))   
       @videoclip.poster_url = posterobj.url_for(:read, expires:  473040000)
+      site = @sport.site
+      site.mediasize = site.mediasize + @videoclip.size
+      site.save
       @videoclip.save
 
       FileUtils.rm(poster_path)
@@ -286,7 +301,9 @@ class VideoclipsController < ApplicationController
 
   def destroy
   	begin
-	  	@videoclip.deleteclips
+      site = @sport.site
+      site.mediasize = site.mediasize - @videoclip.size
+      site.save
 	  	@videoclip.destroy
 	  	redirect_to sport_videoclips_path(@sport), notice: "Videoclip delete sucessful!"
 	  rescue => e

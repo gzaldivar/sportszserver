@@ -3,7 +3,6 @@ class Sport
   include Mongoid::Timestamps
   include Mongoid::Paperclip
 
- 
   field :name, type: String
   field :sportname, type: String
   field :has_stats, type: Boolean, default: false

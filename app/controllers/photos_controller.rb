@@ -319,5 +319,17 @@ class PhotosController < ApplicationController
     def correct_photo
       @photo = Photo.find(params[:id])
     end
+
+    def room?
+      if @sport.site.tier == "Basic" and @sport.site.mediasize > 300,000,000
+        return false
+      elsif @sport.site.tier == "Mobile" and @sport.site.mediasize > 1,000,000,000
+        return false
+      elsif @sport.site.tier == "All"
+        return true
+      else
+        return true
+      end
+    end
     
 end

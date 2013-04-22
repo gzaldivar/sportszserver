@@ -44,6 +44,7 @@ class PhotoProcessor
         thumb.write(temp_thumb_filename)
         tobj.write(Pathname.new(temp_thumb_filename))    # upload the thumbnail to S3
         photo.thumbnail_url = tobj.url_for(:read, expires:  473040000)
+        photo.thumbsize = thumb.filesize
         
         # write medium to S3
         
@@ -52,6 +53,7 @@ class PhotoProcessor
         medium.write(temp_medium_filename)
         mobj.write(Pathname.new(temp_medium_filename))    # upload the medium to S3
         photo.medium_url = mobj.url_for(:read, expires:  473040000)
+        photo.mediumsize = medium.filesize
         
         # write large to S3
         
@@ -60,6 +62,11 @@ class PhotoProcessor
         large.write(temp_large_filename)
         lobj.write(Pathname.new(temp_large_filename))    # upload the large to S3
         photo.large_url = lobj.url_for(:read, expires:  473040000)
+        photo.largesize = large.filesize
+
+        site = photo.sport.site 
+        site.mediasize = site.mediasize + photo.largesize + photo.mediumsize + photo.thumbsize
+        site.save
   
         # remove temporary files
         

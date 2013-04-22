@@ -30,7 +30,7 @@ class Videoclip
 
   field :teamid,  type: String
 #  field :schedule,  type: String
-  field :owner, type: String
+#  field :owner, type: String
   field :players, type: Array
   
   search_in :players, :displayname
@@ -42,7 +42,7 @@ class Videoclip
   
   index( { teamid: 1 }, { unique: false } )
 #  index( { schedule: 1 } , { unique: false } )
-  index( { owner: 1 } , { unique: false } )
+#  index( { owner: 1 } , { unique: false } )
 
   validates_presence_of :filename
 

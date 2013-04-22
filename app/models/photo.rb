@@ -11,6 +11,9 @@ class Photo
   field :filesize, type: Integer
   field :filetype, type: String
   field :original_url, type: String
+  field :largesize, type: Integer
+  field :mediumsize, type: Integer
+  field :thumbsize, type: Integer
   field :large_url, type: String
   field :medium_url, type: String
   field :thumbnail_url, type: String
@@ -27,7 +30,7 @@ class Photo
   
   index({ teamid: 1 }, { unique: false } )
 #  index( { schedule: 1 } , { unique: false } )
-  index( { owner: 1 } , { unique: false } )
+#  index( { owner: 1 } , { unique: false } )
   
   belongs_to :sport, index: true
   belongs_to :gameschedule

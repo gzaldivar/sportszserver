@@ -27,6 +27,8 @@ class Site
   field :sportsexdefault,    	type: String, default:  "Male"
   field :season,				type: String
   field :adminid, type: String
+  field :tier, type: String, default: "Basic"
+  field :mediasize, type: Integer
 
   search_in :sitename, :mascot, :state, :zip, :city
 

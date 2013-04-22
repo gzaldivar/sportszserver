@@ -35,12 +35,7 @@ class AthletesController < ApplicationController
   end
   
   def show
-    if @athlete.team_id.nil? or @athlete.team_id.blank?
-      @team = nil
-    else 
-      @team = @sport.teams.find(@athlete.team_id)
-    end 
-
+    @team = @sport.teams.find(@athlete.team_id)
     @photos = Photo.where(athletes: @athlete.id)
   end
   

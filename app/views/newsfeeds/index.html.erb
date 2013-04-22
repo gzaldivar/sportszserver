@@ -2,12 +2,12 @@
 <p>
 <div class="row">
   <div class="span10 offset1">
-    <%= render 'newsfeed', feed: @newsfeed %>
+    <%= render 'newsfeed', feed: @newsfeeds %>
   </div>
 </div>
 <div class="row">
 	<div class="span10">
-		<% if @newsfeed.any? %>
+		<% if @newsfeeds.any? %>
 		    <div class="row">
 		      	<div class="span2 offset1">
 		  			<%= form_tag sport_newsfeeds_path(@sport), method: :get, class: "form-horizontal" do %>

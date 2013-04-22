@@ -17,9 +17,6 @@ class Newsfeed
   
   index(  { team: 1 }, { unique: false } )
   index( { gameschedule: 1 } , { unique: false } )
-  index( { owner: 1 } , { unique: false } )
-  index(  { coach: 1 }, { unique: false } )
-  index( { athlete: 1 } , { unique: false } )
   
   validates_presence_of :title
   

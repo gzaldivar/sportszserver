@@ -19,7 +19,7 @@
       </div>
       <p>
       <div class="span4 offset1">
-        <% if !@athlete.alerts.blank? %>
+        <% if !@athlete.alerts.nil? and !@athlete.alerts.blank? %>
           <%= link_to "Alerts", sport_athlete_alerts_path(@sport, @athlete), class: "btn btn-medium btn-inverse" %>
         <% end %>
       </div>

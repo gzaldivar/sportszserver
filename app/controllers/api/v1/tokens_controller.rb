@@ -39,10 +39,10 @@ class Api::V1::TokensController < ApplicationController
       sports = onesport?(@user.default_site)
       if !sports.kind_of?(Array)
         render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: @user.authentication_token, 
-                                  avatar: userurl, sport: sports.id}
+                                  avatar: userurl, sport: sports.id, userid: @user.id }
       else
         render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: @user.authentication_token, 
-                                  avatar: userurl, sports:  @sports }
+                                  avatar: userurl, userid: @user.id, sports:  @sports }
       end
     end
   end
@@ -58,8 +58,12 @@ class Api::V1::TokensController < ApplicationController
       if !@user.avatar.blank?
         userurl = @user.avatar.url(:tiny)
       end
-       render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: params[:id], 
-                                  avatar: userurl}
+      sports = onesport?(@user.default_site)
+      if !sports.kind_of?(Array)
+        render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: params[:id], 
+                                  avatar: userurl, userid: @user.id, sport: sports.id}
+      else
+      end
     end
   end
 

@@ -5,7 +5,7 @@ class UsersController < ApplicationController
 
 	def show
 	end
-	
+
 	def edit
     if current_site.sports.all.count == 1
       @teams = current_site.sports.first.teams.all.entries

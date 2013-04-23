@@ -1,7 +1,7 @@
 class SportsController < ApplicationController
   before_filter :authenticate_user!,   only: [:new, :create, :edit, :update, :destroy]
   before_filter :site_owner?,           only: [:new, :create, :edit, :update, :destroy]
-  before_filter :correct_sport,         only: [:show, :edit, :update, :destroy]
+  before_filter :correct_sport,         only: [:show, :edit, :update, :destroy, :sport_user_alerts]
    
   def new
     @sport = Sport.new
@@ -87,6 +87,11 @@ class SportsController < ApplicationController
       @team = params[:team]
       @newsfeed = get_team_news(@sport.id, params[:team])
     end
+  end
+
+  def sport_user_alerts
+    @alerts = @sport.alerts.where(user_id: params[:user_id]).entries
+    respond_to :json
   end
 
   private

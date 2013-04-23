@@ -22,6 +22,7 @@ class Sport
   has_many :sponsors, dependent: :destroy
   has_many :blogs, dependent: :destroy
   has_many :events, dependent: :destroy
+  has_many :alerts
   embeds_many :teams
 
   has_mongoid_attached_file :sport_banner,

@@ -25,7 +25,7 @@ class Blog
     def send_alert
         if !self.athlete.nil?
             Athlete.find(self.athlete).followers.each do |user, name|
-              alert = self.athlete.alerts.new(user: user, blog: self.id)
+              alert = self.athlete.alerts.new(sport: sport, user: user, blog: self.id)
               alert.save
             end
         end

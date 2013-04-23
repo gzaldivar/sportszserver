@@ -9,5 +9,6 @@ class Alert
   belongs_to :photo
   belongs_to :videoclip
   belongs_to :user
+  belongs_to :sport
 
 end

@@ -64,7 +64,7 @@ class Athlete
 
       def send_alerts
           self.followers.each do |user, name|
-            self.alerts.create!(user: user, message: "Athlete info updated")
+            self.alerts.create!(sport: sport, user: user, message: "Athlete info updated")
           end
       end
 end

@@ -33,7 +33,7 @@ class FootballRushing
   private
 
     def send_alerts
-      send_stat_alerts(self.football_stat.athlete, self.football_stat.gameschedule, "Rushing Statistics Updated")
+      send_stat_alerts(self.football_stat.athlete.sport, self.football_stat.athlete, self.football_stat.gameschedule, "Rushing Statistics Updated")
     end
 
 end

@@ -31,7 +31,7 @@ class FootballDefense
    private
 
     def send_alerts
-      send_stat_alerts(self.football_stat.athlete, self.football_stat.gameschedule, "Defense Statistics Updated")
+      send_stat_alerts(self.football_stat.athlete.sport, self.football_stat.athlete, self.football_stat.gameschedule, "Defense Statistics Updated")
     end
 
 end

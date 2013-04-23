@@ -47,7 +47,7 @@ Sportzserver::Application.routes.draw do
 
     resources :athletes do
 
-      resources :alerts, only: [:index, :destroy]
+      resources :alerts, only: [:index, :destroy] 
  
       resources :football_stats, only: [:create] do
         collection do
@@ -128,6 +128,10 @@ Sportzserver::Application.routes.draw do
 
     collection do
       get :feed
+    end
+
+    member do
+      get :sport_user_alerts
     end
   end
   

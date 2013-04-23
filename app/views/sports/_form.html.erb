@@ -7,13 +7,13 @@
           <% if @sport.has_stats? %>
             <h4><%= @sport.name %></h4>
           <% elsif @sport.name %>
-            <%= f.input :name,  label:  "Sport Name", hint: "Enter sport name. Will not have a stat package but all other features will be available." %>
+            <%= f.input :name,  label:  "Sport Name", hint: "Enter sport name does not have a stat package but all other features will be available." %>
           <% else %>
               <!--%= label_tag "Sport Name: " %-->
               <%= f.input :sportname, label: "Sport Name", collection: sports_list, include_blank: true, hint: "These sports have a stat package. If you want to provide stats you should select the sport here." %>
               <!--%= f.input :sportname,  collection: sports_list, include_blank: true, label:  "Sport Name", hint: %-->
               
-              <%= f.input :name, required: false, label:  "Sport Name", hint: "Enter sport name. Will not have a stat package but all other features will be available." %>
+              <%= f.input :name, required: true, label:  "Sport Name", hint: "Enter sport name. Will not have a stat package but all other features will be available." %>
           <% end %>
         </div>
       </div>
@@ -23,7 +23,7 @@
   				<%= f.input :year,  hint: "Year should be 2012, 2013, etc." %>
   			</div>
         <div class="span2 offset1">
-  				<%= f.input	:season, collection: ["Fall","Winter","Spring","Summer"], required: false, 
+  				<%= f.input	:season, collection: ["Fall","Winter","Spring","Summer"], 
                                hint:	"Only enter season if you are creating a multi sport site. If this site is a single sport site, season will not be used" %>
   			</div>
       </div><p>

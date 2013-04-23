@@ -76,6 +76,7 @@ class BlogsController < ApplicationController
   	end
 
   	def show
+      @bloguser = User.find(@blog.user)
       respond_to do |format|
         format.html
         format.json

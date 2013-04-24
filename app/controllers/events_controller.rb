@@ -43,8 +43,8 @@ class EventsController < ApplicationController
 	    if  !params[:team_id].nil?
 	    	@team = @sport.teams.find(params[:team_id])
 			@events = @sport.events.where(team: params[:team_id].to_s)
-			schedules = @team.gameschedules
-			@events = @events + schedules
+#			schedules = @team.gameschedules
+#			@events = @events + schedules
 		else
 			@events = @sport.events.all.entries
 	  	end

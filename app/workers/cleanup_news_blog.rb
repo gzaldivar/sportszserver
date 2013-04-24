@@ -27,6 +27,12 @@ class CleanupNewsBlog
           alert.destroy
         end
       end
+
+      User.where(:confirmation_sent_at.lt => alertdate).each do |user|
+        if user.uncomfirmed_email.nil?
+          user.destroy
+        end
+      end
   	end
 
   end

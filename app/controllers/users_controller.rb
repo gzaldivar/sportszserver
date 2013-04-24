@@ -49,7 +49,10 @@ class UsersController < ApplicationController
       else
         flash[:notice] = "Your default site is now " + site.sitename
       end
-      redirect_to site
+      respond_to do |format|
+        format.html { redirect_to site }
+        format.json { render status: 200, json: { message: "Sucessful", sitename: site.sitename } }
+      end
     else     
       redirect_to :back, alert: "Something went very wrong!"
     end

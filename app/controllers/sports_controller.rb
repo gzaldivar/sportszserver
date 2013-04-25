@@ -39,7 +39,7 @@ class SportsController < ApplicationController
     respond_to do |format|
       format.html
 #      format.json {  render status: 200, json: { id: @sport.id , season: @sport.season, name: @sport.name, sex: @sport.sex, teams: @sport.teams} }
-      format.json
+      format.json 
      end
   end
   

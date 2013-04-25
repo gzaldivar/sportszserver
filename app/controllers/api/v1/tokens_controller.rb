@@ -36,13 +36,16 @@ class Api::V1::TokensController < ApplicationController
       if !@user.avatar.blank?
         userurl = @user.avatar.url(:tiny)
       end
-      sports = onesport?(@user.default_site)
+      site = Site.find(@user.default_site)
+      sports = onesport?(site.id)
       if !sports.kind_of?(Array)
         render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: @user.authentication_token, 
-                                  avatar: userurl, sport: sports.id, userid: @user.id }
+                                  avatar: userurl, sport: sports.id, userid: @user.id, sitename: site.sitename, banner_url: site.banner.url(:thumb),
+                                  logo: site.logo.url(:large) }
       else
         render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: @user.authentication_token, 
-                                  avatar: userurl, userid: @user.id, sports:  @sports }
+                                  avatar: userurl, userid: @user.id, sports:  @sports, sitename: site.sitename, banner_url: site.banner.url(:thumb),
+                                  logo: site.logo.url(:large) }
       end
     end
   end
@@ -61,7 +64,8 @@ class Api::V1::TokensController < ApplicationController
       sports = onesport?(@user.default_site)
       if !sports.kind_of?(Array)
         render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: params[:id], 
-                                  avatar: userurl, userid: @user.id, sport: sports.id}
+                                  avatar: userurl, userid: @user.id, sport: sports.id,  sitename: site.sitename, banner_url: site.banner.url(:thumb),
+                                  logo: site.logo.url(:large)}
       else
       end
     end

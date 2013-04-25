@@ -42,7 +42,7 @@ class UsersController < ApplicationController
       site = Site.find(params[:id])
       current_user.default_site = site.id
       current_user.save
-      if !current_user.mysites.nil? and current_user.mysites.count > 0 and admin_site? 
+      if !current_user.mysites.nil? and current_user.mysites.count > 0 and admin_sites? 
         flash[:notice] = "Your default site is now " + site.sitename + 
                          " which is not a site you administer. You are still adminstrator of the sites you created. 
                          You will be logged into this site when you log in until you change it."

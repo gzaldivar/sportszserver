@@ -43,8 +43,9 @@ class Api::V1::TokensController < ApplicationController
                                   avatar: userurl, sport: sports.id, userid: @user.id, sitename: site.sitename, banner_url: site.banner.url(:thumb),
                                   logo: site.logo.url(:large) }
       else
+        thesport = getsport(sports, params[:sport])
         render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: @user.authentication_token, 
-                                  avatar: userurl, userid: @user.id, sports:  @sports, sitename: site.sitename, banner_url: site.banner.url(:thumb),
+                                  avatar: userurl, userid: @user.id, sport:  thesport, sitename: site.sitename, banner_url: site.banner.url(:thumb),
                                   logo: site.logo.url(:large) }
       end
     end
@@ -67,6 +68,10 @@ class Api::V1::TokensController < ApplicationController
                                   avatar: userurl, userid: @user.id, sport: sports.id,  sitename: site.sitename, banner_url: site.banner.url(:thumb),
                                   logo: site.logo.url(:large)}
       else
+        thesport = getsport(sports, params[:sport])
+        render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: @user.authentication_token, 
+                                  avatar: userurl, userid: @user.id, sport:  thesport, sitename: site.sitename, banner_url: site.banner.url(:thumb),
+                                  logo: site.logo.url(:large) }
       end
     end
   end
@@ -82,4 +87,13 @@ class Api::V1::TokensController < ApplicationController
       end
     end
 
+    def getsport(objs, sport)
+      spobj = nil
+      objs.each do |o|
+        if o.name == sport
+          spobj = o
+        end
+      end
+      return spobj
+    end
 end 

@@ -90,7 +90,11 @@ class SportsController < ApplicationController
   end
 
   def sport_user_alerts
-    @alerts = @sport.alerts.where(user_id: params[:user_id]).entries
+    if params[:updated_at]
+      @alerts = @sport.alerts.where(user_id: params[:user_id].to_s, :updated_at.gt => params[:updated_at].to_s)
+    else
+      @alerts = @sport.alerts.where(user_id: params[:user_id].to_s).entries
+    end
     respond_to :json
   end
 

@@ -24,9 +24,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
         end
         if params[:user][:site].nil?
           render status: 400, json: {message: "Site is missing"}
+          return
         end
         if !Site.find(params[:user][:site].to_s)
           render status: 400, json: {message: "Site does not exist"}
+          return
         end
 
         if params[:user][:email]

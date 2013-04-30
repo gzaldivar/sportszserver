@@ -7,10 +7,7 @@ class UsersController < ApplicationController
 	end
 
 	def edit
-    if current_site.sports.all.count == 1
-      @teams = current_site.sports.first.teams.all.entries
-    else
-    end
+      @teams = current_site.teams.all.entries
   end
 
   def index
@@ -30,16 +27,28 @@ class UsersController < ApplicationController
   end
 
   def disable
-    @user.disable = true
+    begin
+      @user.is_active = false
+      @user.save!
+      redirect_to :back, notice: "User disabled!"
+    rescue Exception => e
+      redirect_to :back, notice: "Error disabling user"
+    end
   end
 
   def enable
-    @user.disable = false
+    begin
+      @user.is_active = true
+      @user.save!
+      redirect_to :back, notice: "User enabled!"
+    rescue Exception => e
+      redirect_to :back, notice: "Error enabling user"
+    end
   end
 
 	def site
     if !params[:id].blank?
-      site = Site.find(params[:id])
+      site = Sport.find(params[:id])
       current_user.default_site = site.id
       current_user.save
       if !current_user.mysites.nil? and current_user.mysites.count > 0 and admin_sites? 
@@ -61,7 +70,7 @@ class UsersController < ApplicationController
 	private
 	
 	  def admin_sites?   
-	    site = Site.where(user_id: current_user.id).each_with_index do |s, cnt|
+	    site = Sport.where(user_id: current_user.id).each_with_index do |s, cnt|
 	      if current_site == site
 	        return true
         end

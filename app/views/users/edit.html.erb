@@ -33,15 +33,22 @@
 						</div>
 					</div>
 					<p>
+				      <div id="loading">
+				        <div id="loadingcontent">
+				            <p id="loadingspinner">
+				                Updating User...
+				            </p>
+				        </div>
+				      </div><p>
 					<div class="row">
 						<div class="span4 offset1">
-							<%= f.input :disable, as: :radio_buttons %>
+							<%= f.input :is_active, as: :radio_buttons %>
 						</div>
 					</div>
 					<p>
 					<div class="row">
 						<div class="span2 offset2">
-							<%= f.button :submit, 'Update Profile', class: "btn btn-medium btn-primary" %>
+							<%= f.button :submit, 'Update Profile', class: "btn btn-medium btn-primary", id: "submitbtn" %>
 						</div>
 					</div>
 				<% end %>
@@ -51,7 +58,11 @@
 			<div class="span8 offset2">
 				<% if current_site? and (@user.default_site != current_site.id.to_s) %>
 					Currently viewing site <em><strong><%= current_site.sitename %></em></strong>. Click here to set as default site on login?<br/>
-					<%= link_to "Default Site", site_user_path(current_site), class: "btn btn-medium btn-primary" %>
+					<%= link_to "Default Site", sport_path(current_site), class: "btn btn-medium btn-primary" %>
+				<% else %>
+					Click here to go back to <em><strong></em>
+					<%= link_to current_site.sitename, sport_path(current_site), class: "btn btn-medium btn-primary" %>
+					</strong>.<br/>
 				<% end %>
 			</div>
 		</div>

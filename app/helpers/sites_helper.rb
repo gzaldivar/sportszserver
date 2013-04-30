@@ -11,7 +11,7 @@ module SitesHelper
   
   def current_site
     if !cookies[:remember_site].nil?
-     return  @current_site ||= Site.find(cookies[:remember_site])
+     return  @current_site ||= Sport.find(cookies[:remember_site])
     else
       return nil
     end
@@ -33,12 +33,16 @@ module SitesHelper
     current_site.enable_user_video
   end
 
+  def review_media?
+    current_site.review_media
+  end
+
   def roomformedia?(sport)
-    if sport.site.tier == "Basic" and sport.site.mediasize > 300000000
+    if sport.tier == "Basic" and sport.mediasize > 300000000
       return false
-    elsif sport.site.tier == "Mobile" and sport.site.mediasize > 1000000000
+    elsif sport.tier == "Mobile" and sport.mediasize > 1000000000
       return false
-    elsif sport.site.tier == "All"
+    elsif sport.tier == "All"
       return true
     else
       return true

@@ -14,9 +14,9 @@ class ApplicationController < ActionController::Base
   include AlertsHelper
   include SponsorsHelper
 
-  def not_authorized
-    raise ActionController::RoutingError.new('You are not Authorized for this')
-  end
+#  def not_authorized
+#    raise ActionController::RoutingError.new('You are not Authorized for this')
+#  end
 
   unless Rails.application.config.consider_all_requests_local
     rescue_from Exception, with: lambda { |exception| render_error 500, exception }
@@ -27,16 +27,16 @@ class ApplicationController < ActionController::Base
   
     def after_sign_out_path_for(resource)
       if current_site?
-        site_path(current_site)
+        sport_path(current_site)
       else
         root_path
       end
     end
 
     def after_sign_in_path_for(resource)
-      if current_user.default_site
-        site_path(current_user.default_site)
-      else
+      if current_user.default_site and !Sport.find(current_user.default_site).nil?
+        sport_path(current_user.default_site)
+     else
         root_path
       end
     end

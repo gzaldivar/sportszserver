@@ -26,12 +26,12 @@ class Videoclip
   field :displayname, type: String
   field :description, type: String
 
-  field :error_status, type: Boolean, default: false
+  field :error_status, type: Boolean
   field :error_message, type: String
+  field :pending, type: Boolean, default: false
+
 
   field :teamid,  type: String
-#  field :schedule,  type: String
-#  field :owner, type: String
   field :players, type: Array
   
   search_in :players, :displayname
@@ -42,8 +42,6 @@ class Videoclip
   has_many :alerts
   
   index( { teamid: 1 }, { unique: false } )
-#  index( { schedule: 1 } , { unique: false } )
-#  index( { owner: 1 } , { unique: false } )
 
   validates_presence_of :filename
 

@@ -2,11 +2,31 @@
 	<div class="span10 offset1">
 		<%= simple_form_for [@sport, @team, @gameschedule], html: { class: 'form-horizontal' } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
-			<%= f.input :startdate, as: :string, input_html: { class: 'datepicker', :value => @gameschedule.try(:gamedate).try(:strftime,'%m/%d/%Y') } %>
-			<%= f.input :gamedate, :as => :hidden, :input_html => { :id => 'recorded-at-alt'} %>
-			<!--%= f.input :gamedate,  as: :date, start_year: Date.today.year, start_month: Date.today, 
-			 			ignore_time: true %-->
-			<%= f.input	:starttime, label: "Start Time:", as: :time, ignore_date:  true %>
+			<div class="row">
+				<div class="span4">
+					<%= f.input :startdate, as: :string, input_html: { class: 'datepicker', 
+											:value => @gameschedule.try(:gamedate).try(:strftime,'%m/%d/%Y') } %>
+					<%= f.input :gamedate, :as => :hidden, :input_html => { :id => 'recorded-at-alt'} %>
+					<!--%= f.input :gamedate,  as: :date, start_year: Date.today.year, start_month: Date.today, 
+					 			ignore_time: true %-->
+				</div>
+				<div class="span4 offset1">
+					We encourage you to upload an image for your opponent if you have one. Looks good on the mobile app. Your team logo or mascot logo will be used on the mobile for your team.<p>
+					<h5>Current opponent image</h5>
+					<% if !@gameschedule.opponentpic.blank? %>
+						<%= image_tag @gameschedule.opponentpic.url(:medium) %>
+		          	<% else %>
+		          		<h5>We will use the image for the opponent if you don't upload one.</h5>
+		            	<%= image_tag "teambutton.jpg" %>
+					<%end %>
+					<%= f.input	:opponentpic,	label: "Opponent image:", hint: "Change image" %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span10">
+					<%= f.input	:starttime, label: "Start Time:", as: :time, ignore_date:  true %>
+				</div>
+			</div>
 			<div class="row">
 				<div class="span4">
 					<%= f.input :homeaway, label: "Home or Away?" %>

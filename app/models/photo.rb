@@ -24,13 +24,9 @@ class Photo
   field :error_status, type: Boolean
   
   field :teamid,  type: String
-#  field :schedule,  type: String
-#  field :owner, type: String
   field :players, type: Array
   
   index({ teamid: 1 }, { unique: false } )
-#  index( { schedule: 1 } , { unique: false } )
-#  index( { owner: 1 } , { unique: false } )
   
   belongs_to :sport, index: true
   belongs_to :gameschedule
@@ -73,7 +69,6 @@ class Photo
   def deletephoto
     s3 = AWS::S3.new
     bucket = s3.buckets[S3DirectUpload.config.bucket]
-#    bucket.objects[self.filepath + "/original/" + self.filename].delete
     bucket.objects[self.filepath + "/large/" + self.filename].delete
     bucket.objects[self.filepath + "/medium/" + self.filename].delete
     bucket.objects[self.filepath + "/thumbnail/" + self.filename].delete

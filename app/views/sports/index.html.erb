@@ -1,30 +1,30 @@
-<% provide(:title, "Sport Site Solutions - Find Site") %>
+<% provide(:title, "Find Site") %>
 <p> 
 <div class="row">
   <div class="span10" style="background-color:#ffffff;">
     <div class="row">
-     	<div class="span10 offset2">
+      <div class="span10 offset2">
         <h3>Find Site:</h3>
-        <%= form_tag sites_path, class: "form-horizontal", method: 'get' do %>
+        <%= form_tag sports_path, class: "form-horizontal", method: 'get' do %>
           <div class="row">
             <div class="span2">
-              <%= label_tag "Sport Name: " %>
-          		<%= text_field_tag "name" %>
+              <%= label_tag "Zip Code: " %>
+              <%= text_field_tag "zip" %>
             </div>
             <div class="span2 offset1">
-              <%= label_tag "Season: " %>
-          		<%= text_field_tag "season" %>
+              <%= label_tag "City: " %>
+              <%= text_field_tag "city" %>
             </div>
           </div>
           <p>
           <div class="row">
             <div class="span2">
-              <%= label_tag "team: " %>
-          		<%= text_field_tag "team" %>
+              <%= label_tag "State: " %>
+              <%= select_tag :state, options_for_select(us_states), include_blank: true %>
             </div>
             <div class="span2 offset1">
-              <%= label_tag "Male/Female Sport: " %>
-              <%= select_tag "sex", "<option>Male</option><option>Female</option>".html_safe %>
+              <%= label_tag "Site Name: " %>
+              <%= text_field_tag "sitename" %>
             </div>
           </div><br/>
           <div class="row">
@@ -36,37 +36,37 @@
       </div>
     </div>
     <div class="row">
-      <div class="span10">
+      <div class="span9 offset1">
         <table class="table table-hover">
           <thead>
             <tr>
-              <th>Sport Name</th>
-              <th>Season</th>
-              <th>Teams</th>
-              <th>Male/Female</th>
-              <th>Year</th>
+              <th>Site Name</th>
+              <th>Mascot</th>
+              <th>City</th>
+              <th>State</th>
+              <th>Zip</th>
               <th>Banner</th>
+              <% if user_signed_in? %>
+                <th>Default Site</th>
+              <% end %>
             </tr>
           </thead>
           <tbody>
-    		<% if @sports.any? %>
-              <% @sports.each do |s| %>
-				<tr>
-                <td><%= link_to s.name, s %></td>
-                <td><%= s.season %></td>
-				<td>
-				<% s.teams.each do |t| %>
-                	<%= t %><p>
-				<% end %>
-				</td>
-                <td><%= s.year %></td>
-                <td>
-				<% if !s.banner_thumburl.nil? %>
-					<%= link_to (image_tag s.banner_thumburl), s %></td>
-				<% else %>
-					<% current_site.banner_thumburl %>
-				<% end %>
-				</tr>
+        <% if @sites.any? %>
+              <% @sites.each do |s| %>
+                <tr>
+                  <td><%= link_to s.sitename, s %></td>
+                  <td><%= s.mascot %></td>
+                  <td><%= s.city %></td>
+                  <td><%= s.state %></td>
+                  <td><%= s.zip %></td>
+                  <td><%= link_to (image_tag s.sport_banner.url(:thumb)), s %></td>
+                  <% if user_signed_in? and (current_user.default_site == s.id) %>
+                     <td><em>Default</em></td>
+                  <% elsif user_signed_in?%>
+                    <td><%= link_to "Set As Default", site_user_path(s), class: "btn btn-mini btn-primary" %></td>
+                  <% end %>
+                </tr>
               <% end %>
             <% end %>
           </tbody>

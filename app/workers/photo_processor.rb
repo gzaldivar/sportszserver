@@ -64,7 +64,7 @@ class PhotoProcessor
         photo.large_url = lobj.url_for(:read, expires:  473040000)
         photo.largesize = large.filesize
 
-        site = photo.sport.site 
+        site = photo.sport 
         site.mediasize = site.mediasize + photo.largesize + photo.mediumsize + photo.thumbsize
         site.save
   
@@ -79,13 +79,10 @@ class PhotoProcessor
 #          newobj = obj.move_to(item.modelname + "/" + photo.id + "/original/" + photo.filename)
           obj.delete
           photo.original_url = nil
+          photo.processing = false
 #          photo.original_url = newobj.url_for(:read, expires:  473040000)
         end
-        photo.filepath = item.modelname + '/' + photo.id + '/' + photo.filename
-        
-        if item.modelname == "photos"
-          photo.processing = false
-        end
+        photo.filepath = item.modelname + '/' + photo.id
         
         item.delete
       else

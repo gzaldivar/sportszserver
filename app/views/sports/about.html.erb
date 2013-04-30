@@ -1,0 +1,37 @@
+<p>
+<div class="span10" id="backcolor">
+	<% if !current_site? or current_site.about_filename_url.nil? %>
+		</p><% provide(:title, 'About Us') %>
+		<h1>About Us</h1>
+		<p>
+		SportzSoftware.com specializes in providing software solutions to 
+		athletic programs allowing them to make their sports programs content available via mobile devices in addition to the web. We provide you with a template model alleviating you from the need to manually manage your web sites with 
+		custom solutions. You enter the data and your site is automatically created and available to your users via our iPhone/iPad app.</p>
+		<p>
+		When you work with us, you will reach your fan base on mobile devices and in the future connected TV's in addition to a web site.</p>
+		<p>
+		You own the site and the product. We provide the technology. The rest is up to you!
+		<p>
+		Thanks for looking at us and considering our solution for your needs.
+		<br/>
+		<% if isAdmin? %>
+			<div class="span6 offset2"%>
+				<h4>Enter your own About Page:
+				<%= link_to "Replace", updateabout_sport_path(current_site), class: "btn btn-medium btn-primary" %><p>
+				You will be required to enter a jpg. If you do not want to enter a new about page the text above will be displayed.</h4>
+			</div>
+		<% end %>
+	<% else %>
+		<% provide(:title, current_site.sitename + " - About Us") %>
+		<h1>About <%= current_site.sitename %></h1>
+		<div class="span10 offset1">
+			<%= image_tag current_site.about_filename_url %><p>
+			<div class="row">
+				<div class="span2 offset2">
+					<%= link_to "Update Page", updateabout_sport_path(current_site), class: "btn btn-medium btn-primary" %>
+				</div>
+			</div>
+		</div>
+		<p>
+	<% end %>	
+</div>

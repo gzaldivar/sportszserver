@@ -1,0 +1,58 @@
+<p>
+<font color="b3f10c">
+<% if user_signed_in? %>
+	<div class="row">
+		<div class="span8 offset1">
+			<h3>Welcome <%= current_user.name %></h3><p>
+			<% if current_user.admin and @admin_sites.any? %>
+				<% @admin_sites.each do |s| %>
+					Administer:&nbsp
+					<%= link_to s.sitename, site_path(id: s) %>&nbsp
+					<% if current_user.default_site == s.id %>
+						<h4><em>Current Default Site</em></h4>
+					<% end %>
+					<p>
+					<%= link_to (image_tag s.banner.url(:medium)), s %>&nbsp
+					<% if !(current_user.default_site == s.id) %>
+						<%= link_to "Set Default", site_user_path(s), class: "btn btn-mini btn-primary" %>
+					<% end %>
+					<p>
+				<% end %>
+				<p>
+			<% end %>
+			<%= link_to "Create New Site", new_sport_path, class: "btn btn-medium btn-primary" %>
+		</div>
+	</div>
+<% else %>
+	<div class="row">
+		<div class="span3 offset1">
+			<h4>Click here to learn more!</h4>
+		</div>
+		<div class="span2">
+		  	<%= link_to "Sign Up", info_path, class: "btn btn-medium btn-primary" %>
+	    </div>
+	</div>
+	<div class="row">
+	    <div class="span5 offset1">
+			<h4>Already managing a site? Sign in above</h4>
+		</div>
+	</div>
+<% end %>
+<div class="row">
+	<div class="span8 offset1">
+		<% if user_signed_in? %>
+			<% if !current_user.mysites.nil? %>
+				List of sites you are registered for:&nbsp
+				<% current_user.mysites.keys.each do |k| %>
+					<%= link_to current_user.mysites[k], site_path(id: k) %>&nbsp
+					<% if current_user.default_site == k %>
+						<em>Default Site!</em>
+					<% end %>
+				<% end %>
+			<% end %>
+		<% end %>
+	    <h4>If you are looking for another school or athletic program powered by SportzTeams.com, click below to find that site.</h4>
+	  	<%= link_to "Search", sports_path, class: "btn btn-medium btn-primary" %>
+	</div>
+</div>
+</font>

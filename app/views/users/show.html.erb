@@ -11,30 +11,39 @@
 	      	<% end %>
 	      	<p>
 	      	<h3>
-	      	<% if @user.avatar_file_name.nil? %>
+	      	<% if @user.avatar_file_name.blank? %>
 	      		<%= image_tag 'photo_not_available.png' %>
 	      	<% else %>
 	      		<%= image_tag @user.avatar.url(:thumb) %>
 	      	<% end %>
 	      	<%= @user.name %><br/><p>
 	  		</h3>
-	      	Email: <%= @user.email %><p>
+	      		<strong>Email: </strong><em><%= @user.email %></em><p>
+	      	<p>
+	      	<% if !@user.default_site .nil? %>
+	      		<strong>Member of Site: </strong><em><%= Sport.find(@user.default_site).sitename %></em>
+	      	<% end %>
 	      	<p>
 	      	<% if !@user.teamid.nil? and !@user.teamid.blank? %>
 	      		Team Manager: <%= find_team(@user.teamid).team_name %>
 	      	<% end %>
 	      	<p>
 	      	<em>
-	      	<% if @user.disable %>
-	      		User Disabled
-	      	<% else %>
+	      	<% if @user.is_active %>
 	      		User Enabled
+	      	<% else %>
+	      		User Disabled
 	      	<% end %>
 	      	</em>
 	      	<p>
-	      	<% if isUserAdmin?(@user) or (!current_user.nil?  and (@user.id == current_user.id)) %>
+	      	<% if isUserAdmin?(@user) or (!current_user.nil?  and (@user.id == current_user.id)) or isAdmin? %>
 	      		<%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-medium btn-primary" %>
-	      	<% end %>
+				<% if @user.disable and !@user.admin %>
+					<td><%= link_to "Disable User", disable_user_path(@user), class: "btn btn-medium btn-danger" %></td>
+				<% elsif !@user.admin %>
+					<td><%= link_to "Enable User", enable_user_path(@user), class: "btn btn-medium btn-danger" %></td>
+				<% end %>
+			<% end %>
 	    <div class="row">
 	  		<div class="span4">
 	        <% if @user.confirmed_at.nil? %>

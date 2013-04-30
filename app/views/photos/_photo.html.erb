@@ -1,14 +1,24 @@
+<% if isTeamManager?(@photo.teamid) %>
+	<div class="row">
+		<div class="span6 offset2">
+			As a team manager you click approve below to make the photos available to users. If you do not want to approve a photo, click on the photo to delete it.
+		</div>
+	</div>
+<% end %>
 <table class="table table-hover">
   <thead>
     <tr>
-      <th>Photo</th>
-      <th>Photo date</th>
-      <th>Photo Name</th>
-      <th>Team</th>
-      <th>Athletes</th>
-      <th>Game</th>
-      <th>Status</th>
-      <th>Errors?</th>
+	    <th>Photo</th>
+	    <th>Photo date</th>
+	    <th>Photo Name</th>
+	    <th>Team</th>
+	    <th>Athletes</th>
+	    <th>Game</th>
+	    <th>Status</th>
+	    <% if @sport.review_media? %>
+    		<th>Approved?</th>
+	    <% end %>
+    	<th>Errors?</th>
     </tr>
   </thead>
 	<ul class="homesites">
@@ -16,9 +26,9 @@
 		  <tr>
 			<div class="row">
 				<div class="span2">
-				    <% if !photo.processing && !photo.thumbnail_url.nil? %>
+				    <% if !photo.processing && !photo.thumbnail_url.nil? and !photo.pending %>
 				      <td><%= link_to image_tag(photo.thumbnail_url), sport_photo_path(@sport, photo) %>
-					<% elsif !photo.original_url.nil? %>
+					<% elsif !photo.original_url.nil? and !photo.pending %>
 					  <td><%= link_to image_tag(photo.original_url), sport_photo_path(@sport, photo) %>
 				    <% else %>
 				      <td><%= image_tag('Photo_Not_Available.jpg') %></td>
@@ -26,7 +36,11 @@
 				</div>
 			</div>
 		    <td><%= photo.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>
-		    <td><%= link_to photo.displayname, sport_photo_path(@sport, photo) %></td>
+		    <% if !photo.pending %>
+		    	<td><%= link_to photo.displayname, sport_photo_path(@sport, photo) %></td>
+		    <% else %>
+		    	<td><%= photo.displayname %></td>
+		    <% end %>
 		  	<% if !photo.teamid.nil? %>
 		  		<td><%= @sport.teams.find(photo.teamid).team_name %></td>
 			<% else %>
@@ -51,7 +65,18 @@
 		    <% else %>
 		      <td>Complete</td>
 		    <% end %>
-		    <td><%= photo.error_status %>
+		    <% if @sport.review_media? %>
+			    <% if @photo.pending and user_signed_in? and isTeamManager?(@photo.teamid) %>
+			    	<td><%= link_to "Approve?", approval_sport_photo_path(@sport, @photo), class: "btn btn-mini btn-primary" %></td>
+			    <% else %>
+			    	<td><%= @photo.pending %></td>
+			    <% end %>
+		    <% end %>
+		    <% if photo.error_status? %>
+		    	<td><%= link_to photo.error_status, errors_sport_photo_path(@sport, photo) %>
+		    <% else %>
+		    	<td>None</td>
+		    <% end %>
 		  </tr>
 		</tbody>
 	</ul>

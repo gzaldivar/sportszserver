@@ -56,7 +56,7 @@ class Site
       :large    => ['640x960',   :jpg]
     }
 
-  has_mongoid_attached_file :background,
+  has_mongoid_attached_file :site_background,
     :storage        => :s3,
     :s3_credentials => { bucket: S3DirectUpload.config.bucket,
                          access_key_id: S3DirectUpload.config.access_key_id,
@@ -79,7 +79,7 @@ class Site
 
   validates_attachment_content_type :banner, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_attachment_content_type :logo, content_type: ['image/jpg', 'image/jpeg', 'image/png']
-  validates_attachment_content_type :background, content_type: ['image/jpg', 'image/jpeg', 'image/png']
+  validates_attachment_content_type :site_background, content_type: ['image/jpg', 'image/jpeg', 'image/png']
 
   attr_accessible :sitename, :mascot, :enable_user_video, :enable_user_pics, :banner, :logo, :background, :zip, :state, :city, :address
 

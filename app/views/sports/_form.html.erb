@@ -3,31 +3,83 @@
     <%= simple_form_for @sport,  html: { multipart: true } do |f| %>
 		  <%= render 'shared/error_messages', object: f.object %>
       <div class="row">
-        <div class="span9">
-          <% if @sport.has_stats? %>
-            <h4><%= @sport.name %></h4>
-          <% elsif @sport.name %>
-            <%= f.input :name,  label:  "Sport Name", hint: "Enter sport name does not have a stat package but all other features will be available." %>
-          <% else %>
-              <!--%= label_tag "Sport Name: " %-->
-              <%= f.input :sportname, label: "Sport Name", collection: sports_list, include_blank: true, hint: "These sports have a stat package. If you want to provide stats you should select the sport here." %>
-              <!--%= f.input :sportname,  collection: sports_list, include_blank: true, label:  "Sport Name", hint: %-->
-              
-              <%= f.input :name, required: true, label:  "Sport Name", hint: "Enter sport name. Will not have a stat package but all other features will be available." %>
-          <% end %>
+        <div class="span2">
+          <%= f.input :sitename, label: "Site Name:", hint: "Enter name of site (ex. My School, Laguna Hills Pop Warner)" %>
         </div>
+        <div class="span2 offset3">
+            <%= f.input :mascot, required: false, hint: "Mascot will be used for all teams. f your teams have different mascots. Ex: Pee Lions, Jr. Pee Wee Mustangs you will have the opportunity to enter a mascot for that team on the team page" %>
+        </div>
+      </div>
+      <div class="row">
+          <% if @sport.has_stats? %>
+            <div class="span2">
+              <h4><%= @sport.name %></h4>
+            </div>
+          <% elsif @sport.name %>
+            <div class="span2">
+              <%= f.input :name,  label:  "Sport Name", 
+                                  hint: "Enter sport name does not have a stat package but all other features will be available." %>
+            </div>
+          <% else %>
+            <div class="span2">
+              <%= f.input :sportname, label: "Sport Name", collection: sports_list, include_blank: true, hint: "These sports have a stat package. If you want to provide stats you should select the sport here." %>
+            </div>
+            <div class="span2 offset3">
+               <%= f.input :name, required: false, label:  "Sport Name", 
+                                  hint: "Enter sport name. Will not have a stat package but all other features will be available." %>
+            </div>
+          <% end %>
       </div>
       <p>
       <div class="row">
-  			<div class="span2">
+        <div class="span2">
+            <%= f.input :zip %>
+        </div>
+  			<div class="span2 offset1">
   				<%= f.input :year,  hint: "Year should be 2012, 2013, etc." %>
   			</div>
         <div class="span2 offset1">
-  				<%= f.input	:season, collection: ["Fall","Winter","Spring","Summer"], 
-                               hint:	"Only enter season if you are creating a multi sport site. If this site is a single sport site, season will not be used" %>
+  				<%= f.input	:season, required: false, collection: ["Fall","Winter","Spring","Summer"] %>
   			</div>
       </div><p>
-      	<div class="row">
+      <div class="row">
+          <div class="span2">
+            Allow user managed pics
+          </div>
+          <div class="span1">
+            <%= f.check_box :enable_user_pics %>
+          </div>
+          <div class="span4 offset1">
+            If you enable user pics, a user will be able to upload, edit and delete the pics they own. You can leave this unchecked and choose 
+            to only have the admin or team manager approve pics. This is a great feature for engaging your fan base in your program. If you check this and assign a user to review pics, then users will be able to upload pics but they will not be viewable until the admin or a user you designate as site reviewer approves them.
+          </div>
+      </div>
+      <p>
+      <div class="row">
+          <div class="span2">
+            Allow user managed videos
+          </div>
+          <div class="span1">
+            <%= f.check_box :enable_user_video %>
+          </div>
+          <div class="span4 offset1">
+            If you enable user videos, a user will be able to upload, edit and delete the vidoes they own. You can leave this unchecked and choose 
+            to only have an admin or team manager approve videos. This is a great feature for engaging your fan base in your program. If you check this and assign a user to review videos, then users will be able to upload videos but they will not be viewable until the admin or a user you designate as site reviewer approves them.
+          </div>
+      </div>
+      <p>
+      <div class="row">
+          <div class="span2">
+            Review Photo's and Video's before posting?
+          </div>
+          <div class="span1">
+            <%= f.check_box :review_media %>
+          </div>
+          <div class="span4 offset1">
+            Check this if you want to review all video and photos before your fans see them. Checking this will result in a delay before your users can post photo's or videos. If you are looking for an active fan base, you may not want to check this. You can always review what your fans post as often as you like and delete any material you deem inapproptiate. This is how large sites that alllow video uploading work. It does impose a burden on the admin or team manager to pay attention to what your users are uploading.
+          </div>
+      </div>
+      <div class="row">
         	<div class="span8 offset 1">
           		<h4>Current teams:</h4><p>
           		<% if @sport.teams.count >= 1 %>
@@ -35,56 +87,74 @@
           		<% else %>
             		None
           		<% end %><p>
-				<% if !@sport.created_at.nil?%>
+				      <% if !@sport.created_at.nil?%>
           			<%= link_to "Add Team", new_sport_team_path(@sport), class: "btn btn-medium btn-primary" %>
-				<% end %>
+				      <% end %>
        		</div>
-      	</div>
-      	<div class="row"> 
- 			<div class="span2">
-				<% if !@sport.sport_logo.blank? %>
-					<h4>Sport Logo image</h4>
-					<%= image_tag @sport.sport_logo.url(:thumb)%>
-          		<% else %>
-            		This is the site logo that will be used for this sport. You can enter one for this sport only. It will appear only on sport pages. The site logo will be used for all other pages. Remember that logos should be 640x960 pixels so that we can size them for mobile devices also.
-            <% if current_site.logo.url.blank? %>
-              <%= image_tag "NotAvailable.jpg" %>
-            <% else %>
-              <%= image_tag current_site.logo.url(:thumb) %>
-  					<%end %>
-          <% end %>
-					<%= f.file_field	:sport_logo %>
-				</div>
-        <div id="loading">
-          <div id="loadingcontent">
-              <p id="loadingspinner">
-                  Updating Sport...
-              </p>
-          </div>
-        </div><p>
-        <div class="span2 offset1">
-					<%= f.input	:sex, collection: ["Male","Female"], label: "Male or Female sport:" %>
-				</div>
-      </div><p>
-      <div class="row">
- 				<div class="span6">
-					<% if !@sport.sport_banner.blank? %>
-						<h4>Sport banner image</h4>
-						<%= image_tag @sport.sport_banner.url(:medium) %>
-          <% else %>
-            Using the site banner and not a team banner. You can change it below. Remember that banners's should be 1000x150 pixels. 
-            <% if current_site.banner.url(:medium).blank? %>
-              <%= image_tag "NotAvailable.jpg" %>
-            <% else %>
-              <%= image_tag current_site.banner.url(:medium) %>
-  					<%end %>
-          <% end %>
-					<%= f.file_field	:sport_banner %>
-				</div>
-			</div>
+      </div>
       <p>
       <div class="row">
-			  <div class="span1 offset3">
+        <div class="span8">
+          <div class="hero-unit">
+            <h5>Below you will be able to upload your site banner, logo and background color. You will be able to change them at anytime. Recommended sizes for each are:
+              <ul>
+                <li>Banner:     1000x150</li>
+                <li>Logo:       640x960</li>
+                <li>Background: 1600x1200</li>
+              </ul>
+            <p>
+            You must use jpg/jpeg images for the banner, logo and background. If you do not upload a banner, a standard site banner will be used (NOT RECOMMENDED). We require a jpg for background so that you can customize the background look of your site if your fans choose to use the web site in addition to the mobile apps. Your fans username and password will work on the web site as well as the mobile app. If you do not enter a background, then a white background will be used. You can use GIMP, Photoshop in addition to other image manipulation programs to create banners, logos and backgrounds. Be creative in your color choices. We encourage you to customize the look and feel as you wish.
+            </h5>
+             <p>
+            <li><h54><em>LOGO</em></h4><h5>Logo will also be used for mobile displays on iPhones and iPads. If your logo is a pic or larger than 640x480, uploaded it and it will be automatically resized. We will resize your logo's to create thumbnails to fit the image format on mobile devices.</h5>
+            </li>
+            <p>
+          </div>
+        </div>
+      </div>
+      <div id="loading">
+        <div id="loadingcontent">
+            <p id="loadingspinner">
+                Updating Sport...
+            </p>
+        </div>
+      </div><p>
+      <div class="row">
+        <div class="span10">
+          <% if !@sport.sport_banner.blank? %>
+            <h4>Sport banner image</h4>
+            <%= image_tag @sport.sport_banner.url(:medium) %>
+          <% else %>
+            <h4>Enter a banner for your site.</h4> 
+          <% end %>
+          <%= f.file_field  :sport_banner %>
+        </div>
+      </div>
+      <p>
+      <div class="row"> 
+   			<div class="span4">
+  				<% if !@sport.sport_logo.blank? %>
+  					<h4>Current Sport Logo</h4>
+  					<%= image_tag @sport.sport_logo.url(:thumb)%>
+          <% else %>
+            <h4>Eneter a logo for your sport.</h4>
+              <%= image_tag "NotAvailable.jpg" %>
+          <% end %>
+  					<%= f.file_field	:sport_logo %>
+  			</div>
+        <div class="span4 offset1">
+            <h4>BACKGROUND. Background for your site pages. Remember, white will be used if not entered.</h4>
+            <% if !@sport.background.blank? %>
+              Current background:<p>
+              <%= image_tag @sport.background.url(:thumb) %>
+            <% end %>
+            <%= f.file_field :background %>
+        </div>
+      </div>
+      <p>
+        </div><p>
+      <div class="row">
+			  <div class="span1 offset4">
 				  <%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary", id: "submitbtn" %>
         </div>
 			</div>

@@ -1,7 +1,7 @@
 class PhotosController < ApplicationController
   before_filter :authenticate_user!,	only: [:create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update]
   before_filter :get_sport
-  before_filter :correct_photo,       only: [:edit, :show, :destroy, :update]
+  before_filter :correct_photo,       only: [:edit, :show, :destroy, :update, :errors, :clear_error, :approval]
 
   require 'base64'
   require 'openssl'
@@ -178,7 +178,11 @@ class PhotosController < ApplicationController
       end
     end
             
-    # put review logic here !!!!!!!
+    if @sport.review_media?
+      @photo.pending = true
+    else
+      @photo.pending = false
+    end
     
     if user_signed_in?
       @photo.user_id = current_user.id
@@ -254,9 +258,8 @@ class PhotosController < ApplicationController
   end
   
   def destroy
-    site = @sport.site
-    site.mediasize = site.mediasize - @photo.thumbsize - @photo.mediumsize - @photo.largesize
-    site.save
+    @sport.mediasize = @sport.mediasize - @photo.thumbsize - @photo.mediumsize - @photo.largesize
+    @sport.save
     @photo.delete
     redirect_to sport_photos_path(@sport), notice: "Photo deleted!"
   end
@@ -294,6 +297,22 @@ class PhotosController < ApplicationController
   def slideshow
   end
   
+  def errors
+    @error = @sport.photo_errors.find_by(modelid: @photo.id)
+  end
+
+  def clear_error
+    @sport.photo_errors.find_by(modelid: @photo.id).destroy
+    @photo.destroy
+    redirect_to sport_photos_path(@sport), notice: "Photo Error cleared!"
+  end
+
+  def approval
+    @photo.pending = false
+    @photo.save
+    redirect_to sport_photos_path(@sport)
+  end
+
   private
   
     # generate the policy document that amazon is expecting.

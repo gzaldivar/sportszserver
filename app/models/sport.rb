@@ -2,16 +2,43 @@ class Sport
   include Mongoid::Document
   include Mongoid::Timestamps
   include Mongoid::Paperclip
+  include Mongoid::Search
 
   field :name, type: String
   field :sportname, type: String
   field :has_stats, type: Boolean, default: false
   field :year, type: String
   field :season, type: String
-  field :sex, type: String
+#  field :sex, type: String
   field :mascot, type: String
+  field :sitename, type: String
 
-  belongs_to :site
+  field :enable_user_pics,    type: Boolean
+  field :enable_user_video,   type: Boolean
+  field :review_media,      type: Boolean
+
+  field :about_filename_url,  type: String
+  field :about_filename,    type: String
+  field :about_filetype,    type: String
+
+  field :help_file_name,    type: String
+
+  field :contactemail,      type: String
+ 
+  field :zip,         type: String
+  field :state,         type: String
+  field :city,          type: String
+  field :address,       type: String
+
+  field :adminid, type: String
+  field :tier, type: String, default: "Basic"
+  field :mediasize, type: Integer, default: 0
+
+  search_in :sitename, :mascot, :state, :zip, :city
+
+#  belongs_to :site
+  belongs_to :user
+  has_many :contacts, dependent: :destroy
   has_many :newsfeeds, dependent: :destroy
   has_many :athletes, dependent: :destroy
   has_many :coaches, dependent: :destroy
@@ -49,13 +76,31 @@ class Sport
       :large    => ['640x960',   :jpg]
     }
 
-  validates_presence_of :name
+  has_mongoid_attached_file :background,
+    :storage        => :s3,
+    :s3_credentials => { bucket: S3DirectUpload.config.bucket,
+                         access_key_id: S3DirectUpload.config.access_key_id,
+                         secret_access_key: S3DirectUpload.config.secret_access_key },
+    :styles => {
+#      :original => ['1600x1000', :jpg],
+      :thumb    => ['100x100',   :jpg],
+      :medium   => ['320x480',    :jpg],
+      :large    => ['640x960',   :jpg]
+    }
+
+  validates_presence_of :name, :sitename
+  validates :zip, presence: true, format: { with: /^[0-9]{5}(-[0-9]{4})?$/ }
+
   validates :year, presence: true, format: { with: /^[0-9]{4}$/ }
   validates_presence_of :season
-  validates :sex, presence: true, format: { with: /Male|Female/ }
+#  validates :sex, presence: true, format: { with: /Male|Female/ }
+  validates :state, presence: true
+  validates :contactemail, presence: true
+   
   validates_attachment_content_type :sport_banner, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_attachment_content_type :sport_logo, content_type: ['image/jpg', 'image/jpeg', 'image/png']
-   
+  validates_attachment_content_type :background, content_type: ['image/jpg', 'image/jpeg', 'image/png']
+
   def sport_name
     if mascot.nil?
       if self.name.nil?

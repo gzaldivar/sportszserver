@@ -36,18 +36,10 @@ class Api::V1::TokensController < ApplicationController
       if !@user.avatar.blank?
         userurl = @user.avatar.url(:tiny)
       end
-      site = Site.find(@user.default_site)
-      sports = onesport?(site.id)
-      if !sports.kind_of?(Array)
-        render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: @user.authentication_token, 
-                                  avatar: userurl, sport: sports.id, userid: @user.id, sitename: site.sitename, banner_url: site.banner.url(:thumb),
-                                  logo: site.logo.url(:large) }
-      else
-        thesport = getsport(sports, params[:sport])
-        render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: @user.authentication_token, 
-                                  avatar: userurl, userid: @user.id, sport:  thesport, sitename: site.sitename, banner_url: site.banner.url(:thumb),
-                                  logo: site.logo.url(:large) }
-      end
+      sport = Sport.find(@user.default_site)
+      render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: @user.authentication_token, 
+                                  avatar: userurl, sport: sport.id, userid: @user.id, sitename: sport.sitename, banner_url: sport.sport_banner.url(:thumb),
+                                  logo: sport.sport_logo.url(:large) }
     end
   end
   
@@ -62,39 +54,10 @@ class Api::V1::TokensController < ApplicationController
       if !@user.avatar.blank?
         userurl = @user.avatar.url(:tiny)
       end
-      site = Site.find(@user.default_site)
-      sports = onesport?(site.id)
-      if !sports.kind_of?(Array)
-        render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: params[:id], 
-                                  avatar: userurl, userid: @user.id, sport: sports.id,  sitename: site.sitename, banner_url: site.banner.url(:thumb),
-                                  logo: site.logo.url(:large)}
-      else
-        thesport = getsport(sports, params[:sport])
-        render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: @user.authentication_token, 
-                                  avatar: userurl, userid: @user.id, sport:  thesport, sitename: site.sitename, banner_url: site.banner.url(:thumb),
-                                  logo: site.logo.url(:large) }
-      end
+      sport = Sport.find(@user.default_site)
+      render :status=>200, :json=>{email: @user.email, name: @user.name, site: @user.default_site, token: params[:id], avatar: userurl, 
+                                  sport: sport.id, userid: @user.id, sitename: sport.sitename, banner_url: sport.sport_banner.url(:thumb),
+                                  logo: sport.sport_logo.url(:large) }
     end
   end
-
-  private
-
-    def onesport?(siteid)
-      site = Site.find(siteid)
-      if site.sports.all.count == 1
-        return site.sports.first
-      else
-        return site.sports.all.entries
-      end
-    end
-
-    def getsport(objs, sport)
-      spobj = nil
-      objs.each do |o|
-        if o.name == sport
-          spobj = o
-        end
-      end
-      return spobj
-    end
 end 

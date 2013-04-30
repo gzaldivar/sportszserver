@@ -13,10 +13,16 @@
 			<% if isAdmin? %>
 				<div class="row">
 					<div class="span2 offset3">
-						<%= link_to "Add Contact", new_site_contact_path(current_site), class: "btn btn-medium btn-primary" %>
+						<%= link_to "Add Contact", new_sport_contact_path(current_site), class: "btn btn-medium btn-primary" %>
 					</div>
 				</div>
 			<% end %>
+		</div>
+	</div>
+	<p>
+	<div class="row">
+		<div class="span10 offset1">
+			If you are having trouble logging in, please send an email to <strong><%= current_site.contactemail %></strong>
 		</div>
 	</div>
 <% else %>

@@ -163,7 +163,11 @@ class VideoclipsController < ApplicationController
         end
       end
               
-      # put review logic here !!!!!!!
+      if @sport.review_media?
+        @videoclip.pending = true
+      else
+        @videoclip.pending = false
+      end
       
       if user_signed_in?
         @videoclip.user_id = current_user.id
@@ -182,9 +186,8 @@ class VideoclipsController < ApplicationController
       posterobj = bucket.objects[@videoclip.poster_filepath]
       posterobj.write(Pathname.new(poster_path))   
       @videoclip.poster_url = posterobj.url_for(:read, expires:  473040000)
-      site = @sport.site
-      site.mediasize = site.mediasize + @videoclip.size
-      site.save
+      @sport.mediasize = @sport.mediasize + @videoclip.size
+      @sport.save
       @videoclip.save
 
       FileUtils.rm(poster_path)

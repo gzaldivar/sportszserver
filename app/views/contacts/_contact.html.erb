@@ -21,10 +21,10 @@
 		<% if isAdmin? %>
 			<div class="row">
 				<div class="span1">
-					<%= link_to "Edit", edit_site_contact_path(@site, contact), class: "btn btn-mini btn-primary" %>
+					<%= link_to "Edit", edit_sport_contact_path(@sport, contact), class: "btn btn-mini btn-primary" %>
 				</div>
 				<div class="span2">
-					<%= link_to "Delete", site_contact_path(@site, contact), method: :delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
+					<%= link_to "Delete", sport_contact_path(@sport, contact), method: :delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
 				</div>
 			</div>
 		<% end %>

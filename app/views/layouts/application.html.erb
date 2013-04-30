@@ -18,8 +18,8 @@
       <% if !@sport.nil? && !@sport.sport_banner.blank? %>
           <div id="banner" style="background-image: url(<%= @sport.sport_banner.url(:large) %>);">    
           </div>
-      <% elsif current_site? and !current_site.banner.blank? %>
-          <div id="banner" style="background-image: url(<%= current_site.banner.url(:large) %>);">
+      <% elsif current_site? and !current_site.sport_banner.blank? %>
+          <div id="banner" style="background-image: url(<%= current_site.sport_banner.url(:large) %>);">
           </div>
     	<% else %>
     		<div id="homebanner" style="background-image: url(<%= image_path 'home.jpg' %>);"></div>

@@ -15,6 +15,7 @@ Sportzserver::Application.routes.draw do
   end  
    
   resources :sports do
+    resources :contacts
     resources :sponsors
 
     resources :events do
@@ -104,14 +105,14 @@ Sportzserver::Application.routes.draw do
     
     resources :photos, only: [:edit, :create, :update, :destroy, :index, :show] do
       member do
-        get :newteam, :newathlete, :newschedule
+        get :newteam, :newathlete, :newschedule, :errors, :approval
         get :slideshow
         get :untagteam
       end
 
       collection do
         post :untagathlete
-        get :updategameschedule
+        get :updategameschedule, :clear_error
       end
     end
     
@@ -127,39 +128,46 @@ Sportzserver::Application.routes.draw do
     end
 
     collection do
-      get :feed
+      get :feed, :mobileinfo, :allnews, :pricing, :admin_info
     end
 
     member do
       get :sport_user_alerts
-    end
-  end
-  
-  resources :sites do
-    resources :contacts
-
-    member do
       get  :updateabout
       get  :updatecontact
       post :uploadpage
       post :uploadcontact
     end
-    
-    collection do
-      get  :male, :female, :mobileinfo, :allnews, :pricing
-    end
+
   end
   
-  root to: 'sites#home'
+#  resources :sites do
+#    resources :contacts
 
-  match '/home',    to: 'sites#home'
-  match '/help',    to: 'sites#help'
-  match '/contacts', to: 'sites#contact'
-  match '/about',   to: 'sites#about'
-  match '/info',    to: 'sites#info'
-  match '/pricing',  to: 'sites#pricing'
-  match '/mobileinfo',  to: 'sites#mobileinfo'
-  match '/user/root',  to: 'sites#show'
+#    member do
+#      get  :updateabout
+#      get  :updatecontact
+#      post :uploadpage
+#      post :uploadcontact
+#    end
+    
+#    collection do
+#      get  :male, :female, :mobileinfo, :allnews, :pricing
+#    end
+
+#  end
+  
+  root to: 'sports#home'
+
+  match '/home',    to: 'sports#home'
+  match '/help',    to: 'sports#help'
+  match '/contacts', to: 'sports#contact'
+  match '/about',   to: 'sports#about'
+  match '/info',    to: 'sports#info'
+  match '/admininfo', to: 'sports#admin_info'
+  match '/pricing',  to: 'sports#pricing'
+  match '/mobileinfo',  to: 'sports#mobileinfo'
+  match '/user/root',  to: 'sports#show'
 
   match '/newkicker', to: 'football_specialteams#newkicker'
   match '/newpunter', to: 'football_specialteams#newpunter'

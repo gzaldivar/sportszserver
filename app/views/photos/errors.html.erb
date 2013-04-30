@@ -1,0 +1,54 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Photo Errors") %>
+<p>
+<div class="row">
+	<div class="span10">
+		<table class="table table-hover">
+		    <thead>
+			    <tr>
+			      <th>Photo date</th>
+			      <th>Photo Name</th>
+			      <th>Team</th>
+			      <th>Athletes</th>
+			      <th>Game</th>
+			    </tr>
+		    </thead>
+			<tbody>
+				<tr>
+				  	<td><%= @photo.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>
+				  	<td><%= @photo.displayname %></td>
+				  	<% if !@photo.teamid.nil? %>
+				  		<td><%= @sport.teams.find(@photo.teamid).team_name %></td>
+					<% else %>
+						<td></td>
+					<% end %>
+				    <% if !@photo.players.nil? and @photo.players.any? %>
+					    <td>
+					      <% @photo.players.each do |p| %>
+					      	<%= @sport.athletes.find(p).full_name %><p>
+					      <% end %>
+					    </td>
+				    <% else %>
+				    	<td></td> 
+				    <% end %>
+					<% if !@photo.gameschedule.nil? and !@photo.gameschedule.blank? %>
+				    	<td><%= @sport.teams.find(@photo.teamid).gameschedules.find(@photo.gameschedule).game_name %></td>
+					<% else %>
+						<td></td>
+					<% end %>
+				</tr>
+			</tbody>
+		</table>
+		<div class="row">
+			<div class="span2">
+				<h5>Error Description:</h5>
+			</div>
+			<div class="span6">
+				<em><%= @error.error_message %></em>
+			</div>
+			<div class="span1 offset1">
+				<%= link_to "Clear", clear_error_sport_photos_path(sport_id: @sport, id: @photo), class: "btn btn-medium btn-info", 
+                  			data: { confirm: "Clear photo error?" } %>
+            </div>
+		</div>
+	</div>
+</div>

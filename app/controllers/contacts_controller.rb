@@ -8,10 +8,11 @@ class ContactsController < ApplicationController
   end
   
   def create
-    if @contact = @site.contacts.create!(params[:contact])
-      redirect_to [@site, @contact], notice: "Contact created!"
-    else
-      redirect_to :back, alert: e.message
+    begin
+      contact = @sport.contacts.create!(params[:contact])
+      redirect_to [@sport, contact], notice: "Contact created!"
+    rescue Exception => e
+        redirect_to :back, alert: e.message
     end
   end
   
@@ -26,16 +27,16 @@ class ContactsController < ApplicationController
   end
   
   def update
-    contact = @site.contacts.find(params[:id])
+    contact = @sport.contacts.find(params[:id])
     if contact.update_attributes(params[:contact])      
-      redirect_to [@site,contact], notice: "Contact updated!"
+      redirect_to [@sport,contact], notice: "Contact updated!"
     else
       redirect_to :back, alert: "Error updating contact"
     end
   end
   
   def destroy
-    if @site.contacts.find(params[:id]).destroy
+    if @sport.contacts.find(params[:id]).destroy
       flash[:notice] = "Contact deleted!"
     else
       flash[:error] = "Error deleting contact"
@@ -45,7 +46,7 @@ class ContactsController < ApplicationController
   
   def index
     @contacts = []
-    @site.contacts.each_with_index do |c, cnt|
+    @sport.contacts.each_with_index do |c, cnt|
       @contacts[cnt] = c
     end
 
@@ -62,7 +63,7 @@ class ContactsController < ApplicationController
     end
     
     def get_site
-      @site = Site.find(params[:site_id])
+      @sport = Sport.find(params[:sport_id])
     end
 
 end

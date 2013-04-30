@@ -3,7 +3,7 @@
   		<div class="span6 offset3">
         <h3>Create new contact:</h3>
         <p>
-  			<%= simple_form_for [@site, @contact] do |f| %>
+  			<%= simple_form_for [@sport, @contact] do |f| %>
   				<%= f.input :title,	hint: "Title for contact. ex: Head Coach, Athletic Director, League President, etc." %>
   				<%= f.input :name, 	hint: "Enter the name of the contact. Can be anything you like." %>
   				<%= f.input :phone, required: false %>

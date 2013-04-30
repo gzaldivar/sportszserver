@@ -15,7 +15,7 @@
 		  <tr>
 			<div class="row">
 				<div class="span1">
-				    <% if !videoclip.poster_url.nil? %>
+				    <% if !videoclip.poster_url.nil? and !videoclip.pending %>
 				    	<td><%= link_to image_tag(videoclip.poster_url), sport_videoclip_path(@sport, videoclip) %>
 				    <% else %>
 				    	<td><%= image_tag('VideoNotAvailable.jpg') %></td>
@@ -23,7 +23,11 @@
 				</div>
 			</div>
 		    <td><%= videoclip.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>
-		    <td><%= link_to videoclip.displayname, sport_videoclip_path(@sport, videoclip) %></td>
+		    <% if !videoclip.pending %>
+		    	<td><%= link_to videoclip.displayname, sport_videoclip_path(@sport, videoclip) %></td>
+		    <% else %>
+		    	<td><%= videoclip.displayname %></td>
+		    <% end %>
 		  	<% if !videoclip.teamid.nil? %>
 		  		<td><%= @sport.teams.find(videoclip.teamid).team_name %></td>
 			<% else %>

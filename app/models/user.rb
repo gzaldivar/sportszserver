@@ -44,7 +44,8 @@ class User
 
   before_save :ensure_authentication_token
 
-  has_many :sites
+#  has_many :sites
+  has_many :sports
   has_many :alerts
   has_many :photos
   has_many :videoclips
@@ -57,7 +58,7 @@ class User
   field :mysites, type: Hash
   field :default_site, type: String
   field :teamid, type: String
-  field :disable, type: Boolean, default: false
+  field :is_active, type: Boolean, default: true
   
   has_mongoid_attached_file :avatar,
     :storage        => :s3,
@@ -71,6 +72,11 @@ class User
     
   validates_attachment_content_type :avatar, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_presence_of :name
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at, :authentication_token, :teamid
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at, 
+                  :authentication_token, :teamid, :avatar, :is_active
+
+  def active_for_authentication?
+    super and self.is_active?
+  end
 
 end

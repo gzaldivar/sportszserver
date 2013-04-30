@@ -12,6 +12,10 @@
 	<div class="span2">
 		<%= link_to @athlete.name, sport_athlete_path(@sport, @athlete) %>
 	</div>
+	<div class="span2 offset1">
+		<%= link_to "Clear All", clearall_sport_athlete_alerts_path(@sport, @athlete),
+								class: "btn btn-primary btn-danger", data: { confirm: "You sure? All Alerts will be cleared!" } %>
+	</div>
 </div>
 <p>
 <div class="row">
@@ -24,11 +28,13 @@
 			  	<table class="table table-striped">
 			  		<thead>
 			  			<th>Time</th>
+			  			<th>Message</th>
 			  			<th>Photo</th>
 			  			<th>Clear Alert</th>
 			  		</thead>
 			  		<tbody>
 			  			<td><%= a.updated_at.strftime("%Y-%d-%m %H:%M:%S") %></td>
+			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.photos.find(a.photo_id).displayname, sport_photo_path(@sport, a.photo_id) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
 			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
@@ -38,11 +44,13 @@
 			  	<table class="table table-striped">
 			  		<thead>
 			  			<th>Time</th>
+			  			<th>Message</th>
 			  			<th>Video Clip</th>
 			  			<th>Clear Alert</th>
 			  		</thead>
 			  		<tbody>
 			  			<td><%= a.updated_at.strftime("%m/%d/%Y") %></td>
+			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.videoclips.find(a.videoclip_id).displayname, sport_videoclip_path(@sport, a.videoclip_id) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
 			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
@@ -52,11 +60,13 @@
 			  	<table class="table table-striped">
 			  		<thead>
 			  			<th>Time</th>
+			  			<th>Message</th>
 			  			<th>Blog</th>
 			  			<th>Clear Alert</th>
 			  		</thead>
 			  		<tbody>
 			  			<td><%= a.updated_at.strftime("%m/%d/%Y") %></td>
+			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.blogs.find(a.blog_id).title, sport_blog_path(@sport, a.blog_id) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
 			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
@@ -67,11 +77,13 @@
 			  		<thead>
 			  			<th>Time</th>
 			  			<th>Message</th>
+			  			<th>Athlete</th>
 			  			<th>Clear Alert</th>
 			  		</thead>
 			  		<tbody>
 			  			<td><%= a.updated_at.strftime("%Y-%d-%m %H:%M:%S") %></td>
 			  			<td><%= link_to a.message, sport_athlete_path(@sport, @athlete) %></td>
+			  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
 			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
 			  		</tbody>

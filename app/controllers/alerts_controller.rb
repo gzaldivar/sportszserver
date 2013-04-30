@@ -1,6 +1,6 @@
 class AlertsController < ApplicationController
-	before_filter :authenticate_user!,	only: [:index, :destroy]
-	before_filter :get_athlete, only: [:index, :destroy]
+	before_filter :authenticate_user!,	only: [:index, :destroy, :clearall]
+	before_filter :get_athlete
 
 	def index
 		@alerts = @athlete.alerts.where(user_id: current_user.id.to_s).entries
@@ -13,6 +13,18 @@ class AlertsController < ApplicationController
 	def destroy
 		@athlete.alerts.find(params[:id]).destroy
 		redirect_to sport_athlete_alerts_path(@sport, @athlete)
+	end
+
+	def clearall
+		@athlete.alerts.each do |a|
+			if a.user_id == current_user.id
+				a.destroy
+			end
+		end
+		respond_to do |format|
+			format.html { redirect_to sport_athlete_alerts_path(@sport, @athlete) }
+			format.json
+		end
 	end
 
 	private

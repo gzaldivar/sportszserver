@@ -42,7 +42,7 @@ class SportsController < ApplicationController
     if signed_in?
       cnt = 0
       @athletes.each do |a|
-        if a.followers.has_key?(current_user.id.to_s)
+        if a.fans.include?(current_user.id)
           @followed[cnt] = a
           cnt+=1
         end

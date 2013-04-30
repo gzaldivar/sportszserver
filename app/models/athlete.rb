@@ -18,6 +18,7 @@ class Athlete
   field :bio, type: String
 #  field :team, type: String,  default: "Unassigned"
   field :followers, type: Hash, default: Hash[]
+  field :fans, type: Array
 
   search_in :lastname, :firstname, :middlename, :number, :team, :position
   
@@ -63,7 +64,8 @@ class Athlete
     private
 
       def send_alerts
-          self.followers.each do |user, name|
+#          self.followers.each do |user, name|
+          self.fans.each do |user|
             self.alerts.create!(sport: sport, user: user, message: "Athlete info updated")
           end
       end

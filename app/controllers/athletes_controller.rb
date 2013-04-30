@@ -1,5 +1,5 @@
 class AthletesController < ApplicationController  
-	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new]
+	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new, :follow, :unfollow]
  #  before_filter :site_owner?,         only: [:destroy, :update, :create, :edit, :new]
   before_filter :get_sport
   before_filter :correct_athlete,     only: [:show, :edit, :update, :destroy, :follow, :unfollow]
@@ -22,6 +22,7 @@ class AthletesController < ApplicationController
       update_postions(athlete)
     end
     update_height(athlete)
+    athlete.fans = Array.new
     if athlete.save
       respond_to do |format|
         format.html { redirect_to [@sport, athlete], notice: 'Athlete created!'}
@@ -113,18 +114,16 @@ class AthletesController < ApplicationController
   end
   
   def follow
-    if user_signed_in? 
-      @athlete.followers[current_user.id] = current_user.name
-    end
+#      @athlete.followers[current_user.id] = current_user.name
+    @athlete.fans.push(current_user.id)
     @athlete.save
     redirect_to [@sport, @athlete], notice: "Now following athlete " + @athlete.full_name
   end
   
   def unfollow
-    if user_signed_in?
-      @athlete.followers.delete(current_user.id.to_s)
-      @athlete.save
-    end
+#      @athlete.followers.delete(current_user.id.to_s)
+    @athlete.fans.delete(current_user.id)
+    @athlete.save
     redirect_to :back, notice: "No longer following " + @athlete.full_name
   end
   

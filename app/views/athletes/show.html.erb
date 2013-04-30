@@ -9,7 +9,7 @@
   <div class="row">
     <h4>
       <div class="span5">
-        <% if @athlete.followers.has_key?(current_user.id.to_s) %>
+        <% if !@athlete.fans.empty? and @athlete.fans.include?(current_user.id) %>
           You are following this player:&nbsp
           <%= link_to "Stop Following", unfollow_sport_athlete_path(@sport, @athlete),  class: "btn btn-medium btn-info" %><p>
         <% else %>

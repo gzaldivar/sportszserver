@@ -1,7 +1,8 @@
 object @sport
 node(:id) { |o| o.id.to_s }
-attributes :season, :name, :has_stats, :alert_interval, :gamelog_interval, :newsfeed_interval
+attributes :season, :name, :has_stats, :alert_interval, :gamelog_interval, :newsfeed_interval, :sitename, :mascot
 node(:sport_logo) { |t| t.sport_logo(:large) }
+node(:banner_url) { |b| b.sport_banner.url(:thumb) }
 child :teams do
 	attributes :title, :mascot, :team_name
 	node (:id) { |o| o.id.to_s }

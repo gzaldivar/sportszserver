@@ -56,7 +56,7 @@ class SportsController < ApplicationController
   end
   
   def index
-    @sites = []
+    @sports = []
     if !params[:zip].blank? and !params[:city].blank? and !params[:state].blank? and !params[:sitename].blank?
       site = Sport.full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s + " " + params[:sitename].to_s, match: :all)      
     elsif !params[:zip].blank? and !params[:city].blank? and !params[:state].blank?
@@ -68,7 +68,6 @@ class SportsController < ApplicationController
     elsif !params[:state].blank?
       site = Sport.full_text_search(params[:state].to_s)
     elsif !params[:sitename].blank?
-      puts "got here " + params[:sitename].to_s
       site = Sport.full_text_search(params[:sitename].to_s)
     elsif params[:all]
       site = Sport.all
@@ -76,7 +75,7 @@ class SportsController < ApplicationController
 
     if site 
       site.each_with_index do |s, cnt|
-         @sites[cnt] = s
+         @sports[cnt] = s
       end
     end
 

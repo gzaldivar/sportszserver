@@ -3,7 +3,7 @@ class AlertsController < ApplicationController
 	before_filter :get_athlete
 
 	def index
-		@alerts = @athlete.alerts.where(user_id: current_user.id.to_s).entries
+		@alerts = @athlete.alerts.where(user_id: current_user.id.to_s).desc(:created_at).entries
 	  	respond_to do |format|
 	  		format.html
 	  		format.json

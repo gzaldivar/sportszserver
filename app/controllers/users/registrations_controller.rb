@@ -26,7 +26,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
           render status: 400, json: {message: "Site is missing"}
           return
         end
-        if !Site.find(params[:user][:site].to_s)
+        if !Sport.find(params[:user][:site].to_s)
           render status: 400, json: {message: "Site does not exist"}
           return
         end

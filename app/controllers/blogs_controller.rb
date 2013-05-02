@@ -25,13 +25,11 @@ class BlogsController < ApplicationController
 
   	def create
       begin 
-        puts 'user_id ', params[:blog][:user_id]
-        puts 'id ', params[:blog][:id]
         blog = @sport.blogs.create!(params[:blog])
 
         respond_to do |format|
           format.html { redirect_to [@sport, blog], notice: "Added #{blog.title}!" }
-          format.json
+          format.json { render json: { blog: blog, request: sport_blog_url(@sport, blog) } }
         end
         
       rescue Exception => e
@@ -80,13 +78,11 @@ class BlogsController < ApplicationController
 
   	def update
       begin 
-        puts 'user_id ', params[:blog][:user_id]
-        puts 'id ', params[:blog][:id]
         @blog.update_attributes!(params[:blog])
 
         respond_to do |format|
           format.html { redirect_to [@sport, @blog], notice: "Updated #{@blog.title}!" }
-          format.json
+          format.json { render json: { blog: blog, request: sport_blog_url(@sport, blog) } }
         end
         
       rescue Exception => e
@@ -95,7 +91,6 @@ class BlogsController < ApplicationController
   	end
 
   	def show
-      puts 'I am in show'
       @bloguser = User.find(@blog.user_id)
       respond_to do |format|
         format.html

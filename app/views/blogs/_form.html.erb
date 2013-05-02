@@ -15,52 +15,52 @@
 	<div class="span10 offset1">
 		<%= simple_form_for [@sport, @blog] do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
-      <%= f.input :user, as: :hidden, :input_html => { value: current_user.id } %>
-			<div class="row">
+      <%= f.input :user_id, as: :hidden, :input_html => { value: current_user.id } %>
+          <div class="row">
 		        <div class="span4">
-		          <%= f.input :title, hint: "Enter Blog Title" %>
+              <% if @oldblog.nil? %>
+		            <%= f.input :title, hint: "Enter Blog Title" %>
+              <% else %>
+                <%= f.input :title, hint: "Enter Blog Title", value: "RE: " + @oldblog.title %>
+              <% end %>
 		        </div>
 	        	<div class="span4 offset1">
 	          		<%= f.input :external_url,  label: "External URL:", required: false, hint: "Enter Url of external site if blog item points to another site" %>
 	        	</div>
-		    </div>
-		    <div class="row">
-  				<div class="span4">
-  					<%= f.input	:entry, as: :text, hint:	"Enter Blog Entry:", input_html: { style: 'width: 400px;height: 200px' } %>
-  				</div>
-				<div class="span4 offset1">
-            		<div class="row">
-              			<div class="span4">
-					    	<%= f.input	:team_id, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Team", hint: "Blog for Team ...", input_html: { id: "select_team" } %>
-					    </div>
-					</div>
-            		<div class="row">
-              			<div class="span4">
-    					    <%= f.input	:gameschedule, collection: @gameschedules.collect{ |t| [t.game_name, t.id] }, label: "Game", hint: "Blog for Game .....", input_html: { id: "gameschedules_select"} %>
-              			</div>
-            		</div>
+    		  </div>
+  		    <div class="row">
+    				  <div class="span4">
+    					   <%= f.input	:entry, as: :text, hint:	"Enter Blog Entry:", input_html: { style: 'width: 400px;height: 200px' } %>
+    				  </div>
+  				    <div class="span4 offset1">
+                <div class="row">
+                	<div class="span4">
+  					    	  <%= f.input	:team_id, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Team", hint: "Blog for Team ...", 
+                                input_html: { id: "select_team" }, required: true %>
+  					       </div>
+                </div>
+                <div class="row">
+                  <div class="span4">
+                    <%= f.input	:gameschedule_id, collection: @gameschedules.collect{ |t| [t.game_name, t.id] }, label: "Game", 
+                                hint: "Blog for Game .....", input_html: { id: "gameschedules_select"} %>
+              	 </div>
+                </div>
              		<div class="row">
               			<div class="span4">
-                			<% if @athlete %>
-                				<h3><em>News item is for team <%= @athlete %></em></h3>
-                			<% else %>
-    					    	<%= f.input	:athlete_id, collection: @athletes.collect{ |t| [t.name, t.id] }, label: "Athlete", hint: "Athlete News ...", input_html: { id: "athletes_select"} %>
-                			<% end %>
+                        <%= f.input :athlete_id, collection: @athletes.collect{ |t| [t.name, t.id] }, label: "Athlete", hint: "Blog for Athlete ...",
+                                    input_html: { id: "athletes_select"} %>
               			</div>
             		</div>
             		<div class="row">
               			<div class="span4">
-                			<% if @coach %>
-                				<h3><em>News item is for team <%= @coach %></em></h3>
-                			<% else %>
-    					    	<%= f.input	:coach, collection: @coaches.collect{ |t| [t.full_name, t.id] }, label: "Coach", hint: "Coach News ...", input_html: { id: "coaches_select"} %>
-                			<% end %>
+                         <%= f.input :coach_id, collection: @coaches.collect{ |t| [t.full_name, t.id] }, label: "Coach", hint: "Blog for Coach ...",
+                                      input_html: { id: "coaches_select"} %>
               			</div>
             		</div>
-					<p>
+	               <p>
 	            </div>
 	            <p>
-			</div>
+			     </div>
   		</div>
       <div class="row">
   			<div class="span1 offset4">

@@ -1,11 +1,11 @@
 class BlogsController < ApplicationController
     before_filter :authenticate_user!,  only: [:new, :create, :edit, :update, :destroy]
-    before_filter :site_owner?,			    only: [:destroy]
   	before_filter :get_sport
   	before_filter :get_blog,			      only: [:edit, :update, :show, :destroy, :comment]
+    before_filter :blog_owner?,         only: [:edit, :update, :destroy]
 
   	def new
-  		@blog = Blog.new
+  		@blog = Blog.new()
       @teams = @sport.teams
       @athletes = @sport.athletes
       @coaches = @sport.coaches
@@ -15,13 +15,25 @@ class BlogsController < ApplicationController
     def comment
       select_teams(@blog)
       @oldblog = @blog
-      @blog = Blog.new
+      @blog = @sport.blogs.new(user: @oldblog.user, gameschedule: @oldblog.gameschedule, athlete: @oldblog.athlete, 
+                               team: @oldblog.team, coach: @oldblog.coach)
+      if !@oldblog.title.include?('RE:')
+        @oldblog.title = "RE: " + @oldblog.title
+      end
+#      render 'edit'
     end
 
   	def create
       begin 
+        puts 'user_id ', params[:blog][:user_id]
+        puts 'id ', params[:blog][:id]
         blog = @sport.blogs.create!(params[:blog])
-        redirect_to [@sport, blog], notice: "Added #{blog.title}!"
+
+        respond_to do |format|
+          format.html { redirect_to [@sport, blog], notice: "Added #{blog.title}!" }
+          format.json
+        end
+        
       rescue Exception => e
         redirect_to :back, alert: "Error adding Blog " + e.message
       end
@@ -29,10 +41,10 @@ class BlogsController < ApplicationController
 
   	def edit
       @teams = @sport.teams
-      if !@blog.team.nil?
-          @athletes = @sport.athletes.where(team: @blog.team).entries
-          @coaches = @sport.coaches.where(team: @blog.team).entries
-          @gameschedules = @sport.teams.find(@blog.team).gameschedules
+      if !@blog.team_id.nil?
+          @athletes = @sport.athletes.where(team: @blog.team_id).entries
+          @coaches = @sport.coaches.where(team: @blog.team_id).entries
+          @gameschedules = @sport.teams.find(@blog.team_id).gameschedules
       else
           @athletes = @sport.athletes
           @coaches = @sport.coaches
@@ -68,15 +80,23 @@ class BlogsController < ApplicationController
 
   	def update
       begin 
+        puts 'user_id ', params[:blog][:user_id]
+        puts 'id ', params[:blog][:id]
         @blog.update_attributes!(params[:blog])
-        redirect_to [@sport, @blog], notice: "Updated #{@blog.title}!"
+
+        respond_to do |format|
+          format.html { redirect_to [@sport, @blog], notice: "Updated #{@blog.title}!" }
+          format.json
+        end
+        
       rescue Exception => e
-        redirect_to :back, alert: "Error adding Blog " + e.message
+        redirect_to :back, alert: "Error updating Blog " + e.message
       end  		
   	end
 
   	def show
-      @bloguser = User.find(@blog.user)
+      puts 'I am in show'
+      @bloguser = User.find(@blog.user_id)
       respond_to do |format|
         format.html
         format.json
@@ -121,5 +141,9 @@ class BlogsController < ApplicationController
             @coaches = @sport.coaches
             @gameschedules = []
         end
+      end
+
+      def blog_owner?
+        (current_user.id == @blog.user_id) or site_owner? 
       end
 end

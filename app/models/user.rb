@@ -51,6 +51,7 @@ class User
   has_many :videoclips
   has_many :newsfeeds
   has_many :events
+  has_many :blogs
 
   index({ email: 1 }, { unique: true, background: true })
   field :name

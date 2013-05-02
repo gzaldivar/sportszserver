@@ -19,6 +19,7 @@ class Blog
 
   validates_presence_of :title
   validates_presence_of :entry
+  validates_presence_of :team_id
 
   private
 

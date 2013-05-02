@@ -38,6 +38,12 @@ class AthletesController < ApplicationController
   def show
     @team = @sport.teams.find(@athlete.team_id)
     @photos = Photo.where(athletes: @athlete.id)
+#    @following = @athlete.fans.include?(current_user.id)
+
+    respond_to do |format|
+      format.html
+      format.json
+    end
   end
   
   def edit

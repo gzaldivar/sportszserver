@@ -34,6 +34,10 @@ class Sport
   field :tier, type: String, default: "Basic"
   field :mediasize, type: Integer, default: 0
 
+  field :alert_interval, type: Integer, default: 120     # Time interval to check for alerts
+  field :gamelog_interval, type: Integer, default: 360     # Time interval to check for game log updates
+  field :newsfeed_interval, type: Integer, default: 3600  # Time interval to check for news feeds
+
   search_in :sitename, :mascot, :state, :zip, :city
 
 #  belongs_to :site

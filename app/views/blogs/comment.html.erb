@@ -11,7 +11,7 @@
 					Blog Entry:<p>
 					<%= @oldblog.entry %>
 				</div>
-				<%= f.input :title, as: :hidden, input_html: { value: "RE:" + @oldblog.title } %>
+				<%= f.input :title, as: :hidden, input_html: { value:  @oldblog.title } %>
 				<%= f.input :user, as: :hidden, input_html: { value: current_user.id.to_s } %>
 				<%= f.input :external_url, as: :hidden, input_html: { value: @oldblog.external_url } %>
 				<% if !@oldblog.team_id.nil? and !@oldblog.team_id.blank? %>
@@ -21,10 +21,10 @@
 					<%= f.input :athlete_id, as: :hidden, input_html: { value: @oldblog.athlete_id } %>
 				<% end %>
 				<% if !@oldblog.coach.nil? and !@oldblog.coach.blank? %>
-					<%= f.input :coach, as: :hidden, input_html: { value: @oldblog.coach } %>
+					<%= f.input :coach_id, as: :hidden, input_html: { value: @oldblog.coach_id } %>
 				<% end %>
 				<% if !@oldblog.gameschedule.nil? and !@oldblog.gameschedule.blank? %>
-					<%= f.input :gameschedule, as: :hidden, input_html: { value: @oldblog.gameschedule } %>
+					<%= f.input :gameschedule_id, as: :hidden, input_html: { value: @oldblog.gameschedule_id } %>
 				<% end %>
 				<div class="span4 offset1">
 					<%= f.input	:entry, as: :text, label:	"Add Comment:" %>

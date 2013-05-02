@@ -38,7 +38,6 @@ class Gameschedule
   has_many :football_stats
   embeds_many :gamelogs
   has_many :blogs
-  has_many :gameschedules
   has_many :photos
   has_many :videoclips
 

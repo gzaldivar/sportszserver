@@ -6,4 +6,5 @@ node(:team) { |t| t.team_id.to_s }
 node(:athlete) { |t| t.athlete_id.to_s }
 node(:coach) { |t| t.coach_id.to_s }
 node(:gameschedule) { |t| t.gameschedule_id.to_s }
-node(:user) { User.find(@blog.user).name }
+node(:user) { |o| User.find(o.user).name }
+node(:avatar) { |o| User.find(o.user).avatar.url(:thumb) }

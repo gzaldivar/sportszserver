@@ -8,3 +8,4 @@ node(:team_id) { |t| t.team_id.to_s }
 if !@team.nil? 
 	node(:teamname) { @team.team_name }
 end
+node (:following) { |o| o.fans.include?(current_user.id)}

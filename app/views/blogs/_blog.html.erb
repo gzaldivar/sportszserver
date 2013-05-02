@@ -14,7 +14,7 @@
                   <% if user.avatar.blank? %>
                     <%= link_to image_tag("Tiny_Photo_Not_Available.png"), user_path(user) %>
                   <% else %>
-                    <%= link_to image_tag(user.avatar.url(:tiny)), sport_athlete_path(b.sport, b.athlete), width: '10', height: '10' %>
+                    <%= link_to image_tag(user.avatar.url(:tiny)), user_path(user) %>
                   <% end %>
                 </div>
                 <div class="span6">
@@ -33,7 +33,7 @@
               <%= link_to Gameschedule.find(b.gameschedule).game_name, sport_team_gameschedule_path(@sport, @sport.teams.find(b.team_id), b.gameschedule) %>
             <% end %>
             <% if !b.athlete_id.nil? and !b.athlete_id.blank? %>
-			  Athlete:
+              Athlete:
               <%= link_to @sport.athletes.find(b.athlete_id).full_name, sport_athlete_path(@sport, b.athlete_id) %>&nbsp
             <% end %>
             <% if !b.coach.nil? and !b.coach.blank? %>
@@ -54,7 +54,7 @@
         </div>
         <div class="row">
           <div class="span4 offset2">
-      			<% if isAdmin? or (current_user == user) %>
+      			<% if isAdmin? or (current_user.id == user.id) %>
       				<%= link_to "Edit", edit_sport_blog_path(b.sport, b),  class: "btn btn-mini btn-warning" %>
       				<%= link_to "Delete", sport_blog_path(b.sport, b),  method:	:delete,  class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
       			<% end %>

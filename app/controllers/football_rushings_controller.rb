@@ -12,13 +12,14 @@ class FootballRushingsController < ApplicationController
 	end
 
 	def create
-		if @rushing = @stat.create_football_rushings(params[:football_rushing])
+		begin
+			@rushing = @stat.create_football_rushings(params[:football_rushing])
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @rushing], notice: 'Stat created for ' + @athlete.full_name }
 		        format.json 
-		     end
-		else
-			redirect_to :back, alert: "Error creating football rushing stats"
+		    end
+		rescue Exception => e
+			redirect_to :back, alert: "Error creating football rushing stats " + e.message
 		end
 	end
 
@@ -29,14 +30,15 @@ class FootballRushingsController < ApplicationController
 	end
 
 	def update
-		if @rushing.update_attributes!(params[:football_rushing])
+		begin
+			@rushing.update_attributes!(params[:football_rushing])
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @rushing], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json 
 		     end
-		else
-			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name
-		end
+		rescue Exception => e
+			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name + " " + e.message
+		end 
 	end
 
 	def destroy

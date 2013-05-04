@@ -39,7 +39,7 @@
 						<tbody>
 							<td><%= s.football_receivings.receptions %></td>
 							<td><%= s.football_receivings.yards %></td>
-							<td><%= s.football_receivings.average %></td>
+							<td><%= number_with_precision(s.football_receivings.average, precision: 2) %></td>
 							<td><%= s.football_receivings.td %></td>
 							<td><%= s.football_receivings.longest %></td>
 							<td><%= s.football_receivings.fumbles %></td>

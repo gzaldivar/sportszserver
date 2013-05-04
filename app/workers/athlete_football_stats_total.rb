@@ -7,12 +7,12 @@ class AthleteFootballStatsTotal
 				  :receiving_fumbles, :receiving_fumbles_lost, :receiving_average,
 				  :defense_tackles, :defense_assists, :defense_sacks, :defense_pass_defended, :defense_interceptions,
 				  :defense_int_yards,:defense_int_long, :defense_int_td, :defense_fumbles_recovered,
-				  :specialteams_fgattempts, :specialteams_fgmade, :specialteams_fgblocked, :specialteams_fglong,
-				:specialteams_xpattempts, :specialteams_xpmade, :specialteams_xpmissed, :specialteams_xpblocked, :specialteams_koattempts,
-				:specialteams_kotouchbacks, :specialteams_koreturned, :specialteams_koreturn_average, :specialteams_punts,
-				:specialteams_punts_blocked, :specialteams_punts_yards, :specialteams_punts_long, :specialteams_punt_return,
-				:specialteams_punt_returntd, :specialteams_punt_returnyards, :specialteams_punt_returnlong, :specialteams_koreturns,
-				:specialteams_kotd, :specialteams_kolong, :specialteams_koyards
+				  :kickers_fgattempts, :kickers_fgmade, :kickers_fgblocked, :kickers_fglong,
+				:kickers_xpattempts, :kickers_xpmade, :kickers_xpmissed, :kickers_xpblocked, :kickers_punts,
+				:kickers_punts_blocked, :kickers_punts_yards, :kickers_punts_long, :kickers_koattempts,
+				:kickers_kotouchbacks, :kickers_koreturned, :kickers_koreturn_average, :returners_punt_return,
+				:returners_punt_returntd, :returners_punt_returnyards, :returners_punt_returnlong, :returners_koreturns,
+				:returners_kotd, :returners_kolong, :returners_koyards
 
 	def passing_totals(athlete)
 		self.passing_attempts = 0
@@ -127,92 +127,89 @@ class AthleteFootballStatsTotal
 	end
 
 	def specialteams_totals(athlete)		
-		self.specialteams_fgattempts = 0
-		self.specialteams_fgmade = 0
-		self.specialteams_fgblocked = 0
-		self.specialteams_fglong = 0
+		self.kickers_fgattempts = 0
+		self.kickers_fgmade = 0
+		self.kickers_fgblocked = 0
+		self.kickers_fglong = 0
 
-		self.specialteams_xpattempts = 0
-		self.specialteams_xpmade = 0
-		self.specialteams_xpmissed = 0
-		self.specialteams_xpblocked = 0
+		self.kickers_xpattempts = 0
+		self.kickers_xpmade = 0
+		self.kickers_xpmissed = 0
+		self.kickers_xpblocked = 0
 
-		self.specialteams_koattempts = 0
-		self.specialteams_kotouchbacks = 0
-		self.specialteams_koreturned = 0
-		self.specialteams_koreturn_average = 0.0
+		self.kickers_koattempts = 0
+		self.kickers_kotouchbacks = 0
+		self.kickers_koreturned = 0
+		self.kickers_koreturn_average = 0.0
 
-		self.specialteams_punts = 0
-		self.specialteams_punts_blocked = 0
-		self.specialteams_punts_yards = 0
-		self.specialteams_punts_long = 0
+		self.kickers_punts = 0
+		self.kickers_punts_blocked = 0
+		self.kickers_punts_yards = 0
+		self.kickers_punts_long = 0
 
-		self.specialteams_punt_return = 0
-		self.specialteams_punt_returntd = 0
-		self.specialteams_punt_returnyards = 0
-		self.specialteams_punt_returnlong = 0
+		self.returners_punt_return = 0
+		self.returners_punt_returntd = 0
+		self.returners_punt_returnyards = 0
+		self.returners_punt_returnlong = 0
 
-		self.specialteams_koreturns = 0
-		self.specialteams_kotd = 0
-		self.specialteams_kolong = 0
-		self.specialteams_koyards = 0
-
-		cnt = 0
+		self.returners_koreturns = 0
+		self.returners_kotd = 0
+		self.returners_kolong = 0
+		self.returners_koyards = 0
 
 		athlete.football_stats.each do |s|
-			if !s.football_specialteams.nil?
+			if !s.football_kickers.nil?
 
-				if !s.football_specialteams.fgattempts.nil?
-					self.specialteams_fgattempts = self.specialteams_fgattempts + s.football_specialteams.fgattempts
-					self.specialteams_fgmade = self.specialteams_fgmade + s.football_specialteams.fgmade
-					self.specialteams_fgblocked = self.specialteams_fgblocked + s.football_specialteams.fgblocked
+				if !s.football_kickers.fgattempts.nil?
+					self.kickers_fgattempts = self.kickers_fgattempts + s.football_kickers.fgattempts
+					self.kickers_fgmade = self.kickers_fgmade + s.football_kickers.fgmade
+					self.kickers_fgblocked = self.kickers_fgblocked + s.football_kickers.fgblocked
 
-					self.specialteams_xpattempts = self.specialteams_xpattempts + s.football_specialteams.xpattempts
-					self.specialteams_xpmade = self.specialteams_xpmade + s.football_specialteams.xpmade
-					self.specialteams_xpmissed = self.specialteams_xpmissed + s.football_specialteams.xpmissed
-					self.specialteams_xpblocked = self.specialteams_xpblocked + s.football_specialteams.xpblocked
+					self.kickers_xpattempts = self.kickers_xpattempts + s.football_kickers.xpattempts
+					self.kickers_xpmade = self.kickers_xpmade + s.football_kickers.xpmade
+					self.kickers_xpmissed = self.kickers_xpmissed + s.football_kickers.xpmissed
+					self.kickers_xpblocked = self.kickers_xpblocked + s.football_kickers.xpblocked
 
-					if self.specialteams_fglong < s.football_specialteams.fglong
-						self.specialteams_fglong = s.football_specialteams.fglong
+					if self.kickers_fglong < s.football_kickers.fglong
+						self.kickers_fglong = s.football_kickers.fglong
 					end
 				end
 
-				if !s.football_specialteams.koattempts.nil?
-					self.specialteams_koattempts = self.specialteams_koattempts + s.football_specialteams.koattempts
-					self.specialteams_kotouchbacks = self.specialteams_kotouchbacks + s.football_specialteams.kotouchbacks
-					self.specialteams_koreturned = self.specialteams_koreturned + s.football_specialteams.koreturned
-#					self.specialteams_koreturn_average = self.specialteams_koreturn_average + s.football_specialteams.koreturn_average
+				if !s.football_kickers.koattempts.nil?
+					self.kickers_koattempts = self.kickers_koattempts + s.football_kickers.koattempts
+					self.kickers_kotouchbacks = self.kickers_kotouchbacks + s.football_kickers.kotouchbacks
+					self.kickers_koreturned = self.kickers_koreturned + s.football_kickers.koreturned
+#					self.kickers_koreturn_average = self.kickers_koreturn_average + s.football_kickers.koreturn_average
 				end
 
-				if !s.football_specialteams.punts.nil?
-					self.specialteams_punts = self.specialteams_punts + s.football_specialteams.punts
-					self.specialteams_punts_blocked = self.specialteams_punts_blocked + s.football_specialteams.punts_blocked
-					self.specialteams_punts_yards = self.specialteams_punts_yards + s.football_specialteams.punts_yards
-					if self.specialteams_punts_long < s.football_specialteams.punts_long
-						self.specialteams_punts_long = s.football_specialteams.punts_long
+				if !s.football_kickers.punts.nil?
+					self.kickers_punts = self.kickers_punts + s.football_kickers.punts
+					self.kickers_punts_blocked = self.kickers_punts_blocked + s.football_kickers.punts_blocked
+					self.kickers_punts_yards = self.kickers_punts_yards + s.football_kickers.punts_yards
+					if self.kickers_punts_long < s.football_kickers.punts_long
+						self.kickers_punts_long = s.football_kickers.punts_long
+					end
+				end
+			end
+			if !s.football_returners.nil?
+				if !s.football_returners.punt_return.nil?
+					self.returners_punt_return = self.returners_punt_return + s.football_returners.punt_return
+					self.returners_punt_returntd = self.returners_punt_returntd + s.football_returners.punt_returntd
+					self.returners_punt_returnyards = self.returners_punt_returnyards + s.football_returners.punt_returnyards
+					if self.returners_punt_returnlong < s.football_returners.punt_returnlong
+						self.returners_punt_returnlong = s.football_returners.punt_returnlong
 					end
 				end
 
-				if !s.football_specialteams.punt_return.nil?
-					self.specialteams_punt_return = self.specialteams_punt_return + s.football_specialteams.punt_return
-					self.specialteams_punt_returntd = self.specialteams_punt_returntd + s.football_specialteams.punt_returntd
-					self.specialteams_punt_returnyards = self.specialteams_punt_returnyards + s.football_specialteams.punt_returnyards
-					if self.specialteams_punt_returnlong < s.football_specialteams.punt_returnlong
-						self.specialteams_punt_returnlong = s.football_specialteams.punt_returnlong
+				if !s.football_returners.koreturns.nil?
+					self.returners_koreturns = self.returners_koreturns + s.football_returners.koreturns
+					self.returners_kotd = self.returners_kotd + s.football_returners.kotd
+					self.returners_koyards = self.returners_koyards + s.football_returners.koyards
+					if self.returners_kolong < s.football_returners.kolong
+						self.returners_kolong = s.football_returners.kolong
 					end
 				end
-
-				if !s.football_specialteams.koreturns.nil?
-					self.specialteams_koreturns = self.specialteams_koreturns + s.football_specialteams.koreturns
-					self.specialteams_kotd = self.specialteams_kotd + s.football_specialteams.kotd
-					self.specialteams_koyards = self.specialteams_koyards + s.football_specialteams.koyards
-					if self.specialteams_kolong < s.football_specialteams.kolong
-						self.specialteams_kolong = s.football_specialteams.kolong
-					end
-				end
-				cnt += 1
 			end
 		end
-#		self.specialteams_koreturn_average = self.specialteams_koreturn_average / cnt
 	end
 end

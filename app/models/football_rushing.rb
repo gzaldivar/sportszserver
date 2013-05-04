@@ -16,7 +16,6 @@ class FootballRushing
   field :fumbles_lost, type: Integer, default: 0
   
   embedded_in :football_stat
-#  belongs_to :gamelogs
   
   validates_numericality_of :attempts, greater_than_or_equal_to: 0, presence: true
   validates_numericality_of :yards, presence: true

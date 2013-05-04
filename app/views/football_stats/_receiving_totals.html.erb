@@ -13,7 +13,7 @@
 	<tbody>
 		<td><%= receiving.receiving_receptions %></td>
 		<td><%= receiving.receiving_yards %></td>
-		<td><%= receiving.receiving_average %></td>
+		<td><%= number_with_precision(receiving.receiving_average, precision: 2) %></td>
 		<td><%= receiving.receiving_tds %></td>
 		<td><%= receiving.receiving_longest %></td>
 		<td><%= receiving.receiving_fumbles %></td>

@@ -2,34 +2,34 @@
 	<%= render 'shared/error_messages', object: f.object %>
 	<div class="row">
 		<div class="span2">
-			<%= f.input :fgattempts, label: "Field Goal Attempts", required: true %>
+			<%= f.input :fgattempts, label: "Field Goal Attempts" %>
 		</div>
 		<div class="span2 offset1">
-			<%= f.input :fgmade, required: true, label: "Field Goals Made" %>
+			<%= f.input :fgmade, label: "Field Goals Made" %>
 		</div>
 	</div>
 	<div class="row">
 		<div class="span2">
-			<%= f.input :fgblocked, required: true, label: "Blocked" %>
+			<%= f.input :fgblocked, label: "Blocked" %>
 		</div>
 		<div class="span2 offset1">
-			<%= f.input :fglong, required: true, label: "Longest" %>
+			<%= f.input :fglong, label: "Longest" %>
 		</div>
 	</div>
 	<div class="row">
 		<div class="span2 ">
-			<%= f.input :xpattempts, required: true, label: "Extra Point Attempts" %>
+			<%= f.input :xpattempts, label: "Extra Point Attempts" %>
 		</div>
 		<div class="span2 offset1">
-			<%= f.input :xpmade, required: true, label: "Extra Points Made" %>
+			<%= f.input :xpmade, label: "Extra Points Made" %>
 		</div>
 	</div>
 	<div class="row">
 		<div class="span2 ">
-			<%= f.input :xpmissed, required: true, label: "Extra Point Missed" %>
+			<%= f.input :xpmissed, label: "Extra Point Missed" %>
 		</div>
 		<div class="span2 offset1">
-			<%= f.input :xpblocked, required: true, label: "Extra Points Blocked" %>
+			<%= f.input :xpblocked, label: "Extra Points Blocked" %>
 		</div>
 	</div>
 	<p>

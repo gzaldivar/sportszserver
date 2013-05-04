@@ -27,10 +27,12 @@
 							<h5><em>Email: <%= @user.email %></em></h5>
 						</div>
 						<p>
-						<div class="span4 offset1">
-							<%= f.input :teamid, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Manage Team", 
-										input_html: {id: "select_team"}  %>
-						</div>
+						<% if isAdmin? %>
+							<div class="span4 offset1">
+								<%= f.input :teamid, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Manage Team", 
+											input_html: {id: "select_team"}  %>
+							</div>
+						<% end %>
 					</div>
 					<p>
 				      <div id="loading">

@@ -1,0 +1,77 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
+<p>
+<div class="row">
+	<div class="span9 offset1">
+		<p>
+		<% if !@returner.punt_return.nil? %>
+			<p>
+			<h4>Punt Return statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for<br/>
+				<%= @stat.gameschedule.game_name %></h4>
+			<p>
+			<h5>Punt Return Statistics</h5>
+			<table class="table table-bordered">
+				<em>
+				<thead>
+					<th>Punt Returns</th>
+					<th>Return Yards</th>
+					<th>Return TD</th>
+					<th>Longest</th>
+				</thead>
+			</em>
+				<tbody>
+					<td><%= @returner.punt_return %></td>
+					<td><%= @returner.punt_returnyards %></td>
+					<td><%= @returner.punt_returntd %></td>
+					<td><%= @returner.punt_returnlong %></td>
+				</tbody>
+			</table>
+			<p>
+			<% if isAdmin? or isTeamManager?(@athlete) %>
+				<div class="span2 offset3">
+					<%= link_to "Edit", editpuntreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat, @returner), class: "btn btn-mini btn-primary" %>
+			</div>
+			<% end %>
+		<% end %>
+		<br/><p>
+		<% if !@returner.koreturns.nil? %>
+			<p>
+			<h4>Kickoff Return statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for<br/>
+				<%= @stat.gameschedule.game_name %></h4>
+			<p>
+			<h5>Kickoff Return Statistics</h5>
+			<table class="table table-bordered">
+				<em>
+				<thead>
+					<th>Kickoff Returns</th>
+					<th>Kickoff Return Yards</th>
+					<th>Kickoff Return TD</th>
+					<th>Longest Return</th>
+				</thead>
+			</em>
+				<tbody>
+					<td><%= @returner.koreturns %></td>
+					<td><%= @returner.koyards %></td>
+					<td><%= @returner.kotd %></td>
+					<td><%= @returner.kolong %></td>
+				</tbody>
+			</table>
+			<p>
+			<% if isAdmin? or isTeamManager?(@athlete) %>
+				<div class="span2 offset3">
+					<%= link_to "Edit", editkoreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat, @returner), class: "btn btn-mini btn-primary" %>
+				</div>
+			<% end %>
+		<% end %>
+		<br/><p>
+		<div class="row">
+			<div class="span4 offset3">
+				<%= link_to "Totals", specialteams_sport_athlete_football_stats_path(@sport, @athlete), class: "btn btn-medium btn-primary" %>
+				<%= link_to "Delete", sport_athlete_football_stat_football_returner_path(@sport, @athlete, @stat, @returner), method: :delete, 
+									  class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<%= render "layouts/sponsor" %>
+</div>

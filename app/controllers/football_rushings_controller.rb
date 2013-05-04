@@ -1,13 +1,12 @@
 class FootballRushingsController < ApplicationController
-	before_filter	[:authenticate_user!, :site_owner?],	only: [:destroy, :update, :create, :edit, :new]
-  	before_filter 	:get_sport_athlete_stat, only: [:new, :playbyplay, :create, :show, :edit, :update, :destroy]
-  	before_filter	:correct_stat,			only: [:show, :edit, :update, :destroy]
-
-  	def new
-		@rushing = FootballRushing.new
+	before_filter	[:authenticate_user!],	only: [:destroy, :update, :create, :edit, :new, :add, :addcarry]
+  	before_filter 	:get_sport_athlete_stat
+  	before_filter	:correct_stat,			only: [:show, :edit, :update, :destroy, :add, :addcarry]
+	before_filter only: [:destroy, :update, :create, :edit, :new, :add, :addcarry] do |controller| 
+	    controller.team_manager?(@athlete, @stat.gameschedule.team)
 	end
 
-	def playbyplay
+  	def new
 		@rushing = FootballRushing.new
 	end
 
@@ -24,6 +23,34 @@ class FootballRushingsController < ApplicationController
 	end
 
 	def show
+	end
+
+	def add
+	end
+
+	def addcarry
+		begin
+			@rushing.attempts = @rushing.attempts + 1
+			@rushing.yards = @rushing.yards + params[:yards].to_i
+			@rushing.fumbles = @rushing.fumbles + params[:fumble].to_i
+			if params[:yards].to_i > @rushing.longest
+				@rushing.longest = params[:yards].to_i
+			end
+			if params[:td].to_i > 0
+				@rushing.td = @rushing.td + params[:td].to_i
+				gamelog = @rushing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
+												logentry: @athlete.logname + " " +  params[:yards] + " yard run", score: "TD")
+				gamelog.save!
+			end
+			@rushing.save!
+
+			respond_to do |format|
+		        format.html { redirect_to [@sport, @athlete, @stat, @rushing], notice: 'Carry added for ' + @athlete.full_name }
+		        format.json 
+		    end
+		rescue Exception => e
+			redirect_to :back, alert: "Error: " + e.message
+		end
 	end
 
 	def edit

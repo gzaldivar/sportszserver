@@ -14,7 +14,7 @@
 	<tbody>
 		<td><%= passing.passing_attempts %></td>
 		<td><%= passing.passing_completions %></td>
-		<td><%= passing.passing_comp_percentage %></td>
+		<td><%= number_with_precision(passing.passing_comp_percentage, precision: 2) %></td>
 		<td><%= passing.passing_yards %></td>
 		<td><%= passing.passing_tds %></td>
 		<td><%= passing.passing_int %></td>

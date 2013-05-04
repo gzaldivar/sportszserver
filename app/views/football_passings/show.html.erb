@@ -19,7 +19,7 @@
 			<tbody>
 				<td><%= @fbpassing.attempts %></td>
 				<td><%= @fbpassing.completions %></td>
-				<td><%= @fbpassing.comp_percentage %></td>
+				<td><%= number_with_precision(@fbpassing.comp_percentage, precision: 2) %></td>
 				<td><%= @fbpassing.yards %></td>
 			</tbody>
 		</table>
@@ -38,10 +38,15 @@
 			</tbody>
 		</table>
 		<% if isAdmin? or isTeamManager?(@athlete) %>
-			<div class="span2 offset4">
-				<%= link_to "Edit", edit_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @fbpassing), class: "btn btn-medium btn-primary" %>
+			Select <strong>Add Passing Attempt</strong> below to enter real time stats during a game. You can still use this page to add stats that have already been totalled. Use this page to make adjustments to the totals.
+			<p>
+			<div class="span6 offset2">
+				<%= link_to "Add Passing Attempt", add_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @fbpassing), 
+							class: "btn btn-mini btn-primary" %>
+				<%= link_to "Edit", edit_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @fbpassing), 
+							class: "btn btn-mini btn-primary" %>
 				<%= link_to "Delete", sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @fbpassing), method: :delete, 
-							class: "btn btn-medium btn-danger" %>
+							class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
 			</div>
 		<% end %>
 	</div>

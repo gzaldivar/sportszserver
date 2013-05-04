@@ -40,7 +40,7 @@
 						<tbody>
 							<td><%= s.football_passings.attempts %></td>
 							<td><%= s.football_passings.completions %></td>
-							<td><%= s.football_passings.comp_percentage %></td>
+							<td><%= number_with_precision(s.football_passings.comp_percentage, precision: 2) %></td>
 							<td><%= s.football_passings.yards %></td>
 							<td><%= s.football_passings.td %></td>
 							<td><%= s.football_passings.interceptions %></td>

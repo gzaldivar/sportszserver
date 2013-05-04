@@ -1,0 +1,78 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
+<p>
+<div class="row">
+	<div class="span10 offset1">
+		<em>Add Passing Attempt for: <%= link_to @athlete.full_name, sport_athlete_path(@sport, @athlete) %> for 
+			<%= @stat.gameschedule.game_name %></em>
+		<p>
+		<%= form_tag addattempt_sport_athlete_football_stat_football_passings_path(sport_id: @sport, athlete_id: @athlete, 
+							football_stat_id: @stat, football_passing_id: @fbpassing), class: "form-horizontal", method: 'get' do %>
+			<%= render 'shared/error_messages', object: @fbpassing %>
+			<div class="row">
+				<div class="span2">
+		            <%= label_tag "Quarter: " %>
+					<%= select_tag "quarter", options_for_select(quarters) %>
+				</div>
+				<div class="span2 offset1">
+		            <%= label_tag "Completion: " %>
+		            <%= radio_button_tag "comp", '1' %>
+				</div>
+				<div class="span2 offset1">
+		            <%= label_tag "Completed pass to: " %>
+					<%= select_tag "receiver", options_from_collection_for_select(@sport.athletes.where(team_id: @athlete.team_id), "id", "full_name"),
+												include_blank: true %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="span2">
+		            <%= label_tag "Game Time (Needed for scoring summary only): " %>
+		            <%= text_field_tag "time", '00:00' %>
+				</div>
+				<div class="span2 offset1">
+		            <%= label_tag "Click for Touchdown: " %>
+		            <%= radio_button_tag 'td', '1' %>
+				</div>
+				<div class="span2 offset1">
+		            <%= label_tag "Receiver Fumble: " %>
+		            <%= radio_button_tag "rec_fumble", '1' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="span2">
+		            <%= label_tag "Yards: " %>
+		            <%= text_field_tag "yards", '0' %>
+				</div>
+				<div class="span2 offset1">
+		            <%= label_tag "Interception: " %>
+		            <%= radio_button_tag "int", '1' %>
+				</div>
+				<div class="span2 offset1">
+		            <%= label_tag "Receiver Fumble Lost?: " %>
+		            <%= radio_button_tag "rec_fumble_lost", '0' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="span2 ">
+		            <%= label_tag "Yards Lost: " %>
+		            <%= text_field_tag "yards_lost", '0' %>
+				</div>
+				<div class="span2 offset1">
+		            <%= label_tag "Click for Sack: " %>
+		            <%= radio_button_tag 'sack', '1' %>
+				</div>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="span1 offset4">
+					<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>
+<p>
+

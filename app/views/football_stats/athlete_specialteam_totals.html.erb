@@ -5,7 +5,9 @@
 		<%= render 'tabs', header: "specialteams" %>
 		<p>
 		<% if params[:games].nil? %>
-			<% if @specialteam.specialteams_fgattempts > 0 %>
+			<h4>Special Team Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
+			<p>
+			<% if @specialteam.kickers_fgattempts > 0 %>
 				<h5>Place Kicking stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
 				<p>
 				<%= render 'specialteams_fgtotals', specialteam: @specialteam %>
@@ -13,7 +15,7 @@
 				<h5>No place kicker special team stats entered.</h5>
 			<% end %>
 			<br/>
-			<% if @specialteam.specialteams_koattempts > 0 %>
+			<% if @specialteam.kickers_koattempts > 0 %>
 				<h5>Kickoff Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
 				<p>
 				<%= render 'specialteams_kototals', specialteam: @specialteam %>
@@ -21,7 +23,7 @@
 				<h5>No Kickoff special team stats entered.</h5>
 			<% end %>
 			<br/>
-			<% if @specialteam.specialteams_punts > 0 %>
+			<% if @specialteam.kickers_punts > 0 %>
 				<h5>Punt Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
 				<p>
 				<%= render 'specialteams_punt_totals', specialteam: @specialteam %>
@@ -29,7 +31,7 @@
 				<h5>No punt special team stats entered.</h5>
 			<% end %>
 			<br/>
-			<% if @specialteam.specialteams_punt_return > 0 %>
+			<% if @specialteam.returners_punt_return > 0 %>
 				<h5>Punt Return Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
 				<p>
 				<%= render 'specialteams_punt_return_totals', specialteam: @specialteam %>
@@ -37,7 +39,7 @@
 				<h5>No punt return special team stats entered.</h5>
 			<% end %>
 			<br/>
-			<% if @specialteam.specialteams_koreturns > 0 %>
+			<% if @specialteam.returners_koreturns > 0 %>
 				<h5>Kickoff Return Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
 				<p>
 				<%= render 'specialteams_koreturn_totals', specialteam: @specialteam %>
@@ -45,9 +47,18 @@
 				<h5>No kickoff return special team stats entered.</h5>
 			<% end %>
 			<br/><p>
-			<div class="span4 offset3">
+			<div class="span10">
 				<% if isAdmin? or isTeamManager?(@athlete) %>
-					<%= link_to "Add Special Team Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "specialteams"), class: "btn btn-mini btn-primary" %>
+					<%= link_to "Add Place Kicker Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Kicker"), 
+								class: "btn btn-mini btn-primary" %>
+					<%= link_to "Add Kickoff Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Kickoff"), 
+								class: "btn btn-mini btn-primary" %>
+					<%= link_to "Add Punter Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Punter"), 
+								class: "btn btn-mini btn-primary" %>
+					<%= link_to "Add Kick Returner Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Kick Returner"), 
+								class: "btn btn-mini btn-primary" %>
+					<%= link_to "Add Punt Returner Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Punt Returner"), 
+								class: "btn btn-mini btn-primary" %>
 				<% end %>
 				<% if @stats.count > 0 %>
 					<%= link_to "Game Stats", specialteams_sport_athlete_football_stats_path(@sport, @athlete, games: "games"), 
@@ -59,10 +70,10 @@
 			<h5>Special Team game statistics for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
 			<p>
 			<% @stats.each do |s| %>
-				<% if !s.football_specialteams.nil? %>
-					<em><%= link_to s.gameschedule.game_name, [@sport, @athlete, s, s.football_specialteams] %></em>
+				<% if !s.football_kickers.nil? %>
+					<em><%= link_to s.gameschedule.game_name, [@sport, @athlete, s, s.football_kickers] %></em>
 					<p>
-					<% if !s.football_specialteams.fgattempts.nil? || !s.football_specialteams.xpattempts.nil? %>
+					<% if !s.football_kickers.fgattempts.nil? || !s.football_kickers.xpattempts.nil? %>
 						<h5>Place Kicking Statistics</h5>
 						<table class="table table-bordered">
 							<em>
@@ -78,21 +89,21 @@
 							</thead>
 							</em>
 							<tbody>
-								<td><%= s.football_specialteams.fgattempts %></td>
-								<td><%= s.football_specialteams.fgmade %></td>
-								<td><%= s.football_specialteams.fgblocked %></td>
-								<td><%= s.football_specialteams.fglong %></td>
-								<td><%= s.football_specialteams.xpattempts %></td>
-								<td><%= s.football_specialteams.xpmade %></td>
-								<td><%= s.football_specialteams.xpmissed %></td>
-								<td><%= s.football_specialteams.xpblocked %></td>
+								<td><%= s.football_kickers.fgattempts %></td>
+								<td><%= s.football_kickers.fgmade %></td>
+								<td><%= s.football_kickers.fgblocked %></td>
+								<td><%= s.football_kickers.fglong %></td>
+								<td><%= s.football_kickers.xpattempts %></td>
+								<td><%= s.football_kickers.xpmade %></td>
+								<td><%= s.football_kickers.xpmissed %></td>
+								<td><%= s.football_kickers.xpblocked %></td>
 							</tbody>
 						</table>
 					<% else %>
 						<h5>No Place Kicking stats entered for this game</h5>
 					<% end %>
 					<br/><p>
-					<% if !s.football_specialteams.koattempts.nil? %>
+					<% if !s.football_kickers.koattempts.nil? %>
 						<h5>Kickoff statistics</h5>
 						<table class="table table-bordered">
 							<em>
@@ -103,16 +114,16 @@
 							</thead>
 							</em>
 							<tbody>
-								<td><%= s.football_specialteams.koattempts %></td>
-								<td><%= s.football_specialteams.kotouchbacks %></td>
-								<td><%= s.football_specialteams.koreturned %></td>
+								<td><%= s.football_kickers.koattempts %></td>
+								<td><%= s.football_kickers.kotouchbacks %></td>
+								<td><%= s.football_kickers.koreturned %></td>
 							</tbody>
 						</table>
 					<% else %>
 						<h5>No Kicking stats entered for this game</h5>
 					<% end %>
 					<p>
-					<% if !s.football_specialteams.punts.nil? %>
+					<% if !s.football_kickers.punts.nil? %>
 						<h5>Punt Statistics</h5>
 						<p>
 						<table class="table table-bordered">
@@ -125,15 +136,19 @@
 							</thead>
 							</em>
 							<tbody>
-								<td><%= s.football_specialteams.punts %></td>
-								<td><%= s.football_specialteams.punts_yards %></td>
-								<td><%= s.football_specialteams.punts_long %></td>
-								<td><%= s.football_specialteams.punts_blocked %></td>
+								<td><%= s.football_kickers.punts %></td>
+								<td><%= s.football_kickers.punts_yards %></td>
+								<td><%= s.football_kickers.punts_long %></td>
+								<td><%= s.football_kickers.punts_blocked %></td>
 							</tbody>
 						</table>
 					<% else %>
 						<h5>No Punt Statistics entered for this game</h5>
 					<% end %>
+				<% end %>
+				<p>
+				<% if !s.football_returners.nil? %>
+					<em><%= link_to s.gameschedule.game_name, [@sport, @athlete, s, s.football_returners] %></em>
 					<p>
 					<% if !s.football_specialteams.punt_return.nil? %>
 						<h5>Punt Return Statistics</h5>
@@ -148,17 +163,17 @@
 							</thead>
 							</em>
 							<tbody>
-								<td><%= s.football_specialteams.punt_return %></td>
-								<td><%= s.football_specialteams.punt_returnyards %></td>
-								<td><%= s.football_specialteams.punt_returntd %></td>
-								<td><%= s.football_specialteams.punt_returnlong %></td>
+								<td><%= s.football_returners.punt_return %></td>
+								<td><%= s.football_returners.punt_returnyards %></td>
+								<td><%= s.football_returners.punt_returntd %></td>
+								<td><%= s.football_returners.punt_returnlong %></td>
 							</tbody>
 						</table>
 					<% else %>
 						<h5>No Punt Return Statistics entered for this game</h5>
 					<% end %>
 					<p>
-					<% if !s.football_specialteams.koreturns.nil? %>
+					<% if !s.football_returners.koreturns.nil? %>
 						<h5>Kickoff Return Statistics</h5>
 						<p>
 						<table class="table table-bordered">
@@ -171,10 +186,10 @@
 							</thead>
 							</em>
 							<tbody>
-								<td><%= s.football_specialteams.koreturns %></td>
-								<td><%= s.football_specialteams.kotd %></td>
-								<td><%= s.football_specialteams.koyards %></td>
-								<td><%= s.football_specialteams.kolong %></td>
+								<td><%= s.football_returners.koreturns %></td>
+								<td><%= s.football_returners.kotd %></td>
+								<td><%= s.football_returners.koyards %></td>
+								<td><%= s.football_returners.kolong %></td>
 							</tbody>
 						</table>
 					<% else %>

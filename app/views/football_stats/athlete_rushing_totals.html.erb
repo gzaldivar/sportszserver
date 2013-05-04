@@ -39,7 +39,7 @@
 						<tbody>
 							<td><%= s.football_rushings.attempts %></td>
 							<td><%= s.football_rushings.yards %></td>
-							<td><%= s.football_rushings.average %></td>
+							<td><%= number_with_precision(s.football_rushings.average, precision: 2) %></td>
 							<td><%= s.football_rushings.td %></td>
 							<td><%= s.football_rushings.longest %></td>
 							<td><%= s.football_rushings.fumbles %></td>

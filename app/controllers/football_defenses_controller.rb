@@ -1,25 +1,24 @@
 class FootballDefensesController < ApplicationController
-	before_filter	[:authenticate_user!, :site_owner?],	only: [:destroy, :update, :create, :edit, :new]
-  	before_filter 	:get_sport_athlete_stat, only: [:new, :playbyplay, :create, :show, :edit, :update, :destroy]
-  	before_filter	:correct_stat,			only: [:show, :edit, :update, :destroy]
+	before_filter	[:authenticate_user!, :site_owner?], only: [:destroy, :update, :create, :edit, :new, :add, :adddefense]
+  	before_filter 	:get_sport_athlete_stat
+  	before_filter	:correct_stat,			only: [:show, :edit, :update, :destroy, :add, :adddefense]
+	before_filter only: [:destroy, :update, :create, :edit, :new, :add, :adddefense] do |controller| 
+	    controller.team_manager?(@athlete, @stat.gameschedule.team)
+	end
 
 	def new
 		@defense = FootballDefense.new
 	end
 
-	def playbyplay
-		@defense = FootballDefense.new
-	end
-
 	def create
-		if @defense = @stat.create_football_defenses(params[:football_defense])
+		begin
+			@defense = @stat.create_football_defenses(params[:football_defense])
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @defense], notice: 'Stat created for ' + @athlete.full_name }
 		        format.json 
-		     end
-		else
-			puts 'got here'
-			redirect_to :back, alert: "Error creating football defense stats"
+		     end			
+		rescue Exception => e
+			redirect_to :back, alert: "Error creating football defense stats"		
 		end
 	end
 
@@ -29,14 +28,64 @@ class FootballDefensesController < ApplicationController
 	def edit		
 	end
 
+	def add
+	end
+
+	def adddefense
+		begin
+			@defense.tackles = @defense.tackles + 1
+			@defense.int_yards = @defense.int_yards + params[:int_yards].to_i
+			@defense.fumbles_recovered = @defense.fumbles_recovered + params[:fumbles_recovered].to_i
+			@defense.assists = @defense.assists + 1
+			if params[:sack]
+				@defense.sacks = @defense.sacks + 1
+			end
+			if params[:pass_defended]
+				@defense.pass_defended = @defense.pass_defended + 1
+			end
+			if params[:int]
+				@defense.interceptions = @defense.interceptions + 1
+			end
+			if params[:fumbles_recovered]
+				@defense.fumbles_recovered = @defense.fumbles_recovered + 1
+			end
+			if params[:int_yards].to_i > @defense.int_long
+				@defense.int_long = params[:int_yards]
+			end
+
+			if params[:int_td]
+				@defense.int_td = @defense.int_td + 1
+
+				if params[:interceptions].to_i > 0
+					gamelog = @defense.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
+																			   logentry: @athlete.logname + " interception return", score: "TD")
+				else
+					gamelog = @defense.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
+																			   logentry: @athlete.logname + " fumble return", score: "TD")
+				end
+
+				gamelog.save!
+			end
+			@defense.save!
+
+			respond_to do |format|
+		        format.html { redirect_to [@sport, @athlete, @stat, @defense], notice: 'Defensive stat added for ' + @athlete.full_name }
+		        format.json 
+		    end
+		rescue Exception => e
+			redirect_to :back, alert: "Error: " + e.message
+		end
+	end
+
 	def update
-		if @defense.update_attributes(params[:football_defense])
+		begin
+			@defense.update_attributes!(params[:football_defense])
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @defense], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json 
-		     end
-		else
-			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name
+		     end			
+		rescue Exception => e
+			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name			
 		end
 	end
 

@@ -8,7 +8,6 @@ class Gamelog
   field :score, type: String
 
   embedded_in :gameschedule
-#  has_one :football_rushing
-
+#
   validates_presence_of :logentry
 end

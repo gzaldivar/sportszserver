@@ -61,6 +61,10 @@ class Athlete
       lastname + ", " + firstname + " " + middlename 
     end
 
+    def logname
+      firstname[0] + ". " + lastname
+    end
+
     private
 
       def send_alerts

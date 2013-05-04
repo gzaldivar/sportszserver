@@ -64,36 +64,49 @@ Sportzserver::Application.routes.draw do
         end
 
         resources :football_passings, only: [:new, :create, :show, :edit, :update, :destroy] do
+          member do
+            get :add
+          end 
+
           collection do
-            get :playbyplay
+            get :addattempt
           end
         end
 
         resources :football_rushings, only: [:new, :create, :show, :edit, :update, :destroy] do
+          member do
+            get :add
+          end 
+
           collection do
-            get :playbyplay
+            get :addcarry
           end
         end
 
-        resources :football_receivings, only: [:new, :create, :show, :edit, :update, :destroy] do
-          collection do
-            get :playbyplay
-          end
-        end
+        resources :football_receivings, only: [:new, :create, :show, :edit, :update, :destroy]
 
         resources :football_defenses, only: [:new, :create, :show, :edit, :update, :destroy] do
+          member do
+            get :add
+          end 
+
           collection do
-            get :playbyplay
+            get :adddefense
+          end
+        end          
+
+        resources :football_kickers, only: [:create, :show, :update, :destroy] do
+          collection do
+            get :newkicker, :newpunter, :newkickoff, :editkicker, :editpunter, :editkickoff
           end
         end
 
-        resources :football_specialteams, only: [:create, :show, :edit, :update, :destroy] do
+        resources :football_returners, only: [:create, :show, :update, :destroy] do
           collection do
-            get :playbyplay
-            get :newkicker, :newpunter, :newkickoff, :newkoreturn, :newpuntreturn, :editkicker, :editpunter, 
-                :editpuntreturn, :editkoreturn, :editkickoff
+            get :newkoreturn, :newpuntreturn, :editkoreturn, :editpuntreturn
           end
         end
+
       end
  
       member do
@@ -173,10 +186,10 @@ Sportzserver::Application.routes.draw do
   match '/mobileinfo',  to: 'sports#mobileinfo'
   match '/user/root',  to: 'sports#show'
 
-  match '/newkicker', to: 'football_specialteams#newkicker'
-  match '/newpunter', to: 'football_specialteams#newpunter'
-  match '/newkoreturn', to: 'football_specialteams#newkoreturn'
-  match '/newpuntreturn', to: 'football_specialteams#newpuntreturn'
+  match '/newkicker', to: 'football_kickers#newkicker'
+  match '/newpunter', to: 'football_kickers#newpunter'
+  match '/newkoreturn', to: 'football_returners#newkoreturn'
+  match '/newpuntreturn', to: 'football_returns#newpuntreturn'
    
   authenticate :user, lambda {|u| u.admin == true} do
     mount Resque::Server, :at => "/resque"

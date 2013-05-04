@@ -13,7 +13,7 @@
 	<tbody>
 		<td><%= rushing.rushing_attempts %></td>
 		<td><%= rushing.rushing_yards %></td>
-		<td><%= rushing.rushing_average %></td>
+		<td><%= number_with_precision(rushing.rushing_average, precision: 2) %></td>
 		<td><%= rushing.rushing_tds %></td>
 		<td><%= rushing.rushing_longest %></td>
 		<td><%= rushing.rushing_fumbles %></td>

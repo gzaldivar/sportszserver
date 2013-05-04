@@ -18,15 +18,15 @@ class FootballDefense
   
   embedded_in :football_stat
 
-  validates_numericality_of :tackles
-  validates_numericality_of :assists
-  validates_numericality_of :sacks
-  validates_numericality_of :pass_defended
-  validates_numericality_of :interceptions, allow_nil: true
-  validates_numericality_of :int_yards, allow_nil: true
-  validates_numericality_of :int_long, allow_nil: true
-  validates_numericality_of :int_td, allow_nil: true
-  validates_numericality_of :fumbles_recovered, allow_nil: true
+  validates_numericality_of :tackles, greater_than_or_equal_to: 0
+  validates_numericality_of :assists, greater_than_or_equal_to: 0
+  validates_numericality_of :sacks, greater_than_or_equal_to: 0
+  validates_numericality_of :pass_defended, greater_than_or_equal_to: 0
+  validates_numericality_of :interceptions, greater_than_or_equal_to: 0
+  validates_numericality_of :int_yards, greater_than_or_equal_to: 0
+  validates_numericality_of :int_long, greater_than_or_equal_to: 0
+  validates_numericality_of :int_td, greater_than_or_equal_to: 0
+  validates_numericality_of :fumbles_recovered, greater_than_or_equal_to: 0
 
    private
 

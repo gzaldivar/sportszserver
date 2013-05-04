@@ -7,18 +7,15 @@ class FootballReceivingsController < ApplicationController
 		@receiving = FootballReceiving.new
 	end
 
-	def playbyplay
-		@receiving = FootballReceiving.new
-	end
-
 	def create
-		if @receiving = @stat.create_football_receivings(params[:football_receiving])
+		begin
+			@receiving = @stat.create_football_receivings(params[:football_receiving])
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @receiving], notice: 'Stat created for ' + @athlete.full_name }
 		        format.json 
-		     end
-		else
-			redirect_to :back, alert: "Error creating football receiving stats"
+		     end			
+		rescue Exception => e
+			redirect_to :back, alert: "Error creating football receiving stats"			
 		end
 	end
 
@@ -29,13 +26,14 @@ class FootballReceivingsController < ApplicationController
 	end
 
 	def update
-		if @receiving.update_attributes(params[:football_receiving])
+		begin
+			@receiving.update_attributes!(params[:football_receiving])
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @receiving], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json 
-		     end
-		else
-			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name
+		     end			
+		rescue Exception => e
+			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name			
 		end
 	end
 

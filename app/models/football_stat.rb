@@ -8,7 +8,8 @@ class FootballStat
   embeds_one :football_passings
   embeds_one :football_rushings
   embeds_one :football_defenses
-  embeds_one :football_specialteams
   embeds_one :football_receivings
+  embeds_one :football_kickers
+  embeds_one :football_returners
 
 end

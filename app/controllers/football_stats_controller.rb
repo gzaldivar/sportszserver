@@ -8,7 +8,7 @@ class FootballStatsController < ApplicationController
 	def newstat
 		@stattype = params[:id]
 		if @athlete.team != "Unassigned"
-			@games = @sport.teams.find(@athlete.team_id).gameschedules
+			@games = @sport.teams.find(@athlete.team_id).gameschedules.asc(:gamedate)
 		else
 			redirect_to :back, alert: "Athlete is unnassigned to a team. Stats must be associated with a game which can only be played by teams"
 		end
@@ -45,32 +45,37 @@ class FootballStatsController < ApplicationController
 			else
 				redirect_to edit_sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat, @stat.football_rushings)
 			end			
-		when "specialteams"
-			if @stat.football_specialteams.nil?
-				if params[:specialteams] == "Punter"
-					redirect_to newpunter_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat)
-				elsif params[:specialteams] == "Kickoff"
-					redirect_to newkickoff_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat)
-				elsif params[:specialteams] == "Kick Returner"
-					redirect_to newkoreturn_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat)
-				elsif params[:specialteams] == "Punt Returner"
-					redirect_to newpuntreturn_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat)
-				else
-					redirect_to newkicker_path(sport_id: @sport, athlete_id: @athlete, football_stat_id: @stat)
-				end
+		when "Kicker"
+			if @stat.football_kickers.nil?
+				redirect_to newkicker_sport_athlete_football_stat_football_kickers_path(sport_id: @sport, 
+												athlete_id: @athlete, football_stat_id: @stat)
 			else
-				if params[:specialteams] == "Punter"
-					redirect_to editpunter_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat)
-				elsif params[:specialteams] == "Kickoff"
-					redirect_to editkickoff_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat)
-				elsif params[:specialteams] == "Kick Returner"
-					redirect_to editkoreturn_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat)
-				elsif params[:specialteams] == "Punt Returner"
-					redirect_to editpuntreturn_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat)
-				else
-					redirect_to editkicker_sport_athlete_football_stat_football_specialteams_path(@sport, @athlete, @stat)
-				end
-			end			
+				redirect_to editkicker_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat)
+			end
+		when "Kickoff"
+			if @stat.football_kickers.nil?
+				redirect_to newkickoff_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat)
+			else
+				redirect_to editkickoff_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat)
+			end
+		when "Punter"
+			if @stat.football_kickers.nil?
+				redirect_to newpunter_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat)
+			else
+				redirect_to editpunter_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat)
+			end
+		when "Kick Returner"	
+			if @stat.football_returners.nil?
+				redirect_to newkoreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat)
+			else
+				redirect_to editkoreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat)
+			end
+		when "Punt Returner"
+			if @stat.football_returners.nil?
+				redirect_to newpuntreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat)
+			else
+				redirect_to editpuntreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat)
+			end
 		when "defense"
 			if @stat.football_defenses.nil?
 				redirect_to new_sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat)

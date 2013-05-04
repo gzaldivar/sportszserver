@@ -28,7 +28,7 @@
 				<th>Interceptions</th>
 				<th>Int Return Yards</th>
 				<th>Int Return Long</th>
-				<th>Interception TD</th>
+				<th>Defensive TD</th>
 				<th>Fumbles Recoveredd</th>
 			</thead>
 			<tbody>
@@ -40,11 +40,15 @@
 			</tbody>
 		</table>
 		<% if isAdmin? or isTeamManager?(@athlete) %>
-			<div class="span2 offset3">
+			Select <strong>Add Defensive Play</strong> below to enter real time stats during a game. You can still use this page to add stats that have already been totalled. Use this page to make adjustments to the totals.
+			<p>
+			<div class="span6 offset2">
+				<%= link_to "Add Defensive Play", add_sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, id: @defense), 
+							class: "btn btn-mini btn-primary" %>
 				<%= link_to "Edit", edit_sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, @defense), 
-							class: "btn btn-medium btn-primary" %>
+							class: "btn btn-mini btn-primary" %>
 				<%= link_to "Delete", sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, @defense), 
-							method: :delete, class: "btn btn-medium btn-danger" %>
+							method: :delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
 			</div>
 		<% end %>
 	</div>

@@ -18,7 +18,7 @@
 			<tbody>
 				<td><%= @rushing.attempts %></td>
 				<td><%= @rushing.yards %></td>
-				<td><%= @rushing.average %></td>
+				<td><%= number_with_precision(@rushing.average, precision: 2) %></td>
 			</tbody>
 		</table>
 		<table class="table table-bordered">
@@ -34,11 +34,15 @@
 			</tbody>
 		</table>
 		<% if isAdmin? or isTeamManager?(@athlete) %>
-			<div class="span2 offset3">
-				<%= link_to "Edit", edit_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat, @rushing), 
-							class: "btn btn-medium btn-primary" %>
+			Select <strong>Add Carry</strong> below to enter real time stats during a game. You can still use this page to add stats that have already been totalled. Use this page to make adjustments to the totals.
+			<p>
+			<div class="span4 offset2">
+				<%= link_to "Add Carry", add_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat, id: @rushing), 
+							class: "btn btn-mini btn-primary" %>
+				<%= link_to "Edit Game Totals", edit_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat, @rushing), 
+							class: "btn btn-mini btn-primary" %>
 				<%= link_to "Delete", sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat, @rushing), method: :delete, 
-							class: "btn btn-medium btn-danger" %>
+							class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
 			</div>
 		<% end %>
 	</div>

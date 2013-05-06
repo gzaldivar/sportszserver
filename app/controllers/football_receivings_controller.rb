@@ -10,6 +10,11 @@ class FootballReceivingsController < ApplicationController
 	def create
 		begin
 			@receiving = @stat.create_football_receivings(params[:football_receiving])
+			if current_user.score_alert? and params[:football_receiving][:td].to_i > 0
+				send_alert(@athlete, "Receiver score alert for ")
+			elsif current_user.stat_alert? and params[:football_receiving][:td].to_i == 0
+				send_alert(@athlete, "Recevier stat alert for ")
+			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @receiving], notice: 'Stat created for ' + @athlete.full_name }
 		        format.json 
@@ -28,6 +33,11 @@ class FootballReceivingsController < ApplicationController
 	def update
 		begin
 			@receiving.update_attributes!(params[:football_receiving])
+			if current_user.score_alert? and params[:football_receiving][:td].to_i > 0
+				send_alert(@athlete, "Receiver score alert for ")
+			elsif current_user.stat_alert? and params[:football_receiving][:td].to_i == 0
+				send_alert(@athlete, "Receiver stat alert for ")
+			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @receiving], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json 
@@ -53,4 +63,12 @@ class FootballReceivingsController < ApplicationController
 		def correct_stat
 			@receiving = @stat.football_receivings
 		end
+		
+		def send_alert(athlete, message)	
+	        Athlete.find(athlete).fans.each do |user|
+	            alert = athlete.alerts.create!(sport: @sport, user: user, athlete: athlete, message: message + @stat.gameschedule.game_name, 
+	                								 football_stat: @stat.id, stat_football: "Receiving")
+	        end
+		end
+
 end

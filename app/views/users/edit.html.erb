@@ -3,7 +3,7 @@
 <div class="row">
  	<div class="span10" id="backcolor">
 		<div class="row">
-			<div class="span8 offset2">
+			<div class="span10 offset1">
 	 			<h4>Update User Profile</h4>
 				<%= simple_form_for @user, html: { multipart: true, class: 'form-horizontal' } do |f| %>
 					<%= render 'shared/error_messages', object: f.object %>
@@ -12,7 +12,7 @@
 							<%= f.input :name %>
 						</div>
 						<p>
-						<div class="span4 offset1">
+						<div class="span2 offset1">
 							<% if @user.avatar_file_name.nil? %>
 								<%= image_tag 'photo_not_available.png' %>
 							<% else %>
@@ -20,19 +20,22 @@
 							<% end %>
 							<%= f.input	:avatar,	label: 	"Avatar Picture" %>
 						</div>
+						<div class="span3 offset1">
+							<h5><em>Login Email: <%= @user.email %></em></h5>
+						</div>
 					</div>
 					<p>
+					<h4>Athlete Alert Options:</h4>
 					<div class="row">
 						<div class="span2">
-							<h5><em>Email: <%= @user.email %></em></h5>
+							<%= f.input :bio_alert, as: :boolean,  label: "Enable Bio Alerts" %>
 						</div>
-						<p>
-						<% if isAdmin? %>
-							<div class="span4 offset1">
-								<%= f.input :teamid, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Manage Team", 
-											input_html: {id: "select_team"}  %>
-							</div>
-						<% end %>
+						<div class="span2 offset1">
+							<%= f.input :blog_alert, as: :boolean, label: "Enable Blog Alerts" %>
+						</div>
+						<div class="span2 offset1">
+							<%= f.input :stat_alert, as: :boolean, label: "Enable Stat Alerts" %>
+						</div>
 					</div>
 					<p>
 				      <div id="loading">
@@ -41,15 +44,30 @@
 				                Updating User...
 				            </p>
 				        </div>
-				      </div><p>
+				      </div>
+				      <p>
 					<div class="row">
-						<div class="span4 offset1">
-							<%= f.input :is_active, as: :radio_buttons %>
+						<div class="span2">
+							<%= f.input :score_alert, as: :boolean, label: "Enable Scoring Alerts" %>
+						</div>
+						<div class="span2 offset1">
+							<%= f.input :media_alert, as: :boolean, label: "Enable Photo and Video Alerts" %>
 						</div>
 					</div>
 					<p>
 					<div class="row">
-						<div class="span2 offset2">
+						<% if isAdmin? %>
+							<div class="span2 ">
+								<%= f.input :teamid, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Manage Team", 
+											input_html: {id: "select_team"}  %>
+							</div>
+							<div class="span2 offset1">
+								<%= f.input :is_active, as: :boolean %>
+							</div>
+						<% end %>
+					</div>
+					<div class="row">
+						<div class="span2 offset3">
 							<%= f.button :submit, 'Update Profile', class: "btn btn-medium btn-primary", id: "submitbtn" %>
 						</div>
 					</div>
@@ -62,9 +80,7 @@
 					Currently viewing site <em><strong><%= current_site.sitename %></em></strong>. Click here to set as default site on login?<br/>
 					<%= link_to "Default Site", sport_path(current_site), class: "btn btn-medium btn-primary" %>
 				<% else %>
-					Click here to go back to <em><strong></em>
-					<%= link_to current_site.sitename, sport_path(current_site), class: "btn btn-medium btn-primary" %>
-					</strong>.<br/>
+					Click here to go back to <em><strong><%= link_to current_site.sitename, sport_path(current_site) %></strong></em><br/>
 				<% end %>
 			</div>
 		</div>

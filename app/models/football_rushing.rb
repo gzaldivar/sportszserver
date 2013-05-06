@@ -2,10 +2,7 @@ class FootballRushing
   include Mongoid::Document
   include Mongoid::Timestamps
 
-  include SendAlert
-
   before_save :comp_average
-  after_save :send_alerts
 
   field :attempts, type: Integer
   field :yards, type: Integer
@@ -29,11 +26,5 @@ class FootballRushing
       self.average = Float(self.yards) / Float(self.attempts)
     end
   end
-
-  private
-
-    def send_alerts
-      send_stat_alerts(self.football_stat.athlete.sport, self.football_stat.athlete, self.football_stat.gameschedule, "Rushing Statistics Updated")
-    end
 
 end

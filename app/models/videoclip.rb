@@ -62,9 +62,10 @@ class Videoclip
         if !self.players.nil?
             self.players.each do |p|
               player = Athlete.find(p)
-#              player.followers.each do |user, name|
               player.fans.each do |user|
-                player.alerts.create!(user: user, videoclip: self.id, message: "Video Clip Updated")
+                if User.find(user).media_alert?
+                  player.alerts.create!(user: user, videoclip: self.id, message: "Video Clip Updated")
+                end
               end
             end
         end

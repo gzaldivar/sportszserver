@@ -44,7 +44,10 @@
 				</tbody>
 			</table>
 			<% if isAdmin? or isTeamManager?(@athlete) %>
-				<div class="span2 offset3">
+				<div class="span6 offset2">
+					<%= link_to "Add Place Kicker Play", addplacekicker_sport_athlete_football_stat_football_kicker_path(@sport, @athlete, 
+														@stat, id: @kicker), 
+								class: "btn btn-mini btn-primary" %>
 					<%= link_to "Edit", editkicker_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat, @kicker), class: "btn btn-mini btn-primary" %>
 				</div>
 			<% end %>
@@ -74,7 +77,9 @@
 			</table>
 			<p>
 			<% if isAdmin? or isTeamManager?(@athlete) %>
-				<div class="span2 offset3">
+				<div class="span6 offset2">
+					<%= link_to "Add Punt Play", addpunter_sport_athlete_football_stat_football_kicker_path(@sport, @athlete, @stat, id: @kicker), 
+								class: "btn btn-mini btn-primary" %>
 					<%= link_to "Edit", editpunter_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat, @kicker), class: "btn btn-mini btn-primary" %>
 				</div>
 			<% end %>
@@ -102,7 +107,9 @@
 			</table>
 			<p>
 			<% if isAdmin? or isTeamManager?(@athlete) %>
-				<div class="span2 offset3">
+				<div class="span6 offset2">
+					<%= link_to "Add Kickoff Play", addkickoff_sport_athlete_football_stat_football_kicker_path(@sport, @athlete, @stat, id: @kicker), 
+								class: "btn btn-mini btn-primary" %>
 					<%= link_to "Edit", editkickoff_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat, @kicker), class: "btn btn-mini btn-primary" %>
 				</div>
 			<% end %>

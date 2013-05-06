@@ -2,8 +2,6 @@ class FootballKicker
 	include Mongoid::Document
 	include SendAlert
 
-	after_save :send_alerts
-  
 	field	:fgattempts, type: Integer, default: 0
 	field	:fgmade, type: Integer, default: 0
 	field	:fgblocked, type: Integer, default: 0
@@ -45,11 +43,5 @@ class FootballKicker
 	validates_numericality_of :punts_blocked, greater_than_or_equal_to: 0
 	validates_numericality_of :punts_yards, greater_than_or_equal_to: 0
 	validates_numericality_of :punts_long, greater_than_or_equal_to: 0
-
-	private
-
-	    def send_alerts
-	      send_stat_alerts(self.football_stat.athlete.sport, self.football_stat.athlete, self.football_stat.gameschedule, "Special Teams Statistics Updated")
-	    end
 
 end

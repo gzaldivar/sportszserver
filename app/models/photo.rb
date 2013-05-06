@@ -80,9 +80,10 @@ class Photo
         if !self.players.nil?
             self.players.each do |p|
               player = Athlete.find(p)
-#              player.followers.each do |user, name|
               player.fans.each do |user|
-                player.alerts.create!(user: user, photo: self.id, message: "Photo information updated!")
+                if User.find(user).media_alert?
+                  player.alerts.create!(user: user, photo: self.id, message: "Photo information updated!")
+                end
               end
             end
         end

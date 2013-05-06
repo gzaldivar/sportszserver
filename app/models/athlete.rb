@@ -68,9 +68,10 @@ class Athlete
     private
 
       def send_alerts
-#          self.followers.each do |user, name|
           self.fans.each do |user|
-            self.alerts.create!(sport: sport, user: user, message: "Athlete info updated")
+            if User.find(user).bio_alert?
+              self.alerts.create!(sport: sport, user: user, message: "Athlete info updated")
+            end
           end
       end
 end

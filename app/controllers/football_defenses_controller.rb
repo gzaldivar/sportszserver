@@ -13,6 +13,11 @@ class FootballDefensesController < ApplicationController
 	def create
 		begin
 			@defense = @stat.create_football_defenses(params[:football_defense])
+			if current_user.score_alert? and params[:football_defense][:int_td].to_i > 0
+				send_alert("Defensive score alert for ")
+			elsif current_user.stat_alert? and params[:football_defense][:int_td].to_i == 0
+				send_alert("Defensive stat alert for ")
+			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @defense], notice: 'Stat created for ' + @athlete.full_name }
 		        format.json 
@@ -68,6 +73,12 @@ class FootballDefensesController < ApplicationController
 			end
 			@defense.save!
 
+			if current_user.score_alert? and params[:int_td].to_i > 0
+				send_alert("Defensive score alert for ")
+			elsif current_user.stat_alert? and params[:int_td].to_i == 0
+				send_alert("Defensive stat alert for ")
+			end
+
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @defense], notice: 'Defensive stat added for ' + @athlete.full_name }
 		        format.json 
@@ -80,12 +91,17 @@ class FootballDefensesController < ApplicationController
 	def update
 		begin
 			@defense.update_attributes!(params[:football_defense])
+			if current_user.score_alert? and params[:football_defense][:int_td].to_i > 0
+				send_alert("Defensive score alert for ")
+			elsif current_user.stat_alert? and params[:football_defense][:int_td].to_i == 0
+				send_alert("Defensive stat alert for ")
+			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @defense], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json 
 		     end			
 		rescue Exception => e
-			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name			
+			redirect_to :back, alert: "Error updating stats for " + e.message	
 		end
 	end
 
@@ -104,6 +120,13 @@ class FootballDefensesController < ApplicationController
 
 		def correct_stat
 			@defense = @stat.football_defenses
+		end
+
+		def send_alert(message)	
+	        Athlete.find(@stat.athlete).fans.each do |user|
+	            alert = @stat.athlete.alerts.create!(sport: @sport, user: user, athlete: @stat.athlete, message: message + @stat.gameschedule.game_name, 
+	                								 football_stat: @stat.id, stat_football: "Defense")
+	        end
 		end
 		
 end

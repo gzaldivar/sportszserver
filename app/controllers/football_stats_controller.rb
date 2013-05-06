@@ -28,17 +28,27 @@ class FootballStatsController < ApplicationController
 
 		case params[:football_stat][:stattype]
 		when "passing"
-			if @stat.football_passings.nil?
+			if @stat.football_passings.nil? and params[:stats] == "Game Totals"
 				redirect_to new_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat)
-			else
+			elsif @stat.football_passings.nil? and params[:stats] == "Play by Play"
+				@stat.create_football_passings
+				redirect_to add_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @stat.football_passings)
+			elsif !@stat.football_passings.nil? and params[:stats] == "Game Totals"
 				redirect_to edit_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @stat.football_passings)
+			elsif !@stat.football_passings.nil? and params[:stats] == "Play by Play"
+				redirect_to add_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @stat.football_passings)
 			end
 		when "rushing"
-			if @stat.football_rushings.nil?
+			if @stat.football_rushings.nil? and params[:stats] == "Game Totals"
 				redirect_to new_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat)
-			else
+			elsif @stat.football_rushings.nil? and params[:stats] == "Play by Play"
+				@stat.create_football_rushings
+				redirect_to add_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat, @stat.football_rushings)
+			elsif !@stat.football_rushings.nil? and params[:stats] == "Game Totals"
 				redirect_to edit_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat, @stat.football_rushings)
-			end			
+			elsif !@stat.football_rushings.nil? and params[:stats] == "Play by Play"
+				redirect_to add_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat, @stat.football_rushings)
+			end
 		when "receiving"
 			if @stat.football_receivings.nil?
 				redirect_to new_sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat)
@@ -46,42 +56,76 @@ class FootballStatsController < ApplicationController
 				redirect_to edit_sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat, @stat.football_rushings)
 			end			
 		when "Kicker"
-			if @stat.football_kickers.nil?
+			if @stat.football_kickers.nil? and params[:stats] == "Game Totals"
 				redirect_to newkicker_sport_athlete_football_stat_football_kickers_path(sport_id: @sport, 
 												athlete_id: @athlete, football_stat_id: @stat)
-			else
-				redirect_to editkicker_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat)
+			elsif @stat.football_kickers.nil? and params[:stats] == "Play by Play"
+				@stat.create_football_kickers
+				redirect_to addplacekicker_sport_athlete_football_stat_football_kicker_path(@sport, @athlete, @stat, @stat.football_kickers)
+			elsif !@stat.football_kickers.nil? and params[:stats] == "Game Totals"
+				redirect_to editkicker_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat, @stat.football_kickers)
+			elsif !@stat.football_kickers.nil? and params[:stats] == "Play by Play"
+				redirect_to addplacekicker_sport_athlete_football_stat_football_kicker_path(@sport, @athlete, @stat, @stat.football_kickers)
 			end
 		when "Kickoff"
-			if @stat.football_kickers.nil?
-				redirect_to newkickoff_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat)
-			else
-				redirect_to editkickoff_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat)
+			if @stat.football_kickers.nil? and params[:stats] == "Game Totals"
+				redirect_to newkickoff_sport_athlete_football_stat_football_kickers_path(sport_id: @sport, 
+												athlete_id: @athlete, football_stat_id: @stat)
+			elsif @stat.football_kickers.nil? and params[:stats] == "Play by Play"
+				@stat.create_football_kickers
+				redirect_to addkickoff_sport_athlete_football_stat_football_kicker_path(@sport, @athlete, @stat, @stat.football_kickers)
+			elsif !@stat.football_kickers.nil? and params[:stats] == "Game Totals"
+				redirect_to editkickoff_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat, @stat.football_kickers)
+			elsif !@stat.football_kickers.nil? and params[:stats] == "Play by Play"
+				redirect_to addkickoff_sport_athlete_football_stat_football_kicker_path(@sport, @athlete, @stat, @stat.football_kickers)
 			end
 		when "Punter"
-			if @stat.football_kickers.nil?
-				redirect_to newpunter_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat)
-			else
-				redirect_to editpunter_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat)
+			if @stat.football_kickers.nil? and params[:stats] == "Game Totals"
+				redirect_to newpunter_sport_athlete_football_stat_football_kickers_path(sport_id: @sport, 
+												athlete_id: @athlete, football_stat_id: @stat)
+			elsif @stat.football_kickers.nil? and params[:stats] == "Play by Play"
+				@stat.create_football_kickers
+				redirect_to addpunter_sport_athlete_football_stat_football_kicker_path(@sport, @athlete, @stat, @stat.football_kickers)
+			elsif !@stat.football_kickers.nil? and params[:stats] == "Game Totals"
+				redirect_to editpunter_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat, @stat.football_kickers)
+			elsif !@stat.football_kickers.nil? and params[:stats] == "Play by Play"
+				redirect_to addpunter_sport_athlete_football_stat_football_kicker_path(@sport, @athlete, @stat, @stat.football_kickers)
 			end
 		when "Kick Returner"	
-			if @stat.football_returners.nil?
-				redirect_to newkoreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat)
-			else
-				redirect_to editkoreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat)
+			if @stat.football_returners.nil? and params[:stats] == "Game Totals"
+				redirect_to newkoreturn_sport_athlete_football_stat_football_returners_path(sport_id: @sport, 
+												athlete_id: @athlete, football_stat_id: @stat)
+			elsif @stat.football_returners.nil? and params[:stats] == "Play by Play"
+				@stat.create_football_returners
+				redirect_to addko_sport_athlete_football_stat_football_returner_path(@sport, @athlete, @stat, @stat.football_returners)
+			elsif !@stat.football_returners.nil? and params[:stats] == "Game Totals"
+				redirect_to editkoreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat, @stat.football_returners)
+			elsif !@stat.football_returners.nil? and params[:stats] == "Play by Play"
+				redirect_to addko_sport_athlete_football_stat_football_returner_path(@sport, @athlete, @stat, @stat.football_returners)
 			end
 		when "Punt Returner"
-			if @stat.football_returners.nil?
-				redirect_to newpuntreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat)
-			else
-				redirect_to editpuntreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat)
+			if @stat.football_returners.nil? and params[:stats] == "Game Totals"
+				redirect_to newpuntreturn_sport_athlete_football_stat_football_returners_path(sport_id: @sport, 
+												athlete_id: @athlete, football_stat_id: @stat)
+			elsif @stat.football_returners.nil? and params[:stats] == "Play by Play"
+				@stat.create_football_returners
+				redirect_to addpunt_sport_athlete_football_stat_football_returner_path(@sport, @athlete, @stat, @stat.football_returners)
+			elsif !@stat.football_returners.nil? and params[:stats] == "Game Totals"
+				redirect_to editpuntreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat, @stat.football_returners)
+			elsif !@stat.football_returners.nil? and params[:stats] == "Play by Play"
+				redirect_to addpunt_sport_athlete_football_stat_football_returner_path(@sport, @athlete, @stat, @stat.football_returners)
 			end
 		when "defense"
-			if @stat.football_defenses.nil?
+			if @stat.football_defenses.nil? and params[:stats] == "Game Totals"
 				redirect_to new_sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat)
-			else
+			elsif @stat.football_defenses.nil? and params[:stats] == "Play by Play"
+				@stat.create_football_defenses
+				redirect_to add_sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, @stat.football_defenses)
+			elsif !@stat.football_defenses.nil? and params[:stats] == "Game Totals"
 				redirect_to edit_sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, @stat.football_defenses)
-			end			
+			elsif !@stat.football_defenses.nil? and params[:stats] == "Play by Play"
+				redirect_to add_sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, @stat.football_defenses)
+			end
 		end
 	end
 
@@ -102,7 +146,13 @@ class FootballStatsController < ApplicationController
 	end
 
 	def passing
-		@stats = @athlete.football_stats	
+		@stats = []
+		@athlete.football_stats.each_with_index do |s, cnt|
+			if !s.football_passings.nil?
+				@stats[cnt] = s
+			end
+		end
+
 		if params[:games].nil?
 			@passing = AthleteFootballStatsTotal.new
 			@passing.passing_totals(@athlete)

@@ -96,14 +96,22 @@ Sportzserver::Application.routes.draw do
         end          
 
         resources :football_kickers, only: [:create, :show, :update, :destroy] do
+          member do
+            get :addplacekicker, :addpunter, :addkickoff
+          end
+
           collection do
-            get :newkicker, :newpunter, :newkickoff, :editkicker, :editpunter, :editkickoff
+            get :newkicker, :newpunter, :newkickoff, :editkicker, :editpunter, :editkickoff, :placekicker, :punter, :kickoff
           end
         end
 
         resources :football_returners, only: [:create, :show, :update, :destroy] do
+          member do
+            get :addko, :addpunt
+          end
+
           collection do
-            get :newkoreturn, :newpuntreturn, :editkoreturn, :editpuntreturn
+            get :newkoreturn, :newpuntreturn, :editkoreturn, :editpuntreturn, :koreturn, :puntreturn
           end
         end
 

@@ -60,6 +60,14 @@ class User
   field :default_site, type: String
   field :teamid, type: String
   field :is_active, type: Boolean, default: true
+
+  # Alert levels 
+
+  field :bio_alert, type: Boolean, default: true
+  field :media_alert, type: Boolean, default: true
+  field :blog_alert, type: Boolean, default: true
+  field :stat_alert, type: Boolean, default: true
+  field :score_alert, type: Boolean, default: true
   
   has_mongoid_attached_file :avatar,
     :storage        => :s3,
@@ -74,7 +82,8 @@ class User
   validates_attachment_content_type :avatar, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_presence_of :name
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at, 
-                  :authentication_token, :teamid, :avatar, :is_active
+                  :authentication_token, :teamid, :avatar, :is_active, :bio_alert, :blog_alert, :media_alert, 
+                  :stat_alert, :score_alert
 
   def active_for_authentication?
     super and self.is_active?

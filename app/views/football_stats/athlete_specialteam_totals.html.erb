@@ -47,31 +47,41 @@
 				<h5>No kickoff return special team stats entered.</h5>
 			<% end %>
 			<br/><p>
-			<div class="span10">
-				<% if isAdmin? or isTeamManager?(@athlete) %>
-					<%= link_to "Add Place Kicker Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Kicker"), 
-								class: "btn btn-mini btn-primary" %>
-					<%= link_to "Add Kickoff Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Kickoff"), 
-								class: "btn btn-mini btn-primary" %>
-					<%= link_to "Add Punter Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Punter"), 
-								class: "btn btn-mini btn-primary" %>
-					<%= link_to "Add Kick Returner Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Kick Returner"), 
-								class: "btn btn-mini btn-primary" %>
-					<%= link_to "Add Punt Returner Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Punt Returner"), 
-								class: "btn btn-mini btn-primary" %>
-				<% end %>
-				<% if @stats.count > 0 %>
-					<%= link_to "Game Stats", specialteams_sport_athlete_football_stats_path(@sport, @athlete, games: "games"), 
-						class: "btn btn-mini btn-primary" %>
-				<% end %>
-			</div><br/>
+			<div class="row">
+				<div class="span10 offset1">
+					<% if isAdmin? or isTeamManager?(@athlete) %>
+						<%= link_to "Add Place Kicker Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Kicker"), 
+									class: "btn btn-mini btn-info" %>
+						<%= link_to "Add Kickoff Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Kickoff"), 
+									class: "btn btn-mini btn-info" %>
+						<%= link_to "Add Punter Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Punter"), 
+									class: "btn btn-mini btn-info" %>
+						<%= link_to "Add Kick Returner Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Kick Returner"), 
+									class: "btn btn-mini btn-info" %>
+						<%= link_to "Add Punt Returner Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Punt Returner"), 
+									class: "btn btn-mini btn-info" %>
+					<% end %>
+				</div>
+			</div>
+			<p>
+			<% if @stats.count > 0 %>
+				<div class="row">
+					<div class="span10 offset1">
+							<em>Click here to enter play by play stats!</em>
+							<%= link_to "Game Stats", specialteams_sport_athlete_football_stats_path(@sport, @athlete, games: "games"), 
+								class: "btn btn-small btn-primary" %>
+					</div>
+				</div>
+			<% end %>
+			<br/>
 		<% else %>
 			<p>
 			<h5>Special Team game statistics for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>
 			<p>
 			<% @stats.each do |s| %>
 				<% if !s.football_kickers.nil? %>
-					<em><%= link_to s.gameschedule.game_name, [@sport, @athlete, s, s.football_kickers] %></em>
+					<em><%= link_to s.gameschedule.game_name, [@sport, @athlete, s, s.football_kickers] %></em> - 
+						<strong>Select to enter play by play stats for game</strong>
 					<p>
 					<% if !s.football_kickers.fgattempts.nil? || !s.football_kickers.xpattempts.nil? %>
 						<h5>Place Kicking Statistics</h5>
@@ -150,7 +160,7 @@
 				<% if !s.football_returners.nil? %>
 					<em><%= link_to s.gameschedule.game_name, [@sport, @athlete, s, s.football_returners] %></em>
 					<p>
-					<% if !s.football_specialteams.punt_return.nil? %>
+					<% if !s.football_returners.punt_return.nil? %>
 						<h5>Punt Return Statistics</h5>
 						<p>
 						<table class="table table-bordered">

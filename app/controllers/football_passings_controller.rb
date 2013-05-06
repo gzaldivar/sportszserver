@@ -13,12 +13,17 @@ class FootballPassingsController < ApplicationController
 	def create
 		begin
 			@fbpassing = @stat.create_football_passings(params[:football_passing])
+			if current_user.score_alert? and params[:football_passing][:td].to_i > 0
+				send_alert(@athlete, "Passing score alert for ")
+			elsif current_user.stat_alert? and params[:football_passing][:td].to_i == 0
+				send_alert(@athlete, "Passing stat alert for ")
+			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @fbpassing], notice: 'Stat created for ' + @athlete.full_name }
 		        format.json 
 		     end			
 		rescue Exception => e
-			redirect_to :back, alert: "Error creating football passing stats"			
+			redirect_to :back, alert: "Error creating football passing stats " + e.message
 		end
 	end
 
@@ -26,6 +31,11 @@ class FootballPassingsController < ApplicationController
 	end
 
 	def add
+		if params[:id]
+			@fbpassing = @stat.football_passings
+		else
+			@fbpassing = FootballPassing.new().save!
+		end
 	end
 
 	def addattempt
@@ -44,6 +54,8 @@ class FootballPassingsController < ApplicationController
 					stat = nil
 
 					if player.football_stats.nil?
+						stat = player.football_stats.create!(gameschedule: @fbpassing.football_stat.gameschedule)
+					elsif player.football_stats.find_by(gameschedule: @fbpassing.football_stat.gameschedule).nil?
 						stat = player.football_stats.create!(gameschedule: @fbpassing.football_stat.gameschedule)
 					else
 						stat = player.football_stats.find_by(gameschedule: @fbpassing.football_stat.gameschedule)
@@ -94,6 +106,14 @@ class FootballPassingsController < ApplicationController
 				if params[:int].to_i > 0
 					@fbpassing.interceptions = @fbpassing.interceptions + 1
 				end
+						
+				if current_user.score_alert? and params[:td].to_i > 0
+					send_alert(@athlete, "Passing score alert for ")
+					send_alert(player, "Receiver score alert for ")
+				elsif current_user.stat_alert? and params[:td].to_i == 0
+					send_alert(@athlete, "Passing stat alert for ")
+					send_alert(player, "Receiver stat alert for ")
+				end
 			end
 			@fbpassing.save!
 
@@ -113,6 +133,11 @@ class FootballPassingsController < ApplicationController
 	def update		
 		begin
 			@fbpassing.update_attributes!(params[:football_passing])
+			if current_user.score_alert? and params[:football_passing][:td].to_i > 0
+				send_alert(@athlete, "Passing score alert for ", @fbpassing)
+			elsif current_user.stat_alert? and params[:football_passing][:td].to_i == 0
+				send_alert(@athlete, "Passing stat alert for ", @fbpassing)
+			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @fbpassing], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json 
@@ -137,6 +162,14 @@ class FootballPassingsController < ApplicationController
 
 		def correct_stat
 			@fbpassing = @stat.football_passings
+
 		end
 		
+		def send_alert(athlete, message)	
+	        Athlete.find(athlete).fans.each do |user|
+	            alert = athlete.alerts.create!(sport: @sport, user: user, athlete: athlete, message: message + @stat.gameschedule.game_name, 
+	                						   football_stat: @stat.id, stat_football: "Passing")
+	        end
+		end
+
 end

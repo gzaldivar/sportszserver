@@ -28,6 +28,8 @@
 			<p>
 			<% if isAdmin? or isTeamManager?(@athlete) %>
 				<div class="span2 offset3">
+					<%= link_to "Add Punt Return", addpunt_sport_athlete_football_stat_football_returner_path(@sport, @athlete, @stat, id: @returner), 
+								class: "btn btn-mini btn-primary" %>
 					<%= link_to "Edit", editpuntreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat, @returner), class: "btn btn-mini btn-primary" %>
 			</div>
 			<% end %>
@@ -58,6 +60,8 @@
 			<p>
 			<% if isAdmin? or isTeamManager?(@athlete) %>
 				<div class="span2 offset3">
+					<%= link_to "Add Kickoff Return", addko_sport_athlete_football_stat_football_returner_path(@sport, @athlete, @stat, id: @returner), 
+								class: "btn btn-mini btn-primary" %>
 					<%= link_to "Edit", editkoreturn_sport_athlete_football_stat_football_returners_path(@sport, @athlete, @stat, @returner), class: "btn btn-mini btn-primary" %>
 				</div>
 			<% end %>

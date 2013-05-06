@@ -3,7 +3,7 @@
 <div class="row">
 	<div class="span6 offset3">
 		<em>Add Defensive Stat for: <%= link_to @athlete.full_name, sport_athlete_path(@sport, @athlete) %> for 
-			<%= @stat.gameschedule.game_name %></em>
+			<strong><%= @stat.gameschedule.game_name %></strong></em>
 		<p>
 		<%= form_tag adddefense_sport_athlete_football_stat_football_defenses_path(sport_id: @sport, athlete_id: @athlete, 
 								football_stat_id: @stat, football_defense_id: @defense), class: "form-horizontal", method: 'get' do %>

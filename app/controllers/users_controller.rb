@@ -20,6 +20,7 @@ class UsersController < ApplicationController
   
   def update
     if @user.update_attributes(params[:user])
+      puts params[:bio_alert]
       redirect_to @user, notice: "User update sucessful!"
     else
       redirect_to :back, alert: "Error updating user data"

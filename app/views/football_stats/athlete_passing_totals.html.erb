@@ -8,50 +8,54 @@
 			<h4>Passing stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
 			<p>
 			<%= render 'passing_totals', passing: @passing %>
-			<div class="span4 offset3">
-				<% if isAdmin? or isTeamManager?(@athlete) %>
-					<%= link_to "Add Passing Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "passing"), class: "btn btn-mini btn-primary" %>
-				<% end %>
-				<% if @stats.count > 0 %>
-					<%= link_to "Game Stats", passing_sport_athlete_football_stats_path(@sport, @athlete, games: "games"), 
-						class: "btn btn-mini btn-primary" %>
-				<% end %>
+			<div class="row">
+				<div class="span8 offset2">
+					<% if isAdmin? or isTeamManager?(@athlete) %>
+						<%= link_to "Add Passing Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "passing"), 
+							class: "btn btn-small btn-info" %>
+					<% end %>&nbsp
+					<% if @stats.count > 0 %>
+						<em>Click here to enter play by play stats:</em>
+						<%= link_to "Game Stats", passing_sport_athlete_football_stats_path(@sport, @athlete, games: "games"), 
+							class: "btn btn-small btn-primary" %>
+					<% end %>
+				</div>
 			</div>
 		<% else %>
 			<p>
 			<h4>List of passing game statistics for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
 			<p>
 			<% @stats.each do |s| %>
-				<% if !s.football_passings.nil? %>
-					<em><%= link_to s.gameschedule.game_name, [@sport, @athlete, s, s.football_passings] %></em>
-					<table class="table table-bordered">
-						<em>
-						<thead>
-							<th>Passing Attempts</th>
-							<th>Passing Completions</th>
-							<th>Completion Percentage</th>
-							<th>Passing Yards</th>
-							<th>Passing TD</th>
-							<th>Interceptions</th>
-							<th>Sacks</th>
-							<th>Yards Lost</th>
-						</thead>
-						</em>
-						<tbody>
-							<td><%= s.football_passings.attempts %></td>
-							<td><%= s.football_passings.completions %></td>
-							<td><%= number_with_precision(s.football_passings.comp_percentage, precision: 2) %></td>
-							<td><%= s.football_passings.yards %></td>
-							<td><%= s.football_passings.td %></td>
-							<td><%= s.football_passings.interceptions %></td>
-							<td><%= s.football_passings.sacks %></td>
-							<td><%= s.football_passings.yards_lost %></td>
-						</tbody>
-					</table>
-				<% end %>
+				<em><%= link_to s.gameschedule.game_name, [@sport, @athlete, s, s.football_passings] %></em> - 
+					<strong>Select to enter play by play stats for game</strong>
+				<table class="table table-bordered">
+					<em>
+					<thead>
+						<th>Passing Attempts</th>
+						<th>Passing Completions</th>
+						<th>Completion Percentage</th>
+						<th>Passing Yards</th>
+						<th>Passing TD</th>
+						<th>Interceptions</th>
+						<th>Sacks</th>
+						<th>Yards Lost</th>
+					</thead>
+					</em>
+					<tbody>
+						<td><%= s.football_passings.attempts %></td>
+						<td><%= s.football_passings.completions %></td>
+						<td><%= number_with_precision(s.football_passings.comp_percentage, precision: 2) %></td>
+						<td><%= s.football_passings.yards %></td>
+						<td><%= s.football_passings.td %></td>
+						<td><%= s.football_passings.interceptions %></td>
+						<td><%= s.football_passings.sacks %></td>
+						<td><%= s.football_passings.yards_lost %></td>
+					</tbody>
+				</table>
 			<% end %>	
 			<div class="span4 offset4">
-				<%= link_to "Passing Totals", passing_sport_athlete_football_stats_path(@sport, @athlete, id: "passing"), class: "btn btn-mini btn-primary" %>
+				<%= link_to "Passing Totals", passing_sport_athlete_football_stats_path(@sport, @athlete, id: "passing"), 
+											class: "btn btn-mini btn-primary" %>
 			</div>
 		<% end %>
 	</div>

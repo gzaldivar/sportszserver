@@ -1,20 +1,40 @@
 <% provide(:title, @sport.sport_name + " " + @athlete.name + " - Alerts") %>
 <p>
 <div class="row">
-	<div class="span2">
+	<div class="span1 offset1">
 		Alerts for Athlete:
 	</div>
 	<% if !@athlete.pic.blank? %>
-		<div class="span2">
+		<div class="span2 offset1">
 			<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
 		</div>
 	<% end %>
-	<div class="span2">
+	<div class="span2 offset1">
 		<%= link_to @athlete.name, sport_athlete_path(@sport, @athlete) %>
 	</div>
-	<div class="span2 offset1">
+	<div class="span1 offset1">
 		<%= link_to "Clear All", clearall_sport_athlete_alerts_path(@sport, @athlete),
-								class: "btn btn-primary btn-danger", data: { confirm: "You sure? All Alerts will be cleared!" } %>
+								class: "btn btn-small btn-warning", data: { confirm: "You sure? All Alerts will be cleared!" } %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span10 offset1">
+		<h4>Sort Alerts by:</h4>
+		<%= form_tag sport_athlete_alerts_path, class: "form-horizontal", method: 'get' do %>
+			<div class="row">
+			    <div class="span2">
+				    <%= label_tag "Bio Alerts: " %>
+					<%= select_tag "alerttype", "<option>Bio</option><option>Blog</option><option>Media</option><option>Stats</option>".html_safe %>
+			    </div>
+			</div>
+			<p>
+			<div class="row">
+		    	<div class="span1 offset3">
+		    		<%= submit_tag  "Sort", class: "btn btn-small btn-primary", name: nil %>
+		    	</div>
+			</div>
+		<% end %>
 	</div>
 </div>
 <p>
@@ -25,6 +45,9 @@
   	<% else %>
 	  	<% @alerts.each do |a| %>
 	  		<% if !a.photo.blank? %>
+	  			Photo Alerts: 
+				<%= link_to "Clear Photo Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, photo: 'photo'), 
+					  								class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %>
 			  	<table class="table table-striped">
 			  		<thead>
 			  			<th>Time</th>
@@ -41,6 +64,9 @@
 			  		</tbody>
 			  	</table>
 			<% elsif !a.videoclip.blank? %>
+	  			Video Clip Alerts: 
+				<%= link_to "Clear Video Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, video: 'video'), 
+					  								class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %>
 			  	<table class="table table-striped">
 			  		<thead>
 			  			<th>Time</th>
@@ -53,10 +79,13 @@
 			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.videoclips.find(a.videoclip_id).displayname, sport_videoclip_path(@sport, a.videoclip_id) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+			  												class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
 			  		</tbody>
 			  	</table>
 			<% elsif !a.blog.blank? %>
+				Athlete Blog Alerts: 
+				<%= link_to "Clear Blog Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, blog: 'blog'), 
+					  				 class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
 			  	<table class="table table-striped">
 			  		<thead>
 			  			<th>Time</th>
@@ -72,7 +101,77 @@
 			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
 			  		</tbody>
 			  	</table>
+			<% elsif @sport.name == "Football" and !a.football_stat.nil? %>
+				Athlete Stat Alerts: 
+				<%= link_to "Clear Stat Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, stats: 'stats'), 
+					  				 class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
+			  	<table class="table table-striped">
+			  		<thead>
+			  			<th>Time</th>
+			  			<th>Message</th>
+			  			<th>Athlete</th>
+			  			<th>Clear Alert</th>
+			  		</thead>
+					<% if a.stat_football == "Defense" %>
+				  		<tbody>
+				  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+				  			<td><%= link_to a.message, sport_athlete_football_stat_football_defense_path(@sport, @athlete, 
+				  										a.football_stat, a.football_stat.football_defenses) %></td>
+				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
+				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  		</tbody>
+					<% elsif a.stat_football == "Passing" %>
+				  		<tbody>
+				  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+				  			<td><%= link_to a.message, sport_athlete_football_stat_football_passing_path(@sport, @athlete, 
+				  										a.football_stat, a.football_stat.football_passings) %></td>
+				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
+				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  		</tbody>
+					<% elsif a.stat_football == "Receiving" %>
+				  		<tbody>
+				  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+				  			<td><%= link_to a.message, sport_athlete_football_stat_football_receiving_path(@sport, @athlete, 
+				  										a.football_stat, a.football_stat.football_receivings) %></td>
+				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
+				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  		</tbody>
+					<% elsif a.stat_football == "Rushing" %>
+				  		<tbody>
+				  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+				  			<td><%= link_to a.message, sport_athlete_football_stat_football_rushing_path(@sport, @athlete, 
+				  										a.football_stat, a.football_stat.football_rushings) %></td>
+				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
+				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  		</tbody>
+					<% elsif a.stat_football == "Kicker" %>
+				  		<tbody>
+				  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+				  			<td><%= link_to a.message, sport_athlete_football_stat_football_kicker_path(@sport, @athlete, 
+				  										a.football_stat, a.football_stat.football_kickers) %></td>
+				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
+				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  		</tbody>
+					<% elsif a.stat_football == "Returner" %>
+				  		<tbody>
+				  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+				  			<td><%= link_to a.message, sport_athlete_football_stat_football_returner_path(@sport, @athlete, 
+				  										a.football_stat, a.football_stat.football_returners) %></td>
+				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
+				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  		</tbody>
+					<% end %>
+				</table>
 			<% else %>
+				Athlete Bio Alerts: 
+				<%= link_to "Clear Bio Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, bio: 'bio'), 
+					  				 class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
 			  	<table class="table table-striped">
 			  		<thead>
 			  			<th>Time</th>

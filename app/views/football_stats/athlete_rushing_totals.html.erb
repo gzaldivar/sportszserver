@@ -8,13 +8,15 @@
 			<h4>Rushing stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
 			<p>
 			<%= render 'rushing_totals', rushing: @rushing %>
-			<div class="span4 offset3">
+			<div class="span8 offset2">
 				<% if isAdmin? or isTeamManager?(@athlete) %>
-					<%= link_to "Add Rushing Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "rushing"), class: "btn btn-mini btn-primary" %>
-				<% end %>
+					<%= link_to "Add Rushing Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "rushing"), 
+								class: "btn btn-small btn-info" %>
+				<% end %>&nbsp
 				<% if @stats.count > 0 %>
+					<em>Click here to enter play by play stats:</em>
 					<%= link_to "Game Stats", rushing_sport_athlete_football_stats_path(@sport, @athlete, games: "games"), 
-						class: "btn btn-mini btn-primary" %>
+						class: "btn btn-small btn-primary" %>
 				<% end %>
 			</div>
 		<% else %>
@@ -23,7 +25,8 @@
 			<p>
 			<% @stats.each do |s| %>
 				<% if !s.football_rushings.nil? %>
-					<em><%= link_to s.gameschedule.game_name, [@sport, @athlete, s, s.football_rushings] %></em>
+					<em><%= link_to s.gameschedule.game_name, [@sport, @athlete, s, s.football_rushings] %></em> - 
+						<strong>Select to enter play by play stats for game</strong>
 					<table class="table table-bordered">
 						<em>
 						<thead>

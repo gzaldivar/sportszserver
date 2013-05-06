@@ -1,9 +1,5 @@
 class FootballReturner
   	include Mongoid::Document
-
-	include SendAlert
-
-	after_save :send_alerts
   
   	field	:punt_return, type: Integer, default: 0
 	field	:punt_returntd, type: Integer, default: 0
@@ -26,11 +22,5 @@ class FootballReturner
 	validates_numericality_of :kotd, greater_than_or_equal_to: 0
 	validates_numericality_of :kolong, greater_than_or_equal_to: 0
 	validates_numericality_of :koyards, greater_than_or_equal_to: 0
-
-	private
-
-	    def send_alerts
-	      send_stat_alerts(self.football_stat.athlete.sport, self.football_stat.athlete, self.football_stat.gameschedule, "Special Teams Statistics Updated")
-	    end
 
 end

@@ -1,60 +1,106 @@
 <% provide(:title, 'User ' + @user.name) %>
 <p>
 <div class="row">
-	<div class="span8 offset1" id="backcolor">
-	      	<% if @user.admin %>
-	      		<div class="row">
-	      			<div class="span10">
-	      				<h4>Administrator for <%= current_site.sitename %></h4>
-	      			</div>
-	      		</div>
-	      	<% end %>
-	      	<p>
-	      	<h3>
-	      	<% if @user.avatar_file_name.blank? %>
-	      		<%= image_tag 'photo_not_available.png' %>
-	      	<% else %>
-	      		<%= image_tag @user.avatar.url(:thumb) %>
-	      	<% end %>
-	      	<%= @user.name %><br/><p>
-	  		</h3>
+	<div class="span10" id="backcolor">
+      	<% if @user.admin %>
+      		<div class="row">
+      			<div class="span8 offset1">
+      				<h4>Administrator for <%= current_site.sitename %></h4>
+      			</div>
+      		</div>
+      	<% end %>
+      	<p>
+      	<div class="row">
+      		<div class="span2 offset1">
+		      	<% if @user.avatar_file_name.blank? %>
+		      		<%= image_tag 'photo_not_available.png' %>
+		      	<% else %>
+		      		<%= image_tag @user.avatar.url(:thumb) %>
+		      	<% end %>
+		    </div>
+		    <div class="span2 offset1">
+		      	<strong>Username: </strong><em><%= @user.name %></em>
+		    </div>
+		    <div class="span2 offset1">
 	      		<strong>Email: </strong><em><%= @user.email %></em><p>
-	      	<p>
-	      	<% if !@user.default_site .nil? %>
-	      		<strong>Member of Site: </strong><em><%= Sport.find(@user.default_site).sitename %></em>
-	      	<% end %>
-	      	<p>
-	      	<% if !@user.teamid.nil? and !@user.teamid.blank? %>
-	      		Team Manager: <%= find_team(@user.teamid).team_name %>
-	      	<% end %>
-	      	<p>
-	      	<em>
-	      	<% if @user.is_active %>
-	      		User Enabled
-	      	<% else %>
-	      		User Disabled
-	      	<% end %>
-	      	</em>
-	      	<p>
-	      	<% if isUserAdmin?(@user) or (!current_user.nil?  and (@user.id == current_user.id)) or isAdmin? %>
-	      		<%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-medium btn-primary" %>
-				<% if @user.disable and !@user.admin %>
-					<td><%= link_to "Disable User", disable_user_path(@user), class: "btn btn-medium btn-danger" %></td>
-				<% elsif !@user.admin %>
-					<td><%= link_to "Enable User", enable_user_path(@user), class: "btn btn-medium btn-danger" %></td>
+		    </div>
+		</div>
+      	<p>
+      	<div class="row">
+      		<div class="span2 offset1">
+		      	<% if !@user.default_site .nil? %>
+		      		<strong>Member of Site: </strong><em><%= Sport.find(@user.default_site).sitename %></em>
+		      	<% end %>
+		    </div>
+		    <div class="span2 offset1">
+		      	<% if !@user.teamid.nil? and !@user.teamid.blank? %>
+		      		Team Manager: <%= find_team(@user.teamid).team_name %>
+		      	<% end %>
+		    </div>
+		    <div class="span2 offset1">
+		    	<strong>User: </strong><em>
+		      	<% if @user.is_active %>
+		      		Enabled
+		      	<% else %>
+		      		Disabled
+		      	<% end %>
+		      	</em>
+		    </div>
+		</div>
+      	<p>
+      	<div class="row">
+      		<div class="span4 offset1">
+				<h4>Athlete Alert Options:</h4>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span2 offset1">
+				<strong>Enable Bio Alerts: </strong><%= @user.bio_alert %>
+			</div>
+			<div class="span2 offset1">
+				<strong>Enable Blog Alerts: </strong><%= @user.blog_alert %>
+			</div>
+			<div class="span2 offset1">
+				<strong>Enable Stat Alerts: </strong><%= @user.stat_alert %>
+			</div>
+		</div>
+		<p>
+		<div class="row">
+			<div class="span4 offset1">
+				<strong>Enable Scoring Alerts: </strong><%= @user.score_alert %>
+			</div>
+			<div class="span2 offset2">
+				<strong>Enable Media Alerts: </strong><%= @user.media_alert %>
+			</div>
+		</div>
+		<p>
+		<div class="row">
+			<div class="span4 offset3">
+				<% if (!current_user.nil?  and (@user.id == current_user.id)) or isAdmin? %>
+				    <%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-medium btn-primary" %>
 				<% end %>
-			<% end %>
-	    <div class="row">
-	  		<div class="span4">
-	        <% if @user.confirmed_at.nil? %>
-	          	<h3>An email has been sent to <%= @user.email %>. Please confirm your account by replying to the email.</h3>
-	        <% end %>
-	      </div>
-			<div class="span4 offset2">
+				<% if isUserAdmin?(@user) or isAdmin? %>
+					<% if @user.disable and !@user.admin %>
+						<td><%= link_to "Disable User", disable_user_path(@user), class: "btn btn-medium btn-danger" %></td>
+					<% elsif !@user.admin %>
+						<td><%= link_to "Enable User", enable_user_path(@user), class: "btn btn-medium btn-danger" %></td>
+					<% end %>
+				<% end %>
+	      	</div>
+	    </div>
+    	<div class="row">
+  			<div class="span4">
+        		<% if @user.confirmed_at.nil? %>
+          			<h3>An email has been sent to <%= @user.email %>. Please confirm your account by replying to the email.</h3>
+        		<% end %>
+      		</div>
+      	</div>
+      	<p>
+      	<div class="row">
+			<div class="span4 offset3">
 				Click here to go back to <em><strong>
 				<%= link_to current_site.sitename, sport_path(current_site) %></strong></em>.<br/>
 			</div>
-	      <p>
-	  	</div>
+  		</div>
 	</div>
 </div>

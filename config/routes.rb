@@ -60,7 +60,7 @@ Sportzserver::Application.routes.draw do
         end
 
         member do
-          get :newstat
+          get :newstat, :getrushing, :getpassing, :getreceiving, :getdefense, :getkicker, :getreturner
         end
 
         resources :football_passings, only: [:new, :create, :show, :edit, :update, :destroy] do
@@ -114,6 +114,8 @@ Sportzserver::Application.routes.draw do
             get :newkoreturn, :newpuntreturn, :editkoreturn, :editpuntreturn, :koreturn, :puntreturn
           end
         end
+
+        resources :basketball_stats
 
       end
  

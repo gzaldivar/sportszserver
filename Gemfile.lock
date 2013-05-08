@@ -47,6 +47,9 @@ GEM
       sass (~> 3.2)
     bootstrap-will_paginate (0.0.5)
       will_paginate
+    browser-timezone-rails (0.0.6)
+      jquery-rails
+      rails (>= 3.1)
     builder (3.0.4)
     capybara (1.1.2)
       mime-types (>= 1.16)
@@ -271,6 +274,7 @@ DEPENDENCIES
   binding_of_caller
   bootstrap-sass
   bootstrap-will_paginate (= 0.0.5)
+  browser-timezone-rails
   capybara (= 1.1.2)
   coffee-rails (~> 3.2.1)
   cucumber-rails (= 1.2.1)

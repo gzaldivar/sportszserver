@@ -212,7 +212,54 @@ class FootballStatsController < ApplicationController
 	end
 
 	def edit
-		
+	end
+
+	def getrushing
+		@stat = @athlete.football_stats.find(params[:id])
+		@rushing = @stat.football_rushings
+		respond_to do |format|
+			format.json { render 'football_rushings/show' }
+		end
+	end
+
+	def getpassing
+		@stat = @athlete.football_stats.find(params[:id])
+		@passing = @stat.football_passings
+		respond_to do |format|
+			format.json { render 'football_passings/show' }
+		end
+	end
+
+	def getreceiving
+		@stat = @athlete.football_stats.find(params[:id])
+		@receiving = @stat.football_receivings
+		respond_to do |format|
+			format.json { render 'football_receivings/show' }
+		end
+	end
+
+	def getdefense
+		@stat = @athlete.football_stats.find(params[:id])
+		@receiving = @stat.football_defenses
+		respond_to do |format|
+			format.json { render 'football_defenses/show' }
+		end
+	end
+
+	def getkicker
+		@stat = @athlete.football_stats.find(params[:id])
+		@receiving = @stat.football_kickers
+		respond_to do |format|
+			format.json { render 'football_kickers/show' }
+		end
+	end
+
+	def getreturner
+		@stat = @athlete.football_stats.find(params[:id])
+		@receiving = @stat.football_returners
+		respond_to do |format|
+			format.json { render 'football_returners/show' }
+		end
 	end
 
 	def update

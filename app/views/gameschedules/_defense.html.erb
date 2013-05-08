@@ -1,0 +1,46 @@
+<table class="table table-bordered">
+	<em>
+	<thead>
+		<th>Player</th>
+		<th>Tackles</th>
+		<th>Assists</th>
+		<th>Sacks</th>
+		<th>Passes Defended</th>
+		<th>Interceptions</th>
+		<th>Int Yards</th>
+		<th>Int Long</th>
+		<th>Int TD</th>
+		<th>Fumbles Recovered</th>
+	</thead>
+	</em>
+	<tbody>
+		<% ath_totals.each do |a| %>
+			<% if !a.football_defenses.nil? %>
+				<tr>
+					<td><%= Athlete.find(a.athlete).logname %></td>
+					<td><%= a.football_defenses.tackles %></td>
+					<td><%= a.football_defenses.assists %></td>
+					<td><%= a.football_defenses.sacks %></td>
+					<td><%= a.football_defenses.pass_defended %></td>
+					<td><%= a.football_defenses.interceptions %></td>
+					<td><%= a.football_defenses.int_yards %></td>
+					<td><%= a.football_defenses.int_long %></td>
+					<td><%= a.football_defenses.int_td %></td>
+					<td><%= a.football_defenses.fumbles_recovered %></td>
+				</tr>
+			<% end %>
+		<% end %>
+		<tr>
+			<td><strong>Totals:</strong></td>
+			<td><%= defense.defense_tackles %></td>
+			<td><%= defense.defense_assists %></td>
+			<td><%= defense.defense_sacks %></td>
+			<td><%= defense.defense_pass_defended %></td>
+			<td><%= defense.defense_interceptions %></td>
+			<td><%= defense.defense_int_yards %></td>
+			<td><%= defense.defense_int_long %></td>
+			<td><%= defense.defense_int_td %></td>
+			<td><%= defense.defense_fumbles_recovered %></td>
+		</tr>
+	</tbody>
+</table>

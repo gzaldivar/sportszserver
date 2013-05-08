@@ -1,0 +1,40 @@
+<table class="table table-bordered">
+	<em>
+	<thead>
+		<th>Player</th>
+		<th>Receptions</th>
+		<th>Receiving Yards</th>
+		<th>Average</th>
+		<th>Receiving TD</th>
+		<th>Longest</th>
+		<th>Fumbles</th>
+		<th>Fumbles Lost</th>
+	</thead>
+	</em>
+	<tbody>
+		<% ath_totals.each do |a| %>
+			<% if !a.football_receivings.nil? %>
+				<tr>
+					<td><%= Athlete.find(a.athlete).logname %></td>
+					<td><%= a.football_receivings.receptions %></td>
+					<td><%= a.football_receivings.yards %></td>
+					<td><%= number_with_precision(a.football_receivings.average, precision: 2) %></td>
+					<td><%= a.football_receivings.td %></td>
+					<td><%= a.football_receivings.longest %></td>
+					<td><%= a.football_receivings.fumbles %></td>
+					<td><%= a.football_receivings.fumbles_lost %></td>
+				</tr>
+			<% end %>
+		<% end %>
+		<tr>
+			<td><strong>Totals:</strong></td>
+			<td><%= receiving.receiving_receptions %></td>
+			<td><%= receiving.receiving_yards %></td>
+			<td><%= number_with_precision(receiving.receiving_average, precision: 2) %></td>
+			<td><%= receiving.receiving_tds %></td>
+			<td><%= receiving.receiving_longest %></td>
+			<td><%= receiving.receiving_fumbles %></td>
+			<td><%= receiving.receiving_fumbles_lost %></td>
+		</tr>
+	</tbody>
+</table>

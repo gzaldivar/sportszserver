@@ -12,10 +12,6 @@
 	<div class="span2 offset1">
 		<%= link_to @athlete.name, sport_athlete_path(@sport, @athlete) %>
 	</div>
-	<div class="span1 offset1">
-		<%= link_to "Clear All", clearall_sport_athlete_alerts_path(@sport, @athlete),
-								class: "btn btn-small btn-warning", data: { confirm: "You sure? All Alerts will be cleared!" } %>
-	</div>
 </div>
 <p>
 <div class="row">
@@ -24,14 +20,32 @@
 		<%= form_tag sport_athlete_alerts_path, class: "form-horizontal", method: 'get' do %>
 			<div class="row">
 			    <div class="span2">
-				    <%= label_tag "Bio Alerts: " %>
-					<%= select_tag "alerttype", "<option>Bio</option><option>Blog</option><option>Media</option><option>Stats</option>".html_safe %>
-			    </div>
-			</div>
-			<p>
-			<div class="row">
-		    	<div class="span1 offset3">
-		    		<%= submit_tag  "Sort", class: "btn btn-small btn-primary", name: nil %>
+					<%= select_tag "alerttype", "<option>Bio</option><option>Blog</option><option>Photo</option>option>Video</option>
+												 <option>Stats</option>".html_safe,
+									include_blank: true %>
+				</div>
+		    	<div class="span1 offset1">
+		    		<%= submit_tag  "Sort", class: "btn btn-medium btn-primary", name: nil %>
+		    	</div>
+		    	<div class="span4 offset1">
+		    		<% if @list == "Blog" %>
+						<%= link_to "Clear All Blog Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, blog: 'blog'), 
+							  								class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
+					<% elsif @list == "Media" %>
+						<%= link_to "Clear All Photo Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, photo: 'photo'), 
+							  								class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
+						<%= link_to "Clear All Video Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, video: 'video'), 
+							  								class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
+					<% elsif @list == "Stats" %>
+						<%= link_to "Clear All Stat Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, stats: 'stats'), 
+							  								class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
+					<% elsif @list == "Bio" %>
+						<%= link_to "Clear All Bio Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, bio: 'bio'), 
+							  								class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
+					<% else %>
+						<%= link_to "Clear All", clearall_sport_athlete_alerts_path(@sport, @athlete),
+												class: "btn btn-medium btn-danger", data: { confirm: "You sure? All Alerts will be cleared!" } %>
+					<% end %>
 		    	</div>
 			</div>
 		<% end %>
@@ -46,8 +60,6 @@
 	  	<% @alerts.each do |a| %>
 	  		<% if !a.photo.blank? %>
 	  			Photo Alerts: 
-				<%= link_to "Clear Photo Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, photo: 'photo'), 
-					  								class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %>
 			  	<table class="table table-striped">
 			  		<thead>
 			  			<th>Time</th>
@@ -65,8 +77,6 @@
 			  	</table>
 			<% elsif !a.videoclip.blank? %>
 	  			Video Clip Alerts: 
-				<%= link_to "Clear Video Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, video: 'video'), 
-					  								class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %>
 			  	<table class="table table-striped">
 			  		<thead>
 			  			<th>Time</th>
@@ -84,8 +94,6 @@
 			  	</table>
 			<% elsif !a.blog.blank? %>
 				Athlete Blog Alerts: 
-				<%= link_to "Clear Blog Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, blog: 'blog'), 
-					  				 class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
 			  	<table class="table table-striped">
 			  		<thead>
 			  			<th>Time</th>
@@ -103,8 +111,6 @@
 			  	</table>
 			<% elsif @sport.name == "Football" and !a.football_stat.nil? %>
 				Athlete Stat Alerts: 
-				<%= link_to "Clear Stat Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, stats: 'stats'), 
-					  				 class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
 			  	<table class="table table-striped">
 			  		<thead>
 			  			<th>Time</th>
@@ -170,8 +176,6 @@
 				</table>
 			<% else %>
 				Athlete Bio Alerts: 
-				<%= link_to "Clear Bio Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, bio: 'bio'), 
-					  				 class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
 			  	<table class="table table-striped">
 			  		<thead>
 			  			<th>Time</th>

@@ -1,0 +1,40 @@
+<table class="table table-bordered">
+	<em>
+	<thead>
+		<th>Player</th>
+		<th>Rushing Attempts</th>
+		<th>Rushing Yards</th>
+		<th>Average</th>
+		<th>Rushing TD</th>
+		<th>Longest</th>
+		<th>Fumbles</th>
+		<th>Fumbles Lost</th>
+	</thead>
+	</em>
+	<tbody>
+		<% ath_totals.each do |a| %>
+			<% if !a.football_rushings.nil? %>
+				<tr>
+					<td><%= Athlete.find(a.athlete).logname %></td>
+					<td><%= a.football_rushings.attempts %></td>
+					<td><%= a.football_rushings.yards %></td>
+					<td><%= number_with_precision(a.football_rushings.average, precision: 2) %></td>
+					<td><%= a.football_rushings.td %></td>
+					<td><%= a.football_rushings.longest %></td>
+					<td><%= a.football_rushings.fumbles %></td>
+					<td><%= a.football_rushings.fumbles_lost %></td>
+				</tr>
+			<% end %>
+		<% end %>
+		<tr>
+			<td><strong>Totals:</strong></td>
+			<td><%= rushing.rushing_attempts %></td>
+			<td><%= rushing.rushing_yards %></td>
+			<td><%= number_with_precision(rushing.rushing_average, precision: 2) %></td>
+			<td><%= rushing.rushing_tds %></td>
+			<td><%= rushing.rushing_longest %></td>
+			<td><%= rushing.rushing_fumbles %></td>
+			<td><%= rushing.rushing_fumbles_lost %></td>
+		</tr>
+	</tbody>
+</table>

@@ -1,0 +1,31 @@
+<table class="table table-bordered">
+	<em>
+	<thead>
+		<th>Player</th>
+		<th>Kickoff Returns</th>
+		<th>Return TD</th>
+		<th>Return Yards</th>
+		<th>Return Long</th>
+	</thead>
+	</em>
+	<tbody>
+		<% ath_totals.each do |a| %>
+			<% if !a.football_returners.nil? and (a.football_returners.koreturns != 0) %>
+				<tr>
+					<td><%= Athlete.find(a.athlete).logname %></td>
+					<td><%= a.football_returners.koreturns %></td>
+					<td><%= a.football_returners.kotd %></td>
+					<td><%= a.football_returners.koyards %></td>
+					<td><%= a.football_returners.kolong %></td>
+				</tr>
+			<% end %>
+		<% end %>
+		<tr>
+			<td><strong>Totals:</strong></td>
+			<td><%= specialteam.returners_koreturns %></td>
+			<td><%= specialteam.returners_kotd %></td>
+			<td><%= specialteam.returners_koyards %></td>
+			<td><%= specialteam.returners_kolong %></td>
+		</tr>
+	</tbody>
+</table>

@@ -5,16 +5,21 @@ class AlertsController < ApplicationController
 	def index
 		if params[:alerttype] == "Bio"
 			@alerts = @athlete.alerts.where(user_id: current_user.id.to_s, :athlete.ne => "", :athlete.exists => true).desc(:created_at).entries
+			@list = "Bio"
 		elsif params[:alerttype] == "Blog"
 			@alerts = @athlete.alerts.where(user_id: current_user.id.to_s, :blog.ne => "", :blog.exists => true).desc(:created_at).entries
+			@list = "Blog"
 		elsif params[:alerttype] == "Media"
 			@alerts = @athlete.alerts.where(user_id: current_user.id.to_s, :photo.ne => "", :photo.exists => true, :videoclip.ne => "", 
 											:videoclip.exists => true).desc(:created_at).entries
+			@list = "Media"
 		elsif params[:alerttype] == "Stats"
 			@alerts = @athlete.alerts.where(user_id: current_user.id.to_s, :footall_stat.ne => "", :football_stat.exists => true,
 											:stat_football.ne => "", :stat_football.exists => true).desc(:created_at).entries
+			@list = "Stats"
 		else				
 			@alerts = @athlete.alerts.where(user_id: current_user.id.to_s).desc(:created_at).entries
+			@list = "All"
 		end
 
 	  	respond_to do |format|

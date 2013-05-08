@@ -40,6 +40,7 @@ class Gameschedule
   has_many :blogs
   has_many :photos
   has_many :videoclips
+  has_many :basketball_stats
 
   validates_presence_of :starttime
   validates_presence_of :gamedate

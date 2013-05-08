@@ -17,4 +17,5 @@
 //= require bootstrap
 //= require s3_direct_upload
 //= require mediaelement_rails
+//= require browser_timezone_rails/application.js
 //= require_tree .

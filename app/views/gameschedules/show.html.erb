@@ -91,31 +91,31 @@
 		  	<h4><em>Game Statistics</em></h4>
 		  	<p>
 		  	<h5>Passing</h5>
-			<%= render 'football_stats/passing_totals', passing: @stats %>
+			<%= render 'passing', passing: @stats, ath_totals: @ath_totals %>
 		  	<p>
 		  	<h5>Rushing</h5>
-			<%= render 'football_stats/rushing_totals', rushing: @stats %>
+			<%= render 'rushing', rushing: @stats, ath_totals: @ath_totals %>
 		  	<p>
 		  	<h5>Receiving</h5>
-			<%= render 'football_stats/receiving_totals', receiving: @stats %>
+			<%= render 'receiving', receiving: @stats, ath_totals: @ath_totals %>
 		  	<p>
 		  	<h5>Defense</h5>
-			<%= render 'football_stats/defense_totals', defense: @stats %>
+			<%= render 'defense', defense: @stats, ath_totals: @ath_totals %>
 		  	<p>
 		  	<h5>Special Teams Placekicking</h5>
-			<%= render 'football_stats/specialteams_fgtotals', specialteam: @stats %>
+			<%= render 'placekicker', specialteam: @stats, ath_totals: @ath_totals %>
 		  	<p>
 		  	<h5>Special Teams Kickoff</h5>
-			<%= render 'football_stats/specialteams_kototals', specialteam: @stats %>
+			<%= render 'kickoff', specialteam: @stats, ath_totals: @ath_totals %>
 		  	<p>
 		  	<h5>Special Teams Punts</h5>
-			<%= render 'football_stats/specialteams_punt_totals', specialteam: @stats %>
+			<%= render 'punter', specialteam: @stats, ath_totals: @ath_totals %>
 		  	<p>
 		  	<h5>Special Teams Punt Returns</h5>
-			<%= render 'football_stats/specialteams_punt_return_totals', specialteam: @stats %>
+			<%= render 'puntreturn', specialteam: @stats, ath_totals: @ath_totals %>
 		  	<p>
 		  	<h5>Special Teams Kickoff Returns</h5>
-			<%= render 'football_stats/specialteams_koreturn_totals', specialteam: @stats %>
+			<%= render 'kickoffreturn', specialteam: @stats, ath_totals: @ath_totals %>
 		<% end %>
 	</div>
 </div>

@@ -41,30 +41,30 @@ if @stats
 				node (:int_td) { @stats.defense_int_td }
 				node (:fumbles_recovered) { @stats.defense_fumbles_recovered }
 			end
-			child @stats => :football_specialteam do
-				node (:fgattempts) { @stats.specialteams_fgattempts }
-				node (:fgmade) { @stats.specialteams_fgmade }
-				node (:fgblocked) { @stats.specialteams_fgblocked }
-				node (:fglong) { @stats.specialteams_fglong }
-				node (:xpattempts) { @stats.specialteams_xpattempts }
-				node (:xpmade) { @stats.specialteams_xpmade }
-				node (:xpmissed) { @stats.specialteams_xpmissed }
-				node (:xpblocked) { @stats.specialteams_xpblocked }
-				node (:koattempts) { @stats.specialteams_koattempts }
-				node (:kotouchbacks) { @stats.specialteams_kotouchbacks }
-				node (:koreturned) { @stats.specialteams_koreturned }
-				node (:punts) { @stats.specialteams_punts }
-				node (:punts_yards) { @stats.specialteams_punts_yards }
-				node (:punts_long) { @stats.specialteams_punts_long }
-				node (:punts_blocked) { @stats.specialteams_punts_blocked }
-				node (:punt_return) { @stats.specialteams_punt_return }
-				node (:punt_returnyards) { @stats.specialteams_punt_returnyards }
-				node (:punts_returntd) { @stats.specialteams_punt_returntd }
-				node (:punts_returnlong) { @stats.specialteams_punt_returnlong }
-				node (:koreturns) { @stats.specialteams_koreturns }
-				node (:kotd) { @stats.specialteams_kotd }
-				node (:koyards) { @stats.specialteams_koyards }
-				node (:kolong) { @stats.specialteams_kolong }
+			child @stats => :football_specialteams do
+				node (:fgattempts) { @stats.kickers_fgattempts }
+				node (:fgmade) { @stats.kickers_fgmade }
+				node (:fgblocked) { @stats.kickers_fgblocked }
+				node (:fglong) { @stats.kickers_fglong }
+				node (:xpattempts) { @stats.kickers_xpattempts }
+				node (:xpmade) { @stats.kickers_xpmade }
+				node (:xpmissed) { @stats.kickers_xpmissed }
+				node (:xpblocked) { @stats.kickers_xpblocked }
+				node (:koattempts) { @stats.kickers_koattempts }
+				node (:kotouchbacks) { @stats.kickers_kotouchbacks }
+				node (:koreturned) { @stats.kickers_koreturned }
+				node (:punts) { @stats.kickers_punts }
+				node (:punts_yards) { @stats.kickers_punts_yards }
+				node (:punts_long) { @stats.kickers_punts_long }
+				node (:punts_blocked) { @stats.kickers_punts_blocked }
+				node (:punt_return) { @stats.returners_punt_return }
+				node (:punt_returnyards) { @stats.returners_punt_returnyards }
+				node (:punts_returntd) { @stats.returners_punt_returntd }
+				node (:punts_returnlong) { @stats.returners_punt_returnlong }
+				node (:koreturns) { @stats.returners_koreturns }
+				node (:kotd) { @stats.returners_kotd }
+				node (:koyards) { @stats.returners_koyards }
+				node (:kolong) { @stats.returners_kolong }
 			end
 		end
 	end

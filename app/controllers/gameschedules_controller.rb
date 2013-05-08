@@ -40,6 +40,7 @@ class GameschedulesController < ApplicationController
     if @sport.name == "Football"
       @stats = AthleteFootballStatsTotal.new
       @stats.passing_totals(@gameschedule)
+      @ath_totals = @gameschedule.football_stats
       @stats.rushing_totals(@gameschedule)
       @stats.receiving_totals(@gameschedule)
       @stats.defense_totals(@gameschedule)

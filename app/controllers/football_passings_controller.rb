@@ -96,6 +96,20 @@ class FootballPassingsController < ApplicationController
 																		 logentry: @athlete.logname + " " + params[:yards] + "yards to " + 
 																		 player.logname, score: "TD")
 						gamelog.save!
+						if params[:quarter]
+							@gameschedule = Gameschedule.find(@fbpassing.football_stat.gameschedule)
+							case params[:quarter]
+							when "Q1"
+								@gameschedule.homeq1 = @gameschedule.homeq1 + 6
+							when "Q2"
+								@gameschedule.homeq2 = @gameschedule.homeq2 + 6
+							when "Q3"
+								@gameschedule.homeq3 = @gameschedule.homeq3 + 6
+							when "Q4"
+								@gameschedule.homeq4 = @gameschedule.homeq4 + 6
+							end
+							@gameschedule.save!
+						end
 					end
 				end
 
@@ -134,16 +148,16 @@ class FootballPassingsController < ApplicationController
 		begin
 			@fbpassing.update_attributes!(params[:football_passing])
 			if current_user.score_alert? and params[:football_passing][:td].to_i > 0
-				send_alert(@athlete, "Passing score alert for ", @fbpassing)
+				send_alert(@athlete, "Passing score alert for ")
 			elsif current_user.stat_alert? and params[:football_passing][:td].to_i == 0
-				send_alert(@athlete, "Passing stat alert for ", @fbpassing)
+				send_alert(@athlete, "Passing stat alert for ")
 			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @fbpassing], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json 
 		     end			
 		rescue Exception => e
-			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name			
+			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name + " " + e.message		
 		end
 	end
 

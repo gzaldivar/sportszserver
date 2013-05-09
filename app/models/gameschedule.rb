@@ -48,7 +48,19 @@ class Gameschedule
   validates_presence_of :opponent
   validates :homeaway, presence: true, format: { with: /Home|Away|home|away/ }
   validates_attachment_content_type :opponentpic, content_type: ['image/jpg', 'image/jpeg', 'image/png']
-  
+  validates_numericality_of :homeq1, message: "Value must be 0 or a number greater than 0"
+  validates_numericality_of :homeq2, message: "Value must be 0 or a number greater than 0"
+  validates_numericality_of :homeq3, message: "Value must be 0 or a number greater than 0"
+  validates_numericality_of :homeq4, message: "Value must be 0 or a number greater than 0"
+  validates_numericality_of :opponentq1, message: "Value must be 0 or a number greater than 0"
+  validates_numericality_of :opponentq2, message: "Value must be 0 or a number greater than 0"
+  validates_numericality_of :opponentq3, message: "Value must be 0 or a number greater than 0"
+  validates_numericality_of :opponentq4, message: "Value must be 0 or a number greater than 0"
+  validates_numericality_of :homeh1, message: "Value must be 0 or a number greater than 0"
+  validates_numericality_of :homeh2, message: "Value must be 0 or a number greater than 0"
+  validates_numericality_of :opponenth1, message: "Value must be 0 or a number greater than 0"
+  validates_numericality_of :opponenth2, message: "Value must be 0 or a number greater than 0"
+
   def game_name
     gamedate.strftime("%m/%d/%Y") + " vs " + opponent
   end

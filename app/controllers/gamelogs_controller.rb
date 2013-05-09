@@ -6,13 +6,14 @@ class GamelogsController < ApplicationController
     end
 
   	def create
-      if @gamelog = @gameschedule.gamelogs.create!(params[:gamelog])
-        respond_to do |format|
-          format.html { redirect_to [@sport, @team, @gameschedule], success: "Game log entry created!" }
-          format.json
-        end
-      else
-        redirect_to :back, alert: "Error creating game log"
+      begin
+        @gamelog = @gameschedule.gamelogs.create!(params[:gamelog])
+          respond_to do |format|
+            format.html { redirect_to [@sport, @team, @gameschedule], success: "Game log entry created!" }
+            format.json
+          end
+      rescue Exception => e
+        redirect_to :back, alert: "Error creating game log " + e.message
       end 		
   	end
 

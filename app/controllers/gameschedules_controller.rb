@@ -29,7 +29,7 @@ class GameschedulesController < ApplicationController
         format.js
       end
     else
-      redirect_to :back, alert: "Error creating game schedule"
+      redirect_to :back, alert: "Error creating game schedule " + schedule.message
     end
 
   end
@@ -56,24 +56,20 @@ class GameschedulesController < ApplicationController
   end
   
   def update
-#    schedule = @team.gameschedules.find(params[:id])
-#    schedule.gamedate = Date.strptime(params[:gameschedule][:gamedate].to_s, '%m/%d/%Y').to_s
-#    schedule.gamedate = Date.civil(params[:gameschedule][:"gamedate(1i)"].to_i,
-#                                   params[:gameschedule][:"gamedate(2i)"].to_i,
-#                                   params[:gameschedule][:"gamedate(3i)"].to_i)
-    @gameschedule.starttime = DateTime.civil(@gameschedule.gamedate.year, @gameschedule.gamedate.month, 
-                                        @gameschedule.gamedate.day, 
-                                        params[:gameschedule][:"starttime(4i)"].to_i,
-                                        params[:gameschedule][:"starttime(5i)"].to_i)
-    if @gameschedule.update_attributes(params[:gameschedule])
-     respond_to do |format|
-        format.html { redirect_to [@sport, @team, @gameschedule] }
-        format.xml
-        format.json 
-        format.js
+    begin
+      @gameschedule.starttime = DateTime.civil(@gameschedule.gamedate.year, @gameschedule.gamedate.month, 
+                                          @gameschedule.gamedate.day, 
+                                          params[:gameschedule][:"starttime(4i)"].to_i,
+                                          params[:gameschedule][:"starttime(5i)"].to_i)
+      @gameschedule.update_attributes!(params[:gameschedule])
+      respond_to do |format|
+          format.html { redirect_to [@sport, @team, @gameschedule] }
+          format.xml
+          format.json 
+          format.js
       end
-    else
-      redirect_to :back, alert: "Error updating game schedule"
+    rescue Exception => e
+      redirect_to :back, alert: "Error updating game schedule " + e.message
     end
   end
   

@@ -165,7 +165,7 @@ class PhotosController < ApplicationController
     tags = data.split('_')
     
     tags.each_with_index do |t, cnt|
-      case t
+    case t
       when "t"
         @photo.teamid = tags[cnt+=1]
       when "s"

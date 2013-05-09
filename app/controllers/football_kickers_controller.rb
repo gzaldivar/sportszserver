@@ -89,11 +89,39 @@ class FootballKickersController < ApplicationController
 				gamelog = @kicker.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
 																		   logentry: @athlete.logname + " " + params[:fglong].to_i, score: "FG")
 				gamelog.save!
+				if params[:quarter]
+					@gameschedule = Gameschedule.find(@kicker.football_stat.gameschedule)
+					case params[:quarter]
+					when "Q1"
+						@gameschedule.homeq1 = @gameschedule.homeq1 + 3
+					when "Q2"
+						@gameschedule.homeq2 = @gameschedule.homeq2 + 3
+					when "Q3"
+						@gameschedule.homeq3 = @gameschedule.homeq3 + 3
+					when "Q4"
+						@gameschedule.homeq4 = @gameschedule.homeq4 + 3
+					end
+					@gameschedule.save!
+				end
 			elsif params[:xpmade].to_i > 0
 				@kicker.xpmade = @kicker.xpmade + 1
 				gamelog = @kicker.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
 																		   logentry: @athlete.logname, score: "XP")
 				gamelog.save!
+				if params[:quarter]
+					@gameschedule = Gameschedule.find(@kicker.football_stat.gameschedule)
+					case params[:quarter]
+					when "Q1"
+						@gameschedule.homeq1 = @gameschedule.homeq1 + 1
+					when "Q2"
+						@gameschedule.homeq2 = @gameschedule.homeq2 + 1
+					when "Q3"
+						@gameschedule.homeq3 = @gameschedule.homeq3 + 1
+					when "Q4"
+						@gameschedule.homeq4 = @gameschedule.homeq4 + 1
+					end
+					@gameschedule.save!
+				end
 			end
 			@kicker.save!
 

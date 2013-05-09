@@ -46,6 +46,20 @@ class FootballRushingsController < ApplicationController
 				gamelog = @rushing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
 												logentry: @athlete.logname + " " +  params[:yards] + " yard run", score: "TD")
 				gamelog.save!
+				if params[:quarter]
+					@gameschedule = Gameschedule.find(@rushing.football_stat.gameschedule)
+					case params[:quarter]
+						when "Q1"
+							@gameschedule.homeq1 = @gameschedule.homeq1 + 6
+						when "Q2"
+							@gameschedule.homeq2 = @gameschedule.homeq2 + 6
+						when "Q3"
+							@gameschedule.homeq3 = @gameschedule.homeq3 + 6
+						when "Q4"
+							@gameschedule.homeq4 = @gameschedule.homeq4 + 6
+					end
+					@gameschedule.save!
+				end
 			end
 			@rushing.save!
 

@@ -1,6 +1,7 @@
 object @athlete
 node(:id) { |o| o.id.to_s }
 attributes :number, :name, :full_name, :logname, :lastname, :firstname, :middlename, :position, :height, :weight, :year, :bio
+node(:tiny) { |t| t.pic(:tiny) }
 node(:thumb) { |t| t.pic(:thumb) }
 node(:mediumpic) { |t| t.pic(:medium) }
 node(:largepic) { |t| t.pic(:large) }

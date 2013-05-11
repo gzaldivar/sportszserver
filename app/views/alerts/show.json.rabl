@@ -1,7 +1,7 @@
 object @alert
 node(:id) { |o| o.id.to_s }
 attributes :message, :stat_football
-node(:created_at) {|u| u.created_at.strftime('%m/%d/%Y %I:%M:%S %p') }
+node(:created_at) {|u| u.created_at.localtime.strftime('%m/%d/%Y %I:%M:%S %p') }
 node(:user) { |u| u.user_id.to_s }
 node(:athlete) { |u| u.athlete_id.to_s }
 node(:photo) { |u| u.photo_id.to_s }

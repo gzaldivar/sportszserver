@@ -66,7 +66,8 @@ class PhotosController < ApplicationController
       team = @sport.teams.find(@gameschedule.team_id)
       @prefix = "t_" + team.id + "_g_" + @gameschedule.id + "_s_" + @sport.id
       
-      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+#      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+      time = DateTime.now.beginning_of_day.iso8601
       time = time.to_time.yesterday.to_date.iso8601
       @photos = []
       
@@ -93,7 +94,8 @@ class PhotosController < ApplicationController
       @athlete = @sport.athletes.find(params[:id].to_s)
       @prefix = "t_" + @athlete.team_id + "_a_" + @athlete.id + "_s_" + @sport.id
       
-      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+#      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+      time = DateTime.now.beginning_of_day.iso8601
       time = time.to_time.yesterday.to_date.iso8601
       @photos = []
       
@@ -120,7 +122,8 @@ class PhotosController < ApplicationController
       @team = @sport.teams.find(params[:id].to_s)
       @prefix = "t_" + @team.id + "_s_" + @sport.id
       
-      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+#      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
+      time = DateTime.now.beginning_of_day.iso8601
       time = time.to_time.yesterday.to_date.iso8601
       @photos = []    
       @sport.photos.where(teamid: @team.id, :updated_at.gt => time, user_id: current_user.id).asc(:updated_at).each_with_index do |q, cnt|

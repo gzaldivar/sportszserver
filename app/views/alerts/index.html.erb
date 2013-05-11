@@ -68,7 +68,7 @@
 			  			<th>Clear Alert</th>
 			  		</thead>
 			  		<tbody>
-			  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+			  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.photos.find(a.photo_id).displayname, sport_photo_path(@sport, a.photo_id) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
@@ -85,7 +85,7 @@
 			  			<th>Clear Alert</th>
 			  		</thead>
 			  		<tbody>
-			  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+			  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.videoclips.find(a.videoclip_id).displayname, sport_videoclip_path(@sport, a.videoclip_id) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
@@ -102,7 +102,7 @@
 			  			<th>Clear Alert</th>
 			  		</thead>
 			  		<tbody>
-			  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+			  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.blogs.find(a.blog_id).title, sport_blog_path(@sport, a.blog_id) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
@@ -120,7 +120,7 @@
 			  		</thead>
 					<% if a.stat_football == "Defense" %>
 				  		<tbody>
-				  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+				  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 				  			<td><%= link_to a.message, sport_athlete_football_stat_football_defense_path(@sport, @athlete, 
 				  										a.football_stat, a.football_stat.football_defenses) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
@@ -129,7 +129,7 @@
 				  		</tbody>
 					<% elsif a.stat_football == "Passing" %>
 				  		<tbody>
-				  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+				  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 				  			<td><%= link_to a.message, sport_athlete_football_stat_football_passing_path(@sport, @athlete, 
 				  										a.football_stat, a.football_stat.football_passings) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
@@ -138,7 +138,7 @@
 				  		</tbody>
 					<% elsif a.stat_football == "Receiving" %>
 				  		<tbody>
-				  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+				  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 				  			<td><%= link_to a.message, sport_athlete_football_stat_football_receiving_path(@sport, @athlete, 
 				  										a.football_stat, a.football_stat.football_receivings) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
@@ -147,7 +147,7 @@
 				  		</tbody>
 					<% elsif a.stat_football == "Rushing" %>
 				  		<tbody>
-				  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+				  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 				  			<td><%= link_to a.message, sport_athlete_football_stat_football_rushing_path(@sport, @athlete, 
 				  										a.football_stat, a.football_stat.football_rushings) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
@@ -156,7 +156,7 @@
 				  		</tbody>
 					<% elsif a.stat_football == "Kicker" %>
 				  		<tbody>
-				  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+				  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 				  			<td><%= link_to a.message, sport_athlete_football_stat_football_kicker_path(@sport, @athlete, 
 				  										a.football_stat, a.football_stat.football_kickers) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
@@ -165,7 +165,7 @@
 				  		</tbody>
 					<% elsif a.stat_football == "Returner" %>
 				  		<tbody>
-				  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+				  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 				  			<td><%= link_to a.message, sport_athlete_football_stat_football_returner_path(@sport, @athlete, 
 				  										a.football_stat, a.football_stat.football_returners) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
@@ -184,7 +184,7 @@
 			  			<th>Clear Alert</th>
 			  		</thead>
 			  		<tbody>
-			  			<td><%= a.created_at.strftime("%m-%d-%Y %H:%M:%S") %></td>
+			  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 			  			<td><%= link_to a.message, sport_athlete_path(@sport, @athlete) %></td>
 			  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 

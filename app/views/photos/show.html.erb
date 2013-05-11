@@ -50,7 +50,7 @@
 		  <% else %>
 				<td></td>
 		  <% end %>
-          <td><%= @photo.updated_at.strftime("%m/%d/%Y") %></td>
+          <td><%= @photo.updated_at.localtime.strftime("%m/%d/%Y") %></td>
         </tr>
       </tbody>
     </table>

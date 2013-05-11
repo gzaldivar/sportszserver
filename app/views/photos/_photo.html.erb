@@ -35,7 +35,7 @@
 				    <% end %>
 				</div>
 			</div>
-		    <td><%= photo.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>
+		    <td><%= photo.updated_at.localtime.strftime("%m/%d/%Y %H:%M:%S") %></td>
 		    <% if !photo.pending %>
 		    	<td><%= link_to photo.displayname, sport_photo_path(@sport, photo) %></td>
 		    <% else %>

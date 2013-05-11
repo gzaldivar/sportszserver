@@ -6,13 +6,13 @@ class VideoclipsController < ApplicationController
   def newathlete
     if roomformedia?(@sport)
       @athlete = @sport.athletes.find(params[:id].to_s)
-      @prefix = "t_" + @athlete.team + "_a_" + @athlete.id + "_s_" + @sport.id
+      @prefix = "t_" + @athlete.team_id + "_a_" + @athlete.id + "_s_" + @sport.id
       
       time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
       time = time.to_time.yesterday.to_date.iso8601
       @videoclips = []
       
-      @sport.videoclips.where(teamid: @athlete.team, :players.in =>  [@athlete.id.to_s], :updated_at.gt => time, 
+      @sport.videoclips.where(teamid: @athlete.team_id, :players.in =>  [@athlete.id.to_s], :updated_at.gt => time, 
                               owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
         @videoclips[cnt] = q
       end

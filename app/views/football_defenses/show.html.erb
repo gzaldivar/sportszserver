@@ -13,6 +13,7 @@
 				<th>Tackles</th>
 				<th>Assists</th>
 				<th>Sacks</th>
+				<th>Interceptions</th>
 				<th>Passes Defended</th>
 			</thead>
 			</em>
@@ -20,23 +21,24 @@
 				<td><%= @defense.tackles %></td>
 				<td><%= @defense.assists %></td>
 				<td><%= @defense.sacks %></td>
+				<td><%= @defense.interceptions %></td>
 				<td><%= @defense.pass_defended %></td>
 			</tbody>
 		</table>
 		<table class="table table-bordered">
 			<thead>
-				<th>Interceptions</th>
 				<th>Int Return Yards</th>
 				<th>Int Return Long</th>
 				<th>Defensive TD</th>
 				<th>Fumbles Recoveredd</th>
+				<th>Safeties</th>
 			</thead>
 			<tbody>
-				<td><%= @defense.interceptions %></td>
 				<td><%= @defense.int_yards %></td>
 				<td><%= @defense.int_long %></td>
 				<td><%= @defense.int_td %></td>
 				<td><%= @defense.fumbles_recovered %></td>
+				<td><%= @defense.safety %></td>
 			</tbody>
 		</table>
 		<% if isAdmin? or isTeamManager?(@athlete) %>

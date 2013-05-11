@@ -26,11 +26,13 @@
 				<th>Receiving TD</th>
 				<th>Fumbles</th>
 				<th>Fumbles Lost</th>
+				<th>Two Point Conv</th>
 			</thead>
 			<tbody>
 				<td><%= @receiving.td %></td>
 				<td><%= @receiving.fumbles %></td>
 				<td><%= @receiving.fumbles_lost %></td>
+				<td><%= @receiving.twopointconv %></td>
 			</tbody>
 		</table>
 		<% if isAdmin? or isTeamManager?(@athlete) %>

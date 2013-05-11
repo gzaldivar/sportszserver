@@ -120,7 +120,7 @@ Sportzserver::Application.routes.draw do
       end
  
       member do
-        get :follow, :unfollow
+        get :follow, :unfollow, :stats
       end
     end
 

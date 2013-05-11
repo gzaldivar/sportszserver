@@ -91,6 +91,18 @@
 				</div>
 			<% end %>
 			<p>
+			<div class="row">
+				<div class="span2">
+					<%= f.input :firstdowns, label: "First Downs:", input_html: { style: "width: 50px" } %>
+				</div>
+				<div class="span2">
+					<%= f.input :penalty, label: "Number of Penalties:", input_html: { style: "width: 50px" } %>
+				</div>
+				<div class="span2">
+					<%= f.input :penaltyyards, label: "Penalty Yards:", input_html: { style: "width: 50px" } %>
+				</div>
+			</div>
+			<p>
 			<div class="span1 offset3">
 				<%= f.button :submit, "Submit", class: "btn btn-medium btn-primary" %>
 			</div>

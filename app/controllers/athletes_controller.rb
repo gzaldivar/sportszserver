@@ -2,7 +2,7 @@ class AthletesController < ApplicationController
 	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new, :follow, :unfollow]
  #  before_filter :site_owner?,         only: [:destroy, :update, :create, :edit, :new]
   before_filter :get_sport
-  before_filter :correct_athlete,     only: [:show, :edit, :update, :destroy, :follow, :unfollow]
+  before_filter :correct_athlete,     only: [:show, :edit, :update, :destroy, :follow, :unfollow, :stats]
   before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
     controller.team_manager?(@athlete, nil)
   end
@@ -130,6 +130,21 @@ class AthletesController < ApplicationController
     @athlete.fans.delete(current_user.id)
     @athlete.save
     redirect_to :back, notice: "No longer following " + @athlete.full_name
+  end
+
+  def stats
+    if @sport.name == "Football"
+      @stats = AthleteFootballStatsTotal.new
+      @stats.passing_totals(@athlete)
+      @ath_totals = @athlete.football_stats
+      @stats.rushing_totals(@athlete)
+      @stats.receiving_totals(@athlete)
+      @stats.defense_totals(@athlete)
+      @stats.specialteams_totals(@athlete)
+    end
+    respond_to do |format|
+      format.json 
+    end
   end
   
   private

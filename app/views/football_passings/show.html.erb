@@ -29,12 +29,14 @@
 				<th>Interceptions</th>
 				<th>Sacks</th>
 				<th>Yards Lost</th>
+				<th>Two Point Conv</th>
 			</thead>
 			<tbody>
 				<td><%= @fbpassing.td %></td>
 				<td><%= @fbpassing.interceptions %></td>
 				<td><%= @fbpassing.sacks %></td>
 				<td><%= @fbpassing.yards_lost %></td>
+				<td><%= @fbpassing.twopointconv %></td>
 			</tbody>
 		</table>
 		<% if isAdmin? or isTeamManager?(@athlete) %>

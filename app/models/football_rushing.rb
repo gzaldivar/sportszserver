@@ -11,6 +11,7 @@ class FootballRushing
   field :td, type: Integer, default:0
   field :fumbles, type: Integer, default: 0
   field :fumbles_lost, type: Integer, default: 0
+  field :twopointconv, type: Integer, default: 0
   
   embedded_in :football_stat
   
@@ -20,6 +21,7 @@ class FootballRushing
   validates_numericality_of :td, greater_than_or_equal_to: 0
   validates_numericality_of :fumbles, greater_than_or_equal_to: 0
   validates_numericality_of :fumbles_lost, greater_than_or_equal_to: 0
+  validates_numericality_of :twopointconv, greater_than_or_equal_to: 0
   
   def comp_average
     if self.attempts > 0 and self.yards > 0

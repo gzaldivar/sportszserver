@@ -12,7 +12,8 @@ class AthleteFootballStatsTotal
 				:kickers_punts_blocked, :kickers_punts_yards, :kickers_punts_long, :kickers_koattempts,
 				:kickers_kotouchbacks, :kickers_koreturned, :kickers_koreturn_average, :returners_punt_return,
 				:returners_punt_returntd, :returners_punt_returnyards, :returners_punt_returnlong, :returners_koreturns,
-				:returners_kotd, :returners_kolong, :returners_koyards
+				:returners_kotd, :returners_kolong, :returners_koyards, :passing_twopointconv, :rushing_twopointconv,
+				:receiving_twopointconv, :defense_safety
 
 	def passing_totals(athlete)
 		self.passing_attempts = 0
@@ -23,6 +24,7 @@ class AthleteFootballStatsTotal
 		self.passing_int = 0
 		self.passing_sacks = 0
 		self.passing_yards_lost = 0
+		self.passing_twopointconv = 0
 
 		athlete.football_stats.each do |s|
 			if !s.football_passings.nil?
@@ -33,6 +35,7 @@ class AthleteFootballStatsTotal
 				self.passing_int = self.passing_int + s.football_passings.interceptions
 				self.passing_sacks = self.passing_sacks + s.football_passings.sacks
 				self.passing_yards_lost = self.passing_yards_lost + s.football_passings.yards_lost
+				self.passing_twopointconv = self.passing_twopointconv + s.football_passings.twopointconv
 			end
 		end
 		if self.passing_attempts != 0
@@ -50,6 +53,7 @@ class AthleteFootballStatsTotal
 		self.rushing_fumbles = 0
 		self.rushing_fumbles_lost = 0
 		self.rushing_average = 0.0
+		self.rushing_twopointconv = 0
 
 		athlete.football_stats.each do |s|
 			if !s.football_rushings.nil?
@@ -61,6 +65,7 @@ class AthleteFootballStatsTotal
 				if self.rushing_longest < s.football_rushings.longest
 					self.rushing_longest = s.football_rushings.longest
 				end
+				self.rushing_twopointconv = self.rushing_twopointconv + s.football_rushings.twopointconv
 			end
 		end
 		if self.rushing_attempts != 0 and self.rushing_yards != 0
@@ -78,6 +83,7 @@ class AthleteFootballStatsTotal
 		self.receiving_fumbles = 0
 		self.receiving_fumbles_lost = 0
 		self.receiving_average = 0.0
+		self.receiving_twopointconv = 0
 
 		athlete.football_stats.each do |s|
 			if !s.football_receivings.nil?
@@ -89,6 +95,7 @@ class AthleteFootballStatsTotal
 				if self.receiving_longest < s.football_receivings.longest
 					self.receiving_longest = s.football_receivings.longest
 				end
+				self.receiving_twopointconv = self.receiving_twopointconv + s.football_receivings.twopointconv
 			end
 		end
 		if self.receiving_receptions != 0 and self.receiving_yards != 0
@@ -108,6 +115,7 @@ class AthleteFootballStatsTotal
 		self.defense_int_long = 0
 		self.defense_int_td = 0
 		self.defense_fumbles_recovered = 0
+		self.defense_safety = 0
 
 		athlete.football_stats.each do |s|
 			if !s.football_defenses.nil?
@@ -122,6 +130,7 @@ class AthleteFootballStatsTotal
 				if self.defense_int_long < s.football_defenses.int_long
 					self.defense_int_long = s.football_defenses.int_long
 				end
+				self.defense_safety = self.defense_safety + s.football_defenses.safety
 			end
 		end
 	end

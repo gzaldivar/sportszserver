@@ -13,7 +13,7 @@ class FootballRushingsController < ApplicationController
 	def create
 		begin
 			@rushing = @stat.create_football_rushings(params[:football_rushing])
-			if current_user.score_alert? and params[:football_rushing][:td].to_i > 0
+			if current_user.score_alert? and (params[:football_rushing][:td].to_i > 0 or params[:football_rushing][:twopointconv].to_i > 0)
 				send_alert(@athlete, "Rushing score alert for ")
 			elsif current_user.stat_alert?
 				send_alert(@athlete, "Rushing stat alert for ")
@@ -61,6 +61,26 @@ class FootballRushingsController < ApplicationController
 					@gameschedule.save!
 				end
 			end
+			if params[:two].to_i > 0
+				@rushing.twopointconv = @rushing.twopointconv + params[:two].to_i
+				gamelog = @rushing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
+												logentry: @athlete.logname + " " +  params[:yards] + " yard run", score: "2P")
+				gamelog.save!
+				if params[:quarter]
+					@gameschedule = Gameschedule.find(@rushing.football_stat.gameschedule)
+					case params[:quarter]
+						when "Q1"
+							@gameschedule.homeq1 = @gameschedule.homeq1 + 2
+						when "Q2"
+							@gameschedule.homeq2 = @gameschedule.homeq2 + 2
+						when "Q3"
+							@gameschedule.homeq3 = @gameschedule.homeq3 + 2
+						when "Q4"
+							@gameschedule.homeq4 = @gameschedule.homeq4 + 2
+					end
+					@gameschedule.save!
+				end
+			end
 			@rushing.save!
 
 			if current_user.score_alert? and params[:td].to_i > 0
@@ -85,7 +105,7 @@ class FootballRushingsController < ApplicationController
 		begin
 			@rushing.update_attributes!(params[:football_rushing])
 			@rushing = @stat.create_football_rushings(params[:football_rushing])
-			if current_user.score_alert? and params[:football_rushing][:td].to_i > 0
+			if current_user.score_alert? and (params[:football_rushing][:td].to_i > 0 or params[:football_rushing][:twopointconv].to_i > 0)
 				send_alert(@athlete, "Rushing score alert for ")
 			elsif current_user.stat_alert?
 				send_alert(@athlete, "Rushing stat alert for ")

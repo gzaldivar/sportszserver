@@ -55,7 +55,8 @@ module SportsHelper
     [
       ["TD", "TD"],
       ["FG", "FG"],
-      ["XP", "XP"]
+      ["XP", "XP"],
+      ["2P", "2P"]
     ]
   end
 

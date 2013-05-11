@@ -12,7 +12,8 @@ class FootballPassing
   field :sacks, type: Integer, default: 0
   field :yards_lost, type: Integer, default: 0
   field :comp_percentage, type: Float
-  
+  field :twopointconv, type: Integer, default: 0
+    
   embedded_in :football_stat
    
   validates_numericality_of :attempts, greater_than_or_equal_to: 0
@@ -22,6 +23,7 @@ class FootballPassing
   validates_numericality_of :interceptions, greater_than_or_equal_to: 0
   validates_numericality_of :sacks, greater_than_or_equal_to: 0
   validates_numericality_of :yards_lost, greater_than_or_equal_to: 0
+  validates_numericality_of :twopointconv, greater_than_or_equal_to: 0
 
   def comp_percent
     if !self.completions.nil? and !self.attempts.nil?

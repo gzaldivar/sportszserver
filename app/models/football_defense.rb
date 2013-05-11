@@ -11,6 +11,7 @@ class FootballDefense
   field :int_long, type: Integer, default: 0
   field :int_td, type: Integer, default: 0
   field :fumbles_recovered, type: Integer, default: 0
+  field :safety, type: Integer, default: 0
   
   embedded_in :football_stat
 
@@ -23,5 +24,6 @@ class FootballDefense
   validates_numericality_of :int_long, greater_than_or_equal_to: 0
   validates_numericality_of :int_td, greater_than_or_equal_to: 0
   validates_numericality_of :fumbles_recovered, greater_than_or_equal_to: 0
+  validates_numericality_of :safety, greater_than_or_equal_to: 0
 
 end

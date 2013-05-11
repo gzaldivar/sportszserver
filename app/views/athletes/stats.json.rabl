@@ -1,6 +1,9 @@
 @ath_totals.each do |t|
-	child t => Athlete.find(t.athlete).logname do
+	game = Gameschedule.find(t.gameschedule)
+	child t => game.game_name do
 		node(:id) { t.id.to_s }
+		node(:game_id) { game.id.to_s }
+		node(:gamename) { game.opponent }
 		if !t.football_passings.nil?
 			child t.football_passings => :passing do |a|
 				attributes :attempts, :completions, :yards, :td, :sacks, :yards_lost, :interceptions, :twopointconv
@@ -49,8 +52,8 @@ end
 object @stats 
 child @stats => :football_stats do
 	child @stats => :passing_totals do
-		attributes :passing_attempts, :passing_completions, :passing_yards, :passing_td, :passing_sacks, :passing_yards_lost, :passing_interceptions,
-					:passing_tds, :passing_int, :passing_twopointconv
+		attributes :passing_attempts, :passing_completions, :passing_yards, :passing_td, :passing_sacks, :passing_yards_lost, :passing_interceptions, 
+				   :passing_tds, :passing_int, :passing_twopointconv
 		node(:comp_percentage) { number_with_precision(@stats.passing_comp_percentage, precision: 2) }
 	end
 	child @stats => :rushing_totals do
@@ -59,7 +62,7 @@ child @stats => :football_stats do
 	end
 	child @stats => :receiving_totals do
 		attributes :receiving_receptions, :receiving_yards, :receiving_tds, :receiving_longest, :receiving_fumbles, :receiving_fumbles_lost,
-					:receiving_twopointconv
+				   :receiving_twopointconv
 		node (:average) { number_with_precision(@stats.receiving_average, precision: 2) }
 	end
 	child @stats => :defense_totals do

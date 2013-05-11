@@ -55,6 +55,22 @@
 	  		<% else %>
 	  		<% end %>
 	  	</table>
+	  	<% if @sport.sportname == "Football" %>
+		  	<h4>First Down/Penalties</h4>
+		  	<table class="table table-bordered">
+		  		<thead>
+		  			<th>First Downs</th>
+		  			<th>Penalties</th>
+		  			<th>Penalty Yards</th>
+		  		</thead>
+		  		<tbody>
+		  			<td><%= @gameschedule.firstdowns %></td>
+		  			<td><%= @gameschedule.penalty %></td>
+		  			<td><%= @gameschedule.penaltyyards %></td>
+		  		</tbody>
+		  	</table>
+		<% end %>
+		<p>
 	  	<% if isAdmin? or isTeamManager?(@gameschedule) %>
 	  		<div class="center">
 	  			<%= link_to "Edit", edit_sport_team_gameschedule_path(@sport, @team, @gameschedule), 
@@ -65,6 +81,8 @@
 			</div>
 		<% end %>	  	
 	  	<p>
+	  	<table class="table table-bordered">
+	  	</table>
 	  	<h4><em>Game Log</em></h4>
 	  	<p>
 		<% @gamelogs.each do |g| %>

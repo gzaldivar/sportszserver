@@ -13,9 +13,9 @@ class FootballPassingsController < ApplicationController
 	def create
 		begin
 			@fbpassing = @stat.create_football_passings(params[:football_passing])
-			if current_user.score_alert? and params[:football_passing][:td].to_i > 0
+			if current_user.score_alert? and (params[:football_passing][:td].to_i > 0 or params[:football_passing][:twopointconv].to_i > 0)
 				send_alert(@athlete, "Passing score alert for ")
-			elsif current_user.stat_alert? and params[:football_passing][:td].to_i == 0
+			elsif current_user.stat_alert? and (params[:football_passing][:td].to_i == 0 or params[:football_passing][:twopointconv].to_i == 0)
 				send_alert(@athlete, "Passing stat alert for ")
 			end
 			respond_to do |format|
@@ -113,6 +113,31 @@ class FootballPassingsController < ApplicationController
 					end
 				end
 
+				if params[:two].to_i > 0
+					@fbpassing.twopointconv = @fbpassing.twopointconv + 1
+
+					if !receiver.nil?
+						gamelog = @fbpassing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
+																		 logentry: @athlete.logname + " " + params[:yards] + "yards to " + 
+																		 player.logname, score: "2P")
+						gamelog.save!
+						if params[:quarter]
+							@gameschedule = Gameschedule.find(@fbpassing.football_stat.gameschedule)
+							case params[:quarter]
+							when "Q1"
+								@gameschedule.homeq1 = @gameschedule.homeq1 + 2
+							when "Q2"
+								@gameschedule.homeq2 = @gameschedule.homeq2 + 2
+							when "Q3"
+								@gameschedule.homeq3 = @gameschedule.homeq3 + 2
+							when "Q4"
+								@gameschedule.homeq4 = @gameschedule.homeq4 + 2
+							end
+							@gameschedule.save!
+						end
+					end
+				end
+
 				if params[:sack].to_i > 0
 					@fbpassing.sacks = @fbpassing.sacks + 1
 				end
@@ -147,9 +172,9 @@ class FootballPassingsController < ApplicationController
 	def update		
 		begin
 			@fbpassing.update_attributes!(params[:football_passing])
-			if current_user.score_alert? and params[:football_passing][:td].to_i > 0
+			if current_user.score_alert? and (params[:football_passing][:td].to_i > 0  or params[:football_passing][:twopointconv].to_i > 0)
 				send_alert(@athlete, "Passing score alert for ")
-			elsif current_user.stat_alert? and params[:football_passing][:td].to_i == 0
+			elsif current_user.stat_alert? and (params[:football_passing][:td].to_i == 0 or params[:football_passing][:twopointconv].to_i == 0)
 				send_alert(@athlete, "Passing stat alert for ")
 			end
 			respond_to do |format|

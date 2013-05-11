@@ -13,9 +13,9 @@ class FootballDefensesController < ApplicationController
 	def create
 		begin
 			@defense = @stat.create_football_defenses(params[:football_defense])
-			if current_user.score_alert? and params[:football_defense][:int_td].to_i > 0
+			if current_user.score_alert? and (params[:football_defense][:int_td].to_i > 0 or params[:football_defense][:safety].to_i > 0)
 				send_alert("Defensive score alert for ")
-			elsif current_user.stat_alert? and params[:football_defense][:int_td].to_i == 0
+			elsif current_user.stat_alert?
 				send_alert("Defensive stat alert for ")
 			end
 			respond_to do |format|
@@ -85,11 +85,34 @@ class FootballDefensesController < ApplicationController
 					@gameschedule.save!
 				end
 			end
+
+			if params[:safety]
+				@defense.safety = @defense.safety + 1
+				gamelog = @defense.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
+																		   logentry: @athlete.logname + " safety", score: "2P")
+
+				gamelog.save!
+				if params[:quarter]
+					@gameschedule = Gameschedule.find(@defense.football_stat.gameschedule)
+					case params[:quarter]
+					when "Q1"
+						@gameschedule.homeq1 = @gameschedule.homeq1 + 2
+					when "Q2"
+						@gameschedule.homeq2 = @gameschedule.homeq2 + 2
+					when "Q3"
+						@gameschedule.homeq3 = @gameschedule.homeq3 + 2
+					when "Q4"
+						@gameschedule.homeq4 = @gameschedule.homeq4 + 2
+					end
+					@gameschedule.save!
+				end
+			end
+
 			@defense.save!
 
-			if current_user.score_alert? and params[:int_td].to_i > 0
+			if current_user.score_alert? and (params[:int_td].to_i > 0 or params[:safety].to_i > 0)
 				send_alert("Defensive score alert for ")
-			elsif current_user.stat_alert? and params[:int_td].to_i == 0
+			elsif current_user.stat_alert?
 				send_alert("Defensive stat alert for ")
 			end
 
@@ -105,9 +128,9 @@ class FootballDefensesController < ApplicationController
 	def update
 		begin
 			@defense.update_attributes!(params[:football_defense])
-			if current_user.score_alert? and params[:football_defense][:int_td].to_i > 0
+			if current_user.score_alert? and (params[:football_defense][:int_td].to_i > 0 or params[:football_defense][:safety].to_i > 0)
 				send_alert("Defensive score alert for ")
-			elsif current_user.stat_alert? and params[:football_defense][:int_td].to_i == 0
+			elsif current_user.stat_alert?
 				send_alert("Defensive stat alert for ")
 			end
 			respond_to do |format|

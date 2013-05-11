@@ -26,11 +26,13 @@
 				<th>Rushing TD</th>
 				<th>Fumbles</th>
 				<th>Fumbles Lost</th>
+				<th>Two Point Conv</th>
 			</thead>
 			<tbody>
 				<td><%= @rushing.td %></td>
 				<td><%= @rushing.fumbles %></td>
 				<td><%= @rushing.fumbles_lost %></td>
+				<td><%= @rushing.twopointconv %></td>
 			</tbody>
 		</table>
 		<% if isAdmin? or isTeamManager?(@athlete) %>

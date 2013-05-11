@@ -22,7 +22,7 @@ class SportsController < ApplicationController
       end
       if @sport.save!
         current_user.admin = true
-        current_site.default_site = @sport.id
+        current_user.default_site = @sport.id
         current_user.save
 
         flash[:success] = "New Sport Site created!"

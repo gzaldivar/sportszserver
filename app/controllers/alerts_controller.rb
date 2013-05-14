@@ -9,10 +9,13 @@ class AlertsController < ApplicationController
 		elsif params[:alerttype] == "Blog"
 			@alerts = @athlete.alerts.where(user_id: current_user.id.to_s, :blog.ne => "", :blog.exists => true).desc(:created_at).entries
 			@list = "Blog"
-		elsif params[:alerttype] == "Media"
-			@alerts = @athlete.alerts.where(user_id: current_user.id.to_s, :photo.ne => "", :photo.exists => true, :videoclip.ne => "", 
-											:videoclip.exists => true).desc(:created_at).entries
-			@list = "Media"
+		elsif params[:alerttype] == "Photo"
+			@alerts = @athlete.alerts.where(user_id: current_user.id.to_s, :photo.ne => "", :photo.exists => true).desc(:created_at).entries
+			@list = "Photo"
+		elsif params[:alerttype] == "Video"
+			@alerts = @athlete.alerts.where(user_id: current_user.id.to_s, :videoclip.ne => "", 
+													  :videoclip.exists => true).desc(:created_at).entries
+			@list = "Video"
 		elsif params[:alerttype] == "Stats"
 			@alerts = @athlete.alerts.where(user_id: current_user.id.to_s, :footall_stat.ne => "", :football_stat.exists => true,
 											:stat_football.ne => "", :stat_football.exists => true).desc(:created_at).entries
@@ -24,7 +27,7 @@ class AlertsController < ApplicationController
 
 	  	respond_to do |format|
 	  		format.html
-	  		format.json
+	  		format.json 
 	  	end
 	end
 
@@ -33,21 +36,21 @@ class AlertsController < ApplicationController
 
 	  	respond_to do |format|
 	  		format.html { redirect_to sport_athlete_alerts_path(@sport, @athlete) }
-	  		format.json
+	  		format.json { render json: { request: sport_athlete_alerts_url(@sport, @athlete) } }
 	  	end
 		
 	end
 
 	def clearall
-		if params[:stats] == "stats"
+		if params[:alerttype] == "Stats"
 			@athlete.alerts.where(:football_stat.ne => "", :football_stat.exists => true).destroy
-		elsif params[:photo] == "photo"
+		elsif params[:alerttype] == "Photo"
 			@athlete.alerts.where(:photo.ne => "", :photo.exists => true).destroy
-		elsif params[:video] == "video"
+		elsif params[:alerttype] == "Video"
 			@athlete.alerts.where(:videoclip.ne => "", :videoclip.exists => true).destroy
-		elsif params[:bio] == "bio"
+		elsif params[:alerttype] == "Bio"
 			@athlete.alerts.where(:athlete.ne => "", :athlete.exists => true).destroy
-		elsif params[:blog] == "blog"
+		elsif params[:alerttype] == "Blog"
 			@athlete.alerts.where(:blog.ne => "", :blog.exists => true).destroy
 		else
 			@athlete.alerts.all.destroy
@@ -55,7 +58,7 @@ class AlertsController < ApplicationController
 
 		respond_to do |format|
 			format.html { redirect_to sport_athlete_alerts_path(@sport, @athlete) }
-			format.json
+			format.json { render json: { request: sport_athlete_alerts_url(@sport, @athlete) } }
 		end
 	end
 

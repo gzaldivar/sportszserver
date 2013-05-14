@@ -5,7 +5,16 @@
 		<%= render 'tabs', header: "specialteams" %>
 		<p>
 		<% if params[:games].nil? %>
-			<h4>Special Team Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
+			<div class="row">
+				<div class="span6">
+					<h4>Special Team Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
+				</div>
+				<% if !@athlete.pic.blank? %>
+					<div class="span2 offset1">
+						<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+					</div>
+				<% end %>
+			</div>
 			<p>
 			<% if @specialteam.kickers_fgattempts > 0 %>
 				<h5>Place Kicking stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h5>

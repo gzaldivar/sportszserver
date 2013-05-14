@@ -5,7 +5,16 @@
 		<%= render 'tabs', header: "receiving" %>
 		<p>
 		<% if params[:games].nil? %>
-			<h4>Receiving stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
+			<div class="row">
+				<div class="span6">
+					<h4>Receiving stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
+				</div>
+				<% if !@athlete.pic.blank? %>
+					<div class="span2 offset1">
+						<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+					</div>
+				<% end %>
+			</div>
 			<p>
 			<%= render 'receiving_totals', receiving: @receiving %>
 			<div class="span8 offset2">

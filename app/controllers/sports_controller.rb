@@ -117,7 +117,10 @@ class SportsController < ApplicationController
 
   def sport_user_alerts
     if params[:updated_at]
-      @alerts = @sport.alerts.where(user_id: params[:user_id].to_s, :updated_at.gt => params[:updated_at].to_s).desc(:created_at).entries
+      puts params[:updated_at]
+      date = DateTime.parse(params[:updated_at]).utc
+      puts date.to_s
+      @alerts = @sport.alerts.where(user_id: params[:user_id].to_s, :updated_at.gt => date).desc(:created_at).entries
     else
       @alerts = @sport.alerts.where(user_id: params[:user_id].to_s).desc(:created_at).entries
     end

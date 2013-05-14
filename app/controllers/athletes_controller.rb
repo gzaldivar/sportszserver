@@ -119,17 +119,23 @@ class AthletesController < ApplicationController
   end
   
   def follow
-#      @athlete.followers[current_user.id] = current_user.name
     @athlete.fans.push(current_user.id)
     @athlete.save
-    redirect_to [@sport, @athlete], notice: "Now following athlete " + @athlete.full_name
+    
+    respond_to do |format|
+      format.html { redirect_to [@sport, @athlete], notice: "Now following athlete " + @athlete.full_name }
+      format.json { render json: { request: sport_athlete_url(@sport, @athlete) } }
+    end
   end
   
   def unfollow
-#      @athlete.followers.delete(current_user.id.to_s)
     @athlete.fans.delete(current_user.id)
     @athlete.save
-    redirect_to :back, notice: "No longer following " + @athlete.full_name
+
+    respond_to do |format|
+      format.html { redirect_to :back, notice: "No longer following " + @athlete.full_name }
+      format.json { render json: { request: sport_athlete_url(@sport, @athlete) } } 
+    end
   end
 
   def stats

@@ -4,6 +4,10 @@ class UsersController < ApplicationController
   before_filter :owner, only: [:edit, :update]
 
 	def show
+    respond_to do |format|
+      format.html
+      format.json
+    end
 	end
 
 	def edit
@@ -19,11 +23,17 @@ class UsersController < ApplicationController
   end
   
   def update
-    if @user.update_attributes(params[:user])
-      puts params[:bio_alert]
-      redirect_to @user, notice: "User update sucessful!"
-    else
-      redirect_to :back, alert: "Error updating user data"
+    begin
+      @user.update_attributes!(params[:user])
+      respond_to do |format|
+        format.html { redirect_to @user, notice: "User update sucessful!" }
+        format.json { render json: { user: @user, request: user_url(@user) } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Error updating user data " + e.message }
+        format.json { render json: { message: "Error updating user data " + e.message, user: @user, request: user_url(@user) } }
+      end
     end
   end
 

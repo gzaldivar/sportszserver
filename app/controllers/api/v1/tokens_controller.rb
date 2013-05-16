@@ -42,7 +42,7 @@ class Api::V1::TokensController < ApplicationController
                                   avatar: userurl, avatar_thumb: userthumb, bio_alert: @user.bio_alert, blog_alert: @user.blog_alert, 
                                   media_alert: @user.media_alert, stat_alert: @user.stat_alert, score_alert: @user.score_alert, 
                                   sport: sport.id, userid: @user.id, sitename: sport.sitename, banner_url: sport.sport_banner.url(:thumb),
-                                  logo: sport.sport_logo.url(:large) }
+                                  logo: sport.sport_logo.url(:large), admin: @user.admin }
     end
   end
   
@@ -63,7 +63,7 @@ class Api::V1::TokensController < ApplicationController
                                   avatar_thumb: userthumb, bio_alert: @user.bio_alert, blog_alert: @user.blog_alert, 
                                   media_alert: @user.media_alert, stat_alert: @user.stat_alert, score_alert: @user.score_alert, 
                                   sport: sport.id, userid: @user.id, sitename: sport.sitename, banner_url: sport.sport_banner.url(:thumb),
-                                  logo: sport.sport_logo.url(:large) }
+                                  logo: sport.sport_logo.url(:large), admin: @user.admin }
     end
   end
 end 

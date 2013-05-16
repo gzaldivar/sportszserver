@@ -68,7 +68,7 @@ class User
   field :blog_alert, type: Boolean, default: true
   field :stat_alert, type: Boolean, default: true
   field :score_alert, type: Boolean, default: true
-  
+ 
   has_mongoid_attached_file :avatar,
     :storage        => :s3,
     :s3_credentials => { bucket: S3DirectUpload.config.bucket,
@@ -85,8 +85,14 @@ class User
                   :authentication_token, :teamid, :avatar, :is_active, :bio_alert, :blog_alert, :media_alert, 
                   :stat_alert, :score_alert
 
-  def active_for_authentication?
+   def active_for_authentication?
     super and self.is_active?
   end
+
+#  StringIO.open(Base64.decode64(self.avatar_base64)) do |data|
+#      data.original_filename = "image_name.jpg"
+#      data.content_type = "image/jpeg"
+#      self.avatar = data
+#    end
 
 end

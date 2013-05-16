@@ -25,7 +25,7 @@ class GameschedulesController < ApplicationController
       respond_to do |format|
         format.html { redirect_to [@sport, @team, schedule] }
         format.xml
-        format.json 
+        format.json { render json: { schedule: schedule, request: sport_team_gameschedule_url(@sport, @team, schedule) } }
         format.js
       end
     else
@@ -65,7 +65,7 @@ class GameschedulesController < ApplicationController
       respond_to do |format|
           format.html { redirect_to [@sport, @team, @gameschedule] }
           format.xml
-          format.json 
+          format.json { render json: { schedule: @gameschedule, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
           format.js
       end
     rescue Exception => e

@@ -9,10 +9,17 @@ class TeamsController < ApplicationController
 	end
 
 	def create
-		if @team = @sport.teams.create!(params[:team])
-			redirect_to @sport, notice: "Added #{@team.title} #{@team.mascot}!"
-		else
-			redirect_to @sport, alert: "Error adding team"
+		begin
+			@team = @sport.teams.create!(params[:team])
+			respond_to do |format|
+				format.html { redirect_to @sport, notice: "Added #{@team.title} #{@team.mascot}!" }
+				format.json { render json: { team: @team, request: sport_team_url(@sport, @team) } }
+			end
+		rescue Exception => e
+			respond_to do |format|
+				format.html { redirect_to @sport, alert: "Error adding team" }
+				format.json { render json: { error: e.message, request: sport_team_url(@sport, @team) } }
+			end
 		end
 	end
 
@@ -20,10 +27,17 @@ class TeamsController < ApplicationController
 	end
 
 	def update
-		if @team.update_attributes(params[:team])
-			redirect_to @sport, notice: "Team updated"
-		else
-			redirect_to @sport, alert: "Error updating team"
+		begin
+			@team.update_attributes!(params[:team])
+			respond_to do |format|
+				format.html { redirect_to @sport, notice: "Team updated" }
+				format.json { render json: { team: @team, request: sport_team_url(@sport, @team) } }
+			end
+		rescue Exception => e
+			respond_to do |format|
+				format.html { redirect_to @sport, alert: "Error updating team" }
+				format.json  { render json: { error: e.message, request: sport_team_url(@sport, @team) } }
+			end
 		end
 	end
 
@@ -32,6 +46,10 @@ class TeamsController < ApplicationController
 	end
 
 	def show
+		respond_to do |format|
+			format.html
+			format.json
+		end
 	end
 
 	def destroy

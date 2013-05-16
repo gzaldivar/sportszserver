@@ -13,7 +13,10 @@ class GamelogsController < ApplicationController
             format.json { render json: { gamelog: @gamelog, request: sport_team_gameschedule_gamelog_url(@sport, @team, @gameschedule, @gamelog) } }
           end
       rescue Exception => e
-        redirect_to :back, alert: "Error creating game log " + e.message
+        respond_to do |format|
+          format.html { redirect_to :back, alert: "Error creating game log " + e.message }
+          format.json { render json: { error: e.message, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
+        end
       end 		
   	end
 

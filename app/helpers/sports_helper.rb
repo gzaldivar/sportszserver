@@ -47,7 +47,7 @@ module SportsHelper
     [      
       ['Kicker', 'K'],
       ['Punter', 'P'],
-      ['Kicker/Punter' 'KP']
+      ['Kicker/Punter', 'KP']
     ]
   end
 

@@ -20,10 +20,15 @@ class FootballDefensesController < ApplicationController
 			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @defense], notice: 'Stat created for ' + @athlete.full_name }
-		        format.json 
+		        format.json { render json: { defense: @defense, 
+		        			  request: sport_team_athlete_football_stat_football_defense_url(@sport, @team, @athlete, @stat, @defense) } }
 		     end			
 		rescue Exception => e
-			redirect_to :back, alert: "Error creating football defense stats"		
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error creating football defense stats"	}
+		        format.json { render json: { error: e.message, 
+		        			  request: sport_team_athlete_football_stat_football_defense_url(@sport, @team, @athlete, @stat, @defense) } }
+		     end			
 		end
 	end
 
@@ -118,11 +123,16 @@ class FootballDefensesController < ApplicationController
 
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @defense], notice: 'Defensive stat added for ' + @athlete.full_name }
-		        format.json 
+		        format.json { render json: { defense: @defense, 
+		        			  request: sport_team_athlete_football_stat_football_defense_url(@sport, @team, @athlete, @stat, @defense) } }
 		    end
 		rescue Exception => e
-			redirect_to :back, alert: "Error: " + e.message
-		end
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error: " + e.message }
+			    format.json { render json: { error: @error, 
+		        			  request: sport_team_athlete_football_stat_football_defense_url(@sport, @team, @athlete, @stat, @defense) } }
+		     end			
+	end
 	end
 
 	def update
@@ -135,10 +145,15 @@ class FootballDefensesController < ApplicationController
 			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @defense], notice: 'Stat updated for ' + @athlete.full_name }
-		        format.json 
+		        format.json { render json: { defense: @defense, 
+		        			  request: sport_team_athlete_football_stat_football_defense_url(@sport, @team, @athlete, @stat, @defense) } }
 		     end			
 		rescue Exception => e
-			redirect_to :back, alert: "Error updating stats for " + e.message	
+			respond_to do |format|
+			format.html { redirect_to :back, alert: "Error updating stats for " + e.message	}
+		    format.json { render json: { error: e.message, 
+		        		  request: sport_team_athlete_football_stat_football_defense_url(@sport, @team, @athlete, @stat, @defense) } }
+		     end			
 		end
 	end
 

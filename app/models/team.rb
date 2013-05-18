@@ -7,6 +7,14 @@ class Team
   field :title, type: String
   field :mascot, type: String
 
+  field :fb_pass_players, type: Array    # List of players user has for stat console
+  field :fb_rush_players, type: Array    # List of players user has for stat console
+  field :fb_rec_players, type: Array    # List of players user has for stat console
+  field :fb_def_players, type: Array    # List of players user has for stat console
+  field :fb_spec_players, type: Array    # List of players user has for stat console
+
+
+
   has_mongoid_attached_file :team_logo,
   :storage        => :s3,
   :s3_credentials => { bucket: S3DirectUpload.config.bucket,

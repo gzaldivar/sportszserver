@@ -68,7 +68,7 @@ class User
   field :blog_alert, type: Boolean, default: true
   field :stat_alert, type: Boolean, default: true
   field :score_alert, type: Boolean, default: true
- 
+
   has_mongoid_attached_file :avatar,
     :storage        => :s3,
     :s3_credentials => { bucket: S3DirectUpload.config.bucket,

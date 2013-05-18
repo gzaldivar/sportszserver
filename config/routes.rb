@@ -35,6 +35,11 @@ Sportzserver::Application.routes.draw do
     end
 
     resources :teams,   only: [:new, :create, :edit, :update, :destroy, :index, :show] do
+      member do
+        get   :getplayers
+        post  :addplayers
+      end
+      
       resources :gameschedules, only: [:show, :new, :create, :edit, :update, :index, :destroy] do
         resources :gamelogs, only: [:create, :destroy, :show, :update]
       end

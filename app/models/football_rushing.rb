@@ -4,8 +4,8 @@ class FootballRushing
 
   before_save :comp_average
 
-  field :attempts, type: Integer
-  field :yards, type: Integer
+  field :attempts, type: Integer, default: 0
+  field :yards, type: Integer, default: 0
   field :average, type: Float
   field :longest, type: Integer, default: 0
   field :td, type: Integer, default:0
@@ -15,8 +15,8 @@ class FootballRushing
   
   embedded_in :football_stat
   
-  validates_numericality_of :attempts, greater_than_or_equal_to: 0, presence: true
-  validates_numericality_of :yards, presence: true
+  validates_numericality_of :attempts, greater_than_or_equal_to: 0
+  validates_numericality_of :yards, greater_than_or_equal_to: 0
   validates_numericality_of :longest, greater_than_or_equal_to: 0
   validates_numericality_of :td, greater_than_or_equal_to: 0
   validates_numericality_of :fumbles, greater_than_or_equal_to: 0

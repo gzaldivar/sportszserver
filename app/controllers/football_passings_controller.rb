@@ -21,13 +21,13 @@ class FootballPassingsController < ApplicationController
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @fbpassing], notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { passing: @passing, 
-		        			  request: sport_team_athlete_football_stat_football_passing_url(@sport, @team, @athlete, @stat, @passing) } }
+		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @passing) } }
 		     end			
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error creating football passing stats " + e.message }
 		        format.json { render json: { error: e.message, 
-		        			  request: sport_team_athlete_football_stat_football_passing_url(@sport, @team, @athlete, @stat, @passing) } }
+		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @passing) } }
 		     end			
 		end
 	end
@@ -164,13 +164,13 @@ class FootballPassingsController < ApplicationController
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @fbpassing], notice: 'Passing entry added for ' + @athlete.full_name }
 		        format.json { render json: { passing: @passing, 
-		        			  request: sport_team_athlete_football_stat_football_passing_url(@sport, @team, @athlete, @stat, @passing) } }
+		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @passing) } }
 		    end
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error: " + e.message }
 				format.json { render json: { error: e.message, 
-		        			  request: sport_team_athlete_football_stat_football_passing_url(@sport, @team, @athlete, @stat, @passing) } }
+		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @passing) } }
 		    end
 		end
 	end
@@ -190,13 +190,13 @@ class FootballPassingsController < ApplicationController
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @fbpassing], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json { render json: { passing: @passing, 
-		        			  request: sport_team_athlete_football_stat_football_passing_url(@sport, @team, @athlete, @stat, @passing) } }
+		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @passing) } }
 		     end			
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error updating stats for " + @athlete.full_name + " " + e.message }
 		        format.json { render json: { error: e.message, 
-		        			  request: sport_team_athlete_football_stat_football_passing_url(@sport, @team, @athlete, @stat, @passing) } }
+		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @passing) } }
 		     end			
 		end
 	end

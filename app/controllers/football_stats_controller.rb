@@ -53,7 +53,7 @@ class FootballStatsController < ApplicationController
 			if @stat.football_receivings.nil?
 				redirect_to new_sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat)
 			else
-				redirect_to edit_sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat, @stat.football_rushings)
+				redirect_to edit_sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat, @stat.football_receivings)
 			end			
 		when "Kicker"
 			if @stat.football_kickers.nil? and params[:stats] == "Game Totals"

@@ -21,13 +21,13 @@ class FootballRushingsController < ApplicationController
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @rushing], notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { rushing: @rushing, 
-		        			  request: sport_team_athlete_football_stat_football_rushing_url(@sport, @team, @athlete, @stat, @rushing) } }
+		        			  request: sport_athlete_football_stat_football_rushing_url(@sport, @athlete, @stat, @rushing) } }
 		    end
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error creating football rushing stats " + e.message }
 				format.json { render json: { error: e.message, 
-		        			  request: sport_team_athlete_football_stat_football_rushing_url(@sport, @team, @athlete, @stat, @rushing) } }
+		        			  request: sport_athlete_football_stat_football_rushing_url(@sport, @athlete, @stat, @rushing) } }
 		    end
 		end
 	end
@@ -97,13 +97,13 @@ class FootballRushingsController < ApplicationController
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @rushing], notice: 'Carry added for ' + @athlete.full_name }
 		        format.json  { render json: { rushing: @rushing, 
-		        			  request: sport_team_athlete_football_stat_football_rushing_url(@sport, @team, @athlete, @stat, @rushing) } }
+		        			  request: sport_athlete_football_stat_football_rushing_url(@sport, @athlete, @stat, @rushing) } }
 		    end
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error: " + e.message }
 				format.json { render json: { error: e.message, 
-		        			  request: sport_team_athlete_football_stat_football_rushing_url(@sport, @team, @athlete, @stat, @rushing) } }
+		        			  request: sport_athlete_football_stat_football_rushing_url(@sport, @athlete, @stat, @rushing) } }
 		    end
 		end
 	end
@@ -123,13 +123,13 @@ class FootballRushingsController < ApplicationController
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @rushing], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json  { render json: { rushing: @rushing, 
-		        			  request: sport_team_athlete_football_stat_football_rushing_url(@sport, @team, @athlete, @stat, @rushing) } }
+		        			  request: sport_athlete_football_stat_football_rushing_url(@sport, @athlete, @stat, @rushing) } }
 		     end
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error updating stats for " + @athlete.full_name + " " + e.message }
 				format.json { render json: { error: e.message, 
-		        			  request: sport_team_athlete_football_stat_football_rushing_url(@sport, @team, @athlete, @stat, @rushing) } }
+		        			  request: sport_athlete_football_stat_football_rushing_url(@sport, @athlete, @stat, @rushing) } }
 		    end
 		end 
 	end

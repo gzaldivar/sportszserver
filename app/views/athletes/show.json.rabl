@@ -10,4 +10,25 @@ if !@team.nil?
 	node(:teamname) { @team.team_name }
 end
 node(:following) { |o| o.fans.include?(current_user.id) }
-node(:football_stat) { |f| f.id.to_s if !f.id.nil?}
+child :football_stats do
+	node(:football_stat_id) { |f| f.id.to_s }
+	node(:gamescheduleid) { |g| g.gameschedule_id.to_s }
+	child :football_passings do
+		node(:football_passing_id) { |f| f.id.to_s }
+	end
+	child :football_rushings do
+		node(:football_rushing_id) { |f| f.id.to_s }
+	end
+	child :football_receivings do
+		node(:football_receiving_id) { |f| f.id.to_s }
+	end
+	child :football_defenses do
+		node(:football_defense_id) { |f| f.id.to_s }
+	end
+	child :football_kickers do
+		node(:football_kicker_id) { |f| f.id.to_s }
+	end
+	child :football_returners do
+		node(:football_returner_id) { |f| f.id.to_s }
+	end
+end

@@ -18,13 +18,13 @@ class FootballReceivingsController < ApplicationController
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @receiving], notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { receiving: @receiving, 
-		        			  request: sport_team_athlete_football_stat_football_receiving_url(@sport, @team, @athlete, @stat, @receiving) } }
+		        			  request: sport_athlete_football_stat_football_receiving_url(@sport, @athlete, @stat, @receiving) } }
 		     end			
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error creating football receiving stats" }	
 		        format.json { render json: { error: e.message, 
-		        			  request: sport_team_athlete_football_stat_football_receiving_url(@sport, @team, @athlete, @stat, @receiving) } }
+		        			  request: sport_athlete_football_stat_football_receiving_url(@sport, @athlete, @stat, @receiving) } }
 		     end			
 		end
 	end
@@ -46,13 +46,13 @@ class FootballReceivingsController < ApplicationController
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @receiving], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json { render json: { receiving: @receiving, 
-		        			  request: sport_team_athlete_football_stat_football_receiving_url(@sport, @team, @athlete, @stat, @receiving) } }
+		        			  request: sport_athlete_football_stat_football_receiving_url(@sport, @athlete, @stat, @receiving) } }
 		     end			
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error updating stats for " + @athlete.full_name }		
 		        format.json { render json: { receiving: @receiving, 
-		        			  request: sport_team_athlete_football_stat_football_receiving_url(@sport, @team, @athlete, @stat, @receiving) } }
+		        			  request: sport_athlete_football_stat_football_receiving_url(@sport, @athlete, @stat, @receiving) } }
 		     end			
 		end
 	end

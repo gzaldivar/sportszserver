@@ -11,7 +11,7 @@ class FootballPassing
   field :interceptions, type: Integer, default: 0
   field :sacks, type: Integer, default: 0
   field :yards_lost, type: Integer, default: 0
-  field :comp_percentage, type: Float
+  field :comp_percentage, type: Float, default: 0.0
   field :twopointconv, type: Integer, default: 0
     
   embedded_in :football_stat

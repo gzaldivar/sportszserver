@@ -6,7 +6,7 @@ class FootballReceiving
 
   field :receptions, type: Integer, default: 0
   field :yards, type: Integer, default: 0
-  field :average, type: Float
+  field :average, type: Float, default: 0.0
   field :longest, type: Integer, default: 0
   field :td, type: Integer, default: 0
   field :fumbles, type: Integer, default: 0

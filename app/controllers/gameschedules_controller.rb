@@ -45,15 +45,15 @@ class GameschedulesController < ApplicationController
       @stats.receiving_totals(@gameschedule)
       @stats.defense_totals(@gameschedule)
       @stats.specialteams_totals(@gameschedule)
-      @firstdowns = 0
+      @gameschedule.firstdowns = 0
       @gameschedule.football_stats.each do |f|
         if !f.football_passings.nil?
-          @firstdowns = @firstdowns + f.football_passings.firstdowns
+          @gameschedule.firstdowns = @gameschedule.firstdowns + f.football_passings.firstdowns
         end
       end
       @gameschedule.football_stats.each do |f|
         if !f.football_rushings.nil?
-          @firstdowns = @firstdowns + f.football_rushings.firstdowns
+          @gameschedule.firstdowns = @gameschedule.firstdowns + f.football_rushings.firstdowns
         end
       end
     end
@@ -88,6 +88,17 @@ class GameschedulesController < ApplicationController
     @gameschedules = []
     @team.gameschedules.asc(:gamedate).each_with_index do |s, cnt|
       @gameschedules[cnt] = s
+      @gameschedules[cnt].firstdowns = 0
+      s.football_stats.each do |f|
+        if !f.football_passings.nil?
+          @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_passings.firstdowns
+        end
+      end
+      s.football_stats.each do |f|
+        if !f.football_rushings.nil?
+          @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_rushings.firstdowns
+        end
+      end
     end
     
     respond_to do |format|

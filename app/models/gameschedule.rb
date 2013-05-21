@@ -25,7 +25,7 @@ class Gameschedule
   field :opponenth1, type: Integer, default: 0
   field :opponenth2, type: Integer, default: 0
 
-  field :firstdowns, type: Integer, default: 0
+#  field :firstdowns, type: Integer, default: 0
   field :penalty, type: Integer, default: 0
   field :penaltyyards, type: Integer, default: 0
 
@@ -46,6 +46,8 @@ class Gameschedule
   has_many :videoclips
   has_many :basketball_stats
 
+  attr_accessor :firstdowns
+  
   validates_presence_of :starttime
   validates_presence_of :gamedate
   validates_presence_of :location

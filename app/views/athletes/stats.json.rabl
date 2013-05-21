@@ -6,13 +6,13 @@
 		node(:gamename) { game.opponent }
 		if !t.football_passings.nil?
 			child t.football_passings => :passing do |a|
-				attributes :attempts, :completions, :yards, :td, :sacks, :yards_lost, :interceptions, :twopointconv
+				attributes :attempts, :completions, :yards, :td, :sacks, :yards_lost, :interceptions, :twopointconv, :firstdowns
 				node(:comp_percentage) { number_with_precision(a.comp_percentage, precision: 2) }
 			end
 		end
 		if !t.football_rushings.nil?
 			child t.football_rushings => :rushing do |a|
-				attributes :attempts, :yards, :td, :longest, :fumbles, :fumbles_lost, :twopointconv
+				attributes :attempts, :yards, :td, :longest, :fumbles, :fumbles_lost, :twopointconv, :firstdowns
 				node(:average) { number_with_precision(a.average, precision: 2) }
 			end
 		end

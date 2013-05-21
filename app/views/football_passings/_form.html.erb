@@ -24,10 +24,13 @@
 	</div>
 	<div class="row">
 		<div class="span2">
+			<%= f.input :firstdowns, label: "First Downs" %>
+		</div>
+		<div class="span2 offset1">
 			<%= f.input :yards_lost, label: "Yards Lost" %>
 		</div>
-		<div class="span4 offset1">
-			<%= f.input :twopointconv,  label: "Enter Number of 2 point conversions" %>
+		<div class="span2 offset1">
+			<%= f.input :twopointconv,  label: "2 point conversions" %>
 		</div>
 	</div>
 	<p>

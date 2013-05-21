@@ -46,6 +46,9 @@ class FootballRushingsController < ApplicationController
 			if params[:yards].to_i > @rushing.longest
 				@rushing.longest = params[:yards].to_i
 			end
+			if params[:fd].to_i > 0
+				@rushing.firstdowns = @rushing.firstdowns + 1
+			end
 			if params[:td].to_i > 0
 				@rushing.td = @rushing.td + params[:td].to_i
 				gamelog = @rushing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 

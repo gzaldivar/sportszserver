@@ -14,6 +14,7 @@
 				<th>Passing Completions</th>
 				<th>Completion Percentage</th>
 				<th>Passing Yards</th>
+				<th>Passing TD</th>
 			</thead>
 			</em>
 			<tbody>
@@ -21,18 +22,19 @@
 				<td><%= @fbpassing.completions %></td>
 				<td><%= number_with_precision(@fbpassing.comp_percentage, precision: 2) %></td>
 				<td><%= @fbpassing.yards %></td>
+				<td><%= @fbpassing.td %></td>
 			</tbody>
 		</table>
 		<table class="table table-bordered">
 			<thead>
-				<th>Passing TD</th>
+				<th>First Downs</th>
 				<th>Interceptions</th>
 				<th>Sacks</th>
 				<th>Yards Lost</th>
 				<th>Two Point Conv</th>
 			</thead>
 			<tbody>
-				<td><%= @fbpassing.td %></td>
+				<td><%= @fbpassing.firstdowns %></td>
 				<td><%= @fbpassing.interceptions %></td>
 				<td><%= @fbpassing.sacks %></td>
 				<td><%= @fbpassing.yards_lost %></td>

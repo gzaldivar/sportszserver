@@ -13,23 +13,25 @@
 				<th>Rushing Attempts</th>
 				<th>Rushing Yards</th>
 				<th>Average</th>
+				<th>Rushing TD</th>
 			</thead>
 			</em>
 			<tbody>
 				<td><%= @rushing.attempts %></td>
 				<td><%= @rushing.yards %></td>
 				<td><%= number_with_precision(@rushing.average, precision: 2) %></td>
+				<td><%= @rushing.td %></td>
 			</tbody>
 		</table>
 		<table class="table table-bordered">
 			<thead>
-				<th>Rushing TD</th>
+				<th>First Downs</th>
 				<th>Fumbles</th>
 				<th>Fumbles Lost</th>
 				<th>Two Point Conv</th>
 			</thead>
 			<tbody>
-				<td><%= @rushing.td %></td>
+				<td><%= @rushing.firstdowns %></td>
 				<td><%= @rushing.fumbles %></td>
 				<td><%= @rushing.fumbles_lost %></td>
 				<td><%= @rushing.twopointconv %></td>

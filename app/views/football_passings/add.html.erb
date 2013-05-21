@@ -45,8 +45,8 @@
 		            <%= text_field_tag "yards", '0' %>
 				</div>
 				<div class="span2 offset1">
-		            <%= label_tag "Interception: " %>
-		            <%= check_box_tag "int", '1' %>
+		            <%= label_tag "Click for first down: " %>
+		            <%= check_box_tag 'fd', '1' %>
 				</div>
 				<div class="span2 offset1">
 		            <%= label_tag "Receiver Fumble Lost?: " %>
@@ -68,6 +68,12 @@
 		            <%= check_box_tag 'two', '1' %>
 				</div>
 			</div>
+			<div class="row">
+				<div class="span2 offset3">
+		            <%= label_tag "Interception: " %>
+		            <%= check_box_tag "int", '1' %>
+				</div>
+			</div>					
 			<p>
 			<div class="row">
 				<div class="span1 offset4">

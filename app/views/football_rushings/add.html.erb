@@ -1,7 +1,7 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span6 offset2">
+	<div class="span8 offset2">
 		<em>Add Rushing Carry for: <%= link_to @athlete.full_name, sport_athlete_path(@sport, @athlete) %>  for 
 			<%= @stat.gameschedule.game_name %></em>
 		<p>
@@ -13,7 +13,7 @@
 		            <%= label_tag "Quarter: " %>
 					<%= select_tag "quarter", options_for_select(quarters) %>
 				</div>
-				<div class="span2 offset1">
+				<div class="span4 offset1">
 		            <%= label_tag "Game Time (Needed for scoring summary only): " %>
 		            <%= text_field_tag "time", '00:00' %>
 				</div>
@@ -38,6 +38,13 @@
 				<div class="span2 offset1">
 		            <%= label_tag "Two Point Conversion: " %>
 		            <%= check_box_tag "two", '1' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="span2 offset3">
+		            <%= label_tag "First Downs: " %>
+		            <%= check_box_tag "fd", '1' %>
 				</div>
 			</div>
 			<p>

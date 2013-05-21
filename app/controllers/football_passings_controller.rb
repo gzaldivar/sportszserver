@@ -54,6 +54,10 @@ class FootballPassingsController < ApplicationController
 				@fbpassing.yards = @fbpassing.yards + params[:yards].to_i
 				@fbpassing.yards_lost = @fbpassing.yards_lost + params[:yards_lost].to_i
 
+				if params[:fd].to_i > 0
+					@fbpassing.firstdowns = @fbpassing.firstdowns + 1
+				end
+
 				if !params[:receiver].nil? and !params[:receiver].blank?
 					player = @sport.athletes.find(params[:receiver])
 					stat = nil

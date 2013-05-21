@@ -45,6 +45,17 @@ class GameschedulesController < ApplicationController
       @stats.receiving_totals(@gameschedule)
       @stats.defense_totals(@gameschedule)
       @stats.specialteams_totals(@gameschedule)
+      @firstdowns = 0
+      @gameschedule.football_stats.each do |f|
+        if !f.football_passings.nil?
+          @firstdowns = @firstdowns + f.football_passings.firstdowns
+        end
+      end
+      @gameschedule.football_stats.each do |f|
+        if !f.football_rushings.nil?
+          @firstdowns = @firstdowns + f.football_rushings.firstdowns
+        end
+      end
     end
     respond_to do |format|
       format.html

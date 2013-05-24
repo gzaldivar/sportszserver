@@ -1,5 +1,5 @@
 class FootballStatsController < ApplicationController
-	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new, :showdata]
+	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :showdata]
   	before_filter 	:get_sport_athlete
 	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
 		controller.team_manager?(@athlete, nil)
@@ -32,22 +32,34 @@ class FootballStatsController < ApplicationController
 				redirect_to new_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat)
 			elsif @stat.football_passings.nil? and params[:stats] == "Play by Play"
 				@stat.create_football_passings
-				redirect_to add_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @stat.football_passings)
+				respond_to do |format|
+					format.html { redirect_to add_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @stat.football_passings) }
+					format.json { render json: { fbstat: @stat, request: showdata_sport_athlete_football_stats_path(@sport, @athlete) } }
+				end
 			elsif !@stat.football_passings.nil? and params[:stats] == "Game Totals"
 				redirect_to edit_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @stat.football_passings)
 			elsif !@stat.football_passings.nil? and params[:stats] == "Play by Play"
-				redirect_to add_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @stat.football_passings)
+				respond_to do |format|
+					format.html { redirect_to add_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @stat.football_passings) }
+					format.json { render json: { fbstat: @stat, request: showdata_sport_athlete_football_stats_path(@sport, @athlete) } }
+				end
 			end
 		when "rushing"
 			if @stat.football_rushings.nil? and params[:stats] == "Game Totals"
 				redirect_to new_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat)
 			elsif @stat.football_rushings.nil? and params[:stats] == "Play by Play"
 				@stat.create_football_rushings
-				redirect_to add_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat, @stat.football_rushings)
+				respond_to do |format|
+					format.html { redirect_to add_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat, @stat.football_rushings) }
+					format.json { render json: { fbstat: @stat, request: showdata_sport_athlete_football_stats_path(@sport, @athlete) } }
+				end
 			elsif !@stat.football_rushings.nil? and params[:stats] == "Game Totals"
 				redirect_to edit_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat, @stat.football_rushings)
 			elsif !@stat.football_rushings.nil? and params[:stats] == "Play by Play"
-				redirect_to add_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat, @stat.football_rushings)
+				respond_to do |format|
+					format.html { redirect_to add_sport_athlete_football_stat_football_rushing_path(@sport, @athlete, @stat, @stat.football_rushings) }
+					format.json { render json: { fbstat: @stat, request: showdata_sport_athlete_football_stats_path(@sport, @athlete) } }
+				end
 			end
 		when "receiving"
 			if @stat.football_receivings.nil?

@@ -42,7 +42,11 @@
 			</div>
 			<p>
 			<div class="row">
-				<div class="span2 offset3">
+				<div class="span2">
+		            <%= label_tag "Fumble Lost: " %>
+		            <%= text_field_tag "fumble_lost", '0' %>
+				</div>
+				<div class="span2 offset1">
 		            <%= label_tag "First Downs: " %>
 		            <%= check_box_tag "fd", '1' %>
 				</div>

@@ -20,14 +20,14 @@ class FootballPassingsController < ApplicationController
 			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @fbpassing], notice: 'Stat created for ' + @athlete.full_name }
-		        format.json { render json: { passing: @passing, 
-		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @passing) } }
+		        format.json { render json: { passing: @fbpassing, 
+		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @fbpassing) } }
 		     end			
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error creating football passing stats " + e.message }
 		        format.json { render json: { error: e.message, 
-		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @passing) } }
+		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @fbpassing) } }
 		     end			
 		end
 	end
@@ -100,7 +100,7 @@ class FootballPassingsController < ApplicationController
 				if params[:td].to_i > 0
 					@fbpassing.td = @fbpassing.td + 1
 
-					if !receiver.nil?
+					if !receiver.nil? and !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
 						gamelog = @fbpassing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
 																		 logentry: @athlete.logname + " " + params[:yards] + " yards to " + 
 																		 player.logname, score: "TD")
@@ -125,7 +125,7 @@ class FootballPassingsController < ApplicationController
 				if params[:two].to_i > 0
 					@fbpassing.twopointconv = @fbpassing.twopointconv + 1
 
-					if !receiver.nil?
+					if !receiver.nil? and !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
 						gamelog = @fbpassing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
 																		 logentry: @athlete.logname + " " + params[:yards] + "yards to " + 
 																		 player.logname, score: "2P")
@@ -167,14 +167,14 @@ class FootballPassingsController < ApplicationController
 
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @fbpassing], notice: 'Passing entry added for ' + @athlete.full_name }
-		        format.json { render json: { passing: @passing, 
-		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @passing) } }
+		        format.json { render json: { passing: @fbpassing, 
+		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @fbpassing) } }
 		    end
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error: " + e.message }
 				format.json { render json: { error: e.message, 
-		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @passing) } }
+		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @fbpassing) } }
 		    end
 		end
 	end
@@ -193,14 +193,14 @@ class FootballPassingsController < ApplicationController
 			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @fbpassing], notice: 'Stat updated for ' + @athlete.full_name }
-		        format.json { render json: { passing: @passing, 
-		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @passing) } }
+		        format.json { render json: { passing: @fbpassing, 
+		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @fbpassing) } }
 		     end			
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error updating stats for " + @athlete.full_name + " " + e.message }
 		        format.json { render json: { error: e.message, 
-		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @passing) } }
+		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @fbpassing) } }
 		     end			
 		end
 	end

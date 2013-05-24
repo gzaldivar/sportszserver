@@ -24,8 +24,10 @@ class FootballReceiving
   validates_numericality_of :twopointconv, greater_than_or_equal_to: 0
 
   def comp_average
-    if self.receptions > 0 and self.yards > 0
+    if self.receptions > 0 and self.yards > 0 and self.receptions > 0
       self.average = Float(self.yards) / Float(self.receptions)
+    else
+      self.average = 0.0
     end
   end
 

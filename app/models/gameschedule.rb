@@ -68,7 +68,6 @@ class Gameschedule
   validates_numericality_of :opponenth2, message: "Value must be 0 or a number greater than 0"
   validates_numericality_of :penaltyyards, greater_than_or_equal_to: 0
   validates_numericality_of :penalty, greater_than_or_equal_to: 0
-  validates_numericality_of :firstdowns, greater_than_or_equal_to: 0
 
   def game_name
     gamedate.strftime("%m/%d/%Y") + " vs " + opponent

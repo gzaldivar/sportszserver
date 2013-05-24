@@ -59,7 +59,7 @@ Sportzserver::Application.routes.draw do
         end
       end
  
-      resources :football_stats, only: [:create] do
+      resources :football_stats, only: [:create, :edit, :update, :destroy] do
         collection do
           get :passing, :rushing, :receiving, :defense, :specialteams, :showdata
         end

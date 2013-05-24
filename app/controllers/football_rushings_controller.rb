@@ -43,6 +43,7 @@ class FootballRushingsController < ApplicationController
 			@rushing.attempts = @rushing.attempts + 1
 			@rushing.yards = @rushing.yards + params[:yards].to_i
 			@rushing.fumbles = @rushing.fumbles + params[:fumble].to_i
+			@rushing.fumbles_lost = @rushing.fumbles_lost + params[:fumbles_lost].to_i
 			if params[:yards].to_i > @rushing.longest
 				@rushing.longest = params[:yards].to_i
 			end

@@ -11,7 +11,7 @@ class FootballPassing
   field :interceptions, type: Integer, default: 0
   field :sacks, type: Integer, default: 0
   field :yards_lost, type: Integer, default: 0
-  field :comp_percentage, type: Float, default: 0.0
+  field :comp_percentage, type: Float, default: Float(0)
   field :twopointconv, type: Integer, default: 0
   field :firstdowns, type: Integer, default: 0
     
@@ -28,10 +28,10 @@ class FootballPassing
   validates_numericality_of :firstdowns, greater_than_or_equal_to: 0
 
   def comp_percent
-    if !self.completions.nil? and !self.attempts.nil?
+    if !self.completions.nil? and !self.attempts.nil? and self.completions > 0 and self.attempts > 0
       self.comp_percentage = Float(self.completions) / Float(self.attempts)
     else
-      self.comp_percentage = 0.0
+      self.comp_percentage = Float(0)
     end
   end
 

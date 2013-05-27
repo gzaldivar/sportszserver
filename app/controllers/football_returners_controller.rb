@@ -26,10 +26,15 @@ class FootballReturnersController < ApplicationController
 			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @returner], notice: 'Stat created for ' + @athlete.full_name }
-		        format.json 
+		        format.json { render json: { returner: @returner, 
+		        			  request: sport_athlete_football_stat_football_returner_url(@sport, @athlete, @stat, @returner) } }
 		     end			
 		rescue Exception => e
-			redirect_to :back, alert: "Error creating football returner stats "	+ e.message
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error creating football returner stats "	+ e.message }
+				format.json { render status: 404, json: { error: e.message, 
+		        			  request: sport_athlete_football_stat_football_returner_url(@sport, @athlete, @stat, @returner) } }
+			end
 		end
 	end
 
@@ -84,10 +89,15 @@ class FootballReturnersController < ApplicationController
 
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @returner], notice: 'Return stats added for ' + @athlete.full_name }
-		        format.json 
+		        format.json { returner: @returner, 
+		        			  request: sport_athlete_football_stat_football_returner_url(@sport, @athlete, @stat, @returner) } }
 		    end
 		rescue Exception => e
-			redirect_to :back, alert: "Error: " + e.message
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error creating football returner stats "	+ e.message }
+				format.json { render status: 404, json: { error: e.message, 
+		        			  request: sport_athlete_football_stat_football_returner_url(@sport, @athlete, @stat, @returner) } }
+			end
 		end
 	end
 
@@ -120,10 +130,15 @@ class FootballReturnersController < ApplicationController
 			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @returner], notice: 'Return stats added for ' + @athlete.full_name }
-		        format.json 
+		        format.json { render json: { returner: @returner, 
+		        			  request: sport_athlete_football_stat_football_returner_url(@sport, @athlete, @stat, @returner) } }
 		    end
 		rescue Exception => e
-			redirect_to :back, alert: "Error: " + e.message
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error creating football returner stats "	+ e.message }
+				format.json { render status: 404, json: { error: e.message, 
+		        			  request: sport_athlete_football_stat_football_returner_url(@sport, @athlete, @stat, @returner) } }
+			end
 		end
 	end
 
@@ -139,10 +154,15 @@ class FootballReturnersController < ApplicationController
 			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @returner], notice: 'Stat updated for ' + @athlete.full_name }
-		        format.json 
+		        format.json { returner: @returner, 
+		        			  request: sport_athlete_football_stat_football_returner_url(@sport, @athlete, @stat, @returner) } }
 		     end		
 		rescue Exception => e
-			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name + " " + e.message		
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error creating football returner stats "	+ e.message }
+				format.json { render status: 404, json: { error: e.message, 
+		        			  request: sport_athlete_football_stat_football_returner_url(@sport, @athlete, @stat, @returner) } }
+			end
 		end
 	end
 

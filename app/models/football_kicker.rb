@@ -1,6 +1,5 @@
 class FootballKicker
 	include Mongoid::Document
-	include SendAlert
 
 	field	:fgattempts, type: Integer, default: 0
 	field	:fgmade, type: Integer, default: 0

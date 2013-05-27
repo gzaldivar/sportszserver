@@ -12,8 +12,9 @@ class Team
   field :fb_rec_players, type: Array    # List of players user has for stat console
   field :fb_def_players, type: Array    # List of players user has for stat console
   field :fb_spec_players, type: Array    # List of players user has for stat console
-
-
+  field :placekicker, type: String
+  field :kicker, type: String
+  field :punter, type: String
 
   has_mongoid_attached_file :team_logo,
   :storage        => :s3,

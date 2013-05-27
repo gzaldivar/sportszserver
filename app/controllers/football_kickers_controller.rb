@@ -34,10 +34,15 @@ class FootballKickersController < ApplicationController
 			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @kicker], notice: 'Stat created for ' + @athlete.full_name }
-		        format.json 
+		        format.json { render json: { kicker: @kicker, 
+		        			  request: sport_athlete_football_stat_football_kicker_url(@sport, @athlete, @stat, @kicker) } }
 		     end			
 		rescue Exception => e
-			redirect_to :back, alert: "Error creating football specialteams stats"	+ e.message		
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error creating football specialteams stats"	+ e.message	}
+				format.json { render status: 404, json: { error: e.message, 
+									 request: sport_athlete_football_stat_football_kicker_url(@sport, @athlete, @stat, @kicker) } }
+			end
 		end
 	end
 
@@ -87,7 +92,7 @@ class FootballKickersController < ApplicationController
 			if params[:fgmade].to_i > 0
 				@kicker.fgmade = @kicker.fgmade + 1
 				gamelog = @kicker.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
-																		   logentry: @athlete.logname + " " + params[:fglong].to_i, score: "FG")
+																		  logentry: @athlete.logname + " " + params[:fglong], score: "FG")
 				gamelog.save!
 				if params[:quarter]
 					@gameschedule = Gameschedule.find(@kicker.football_stat.gameschedule)
@@ -106,7 +111,7 @@ class FootballKickersController < ApplicationController
 			elsif params[:xpmade].to_i > 0
 				@kicker.xpmade = @kicker.xpmade + 1
 				gamelog = @kicker.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
-																		   logentry: @athlete.logname, score: "XP")
+																		  logentry: @athlete.logname, score: "XP")
 				gamelog.save!
 				if params[:quarter]
 					@gameschedule = Gameschedule.find(@kicker.football_stat.gameschedule)
@@ -135,10 +140,15 @@ class FootballKickersController < ApplicationController
 
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @kicker], notice: 'Place Kicking stat added for ' + @athlete.full_name }
-		        format.json 
+		        format.json { render json: { kicker: @kicker, 
+		        			  request: sport_athlete_football_stat_football_kicker_url(@sport, @athlete, @stat, @kicker) } }
 		    end
 		rescue Exception => e
-			redirect_to :back, alert: "Error: " + e.message
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error creating football specialteams stats"	+ e.message	}
+				format.json { render status: 404, json: { error: e.message, 
+									 request: sport_athlete_football_stat_football_kicker_url(@sport, @athlete, @stat, @kicker) } }
+			end
 		end
 	end
 
@@ -158,10 +168,15 @@ class FootballKickersController < ApplicationController
 
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @kicker], notice: 'Kickoff stats added for ' + @athlete.full_name }
-		        format.json 
+		        format.json { render json: { kicker: @kicker, 
+		        			  request: sport_athlete_football_stat_football_kicker_url(@sport, @athlete, @stat, @kicker) } }
 		    end
 		rescue Exception => e
-			redirect_to :back, alert: "Error: " + e.message
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error creating football specialteams stats"	+ e.message	}
+				format.json { render status: 404, json: { error: e.message, 
+									 request: sport_athlete_football_stat_football_kicker_url(@sport, @athlete, @stat, @kicker) } }
+			end
 		end
 	end
 
@@ -185,22 +200,15 @@ class FootballKickersController < ApplicationController
 
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @kicker], notice: 'Punter stats added for ' + @athlete.full_name }
-		        format.json 
+		        format.json { render json: { kicker: @kicker, 
+		        			  request: sport_athlete_football_stat_football_kicker_url(@sport, @athlete, @stat, @kicker) } }
 		    end
 		rescue Exception => e
-			redirect_to :back, alert: "Error: " + e.message
-		end
-	end
-
-	def update
-		begin
-			@defense.update_attributes!(params[:football_defense])
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, @stat, @defense], notice: 'Stat updated for ' + @athlete.full_name }
-		        format.json 
-		     end			
-		rescue Exception => e
-			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name			
+				format.html { redirect_to :back, alert: "Error creating football specialteams stats"	+ e.message	}
+				format.json { render status: 404, json: { error: e.message, 
+									 request: sport_athlete_football_stat_football_kicker_url(@sport, @athlete, @stat, @kicker) } }
+			end
 		end
 	end
 
@@ -216,10 +224,15 @@ class FootballKickersController < ApplicationController
 			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @kicker], notice: 'Stat updated for ' + @athlete.full_name }
-		        format.json 
+		        format.json { render json: { kicker: @kicker, 
+		        			  request: sport_athlete_football_stat_football_kicker_url(@sport, @athlete, @stat, @kicker) } }
 		     end			
 		rescue Exception => e
-			redirect_to :back, alert: "Error updating stats for " + @athlete.full_name + " " + e.message
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error updating stats for "	+ @athlete.full_name + " " + e.message	}
+				format.json { render status: 404, json: { error: e.message, 
+									 request: sport_athlete_football_stat_football_kicker_url(@sport, @athlete, @stat, @kicker) } }
+			end
 		end
 	end
 

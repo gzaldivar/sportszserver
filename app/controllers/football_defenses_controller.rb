@@ -43,30 +43,31 @@ class FootballDefensesController < ApplicationController
 
 	def adddefense
 		begin
-			@defense.tackles = @defense.tackles + 1
+			@defense.tackles = @defense.tackles + params[:tackles].to_i
 			@defense.int_yards = @defense.int_yards + params[:int_yards].to_i
 			@defense.fumbles_recovered = @defense.fumbles_recovered + params[:fumbles_recovered].to_i
-			@defense.assists = @defense.assists + 1
-			if params[:sack]
+			@defense.assists = @defense.assists + params[:assists].to_i
+
+			if params[:sack].to_i > 0
 				@defense.sacks = @defense.sacks + 1
 			end
-			if params[:pass_defended]
+			if params[:pass_defended].to_i > 0
 				@defense.pass_defended = @defense.pass_defended + 1
 			end
-			if params[:int]
+			if params[:int].to_i > 0
 				@defense.interceptions = @defense.interceptions + 1
 			end
-			if params[:fumbles_recovered]
+			if params[:fumbles_recovered].to_i > 0
 				@defense.fumbles_recovered = @defense.fumbles_recovered + 1
 			end
 			if params[:int_yards].to_i > @defense.int_long
 				@defense.int_long = params[:int_yards]
 			end
 
-			if params[:int_td]
+			if params[:int_td].to_i > 0
 				@defense.int_td = @defense.int_td + 1
 
-				if params[:interceptions].to_i > 0
+				if params[:int].to_i > 0
 					gamelog = @defense.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
 																			   logentry: @athlete.logname + " interception return", score: "TD")
 				else
@@ -91,7 +92,7 @@ class FootballDefensesController < ApplicationController
 				end
 			end
 
-			if params[:safety]
+			if params[:safety].to_i > 0
 				@defense.safety = @defense.safety + 1
 				gamelog = @defense.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
 																		   logentry: @athlete.logname + " safety", score: "2P")
@@ -129,10 +130,10 @@ class FootballDefensesController < ApplicationController
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error: " + e.message }
-			    format.json { render json: { error: @error, 
+			    format.json { render json: { error: e.message, 
 		        			  request: sport_athlete_football_stat_football_defense_url(@sport, @athlete, @stat, @defense) } }
-		     end			
-	end
+		     end
+		end		
 	end
 
 	def update

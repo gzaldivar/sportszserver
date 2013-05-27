@@ -8,7 +8,7 @@
 		<%= form_tag punter_sport_athlete_football_stat_football_kickers_path(sport_id: @sport, athlete_id: @athlete, 
 								football_stat_id: @stat, football_kicker_id: @kicker), class: "form-horizontal", method: 'get' do %>
 			<%= render 'shared/error_messages', object: @kicker %>
-			<div class="row">
+			<!--div class="row">
 				<div class="span2">
 		            <%= label_tag "Quarter: " %>
 					<%= select_tag "quarter", options_for_select(quarters) %>
@@ -17,7 +17,7 @@
 		            <%= label_tag "Game Time (Needed for scoring summary. Optional for Kickoff and Punts): " %>
 		            <%= text_field_tag "time", '00:00' %>
 				</div>
-			</div>
+			</div-->
 			<p>
 			<h4>Punts</h4>
 			<div class="row">

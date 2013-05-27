@@ -64,9 +64,7 @@ class TeamsController < ApplicationController
 		     	 params[:pass_players].each do |key,value|
 		        	if player = Athlete.find(value.to_s)
 		            	@team.fb_pass_players = Array.new
-		            	puts "here"
 		          		@team.fb_pass_players.push(value)
-		          		puts "yeah baby!"
 		        	else
 		          		throw "Athlete does not exist"
 		        	end
@@ -112,12 +110,27 @@ class TeamsController < ApplicationController
 		        	end
 		      	end
 			end
+			if params[:placekicker]
+				if player = Athlete.find(params[:placekicker].to_s)
+					@team.placekicker = params[:placekicker].to_s
+				end
+			end
+			if params[:punter]
+				if player = Athlete.find(params[:punter].to_s)
+					@team.punter = params[:punter].to_s
+				end
+			end
+			if params[:kicker]
+				if player = Athlete.find(params[:kicker].to_s)
+					@team.kicker = params[:kicker].to_s
+				end
+			end
 		    @team.save!
 		    respond_to do |format|
 		      format.json { render json: { team: @team, request: sport_team_url(@sport, @team) } }
 		    end
 		rescue Exception => e
-		  render status: 200, json: { error: e.message }
+		  render status: 404, json: { error: e.message }
 		end
 	end
 

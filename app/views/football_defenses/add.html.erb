@@ -14,8 +14,8 @@
 					<%= select_tag "quarter", options_for_select(quarters) %>
 				</div>
 				<div class="span2 offset1">
-		            <%= label_tag "Sack: " %>
-		            <%= check_box_tag 'sack', 1 %>
+		            <%= label_tag "Interception Yards: " %>
+		            <%= text_field_tag "int_yards", '0' %>
 				</div>
 			</div>
 			<p>
@@ -25,14 +25,15 @@
 		            <%= text_field_tag "time", '00:00' %>
 				</div>
 				<div class="span2 offset1">
-		            <%= label_tag "Click for Interception: " %>
+		            <%= label_tag "Interception: " %>
 		            <%= check_box_tag 'int', 1 %>
 				</div>
 			</div>
+			<p>
 			<div class="row">
 				<div class="span2">
-		            <%= label_tag "Tackles: " %>
-		            <%= text_field_tag "tackles", '0' %>
+		            <%= label_tag "Tackle: " %>
+		            <%= check_box_tag "tackles", '1' %>
 				</div>
 				<div class="span2 offset1">
 		            <%= label_tag "Defensive TD: " %>
@@ -42,8 +43,8 @@
 			<p>
 			<div class="row">
 				<div class="span2">
-		            <%= label_tag "Assists: " %>
-		            <%= text_field_tag "assists", '0' %>
+		            <%= label_tag "Assist: " %>
+		            <%= check_box_tag "assists", '1' %>
 				</div>
 				<div class="span2 offset1">
 		            <%= label_tag "Fumbles Recovered: " %>
@@ -53,14 +54,17 @@
 			<p>
 			<div class="row">
 				<div class="span2">
-		            <%= label_tag "Interception Yards: " %>
-		            <%= text_field_tag "int_yards", '0' %>
+		            <%= label_tag "Sack: " %>
+		            <%= check_box_tag 'sack', 1 %>
 				</div>
 				<div class="span2 offset1">
 		            <%= label_tag "Passes Defended: " %>
 		            <%= check_box_tag "pass_defended", 1 %>
 				</div>
-				<div class="span2 offset1">
+			</div>
+			<p>
+			<div class="row">
+				<div class="span2 offset3">
 		            <%= label_tag "Safety: " %>
 		            <%= check_box_tag "safety", 1 %>
 				</div>

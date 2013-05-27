@@ -89,7 +89,7 @@ class FootballReturnersController < ApplicationController
 
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @returner], notice: 'Return stats added for ' + @athlete.full_name }
-		        format.json { returner: @returner, 
+		        format.json { render json: {returner: @returner, 
 		        			  request: sport_athlete_football_stat_football_returner_url(@sport, @athlete, @stat, @returner) } }
 		    end
 		rescue Exception => e
@@ -154,7 +154,7 @@ class FootballReturnersController < ApplicationController
 			end
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, @stat, @returner], notice: 'Stat updated for ' + @athlete.full_name }
-		        format.json { returner: @returner, 
+		        format.json { render json: { returner: @returner, 
 		        			  request: sport_athlete_football_stat_football_returner_url(@sport, @athlete, @stat, @returner) } }
 		     end		
 		rescue Exception => e

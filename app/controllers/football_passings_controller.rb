@@ -26,7 +26,7 @@ class FootballPassingsController < ApplicationController
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error creating football passing stats " + e.message }
-		        format.json { render json: { error: e.message, 
+		        format.json { render status: 404, json: { error: e.message, 
 		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @fbpassing) } }
 		     end			
 		end
@@ -173,7 +173,7 @@ class FootballPassingsController < ApplicationController
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error: " + e.message }
-				format.json { render json: { error: e.message, 
+				format.json { render status: 404, json: { error: e.message, 
 		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @fbpassing) } }
 		    end
 		end
@@ -199,7 +199,7 @@ class FootballPassingsController < ApplicationController
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error updating stats for " + @athlete.full_name + " " + e.message }
-		        format.json { render json: { error: e.message, 
+		        format.json { render status: 404, json: { error: e.message, 
 		        			  request: sport_athlete_football_stat_football_passing_url(@sport, @athlete, @stat, @fbpassing) } }
 		     end			
 		end

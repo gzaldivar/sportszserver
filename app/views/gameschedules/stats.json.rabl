@@ -50,11 +50,12 @@ object @stats
 child @stats => :football_stats do
 	child @stats => :passing_totals do
 		attributes :passing_attempts, :passing_completions, :passing_yards, :passing_td, :passing_sacks, :passing_yards_lost, :passing_interceptions,
-					:passing_tds, :passing_int, :passing_twopointconv
+					:passing_tds, :passing_int, :passing_twopointconv, :passing_firstdowns
 		node(:comp_percentage) { number_with_precision(@stats.passing_comp_percentage, precision: 2) }
 	end
 	child @stats => :rushing_totals do
-		attributes :rushing_attempts, :rushing_yards, :rushing_tds, :rushing_longest, :rushing_fumbles, :rushing_fumbles_lost, :rushing_twopointconv
+		attributes :rushing_attempts, :rushing_yards, :rushing_tds, :rushing_longest, :rushing_fumbles, :rushing_fumbles_lost, 
+				   :rushing_twopointconv, :rushing_firstdowns
 		node (:average) { number_with_precision(@stats.rushing_average, precision: 2) }
 	end
 	child @stats => :receiving_totals do

@@ -9,6 +9,7 @@
 		<th>Longest</th>
 		<th>Fumbles</th>
 		<th>Fumbles Lost</th>
+		<th>Two Point Conv</th>
 	</thead>
 	</em>
 	<tbody>
@@ -23,6 +24,7 @@
 					<td><%= a.football_receivings.longest %></td>
 					<td><%= a.football_receivings.fumbles %></td>
 					<td><%= a.football_receivings.fumbles_lost %></td>
+					<td><%= a.football_receivings.twopointconv %></td>
 				</tr>
 			<% end %>
 		<% end %>
@@ -35,6 +37,7 @@
 			<td><%= receiving.receiving_longest %></td>
 			<td><%= receiving.receiving_fumbles %></td>
 			<td><%= receiving.receiving_fumbles_lost %></td>
+			<td><%= receiving.receiving_twopointconv %></td>
 		</tr>
 	</tbody>
 </table>

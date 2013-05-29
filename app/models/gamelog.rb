@@ -6,6 +6,7 @@ class Gamelog
   field :period, type: String
   field :time, type: String
   field :score, type: String
+
   field :inning, type: Integer, default:0
 
   belongs_to :gameschedule

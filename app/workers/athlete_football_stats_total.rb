@@ -1,8 +1,8 @@
 class AthleteFootballStatsTotal
 	attr_accessor :passing_attempts, :passing_completions, :passing_comp_percentage, :passing_yards, 
-				  :passing_tds, :passing_int, :passing_sacks, :passing_yards_lost, 
+				  :passing_tds, :passing_int, :passing_sacks, :passing_yards_lost, :passing_firstdowns,
 				  :rushing_attempts, :rushing_longest, :rushing_yards, :rushing_tds, :rushing_fumbles, 
-				  :rushing_fumbles_lost, :rushing_average,
+				  :rushing_fumbles_lost, :rushing_average, :rushing_firstdowns,
 				  :receiving_receptions, :receiving_longest, :receiving_yards, :receiving_tds,
 				  :receiving_fumbles, :receiving_fumbles_lost, :receiving_average,
 				  :defense_tackles, :defense_assists, :defense_sacks, :defense_pass_defended, :defense_interceptions,
@@ -25,6 +25,7 @@ class AthleteFootballStatsTotal
 		self.passing_sacks = 0
 		self.passing_yards_lost = 0
 		self.passing_twopointconv = 0
+		self.passing_firstdowns = 0
 
 		athlete.football_stats.each do |s|
 			if !s.football_passings.nil?
@@ -36,6 +37,7 @@ class AthleteFootballStatsTotal
 				self.passing_sacks = self.passing_sacks + s.football_passings.sacks
 				self.passing_yards_lost = self.passing_yards_lost + s.football_passings.yards_lost
 				self.passing_twopointconv = self.passing_twopointconv + s.football_passings.twopointconv
+				self.passing_firstdowns = self.passing_firstdowns + s.football_passings.firstdowns
 			end
 		end
 		if self.passing_attempts != 0
@@ -54,6 +56,7 @@ class AthleteFootballStatsTotal
 		self.rushing_fumbles_lost = 0
 		self.rushing_average = 0.0
 		self.rushing_twopointconv = 0
+		self.rushing_firstdowns = 0
 
 		athlete.football_stats.each do |s|
 			if !s.football_rushings.nil?
@@ -66,6 +69,7 @@ class AthleteFootballStatsTotal
 					self.rushing_longest = s.football_rushings.longest
 				end
 				self.rushing_twopointconv = self.rushing_twopointconv + s.football_rushings.twopointconv
+				self.rushing_firstdowns = self.rushing_firstdowns + s.football_rushings.firstdowns
 			end
 		end
 		if self.rushing_attempts != 0 and self.rushing_yards != 0

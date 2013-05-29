@@ -6,9 +6,11 @@
 		<th>Rushing Yards</th>
 		<th>Average</th>
 		<th>Rushing TD</th>
+		<th>First Downs</th>
 		<th>Longest</th>
 		<th>Fumbles</th>
 		<th>Fumbles Lost</th>
+		<th>Two Point Conv</th>
 	</thead>
 	</em>
 	<tbody>
@@ -20,9 +22,11 @@
 					<td><%= a.football_rushings.yards %></td>
 					<td><%= number_with_precision(a.football_rushings.average, precision: 2) %></td>
 					<td><%= a.football_rushings.td %></td>
+					<td><%= a.football_rushings.firstdowns %></td>
 					<td><%= a.football_rushings.longest %></td>
 					<td><%= a.football_rushings.fumbles %></td>
 					<td><%= a.football_rushings.fumbles_lost %></td>
+					<td><%= a.football_rushings.twopointconv %></td>
 				</tr>
 			<% end %>
 		<% end %>
@@ -32,9 +36,11 @@
 			<td><%= rushing.rushing_yards %></td>
 			<td><%= number_with_precision(rushing.rushing_average, precision: 2) %></td>
 			<td><%= rushing.rushing_tds %></td>
+			<td><%= rushing.rushing_firstdowns %></td>
 			<td><%= rushing.rushing_longest %></td>
 			<td><%= rushing.rushing_fumbles %></td>
 			<td><%= rushing.rushing_fumbles_lost %></td>
+			<td><%= rushing.rushing_twopointconv %></td>
 		</tr>
 	</tbody>
 </table>

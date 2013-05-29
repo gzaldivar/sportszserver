@@ -7,9 +7,11 @@
 		<th>Comp. Percentage</th>
 		<th>Yards</th>
 		<th>TD</th>
+		<th>First Downs</th>
 		<th>Int</th>
 		<th>Sacks</th>
 		<th>Yards Lost</th>
+		<th>Two Point Conv</th>
 	</thead>
 	</em>
 	<tbody>
@@ -22,9 +24,11 @@
 					<td><%= number_with_precision(a.football_passings.comp_percentage, precision: 2) %></td>
 					<td><%= a.football_passings.yards %></td>
 					<td><%= a.football_passings.td %></td>
+					<td><%= a.football_passings.firstdowns %></td>
 					<td><%= a.football_passings.interceptions %></td>
 					<td><%= a.football_passings.sacks %></td>
 					<td><%= a.football_passings.yards_lost %></td>
+					<td><%= a.football_passings.twopointconv %></td>
 				</tr>
 			<% end %>
 		<% end %>
@@ -35,9 +39,11 @@
 			<td><%= number_with_precision(passing.passing_comp_percentage, precision: 2) %></td>
 			<td><%= passing.passing_yards %></td>
 			<td><%= passing.passing_tds %></td>
+			<td><%= passing.passing_firstdowns %></td>
 			<td><%= passing.passing_int %></td>
 			<td><%= passing.passing_sacks %></td>
 			<td><%= passing.passing_yards_lost %></td>
+			<td><%= passing.passing_twopointconv %></td>
 		</tr>
 	</tbody>
 </table>

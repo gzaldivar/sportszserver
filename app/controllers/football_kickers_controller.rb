@@ -91,41 +91,47 @@ class FootballKickersController < ApplicationController
 
 			if params[:fgmade].to_i > 0
 				@kicker.fgmade = @kicker.fgmade + 1
-				gamelog = @kicker.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
-																		  logentry: @athlete.logname + " " + params[:fglong], score: "FG")
-				gamelog.save!
-				if params[:quarter]
-					@gameschedule = Gameschedule.find(@kicker.football_stat.gameschedule)
-					case params[:quarter]
-					when "Q1"
-						@gameschedule.homeq1 = @gameschedule.homeq1 + 3
-					when "Q2"
-						@gameschedule.homeq2 = @gameschedule.homeq2 + 3
-					when "Q3"
-						@gameschedule.homeq3 = @gameschedule.homeq3 + 3
-					when "Q4"
-						@gameschedule.homeq4 = @gameschedule.homeq4 + 3
+
+				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
+					gamelog = @kicker.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
+																			  logentry: @athlete.logname + " " + params[:fglong], score: "FG")
+					gamelog.save!
+					if params[:quarter]
+						@gameschedule = Gameschedule.find(@kicker.football_stat.gameschedule)
+						case params[:quarter]
+						when "Q1"
+							@gameschedule.homeq1 = @gameschedule.homeq1 + 3
+						when "Q2"
+							@gameschedule.homeq2 = @gameschedule.homeq2 + 3
+						when "Q3"
+							@gameschedule.homeq3 = @gameschedule.homeq3 + 3
+						when "Q4"
+							@gameschedule.homeq4 = @gameschedule.homeq4 + 3
+						end
+						@gameschedule.save!
 					end
-					@gameschedule.save!
 				end
 			elsif params[:xpmade].to_i > 0
 				@kicker.xpmade = @kicker.xpmade + 1
-				gamelog = @kicker.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
-																		  logentry: @athlete.logname, score: "XP")
-				gamelog.save!
-				if params[:quarter]
-					@gameschedule = Gameschedule.find(@kicker.football_stat.gameschedule)
-					case params[:quarter]
-					when "Q1"
-						@gameschedule.homeq1 = @gameschedule.homeq1 + 1
-					when "Q2"
-						@gameschedule.homeq2 = @gameschedule.homeq2 + 1
-					when "Q3"
-						@gameschedule.homeq3 = @gameschedule.homeq3 + 1
-					when "Q4"
-						@gameschedule.homeq4 = @gameschedule.homeq4 + 1
+
+				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
+					gamelog = @kicker.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
+																			  logentry: @athlete.logname, score: "XP")
+					gamelog.save!
+					if params[:quarter]
+						@gameschedule = Gameschedule.find(@kicker.football_stat.gameschedule)
+						case params[:quarter]
+						when "Q1"
+							@gameschedule.homeq1 = @gameschedule.homeq1 + 1
+						when "Q2"
+							@gameschedule.homeq2 = @gameschedule.homeq2 + 1
+						when "Q3"
+							@gameschedule.homeq3 = @gameschedule.homeq3 + 1
+						when "Q4"
+							@gameschedule.homeq4 = @gameschedule.homeq4 + 1
+						end
+						@gameschedule.save!
 					end
-					@gameschedule.save!
 				end
 			end
 			@kicker.save!

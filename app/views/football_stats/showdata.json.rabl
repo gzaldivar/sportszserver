@@ -10,6 +10,8 @@ if @stats
 			node (:interceptions) { @stats.passing_int }
 			node (:sacks) { @stats.passing_sacks }
 			node (:yards_lost) { @stats.passing_yards_lost }
+			node (:firstdowns) { @stats.passing_firstdowns }
+			node (:twopointconv) { @stats.passing_twopointconv }
 		end
 		child @stats => :football_rushing do
 			node (:attempts) { @stats.rushing_attempts }
@@ -19,6 +21,8 @@ if @stats
 			node (:longest) { @stats.rushing_longest }
 			node (:fumbles) { @stats.rushing_fumbles }
 			node (:fumbles_lost) { @stats.rushing_fumbles_lost }
+			node (:firstdowns) { @stats.passing_firstdowns }
+			node (:twopointconv) { @stats.rushing_twopointconv }
 		end
 		child @stats => :football_receiving do
 			node (:receptions) { @stats.receiving_receptions }
@@ -28,6 +32,7 @@ if @stats
 			node (:longest) { @stats.receiving_longest }
 			node (:fumbles) { @stats.receiving_fumbles }
 			node (:fumbles_lost) { @stats.receiving_fumbles_lost }
+			node (:twopointconv) { @stats.receiving_twopointconv }
 		end
 		child @stats => :football_defense do
 			node (:tackles) { @stats.defense_tackles }

@@ -187,7 +187,7 @@ class FootballStatsController < ApplicationController
 			@stats.defense_totals(@athlete)
 			@stats.specialteams_totals(@athlete)
 		else			
-			@gamestats = @athlete.football_stats.where(gameschedule_id: params[:game].to_s).first
+			@ath_totals = @athlete.football_stats.where(gameschedule_id: params[:game].to_s)
 		end
 		respond_to do |format|
 			format.json

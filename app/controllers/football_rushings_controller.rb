@@ -52,8 +52,9 @@ class FootballRushingsController < ApplicationController
 			end
 			if params[:td].to_i > 0
 				@rushing.td = @rushing.td + params[:td].to_i
-				gamelog = @rushing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
-												logentry: @athlete.logname + " " +  params[:yards] + " yard run", score: "TD")
+				gamelog = @rushing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
+																			logentry: "yard run", score: "TD", yards: params[:yards],
+																			player: @athlete.id)
 				gamelog.save!
 				if params[:quarter]
 					@gameschedule = Gameschedule.find(@rushing.football_stat.gameschedule)
@@ -72,8 +73,9 @@ class FootballRushingsController < ApplicationController
 			end
 			if params[:two].to_i > 0
 				@rushing.twopointconv = @rushing.twopointconv + params[:two].to_i
-				gamelog = @rushing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
-												logentry: @athlete.logname + " " +  params[:yards] + " yard run", score: "2P")
+				gamelog = @rushing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
+																			logentry: "yard run", score: "TD", yards: params[:yards],
+																			player: @athlete.id)
 				gamelog.save!
 				if params[:quarter]
 					@gameschedule = Gameschedule.find(@rushing.football_stat.gameschedule)

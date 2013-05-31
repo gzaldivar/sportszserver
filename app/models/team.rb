@@ -3,7 +3,6 @@ class Team
   include Mongoid::Timestamps
   include Mongoid::Paperclip
 
- 
   field :title, type: String
   field :mascot, type: String
 

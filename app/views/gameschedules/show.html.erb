@@ -88,10 +88,7 @@
 		<% @gamelogs.each do |g| %>
 			<div class="row">
 				<div class="span8">
-				 	<%= g.period %>:
-				 	<%= g.time %> - 
-				 	<%= g.logentry %> - 
-				 	<%= g.score %>
+				 	<%= g.logentrytext %>
 				 	<% if isAdmin? or isTeamManager?(@gameschedule) %>
 				 		<%= link_to "Delete", [@sport, @team, @gameschedule, g], method: :delete,
 				 					class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>

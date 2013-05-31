@@ -120,5 +120,13 @@ class Sport
       end
     end
   end
+
+  def isFootball?
+    if self.sportname == "Football"
+      return true
+    else
+      return nil
+    end
+  end
   
 end

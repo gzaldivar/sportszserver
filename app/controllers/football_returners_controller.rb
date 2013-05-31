@@ -68,9 +68,9 @@ class FootballReturnersController < ApplicationController
 				@returner.kotd = @returner.kotd + 1
 
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
-					gamelog = @returner.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
-																			  logentry: @athlete.logname + " Kickoff Return " + 
-																			  params[:koyards].to_s, score: "TD")
+					gamelog = @returner.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
+																				logentry: "kickoff return", score: "TD", yards: params[:koyards],
+																				player: @athlete.id)
 					gamelog.save!
 					if params[:quarter]
 						@gameschedule = Gameschedule.find(@returner.football_stat.gameschedule)
@@ -117,10 +117,27 @@ class FootballReturnersController < ApplicationController
 
 			if params[:punt_returntd].to_i > 0
 				@returner.punt_returntd = @returner.punt_returntd + 1
-				gamelog = @returner.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
-																		  logentry: @athlete.logname + " Punt Return " + 
-																		  params[:punt_returnyards].to_s, score: "TD")
-				gamelog.save!
+
+				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
+					gamelog = @returner.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
+																				logentry: "punt return", score: "TD", yards: params[:punt_returnyards],
+																				player: @athlete.id)
+					gamelog.save!
+					if params[:quarter]
+						@gameschedule = Gameschedule.find(@returner.football_stat.gameschedule)
+						case params[:quarter]
+						when "Q1"
+							@gameschedule.homeq1 = @gameschedule.homeq1 + 6
+						when "Q2"
+							@gameschedule.homeq2 = @gameschedule.homeq2 + 6
+						when "Q3"
+							@gameschedule.homeq3 = @gameschedule.homeq3 + 6
+						when "Q4"
+							@gameschedule.homeq4 = @gameschedule.homeq4 + 6
+						end
+						@gameschedule.save!
+					end
+				end
 			end
 			@returner.save!
 

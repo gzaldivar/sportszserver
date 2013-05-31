@@ -29,7 +29,10 @@ class GameschedulesController < ApplicationController
         format.js
       end
     else
-      redirect_to :back, alert: "Error creating game schedule " + schedule.message
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Error creating game schedule " + schedule.message }
+        format.json { render status: 404, json: { error: e.message, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
+      end
     end
 
   end
@@ -68,19 +71,25 @@ class GameschedulesController < ApplicationController
   
   def update
     begin
-      @gameschedule.starttime = DateTime.civil(@gameschedule.gamedate.year, @gameschedule.gamedate.month, 
-                                          @gameschedule.gamedate.day, 
-                                          params[:gameschedule][:"starttime(4i)"].to_i,
-                                          params[:gameschedule][:"starttime(5i)"].to_i)
+      datetime = DateTime.iso8601(params[:gameschedule][:gamedate])
+      puts datetime
+      @gameschedule.starttime = DateTime.civil(datetime.year, datetime.month, datetime.day, params[:gameschedule][:"starttime(4i)"].to_i,
+                                               params[:gameschedule][:"starttime(5i)"].to_i)
+#      @gameschedule.starttime = DateTime.civil(@gameschedule.gamedate.year, @gameschedule.gamedate.month, 
+#                                          @gameschedule.gamedate.day, 
+#                                          params[:gameschedule][:"starttime(4i)"].to_i,
+#                                          params[:gameschedule][:"starttime(5i)"].to_i)
+      puts @gameschedule.starttime
       @gameschedule.update_attributes!(params[:gameschedule])
       respond_to do |format|
           format.html { redirect_to [@sport, @team, @gameschedule] }
-          format.xml
           format.json { render json: { schedule: @gameschedule, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
-          format.js
       end
     rescue Exception => e
-      redirect_to :back, alert: "Error updating game schedule " + e.message
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Error updating game schedule " + e.message }
+        format.json { render status: 404, json: { error: e.message, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
+      end
     end
   end
   

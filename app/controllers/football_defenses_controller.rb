@@ -26,7 +26,7 @@ class FootballDefensesController < ApplicationController
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error creating football defense stats"	}
-		        format.json { render json: { error: e.message, 
+		        format.json { render status: 404, json: { error: e.message, 
 		        			  request: sport_athlete_football_stat_football_defense_url(@sport, @athlete, @stat, @defense) } }
 		     end			
 		end
@@ -69,11 +69,17 @@ class FootballDefensesController < ApplicationController
 
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
 					if params[:int].to_i > 0
-						gamelog = @defense.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
-																				   logentry: @athlete.logname + " interception return", score: "TD")
+						gamelog = @defense.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
+																					logentry: "yard interception return", score: "TD", yards: params[:yards],
+																					player: @athlete.id)
+#						gamelog = @defense.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
+#																				   logentry: @athlete.logname + " interception return", score: "TD")
 					else
 						gamelog = @defense.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
-																				   logentry: @athlete.logname + " fumble return", score: "TD")
+																					logentry: "yard fumble return", score: "TD", yards: params[:yards],
+																					player: @athlete.id)
+#						gamelog = @defense.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
+#																				   logentry: @athlete.logname + " fumble return", score: "TD")
 					end
 
 					gamelog.save!
@@ -99,7 +105,10 @@ class FootballDefensesController < ApplicationController
 
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
 					gamelog = @defense.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
-																			   logentry: @athlete.logname + " safety", score: "2P")
+																				logentry: "defensive safety", score: "2P", yards: params[:yards],
+																				player: @athlete.id)
+#					gamelog = @defense.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
+#																			   logentry: @athlete.logname + " safety", score: "2P")
 
 					gamelog.save!
 					if params[:quarter]
@@ -135,7 +144,7 @@ class FootballDefensesController < ApplicationController
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error: " + e.message }
-			    format.json { render json: { error: e.message, 
+			    format.json { render status: 404, json: { error: e.message, 
 		        			  request: sport_athlete_football_stat_football_defense_url(@sport, @athlete, @stat, @defense) } }
 		     end
 		end		
@@ -157,7 +166,7 @@ class FootballDefensesController < ApplicationController
 		rescue Exception => e
 			respond_to do |format|
 			format.html { redirect_to :back, alert: "Error updating stats for " + e.message	}
-		    format.json { render json: { error: e.message, 
+		    format.json { render status: 404, json: { error: e.message, 
 		        		  request: sport_athlete_football_stat_football_defense_url(@sport, @athlete, @stat, @defense) } }
 		     end			
 		end

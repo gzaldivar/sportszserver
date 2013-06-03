@@ -46,8 +46,11 @@ module SportsHelper
   def specialteams_football_positions
     [      
       ['Kicker', 'K'],
+      ['Place Kicker', 'PK'],
       ['Punter', 'P'],
-      ['Kicker/Punter', 'KP']
+      ['Returner', "RET"],
+      ['Kicker/Punter', 'KP'],
+      ['Kicker/Punter/Place Kicker', 'PKP']
     ]
   end
 

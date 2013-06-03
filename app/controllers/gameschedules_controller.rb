@@ -11,16 +11,14 @@ class GameschedulesController < ApplicationController
   end
   
   def create
-    schedule = @team.gameschedules.build(params[:gameschedule])
-#    schedule.gamedate = Date.civil(params[:gameschedule][:"gamedate(1i)"].to_i,
-#                                   params[:gameschedule][:"gamedate(2i)"].to_i,
-#                                   params[:gameschedule][:"gamedate(3i)"].to_i)
-    schedule.starttime = DateTime.civil(schedule.gamedate.year, schedule.gamedate.month, 
-                                        schedule.gamedate.day, 
-                                        params[:gameschedule][:"starttime(4i)"].to_i,
-                                        params[:gameschedule][:"starttime(5i)"].to_i)
+    begin
+      schedule = @team.gameschedules.build(params[:gameschedule])
+      schedule.starttime = DateTime.civil(schedule.gamedate.year, schedule.gamedate.month, 
+                                          schedule.gamedate.day, 
+                                          params[:gameschedule][:"starttime(4i)"].to_i,
+                                          params[:gameschedule][:"starttime(5i)"].to_i)
 
-    if schedule.save
+      schedule.save!
 
       respond_to do |format|
         format.html { redirect_to [@sport, @team, schedule] }
@@ -28,7 +26,7 @@ class GameschedulesController < ApplicationController
         format.json { render json: { schedule: schedule, request: sport_team_gameschedule_url(@sport, @team, schedule) } }
         format.js
       end
-    else
+    rescue Exception => e
       respond_to do |format|
         format.html { redirect_to :back, alert: "Error creating game schedule " + schedule.message }
         format.json { render status: 404, json: { error: e.message, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
@@ -75,10 +73,6 @@ class GameschedulesController < ApplicationController
       puts datetime
       @gameschedule.starttime = DateTime.civil(datetime.year, datetime.month, datetime.day, params[:gameschedule][:"starttime(4i)"].to_i,
                                                params[:gameschedule][:"starttime(5i)"].to_i)
-#      @gameschedule.starttime = DateTime.civil(@gameschedule.gamedate.year, @gameschedule.gamedate.month, 
-#                                          @gameschedule.gamedate.day, 
-#                                          params[:gameschedule][:"starttime(4i)"].to_i,
-#                                          params[:gameschedule][:"starttime(5i)"].to_i)
       puts @gameschedule.starttime
       @gameschedule.update_attributes!(params[:gameschedule])
       respond_to do |format|
@@ -119,10 +113,17 @@ class GameschedulesController < ApplicationController
   end
   
   def destroy
-    if @gameschedule.destroy
-      redirect_to sport_team_gameschedules_path(@sport, @team), notice: "Schedule deleted!"
-    else
-      redirect_to :back, alert: "Error deleting schedule"
+    begin
+      @gameschedule.destroy
+      respond_to do |format|
+        format.html { redirect_to sport_team_gameschedules_path(@sport, @team), notice: "Schedule deleted!" }
+        format.json { render json: { message: "Success", request: [@sport, @team] } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Error deleting schedule" }
+        format.json { render status: 404, json: { error: e.message, request: [@sport, @team] } }
+      end
     end
   end
   

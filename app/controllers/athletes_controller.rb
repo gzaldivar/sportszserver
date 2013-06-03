@@ -16,22 +16,23 @@ class AthletesController < ApplicationController
   end
   
   def create
-    athlete = @sport.athletes.build(params[:athlete]) 
-#    update_team(athlete)
-    if @sport.name == "Football"
-      update_postions(athlete)
-    end
-    update_height(athlete)
-    athlete.fans = Array.new
-    if athlete.save
+    begin
+      athlete = @sport.athletes.build(params[:athlete]) 
+      if @sport.name == "Football"
+        update_postions(athlete)
+      end
+      update_height(athlete)
+      athlete.fans = Array.new
+      athlete.save!
       respond_to do |format|
         format.html { redirect_to [@sport, athlete], notice: 'Athlete created!'}
-        format.xml
-        format.json 
-        format.js
+        format.json { render json: { athlete: athlete, request: [@sport, athlete] } }
       end
-    else     
-      redirect_to :back, alert: "Error creating athlete"
+    rescue Exception => e
+      respond_to do |format|   
+        format.html { redirect_to :back, alert: "Error creating athlete" }
+        format.json { render status: 404, json: { error: e.message, request: [@sport, @athlete] } }
+      end
     end
   end
   
@@ -62,33 +63,38 @@ class AthletesController < ApplicationController
   end
   
   def update
-#    update_team(@athlete)
-    if @sport.name == "Football"
-      update_postions(@athlete)
-    end
-    update_height(@athlete)
-    if @athlete.update_attributes(params[:athlete])
-      respond_to do |format|
-        format.html { redirect_to [@sport, @athlete], notice: "Update successful" }
-        format.xml
-        format.json 
-        format.js
+    begin
+      if @sport.name == "Football"
+        update_postions(@athlete)
       end
-    else
-      redirect_to :back, alert: "Update fialed!"
+      update_height(@athlete)
+      @athlete.update_attributes!(params[:athlete])
+      respond_to do |format|
+          format.html { redirect_to [@sport, @athlete], notice: "Update successful" }
+          format.json { render json: { athlete: @athlete, request: [@sport, @athlete] } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Update fialed!" }
+        format.json { render status: 404, json: { error: e.message, request: [@sport, @athlete] } }
+      end
     end        
   end
   
   def destroy
-    destroy_athlete(@athlete.id.to_s)
-#    @athlete.deletephoto
-    @athlete.destroy    
-          
-    respond_to do |format|
-      format.html { redirect_to sport_athletes_path(@sport) }
-      format.xml
-      format.json 
-      format.js
+    begin
+      destroy_athlete(@athlete.id.to_s)
+      @athlete.destroy    
+            
+      respond_to do |format|
+        format.html { redirect_to sport_athletes_path(@sport) }
+        format.json { render json: { successful: "delete successful", request: [@sport] } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to sport_athletes_path(@sport) }
+        format.json { render status: 404, json: { error: e.message, request: [@sport] } }
+      end
     end
   end
   

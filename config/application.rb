@@ -43,7 +43,7 @@ module Sportzserver
     config.encoding = "utf-8"
 
     # Configure sensitive parameters which will be filtered from the log file.
-     config.filter_parameters += [:password, :password_confirmation]
+    config.filter_parameters += [:password, :password_confirmation]
 
     # Enable escaping HTML in JSON.
     config.active_support.escape_html_entities_in_json = true
@@ -70,5 +70,13 @@ module Sportzserver
         g.helper_specs false
     end
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
+#    config.middleware.use Rack::SslEnforcer, :except_environments => 'development', :only_methods => ['POST', 'DELETE', 'PUT', 'CREATE'], 
+#                                              :except_methods => ['GET', 'HEAD']
+#    config.middleware.use Rack::SslEnforcer
+    # constraint as a String
+    # config.middleware.use Rack::SslEnforcer
+    # Please note that, for instance, GET requests would be accessible via SSL and non-SSL connection here
+
+    # config.middleware.use Rack::SslEnforcer
   end
 end

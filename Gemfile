@@ -8,6 +8,7 @@ gem 'rails', '3.2.11'
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'thin'
+gem 'rack-ssl-enforcer', :git => 'git://github.com/tobmatth/rack-ssl-enforcer.git'
 gem 'aws-sdk'
 gem 'mongoid', "~> 3.0.0"
 gem 'mongoid_search'

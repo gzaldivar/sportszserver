@@ -24,7 +24,7 @@
 			</div>
 			<div class="row">
 				<div class="span10">
-					<%= f.input	:starttime, label: "Start Time:", as: :time, ignore_date:  true %>
+					<%= f.input	:starttime, label: "Start Time:", as: :time, ignore_date:  true, input_html: { style: "width: 50px" } %>
 				</div>
 			</div>
 			<div class="row">
@@ -41,6 +41,37 @@
 				</div>
 				<div class="span5">
 					<%= f.input	:event, hint:	"Senior day, Homecoming, etc.", required: false %>	
+				</div>
+			</div>
+			<p>
+			<h5>Real Time Game Summary:</h5>
+			<p>
+			<div class="row">
+				<div class="span2">
+					<%= f.input :livegametime, label: "Live Game Time:", as: :time, ignore_date: true, input_html: { style: "width: 50px" } %>
+					<!--%= f.input :current_game_time, label: "Game Time", input_html: { style: "width: 50px" } %-->
+				</div>
+				<div class="span2 offset1">
+					<%= f.input :our, label: "Ball Position", collection: [ @team.team_name, @gameschedule.opponent ] %>
+				</div>
+				<div class="span1 offset1">
+					<%= f.input :ballon, label: "Ball On:", input_html: { style: "width: 50px" } %>
+				</div>
+				<div class="span1 offset1">
+					<%= f.input :possession, collection: ["Home", "Opponent"], input_html: { style: "width: 80px" }  %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span1">
+					<%= f.input :down, collection: 1..4, input_html: { style: "width: 50px" } %>
+				</div>
+				<div class="span6 offset1">
+					<%= f.input :lastplay, label: "Last Play:", input_html: { style: "width: 600px" } %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span2">
+					<%= f.input :final, as: :boolean, label: "Mark game as final" %>
 				</div>
 			</div>
 			<p>

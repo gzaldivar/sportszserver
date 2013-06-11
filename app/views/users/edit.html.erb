@@ -19,6 +19,7 @@
 								<%= image_tag @user.avatar.url(:thumb) %>
 							<% end %>
 							<%= f.input	:avatar,	label: 	"Avatar Picture" %>
+							<%= link_to "Delete Image", delete_avatar_user_path(@user), class: "btn btn-medium btn-primary" %>
 						</div>
 						<div class="span3 offset1">
 							<h5><em>Login Email: <%= @user.email %></em></h5>

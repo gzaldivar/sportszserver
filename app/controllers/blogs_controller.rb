@@ -33,7 +33,10 @@ class BlogsController < ApplicationController
         end
         
       rescue Exception => e
-        redirect_to :back, alert: "Error adding Blog " + e.message
+        respond_to do |format|
+          format.html { redirect_to :back, alert: "Error adding Blog " + e.message } 
+          format.json { render status: 404, json: { error: e.message, request: sport_blogs_url(@sport) } }
+        end
       end
   	end
 
@@ -46,15 +49,20 @@ class BlogsController < ApplicationController
       else
           @athletes = @sport.athletes
           @coaches = @sport.coaches
-          @gameschedules = []
       end
   	end
 
   	def index
-      if !params[:team_id].nil? and !params[:team_id].blank?
+      if !params[:team_id].nil? and !params[:team_id].blank? and !params[:updated_at].nil? and !params[:updated_at].blank?
+        @blogs = @sport.blogs.where(team_id: params[:team_id].to_s, :updated_at.gt => params[:updated_at.to_date]).limit(20).desc(:updated_at)
+      elsif !params[:team_id].nil? and !params[:team_id].blank?
         @blogs = @sport.blogs.where(team: params[:team_id].to_s).limit(20).desc(:updated_at).entries
+      elsif !params[:athlete].nil? and !params[:athlete][:id].blank? and !params[:updated_at].nil? and !params[:updated_at].blank?
+        @blogs = @sport.blogs.where(athlete: params[:athlete][:id].to_s, :updated_at.gt => params[:updated_at.to_date]).limit(20).desc(:updated_at)        
       elsif !params[:athlete].nil? and !params[:athlete][:id].blank?
         @blogs = @sport.blogs.where(athlete: params[:athlete][:id].to_s).limit(20).desc(:updated_at)
+      elsif !params[:coach].nil? and !params[:coach][:id].blank? and !params[:updated_at].nil? and !params[:updated_at].blank?
+        @blogs = @sport.blogs.where(coach: params[:coach][:id].to_s, :updated_at.gt => params[:updated_at.to_date]).limit(20).desc(:updated_at)
       elsif !params[:coach].nil? and !params[:coach][:id].blank?
         @blogs = @sport.blogs.where(coach: params[:coach][:id].to_s).limit(20).desc(:updated_at)
       elsif !params[:player].nil? and !params[:player].blank?
@@ -63,12 +71,20 @@ class BlogsController < ApplicationController
         @blogs = @sport.blogs.where(team: params[:teamname].to_s).limit(20).desc(:updated_at)
       elsif !params[:coachname].nil? and !params[:coachname].blank?
         @blogs = @sport.blogs.where(coach: params[:coachname].to_s).limit(20).desc(:updated_at)      
+      elsif !params[:gamename].nil? and !params[:gamename].blank?
+        @blogs = @sport.blogs.where(gameschedule: params[:gamename].to_s).limit(20).desc(:updated_at)      
       else
         @blogs = @sport.blogs.limit(40).desc(:updated_at)
       end
       
       @coaches = @sport.coaches
       @athletes = @sport.athletes
+
+      if !params[:team_id].nil? and !params[:team_id].blank?
+        @gameschedules = @sport.teams.find(params[:team_id].to_s).gameschedules
+      else
+        @gameschedules = nil
+      end
 
       respond_to do |format|
         format.html
@@ -86,7 +102,10 @@ class BlogsController < ApplicationController
         end
         
       rescue Exception => e
-        redirect_to :back, alert: "Error updating Blog " + e.message
+        respond_to do |format|
+          format.html { redirect_to :back, alert: "Error updating Blog " + e.message }
+          format.json { render status: 404, json: { error: e.message, request: sport_blog_url(@sport, @blog) } }
+        end
       end  		
   	end
 
@@ -99,13 +118,26 @@ class BlogsController < ApplicationController
   	end
 
   	def destroy
-      if @blog.team.nil?
-        @blog.destroy
-        redirect_to sport_blogs_path(@sport), notice: "Blog delete sucessful!"
-      else
-        @team = @sport.teams.find(@blog.team)
-        @blog.destroy
-        redirect_to sport_blogs_path(@sport, team_id: @team), notice: "Blog deleted for " + @team.team_name
+      begin
+        if @blog.team.nil?
+          @blog.destroy
+          respond_to do |format|
+            format.html { redirect_to sport_blogs_path(@sport), notice: "Blog delete sucessful!" }
+            format.json { render json: { message: "Success", request: sport_blogs_url(@sport) } }
+          end
+        else
+          @team = @sport.teams.find(@blog.team)
+          @blog.destroy
+          respond_to do |format|
+            format.html { redirect_to sport_blogs_path(@sport, team_id: @team), notice: "Blog deleted for " + @team.team_name }
+            format.json { render json: { message: "Success", request: sport_blogs_path(@sport, team_id: @team) } }
+          end
+        end
+      rescue Exception => e
+        respond_to do |format|
+          format.html { redirect_to sport_blogs_path(@sport), alert: "Error deleting blog entry" }
+          format.json { render status: 404, json: { error: e.message, request: sport_blogs_url(@sport) } }
+        end
       end
   	end
 

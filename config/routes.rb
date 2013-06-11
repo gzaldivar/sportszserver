@@ -4,7 +4,7 @@ Sportzserver::Application.routes.draw do
 
   resources :users, only: [:edit, :update, :show, :index] do
     member do
-      get   :site, :disable, :enable
+      get   :site, :disable, :enable, :delete_avatar
     end
   end
 

@@ -2,6 +2,7 @@ class User
   include Mongoid::Document
   include Mongoid::Paperclip
   include Mongoid::Timestamps
+  include Mongoid::Search
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
@@ -69,6 +70,8 @@ class User
   field :stat_alert, type: Boolean, default: true
   field :score_alert, type: Boolean, default: true
 
+  search_in :email, :name, :default_site
+  
   has_mongoid_attached_file :avatar,
     :storage        => :s3,
     :s3_credentials => { bucket: S3DirectUpload.config.bucket,

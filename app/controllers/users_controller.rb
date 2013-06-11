@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
-	before_filter :authenticate_user!,	only: [:site, :edit, :update, :index, :disable, :enable]
-  before_filter :get_user, only: [:edit, :show, :update, :disable, :enable]
+	before_filter :authenticate_user!,	only: [:site, :edit, :update, :index, :disable, :enable, :delete_avatar]
+  before_filter :get_user, only: [:edit, :show, :update, :disable, :enable, :delete_avatar]
   before_filter :owner, only: [:edit, :update]
 
 	def show
@@ -15,10 +15,22 @@ class UsersController < ApplicationController
   end
 
   def index
-    if !params[:site].nil? and !params[:site].blank?
+    if !params[:site].blank? and !params[:email].blank? and !params[:name].blank?
+      @users = User.full_text_search(params[:site].to_s + " " + params[:email].to_s + " " + params[:name].to_s, match: :all).asc(:name, :updated_at).entries
+    elsif !params[:site].blank? and !params[:name].blank? 
+      puts 'got here'
+      @users = User.full_text_search(params[:site] + " " + params[:name].to_s, match: :all).asc(:name, :updated_at).entries
+    elsif !params[:site].blank? and !params[:email].blank?
+      @users = User.full_text_search(params[:site] + " " + params[:email].to_s, match: :all).asc(:name, :updated_at).entries
+     elsif !params[:site].nil? and !params[:site].blank?
       @users = User.where(default_site: params[:site].to_s).asc(:name, :updated_at).entries
     else
       @users = User.all.entries
+    end
+
+    respond_to do |format|
+      format.html
+      format.json
     end
   end
   
@@ -77,6 +89,22 @@ class UsersController < ApplicationController
       redirect_to :back, alert: "Something went very wrong!"
     end
 	end
+
+  def delete_avatar
+    begin
+      @user.avatar.clear
+      @user.save!
+      respond_to do |format|
+        format.html { redirect_to @user, notice: "Image Removed" }
+        format.json { render json: { user: @user, request: @user } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to @user, notice: "Error removing image" }
+        format.json { render status: 404, json: { error: e.message, request: @user } }
+      end
+    end
+  end
 	
 	private
 	

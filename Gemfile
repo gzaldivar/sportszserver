@@ -1,12 +1,13 @@
 source 'http://rubygems.org'
 
-ruby "1.9.3"
+# ruby "1.9.3"
 
 gem 'rails', '3.2.11'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
+gem 'nokogiri'
 gem 'thin'
 gem 'rack-ssl-enforcer', :git => 'git://github.com/tobmatth/rack-ssl-enforcer.git'
 gem 'aws-sdk'

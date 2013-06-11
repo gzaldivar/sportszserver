@@ -42,13 +42,15 @@
 				        <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
 				  	<% end %>
 		      	</div>
-		      	<div class="span2 offset1">
-		  			<%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
-		        		<h5>Filter Blog by Game:</h5>
-		        		<%= select_tag "teamname", options_from_collection_for_select(@sport.teams, "id", "team_name"), :include_blank => true %>
-				        <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
-				  	<% end %>
-		      	</div>
+		      	<% if !@gameschedules.nil? %>
+			      	<div class="span2 offset1">
+			  			<%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
+			        		<h5>Filter Blog by Game:</h5>
+			        		<%= select_tag "gamename", options_from_collection_for_select(@gameschedules, "id", "game_name"), :include_blank => true %>
+					        <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+					  	<% end %>
+			      	</div>
+			    <% end %>
 		    </div>
 		    <p>
 		<% else %>

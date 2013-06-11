@@ -3,6 +3,8 @@ class Gameschedule
   include Mongoid::Timestamps
   include Mongoid::Paperclip
 
+  before_create :set_live_game_time
+
   field :starttime, type: DateTime
   field :gamedate, type: Date
   field :location, type: String
@@ -28,6 +30,15 @@ class Gameschedule
 #  field :firstdowns, type: Integer, default: 0
   field :penalty, type: Integer, default: 0
   field :penaltyyards, type: Integer, default: 0
+  field :livegametime, type: DateTime
+  field :current_game_time, type: String
+  field :own, type: Boolean
+  field :our, type: String, default: ""
+  field :ballon, type: Integer, default: 0
+  field :possession, type: String
+  field :lastplay, type: String
+  field :down, type: Integer
+  field :final, type: Boolean, default: false
 
   has_mongoid_attached_file :opponentpic,
     :storage        => :s3,
@@ -75,6 +86,10 @@ class Gameschedule
 
   def start_time
     starttime
+  end
+
+  def set_live_game_time
+    self.livegametime = Date.today.midnight
   end
 
 end

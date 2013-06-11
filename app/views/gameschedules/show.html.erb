@@ -23,7 +23,11 @@
 	  				<th>Q2</th>
 	  				<th>Q3</th>
 	  				<th>Q4</th>
-	  				<th>Final</th>
+	  				<% if @gameschedule.final %>
+	  					<th>Final</th>
+	  				<% else %>
+	  					<th>Score</th>
+	  				<% end %>
 	  			</thead>
 	  			<tbody>
 	  				<tr>
@@ -55,7 +59,28 @@
 	  		<% else %>
 	  		<% end %>
 	  	</table>
-	  	<% if @sport.sportname == "Football" %>
+	  	<% if @sport.sportname == "Football" and !@gameschedule.current_game_time.nil? %>
+	  		<h4>Real Time Game Summary:</h4>
+	  			<table class="table table-bordered">
+	  				<thead>
+	  					<th>Game Time</th>
+	  					<th>Possession</th>
+	  					<th>Down</th>
+	  					<th>Ball On</th>
+	  				</thead>
+	  				<tbody>
+	  					<td><%= @gameschedule.livegametime.strftime("%I:%M") %></td>
+	  					<td><%= @gameschedule.possession %></td>
+	  					<td><%= @gameschedule.down %></td>
+	  					<td><%= @gameschedule.our + " " + @gameschedule.ballon.to_s %></td>
+	  				</tbody>
+	  			</table>
+	  			<em><strong>Last Play:</strong></em>
+	  			<div class="row">
+	  				<div class="span8">
+	  					<%= @gameschedule.lastplay %>
+	  				</div>
+	  			</div>
 		  	<h4>First Down/Penalties</h4>
 		  	<table class="table table-bordered">
 		  		<thead>

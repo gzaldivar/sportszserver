@@ -17,6 +17,10 @@ class GameschedulesController < ApplicationController
                                           schedule.gamedate.day, 
                                           params[:gameschedule][:"starttime(4i)"].to_i,
                                           params[:gameschedule][:"starttime(5i)"].to_i)
+      schedule.livegametime = DateTime.civil(schedule.gamedate.year, schedule.gamedate.month, 
+                                          schedule.gamedate.day, 
+                                          params[:gameschedule][:"livegametime(4i)"].to_i,
+                                          params[:gameschedule][:"livegametime(5i)"].to_i)
 
       schedule.save!
 
@@ -70,10 +74,10 @@ class GameschedulesController < ApplicationController
   def update
     begin
       datetime = DateTime.iso8601(params[:gameschedule][:gamedate])
-      puts datetime
       @gameschedule.starttime = DateTime.civil(datetime.year, datetime.month, datetime.day, params[:gameschedule][:"starttime(4i)"].to_i,
                                                params[:gameschedule][:"starttime(5i)"].to_i)
-      puts @gameschedule.starttime
+      @gameschedule.livegametime = DateTime.civil(datetime.year, datetime.month, datetime.day, params[:gameschedule][:"livegametime(4i)"].to_i,
+                                                  params[:gameschedule][:"livegametime(5i)"].to_i)
       @gameschedule.update_attributes!(params[:gameschedule])
       respond_to do |format|
           format.html { redirect_to [@sport, @team, @gameschedule] }
@@ -106,9 +110,7 @@ class GameschedulesController < ApplicationController
     
     respond_to do |format|
       format.html
-      format.xml
       format.json 
-      format.js
     end    
   end
   

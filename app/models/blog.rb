@@ -10,7 +10,7 @@ class Blog
   field :external_url, type: String
  
   belongs_to :sport
-  belongs_to :team
+  belongs_to :team, index: true
   belongs_to :athlete
   belongs_to :coach
   belongs_to :gameschedule

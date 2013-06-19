@@ -18,7 +18,6 @@ class UsersController < ApplicationController
     if !params[:site].blank? and !params[:email].blank? and !params[:name].blank?
       @users = User.full_text_search(params[:site].to_s + " " + params[:email].to_s + " " + params[:name].to_s, match: :all).asc(:name, :updated_at).entries
     elsif !params[:site].blank? and !params[:name].blank? 
-      puts 'got here'
       @users = User.full_text_search(params[:site] + " " + params[:name].to_s, match: :all).asc(:name, :updated_at).entries
     elsif !params[:site].blank? and !params[:email].blank?
       @users = User.full_text_search(params[:site] + " " + params[:email].to_s, match: :all).asc(:name, :updated_at).entries
@@ -37,14 +36,49 @@ class UsersController < ApplicationController
   def update
     begin
       @user.update_attributes!(params[:user])
+      @user.reset_authentication_token
+      @user.save!
       respond_to do |format|
         format.html { redirect_to @user, notice: "User update sucessful!" }
-        format.json { render json: { user: @user, request: user_url(@user) } }
+        format.json { render json: { user: @user, authentication_token: @user.authentication_token, request: user_url(@user) } }
       end
     rescue Exception => e
       respond_to do |format|
         format.html { redirect_to :back, alert: "Error updating user data " + e.message }
         format.json { render json: { message: "Error updating user data " + e.message, user: @user, request: user_url(@user) } }
+      end
+    end
+  end
+
+  def update_user_info
+    begin
+      if params[:user][:name]
+        @user.name = params[:user][:name]
+      end
+      if params[:user][:email]
+        @user.email = params[:user][:email]
+      end
+      if params[:user][:content_type]
+        @user.original_filename = params[:user][:original_filename]
+        @user.image_data = params[:user][:image_data]
+        @user.content_type = params[:user][:content_type]
+      end
+      if params[:user][:is_active] and params[:user][:is_active] == "1"
+        @user.is_active = true
+      elsif params[:user][:is_active] and params[:user][:is_active] == "0"
+        @user.is_active = false
+      end
+
+      @user.save!
+
+      respond_to do |format|
+        format.html { redirect_to user_path(@user), notice: "Update sucessful!" }
+        format.json { render status: 200, json: { request: user_path(@user) } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to user_path(@user), alert: e.message }
+        format.json { render status:400, json: { error: e.message, request: user_path(@user) } }
       end
     end
   end

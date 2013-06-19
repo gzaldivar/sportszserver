@@ -77,7 +77,7 @@ class AthletesController < ApplicationController
       end
     rescue Exception => e
       respond_to do |format|
-        format.html { redirect_to :back, alert: "Update fialed!" }
+        format.html { redirect_to :back, alert: "Update failed! " + e.message }
         format.json { render status: 404, json: { error: e.message, request: [@sport, @athlete] } }
       end
     end        
@@ -101,28 +101,35 @@ class AthletesController < ApplicationController
   end
   
   def index
-    @athletes = []
-    
-    if !params[:lastname].blank? && !params[:number].blank?
-      players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:lastname].to_s + " " + params[:number].to_s, match: :all)
-    elsif !params[:lastname].blank?
-      players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:lastname].to_s).asc(:number)
-    elsif !params[:number].blank?
-      players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:number].to_s)
-    elsif params[:team_id]
-      players = Athlete.where(sport_id: params[:sport_id], team_id: params[:team_id]).asc(:number)
-      @team = @sport.teams.find(params[:team_id])
-    else
-      players = Athlete.where(sport_id: params[:sport_id]).asc(:number)
-    end
-    
-    players.each_with_index do |p, cnt|
-      @athletes[cnt] = p
-    end
+    begin
+      @athletes = []
+      
+      if !params[:lastname].blank? && !params[:number].blank?
+        players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:lastname].to_s + " " + params[:number].to_s, match: :all)
+      elsif !params[:lastname].blank?
+        players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:lastname].to_s).asc(:number)
+      elsif !params[:number].blank?
+        players = Athlete.where(sport_id: params[:sport_id]).full_text_search(params[:number].to_s)
+      elsif params[:team_id]
+        players = Athlete.where(sport_id: params[:sport_id], team_id: params[:team_id]).asc(:number)
+        @team = @sport.teams.find(params[:team_id])
+      else
+        players = Athlete.where(sport_id: params[:sport_id]).asc(:number)
+      end
+      
+      players.each_with_index do |p, cnt|
+        @athletes[cnt] = p
+      end
 
-    respond_to do |format|
-      format.html
-      format.json
+      respond_to do |format|
+        format.html
+        format.json
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { e.message }
+        format.json { render status: 404, json: { error: e.message, request: [@sport] } }
+      end
     end
   end
   

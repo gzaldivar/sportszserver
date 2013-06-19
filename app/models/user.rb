@@ -84,11 +84,15 @@ class User
     
   validates_attachment_content_type :avatar, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_presence_of :name
-  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at, 
-                  :authentication_token, :teamid, :avatar, :is_active, :bio_alert, :blog_alert, :media_alert, 
-                  :stat_alert, :score_alert
 
-   def active_for_authentication?
+  attr_accessor :content_type, :original_filename, :image_data
+
+  attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at, 
+                :authentication_token, :teamid, :avatar, :is_active, :bio_alert, :blog_alert, :media_alert, 
+                :stat_alert, :score_alert, :is_active, :default_site, :admin, :content_type, :original_filename, :image_data,
+                :avatar_file_name
+
+  def active_for_authentication?
     super and self.is_active?
   end
 
@@ -97,5 +101,21 @@ class User
 #      data.content_type = "image/jpeg"
 #      self.avatar = data
 #    end
+
+  def decode_base64_image
+    if self.image_data && self.content_type && self.original_filename
+      decoded_data = Base64.decode64(self.image_data)
+
+      data = StringIO.new(decoded_data)
+      data.class_eval do
+        attr_accessor :content_type, :original_filename
+      end
+
+      data.content_type = self.content_type
+      data.original_filename = File.basename(self.original_filename)
+
+      self.avatar = data
+    end
+  end
 
 end

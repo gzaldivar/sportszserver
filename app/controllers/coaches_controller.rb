@@ -11,18 +11,22 @@ class CoachesController < ApplicationController
   end
 	
 	def create
-    if coach = @sport.coaches.create(params[:coach])                 
+    begin
+      coach = @sport.coaches.create!(params[:coach])                 
       respond_to do |format|
         format.html { redirect_to [@sport, coach], notice: 'Coach created!' }
-        format.json 
+        format.json { render json: { coach: coach, request: [@sport, @coach] } }
       end
-    else      
-      redirect_to :back, alert: "Error saving coach."
+    rescue Exception => e
+      respond_to do |format|    
+        format.html { redirect_to :back, alert: "Error saving coach. " + e.message }
+        format.json { render status: 401, json: { error: e.message, request: @sport } }
+      end
     end
 	end
 	
 	def show
-    if !@coach.team_id.nil?
+    if !@coach.nil? and !@coach.team_id.nil?
       @team = @sport.teams.find(@coach.team_id)
     end
     respond_to do |format|
@@ -60,16 +64,34 @@ class CoachesController < ApplicationController
 	end
 	
 	def update
-    if @coach.update_attributes(params[:coach])      
-      redirect_to [@sport, @coach], notice: 'Update successful!'
-    else
-      redirect_to :back, alert: 'Error updating coach information for ' + @sport.name
+    begin
+      @coach.update_attributes!(params[:coach])
+      respond_to do |format|   
+        format.html { redirect_to [@sport, @coach], notice: 'Update successful!' }
+        format.json { render json: { coach: @coach, request: [@sport, @coach] } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: 'Error updating coach information ' + e.message }
+        format.json { render status: 401, json: { error: e.message, request: [@sport, @coach] } }
+      end
     end        
 	end
 	
 	def destroy
-    @coach.delete    
-    redirect_to sport_coaches_path(@sport)
+    begin
+      @coach.delete
+      respond_to do |format|    
+        format.html { redirect_to sport_coaches_path(@sport) }
+        format.json { render json: { message: "success", request: sport_coaches_path(@sport) } }
+      end
+      puts 'rendered result'
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to @sport, alert: "Error deleting coach " + e.message }
+        format.json { render status: 401, json: { error: e.message, request: @sport } }
+      end
+    end
 	end
 	
 	def copy

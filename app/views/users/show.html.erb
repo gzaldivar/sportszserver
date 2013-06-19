@@ -52,6 +52,9 @@
       		<div class="span4 offset1">
 				<h4>Athlete Alert Options:</h4>
 			</div>
+			<!--div class="span2 offset1">
+				<h4><%= @user.authentication_token %></h4>
+			</div-->
 		</div>
 		<div class="row">
 			<div class="span2 offset1">
@@ -80,7 +83,7 @@
 				    <%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-medium btn-primary" %>
 				<% end %>
 				<% if isUserAdmin?(@user) or isAdmin? %>
-					<% if @user.disable and !@user.admin %>
+					<% if @user.is_active and !@user.admin %>
 						<td><%= link_to "Disable User", disable_user_path(@user), class: "btn btn-medium btn-danger" %></td>
 					<% elsif !@user.admin %>
 						<td><%= link_to "Enable User", enable_user_path(@user), class: "btn btn-medium btn-danger" %></td>

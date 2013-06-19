@@ -4,13 +4,16 @@ class Coach
   include Mongoid::Paperclip
   include Mongoid::Search
 
+  attr_accessor :content_type, :original_filename, :image_data
+  
+  before_save :decode_base64_image
+
   field :lastname, type: String
   field :firstname, type: String
   field :middlename, type: String
-  field :speciality, type:String
+  field :speciality, type: String
   field :years_on_staff, type: Integer
   field :bio, type: String
-#  field :team, type: String,  default: "Unassigned"
   
   search_in :lastname, :firstname, :middlename, :speciality
   
@@ -42,5 +45,23 @@ class Coach
         return lastname + ", " + firstname + " " + middlename
       end
     end
+
+    private
+
+      def decode_base64_image
+        if self.image_data && self.content_type && self.original_filename
+          decoded_data = Base64.decode64(self.image_data)
+   
+          data = StringIO.new(decoded_data)
+          data.class_eval do
+            attr_accessor :content_type, :original_filename
+          end
+   
+          data.content_type = self.content_type
+          data.original_filename = File.basename(self.original_filename)
+   
+          self.coachpic = data
+        end
+      end
   
 end

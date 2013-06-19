@@ -5,6 +5,7 @@ class Athlete
   include Mongoid::Search
 
   attr_accessor :content_type, :original_filename, :image_data
+  
   before_save :decode_base64_image
   after_save :send_alerts
   

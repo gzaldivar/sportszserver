@@ -78,5 +78,10 @@ module Sportzserver
     # Please note that, for instance, GET requests would be accessible via SSL and non-SSL connection here
 
     # config.middleware.use Rack::SslEnforcer
+
+    config.to_prepare do
+        DeviseController.respond_to :html, :json
+    end
+    
   end
 end

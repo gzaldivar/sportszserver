@@ -57,7 +57,7 @@
 					</div>
 					<p>
 					<div class="row">
-						<% if isAdmin? %>
+						<% if isAdmin? and current_user != @user %>
 							<div class="span2 ">
 								<%= f.input :teamid, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Manage Team", 
 											input_html: {id: "select_team"}  %>

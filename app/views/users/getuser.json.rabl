@@ -7,7 +7,3 @@ node(:tiny) { |t| t.avatar(:tiny) }
 node(:sitename) { |t| Sport.find(t.default_site).sitename }
 node(:logo) { |t| Sport.find(t.default_site).sport_logo.url(:large) }
 node(:banner_url) { |t| Sport.find(t.default_site).sport_banner.url(:thumb) }
-if lambda { |m| m.admin }
-	node(:awskey) { S3DirectUpload.config.secret_access_key }
-	node(:awskeyid) { S3DirectUpload.config.access_key_id }
-end

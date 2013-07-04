@@ -90,7 +90,7 @@ class User
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at, 
                 :authentication_token, :teamid, :avatar, :is_active, :bio_alert, :blog_alert, :media_alert, 
                 :stat_alert, :score_alert, :is_active, :default_site, :admin, :content_type, :original_filename, :image_data,
-                :avatar_file_name
+                :avatar_file_name, :avatar_content_type, :avatar_file_size, :avatar_updated_at
 
   def active_for_authentication?
     super and self.is_active?

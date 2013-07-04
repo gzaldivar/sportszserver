@@ -13,15 +13,18 @@ class NewsfeedsController < ApplicationController
   end
   
   def create
-    if (newsfeed = @sport.newsfeeds.create!(params[:newsfeed]))
+    begin
+      newsfeed = @sport.newsfeeds.create!(params[:newsfeed])
        
       respond_to do |format|
         format.html { redirect_to [@sport, newsfeed], notice: "News item created for #{@sport.sport_name}!" }
-        format.json
-        format.xml
+        format.json { render json: { newsfeed: newsfeed, request: sport_newsfeed_url(@sport, newsfeed) } }
       end
-    else
-      redirect_to :back, alert: "Error creating news item for #{@sport.sport_name}"
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Error creating news item for #{@sport.sport_name}" }
+        format.json { render status: 404, json: { error: e.message, request: @sport } }
+      end
     end
   end
   
@@ -69,18 +72,32 @@ class NewsfeedsController < ApplicationController
   end
   
   def update
-    if @newsfeed.update_attributes(params[:newsfeed])
-      redirect_to [@sport, @newsfeed], notice: "Update sucessful!"
-    else
-      redirect_to :back, alert: "Error updating news feed item."
+    begin
+      @newsfeed.update_attributes!(params[:newsfeed])
+      respond_to do |format|
+        format.html { redirect_to [@sport, @newsfeed], notice: "Update sucessful!" }
+        format.json { render json: { newsfeed: @newsfeed, request: [@sport, @newsfeed] } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Error updating news feed item." }
+        format.json { render status: 404, json: { error: e.message, request: @sport } }
+      end
     end
   end
   
   def destroy
-    if @newsfeed.delete
-      redirect_to :back, notice: "News item delete successful!"
-    else
-      redirect_to :back, alert: "Error deleting news item"
+    begin
+      @newsfeed.delete
+      respond_to do |format|
+        format.html { redirect_to :back, notice: "News item delete successful!" }
+        format.json { render json: { success: "success", request: @sport } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Error deleting news item" }
+        format.json { render status: 404, json: { error: e.message, request: @sport } }
+      end
     end
   end
   

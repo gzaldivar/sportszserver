@@ -4,7 +4,7 @@ Sportzserver::Application.routes.draw do
 
   resources :users, only: [:edit, :update, :show, :index] do
     member do
-      get   :site, :disable, :enable, :delete_avatar
+      get   :site, :disable, :enable, :delete_avatar, :getuser
 #      put   :update_user_info
     end
   end
@@ -139,6 +139,7 @@ Sportzserver::Application.routes.draw do
     resources :photos, only: [:edit, :create, :update, :destroy, :index, :show] do
       member do
         get :newteam, :newathlete, :newschedule, :errors, :approval
+        put :untag_athlete, :tag_athletes
         get :slideshow
         get :untagteam
       end

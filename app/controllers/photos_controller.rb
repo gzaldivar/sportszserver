@@ -1,7 +1,7 @@
 class PhotosController < ApplicationController
-  before_filter :authenticate_user!,	only: [:create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update]
+  before_filter :authenticate_user!,	only: [:create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, :tag_athletes]
   before_filter :get_sport
-  before_filter :correct_photo,       only: [:edit, :show, :destroy, :update, :errors, :clear_error, :approval]
+  before_filter :correct_photo,       only: [:edit, :show, :destroy, :update, :errors, :clear_error, :approval, :untag_athletes, :tag_athletes]
 
   require 'base64'
   require 'openssl'
@@ -31,7 +31,7 @@ class PhotosController < ApplicationController
       pics = @sport.photos.where(teamid: params[:team][:id].to_s, :players.in => [params[:athlete][:id].to_s])
       @team = @sport.teams.find(params[:team][:id].to_s)
     elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:game].nil? && !params[:game][:id].blank?
-      pics = @sport.photos.where(teamid: params[:team][:id].to_s, schedule: params[:game][:id].to_s)
+      pics = @sport.photos.where(teamid: params[:team][:id].to_s, gameschedule: params[:game][:id].to_s)
       @team = @sport.teams.find(params[:team][:id].to_s)
     elsif !params[:team].nil? && !params[:team][:id].blank?
       pics = @sport.photos.where(teamid: params[:team][:id].to_s)
@@ -42,6 +42,8 @@ class PhotosController < ApplicationController
     elsif !params[:number].nil? && !params[:number][:id].blank?
       pics = @sport.photos.where(:players.in => [params[:number][:id].to_s])
       @athlete = @sport.athletes.find(params[:number][:id].to_s)
+    elsif !params[:user].nil? and !params[:user].blank?
+      pics = @sport.photos.where(user_id: params[:user].to_s)
     else
       pics = []
     end
@@ -198,6 +200,15 @@ class PhotosController < ApplicationController
       else
         flash[:alert] = "Error putting photo in queue!"
       end
+      respond_to do |format|
+        format.html
+        format.json
+      end
+    else
+      respond_to do |format|
+        format.html
+        format.json
+      end
     end
   end
   
@@ -205,7 +216,7 @@ class PhotosController < ApplicationController
     respond_to do |format|
       format.html
       format.xml
-      format.json 
+      format.json
       format.js
     end
   end
@@ -240,23 +251,30 @@ class PhotosController < ApplicationController
 #  end
   
   def update
-    if @photo.update_attributes(params[:photo])
+    begin 
+      @photo.update_attributes(params[:photo])
       if @photo.players.nil?
         @photo.players = Array.new
       end
-      if !params[:athlete][:id].blank?
-        @photo.players.push(params[:athlete][:id].to_s)
+      if !params[:athlete].nil? and !params[:athlete][:id].blank?
+        unless @photo.players.include?(params[:athlete][:id].to_s)
+          @photo.players << params[:athlete][:id].to_s
+        end
+#        @photo.players.push(params[:athlete][:id].to_s)
         @photo.save!
       end
     
       respond_to do |format|
         format.html { redirect_to [@sport, @photo], notice: "Update successful!" }
         format.xml
-        format.json 
+        format.json { render json: { photo: @photo, request: [@sport, @photo] } }
         format.js
       end
-    else
-      redirect_to [@sport, @photo], alert: "Update failed!"
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to [@sport, @photo], alert: "Update failed!" }
+        format.json { render status: 404, json: { error: e.message, request: [@sport, @photo] } }
+      end
     end
   end
   
@@ -277,8 +295,46 @@ class PhotosController < ApplicationController
     respond_to do |format|
       format.html { redirect_to [@sport, @photo], notice: "Athlete untagged from photo!" }
       format.xml
-      format.json 
+      format.json { render json: { photo: @photo, request: [@sport, @photo] } }
       format.js
+    end
+  end
+
+  def untag_athletes
+    begin
+      params[:photo].each do |key, values|
+        @photo.players.delete(values.to_s)
+      end
+      @photo.save!
+
+      respond_to do |format|
+        format.json { render json: { photo: @photo, request: [@sport, @photo] } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.json {  render status: 404, json: { error: e.message, request: [@sport, @photo] } }
+      end
+    end
+  end
+
+  def tag_athletes
+    begin
+      params[:photo].each do |key, values|
+        if @photo.players.nil?
+          @photo.players = Array.new
+        end
+        unless @photo.players.include?(values.to_s)
+          @photo.players << values.to_s
+        end
+        @photo.save!
+        respond_to do |format|
+          format.json { render json: { photo: @photo, request: sport_photos_path(@sport, @photo) } }
+        end
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.json { render status: 404, json: { error: e.message, request: sport_photos_path(@sport, @photo) } }
+      end
     end
   end
   

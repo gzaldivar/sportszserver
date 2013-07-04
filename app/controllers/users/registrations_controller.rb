@@ -59,26 +59,39 @@ class Users::RegistrationsController < Devise::RegistrationsController
         super
       }
       format.json {
-        user = User.find(authentication_token: params[:user][:auth_token])
+        @user = User.find(authentication_token: params[:user][:auth_token])
 
-        prev_unconfirmed_email = user.unconfirmed_email if resource.respond_to?(:unconfirmed_email)
+        successfully_updated = if needs_password?(@user, params)
+          @user.update_with_password(params[:user])
+        else
+          # remove the virtual current_password attribute update_without_password
+          # doesn't know how to ignore it
+          params[:user].delete(:current_password)
+          @user.update_without_password(params[:user])
+        end
 
-        if user.update_with_password(params[:user])
-          if is_navigational_format?
-            flash_key = update_needs_confirmation?(resource, prev_unconfirmed_email) ?
-              :update_needs_confirmation : :updated
-              render status: 400, json: { message: "Confirm account via email" }
-          end
-          sign_in resource_name, resource, :bypass => true
-          user = User.new
-          user = resource
+        if successfully_updated
+#          set_flash_message :notice, :updated
+          # Sign in the user bypassing validation in case his password changed
+          sign_in @user, :bypass => true
+#          redirect_to after_update_path_for(@user)
           render status: 200, json: { user: user, authentication_token: user.authentication_token }
         else
-          clean_up_passwords resource
-          render status: 200, json: { user: resouce }
+          render status: 400, json: { message: "Error updating user" }
         end
       }
     end
   end
+
+  private
+
+    # check if we need password to update user data
+    # ie if password or email was changed
+    # extend this as needed
+    def needs_password?(user, params)
+      user.email != params[:user][:email] ||
+        !params[:user][:password].blank?
+    end
+
 
 end

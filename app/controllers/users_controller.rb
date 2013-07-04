@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	before_filter :authenticate_user!,	only: [:site, :edit, :update, :index, :disable, :enable, :delete_avatar]
-  before_filter :get_user, only: [:edit, :show, :update, :disable, :enable, :delete_avatar]
+  before_filter :get_user, only: [:edit, :show, :update, :disable, :enable, :delete_avatar, :getuser]
   before_filter :owner, only: [:edit, :update]
 
 	def show
@@ -35,7 +35,10 @@ class UsersController < ApplicationController
   
   def update
     begin
+      params[:user].delete(:password) if params[:user][:password].blank?
+      params[:user].delete(:password_confirmation) if params[:user][:password].blank? and params[:user][:password_confirmation].blank?
       @user.update_attributes!(params[:user])
+
       @user.reset_authentication_token
       @user.save!
       respond_to do |format|
@@ -137,6 +140,12 @@ class UsersController < ApplicationController
         format.html { redirect_to @user, notice: "Error removing image" }
         format.json { render status: 404, json: { error: e.message, request: @user } }
       end
+    end
+  end
+
+  def getuser
+    respond_to do |format|
+      format.json
     end
   end
 	

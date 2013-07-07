@@ -139,7 +139,7 @@ Sportzserver::Application.routes.draw do
     resources :photos, only: [:edit, :create, :update, :destroy, :index, :show] do
       member do
         get :newteam, :newathlete, :newschedule, :errors, :approval
-        put :untag_athlete, :tag_athletes
+        put :untag_athletes, :tag_athletes
         get :slideshow
         get :untagteam
       end
@@ -153,7 +153,7 @@ Sportzserver::Application.routes.draw do
     resources :videoclips, only: [:edit, :create, :update, :destroy, :index, :show] do
       member do
         get :newteam, :newathlete, :newschedule, :untagteam
-        put :untag_athlete, :tag_athletes
+        put :untag_athletes, :tag_athletes
       end
 
       collection do

@@ -315,7 +315,7 @@ class VideoclipsController < ApplicationController
       if @videoclip.players.nil?
         @videoclip.players = Array.new
       end
-      if !params[:athlete][:id].blank?
+      if !params[:athlete].nil? and !params[:athlete][:id].blank?
         unless @videoclip.players.include?(params[:athlete][:id].to_s)
           @videoclip.players << params[:athlete][:id].to_s
         end

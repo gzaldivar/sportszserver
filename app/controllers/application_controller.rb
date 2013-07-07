@@ -18,10 +18,10 @@ class ApplicationController < ActionController::Base
 #    raise ActionController::RoutingError.new('You are not Authorized for this')
 #  end
 
-#  unless Rails.application.config.consider_all_requests_local
-#    rescue_from Exception, with: lambda { |exception| render_error 500, exception }
-#    rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, with: lambda { |exception| render_error 404, exception }
-#  end
+  unless Rails.application.config.consider_all_requests_local
+    rescue_from Exception, with: lambda { |exception| render_error 500, exception }
+    rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, with: lambda { |exception| render_error 404, exception }
+  end
 
   private
   

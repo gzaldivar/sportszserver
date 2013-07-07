@@ -97,9 +97,11 @@ class VideoclipsController < ApplicationController
       @videoclip.filetype = params[:filetype]
       @videoclip.video_url = params[:url]
     
-      path = @videoclip.filepath.split('/')
-      path = CGI.unescape(path[2])
-      @videoclip.filepath = path
+      if params[:teamid].nil? || params[:teamid].blank?
+        path = @videoclip.filepath.split('/')
+        path = CGI.unescape(path[2])
+        @videoclip.filepath = path
+      end
 
       s3 = AWS::S3.new
       bucket = s3.buckets[S3DirectUpload.config.bucket]

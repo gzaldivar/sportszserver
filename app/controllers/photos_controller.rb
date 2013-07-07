@@ -1,7 +1,11 @@
 class PhotosController < ApplicationController
-  before_filter :authenticate_user!,	only: [:create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, :tag_athletes]
+  before_filter :authenticate_user!,	only: [:destroy, :create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, 
+                                            :tag_athletes, :createmobile]
   before_filter :get_sport
   before_filter :correct_photo,       only: [:edit, :show, :destroy, :update, :errors, :clear_error, :approval, :untag_athletes, :tag_athletes]
+  before_filter only: [:destroy, :update, :create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, :tag_athletes, :createmobile] do |controller| 
+    controller.team_manager?(@athlete, nil)
+  end
 
   require 'base64'
   require 'openssl'
@@ -42,8 +46,8 @@ class PhotosController < ApplicationController
     elsif !params[:number].nil? && !params[:number][:id].blank?
       pics = @sport.photos.where(:players.in => [params[:number][:id].to_s])
       @athlete = @sport.athletes.find(params[:number][:id].to_s)
-    elsif !params[:user].nil? and !params[:user].blank?
-      pics = @sport.photos.where(user_id: params[:user].to_s)
+    elsif !params[:username].nil? and !params[:username].blank?
+      pics = @sport.photos.where(user_id: current_user.id.to_s)
     else
       pics = []
     end
@@ -142,6 +146,41 @@ class PhotosController < ApplicationController
       end
     else
       redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgradig or delete some media."
+    end
+  end
+
+  def createmobile
+    begin
+      photo = @sport.photos.build(params[:photo])
+      photo.processing = true
+      
+      s3 = AWS::S3.new
+      bucket = s3.buckets[S3DirectUpload.config.bucket]
+      obj = bucket.objects[photo.filepath]
+      photo.original_url = obj.url_for(:read, expires:  473040000)
+
+      puts photo.filepath
+      puts photo.original_url
+
+      if @sport.review_media?
+        photo.pending = true
+      else
+        photo.pending = false
+      end
+
+      photo.save!
+
+      queue = @sport.photo_queues.new(modelid: photo.id, modelname: "photos")
+      queue.save!
+
+      puts "addded to queue"
+      puts photo.id
+
+      Resque.enqueue(PhotoProcessor, queue.id)
+
+      render status: 200, json: { photo: @photo, request: [@sport, photo] }
+    rescue Exception => e
+      render status: 404, json: { error: e.message, request: @sport }
     end
   end
     

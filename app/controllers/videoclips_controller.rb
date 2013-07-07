@@ -1,7 +1,10 @@
 class VideoclipsController < ApplicationController
-	before_filter :authenticate_user!,	only: [:edit, :update, :destroy, :newathlete, :newteam, :newgame, :create]
+	before_filter :authenticate_user!,	only: [:edit, :update, :destroy, :newathlete, :newteam, :newgame, :create, :tag_athletes, :untag_athletes, :untagathlete, :untagteam]
 	before_filter :get_sport
-	before_filter :correct_video, 		only: [:edit, :update, :destroy, :show]
+	before_filter :correct_video, 		only: [:edit, :update, :destroy, :show, :untag_athletes, :tag_athletes]
+  before_filter only: [:destroy, :update, :create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, :tag_athletes, :createmobile] do |controller| 
+    controller.team_manager?(@athlete, nil)
+  end
   
   def newathlete
     if roomformedia?(@sport)
@@ -84,116 +87,137 @@ class VideoclipsController < ApplicationController
   end
 
   def create
-    @videoclip = Videoclip.new
-    @videoclip.filepath = params[:filepath]
-    @videoclip.filename = params[:filename]
-    @videoclip.displayname = @videoclip.filename
-    @videoclip.filesize = params[:filesize]
-    @videoclip.filetype = params[:filetype]
-    @videoclip.video_url = params[:url]
-  
-    path = @videoclip.filepath.split('/')
-    path = CGI.unescape(path[2])
-    @videoclip.filepath = path
+    begin
+      @videoclip = Videoclip.new
+      @videoclip.filepath = params[:filepath]
+      @videoclip.filename = params[:filename]
+      @videoclip.displayname = @videoclip.filename
+      @videoclip.description = ""
+      @videoclip.filesize = params[:filesize]
+      @videoclip.filetype = params[:filetype]
+      @videoclip.video_url = params[:url]
+    
+      path = @videoclip.filepath.split('/')
+      path = CGI.unescape(path[2])
+      @videoclip.filepath = path
 
-    s3 = AWS::S3.new
-    bucket = s3.buckets[S3DirectUpload.config.bucket]
-    obj = bucket.objects[@videoclip.filepath]
+      s3 = AWS::S3.new
+      bucket = s3.buckets[S3DirectUpload.config.bucket]
+      obj = bucket.objects[@videoclip.filepath]
 
-    # Check to see if video correct format, length, etc. 
+      # Check to see if video correct format, length, etc. 
 
-    video_path = @videoclip.videopath + "/" + SecureRandom.hex(10) + @videoclip.filename
-      
-    File.open(video_path, 'wb') do |file|
-      obj.read do |chunk|
-        file.write(chunk)
+      video_path = @videoclip.videopath + "/" + SecureRandom.hex(10) + @videoclip.filename
+        
+      File.open(video_path, 'wb') do |file|
+        obj.read do |chunk|
+          file.write(chunk)
+        end
       end
-    end
 
-    movie = FFMPEG::Movie.new(video_path)
+      movie = FFMPEG::Movie.new(video_path)
 
-    if !movie.nil?
-      if movie.video_codec != nil
-        str = movie.video_codec.split(" ")
-        if str[0] != "h264"
-          @videoclip.error_status = true
-          @videoclip.error_message = "Uploaded video is not an h264 video"
-        else
-          if movie.audio_codec != nil
-            str = movie.audio_codec.split(" ")
-            if str[0] != "aac"
-              @videoclip.error_status = true
-              @videoclip.error_message = "Audio for video clip is not AAC"
+      if !movie.nil?
+        if movie.video_codec != nil
+          str = movie.video_codec.split(" ")
+          if str[0] != "h264"
+            @videoclip.error_status = true
+            @videoclip.error_message = "Uploaded video is not an h264 video"
+          else
+            if movie.audio_codec != nil
+              str = movie.audio_codec.split(" ")
+              if str[0] != "aac"
+                @videoclip.error_status = true
+                @videoclip.error_message = "Audio for video clip is not AAC"
+              end
             end
-          end
-          @videoclip.duration = movie.duration
-          @videoclip.bitrate = movie.bitrate
-          @videoclip.height = movie.height
-          @videoclip.width = movie.width
-          @videoclip.size = movie.size
-          @videoclip.frame_rate = movie.frame_rate
-          @videoclip.resolution = movie.resolution
+            @videoclip.duration = movie.duration
+            @videoclip.bitrate = movie.bitrate
+            @videoclip.height = movie.height
+            @videoclip.width = movie.width
+            @videoclip.size = movie.size
+            @videoclip.frame_rate = movie.frame_rate
+            @videoclip.resolution = movie.resolution
 
+          end
+        else
+          @videoclip.error_status = true
+          @videoclip.error_message = "Unrecognized video codec."
         end
       else
         @videoclip.error_status = true
-        @videoclip.error_message = "Unrecognized video codec."
+        @videoclip.error_message = "Uploaded media is not playable"
       end
-    else
-      @videoclip.error_status = true
-      @videoclip.error_message = "Uploaded media is not playable"
-    end
 
-    if !@videoclip.error_status
-      data = @videoclip.filepath.split('/')
-      data = data[data.length-2]
-      tags = data.split('_')
-      
-      tags.each_with_index do |t, cnt|
-        case t
-        when "t"
-          @videoclip.teamid = tags[cnt+=1]
-        when "s"
-          @videoclip.sport = tags[cnt+=1]
-        when "a"
-          @videoclip.players = Array.new
-          @videoclip.players.push(tags[cnt+=1])
-        when "g"
-          @videoclip.gameschedule_id = tags[cnt+=1]
+      if !@videoclip.error_status
+        data = @videoclip.filepath.split('/')
+        data = data[data.length-2]
+        tags = data.split('_')
+        
+        if params[:teamid].nil? || params[:teamid].blank?
+          tags.each_with_index do |t, cnt|
+            case t
+            when "t"
+              @videoclip.teamid = tags[cnt+=1]
+            when "s"
+              @videoclip.sport = tags[cnt+=1]
+            when "a"
+              @videoclip.players = Array.new
+              @videoclip.players.push(tags[cnt+=1])
+            when "g"
+              @videoclip.gameschedule_id = tags[cnt+=1]
+            end
+          end
+        else
+          if !params[:gameschedule_id].nil? and !params[:gameschedule_id].blank?
+            @videoclip.gameschedule_id = params[:gameschedule_id]
+          end
+          @videoclip.teamid = params[:teamid]
+        end
+                
+        if @sport.review_media?
+          @videoclip.pending = true
+        else
+          @videoclip.pending = false
+        end
+        
+        if user_signed_in?
+          @videoclip.user_id = current_user.id
+        end
+       
+        filepath = "videos/" + @videoclip.id + "/" + SecureRandom.hex(10)
+        @videoclip.filepath = filepath + @videoclip.filename
+        newobj = obj.move_to(@videoclip.filepath)
+        @videoclip.video_url = newobj.url_for(:read, expires:  473040000)
+
+        # create poster for video clip
+
+        poster_path = @videoclip.videopath + "/" + SecureRandom.hex(10) + "temp_poster.jpg"
+        poster = movie.screenshot(poster_path)
+        @videoclip.poster_filepath = "videos/" + @videoclip.id + "/" + SecureRandom.hex(10) + "poster.jpg"
+        posterobj = bucket.objects[@videoclip.poster_filepath]
+        posterobj.write(Pathname.new(poster_path))   
+        @videoclip.poster_url = posterobj.url_for(:read, expires:  473040000)
+        @sport.mediasize = @sport.mediasize + @videoclip.size
+        @sport.save
+        @videoclip.save!
+
+        FileUtils.rm(poster_path)
+
+        respond_to do |format|
+          format.js
+          format.json { render json: { videoclip: @videoclip, request: [@sport, @videoclip] } }
         end
       end
-              
-      if @sport.review_media?
-        @videoclip.pending = true
-      else
-        @videoclip.pending = false
-      end
       
-      if user_signed_in?
-        @videoclip.user_id = current_user.id
+      FileUtils.rm(video_path)
+    rescue Exception => e
+      respond_to do |format|
+        format.js
+        format.json { render status: 404, json: { error: e.message, request: @sport } }
       end
-     
-      filepath = "videos/" + @videoclip.id + "/" + SecureRandom.hex(10)
-      @videoclip.filepath = filepath + @videoclip.filename
-      newobj = obj.move_to(@videoclip.filepath)
-      @videoclip.video_url = newobj.url_for(:read, expires:  473040000)
-
-      # create poster for video clip
-
-      poster_path = @videoclip.videopath + "/" + SecureRandom.hex(10) + "temp_poster.jpg"
-      poster = movie.screenshot(poster_path)
-      @videoclip.poster_filepath = "videos/" + @videoclip.id + "/" + SecureRandom.hex(10) + "poster.jpg"
-      posterobj = bucket.objects[@videoclip.poster_filepath]
-      posterobj.write(Pathname.new(poster_path))   
-      @videoclip.poster_url = posterobj.url_for(:read, expires:  473040000)
-      @sport.mediasize = @sport.mediasize + @videoclip.size
-      @sport.save
-      @videoclip.save
-
-      FileUtils.rm(poster_path)
     end
-    
-    FileUtils.rm(video_path)
+
   end
 
   def index
@@ -229,6 +253,8 @@ class VideoclipsController < ApplicationController
       clips = @sport.videoclips.where(:players.in => [params[:athlete][:id].to_s])
     elsif !params[:number].nil? && !params[:number][:id].blank?
       clips = @sport.videoclips.where(:players.in => [params[:number][:id].to_s])
+    elsif !params[:username].nil? and !params[:username].blank?
+      clips = @sport.videoclips.where(user_id: current_user.id.to_s)
     else
       clips = []
     end
@@ -282,23 +308,29 @@ class VideoclipsController < ApplicationController
   end
   
   def update
-    if @videoclip.update_attributes(params[:videoclip])
+    begin
+      @videoclip.update_attributes!(params[:videoclip])
       if @videoclip.players.nil?
         @videoclip.players = Array.new
       end
       if !params[:athlete][:id].blank?
-        @videoclip.players.push(params[:athlete][:id].to_s)
+        unless @videoclip.players.include?(params[:athlete][:id].to_s)
+          @videoclip.players << params[:athlete][:id].to_s
+        end
+#        @videoclip.players.push(params[:athlete][:id].to_s)
         @videoclip.save!
       end
     
       respond_to do |format|
         format.html { redirect_to [@sport, @videoclip], notice: "Update successful!" }
-        format.xml
-        format.json 
+        format.json { render json: { videoclip: @videoclip, request: [@sport, @videoclip] } }
         format.js
       end
-    else
-      redirect_to [@sport, @videoclip], alert: "Update failed!"
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to [@sport, @videoclip], alert: "Update failed! " + e.message }
+        format.json { render status: 404, json: { error: e.message, request: [@sport, @videoclip] } }
+      end
     end
   end
 
@@ -341,6 +373,44 @@ class VideoclipsController < ApplicationController
       format.xml
       format.json 
       format.js
+    end
+  end
+
+   def untag_athletes
+    begin
+      params[:videoclip].each do |key, values|
+        @videoclip.players.delete(values.to_s)
+      end
+      @videoclip.save!
+
+      respond_to do |format|
+        format.json { render json: { videoclip: @videoclip, request: [@sport, @videoclip] } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.json {  render status: 404, json: { error: e.message, request: [@sport, @videoclip] } }
+      end
+    end
+  end
+
+  def tag_athletes
+    begin
+      params[:videoclip].each do |key, values|
+        if @videoclip.players.nil?
+          @videoclip.players = Array.new
+        end
+        unless @videoclip.players.include?(values.to_s)
+          @videoclip.players << values.to_s
+        end
+        @videoclip.save!
+        respond_to do |format|
+          format.json { render json: { videoclip: @videoclip, request: sport_videoclips_path(@sport, @videoclip) } }
+        end
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.json { render status: 404, json: { error: e.message, request: sport_videoclips_path(@sport, @videoclip) } }
+      end
     end
   end
   

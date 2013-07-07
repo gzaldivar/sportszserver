@@ -145,7 +145,7 @@ Sportzserver::Application.routes.draw do
       end
 
       collection do
-        post :untagathlete
+        post :untagathlete, :createmobile
         get :updategameschedule, :clear_error
       end
     end
@@ -153,6 +153,7 @@ Sportzserver::Application.routes.draw do
     resources :videoclips, only: [:edit, :create, :update, :destroy, :index, :show] do
       member do
         get :newteam, :newathlete, :newschedule, :untagteam
+        put :untag_athlete, :tag_athletes
       end
 
       collection do

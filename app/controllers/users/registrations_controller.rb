@@ -22,11 +22,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
             render :status => 400,
                    :json => {:message => 'User request must contain the user name.'}
           end
-          if params[:user][:site].nil?
+          if params[:user][:admin].nil? and params[:user][:site].nil?
             render status: 400, json: {message: "Site is missing"}
             return
           end
-          if !Sport.find(params[:user][:site].to_s)
+          if params[:user][:admin].nil? and !Sport.find(params[:user][:site].to_s)
             render status: 400, json: {message: "Site does not exist"}
             return
           end
@@ -43,11 +43,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
           @user = User.create(params[:user])
           @user.default_site = params[:user][:site]
 
+          if params[:user][:admin]
+            @user.admin = true
+          end
+
           if @user.save
             render :status => 200, :json => {:user => @user}
           else
-            render :status => 400,
-                   :json => {:message => @user.errors.full_messages}
+            render :status => 400, :json => {:message => @user.errors.full_messages}
           end
         }
     end

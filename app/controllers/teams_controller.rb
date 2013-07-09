@@ -53,9 +53,19 @@ class TeamsController < ApplicationController
 	end
 
 	def destroy
-		destroy_team(@team.id.to_s)
-		@team.destroy
-		redirect_to @sport, notice: "Team delete sucessful!"
+		begin
+			destroy_team(@team.id.to_s)
+			@team.destroy
+			respond_to do |format|
+				format.html { redirect_to @sport, notice: "Team delete sucessful!" }
+				format.json { render json: { success: "success", request: @sport } }
+			end
+		rescue Exception => e
+			respond_to do |format|
+				format.html { redirect_to @sport, alert: "Error deleting team " + e.message }
+				format.json { render status: 404, json: { error: e.message, request: [@sport, @team] } }
+			end
+		end
 	end
 
 	def addplayers

@@ -2,7 +2,7 @@
 <p>
 <div class="row">
 	<div class="span10" id="backcolor">
-      	<% if @user.admin %>
+      	<% if @user.admin and !current_site.nil?%>
       		<div class="row">
       			<div class="span8 offset1">
       				<h4>Administrator for <%= current_site.sitename %></h4>
@@ -79,7 +79,7 @@
 		<p>
 		<div class="row">
 			<div class="span4 offset3">
-				<% if (!current_user.nil?  and (@user.id == current_user.id)) or isAdmin? %>
+				<% if (!current_user.nil?  and !current_site.nil? and (@user.id == current_user.id)) or isAdmin? %>
 				    <%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-medium btn-primary" %>
 				<% end %>
 				<% if isUserAdmin?(@user) or isAdmin? %>
@@ -99,11 +99,13 @@
       		</div>
       	</div>
       	<p>
-      	<div class="row">
-			<div class="span4 offset3">
-				Click here to go back to <em><strong>
-				<%= link_to current_site.sitename, sport_path(current_site) %></strong></em>.<br/>
-			</div>
-  		</div>
+      	<% if !current_site.nil? %> 
+	      	<div class="row">
+				<div class="span4 offset3">
+					Click here to go back to <em><strong>
+					<%= link_to current_site.sitename, sport_path(current_site) %></strong></em>.<br/>
+				</div>
+	  		</div>
+	  	<% end %>
 	</div>
 </div>

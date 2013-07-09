@@ -25,12 +25,16 @@ class SportsController < ApplicationController
         current_user.default_site = @sport.id
         current_user.save
 
-        flash[:success] = "New Sport Site created!"
-        
-        redirect_to @sport
+        respond_to do |format|
+          format.html { redirect_to @sport, notice: "New Sport Site created!" }
+          format.json { render json: { sport: @sport, request: @sport } }
+        end
       end
     rescue Exception => e
-      redirect_to :back, alert: "Error saving sport information " + e.message
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Error saving sport information " + e.message }
+        format.json { render status: 404, json: { error: e.message, request: current_user } }
+      end
     end
   end
   
@@ -91,16 +95,32 @@ class SportsController < ApplicationController
   def update
     begin
       @sport.update_attributes(params[:sport])
-      redirect_to @sport
+      respond_to do |format|
+        format.html { redirect_to @sport, notice: "Sport updated!" }
+        format.json { render json: { sport: @sport, request: @sport } }
+      end
     rescue Exception => e
-      redirect_to :back, alert: "Error updating sport"
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Error updating sport " + e.message }
+        format.json { render status: 404, json: { error: e.message, request: current_user } }
+      end
     end
   end
   
   def destroy
-    deletesport(@sport)
-    @sport.destroy
-    redirect_to current_site
+    begin
+      deletesport(@sport)
+      @sport.destroy
+      respond_to do |format|
+        format.html { redirect_to current_user }
+        format.json { render json: { user: current_user, request: current_user } } 
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to current_user, alert: e.message }
+        format.json { render status: 404, json: { error: e.message, request: current_user } } 
+      end
+    end
   end
   
   def feed

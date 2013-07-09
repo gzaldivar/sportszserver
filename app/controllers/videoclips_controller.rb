@@ -185,6 +185,8 @@ class VideoclipsController < ApplicationController
         
         if user_signed_in?
           @videoclip.user_id = current_user.id
+        elsif !params[:user_id].nil? and !params[:user_id].blank?
+          @videoclip.user_id = params[:user_id].to_s
         end
        
         filepath = "videos/" + @videoclip.id + "/" + SecureRandom.hex(10)
@@ -205,13 +207,13 @@ class VideoclipsController < ApplicationController
         @videoclip.save!
 
         FileUtils.rm(poster_path)
-
-        respond_to do |format|
-          format.js
-          format.json { render json: { videoclip: @videoclip, request: [@sport, @videoclip] } }
-        end
       end
       
+      respond_to do |format|
+          format.js
+          format.json { render json: { videoclip: @videoclip, request: [@sport, @videoclip] } }
+      end
+
       FileUtils.rm(video_path)
     rescue Exception => e
       respond_to do |format|

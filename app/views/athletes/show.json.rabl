@@ -32,3 +32,9 @@ child :football_stats do
 		node(:football_returner_id) { |f| f.id.to_s }
 	end
 end
+if lambda { |a| @sport.photos.where(players: a.id.to_s) }
+	node(:hasphotos) { true }
+end
+if lambda { |a| @sport.videos.where(players: a.id.to_s) }
+	node(:hasvideos) { true }
+end

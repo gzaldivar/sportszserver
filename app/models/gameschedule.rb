@@ -9,6 +9,7 @@ class Gameschedule
   field :gamedate, type: Date
   field :location, type: String
   field :opponent, type: String
+  field :opponent_mascot, type: String, default: ""
   field :event, type: String
   field :homeaway, type: String
   field :live, type: Boolean
@@ -35,9 +36,10 @@ class Gameschedule
   field :own, type: Boolean
   field :our, type: String, default: ""
   field :ballon, type: Integer, default: 0
-  field :possession, type: String
-  field :lastplay, type: String
-  field :down, type: Integer
+  field :possession, type: String, default: ""
+  field :lastplay, type: String, default: ""
+  field :down, type: Integer, default: 1
+  field :currentqtr, type: String, default: "Q1"
   field :final, type: Boolean, default: false
 
   has_mongoid_attached_file :opponentpic,
@@ -82,6 +84,10 @@ class Gameschedule
 
   def game_name
     gamedate.strftime("%m/%d/%Y") + " vs " + opponent
+  end
+
+  def opponent_name
+    opponent + " " + opponent_mascot
   end
 
   def start_time

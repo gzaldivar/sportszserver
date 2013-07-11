@@ -40,7 +40,7 @@ class AthletesController < ApplicationController
     if !@athlete.team_id.nil?
       @team = @sport.teams.find(@athlete.team_id)
     end
-    @photos = Photo.where(athletes: @athlete.id)
+    @photos = @sport.photos.where(players: @athlete.id.to_s)
 
     respond_to do |format|
       format.html

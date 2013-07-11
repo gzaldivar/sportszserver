@@ -1,5 +1,5 @@
 @ath_totals.each do |t|
-	game = Gameschedule.find(t.gameschedule)
+	game = Gameschedule.find(t.gameschedule_id)
 	child t => game.game_name do
 		node(:id) { t.id.to_s }
 		node(:game_id) { game.id.to_s }

@@ -20,6 +20,7 @@ class SportsController < ApplicationController
         @sport.name = @sport.sportname
         @sport.has_stats = true
       end
+      
       if @sport.save!
         current_user.admin = true
         current_user.default_site = @sport.id

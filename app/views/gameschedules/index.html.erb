@@ -28,7 +28,7 @@
           		<td><%= link_to (count += 1), [@sport, @team, g] %></td>
           		<td><%= g.gamedate.strftime("%m/%d/%Y") %></td>
           		<td><%= g.homeaway %></td>
-          		<td><%= g.opponent %></td>
+          		<td><%= g.opponent_name %></td>
           		<td><%= g.starttime.strftime("%I:%M%p") %></td>
           		<td><%= g.location %></td>
           		<td><%= g.event %></td>

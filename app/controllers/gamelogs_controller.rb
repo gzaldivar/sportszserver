@@ -42,8 +42,18 @@ class GamelogsController < ApplicationController
     end
 
   	def destroy
-  		@gameschedule.gamelogs.find(params[:id]).destroy
-      redirect_to :back, success: "Game log entry deleted!"
+      begin
+  		  @gamelog.destroy
+        respond_to do |format|
+          format.html { redirect_to :back, success: "Game log entry deleted!" }
+          format.json { render json: { success: "sucess", request: [@sport, @team, @gameschedule] } }
+        end
+      rescue Exception => e
+        respond_to do |format|
+          format.html { redirect_to :back, alert: "Error deleting Game Log Entry " + e.message }
+          format.json { render status: 404, json: { error: e.message, request: [@sport, @team, @gameschedule, @gamelog] } }
+        end
+      end
   	end
 
   	private
@@ -52,5 +62,6 @@ class GamelogsController < ApplicationController
   			@sport = Sport.find(params[:sport_id])
         @team = @sport.teams.find(params[:team_id])
         @gameschedule = @team.gameschedules.find(params[:gameschedule_id])
+        @gamelog = @gameschedule.gamelogs.find(params[:id])
   		end
 end

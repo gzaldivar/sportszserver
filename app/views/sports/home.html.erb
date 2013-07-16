@@ -1,5 +1,5 @@
 <p>
-<font color="b3f10c">
+<!--font color="b3f10c"-->
 <% if user_signed_in? %>
 	<div class="row">
 		<div class="span8 offset1">
@@ -24,6 +24,49 @@
 		</div>
 	</div>
 <% else %>
+	<div class="row">
+		<div class="span10">
+			<h1>Welcome to Eazesportz.com!</h1>
+			<p>
+			<h2>Who we are:</h2><br/>
+			<div class="row">
+				<div class="span4">
+					Eazesportz.com provides mobile applications for you to manage your sports program. Our current offering includes an iPad app that can
+					be used to update and manage all content you want your fans to see. Your fans will view the your programs content via our iPhone app. There
+					is no charge for you to use our iPad app to manage your program or teams news and information. 
+				</div>
+				<div class="span4 offset1">
+					<%= link_to (image_tag "Eazesportz.jpg"), home_path %>
+				</div> 
+			</div>
+			<h4>
+				Features
+				<ul>
+					<li>View and update live scores for every game</li>
+					<li>Select and follow your favorite players</li>
+Browse games by favorite teams, region, or location
+View venue information for all games, including map and bird’s eye views
+Pre-game, in-game, post-game, and chat areas for all games, all season long
+Make picks for every game and compare picks with those of other fans
+Forums to discuss the games with other users all over the state of Texas
+Facebook and Twitter integration for user avatars and score posting
+Team Helmets, Private Messages, Pre-Game Weather Forecasts, and Push Notifications available with a Season Pass In-App Purchase
+					<li>Manage your teams Roster</li>
+					<li>Coaches</li>
+					<li>Season Stats</li>
+					<li>Season Photo's and Video's</li>
+				</ul>
+				When your team is playing you can enter:
+				<ul>
+					<li>Live stats</li>
+					<li>Scores</li>
+					<li>Photos</li>
+					<li>Videos</li>
+				</ul>
+				Your fans can participate using our live blog feature!
+			</h4>
+		</div>
+	</div>
 	<div class="row">
 		<div class="span3 offset1">
 			<h4>Click here to learn more!</h4>
@@ -55,4 +98,4 @@
 	  	<%= link_to "Search", sports_path, class: "btn btn-medium btn-primary" %>
 	</div>
 </div>
-</font>
+<!--/font-->

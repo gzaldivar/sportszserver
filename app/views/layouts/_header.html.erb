@@ -9,8 +9,9 @@
       <% if current_site? %>
       	<a class="brand" href=<%= "/sports/" + current_site.id %>><%= current_site.sitename %></a>      	
       <% else %>
-		<a class="brand" href="/">SportzTeams.com</a>      
+		<a class="brand" href="/">Eazesportz.com</a>      
       <% end %>
+      	<h5>
 			<div class="nav-collapse">
 				<ul class="nav pull-left">
           			<% if @sport.nil? %>
@@ -150,6 +151,7 @@
 				<% end %>
 			</ul>
 		</div>
+	</h5>
     </div>
   </div>
 </header>

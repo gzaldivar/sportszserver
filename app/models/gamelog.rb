@@ -84,41 +84,63 @@ class Gamelog
         if isReceiver?
           stat = gameschedule.football_stats.find_by(athlete: self.player).football_passings
           rec = gameschedule.football_stats.find_by(athlete: self.assist).football_receivings
-          stat.yards = stat.yards - self.yards
-          rec.yards = rec.yards - self.yards
-          rec.receptions = rec.receptions - 1
-          stat.completions = stat.completions - 1;
-          stat.attempts = stat.attempts - 1
-          if self.score = "TD"
-            stat.td = stat.td - 1
-            rec.td = rec.td - 1
+          if stat.yards > 0
+            stat.yards = stat.yards - self.yards
+          end
+          if rec.yards > 0
+            rec.yards = rec.yards - self.yards
+          end
+          if rec.receptions > 0
+            rec.receptions = rec.receptions - 1
+          end
+          if stat.completions > 0
+            stat.completions = stat.completions - 1
+          end
+          if stat.attempts > 0
+            stat.attempts = stat.attempts - 1
+          end
+          if self.score = "TD" 
+            if stat.td > 0
+              stat.td = stat.td - 1
+            end
+            if rec.td > 0
+              rec.td = rec.td - 1
+            end
           else
-            stat.twopointconv = stat.twopointconv - 1
-            rec.twopointconv = rec.twopointconv - 1
+            if stat.twopointconv > 0
+              stat.twopointconv = stat.twopointconv - 1
+            end
+            if rec.twopointconv > 0
+              rec.twopointconv = rec.twopointconv - 1
+            end
           end
           stat.save!
           rec.save!
         elsif isRusher?
           stat = gameschedule.football_stats.find_by(athlete: self.player).football_rushings
-          stat.yards -= self.yards
-          stat.attempts = stat.attempts - 1
-          if self.score = "TD"
+          if stat.yards > 0
+            stat.yards -= self.yards
+          end
+          if stat.attempts > 0
+            stat.attempts = stat.attempts - 1
+          end
+          if self.score = "TD" and stat.td > 0
             stat.td = stat.td - 1
-          else
+          elsif stat.twopointconv > 0
             stat.twopointconv = stat.twopointconv - 1
           end
           stat.save!
         elsif isDefense?
           stat = gameschedule.football_stats.find_by(athlete: self.player).football_defenses
           stat.int_yards-= self.yards
-          if footballPosition == "interception"
+          if footballPosition == "interception" and stat.interception > 0
             stat.interceptions -= 1
-          else
+          elsif stat.fumbles_recovered > 0
             stat.fumbles_recovered -=1
           end
-          if self.score = "TD"
+          if self.score = "TD" and stat.td > 0
             stat.td -= 1
-          else
+          elsif stat.safety > 0
             stat.safety -= 1
           end
           stat.save!
@@ -126,15 +148,23 @@ class Gamelog
           rettype = logentry.split(" ")
           stat = gameschedule.football_stats.find_by(athlete: self.player).football_returners
           if rettype[0] == "punt"
-            stat.punt_returnyards -= self.yards
-            stat.punt_return -= 1
-            if self.score = "TD"
+            if stat.punt_returnyards > 0
+              stat.punt_returnyards -= self.yards
+            end
+            if stat.punt_return > 0
+              stat.punt_return -= 1
+            end
+            if self.score = "TD" and stat.punt_returntd > 0
               stat.punt_returntd -= 1
             end
           else
-            stat.koyards -= self.yards
-            stat.koreturns -= 1
-            if self.score = "TD"
+            if stat.koyards > 0
+              stat.koyards -= self.yards
+            end
+            if stat.koreturns > 0
+              stat.koreturns -= 1
+            end
+            if self.score = "TD" and stat.kotd > 0
               stat.kotd -= 1
             end
           end
@@ -155,24 +185,40 @@ class Gamelog
         if self.score == "TD"
           case self.period
           when "Q1"
-            game.homeq1-=6
+            if game.homeq1 > 0
+              game.homeq1-=6
+            end
           when "Q2"
-            game.homeq2-=6
+            if game.homeq2 > 0
+              game.homeq2-=6
+            end
           when "Q3"
-            game.homeq3-=6
+            if game.homeq3 > 0
+              game.homeq3-=6
+            end
           when "Q4"
-            game.homeq4-=6
+            if game.homeq4 > 0
+              game.homeq4-=6
+            end
           end
         elsif self.score == "2P"
           case self.period
           when "Q1"
-            game.homeq1-=2
+            if game.homeq1 > 0
+              game.homeq1-=2
+            end
           when "Q2"
-            game.homeq2-=2
+            if game.homeq2 > 0
+              game.homeq2-=2
+            end
           when "Q3"
-            game.homeq3-=2
+            if game.homeq3 > 0
+              game.homeq3-=2
+            end
           when "Q4"
-            game.homeq4-=2
+            if game.homeq4 > 0
+              game.homeq4-=2
+            end
           end
         end
       end

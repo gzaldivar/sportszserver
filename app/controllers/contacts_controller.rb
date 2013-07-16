@@ -10,9 +10,15 @@ class ContactsController < ApplicationController
   def create
     begin
       contact = @sport.contacts.create!(params[:contact])
-      redirect_to [@sport, contact], notice: "Contact created!"
+      respond_to do |format|
+        format.html { redirect_to [@sport, contact], notice: "Contact created!" }
+        format.json { render json: { contact: contact, request: [@sport, @contact] } }
+      end
     rescue Exception => e
-        redirect_to :back, alert: e.message
+      respond_to do |format|
+        format.html { redirect_to :back, alert: e.message }
+        format.json { render status: 404, json: { error: e.message, request: @sport } }
+      end
     end
   end
   
@@ -29,19 +35,31 @@ class ContactsController < ApplicationController
   def update
     contact = @sport.contacts.find(params[:id])
     if contact.update_attributes(params[:contact])      
-      redirect_to [@sport,contact], notice: "Contact updated!"
+      respond_to do |format|
+        format.html { redirect_to [@sport, contact], notice: "Contact updated!" }
+        format.json { render json: { contact: contact, request: [@sport, @contact] } }
+      end
     else
-      redirect_to :back, alert: "Error updating contact"
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Error updating contact: " + e.message }
+        format.json { render status: 404, json: { error: e.message, request: @sport } }
+      end
     end
   end
   
   def destroy
-    if @sport.contacts.find(params[:id]).destroy
-      flash[:notice] = "Contact deleted!"
-    else
-      flash[:error] = "Error deleting contact"
+    begin
+      @sport.contacts.find(params[:id]).destroy
+      respond_to do |format|
+        format.html { redirect_to site_contacts_path, notice: "Contact deleted" }
+        format.json { render json: { success: "success", request: @sport } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to site_contacts_path, alert: "Error deleting contact: " + e.message }
+        format.json { render status: 404, json: { error: e.message, request: @sport } }
+      end
     end
-    redirect_to site_contacts_path
   end
   
   def index

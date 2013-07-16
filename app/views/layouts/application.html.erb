@@ -8,7 +8,7 @@
     <%= render 'layouts/shim' %>    
   </head>
 	<% if current_site? and !current_site.background.blank? %>
-	   	<body style="background-image: url('<%= current_site.background.url %>');">
+	   	<!--body style="background-image: url('<%= current_site.background.url %>');"-->
 	<% else %>
     	<body>
 	<% end %>
@@ -21,13 +21,20 @@
       <% elsif current_site? and !current_site.sport_banner.blank? %>
           <div id="banner" style="background-image: url(<%= current_site.sport_banner.url(:large) %>);">
           </div>
-    	<% else %>
-    		<div id="homebanner" style="background-image: url(<%= image_path 'home.jpg' %>);"></div>
+      <% elsif current_site? %>
+        <div class="row">
+          <div class="span10">
+            <h1><%= current_site.sitename %></h1>
+          </div>
+        </div>
+    	<!--% else %>
+    		<div id="homebanner" style="background-image: url(<%= image_path 'home.jpg' %>);"></div-->
       <% end %>
+
       <% if current_site? %>
         <div class="container" id="bodywindow" style="background-color:#ffffff;">
       <% else %>
-        <div class="container" id="bodywindow" style="bakcground-color:#254959;">
+        <!--div class="container" id="bodywindow" style="background-color:#254959;"-->
       <% end %>
             <div class="row">
               <div class="span10">

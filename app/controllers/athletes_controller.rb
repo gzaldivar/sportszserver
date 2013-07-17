@@ -26,7 +26,7 @@ class AthletesController < ApplicationController
       athlete.save!
       respond_to do |format|
         format.html { redirect_to [@sport, athlete], notice: 'Athlete created!'}
-        format.json { render json: { athleteid: athlete.id.to_s, request: [@sport, athlete] } }
+        format.json { render json: { athlete: athlete, request: [@sport, athlete] } }
       end
     rescue Exception => e
       respond_to do |format|   
@@ -73,7 +73,7 @@ class AthletesController < ApplicationController
       @athlete.update_attributes!(params[:athlete])
       respond_to do |format|
           format.html { redirect_to [@sport, @athlete], notice: "Update successful" }
-          format.json { render json: { athleteid: @athlete.id.to_s, request: [@sport, @athlete] } }
+          format.json { render json: { athlete: @athlete, request: [@sport, @athlete] } }
       end
     rescue Exception => e
       respond_to do |format|

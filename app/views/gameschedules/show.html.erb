@@ -66,12 +66,14 @@
 	  					<th>Game Time</th>
 	  					<th>Possession</th>
 	  					<th>Down</th>
+	  					<th>To go</th>
 	  					<th>Ball On</th>
 	  				</thead>
 	  				<tbody>
 	  					<td><%= @gameschedule.livegametime.strftime("%I:%M") %></td>
 	  					<td><%= @gameschedule.possession %></td>
 	  					<td><%= @gameschedule.down %></td>
+	  					<td><%= @gameschedule.togo %></td>
 	  					<td><%= @gameschedule.our + " " + @gameschedule.ballon.to_s %></td>
 	  				</tbody>
 	  			</table>

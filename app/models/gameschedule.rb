@@ -39,6 +39,7 @@ class Gameschedule
   field :possession, type: String, default: ""
   field :lastplay, type: String, default: ""
   field :down, type: Integer, default: 1
+  field :togo, type: Integer, default: 0
   field :currentqtr, type: String, default: "Q1"
   field :final, type: Boolean, default: false
 
@@ -81,6 +82,9 @@ class Gameschedule
   validates_numericality_of :opponenth2, message: "Value must be 0 or a number greater than 0", greater_than_or_equal_to: 0
   validates_numericality_of :penaltyyards, greater_than_or_equal_to: 0
   validates_numericality_of :penalty, greater_than_or_equal_to: 0
+  validates_numericality_of :togo, greater_than_or_equal_to: 0
+  validates_numericality_of :down, greater_than_or_equal_to: 0
+  validates_numericality_of :ballon, greater_than_or_equal_to: 0
 
   def game_name
     gamedate.strftime("%m/%d/%Y") + " vs " + opponent

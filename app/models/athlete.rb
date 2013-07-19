@@ -8,6 +8,7 @@ class Athlete
   
   before_save :decode_base64_image
   after_save :send_alerts
+  before_destroy :process_statslist
   
   field :number, type: Integer
   field :lastname, type: String
@@ -91,6 +92,27 @@ class Athlete
           data.original_filename = File.basename(self.original_filename)
    
           self.pic = data
+        end
+      end
+
+      def process_statslists
+        self.sport.teams.each do |t|
+          if !t.fb_pass_players.nil?
+            t.fb_pass_players.delete_if{|x| x == self.id.to_s}
+          end
+          if !t.fb_def_players.nil?
+            t.fb_def_players.delete_if{|x| x == self.id.to_s}
+          end
+          if !t.fb_rush_players.nil?
+            t.fb_rush_players.delete_if{|x| x == self.id.to_s}
+          end
+          if !t.fb_spec_players.nil?
+            t.fb_spec_players.delete_if{|x| x == self.id.to_s}
+          end
+          if !t.fb_rec_players.nil?
+            t.fb_rec_players.delete_if{|x| x == self.id.to_s}
+          end
+          t.save!
         end
       end
 end

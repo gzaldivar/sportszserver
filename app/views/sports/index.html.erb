@@ -1,10 +1,18 @@
 <% provide(:title, "Find Site") %>
 <p> 
 <div class="row">
+  <div class="span">
+    <h2>Welcome to Eazesportz.com</h2>
+  </div>
+  <div class="span4 offset1">
+    <%= link_to (image_tag "FC_Live_Stats.png"), info_path %>
+  </div>
+</div>
+<div class="row">
   <div class="span10" style="background-color:#ffffff;">
     <div class="row">
       <div class="span10 offset2">
-        <h3>Find Site:</h3>
+        <h3>Find Eazesportz Sports Program:</h3>
         <%= form_tag sports_path, class: "form-horizontal", method: 'get' do %>
           <div class="row">
             <div class="span2">

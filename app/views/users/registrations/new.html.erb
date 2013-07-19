@@ -1,10 +1,19 @@
 <% provide(:title, "New User") %>
-
+<% if !current_site? %>
+  <div class="row">
+    <div class="span4">
+      <h2>Create Eazesport Administrator</h2>
+    </div>
+    <div class="span4 offset1">
+      <%= image_tag "FC_Live_Stats.png" %>
+    </div>
+  </div>
+<% end %>
 <div class="row">
   <div class="span7" style="background-color:#ffffff;position:relative;top:0;left:100px;">
     <div class="row">
       <div class="span4 offset2">
-
+ 
         <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
           <%= f.error_notification %>
 

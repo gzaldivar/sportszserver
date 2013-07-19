@@ -28,61 +28,82 @@
 		<div class="span10">
 			<h1>Welcome to Eazesportz.com!</h1>
 			<p>
-			<h2>Who we are:</h2><br/>
-			<div class="row">
-				<div class="span4">
-					Eazesportz.com provides mobile applications for you to manage your sports program. Our current offering includes an iPad app that can
-					be used to update and manage all content you want your fans to see. Your fans will view the your programs content via our iPhone app. There
-					is no charge for you to use our iPad app to manage your program or teams news and information. 
-				</div>
-				<div class="span4 offset1">
-					<%= link_to (image_tag "Eazesportz.jpg"), home_path %>
-				</div> 
-			</div>
-			<h4>
-				Features
-				<ul>
-					<li>View and update live scores for every game</li>
-					<li>Select and follow your favorite players</li>
-Browse games by favorite teams, region, or location
-View venue information for all games, including map and bird’s eye views
-Pre-game, in-game, post-game, and chat areas for all games, all season long
-Make picks for every game and compare picks with those of other fans
-Forums to discuss the games with other users all over the state of Texas
-Facebook and Twitter integration for user avatars and score posting
-Team Helmets, Private Messages, Pre-Game Weather Forecasts, and Push Notifications available with a Season Pass In-App Purchase
-					<li>Manage your teams Roster</li>
-					<li>Coaches</li>
-					<li>Season Stats</li>
-					<li>Season Photo's and Video's</li>
-				</ul>
-				When your team is playing you can enter:
-				<ul>
-					<li>Live stats</li>
-					<li>Scores</li>
-					<li>Photos</li>
-					<li>Videos</li>
-				</ul>
-				Your fans can participate using our live blog feature!
-			</h4>
+			<h2>Who we are:</h2>
+			<p>
+			Eazesportz.com provides mobile applications for you to manage your sports program. Our current offering includes an iPad app that can
+			be used to update and manage all content you want your fans to see. Your fans will view the your programs content via our iPhone app. There
+			is no charge for you to use our iPad app to manage your program or teams news and information. 
+			<p>
+			<h4>What you can do with our iPad app:</h4>
 		</div>
 	</div>
 	<div class="row">
-		<div class="span3 offset1">
-			<h4>Click here to learn more!</h4>
+		<div class="span4">
+			<h5>
+			iPad Management Features
+			<ul>
+				<li>Update live scores for every game</li>
+				<li>Upload Photo's and Video's of your team during the game</li>
+				<li>Select and follow your favorite players</li>
+				<li>Browse and Manage Game Stats</li>
+				<li>Monitor and Mangage your fans live Blog</li>
+				<li>Manage your programs news feed</li>
+				<li>Manage your teams Roster</li>
+				<li>Manage your teams Coaches</li>
+				<li>Manage Season Stats</li>
+			</ul>
+			</h5>
 		</div>
-		<div class="span2">
+		<div class="span4 offset1">
+			<%= link_to (image_tag "FC_Live_Stats.png"), info_path %>
+		</div> 
+	</div>
+	<div class="row">
+		<div class="span10">
+			<h4>What your fans can do:</h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span4">
+			<h5>
+			Your fans use our iPhone app to access what you create:
+			<ul>
+				<li>Follow live game updates</li>
+				<li>Access live game stats</li>
+				<li>Access live game photos and videos</li>
+				<li>Track historical season stats</li>
+				<li>Follow players and receive score/stat alerts</li>
+				<li>Live blog support</li>
+			</ul>
+			</h5>
+		</div>
+		<div class="span4 offset1">
+			<%= link_to (image_tag "ios_LiveGame.png"), mobileinfo_path %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span10">
+			<h4>We also provide a web site for you to use to manage your program. Your fans are also welcome to access the site content via the web site.
+			<p>
+			<h5>Click here to learn more about the web site</h5>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span4">
+			<h4>Click here to sign up!</h4>
+		</div>
+		<div class="span2 offset1">
 		  	<%= link_to "Sign Up", info_path, class: "btn btn-medium btn-primary" %>
 	    </div>
 	</div>
 	<div class="row">
-	    <div class="span5 offset1">
+	    <div class="span5">
 			<h4>Already managing a site? Sign in above</h4>
 		</div>
 	</div>
 <% end %>
 <div class="row">
-	<div class="span8 offset1">
+	<div class="span10">
 		<% if user_signed_in? %>
 			<% if !current_user.mysites.nil? %>
 				List of sites you are registered for:&nbsp
@@ -94,7 +115,7 @@ Team Helmets, Private Messages, Pre-Game Weather Forecasts, and Push Notificatio
 				<% end %>
 			<% end %>
 		<% end %>
-	    <h4>If you are looking for another school or athletic program powered by SportzTeams.com, click below to find that site.</h4>
+	    <h4>If you are looking for another school or athletic program powered by Eazesportz.com, click below to find that site.</h4>
 	  	<%= link_to "Search", sports_path, class: "btn btn-medium btn-primary" %>
 	</div>
 </div>

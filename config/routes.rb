@@ -163,7 +163,7 @@ Sportzserver::Application.routes.draw do
     end
 
     collection do
-      get :feed, :mobileinfo, :allnews, :pricing, :admin_info
+      get :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo
     end
 
     member do
@@ -202,6 +202,7 @@ Sportzserver::Application.routes.draw do
   match '/admininfo', to: 'sports#admin_info'
   match '/pricing',  to: 'sports#pricing'
   match '/mobileinfo',  to: 'sports#mobileinfo'
+  match '/websiteinfo', to: 'sports#websiteinfo'
   match '/user/root',  to: 'sports#show'
 
   match '/newkicker', to: 'football_kickers#newkicker'

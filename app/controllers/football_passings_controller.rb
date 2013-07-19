@@ -101,6 +101,7 @@ class FootballPassingsController < ApplicationController
 					@fbpassing.td = @fbpassing.td + 1
 
 					if !receiver.nil? and !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
+						puts params[:quarter].to_s
 						gamelog = @fbpassing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
 																					logentry: "yard pass to ", score: "TD", yards: params[:yards],
 																					player: @athlete.id, assist: player.id)

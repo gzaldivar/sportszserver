@@ -219,6 +219,9 @@ class SportsController < ApplicationController
   def admin_info
   end
 
+  def websiteinfo
+  end
+
   private
   
     def correct_sport

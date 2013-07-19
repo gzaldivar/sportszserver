@@ -68,7 +68,7 @@
                   <td><%= s.city %></td>
                   <td><%= s.state %></td>
                   <td><%= s.zip %></td>
-                  <td><%= link_to (image_tag s.sport_banner.url(:thumb)), s %></td>
+                  <td><%= link_to (image_tag s.sport_logo.url(:thumb)), s %></td>
                   <% if user_signed_in? and (current_user.default_site == s.id) %>
                      <td><em>Default</em></td>
                   <% elsif user_signed_in?%>

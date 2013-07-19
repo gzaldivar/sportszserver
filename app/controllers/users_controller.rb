@@ -107,23 +107,30 @@ class UsersController < ApplicationController
   end
 
 	def site
-    if !params[:id].blank?
-      site = Sport.find(params[:id])
-      current_user.default_site = site.id
-      current_user.save
-      if !current_user.mysites.nil? and current_user.mysites.count > 0 and admin_sites? 
-        flash[:notice] = "Your default site is now " + site.sitename + 
-                         " which is not a site you administer. You are still adminstrator of the sites you created. 
-                         You will be logged into this site when you log in until you change it."
-      else
-        flash[:notice] = "Your default site is now " + site.sitename
+    begin
+      if !params[:id].blank?
+        site = Sport.find(params[:id])
+        current_user.default_site = site.id
+        current_user.save
+        if !current_user.mysites.nil? and current_user.mysites.count > 0 and admin_sites? 
+          flash[:notice] = "Your default site is now " + site.sitename + 
+                           " which is not a site you administer. You are still adminstrator of the sites you created. 
+                           You will be logged into this site when you log in until you change it."
+        else
+          flash[:notice] = "Your default site is now " + site.sitename
+        end
+        respond_to do |format|
+          format.html { redirect_to site }
+          format.json { render status: 200, json: { site: site, sitename: site.sitename } }
+        end
+      else    
+        redirect_to :back, alert: "Something went very wrong!"
       end
+    rescue Exception => e
       respond_to do |format|
-        format.html { redirect_to site }
-        format.json { render status: 200, json: { message: "Sucessful", sitename: site.sitename } }
+        format.html { redirect_to @user, alert: e.message }
+        format.json { render status: 404, json: { error: e.message, request: @user } }
       end
-    else     
-      redirect_to :back, alert: "Something went very wrong!"
     end
 	end
 

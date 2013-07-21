@@ -78,13 +78,13 @@ Sportzserver::Application.configure do
 #  config.action_mailer.delivery_method = :smtp #:smtp
 #  config.action_mailer.smtp_settings = {
 #    :enable_starttls_auto => true,
-#    :address => 'smtp.gmail.com',
-#    :port => '587',
-#    :authentication => :plain,
-#    :domain => 'gmail.com',
-#    :user_name => 'spsites01@gmail.com',
-#    :password => 'bryan101'
-#  }  # Enable threaded mode
+#    :address => 'smtpout.secureserver.net',
+#    :domain  => 'www.sportzteams.com',
+#    :port      => 80,
+#    :user_name => 'info@sportzteams.com',
+#    :password => 'bryan101',
+#    :authentication => :plain
+#  }
   # config.threadsafe!
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to

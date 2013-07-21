@@ -66,8 +66,8 @@ Sportzserver::Application.configure do
   # Disable delivery errors, bad email addresses will be ignored
   config.action_mailer.raise_delivery_errors = false
 
-#  config.action_mailer.default_url_options = { :host => 'infinite-savannah-9832.herokuapp.com' }
-  config.action_mailer.default_url_options = { :host => 'powerful-everglades-2345.herokuapp.com' }
+  config.action_mailer.default_url_options = { :host => 'infinite-savannah-9832.herokuapp.com' }
+#  config.action_mailer.default_url_options = { :host => 'powerful-everglades-2345.herokuapp.com' }
   config.action_mailer.perform_deliveries = true
  # config.action_mailer.raise_delivery_errors = false
   config.action_mailer.default :charset => "utf-8"

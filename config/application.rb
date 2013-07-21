@@ -70,8 +70,7 @@ module Sportzserver
         g.helper_specs false
     end
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
-#    config.middleware.use Rack::SslEnforcer, :except_environments => 'development', :only_methods => ['POST', 'DELETE', 'PUT', 'CREATE'], 
-#                                              :except_methods => ['GET', 'HEAD']
+    config.middleware.use Rack::SslEnforcer, :only => '/users'
 #    config.middleware.use Rack::SslEnforcer
     # constraint as a String
     # config.middleware.use Rack::SslEnforcer

@@ -1,5 +1,5 @@
 class GameschedulesController < ApplicationController
-	before_filter	:authenticate_user!,  only: [:destroy, :new, :edit, :update, :create]
+	before_filter	:authenticate_user! #,   only: [:destroy, :new, :edit, :update, :create]
   before_filter :get_sport
   before_filter :get_schedule,        only: [:show, :edit, :update, :destroy]
   before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 

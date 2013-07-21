@@ -1,5 +1,5 @@
 class GamelogsController < ApplicationController
-    before_filter	:authenticate_user!,  only: [:destroy, :create, :show, :update]
+    before_filter	:authenticate_user! #,  only: [:destroy, :create, :show, :update]
     before_filter :correct_gamelog
     before_filter only: [:destroy, :create, :show, :update] do |controller| 
       controller.team_manager?(@gameschedule, @team)

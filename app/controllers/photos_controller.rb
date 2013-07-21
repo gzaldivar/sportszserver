@@ -1,6 +1,6 @@
 class PhotosController < ApplicationController
-  before_filter :authenticate_user!,	only: [:destroy, :create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, 
-                                            :tag_athletes, :createmobile]
+  before_filter :authenticate_user! #,	only: [:destroy, :create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, 
+                                    #        :tag_athletes, :createmobile]
   before_filter :get_sport
   before_filter :correct_photo,       only: [:edit, :show, :destroy, :update, :errors, :clear_error, :approval, :untag_athletes, :tag_athletes]
   before_filter only: [:destroy, :update, :create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, :tag_athletes, :createmobile] do |controller| 

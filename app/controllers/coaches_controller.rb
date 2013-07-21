@@ -1,5 +1,5 @@
 class CoachesController < ApplicationController
-	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :new]
+	before_filter	:authenticate_user! #,	only: [:destroy, :update, :create, :edit, :new]
   before_filter :get_sport
 	before_filter	:correct_coach,	      only:	[:show, :edit, :update, :destroy]
   before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 

@@ -1,5 +1,5 @@
 class FootballStatsController < ApplicationController
-	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :showdata]
+	before_filter	:authenticate_user! #,	only: [:destroy, :update, :create, :edit, :showdata]
   	before_filter 	:get_sport_athlete
 	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
 		controller.team_manager?(@athlete, nil)

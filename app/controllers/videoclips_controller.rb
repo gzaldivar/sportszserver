@@ -1,5 +1,5 @@
 class VideoclipsController < ApplicationController
-	before_filter :authenticate_user!,	only: [:edit, :update, :destroy, :newathlete, :newteam, :newgame, :create, :tag_athletes, :untag_athletes, :untagathlete, :untagteam]
+	before_filter :authenticate_user! #,	only: [:edit, :update, :destroy, :newathlete, :newteam, :newgame, :create, :tag_athletes, :untag_athletes, :untagathlete, :untagteam]
 	before_filter :get_sport
 	before_filter :correct_video, 		only: [:edit, :update, :destroy, :show, :untag_athletes, :tag_athletes]
   before_filter only: [:destroy, :update, :create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, :tag_athletes, :createmobile] do |controller| 

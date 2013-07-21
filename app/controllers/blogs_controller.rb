@@ -1,5 +1,5 @@
 class BlogsController < ApplicationController
-    before_filter :authenticate_user!,  only: [:new, :create, :edit, :update, :destroy]
+    before_filter :authenticate_user! #,  only: [:new, :create, :edit, :update, :destroy]
   	before_filter :get_sport
   	before_filter :get_blog,			      only: [:edit, :update, :show, :destroy, :comment]
     before_filter :blog_owner?,         only: [:edit, :update, :destroy]

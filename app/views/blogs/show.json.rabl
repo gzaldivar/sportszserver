@@ -1,6 +1,6 @@
 object @blog
 node(:id) { |o| o.id.to_s }
-attributes :title, :entry, :external_url
+attributes :title, :entry, :external_url, :updated_at
 node(:user) { |u| u.user_id.to_s }
 node(:sport) { |t| t.sport_id.to_s }
 node(:team) { |t| t.team_id.to_s }

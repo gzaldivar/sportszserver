@@ -70,8 +70,9 @@ module Sportzserver
         g.helper_specs false
     end
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
-    config.middleware.use Rack::SslEnforcer, :only => '/users'
-    config.middleware.use Rack::SslEnforcer, :except => '/sports'
+    if Rails.env.production?
+        config.middleware.use Rack::SslEnforcer, :only => '/users', :except => '/sports', :strict => true
+    end
 #    config.middleware.use Rack::SslEnforcer
     # constraint as a String
     # config.middleware.use Rack::SslEnforcer

@@ -54,15 +54,15 @@ class BlogsController < ApplicationController
 
   	def index
       if !params[:team_id].nil? and !params[:team_id].blank? and !params[:updated_at].nil? and !params[:updated_at].blank?
-        @blogs = @sport.blogs.where(team_id: params[:team_id].to_s, :updated_at.gt => params[:updated_at.to_date]).limit(20).desc(:updated_at)
+        @blogs = @sport.blogs.where(team_id: params[:team_id].to_s, :updated_at.gt => params[:updated_at].to_s.to_date).limit(20).desc(:updated_at)
       elsif !params[:team_id].nil? and !params[:team_id].blank?
         @blogs = @sport.blogs.where(team: params[:team_id].to_s).limit(20).desc(:updated_at).entries
       elsif !params[:athlete].nil? and !params[:athlete][:id].blank? and !params[:updated_at].nil? and !params[:updated_at].blank?
-        @blogs = @sport.blogs.where(athlete: params[:athlete][:id].to_s, :updated_at.gt => params[:updated_at.to_date]).limit(20).desc(:updated_at)        
+        @blogs = @sport.blogs.where(athlete: params[:athlete][:id].to_s, :updated_at.gt => params[:updated_at].to_s.to_date).limit(20).desc(:updated_at)        
       elsif !params[:athlete].nil? and !params[:athlete][:id].blank?
         @blogs = @sport.blogs.where(athlete: params[:athlete][:id].to_s).limit(20).desc(:updated_at)
       elsif !params[:coach].nil? and !params[:coach][:id].blank? and !params[:updated_at].nil? and !params[:updated_at].blank?
-        @blogs = @sport.blogs.where(coach: params[:coach][:id].to_s, :updated_at.gt => params[:updated_at.to_date]).limit(20).desc(:updated_at)
+        @blogs = @sport.blogs.where(coach: params[:coach][:id].to_s, :updated_at.gt => params[:updated_at].to_s.to_date).limit(20).desc(:updated_at)
       elsif !params[:coach].nil? and !params[:coach][:id].blank?
         @blogs = @sport.blogs.where(coach: params[:coach][:id].to_s).limit(20).desc(:updated_at)
       elsif !params[:user].nil? and !params[:user][:id].blank?

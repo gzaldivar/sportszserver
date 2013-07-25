@@ -5,3 +5,4 @@ attributes :description, :if => lambda { |m| !m.description.nil? }
 attributes :players, :if => lambda { |m| !m.players.nil? }
 node(:user) { |o| o.user_id.to_s }
 node(:gameschedule) { |o| o.gameschedule_id.to_s }
+node(:gamelog) { |o| o.gamelog_id.to_s }

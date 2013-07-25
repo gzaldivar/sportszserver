@@ -42,7 +42,11 @@ Sportzserver::Application.routes.draw do
       end
       
       resources :gameschedules, only: [:show, :new, :create, :edit, :update, :index, :destroy] do
-        resources :gamelogs, only: [:create, :destroy, :show, :update]
+        resources :gamelogs, only: [:create, :destroy, :show, :update] do
+          collection do
+            get :gamelogs
+          end
+        end
       end
     end
     
@@ -146,7 +150,7 @@ Sportzserver::Application.routes.draw do
 
       collection do
         post :untagathlete, :createmobile
-        get :updategameschedule, :clear_error
+        get :updategameschedule, :clear_error, :updategamelogs
       end
     end
     

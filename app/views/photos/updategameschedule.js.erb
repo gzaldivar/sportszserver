@@ -1,1 +1,3 @@
-$('#gameschedules_select').html("<%= escape_javascript(select('photo', 'schedule', @gameschedules.collect{ |t| [t.game_name, t.id] }, {include_blank: true})) %>");
+$('#gameschedules_select').html("<%= escape_javascript(select('photo', 'gameschedule_id', @gameschedules.collect{ |t| [t.game_name, t.id] }, {include_blank: true})) %>");
+$('#athletes_select').html("<%= escape_javascript(collection_select('athlete', 'id', @athletes, 'id', 'full_name', { prompt: 'Tag Athlete' } )) %>");
+$('#gamelogs_select').html("<%= escape_javascript(select('photo', 'gamelog_id', @gamelogs.collect{ |t| [t.logentrytext, t.id] }, {include_blank: true})) %>");

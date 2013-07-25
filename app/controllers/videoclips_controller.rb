@@ -259,6 +259,8 @@ class VideoclipsController < ApplicationController
       clips = @sport.videoclips.where(:players.in => [params[:number][:id].to_s])
     elsif !params[:username].nil? and !params[:username].blank?
       clips = @sport.videoclips.where(user_id: current_user.id.to_s)
+    elsif !params[:gamelogs].nil? and !params[:gamelogs].blank?
+      clips = @sport.videoclips.where(gamelogs: params[:gamelogs].to_s)
     else
       clips = []
     end

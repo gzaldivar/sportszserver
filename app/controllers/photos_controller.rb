@@ -48,6 +48,8 @@ class PhotosController < ApplicationController
       @athlete = @sport.athletes.find(params[:number][:id].to_s)
     elsif !params[:username].nil? and !params[:username].blank?
       pics = @sport.photos.where(user_id: current_user.id.to_s)
+    elsif !params[:gamelogs].nil? and !params[:gamelogs].blank?
+      pics = @sport.photos.where(gamelogs: params[:gamelogs].to_s)
     else
       pics = []
     end
@@ -72,7 +74,6 @@ class PhotosController < ApplicationController
       team = @sport.teams.find(@gameschedule.team_id)
       @prefix = "t_" + team.id + "_g_" + @gameschedule.id + "_s_" + @sport.id
       
-#      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
       time = DateTime.now.beginning_of_day.iso8601
       time = time.to_time.yesterday.to_date.iso8601
       @photos = []
@@ -261,7 +262,17 @@ class PhotosController < ApplicationController
   end
   
   def updategameschedule
-    @gameschedules = @sport.teams.find(params[:teamid]).gameschedules
+    team = @sport.teams.find(params[:teamid])
+    @gameschedules = team.gameschedules
+    @athletes = @sport.athletes.where(team_id: team.id.to_s)
+    if !params[:gameschedule_id].nil? and !params[:gameschedule_id].blank?
+      @gamelogs = Gameschedule.find(params[:gameschedule_id]).gamelogs
+    else
+      @gamelogs = []
+    end
+  end
+
+  def updategamelogs
   end
   
   def edit
@@ -286,8 +297,13 @@ class PhotosController < ApplicationController
       @teams.first.gameschedules.each_with_index do |g, cnt|
         @gameschedules[cnt] = g
       end
+#    end
+    if @photo.gameschedule
+      @gamelogs = Gameschedule.find(@photo.gameschedule_id.to_s).gamelogs
+    else
+      @gamelogs = []
     end
-#  end
+  end
   
   def update
     begin 

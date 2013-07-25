@@ -1,7 +1,8 @@
 class GamelogsController < ApplicationController
     before_filter	:authenticate_user! #,  only: [:destroy, :create, :show, :update]
-    before_filter :correct_gamelog
-    before_filter only: [:destroy, :create, :show, :update] do |controller| 
+    before_filter :get_gameschedule
+    before_filter :correct_gamelog, only: [:destroy, :create, :update, :show]
+    before_filter only: [:destroy, :create, :update] do |controller| 
       controller.team_manager?(@gameschedule, @team)
     end
 
@@ -25,6 +26,10 @@ class GamelogsController < ApplicationController
       respond_to do |format|
         format.json
       end
+    end
+
+    def gamelogs
+      @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
     end
 
     def update
@@ -58,10 +63,13 @@ class GamelogsController < ApplicationController
 
   	private
 
-  		def correct_gamelog
-  			@sport = Sport.find(params[:sport_id])
+      def get_gameschedule
+        @sport = Sport.find(params[:sport_id])
         @team = @sport.teams.find(params[:team_id])
         @gameschedule = @team.gameschedules.find(params[:gameschedule_id])
+      end
+        
+  		def correct_gamelog
         @gamelog = @gameschedule.gamelogs.find(params[:id])
   		end
 end

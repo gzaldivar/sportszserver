@@ -31,6 +31,7 @@ class Photo
   belongs_to :sport, index: true
   belongs_to :gameschedule
   belongs_to :user
+  belongs_to :gamelog
   has_many :alerts
   
   validates_presence_of :filename

@@ -39,6 +39,7 @@ class Videoclip
   belongs_to :sport, index: true
   belongs_to :gameschedule
   belongs_to :user
+  belongs_to :gamelog
   has_many :alerts
   
   index( { teamid: 1 }, { unique: false } )

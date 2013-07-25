@@ -17,6 +17,8 @@ class Gamelog
   field :yards, type: Integer, default: 0
     
   belongs_to :gameschedule
+  has_many :photos
+  has_many :videoclips
 
   # football stats
   

@@ -10,3 +10,4 @@ node(:gameschedule) { |t| t.gameschedule_id.to_s }
 node(:username) { |u| User.find(u.user).name }
 node(:avatar) { |o| User.find(o.user).avatar.url(:thumb) }
 node(:tinyavatar) { |o| User.find(o.user).avatar.url(:tiny) }
+node(:gamelog) { |b| b.gamelog_id.to_s }

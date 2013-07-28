@@ -222,6 +222,9 @@ class SportsController < ApplicationController
   def websiteinfo
   end
 
+  def ipadexample_path
+  end
+
   private
   
     def correct_sport

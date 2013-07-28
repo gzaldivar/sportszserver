@@ -32,6 +32,10 @@
             <% if !b.gameschedule.nil? and !b.gameschedule.blank? %>
               <%= link_to Gameschedule.find(b.gameschedule).game_name, sport_team_gameschedule_path(@sport, @sport.teams.find(b.team_id), b.gameschedule) %>
             <% end %>
+            <% if !b.gamelog.nil? and !b.gamelog.blank? %>
+              <%= link_to Gamelog.find(b.gamelog).logentrytext, sport_team_gameschedule_gamelog_path(@sport, @sport.teams.find(b.team_id), 
+                                                                                                     b.gameschedule, b.gamelog) %>
+            <% end %>
             <% if !b.athlete_id.nil? and !b.athlete_id.blank? %>
               Athlete:
               <%= link_to @sport.athletes.find(b.athlete_id).full_name, sport_athlete_path(@sport, b.athlete_id) %>&nbsp

@@ -1,25 +1,32 @@
 <% provide(:title, current_site.sitename + " Videoclips" ) %>
+<script>
+  $(document).ready(function() {
+    $('#select_game').change(function() {
+      $.ajax({
+        url: "<%= updategamelogs_sport_videoclips_path %>",
+        data: {
+          gameid : $('#select_game').val()
+        },
+        dataType: "script"
+      });
+    });
+  });
+</script>
+<p> 
 <p>
 <div class="row">
     <div class="span9 offset1">
         <%= form_tag sport_videoclips_path, class: "form-horizontal", method: 'get' do %>
+            <%= hidden_field_tag :team_id, @team.id %>
             <div class="row">
                 <div class="span2">
-                    <%= label_tag "Team: " %>
-                    <%= select(:team, :id, @sport.teams.collect{ |t| [t.team_name, t.id] }, include_blank: true ) %>
+                    <%= label_tag "Game: " %>
+                    <%= collection_select(:game, :id, @gameschedules, :id, :game_name, { include_blank: true }, { id: "select_game" } ) %>
                 </div>
-                <% if !@team.nil? %>
-                    <div class="span2 offset1">
-                        <%= label_tag "Game: " %>
-                        <%= select(:game, :id, @team.gameschedules.collect{ |t| [t.game_name, t.id] }, include_blank: true ) %>
-                    </div>
-                <% end %>
-                <% if user_signed_in? %>
-                    <div class="span2 offset1">
-                        <%= label_tag "My Video Clips: " %>
-                        <%= check_box_tag "username" %>
-                    </div>
-                <% end %>
+                <div class="span4 offset1">
+                    <%= label_tag "Play: " %>
+                    <%= collection_select(:gamelog, :id, @gamelogs, :id, :logentrytext, { include_blank: true }, { id: "gamelogs_select" } ) %>
+                </div>
             </div>
             <div class="row">
                 <div class="span2">
@@ -30,6 +37,14 @@
                     <%= label_tag "Player Name: " %>
                     <%= select(:athlete, :id, @sport.athletes.collect{ |t| [t.name, t.id] }, include_blank: true ) %>
                 </div>
+            </div>
+            <div class="row">
+                <% if user_signed_in? %>
+                    <div class="span2 offset1">
+                        <%= label_tag "My Video Clips: " %>
+                        <%= check_box_tag "username" %>
+                    </div>
+                <% end %>
             </div>
             <br/>
             <div class="row">

@@ -162,12 +162,12 @@ Sportzserver::Application.routes.draw do
 
       collection do
         post :untagathlete
-        get :updategameschedule
+        get :updategameschedule, :updategamelogs
       end
     end
 
     collection do
-      get :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo
+      get :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo, :ipadexample_path
     end
 
     member do
@@ -207,6 +207,7 @@ Sportzserver::Application.routes.draw do
   match '/pricing',  to: 'sports#pricing'
   match '/mobileinfo',  to: 'sports#mobileinfo'
   match '/websiteinfo', to: 'sports#websiteinfo'
+  match '/ipadexample', to: 'sports#ipadexample_info'
   match '/user/root',  to: 'sports#show'
 
   match '/newkicker', to: 'football_kickers#newkicker'

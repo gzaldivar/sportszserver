@@ -19,6 +19,7 @@ class Gamelog
   belongs_to :gameschedule
   has_many :photos
   has_many :videoclips
+  has_many :blogs
 
   # football stats
   

@@ -46,6 +46,7 @@ class BlogsController < ApplicationController
           @athletes = @sport.athletes.where(team: @blog.team_id).entries
           @coaches = @sport.coaches.where(team: @blog.team_id).entries
           @gameschedules = @sport.teams.find(@blog.team_id).gameschedules
+          @gamelogs = @gameschedules.gamelogs
       else
           @athletes = @sport.athletes
           @coaches = @sport.coaches
@@ -53,6 +54,11 @@ class BlogsController < ApplicationController
   	end
 
   	def index
+
+      if params[:team_id]
+        @team = @sport.teams.find(params[:team_id])
+      end
+
       if !params[:team_id].nil? and !params[:team_id].blank? and !params[:updated_at].nil? and !params[:updated_at].blank?
         @blogs = @sport.blogs.where(team_id: params[:team_id].to_s, :updated_at.lt => params[:updated_at].to_s.to_datetime).limit(20).desc(:updated_at)
       elsif !params[:team_id].nil? and !params[:team_id].blank?

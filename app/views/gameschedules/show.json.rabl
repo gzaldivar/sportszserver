@@ -11,6 +11,12 @@ if !@gamelogs.nil?
 	child @gamelogs => :gamelogs do
 		attribute :period, :logentrytext, :time, :score
 		node(:id) { |o| o.id.to_s }
+		node :hasphotos, :if => lambda { |a| !@sport.photos.where(gamelog_id: a.id.to_s).empty? } do
+			true
+		end
+		node :hasvideos, :if => lambda { |a| !@sport.videoclips.where(gamelog_id: a.id.to_s).empty? } do
+			true
+		end
 	end
 end
 if !@stats.nil?

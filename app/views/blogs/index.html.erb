@@ -10,6 +10,7 @@
     <%= render 'blog', blog: @blogs %>
   </div>
 </div>
+<%= hidden_field_tag 'team_id', @team.id %>
 <div class="row">
 	<div class="span2 offset6">
 		<%= link_to "New Blog Entry", new_sport_blog_path(@sport), class: "btn btn-medium btn-primary" %>

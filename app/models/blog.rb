@@ -16,6 +16,7 @@ class Blog
   belongs_to :gameschedule
   has_one :alert
   belongs_to :user
+  belongs_to :gamelog
 
   validates_presence_of :title
   validates_presence_of :entry

@@ -28,18 +28,19 @@ $('video,audio').mediaelementplayer({
           <th>Team</th>
           <th>Athletes</th>
           <th>Game</th>
+          <th>Play</th>
           <th>Date</th>
         </tr>
       </thead>
       <tbody>
         <tr>
           <td><%= @videoclip.displayname %></td>
-		  	<% if !@videoclip.teamid.nil? %>
-          		<td><%= @sport.teams.find(@videoclip.teamid).team_name %></td>
-			<% else %>
-				<td></td>
-			<% end %>
-          	<% if !@videoclip.players.nil? and @videoclip.players.any? %>
+    		  <% if !@videoclip.teamid.nil? %>
+            <td><%= @sport.teams.find(@videoclip.teamid).team_name %></td>
+    			<% else %>
+    				<td></td>
+    			<% end %>
+          <% if !@videoclip.players.nil? and @videoclip.players.any? %>
 	          <td>
 	            <% @videoclip.players.each do |p| %>
 	            	<%= link_to Athlete.find(p).full_name, sport_athlete_path(@sport, p) %><p>
@@ -48,11 +49,16 @@ $('video,audio').mediaelementplayer({
           <% else %>
             	<td></td>
           <% end %>
-		  <% if !@videoclip.gameschedule.nil? and !@videoclip.gameschedule.blank? %>
-          		<td><%= @sport.teams.find(@videoclip.teamid).gameschedules.find(@videoclip.gameschedule).game_name %></td>
-		  <% else %>
-				<td></td>
-		  <% end %>
+    		  <% if !@videoclip.gameschedule.nil? and !@videoclip.gameschedule.blank? %>
+              		<td><%= @sport.teams.find(@videoclip.teamid).gameschedules.find(@videoclip.gameschedule).game_name %></td>
+    		  <% else %>
+    				<td></td>
+    		  <% end %>
+          <% if !@videoclip.gamelog.nil? and !@videoclip.gamelog.blank? %>
+                  <td><%= @sport.teams.find(@videoclip.teamid).gameschedules.find(@videoclip.gameschedule).gamelogs.find(@videoclip.gamelog).logentrytext %></td>
+          <% else %>
+            <td></td>
+          <% end %>
           <td><%= @videoclip.updated_at.strftime("%m/%d/%Y") %></td>
         </tr>
       </tbody>

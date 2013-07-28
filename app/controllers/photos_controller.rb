@@ -15,41 +15,101 @@ class PhotosController < ApplicationController
     @photos = []
     @athletes = []
 
-    if !params[:team_id].nil? and !params[:team_id].blank?
-      pics = @sport.photos.where(teamid: params[:team_id].to_s)
-      @team = @sport.teams.find(params[:team_id].to_s)
-    elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:number].nil? && !params[:number][:id].blank? && 
-          !params[:game].nil? && !params[:game][:id].blank?
-      pics = @sport.photos.where(teamid: params[:team][:id].to_s, gameschedule: params[:game][:id].to_s, 
-                                 :players.in => [params[:number][:id].to_s])
-      @team = @sport.teams.find(params[:team][:id].to_s)
-    elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:athlete].nil? && !params[:athlete][:id].blank? && 
-          !params[:game].nil? && !params[:game][:id].blank?
-      pics = @sport.photos.where(teamid: params[:team][:id].to_s, gameschedule: params[:game][:id].to_s, 
+    if params[:team_id]
+      @team = @sport.teams.find(params[:team_id])
+      @gameschedules = @team.gameschedules
+    end
+
+    if !params[:game].nil? and !params[:game][:id].blank?
+      @gamelogs = Gameschedule.find(params[:game][:id].to_s).gamelogs
+    else
+      @gamelogs = []
+    end
+
+    if !params[:number].nil? && !params[:number][:id].blank? && !params[:game].nil? && !params[:game][:id].blank? && 
+      !params[:gamelog].nil? && !params[:gamelog][:id].blank? && !params[:athlete].nil? && !params[:athlete][:id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
+                                 :players.in => [params[:number][:id].to_s], gamelog: params[:gamelog][:id].to_s,
                                  :players.in => [params[:athlete][:id].to_s])
-      @team = @sport.teams.find(params[:team][:id].to_s)
-    elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:number].nil? && !params[:number][:id].blank?
-      pics = @sport.photos.where(teamid: params[:team][:id].to_s, :players.in => [params[:number][:id].to_s])
-      @team = @sport.teams.find(params[:team][:id].to_s)
-    elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:athlete].nil? && !params[:athlete][:id].blank?
-      pics = @sport.photos.where(teamid: params[:team][:id].to_s, :players.in => [params[:athlete][:id].to_s])
-      @team = @sport.teams.find(params[:team][:id].to_s)
-    elsif !params[:team].nil? && !params[:team][:id].blank? && !params[:game].nil? && !params[:game][:id].blank?
-      pics = @sport.photos.where(teamid: params[:team][:id].to_s, gameschedule: params[:game][:id].to_s)
-      @team = @sport.teams.find(params[:team][:id].to_s)
-    elsif !params[:team].nil? && !params[:team][:id].blank?
-      pics = @sport.photos.where(teamid: params[:team][:id].to_s)
-      @team = @sport.teams.find(params[:team][:id].to_s)
-    elsif !params[:athlete].nil? and !params[:athlete][:id].blank?
-      pics = @sport.photos.where(:players.in => [params[:athlete][:id].to_s])
-      @athlete = @sport.athletes.find(params[:athlete][:id].to_s)
+
+    elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:gamelog].nil? && !params[:gamelog][:id].blank? && 
+          !params[:number].nil? && !params[:number][:id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
+                                 :players.in => [params[:number][:id].to_s], gamelog: params[:gamelog][:id].to_s)
+
+    elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:gamelog].nil? && !params[:gamelog][:id].blank? and 
+          !params[:athlete].nil? && !params[:athlete][:id].blank? 
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
+                                 :players.in => [params[:athlete][:id].to_s], gamelog: params[:gamelog][:id].to_s)
+
+    elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:number].nil? && !params[:number][:id].blank? and 
+          !params[:athlete].nil? && !params[:athlete][:id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
+                                 :players.in => [params[:athlete][:id].to_s], 
+                                 :players.in => [params[:number][:id].to_s])      
+ 
+    elsif !params[:gamelog].nil? && !params[:gamelog][:id].blank? && !params[:number].nil? && !params[:number][:id].blank? and 
+          !params[:athlete].nil? && !params[:athlete][:id].blank? 
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
+                                 :players.in => [params[:athlete][:id].to_s], 
+                                 :players.in => [params[:number][:id].to_s])
+      gamelog = Gamelog.find(params[:gamelog][:id].to_s)
+      @gamelogs = @team.gameschedules.find(gamelog.gameschedule_id.to_s).gamelogs
+
+    elsif !params[:game].nil? and !params[:game][:id].blank? and !params[:gamelog].nil? and !params[:gamelog][:id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule_id: params[:game][:id].to_s, gamelog_id: params[:gamelog][:id].to_s)
+
+    elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:number].nil? && !params[:number][:id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
+                                 :players.in => [params[:number][:id].to_s])
+
+    elsif !params[:game].nil? and !params[:game][:id].blank? and !params[:athlete].nil? and !params[:athlete][:id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule_id: params[:game][:id].to_s, 
+                                  :players.in => [params[:athlete][:id].to_s])
+
+    elsif !params[:gamelog].nil? and !params[:gamelog][:id].blank? and !params[:number].nil? && !params[:number][:id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
+                                  :players.in => [params[:number][:id].to_s])
+        
+    elsif !params[:gamelog].nil? and !params[:gamelog][:id].blank? and !params[:athlete].nil? && !params[:athlete][:id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
+                                  :players.in => [params[:athlete][:id].to_s])
+        
+    elsif !params[:athlete].nil? and !params[:athlete][:id].blank? and !params[:number].nil? && !params[:number][:id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, :players.in => [params[:athlete][:id].to_s], 
+                                  :players.in => [params[:number][:id].to_s])
+        
+    elsif !params[:game].nil? and !params[:game][:id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule_id: params[:game][:id].to_s)
+
+    elsif !params[:gamelog].nil? and !params[:gamelog][:id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s)
+
     elsif !params[:number].nil? && !params[:number][:id].blank?
-      pics = @sport.photos.where(:players.in => [params[:number][:id].to_s])
-      @athlete = @sport.athletes.find(params[:number][:id].to_s)
-    elsif !params[:username].nil? and !params[:username].blank?
-      pics = @sport.photos.where(user_id: current_user.id.to_s)
-    elsif !params[:gamelogs].nil? and !params[:gamelogs].blank?
-      pics = @sport.photos.where(gamelogs: params[:gamelogs].to_s)
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, :players.in => [params[:number][:id].to_s])
+
+    elsif !params[:athlete].nil? && !params[:athlete][:id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s, :players.in => [params[:athlete][:id].to_s])
+
+    elsif !params[:team_id].nil? and !params[:team_id].blank?
+
+      pics = @sport.photos.where(teamid: @team.id.to_s)
+
     else
       pics = []
     end
@@ -273,6 +333,7 @@ class PhotosController < ApplicationController
   end
 
   def updategamelogs
+    @gamelogs = Gameschedule.find(params[:gameid].to_s).gamelogs
   end
   
   def edit

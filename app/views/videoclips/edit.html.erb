@@ -46,9 +46,23 @@
 	        <div class="span2 offset1">
 	          Tag athletes:&nbsp<br/>
 				<!--%= f.input :athlete, collection: @athletes.collect{ |t| [t.full_name, t.id] }, label: "Tag athletes", prompt: "Tag Athlete", hint: "Tag athletes" %-->
-	    		<%= collection_select(:athlete,	:id, @athletes, :id, :full_name, prompt:  "Tag Athlete" ) %>
+	    		<%= collection_select(:athlete,	:id, @athletes, :id, :full_name, { prompt: "Tag Athlete" }, { id: "athletes_select" } ) %>
 	        </div>
 	      </div>
+		   <div class="row">
+		        <div class="span4 offset1">
+				    <h5>Play Tagging:</h5>
+	   				 <% if !@gamelogs.empty? %>
+		    		<!--%= collection_select(:play, :id, @gamelogs, :id, :logentrytext, prompt:  "Tag Play", include_blank: true, 
+		    							  input_html: { id: "gamelogs_select"} ) %-->
+			    		<%= f.input :gamelog_id, collection: @gamelogs.collect{ |t| [t.logentrytext, t.id] }, label:  "Tag Play", include_blank: true,
+			    			input_html: { id: "gamelogs_select" } %>
+					<% else %>
+						No game tagged. Tag game before tagging play!
+					<% end %>
+	        	</div>
+	      </div>
+	      <p>
 	      <div class="row">
 			<div class="span2 offset1">
 				<%= f.input	:displayname,	label:	"videoclip Name" %>

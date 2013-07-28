@@ -1,26 +1,36 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + " - Photos") %>
+<script>
+  $(document).ready(function() {
+    $('#select_game').change(function() {
+      $.ajax({
+        url: "<%= updategamelogs_sport_photos_path %>",
+        data: {
+          gameid : $('#select_game').val()
+        },
+        dataType: "script"
+      });
+    });
+  });
+</script>
 <p> 
 <div class="row">
 	<div class="span9 offset1">
 	    <%= form_tag sport_photos_path, class: "form-horizontal", method: 'get' do %>
+	    	<%= hidden_field_tag :team_id, @team.id %>
 		    <div class="row">
-		        <div class="span2">
+		        <!--div class="span2">
 		          	<%= label_tag "Team: " %>
 		      		<%= select(:team, :id, @sport.teams.collect{ |t| [t.team_name, t.id] }, include_blank: true ) %>
-		        </div>
-				<% if !@team.nil? %>
-					<div class="span2 offset1">
+		        </div-->
+					<div class="span2">
 			          	<%= label_tag "Game: " %>
-			      		<%= select(:game, :id, @team.gameschedules.collect{ |t| [t.game_name, t.id] }, include_blank: true ) %>
+			      		<%= collection_select(:game, :id, @gameschedules, :id, :game_name, { include_blank: true }, { id: "select_game" } ) %>
 					</div>
-				<% end %>
-				<% if user_signed_in? %>
-					<div class="span2 offset1">
-			          	<%= label_tag "My Photos: " %>
-			      		<%= check_box_tag "username", '1' %>
+					<div class="span4 offset1">
+			          	<%= label_tag "Play: " %>
+			      		<%= collection_select(:gamelog, :id, @gamelogs, :id, :logentrytext, { include_blank: true }, { id: "gamelogs_select" } ) %>
 					</div>
-				<% end %>
-		    </div>
+			</div>
 			<div class="row">
 		        <div class="span2">
 		          	<%= label_tag "Player Number: " %>
@@ -31,6 +41,14 @@
 		      		<%= select(:athlete, :id, @sport.athletes.collect{ |t| [t.name, t.id] }, include_blank: true ) %>
 		        </div>
 			</div>
+			<div class = "row">
+				<% if user_signed_in? %>
+					<div class="span2">
+			          	<%= label_tag "My Photos: " %>
+			      		<%= check_box_tag "username", '1' %>
+					</div>
+				<% end %>
+		    </div>
 			<br/>
 		    <div class="row">
 		        <div class="span1 offset3">

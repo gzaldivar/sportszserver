@@ -2,7 +2,7 @@
 <p>
 <div class="row">
 	<div class="span2 offset6">
-		<%= link_to "New Blog Entry", new_sport_blog_path(@sport), class: "btn btn-medium btn-primary" %>
+		<%= link_to "New Blog Entry", newteamblog_sport_blogs_path(@sport, team_id: @team.id.to_s), class: "btn btn-medium btn-primary" %>
 	</div>
 </div>
 <div class="row">
@@ -13,7 +13,7 @@
 <%= hidden_field_tag 'team_id', @team.id %>
 <div class="row">
 	<div class="span2 offset6">
-		<%= link_to "New Blog Entry", new_sport_blog_path(@sport), class: "btn btn-medium btn-primary" %>
+		<%= link_to "New Blog Entry", newteamblog_sport_blogs_path(@sport, team_id: @team.id.to_s), class: "btn btn-medium btn-primary" %>
 	</div>
 </div>
 <div class="row">

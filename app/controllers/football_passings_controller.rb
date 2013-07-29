@@ -158,10 +158,14 @@ class FootballPassingsController < ApplicationController
 						
 				if current_user.score_alert? and params[:td].to_i > 0
 					send_alert(@athlete, "Passing score alert for ")
-					send_alert(player, "Receiver score alert for ")
+					if !player.nil?
+						send_alert(player, "Receiver score alert for ")
+					end
 				elsif current_user.stat_alert? and params[:td].to_i == 0
 					send_alert(@athlete, "Passing stat alert for ")
-					send_alert(player, "Receiver stat alert for ")
+					if !player.nil?
+						send_alert(player, "Receiver stat alert for ")
+					end
 				end
 			end
 			@fbpassing.save!

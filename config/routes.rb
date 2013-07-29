@@ -27,7 +27,7 @@ Sportzserver::Application.routes.draw do
 
     resources :blogs do
       collection do
-        get :updateforteams
+        get :updateforteams, :newteamblog, :updategamelogs
       end
       
       member do

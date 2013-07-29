@@ -16,6 +16,6 @@
 </div>
 <div class="row">
 	<div class="span6 offset2">
-		<h5><em><strong><%= link_to "Back to Blog for " + @sport.sitename + " " + @sport.sport_name, sport_blogs_path(@sport) %></strong></em></h5>
+		<h5><em><strong><%= link_to "Back to Blog for " + @sport.sitename + " " + @sport.sport_name, sport_blogs_path(@sport, team_id: item.team_id) %></strong></em></h5>
 	</div>
 </div>

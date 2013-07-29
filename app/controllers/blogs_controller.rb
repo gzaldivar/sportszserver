@@ -12,11 +12,21 @@ class BlogsController < ApplicationController
       @gameschedules = []
   	end
 
+    def newteamblog
+      @blog = Blog.new()
+      @team = @sport.teams.find(params[:team_id])
+      @athletes = @sport.athletes.where(team_id: @team.id.to_s).asc(:number)
+      @coaches = @sport.coaches.where(team_id: @team.id.to_s)
+      @gameschedules = @team.gameschedules
+      @gamelogs = []
+      render 'new'
+    end
+
     def comment
       select_teams(@blog)
       @oldblog = @blog
       @blog = @sport.blogs.new(user: @oldblog.user, gameschedule: @oldblog.gameschedule, athlete: @oldblog.athlete, 
-                               team: @oldblog.team, coach: @oldblog.coach)
+                               team: @oldblog.team, coach: @oldblog.coach, gamelog: @oldblog.gamelog)
       if !@oldblog.title.include?('RE:')
         @oldblog.title = "RE: " + @oldblog.title
       end
@@ -43,10 +53,15 @@ class BlogsController < ApplicationController
   	def edit
       @teams = @sport.teams
       if !@blog.team_id.nil?
-          @athletes = @sport.athletes.where(team: @blog.team_id).entries
-          @coaches = @sport.coaches.where(team: @blog.team_id).entries
+          @team = @sport.teams.find(@blog.team_id.to_s)
+          @athletes = @sport.athletes.where(team: @blog.team_id).asc(:number)
+          @coaches = @sport.coaches.where(team: @blog.team_id)
           @gameschedules = @sport.teams.find(@blog.team_id).gameschedules
-          @gamelogs = @gameschedules.gamelogs
+          if @blog.gameschedule_id.nil?
+            @gamelogs = []
+          else
+            @gamelogs = @team.gameschedules.find(@blog.gameschedule_id.to_s).gamelogs
+          end
       else
           @athletes = @sport.athletes
           @coaches = @sport.coaches
@@ -157,6 +172,10 @@ class BlogsController < ApplicationController
       @coaches = @sport.coaches.where(team: params[:teamid].to_s).entries
     end
 
+    def updategamelogs
+      @gamelogs = Gameschedule.find(params[:gameid].to_s).gamelogs
+    end
+  
   	private
 
   		def get_sport

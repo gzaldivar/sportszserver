@@ -1,7 +1,7 @@
 class SportsController < ApplicationController
   before_filter :authenticate_user!,    only: [:new, :create, :edit, :update, :destroy]
   before_filter :site_owner?,           only: [:edit, :update, :destroy]
-  before_filter :correct_sport,         only: [:show, :edit, :update, :destroy, :sport_user_alerts]
+  before_filter :correct_sport,         only: [:show, :edit, :update, :destroy, :sport_user_alerts, :updatelogo]
    
   def new
     @sport = Sport.new
@@ -223,6 +223,29 @@ class SportsController < ApplicationController
   end
 
   def ipadexample_path
+  end
+
+  def updatelogo
+    begin    
+      @sport.logoprocessing = true
+
+      @sport.save!
+
+      queue = @sport.photo_queues.new(modelid: @sport.id, modelname: "sportlogo", filename: params[:filename], filetype: params[:filetype], 
+                                      filepath: params[:filepath])
+      if queue.save!
+        Resque.enqueue(PhotoProcessor, queue.id)
+      end
+
+      respond_to do |format|
+        format.json { render json: { success: "success", sport: @sport } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.json { render status: 404, json: { error: e.message, sport: @sport } }
+      end
+    end
+
   end
 
   private

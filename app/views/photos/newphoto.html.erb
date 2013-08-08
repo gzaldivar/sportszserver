@@ -37,7 +37,7 @@
 		<% end %>
 	</h4>
     
-    <%= s3_uploader_form post: sport_photos_url, as: "photo[image_url]", key: "uploads/photos/#{@id}/#{@prefix}/${filename}", id:  "myS3Uploader" do %>
+    <%= s3_uploader_form callback_url: sport_photos_url, callback_param: "photo[image_url]", key: "uploads/photos/#{@id}/#{@prefix}/${filename}", id:  "myS3Uploader" do %>
       <%= file_field_tag :file, multiple: true %>
     <% end %>
     

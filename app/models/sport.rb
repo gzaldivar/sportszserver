@@ -42,6 +42,8 @@ class Sport
   field :gamelog_interval, type: Integer, default: 360     # Time interval to check for game log updates
   field :newsfeed_interval, type: Integer, default: 3600  # Time interval to check for news feeds
 
+  field :logoprocessing, type: Boolean, default: false
+
   search_in :sitename, :mascot, :state, :zip, :city
 
 #  belongs_to :site
@@ -136,19 +138,19 @@ class Sport
 
   private
 
-        def decode_base64_image
-        if self.image_data && self.content_type && self.original_filename
-          decoded_data = Base64.decode64(self.image_data)
-   
-          data = StringIO.new(decoded_data)
-          data.class_eval do
-            attr_accessor :content_type, :original_filename
-          end
-   
-          data.content_type = self.content_type
-          data.original_filename = File.basename(self.original_filename)
-   
-          self.sport_logo = data
+    def decode_base64_image
+      if self.image_data && self.content_type && self.original_filename
+#        decoded_data = Base64.decode64(self.image_data)
+ 
+        data = StringIO.new(image_data)
+        data.class_eval do
+          attr_accessor :content_type, :original_filename
         end
+ 
+        data.content_type = self.content_type
+        data.original_filename = File.basename(self.original_filename)
+ 
+        self.sport_logo = data
       end
+    end
 end

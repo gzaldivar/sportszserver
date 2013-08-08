@@ -4,6 +4,9 @@ class PhotoQueue
   
   field :modelname, type: String
   field :modelid, type: String
+  field :filename, type: String
+  field :filetype, type: String
+  field :filepath, type: String
   
   belongs_to :sport
   

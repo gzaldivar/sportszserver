@@ -1,8 +1,15 @@
+<script id="template-upload" type="text/x-tmpl">
+  <div id="file-{%=o.unique_id%}" class="upload">
+    {%=o.name%}
+    <div class="progress"><div class="bar" style="width: 0%"></div></div>
+  </div>
+</script>    
 <table class="table table-hover">
   <thead> 
     <tr>
       <th>Team</th>
       <th>Mascot</th>
+      <th>Logo</th>
      <% if isAdmin? %>
         <th>Update?</th>
         <th>Remove?</th>
@@ -15,6 +22,21 @@
       <em>
         <td><%= t.title %></td>
         <td><%= t.mascot %></td>
+        <td>
+        <% if t.team_logo.file? %>
+          <%= image_tag t.team_logo.url(:thumb) %>
+        <% elsif current_site.sport_logo.file? %>
+          <%= image_tag current_site.sport_logo.url(:thumb) %>
+        <% else %>
+          <%= image_tag "photo_not_available.png" %>
+        <% end %>
+        <% if isAdmin? %>
+          <%= s3_uploader_form callback_url: sport_teams_path, callback_param: "team[image_url]",
+                     key: "uploads/teamsphotos/#{@team.id}/${filename}", id:  "myS3Uploader" do %>
+              <%= file_field_tag :file %>
+          <% end %>
+        <% end %>
+      </td>
       </em>
       <% if isAdmin? %>
         <td><%= link_to "Edit", edit_sport_team_path(sport, t), class: "btn btn-mini btn-primary" %></td>

@@ -47,15 +47,6 @@
 					<% end %>
 					<%= f.input :team_id, collection: @sport.teams.collect{ |t| [t.team_name, t.id] }, input_html: { include_blank: true } %>
 		        </div>
-				<div class="span4 offset1">
-					<h4>Current coach image</h4>
-					<% if !@coach.coachpic.blank? %>
-						<%= image_tag @coach.coachpic.url(:medium) %>
-			        <% else %>
-			            <%= image_tag "Photo_Not_Available.jpg" %>
-					<%end %>
-					<%= f.input	:coachpic,	hint:	"Upload coaches photo. Photo will be processed in the background." %>
-				</div>
 			</div>
 			<div class="row">
 				<div class="span4 offset4">

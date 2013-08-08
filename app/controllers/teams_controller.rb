@@ -2,7 +2,7 @@ class TeamsController < ApplicationController
   before_filter :authenticate_user! #,   only: [:new, :create, :edit, :update, :destroy, :index, :show, :getplayers, :addplayers]
   before_filter :site_owner?,           only: [:new, :create, :edit, :update, :destroy, :addplayers]
   before_filter :get_sport
-  before_filter :get_team,	only: [:edit, :update, :show, :destroy, :getplayers, :addplayers]
+  before_filter :get_team,	only: [:edit, :update, :show, :destroy, :getplayers, :addplayers, :createphoto]
 
 	def new
 		@team = Team.new
@@ -145,6 +145,9 @@ class TeamsController < ApplicationController
 	end
 
 	def getplayers
+	end
+
+	def createphoto
 	end
 
 	private

@@ -14,6 +14,7 @@ class Coach
   field :speciality, type: String
   field :years_on_staff, type: Integer
   field :bio, type: String
+  field :processing, type: Boolean, default: false
   
   search_in :lastname, :firstname, :middlename, :speciality
   
@@ -50,9 +51,9 @@ class Coach
 
       def decode_base64_image
         if self.image_data && self.content_type && self.original_filename
-          decoded_data = Base64.decode64(self.image_data)
+#          decoded_data = Base64.decode64(self.image_data)
    
-          data = StringIO.new(decoded_data)
+          data = StringIO.new(image_data)
           data.class_eval do
             attr_accessor :content_type, :original_filename
           end

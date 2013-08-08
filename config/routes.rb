@@ -36,6 +36,9 @@ Sportzserver::Application.routes.draw do
     end
 
     resources :teams,   only: [:new, :create, :edit, :update, :destroy, :index, :show] do
+      collection do
+        post :createphoto
+      end
       member do
         get   :getplayers
         post  :addplayers
@@ -131,12 +134,21 @@ Sportzserver::Application.routes.draw do
  
       member do
         get :follow, :unfollow, :stats
+        put :updatephoto
       end
+      collection do
+        post :createathletephoto
+      end
+
     end
 
     resources :coaches do
       member do
         get   :copy
+        put   :updatephoto
+      end
+      collection do
+        post :createcoachphoto
       end
     end
     
@@ -176,6 +188,7 @@ Sportzserver::Application.routes.draw do
       get  :updatecontact
       post :uploadpage
       post :uploadcontact
+      put :updatelogo
     end
 
   end

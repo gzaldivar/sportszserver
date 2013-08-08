@@ -9,7 +9,7 @@ attributes :gamedate, :location, :opponent, :event, :homeaway, :game_name, :home
 node(:firstdowns) { |f| f.firstdowns }
 if !@gamelogs.nil?
 	child @gamelogs => :gamelogs do
-		attribute :period, :logentrytext, :time, :score
+		attribute :period, :logentrytext, :time, :score, :logentry
 		node(:id) { |o| o.id.to_s }
 		node :hasphotos, :if => lambda { |a| !@sport.photos.where(gamelog_id: a.id.to_s).empty? } do
 			true

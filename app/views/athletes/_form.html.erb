@@ -69,41 +69,52 @@
 				<div class="span2">
 					<div class="row">
 		        		<% if !@sport.teams.empty? %>
-		          			<div class="span2">
+		          			<div class="span4">
 								<!--label class="string required" for="athteam_team"></abbr>Assign to Team:</label-->
-								Assigned Team: 
+								<h5>Assigned Team: 
 								<% if @athlete.team_id.nil?  %>
 									Unassigned
 									<!--%= select("", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true } ) %-->
 								<% else %>
 									<%= @sport.teams.find(@athlete.team_id).team_name %>
 		            				<!--%= select("athteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, selected: @sport.teams.find(@athlete.team).id ) %-->
-								<% end %>
-								<%= f.input :team_id, collection: @sport.teams.collect{ |t| [t.team_name, t.id] }, 
+								<% end %></h5>
+								<%= f.input :team_id, collection: @sport.teams.collect{ |t| [t.team_name, t.id] }, label: "Change Team:",
 											input_html: { include_blank: true } %>
 		          			</div>
 		        		<% end %>
 					</div>
-					<!--div class="row">
-						<div class="span2">
-							<label class="string required" for="unassign"></abbr>Assign to no team:</label>
-							<%= check_box_tag :unassign %>
-						</div>
-					</div-->
-				</div>
-				<div class="span3 offset1">
-					<h4>Current player image</h4>
-					<% if !@athlete.pic.blank? %>
-						<%= image_tag @athlete.pic.url(:medium) %>
-		          	<% else %>
-		            	<%= image_tag "Photo_Not_Available.jpg" %>
-					<%end %>
-					<%= f.input	:pic,	label: "Photo of player:", hint:	"Change photo of the athlete" %>
 				</div>
 			</div>
 			<div class="span8 offset4">
 				<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary", id: "submitbtn" %>
 			</div>
-		<% end %>	
+		<% end %>
+		<div class="row">
+			<div class="span6">
+				<h4>Current player image</h4>
+				<% if !@athlete.pic.blank? %>
+					<%= image_tag @athlete.pic.url(:medium) %>
+	          	<% else %>
+	            	<%= image_tag "Photo_Not_Available.jpg" %>
+				<%end %>
+
+	      		<% if @athlete.lastname.blank? %>
+	      			<h4>New Athlete info must be submitted before uploading pic!</h4>
+	      		<% else %>
+					<%= s3_uploader_form callback_url: createathletephoto_sport_athletes_url, callback_param: "photo[image_url]", 
+										 key: "uploads/athletephotos/#{@athlete.id}/${filename}", id:  "myS3Uploader" do %>
+	    				<%= file_field_tag :file %>
+	   				 <% end %>
+	    
+					<script id="template-upload" type="text/x-tmpl">
+						<div id="file-{%=o.unique_id%}" class="upload">
+							{%=o.name%}
+							<div class="progress"><div class="bar" style="width: 0%"></div></div>
+						</div>
+					</script>    
+	      		<% end %>
+			</div>
+		</div>
 	</div>	
 </div>

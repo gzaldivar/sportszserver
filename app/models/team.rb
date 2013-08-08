@@ -18,6 +18,7 @@ class Team
   field :placekicker, type: String
   field :kicker, type: String
   field :punter, type: String
+  field :logoprocessing, type: Boolean, default: false
 
   has_mongoid_attached_file :team_logo,
   :storage        => :s3,
@@ -49,9 +50,9 @@ class Team
 
       def decode_base64_image
         if self.image_data && self.content_type && self.original_filename
-          decoded_data = Base64.decode64(self.image_data)
+#          decoded_data = Base64.decode64(self.image_data)
    
-          data = StringIO.new(decoded_data)
+          data = StringIO.new(image_data)
           data.class_eval do
             attr_accessor :content_type, :original_filename
           end

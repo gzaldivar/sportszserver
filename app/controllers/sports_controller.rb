@@ -245,7 +245,6 @@ class SportsController < ApplicationController
         format.json { render status: 404, json: { error: e.message, sport: @sport } }
       end
     end
-
   end
 
   private

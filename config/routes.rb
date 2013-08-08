@@ -36,12 +36,10 @@ Sportzserver::Application.routes.draw do
     end
 
     resources :teams,   only: [:new, :create, :edit, :update, :destroy, :index, :show] do
-      collection do
-        post :createphoto
-      end
       member do
-        get   :getplayers
+        get   :getplayers, :teamlogo
         post  :addplayers
+        put :createteamlogo
       end
       
       resources :gameschedules, only: [:show, :new, :create, :edit, :update, :index, :destroy] do

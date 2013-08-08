@@ -7,7 +7,7 @@
         <h4><em><font color="red">Processing Replacement Photo ...</font></em></h4>
       <% end %>
       <h4>Change Coach Image:</h4>
-      <% if !@coach.processing? %> 
+      <% if @coach.coachpic.file? %> 
         <%= image_tag @coach.coachpic.url(:medium) %>
       <% else %>
         <%= image_tag 'Photo_Not_Available.jpg' %>

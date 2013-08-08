@@ -19,21 +19,6 @@
           <% end %>
         </div>
       </div>
-      <div class="row"> 
-        <div class="span2">
-          <% if !@team.team_logo.blank? %>
-            <h4>Team Logo image</h4>
-            <%= image_tag @team.team_logo.url(:thumb)%>
-          <% else %>
-              This is the site logo that will be used for this team. You can enter one for this team only. It will appear only on sport pages and will be used as the team logo in our mobile app.
-              <% if current_site.sport_logo.url.blank? %>
-                <%= image_tag "NotAvailable.jpg" %>
-              <% else %>
-                <%= image_tag current_site.sport_logo.url(:thumb) %>
-              <%end %>
-          <% end %>
-          <%= t.file_field  :team_logo %>
-        </div>
         <div id="loading">
           <div id="loadingcontent">
               <p id="loadingspinner">

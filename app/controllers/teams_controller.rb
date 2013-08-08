@@ -2,7 +2,7 @@ class TeamsController < ApplicationController
   before_filter :authenticate_user! #,   only: [:new, :create, :edit, :update, :destroy, :index, :show, :getplayers, :addplayers]
   before_filter :site_owner?,           only: [:new, :create, :edit, :update, :destroy, :addplayers]
   before_filter :get_sport
-  before_filter :get_team,	only: [:edit, :update, :show, :destroy, :getplayers, :addplayers, :createphoto]
+  before_filter :get_team,	only: [:edit, :update, :show, :destroy, :getplayers, :addplayers, :createteamlogo, :teamlogo]
 
 	def new
 		@team = Team.new
@@ -147,7 +147,47 @@ class TeamsController < ApplicationController
 	def getplayers
 	end
 
-	def createphoto
+	def createteamlogo
+	    begin    
+	      path = params[:filepath].split('/')
+	      imagepath = CGI.unescape(path[2])
+	      @team.logoprocessing = true
+
+	      @team.save!
+
+	      queue = @sport.photo_queues.new(modelid: @team.id, modelname: "teamlogo", filename: params[:filename], filetype: params[:filetype], 
+	                                      filepath: imagepath)
+	      if queue.save!
+	        Resque.enqueue(PhotoProcessor, queue.id)
+	      end
+	    rescue Exception => e
+	    	puts e.message
+	    end
+	end
+
+	def updatelogo
+		begin
+		    @team.logoprocessing = true
+
+		    @team.save!
+
+		    queue = @sport.photo_queues.new(modelid: @team.id, modelname: "teamlogo", filename: params[:filename], filetype: params[:filetype], 
+		                                      filepath: params[:filepath])
+		    if queue.save!
+		        Resque.enqueue(PhotoProcessor, queue.id)
+		    end
+
+		    respond_to do |format|
+		        format.json { render json: { success: "success", team: @team } }
+		    end
+	    rescue Exception => e
+		    respond_to do |format|
+		        format.json { render status: 404, json: { error: e.message, team: @team } }
+		    end
+	    end
+	end
+
+	def teamlogo
 	end
 
 	private

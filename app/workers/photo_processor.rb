@@ -115,17 +115,17 @@ class PhotoProcessor
 
     elsif item.modelname == "athletes"
       begin
-        @athlete = Athlete.find(item.modelid)    
+        athlete = Athlete.find(item.modelid)    
         s3 = AWS::S3.new
         bucket = s3.buckets[S3DirectUpload.config.bucket]
         obj = bucket.objects[item.filepath]
 
-        @athlete.image_data = obj.read
-        @athlete.original_filename = item.filename
-        @athlete.content_type = item.filetype
-        @athlete.save!
-        @athlete.processing = false
-        @athlete.save!
+        athlete.image_data = obj.read
+        athlete.original_filename = item.filename
+        athlete.content_type = item.filetype
+        athlete.save!
+        athlete.processing = false
+        athlete.save!
         
         obj.delete
         item.delete
@@ -140,16 +140,16 @@ class PhotoProcessor
       end
     elsif item.modelname == "coaches"
       begin
-        @coach = Coach.find(item.modelid)    
+        coach = Coach.find(item.modelid)    
         s3 = AWS::S3.new
         bucket = s3.buckets[S3DirectUpload.config.bucket]
         obj = bucket.objects[item.filepath]
 
-        @coach.image_data = obj.read
-        @coach.original_filename = item.filename
-        @coach.content_type = item.filetype
-        @coach.processing = false
-        @coach.save!
+        coach.image_data = obj.read
+        coach.original_filename = item.filename
+        coach.content_type = item.filetype
+        coach.processing = false
+        coach.save!
         
         obj.delete
         item.delete
@@ -164,16 +164,41 @@ class PhotoProcessor
       end
     elsif item.modelname == "sportlogo"
       begin
-        @sport = Sport.find(item.modelid)    
+        sport = Sport.find(item.modelid)    
         s3 = AWS::S3.new
         bucket = s3.buckets[S3DirectUpload.config.bucket]
         obj = bucket.objects[item.filepath]
 
-        @sport.image_data = obj.read
-        @sport.original_filename = item.filename
-        @sport.content_type = item.filetype
-        @sport.logoprocessing = false
-        @sport.save!
+        sport.image_data = obj.read
+        sport.original_filename = item.filename
+        sport.content_type = item.filetype
+        sport.logoprocessing = false
+        sport.save!
+        
+        obj.delete
+        item.delete
+      rescue Exception => e
+        error = item.sport.photo_errors.new
+        error.error_message = e.message
+        error.modelname = item.modelname
+        error.modelid = item.modelid
+        error.sport = item.sport
+        error.save
+        item.delete
+      end
+    elsif item.modelname == "teamlogo"
+      begin
+        sport = Sport.find(item.sport_id)
+        team = sport.teams.find(item.modelid)    
+        s3 = AWS::S3.new
+        bucket = s3.buckets[S3DirectUpload.config.bucket]
+        obj = bucket.objects[item.filepath]
+
+        team.image_data = obj.read
+        team.original_filename = item.filename
+        team.content_type = item.filetype
+        team.logoprocessing = false
+        team.save!
         
         obj.delete
         item.delete

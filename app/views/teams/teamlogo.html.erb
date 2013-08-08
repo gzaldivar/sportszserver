@@ -1,0 +1,33 @@
+<% provide(:title, current_site.sitename + ' - Change Team Logo') %>
+<p>
+<div class="row">
+	<div class="span10">
+		<h4>Team Image - You can upload a separate image for each team</h4>
+		<p>
+		<% if @team.logoprocessing? %>
+			<h4><em><font color="red">Processing new logo .....</font></em></h4>
+		<% end %>
+		<h5>Current Image:</h5>
+		<% if @team.team_logo.file? %>
+			<%= image_tag @team.team_logo.url(:thumb) %>
+        <% elsif current_site.sport_logo.file? %>
+        	<p>
+        	<h5>Using progam image....</h5>
+        	<%= image_tag current_site.sport_logo.url(:thumb) %>
+		<% else %>
+			<%= image_tag "photo_not_available.png" %>
+		<% end %>
+		<p>
+		<h5>Change image</h5>
+		<%= s3_uploader_form callback_url: createteamlogo_sport_team_path, callback_param: "team[image_url]", callback_method: "PUT",
+		         key: "uploads/teamsphotos/#{@team.id}/${filename}", id:  "myS3Uploader" do %>
+		  <%= file_field_tag :file %>
+		<% end %>
+		<script id="template-upload" type="text/x-tmpl">
+		  <div id="file-{%=o.unique_id%}" class="upload">
+		    {%=o.name%}
+		    <div class="progress"><div class="bar" style="width: 0%"></div></div>
+		  </div>
+		</script>    
+	</div>
+</div>

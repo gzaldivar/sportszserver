@@ -35,10 +35,10 @@
 			<tbody>
 				<% @users.each do |u| %>
 					<tr>
-						<% if u.avatar_file_name.nil? %>
-							<td><%= link_to image_tag("photo_not_available.png"), u  %></td>
+						<% if u.avatartinyurl.nil? %>
+							<td><%= link_to image_tag("Tiny_Photo_Not_Available.png"), u  %></td>
 						<% else %>
-							<td><%= link_to image_tag(u.avatar.url(:thumb)), u  %></td>
+							<td><%= link_to image_tag(u.avatartinyurl), u  %></td>
 						<% end %>
 						<td><%= link_to u.name, u %></td>
 						<td><%= link_to u.email, u %></td>

@@ -211,6 +211,62 @@ class PhotoProcessor
         error.save
         item.delete
       end
+    elsif item.modelname == "useravatar"
+      begin
+        user = User.find(item.modelid)
+        s3 = AWS::S3.new
+        bucket = s3.buckets[S3DirectUpload.config.bucket]
+        obj = bucket.objects[item.filepath]
+
+        img_path = "#{Rails.root}/tmp/" + SecureRandom.hex(10) + user.name
+        
+        File.open(img_path, 'wb') do |file|
+          obj.read do |chunk|
+            file.write(chunk)
+          end
+        end
+        
+        img = Magick::Image::read(img_path).first
+
+        if img.format == 'JPEG'      
+          thumb = img.scale(125, 125)
+          tiny = img.scale(50, 50)
+        end
+          
+          # write thumbnail to S3
+
+        tinyobj = bucket.objects["users/" + user.id + "/tiny/" + user.name]
+        temp_tiny_filename = "#{Rails.root}/tmp/" + SecureRandom.hex(10) + user.id + ".jpg"
+        tiny.write(temp_tiny_filename)
+        tinyobj.write(Pathname.new(temp_tiny_filename))    # upload the thumbnail to S3
+        user.avatartinyurl = tinyobj.url_for(:read, expires:  473040000)
+          
+        tobj = bucket.objects["users/" + user.id + "/thumbnail/" + user.name]
+        temp_thumb_filename = "#{Rails.root}/tmp/" + SecureRandom.hex(10) + user.id + ".jpg"
+        thumb.write(temp_thumb_filename)
+        tobj.write(Pathname.new(temp_thumb_filename))    # upload the thumbnail to S3
+        user.avatarthumburl = tobj.url_for(:read, expires:  473040000)
+
+#        user.image_data = obj.read
+#        user.original_filename = item.filename
+#        user.content_type = item.filetype
+        user.avatarprocessing = false
+        user.save!
+        
+        FileUtils.rm(temp_tiny_filename)
+        FileUtils.rm(temp_thumb_filename)
+
+        obj.delete
+        item.delete
+      rescue Exception => e
+        error = item.sport.photo_errors.new
+        error.error_message = e.message
+        error.modelname = item.modelname
+        error.modelid = item.modelid
+        error.sport = item.sport
+        error.save
+        item.delete
+      end
     end
   end
   

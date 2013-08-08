@@ -12,11 +12,26 @@
       	<p>
       	<div class="row">
       		<div class="span2 offset1">
-		      	<% if @user.avatar_file_name.blank? %>
-		      		<%= image_tag 'photo_not_available.png' %>
-		      	<% else %>
-		      		<%= image_tag @user.avatar.url(:thumb) %>
-		      	<% end %>
+				<% if @user.avatarprocessing? %>
+					<h4><em><font color="red">Processing new logo .....</font></em></h4>
+				<% end %>
+				<% if !@user.avatarthumburl.nil? %>
+					<%= image_tag @user.avatarthumburl %>
+				<% else %>
+					<%= image_tag "photo_not_available.png" %>
+				<% end %>
+				<p>
+				<h5>Change image</h5>
+				<%= s3_uploader_form callback_url: createavatar_user_path, callback_param: "user[image_url]", callback_method: "PUT",
+				         key: "uploads/usersphotos/#{@user.id}/${filename}", id:  "myS3Uploader" do %>
+				  <%= file_field_tag :file %>
+				<% end %>
+				<script id="template-upload" type="text/x-tmpl">
+				  <div id="file-{%=o.unique_id%}" class="upload">
+				    {%=o.name%}
+				    <div class="progress"><div class="bar" style="width: 0%"></div></div>
+				  </div>
+				</script>    
 		    </div>
 		    <div class="span2 offset1">
 		      	<strong>Username: </strong><em><%= @user.name %></em>

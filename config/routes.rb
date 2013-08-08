@@ -6,6 +6,7 @@ Sportzserver::Application.routes.draw do
     member do
       get   :site, :disable, :enable, :delete_avatar, :getuser
 #      put   :update_user_info
+      put :createavatar, :uploadavatar
     end
   end
 

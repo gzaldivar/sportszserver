@@ -13,13 +13,13 @@
 						</div>
 						<p>
 						<div class="span2 offset1">
-							<% if @user.avatar_file_name.nil? %>
+							<% if @user.avatarthumburl.nil? %>
 								<%= image_tag 'photo_not_available.png' %>
 							<% else %>
-								<%= image_tag @user.avatar.url(:thumb) %>
+								<%= image_tag @user.avatarthumburl %>
 							<% end %>
-							<%= f.input	:avatar,	label: 	"Avatar Picture" %>
-							<%= link_to "Delete Image", delete_avatar_user_path(@user), class: "btn btn-medium btn-primary" %>
+							<p>
+							<%= link_to "Delete Image", delete_avatar_user_path(@user), class: "btn btn-medium btn-danger" %>
 						</div>
 						<div class="span3 offset1">
 							<h5><em>Login Email: <%= @user.email %></em></h5>

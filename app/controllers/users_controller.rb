@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	before_filter :authenticate_user!,	only: [:site, :edit, :update, :index, :disable, :enable, :delete_avatar]
-  before_filter :get_user, only: [:edit, :show, :update, :disable, :enable, :delete_avatar, :getuser]
+  before_filter :get_user, only: [:edit, :show, :update, :disable, :enable, :delete_avatar, :getuser, :uploadavatar, :createavatar]
   before_filter :owner, only: [:edit, :update]
 
 	def show
@@ -136,7 +136,9 @@ class UsersController < ApplicationController
 
   def delete_avatar
     begin
-      @user.avatar.clear
+#      @user.avatar.clear
+      @user.avatarthumburl = nil
+      @user.avatartinyurl = nil
       @user.save!
       respond_to do |format|
         format.html { redirect_to @user, notice: "Image Removed" }
@@ -154,6 +156,47 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.json
     end
+  end
+
+  def createavatar
+      begin    
+        path = params[:filepath].split('/')
+        imagepath = CGI.unescape(path[2])
+        @user.avatarprocessing = true
+
+        @user.save!
+
+        sport = Sport.find(@user.default_site)
+        queue = sport.photo_queues.new(modelid: @user.id, modelname: "useravatar", filename: params[:filename], filetype: params[:filetype], 
+                                        filepath: imagepath)
+        if queue.save!
+          Resque.enqueue(PhotoProcessor, queue.id)
+        end
+      rescue Exception => e
+        puts e.message
+      end
+  end
+
+  def uploadavatar
+    begin
+        @user.avatarprocessing = true
+
+        @user.save!
+
+        queue = @sport.photo_queues.new(modelid: @user.id, modelname: "useravatar", filename: params[:filename], filetype: params[:filetype], 
+                                        filepath: params[:filepath])
+        if queue.save!
+            Resque.enqueue(PhotoProcessor, queue.id)
+        end
+
+        respond_to do |format|
+            format.json { render json: { success: "success", user: @user } }
+        end
+      rescue Exception => e
+        respond_to do |format|
+            format.json { render status: 404, json: { error: e.message, user: @user } }
+        end
+      end
   end
 	
 	private

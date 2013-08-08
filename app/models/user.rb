@@ -4,6 +4,8 @@ class User
   include Mongoid::Timestamps
   include Mongoid::Search
 
+  attr_accessor :content_type, :original_filename, :image_data
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -55,12 +57,16 @@ class User
   has_many :blogs
 
   index({ email: 1 }, { unique: true, background: true })
+
   field :name
   field :admin, type: Boolean, default: false
   field :mysites, type: Hash
   field :default_site, type: String
   field :teamid, type: String
   field :is_active, type: Boolean, default: true
+  field :avatarprocessing, type: Boolean, default: false
+  field :avatarthumburl, type: String
+  field :avatartinyurl, type: String
 
   # Alert levels 
 
@@ -85,7 +91,6 @@ class User
   validates_attachment_content_type :avatar, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_presence_of :name
 
-  attr_accessor :content_type, :original_filename, :image_data
 
   attr_accessible :name, :email, :password, :password_confirmation, :remember_me, :created_at, :updated_at, 
                 :authentication_token, :teamid, :avatar, :is_active, :bio_alert, :blog_alert, :media_alert, 
@@ -104,9 +109,9 @@ class User
 
   def decode_base64_image
     if self.image_data && self.content_type && self.original_filename
-      decoded_data = Base64.decode64(self.image_data)
+#      decoded_data = Base64.decode64(self.image_data)
 
-      data = StringIO.new(decoded_data)
+      data = StringIO.new(image_data)
       data.class_eval do
         attr_accessor :content_type, :original_filename
       end

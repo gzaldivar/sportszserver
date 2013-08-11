@@ -62,25 +62,27 @@ class Users::RegistrationsController < Devise::RegistrationsController
         super
       }
       format.json {
-        @user = User.find(authentication_token: params[:user][:auth_token])
+        begin
+          @user = User.find_by(authentication_token: params[:auth_token])
 
-        successfully_updated = if needs_password?(@user, params)
-          @user.update_with_password(params[:user])
-        else
-          # remove the virtual current_password attribute update_without_password
-          # doesn't know how to ignore it
-          params[:user].delete(:current_password)
-          @user.update_without_password(params[:user])
-        end
+          successfully_updated = if needs_password?(@user, params)
+            @user.update_with_password(params[:user])
+          else
+            # remove the virtual current_password attribute update_without_password
+            # doesn't know how to ignore it
+            params[:user].delete(:current_password)
+            @user.update_without_password(params[:user])
+          end
 
-        if successfully_updated
-#          set_flash_message :notice, :updated
-          # Sign in the user bypassing validation in case his password changed
-          sign_in @user, :bypass => true
-#          redirect_to after_update_path_for(@user)
-          render status: 200, json: { user: user, authentication_token: user.authentication_token }
-        else
-          render status: 400, json: { message: "Error updating user" }
+  #        if successfully_updated
+  #          set_flash_message :notice, :updated
+            # Sign in the user bypassing validation in case his password changed
+  #          sign_in @user, :bypass => true
+  #          redirect_to after_update_path_for(@user)
+            render status: 200, json: { user: @user, authentication_token: @user.authentication_token }
+  #        else
+        rescue Exception => e
+            render status: 404, json: { error: "Error updating user " + e.message }
         end
       }
     end

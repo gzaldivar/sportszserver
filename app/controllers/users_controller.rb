@@ -76,12 +76,12 @@ class UsersController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to user_path(@user), notice: "Update sucessful!" }
-        format.json { render status: 200, json: { request: user_path(@user) } }
+        format.json { render status: 200, json: { user: @user } }
       end
     rescue Exception => e
       respond_to do |format|
         format.html { redirect_to user_path(@user), alert: e.message }
-        format.json { render status:400, json: { error: e.message, request: user_path(@user) } }
+        format.json { render status:400, json: { error: e.message, user: @user } }
       end
     end
   end
@@ -183,8 +183,9 @@ class UsersController < ApplicationController
 
         @user.save!
 
-        queue = @sport.photo_queues.new(modelid: @user.id, modelname: "useravatar", filename: params[:filename], filetype: params[:filetype], 
-                                        filepath: params[:filepath])
+        sport = Sport.find(@user.default_site)
+        queue = sport.photo_queues.new(modelid: @user.id, modelname: "useravatar", filename: params[:filename], filetype: params[:filetype], 
+                                      filepath: params[:filepath])
         if queue.save!
             Resque.enqueue(PhotoProcessor, queue.id)
         end

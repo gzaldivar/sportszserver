@@ -11,7 +11,7 @@
       	<% end %>
       	<p>
       	<div class="row">
-      		<div class="span2 offset1">
+      		<div class="span3 offset1">
 				<% if @user.avatarprocessing? %>
 					<h4><em><font color="red">Processing new logo .....</font></em></h4>
 				<% end %>
@@ -42,7 +42,7 @@
 		</div>
       	<p>
       	<div class="row">
-      		<div class="span2 offset1">
+      		<div class="span3 offset1">
 		      	<% if !@user.default_site .nil? %>
 		      		<strong>Member of Site: </strong><em><%= Sport.find(@user.default_site).sitename %></em>
 		      	<% end %>
@@ -72,7 +72,7 @@
 			</div-->
 		</div>
 		<div class="row">
-			<div class="span2 offset1">
+			<div class="span3 offset1">
 				<strong>Enable Bio Alerts: </strong><%= @user.bio_alert %>
 			</div>
 			<div class="span2 offset1">
@@ -87,7 +87,7 @@
 			<div class="span4 offset1">
 				<strong>Enable Scoring Alerts: </strong><%= @user.score_alert %>
 			</div>
-			<div class="span2 offset2">
+			<div class="span2 offset3">
 				<strong>Enable Media Alerts: </strong><%= @user.media_alert %>
 			</div>
 		</div>

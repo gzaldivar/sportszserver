@@ -12,6 +12,7 @@
       	<p>
       	<div class="row">
       		<div class="span3 offset1">
+      			<h5><em>Avatar:</em></h5>
 				<% if @user.avatarprocessing? %>
 					<h4><em><font color="red">Processing new logo .....</font></em></h4>
 				<% end %>
@@ -34,7 +35,8 @@
 				</script>    
 		    </div>
 		    <div class="span2 offset1">
-		      	<strong>Username: </strong><em><%= @user.name %></em>
+		      	<strong>Username: </strong><em><%= @user.name %></em><p>
+		      	<strong>Mobile Tier: </strong><em><font color="red"><%= @user.tier %></font></em>
 		    </div>
 		    <div class="span2 offset1">
 	      		<strong>Email: </strong><em><%= @user.email %></em><p>

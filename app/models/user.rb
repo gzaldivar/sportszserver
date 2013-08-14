@@ -60,13 +60,14 @@ class User
 
   field :name
   field :admin, type: Boolean, default: false
-  field :mysites, type: Hash
+#  field :mysites, type: Hash
   field :default_site, type: String
   field :teamid, type: String
   field :is_active, type: Boolean, default: true
   field :avatarprocessing, type: Boolean, default: false
   field :avatarthumburl, type: String
   field :avatartinyurl, type: String
+  field :tier, type: String, default: "Basic"
 
   # Alert levels 
 

@@ -118,32 +118,34 @@
 	        <ul class="nav pull-right">
 				<% if signed_in? %>
 					<li id="fat-menu" class="dropdown">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-			            <% if user_signed_in? %>
-			                <%= current_user.email %> <b class="caret"></b>
-	              		<% end %>
-					</a>
-					<ul class="dropdown-menu">
-	                	<% if user_signed_in? %>
-							<li><%= link_to "My Profile", user_path(current_user) %></li>
-							<% if isAdmin? and !@sport.nil? and @sport.teams.count > 0 %>
-						  		<li class="dropdown-submenu">
-						    		<a tabindex="-1" href="#">Admin</a>
-						    			<ul class="dropdown-menu">
-						        			<li><%= link_to "Manage Players", sport_athletes_path(@sport) %></li>
-											<li class="divider"></li>
-											<li><%= link_to "Manage Coaches", sport_coaches_path(@sport) %></li>
-											<li class="divider"></li>
-											<li><%= link_to "Manage Users", users_path(site: current_site) %></li>
-											<li class="divider"></li>
-											<li><%= link_to "Manage Sponsors", sport_sponsors_path(@sport) %></li>
-						    			</ul>
-									</a>
-								</li>
-							<% end %>
-							<li class="divider"></li>
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+				            <% if user_signed_in? %>
+				                <%= current_user.email %> <b class="caret"></b>
+		              		<% end %>
+						</a>
+						<ul class="dropdown-menu">
+		                	<% if user_signed_in? %>
+								<li><%= link_to "My Profile", user_path(current_user) %></li>
+								<% if isAdmin? and !@sport.nil? and @sport.teams.count > 0 %>
+							  		<li class="dropdown-submenu">
+							    		<a tabindex="-1" href="#">Admin</a>
+							    			<ul class="dropdown-menu">
+							        			<li><%= link_to "Manage Players", sport_athletes_path(@sport) %></li>
+												<li class="divider"></li>
+												<li><%= link_to "Manage Coaches", sport_coaches_path(@sport) %></li>
+												<li class="divider"></li>
+												<li><%= link_to "Manage Users", users_path(site: current_site) %></li>
+												<li class="divider"></li>
+												<li><%= link_to "Manage Sponsors", sport_sponsors_path(@sport) %></li>
+							    			</ul>
+										</a>
+									</li>
+								<% end %>
+								<li class="divider"></li>
+								<li><%= link_to "Change Site", sports_path %></li>
+								<li class="divider"></li>
 								<li><%= link_to "Sign out", destroy_user_session_path, method: "delete" %></li>
-                			<% end %>
+	                		<% end %>
 						</ul>
 					</li>
 				<% elsif !signed_in? %>

@@ -1,7 +1,7 @@
 class GamelogsController < ApplicationController
     before_filter	:authenticate_user! #,  only: [:destroy, :create, :show, :update]
     before_filter :get_gameschedule
-    before_filter :correct_gamelog, only: [:destroy, :create, :update, :show]
+    before_filter :correct_gamelog, only: [:destroy, :edit, :create, :update, :show]
     before_filter only: [:destroy, :create, :update] do |controller| 
       controller.team_manager?(@gameschedule, @team)
     end
@@ -22,8 +22,8 @@ class GamelogsController < ApplicationController
   	end
 
     def show
-      @gamelog = @gameschedule.gamelogs.find(params[:id])
       respond_to do |format|
+        format.html
         format.json
       end
     end
@@ -32,15 +32,21 @@ class GamelogsController < ApplicationController
       @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
     end
 
+    def edit
+      @players = @sport.athletes.where(team_id: @team.id.to_s)
+    end
+
     def update
       begin
         @gamelog = @gameschedule.gamelogs.find(params[:id])
         @gamelog.update_attributes!(params[:gamelog])
         respond_to do |format|
+          format.html { redirect_to [@sport, @team, @gameschedule, @gamelog], notice: "Game log update sucessful!" }
           format.json { render json: { gamelog: @gamelog, request: sport_team_gameschedule_gamelog_url(@sport, @team, @gameschedule, @gamelog) } }
         end
       rescue Exception => e
         respond_to do |format|
+          format.html { redirect_to :back, alert: "Error - " + e.message }
           format.json { render json: { error: e.message, request: sport_team_gameschedule_gamelog_url(@sport, @team, @gameschedule, @gamelog) } }
         end
       end

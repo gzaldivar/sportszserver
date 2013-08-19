@@ -1,0 +1,11 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Edit Schedule" ) %>
+<p>
+<h4>Edit Gamelog</h4>
+<p>
+<% if @sport.name == "Football" %>
+	<h5><em><font color="red">Warning - You can make edits to time and period without any negative effects on stats.
+	 Changing the actual score, yards, etc. will result in stats being out of sync
+		with stats. If you want to change the score or the player involved in the score you should delete the log entry. Stats will be updated automatically.
+		You can then enter the stats for the players involved and a new score log will be generated.</font></em>
+<% end %>
+  <%= render 'gamelog_form' %>

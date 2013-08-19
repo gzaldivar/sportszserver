@@ -42,6 +42,7 @@ class GameschedulesController < ApplicationController
   def show
     @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
     @gamelog = @gameschedule.gamelogs.build
+    @players = @sport.athletes.where(team_id: @team.id.to_s).asc(:number)
     if @sport.name == "Football"
       @stats = AthleteFootballStatsTotal.new
       @stats.passing_totals(@gameschedule)

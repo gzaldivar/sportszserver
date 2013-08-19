@@ -117,6 +117,7 @@
 				<div class="span8">
 				 	<%= g.logentrytext %>
 				 	<% if isAdmin? or isTeamManager?(@gameschedule) %>
+				 		<%= link_to "Edit", edit_sport_team_gameschedule_gamelog_path(@sport, @team, @gameschedule, g), class: "btn btn-mini btn-warning" %>
 				 		<%= link_to "Delete", [@sport, @team, @gameschedule, g], method: :delete,
 				 					class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
 				 	<% end %>
@@ -125,10 +126,11 @@
 		<% end %>
 		<% if isAdmin? or isTeamManager?(@gameschedule) %>
 		  	Enter score entry. Scoring entries will be ordered first to last by time.</h6><br/>
-	  		<em>Score entries are added automatically when you add scoring stats and automatically computed . You can override the and edit the entries below.
-	  		<p>
-		  	You can also add opposing team entires here if you choose. You will have to edit the score update above to add the opponents score.</em>
+	  		<em>Score entries are added automatically when you add scoring stats and automatically computed . You can override the and edit the entries below.</em>
+	  		<h5>Be careful entering game log data using this form. If you update a log entry your stats can get out of sync. If you want to edit an existing log entry, it is much better to delete the entry and update the stats for the players involved in the score. The system will automatically generate a new log. If you want to enter a new log entry, you should update the stats for the players involved and let the system generate the log entry.</h5>
 	  		<%= render "gamelogs/gamelog_form" %>
+	  		<br>
+	  		<h5>Example of resulting log entry: "Q2: 03:57 - C. Zaldivar 25 yard pass to J. Cody - TD"</h5>
 		<% end %>
 		<% if !@stats.nil? %>
 		  	<p>

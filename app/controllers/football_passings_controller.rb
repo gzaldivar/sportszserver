@@ -103,7 +103,7 @@ class FootballPassingsController < ApplicationController
 					if !receiver.nil? and !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
 						puts params[:quarter].to_s
 						gamelog = @fbpassing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
-																					logentry: "yard pass to ", score: "TD", yards: params[:yards],
+																					logentry: "yard pass to", score: "TD", yards: params[:yards],
 																					player: @athlete.id, assist: player.id)
 						gamelog.save!
 						if params[:quarter]
@@ -128,7 +128,7 @@ class FootballPassingsController < ApplicationController
 
 					if !receiver.nil? and !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
 						gamelog = @fbpassing.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
-																					logentry: " yards to ", score: "2P", yards: params[:yards], 
+																					logentry: " yards to", score: "2P", yards: params[:yards], 
 																					player: player.id, assist: receiver.id)
 						gamelog.save!
 						if params[:quarter]

@@ -5,6 +5,9 @@
 			<% if @sport.name == "Football" %>
 				<%= f.input :period, collection: quarters, hint: "Enter quarter, half, inning, etc." %>
 				<%= f.input :score, collection: football_score, hint: "TD, FG, XP" %>
+				<%= f.input :yards %>
+				<%= f.input :player, collection: @players.collect{ |t| [t.full_name, t.id] }, hint: "QB, RB, etc." %>
+				<%= f.input :assist, collection: @players.collect{ |t| [t.full_name, t.id] }, hint: "Enter another player. Ex: Reciever" %>
 			<% elsif @sport.name == "Basketball" %>
 				<%= f.input :period, collection: halfs, hint: "Enter quarter, half, inning, etc." %>
 			<% end %>
@@ -12,7 +15,7 @@
 			<%= f.input :time, hint: "Time on clock if there is one for logged event" %>
 			<p>
 			<%= f.input :logentry, required: true, label: "Game Log Entry", input_html: {size: 60, style: 'width: 750px'}, 
-						hint: "Ex. C. Zaldivar 25 yards to J. Cody TD" %>
+						hint: "Ex. yard pass to. The rest of the game log will be automatically generated." %>
 		</div>
 	</div>
 	<p>

@@ -4,13 +4,19 @@ module UsersHelper
 	  	if current_site? and !current_user.nil? and current_user.admin?
 		  	if current_user.id.to_s != current_site.adminid
 #		  		not_authorized
-		  		redirect_to :back, alert: "You are not the site owner"
+				respond_to do |format|
+		  			format.html { redirect_to :back, alert: "You are not the site owner" }
+		  			format.json { render status: 401, json: { error: "You are not site owner" } }
+		  		end
 		  	else
 		  		return true
 		  	end
 	  	else
 #	  		not_authorized
-	    	redirect_to :back, notice: "Action not allowed"
+			respond_to do |format|
+	    		format.html { redirect_to :back, notice: "Action not allowed" }
+	    		format.json { render status: 401, json: { error: "You are not site owner" } }
+	    	end
     	end
 	end
 

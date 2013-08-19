@@ -1,0 +1,15 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Edit Schedule" ) %>
+<p>
+<h4><em>Game Log</em></h4>
+<p>
+<div class="row">
+	<div class="span8">
+	 	<%= @gamelog.logentrytext %>
+	 	<p>
+	 	<% if isAdmin? or isTeamManager?(@gameschedule) %>
+	 		<%= link_to "Edit", edit_sport_team_gameschedule_gamelog_path(@sport, @team, @gameschedule, @gamelog), class: "btn btn-mini btn-warning" %>
+	 		<%= link_to "Delete", [@sport, @team, @gameschedule, @gamelog], method: :delete,
+	 					class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
+	 	<% end %>
+	 </div>
+</div>

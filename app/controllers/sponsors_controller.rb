@@ -1,6 +1,6 @@
 class SponsorsController < ApplicationController
 	before_filter :authenticate_user! #,  only: [:new, :create, :edit, :update, :destroy, :index, :show]
-	before_filter :site_owner?,			only: [:new, :create, :edit, :update, :destroy, :index, :show]
+	before_filter :site_owner?,			only: [:new, :create, :edit, :update, :destroy]
   	before_filter :get_sport
   	before_filter :get_sponsor,		only: [:edit, :show, :destroy]
 
@@ -35,7 +35,18 @@ class SponsorsController < ApplicationController
 	end
 
 	def index
-		@sponsors = @sport.sponsors.all.entries
+		begin
+			@sponsors = @sport.sponsors.all.entries
+			respond_to do |format|
+				format.html
+				format.json
+			end	
+		rescue Exception => e
+			respond_to do |format|
+				format.html { redirect_to :back, alert: e.message }
+				format.json { render status: 404, json: { error: e.message } }
+			end
+		end
 	end
 
 	def show

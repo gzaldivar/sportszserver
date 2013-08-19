@@ -39,10 +39,11 @@ class BlogsController < ApplicationController
 
         respond_to do |format|
           format.html { redirect_to [@sport, blog], notice: "Added #{blog.title}!" }
-          format.json { render json: { blog: blog, request: sport_blog_url(@sport, blog) } }
+          format.json { render json: { blog: blog, avatar: User.find(@blog.user).avatarthumburl, tinyavatar: User.find(@blog.user).avatartinyurl } }
         end
         
       rescue Exception => e
+        puts e.message
         respond_to do |format|
           format.html { redirect_to :back, alert: "Error adding Blog " + e.message } 
           format.json { render status: 404, json: { error: e.message, request: sport_blogs_url(@sport) } }
@@ -128,10 +129,11 @@ class BlogsController < ApplicationController
 
         respond_to do |format|
           format.html { redirect_to [@sport, @blog], notice: "Updated #{@blog.title}!" }
-          format.json { render json: { blog: blog, request: sport_blog_url(@sport, blog) } }
+          format.json { render json: { blog: blog, avatar: User.find(@blog.user).avatarthumburl, tinyavatar: User.find(@blog.user).avatartinyurl } }
         end
         
       rescue Exception => e
+        puts e.message
         respond_to do |format|
           format.html { redirect_to :back, alert: "Error updating Blog " + e.message }
           format.json { render status: 404, json: { error: e.message, request: sport_blog_url(@sport, @blog) } }
@@ -149,18 +151,18 @@ class BlogsController < ApplicationController
 
   	def destroy
       begin
-        if @blog.team.nil?
+        if @blog.team_id.nil?
           @blog.destroy
           respond_to do |format|
             format.html { redirect_to sport_blogs_path(@sport), notice: "Blog delete sucessful!" }
             format.json { render json: { message: "Success", request: sport_blogs_url(@sport) } }
           end
         else
-          @team = @sport.teams.find(@blog.team)
+          @team = @sport.teams.find(@blog.team_id)
           @blog.destroy
           respond_to do |format|
-            format.html { redirect_to sport_blogs_path(@sport, team_id: @team), notice: "Blog deleted for " + @team.team_name }
-            format.json { render json: { message: "Success", request: sport_blogs_path(@sport, team_id: @team) } }
+            format.html { redirect_to sport_blogs_path(@sport, team_id: @team.id), notice: "Blog deleted for " + @team.team_name }
+            format.json { render json: { message: "Success", request: sport_blogs_path(@sport, team_id: @team.id) } }
           end
         end
       rescue Exception => e

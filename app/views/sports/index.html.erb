@@ -1,8 +1,12 @@
 <% provide(:title, "Find Site") %>
 <p> 
 <div class="row">
-  <div class="span">
-    <h2>Welcome to Eazesportz.com</h2>
+  <div class="span5">
+    <% if signed_in? %>
+      <h2>Find Eazesportz Site</h2>
+    <% else %>
+      <h2>Welcome to Eazesportz.com</h2>
+    <% end %>
   </div>
   <div class="span4 offset1">
     <%= link_to (image_tag "FC_Live_Stats.png"), info_path %>
@@ -69,10 +73,10 @@
                   <td><%= s.state %></td>
                   <td><%= s.zip %></td>
                   <td><%= link_to (image_tag s.sport_logo.url(:thumb)), s %></td>
-                  <% if user_signed_in? and (current_user.default_site == s.id) %>
-                     <td><em>Default</em></td>
+                  <% if user_signed_in? and (current_user.default_site == s.id.to_s) %>
+                     <td><em><strong>Default Site</strong></em></td>
                   <% elsif user_signed_in?%>
-                    <td><%= link_to "Set As Default", site_user_path(s), class: "btn btn-mini btn-primary" %></td>
+                    <td><%= link_to "Set As Default", sitechange_user_path(current_user, sport_id: s), class: "btn btn-mini btn-primary" %></td>
                   <% end %>
                 </tr>
               <% end %>

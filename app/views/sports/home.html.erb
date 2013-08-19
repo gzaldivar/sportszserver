@@ -7,7 +7,7 @@
 			<% if current_user.admin and @admin_sites.any? %>
 				<% @admin_sites.each do |s| %>
 					Administer:&nbsp
-					<%= link_to s.sitename, site_path(id: s) %>&nbsp
+					<%= link_to s.sitename, sitechange_user_path(sport_id: s) %>&nbsp
 					<% if current_user.default_site == s.id %>
 						<h4><em>Current Default Site</em></h4>
 					<% end %>
@@ -30,7 +30,7 @@
 			<p>
 			<h2>Who we are:</h2>
 			<p>
-			Eazesportz.com provides mobile applications for you to manage your sports program. Our current offering includes an iPad app that can
+			Eazesportz.com provides mobile applications for you to manage your football program. Our current offering includes an iPad app that can
 			be used to update and manage all content you want your fans to see. Your fans will view the your programs content via our iPhone app. There
 			is no charge for you to use our iPad app to manage your program or teams news and information. If you do not have an iPad, you can use our web 
 			site to manage your teams content.

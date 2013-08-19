@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-	before_filter :authenticate_user!,	only: [:site, :edit, :update, :index, :disable, :enable, :delete_avatar]
+	before_filter :authenticate_user!,	only: [:sitechange, :edit, :update, :index, :disable, :enable, :delete_avatar]
   before_filter :get_user, only: [:edit, :show, :update, :disable, :enable, :delete_avatar, :getuser, :uploadavatar, :createavatar]
   before_filter :owner, only: [:edit, :update]
 
@@ -106,13 +106,14 @@ class UsersController < ApplicationController
     end
   end
 
-	def site
+	def sitechange
     begin
-      if !params[:id].blank?
-        site = Sport.find(params[:id])
+      if !params[:sport_id].blank?
+        site = Sport.find(params[:sport_id])
         current_user.default_site = site.id
         current_user.save
-        if !current_user.mysites.nil? and current_user.mysites.count > 0 and admin_sites? 
+
+        if admin_sites? 
           flash[:notice] = "Your default site is now " + site.sitename + 
                            " which is not a site you administer. You are still adminstrator of the sites you created. 
                            You will be logged into this site when you log in until you change it."
@@ -120,7 +121,7 @@ class UsersController < ApplicationController
           flash[:notice] = "Your default site is now " + site.sitename
         end
         respond_to do |format|
-          format.html { redirect_to site }
+          format.html { redirect_to home_path }
           format.json { render status: 200, json: { site: site, sitename: site.sitename } }
         end
       else    
@@ -128,15 +129,14 @@ class UsersController < ApplicationController
       end
     rescue Exception => e
       respond_to do |format|
-        format.html { redirect_to @user, alert: e.message }
-        format.json { render status: 404, json: { error: e.message, request: @user } }
+        format.html { redirect_to current_user, alert: e.message }
+        format.json { render status: 404, json: { error: e.message, request: current_user } }
       end
     end
 	end
 
   def delete_avatar
     begin
-#      @user.avatar.clear
       @user.avatarthumburl = nil
       @user.avatartinyurl = nil
       @user.save!

@@ -4,7 +4,7 @@ Sportzserver::Application.routes.draw do
 
   resources :users, only: [:edit, :update, :show, :index] do
     member do
-      get   :site, :disable, :enable, :delete_avatar, :getuser
+      get :sitechange, :disable, :enable, :delete_avatar, :getuser
 #      put   :update_user_info
       put :createavatar, :uploadavatar
     end
@@ -44,7 +44,7 @@ Sportzserver::Application.routes.draw do
       end
       
       resources :gameschedules, only: [:show, :new, :create, :edit, :update, :index, :destroy] do
-        resources :gamelogs, only: [:create, :destroy, :show, :update] do
+        resources :gamelogs, only: [:create, :edit, :destroy, :show, :update] do
           collection do
             get :gamelogs
           end

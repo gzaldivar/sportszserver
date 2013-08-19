@@ -8,6 +8,6 @@ node(:athlete) { |t| t.athlete_id.to_s }
 node(:coach) { |t| t.coach_id.to_s }
 node(:gameschedule) { |t| t.gameschedule_id.to_s }
 node(:username) { |u| User.find(u.user).name }
-node(:avatar) { |o| User.find(o.user).avatar.url(:thumb) }
-node(:tinyavatar) { |o| User.find(o.user).avatar.url(:tiny) }
+node(:avatar) { |o| User.find(o.user).avatarthumburl }
+node(:tinyavatar) { |o| User.find(o.user).avatartinyurl }
 node(:gamelog) { |b| b.gamelog_id.to_s }

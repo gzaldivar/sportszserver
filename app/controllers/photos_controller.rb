@@ -220,9 +220,6 @@ class PhotosController < ApplicationController
       obj = bucket.objects[photo.filepath]
       photo.original_url = obj.url_for(:read, expires:  473040000)
 
-      puts photo.filepath
-      puts photo.original_url
-
       if @sport.review_media?
         photo.pending = true
       else
@@ -233,9 +230,6 @@ class PhotosController < ApplicationController
 
       queue = @sport.photo_queues.new(modelid: photo.id, modelname: "photos")
       queue.save!
-
-      puts "addded to queue"
-      puts photo.id
 
       Resque.enqueue(PhotoProcessor, queue.id)
 

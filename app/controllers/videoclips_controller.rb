@@ -211,7 +211,7 @@ class VideoclipsController < ApplicationController
       
       respond_to do |format|
           format.js
-          format.json { render json: { videoclip: @videoclip, request: [@sport, @videoclip] } }
+          format.json { render json: { videoclip: @videoclip } }
       end
 
       FileUtils.rm(video_path)
@@ -222,6 +222,94 @@ class VideoclipsController < ApplicationController
       end
     end
 
+  end
+
+  def createmobile
+    begin
+      video = @sport.videoclips.build(params[:videoclip])
+      
+      s3 = AWS::S3.new
+      bucket = s3.buckets[S3DirectUpload.config.bucket]
+      obj = bucket.objects[video.filepath]
+      video.video_url = obj.url_for(:read, expires:  473040000)
+
+      puts video.filepath
+      puts video.video_url
+
+      video_path = video.videopath + "/" + SecureRandom.hex(10) + video.filename
+        
+      File.open(video_path, 'wb') do |file|
+        obj.read do |chunk|
+          file.write(chunk)
+        end
+      end
+
+      movie = FFMPEG::Movie.new(video_path)
+
+      if !movie.nil?
+        if movie.video_codec != nil
+          str = movie.video_codec.split(" ")
+          if str[0] != "h264"
+            video.error_status = true
+            video.error_message = "Uploaded video is not an h264 video"
+          else
+            if movie.audio_codec != nil
+              str = movie.audio_codec.split(" ")
+              if str[0] != "aac"
+                video.error_status = true
+                video.error_message = "Audio for video clip is not AAC"
+              end
+            end
+            video.duration = movie.duration
+            video.bitrate = movie.bitrate
+            video.height = movie.height
+            video.width = movie.width
+            video.size = movie.size
+            video.frame_rate = movie.frame_rate
+            video.resolution = movie.resolution
+
+          end
+        else
+          video.error_status = true
+          video.error_message = "Unrecognized video codec."
+        end
+      else
+        video.error_status = true
+        video.error_message = "Uploaded media is not playable"
+      end
+
+      if !video.error_status
+        if user_signed_in?
+          video.user_id = current_user.id
+        elsif !params[:user_id].nil? and !params[:user_id].blank?
+          video.user_id = params[:user_id].to_s
+        end
+       
+        filepath = "videos/" + video.id + "/" + SecureRandom.hex(10)
+        video.filepath = filepath + video.filename
+        newobj = obj.move_to(video.filepath)
+        video.video_url = newobj.url_for(:read, expires:  473040000)
+
+        # create poster for video clip
+
+        poster_path = video.videopath + "/" + SecureRandom.hex(10) + "temp_poster.jpg"
+        poster = movie.screenshot(poster_path)
+        video.poster_filepath = "videos/" + video.id + "/" + SecureRandom.hex(10) + "poster.jpg"
+        posterobj = bucket.objects[video.poster_filepath]
+        posterobj.write(Pathname.new(poster_path))   
+        video.poster_url = posterobj.url_for(:read, expires:  473040000)
+        @sport.mediasize = @sport.mediasize + video.size
+        @sport.save
+        video.save!
+      else
+        throw "Error Processing Video " + video.error_message
+      end
+
+      FileUtils.rm(poster_path)
+      render status: 200, json: { videoclip: video, request: [@sport, video] }
+    rescue Exception => e
+      render status: 404, json: { error: e.message, request: @sport }
+    end
   end
 
   def index

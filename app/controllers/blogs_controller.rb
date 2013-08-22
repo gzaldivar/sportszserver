@@ -39,7 +39,7 @@ class BlogsController < ApplicationController
 
         respond_to do |format|
           format.html { redirect_to [@sport, blog], notice: "Added #{blog.title}!" }
-          format.json { render json: { blog: blog, avatar: User.find(@blog.user).avatarthumburl, tinyavatar: User.find(@blog.user).avatartinyurl } }
+          format.json { render json: { blog: blog, avatar: User.find(blog.user).avatarthumburl, tinyavatar: User.find(blog.user).avatartinyurl } }
         end
         
       rescue Exception => e

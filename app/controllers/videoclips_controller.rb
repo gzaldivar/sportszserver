@@ -508,13 +508,18 @@ class VideoclipsController < ApplicationController
 
   def destroy
   	begin
-      site = @sport.site
-      site.mediasize = site.mediasize - @videoclip.size
-      site.save
+      @sport.mediasize = @sport.mediasize - @videoclip.size
+      @sport.save
 	  	@videoclip.destroy
-	  	redirect_to sport_videoclips_path(@sport), notice: "Videoclip delete sucessful!"
+      respond_to do |format|
+	  	  format.html { redirect_to sport_videoclips_path(@sport), notice: "Videoclip delete sucessful!" }
+        format.json { render json: { sucess: "successful" } }
+      end
 	  rescue => e
-	  	redirect_to :back, alert: "Error deleting video " + e.message
+      respond_to do |format|
+	  	  format.html { redirect_to :back, alert: "Error deleting video " + e.message }
+        format.json { render status: 404, json: { error: e.message, videoclip: @videoclip } }
+      end
 	  end
   end
 

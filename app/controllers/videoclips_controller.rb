@@ -117,11 +117,7 @@ class VideoclipsController < ApplicationController
         end
       end
 
-      puts "opening movie"
-
       movie = FFMPEG::Movie.new(video_path)
-
-puts "found fffmpeg"
 
       if !movie.nil?
         if movie.video_codec != nil

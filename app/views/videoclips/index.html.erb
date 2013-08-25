@@ -57,7 +57,7 @@
     </div>
     <div class="row">
         <div class="span3 offset4">
-            <% if !@team.nil? and user_signed_in? and user_pics_ok? %>
+            <% if !@team.nil? and user_signed_in? and (user_pics_ok? or isAdmin?) %>
                 <%= link_to "Add Team Video Clip", newteam_sport_videoclip_path(@sport, @team), class: "btn btn-medium btn-primary" %>
             <% end %>
         </div>

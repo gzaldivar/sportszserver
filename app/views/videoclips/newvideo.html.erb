@@ -42,7 +42,8 @@
 		<% end %>
 	</h4>
     
-    <%= s3_uploader_form post: sport_videoclips_url, as: "videoclip[image_url]", key: "uploads/videoclips/#{@id}/#{@prefix}/${filename}", id:  "myS3Uploader" do %>
+    <%= s3_uploader_form callback_url: sport_videoclips_url, callback_param: "videoclip[image_url]", 
+    					 key: "uploads/videoclips/#{@id}/#{@prefix}/${filename}", id:  "myS3Uploader" do %>
       <%= file_field_tag :file, multiple: true %>
     <% end %>
     

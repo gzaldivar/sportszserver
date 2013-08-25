@@ -31,84 +31,84 @@ class PhotosController < ApplicationController
 
       pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
                                  :players.in => [params[:number][:id].to_s], gamelog: params[:gamelog][:id].to_s,
-                                 :players.in => [params[:athlete][:id].to_s])
+                                 :players.in => [params[:athlete][:id].to_s]).desc(:updated_at)
 
     elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:gamelog].nil? && !params[:gamelog][:id].blank? && 
           !params[:number].nil? && !params[:number][:id].blank?
 
       pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
-                                 :players.in => [params[:number][:id].to_s], gamelog: params[:gamelog][:id].to_s)
+                                 :players.in => [params[:number][:id].to_s], gamelog: params[:gamelog][:id].to_s).desc(:updated_at)
 
     elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:gamelog].nil? && !params[:gamelog][:id].blank? and 
           !params[:athlete].nil? && !params[:athlete][:id].blank? 
 
       pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
-                                 :players.in => [params[:athlete][:id].to_s], gamelog: params[:gamelog][:id].to_s)
+                                 :players.in => [params[:athlete][:id].to_s], gamelog: params[:gamelog][:id].to_s).desc(:updated_at)
 
     elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:number].nil? && !params[:number][:id].blank? and 
           !params[:athlete].nil? && !params[:athlete][:id].blank?
 
       pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
                                  :players.in => [params[:athlete][:id].to_s], 
-                                 :players.in => [params[:number][:id].to_s])      
+                                 :players.in => [params[:number][:id].to_s]).desc(:updated_at)
  
     elsif !params[:gamelog].nil? && !params[:gamelog][:id].blank? && !params[:number].nil? && !params[:number][:id].blank? and 
           !params[:athlete].nil? && !params[:athlete][:id].blank? 
 
       pics = @sport.photos.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
                                  :players.in => [params[:athlete][:id].to_s], 
-                                 :players.in => [params[:number][:id].to_s])
+                                 :players.in => [params[:number][:id].to_s]).desc(:updated_at)
       gamelog = Gamelog.find(params[:gamelog][:id].to_s)
       @gamelogs = @team.gameschedules.find(gamelog.gameschedule_id.to_s).gamelogs
 
     elsif !params[:game].nil? and !params[:game][:id].blank? and !params[:gamelog].nil? and !params[:gamelog][:id].blank?
 
-      pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule_id: params[:game][:id].to_s, gamelog_id: params[:gamelog][:id].to_s)
+      pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule_id: params[:game][:id].to_s, gamelog_id: params[:gamelog][:id].to_s).desc(:updated_at)
 
     elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:number].nil? && !params[:number][:id].blank?
 
       pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
-                                 :players.in => [params[:number][:id].to_s])
+                                 :players.in => [params[:number][:id].to_s]).desc(:updated_at)
 
     elsif !params[:game].nil? and !params[:game][:id].blank? and !params[:athlete].nil? and !params[:athlete][:id].blank?
 
       pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule_id: params[:game][:id].to_s, 
-                                  :players.in => [params[:athlete][:id].to_s])
+                                  :players.in => [params[:athlete][:id].to_s]).desc(:updated_at)
 
     elsif !params[:gamelog].nil? and !params[:gamelog][:id].blank? and !params[:number].nil? && !params[:number][:id].blank?
 
       pics = @sport.photos.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
-                                  :players.in => [params[:number][:id].to_s])
+                                  :players.in => [params[:number][:id].to_s]).desc(:updated_at)
         
     elsif !params[:gamelog].nil? and !params[:gamelog][:id].blank? and !params[:athlete].nil? && !params[:athlete][:id].blank?
 
       pics = @sport.photos.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
-                                  :players.in => [params[:athlete][:id].to_s])
+                                  :players.in => [params[:athlete][:id].to_s]).desc(:updated_at)
         
     elsif !params[:athlete].nil? and !params[:athlete][:id].blank? and !params[:number].nil? && !params[:number][:id].blank?
 
       pics = @sport.photos.where(teamid: @team.id.to_s, :players.in => [params[:athlete][:id].to_s], 
-                                  :players.in => [params[:number][:id].to_s])
+                                  :players.in => [params[:number][:id].to_s]).desc(:updated_at)
         
     elsif !params[:game].nil? and !params[:game][:id].blank?
 
-      pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule_id: params[:game][:id].to_s)
+      pics = @sport.photos.where(teamid: @team.id.to_s, gameschedule_id: params[:game][:id].to_s).desc(:updated_at)
 
     elsif !params[:gamelog].nil? and !params[:gamelog][:id].blank?
 
-      pics = @sport.photos.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s)
+      pics = @sport.photos.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s).desc(:updated_at)
 
     elsif !params[:number].nil? && !params[:number][:id].blank?
 
-      pics = @sport.photos.where(teamid: @team.id.to_s, :players.in => [params[:number][:id].to_s])
+      pics = @sport.photos.where(teamid: @team.id.to_s, :players.in => [params[:number][:id].to_s]).desc(:updated_at)
 
     elsif !params[:athlete].nil? && !params[:athlete][:id].blank?
 
-      pics = @sport.photos.where(teamid: @team.id.to_s, :players.in => [params[:athlete][:id].to_s])
+      pics = @sport.photos.where(teamid: @team.id.to_s, :players.in => [params[:athlete][:id].to_s]).desc(:updated_at)
 
     elsif !params[:team_id].nil? and !params[:team_id].blank?
 
-      pics = @sport.photos.where(teamid: @team.id.to_s)
+      pics = @sport.photos.where(teamid: @team.id.to_s).desc(:updated_at)
 
     else
       pics = []
@@ -139,7 +139,7 @@ class PhotosController < ApplicationController
       @photos = []
       
       @sport.photos.where(teamid: team.id, gameschedule: @gameschedule.id.to_s, :updated_at.gt => time, 
-                          user_id: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
+                          user_id: current_user.id).desc(:updated_at).each_with_index do |q, cnt|
         @photos[cnt] = q
       end
       
@@ -239,71 +239,65 @@ class PhotosController < ApplicationController
     end
   end
     
-  def create    
-    @photo = Photo.new
-  
-    @photo.filename = params[:filename]
-    @photo.displayname = @photo.filename
-    @photo.filepath = params[:filepath]
-    @photo.filesize = params[:filesize]
-    @photo.filetype = params[:filetype]
-    @photo.original_url = params[:url]
-    @photo.processing = true
+  def create
+    begin     
+      @photo = Photo.new
     
-    path = @photo.filepath.split('/')
-    path = CGI.unescape(path[2])
-    @photo.filepath = path
-    
-    s3 = AWS::S3.new
-    bucket = s3.buckets[S3DirectUpload.config.bucket]
-    obj = bucket.objects[@photo.filepath]
-    @photo.original_url = obj.url_for(:read, expires:  473040000)
-    
-    data = @photo.filepath.split('/')
-    data = data[data.length-2]
-    tags = data.split('_')
-    
-    tags.each_with_index do |t, cnt|
-    case t
-      when "t"
-        @photo.teamid = tags[cnt+=1]
-      when "s"
-        @photo.sport = tags[cnt+=1]
-      when "a"
-        @photo.players = Array.new
-        @photo.players.push(tags[cnt+=1])
-      when "g"
-        @photo.gameschedule_id = tags[cnt+=1]
+      @photo.filename = params[:filename]
+      @photo.displayname = @photo.filename
+      @photo.filepath = params[:filepath]
+      @photo.filesize = params[:filesize]
+      @photo.filetype = params[:filetype]
+      @photo.original_url = params[:url]
+      @photo.processing = true
+      
+      path = @photo.filepath.split('/')
+      path = CGI.unescape(path[2])
+      @photo.filepath = path
+      
+      s3 = AWS::S3.new
+      bucket = s3.buckets[S3DirectUpload.config.bucket]
+      obj = bucket.objects[@photo.filepath]
+      @photo.original_url = obj.url_for(:read, expires:  473040000)
+      
+      data = @photo.filepath.split('/')
+      data = data[data.length-2]
+      tags = data.split('_')
+      
+      tags.each_with_index do |t, cnt|
+      case t
+        when "t"
+          @photo.teamid = tags[cnt+=1]
+        when "s"
+          @photo.sport = tags[cnt+=1]
+        when "a"
+          @photo.players = Array.new
+          @photo.players.push(tags[cnt+=1])
+        when "g"
+          @photo.gameschedule_id = tags[cnt+=1]
+        end
       end
-    end
-            
-    if @sport.review_media?
-      @photo.pending = true
-    else
-      @photo.pending = false
-    end
+              
+      if @sport.review_media?
+        @photo.pending = true
+      else
+        @photo.pending = false
+      end
+      
+      if user_signed_in?
+        @photo.user_id = current_user.id
+      end
     
-    if user_signed_in?
-      @photo.user_id = current_user.id
-    end
-    
-    if @photo.save!
+      @photo.save!
       queue = @sport.photo_queues.new(modelid: @photo.id, modelname: "photos")
       if queue.save!
         Resque.enqueue(PhotoProcessor, queue.id)
       else
         flash[:alert] = "Error putting photo in queue!"
       end
-      respond_to do |format|
-        format.html
-        format.json
-      end
-    else
-      respond_to do |format|
-        format.html
-        format.json
-      end
-    end
+    rescue Exception => e
+      puts e.message
+    end 
   end
   
   def show

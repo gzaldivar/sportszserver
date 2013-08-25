@@ -48,8 +48,13 @@
             </div>
             <br/>
             <div class="row">
-                <div class="span1 offset3">
+                <div class="span1 offset1">
                   <%= submit_tag  "Search", class: "btn btn-medium btn-primary", name: nil %>
+                </div>
+                <div class="span3 offset1">
+                    <% if !@team.nil? and user_signed_in? and (user_pics_ok? or isAdmin?) %>
+                        <%= link_to "Add Team Video Clip", newteam_sport_videoclip_path(@sport, @team), class: "btn btn-medium btn-primary" %>
+                    <% end %>
                 </div>
             </div>
         <% end %>

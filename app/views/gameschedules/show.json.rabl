@@ -7,23 +7,12 @@ attributes :gamedate, :location, :opponent, :event, :homeaway, :game_name, :home
 		   :opponentq3, :opponentq4, :penalty, :penaltyyards, :down, :own, :ballon, :possession, :lastplay, :final, :our, :opponent_mascot, 
 		   :opponent_name, :togo
 node(:firstdowns) { |f| f.firstdowns }
-if !@gamelogs.nil?
-	child @gamelogs => :gamelogs do
-		attribute :period, :logentrytext, :time, :score, :logentry, :yards
-		node(:id) { |o| o.id.to_s }
-		node :hasphotos, :if => lambda { |a| !@sport.photos.where(gamelog_id: a.id.to_s).empty? } do
-			true
-		end
-		node :hasvideos, :if => lambda { |a| !@sport.videoclips.where(gamelog_id: a.id.to_s).empty? } do
-			true
-		end
-	end
-end
 if !@stats.nil?
 	extends 'gameschedules/stats'
 end
 child :gamelogs do
-	attributes :period, :time, :score, :logentry, :yards
+	attributes :period, :time, :score, :logentry, :yards, :player
+	attributes :logentrytext, :if => lambda { |m| !m.player.nil? and !m.player.blank? }
 	node(:id) { |o| o.id.to_s }
 	node :hasphotos, :if => lambda { |a| !@sport.photos.where(gamelog_id: a.id.to_s).empty? } do
 		true

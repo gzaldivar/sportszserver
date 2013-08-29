@@ -9,7 +9,7 @@ attributes :gamedate, :location, :opponent, :event, :homeaway, :game_name, :home
 node(:firstdowns) { |f| f.firstdowns }
 if !@gamelogs.nil?
 	child @gamelogs => :gamelogs do
-		attribute :period, :logentrytext, :time, :score, :logentry
+		attribute :period, :logentrytext, :time, :score, :logentry, :yards
 		node(:id) { |o| o.id.to_s }
 		node :hasphotos, :if => lambda { |a| !@sport.photos.where(gamelog_id: a.id.to_s).empty? } do
 			true
@@ -21,4 +21,14 @@ if !@gamelogs.nil?
 end
 if !@stats.nil?
 	extends 'gameschedules/stats'
+end
+child :gamelogs do
+	attributes :period, :time, :score, :logentry, :yards
+	node(:id) { |o| o.id.to_s }
+	node :hasphotos, :if => lambda { |a| !@sport.photos.where(gamelog_id: a.id.to_s).empty? } do
+		true
+	end
+	node :hasvideos, :if => lambda { |a| !@sport.videoclips.where(gamelog_id: a.id.to_s).empty? } do
+		true
+	end
 end

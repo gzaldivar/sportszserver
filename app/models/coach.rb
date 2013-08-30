@@ -10,10 +10,11 @@ class Coach
 
   field :lastname, type: String
   field :firstname, type: String
-  field :middlename, type: String
-  field :speciality, type: String
+  field :middlename, type: String, default: ""
+  field :speciality, type: String, default: ""
   field :years_on_staff, type: Integer
-  field :bio, type: String
+  field :bio, type: String, default: ""
+    
   field :processing, type: Boolean, default: false
   
   search_in :lastname, :firstname, :middlename, :speciality

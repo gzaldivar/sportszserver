@@ -13,13 +13,14 @@ class Athlete
   field :number, type: Integer
   field :lastname, type: String
   field :firstname, type: String
-  field :middlename, type: String
-  field :position, type: String
+  field :middlename, type: String, default: ""
+  field :position, type: String, default: ""
   field :height, type: String
   field :weight, type: Integer
   field :year, type: String
   field :season, type: String
-  field :bio, type: String
+  field :bio, type: String, default: ""
+    
   field :followers, type: Hash, default: Hash[]
   field :fans, type: Array
   field :processing, type: Boolean, default: false

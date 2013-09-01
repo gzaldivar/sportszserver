@@ -180,8 +180,6 @@ class AthletesController < ApplicationController
 
       queue = @sport.photo_queues.new(modelid: @athlete.id, modelname: "athletes", filename: params[:filename], filetype: params[:filetype], filepath: imagepath)
       if queue.save!
-        puts "queing job " + @athelete.id.to_s
-        
         Resque.enqueue(PhotoProcessor, queue.id)
       end
     rescue Exception => e
@@ -198,6 +196,8 @@ class AthletesController < ApplicationController
       queue = @sport.photo_queues.new(modelid: @athlete.id, modelname: "athletes", filename: params[:filename], filetype: params[:filetype], 
                                       filepath: params[:filepath])
       if queue.save!
+        puts "queing job " + @athelete.id.to_s
+        
         Resque.enqueue(PhotoProcessor, queue.id)
       end
 

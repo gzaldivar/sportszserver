@@ -6,6 +6,8 @@ class PhotoProcessor
   def self.perform(photo_id)
     item = PhotoQueue.find(photo_id)
     
+    puts "Starting job " + photo_id.to_s
+
     if item.modelname == "photos"
       photo = Photo.find(item.modelid)
 

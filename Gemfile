@@ -75,7 +75,8 @@ group :production do
   gem 'pg', '0.12.2'
 end
 
-gem 'resque', :require => "resque/server"
+#gem 'resque', :require => "resque/server"
+gem 'resque', "~> 1.22.0"
 gem 'rmagick'
 gem 'rabl'
 gem 'streamio-ffmpeg'

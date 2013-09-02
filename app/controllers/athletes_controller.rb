@@ -7,6 +7,8 @@ class AthletesController < ApplicationController
     controller.team_manager?(@athlete, nil)
   end
   
+  respond_to :json
+  
   def new    
     @athlete = Athlete.new
     @height = []
@@ -170,12 +172,12 @@ class AthletesController < ApplicationController
 
   def createathletephoto
     begin
-      puts "processing job " + @athlete.id.to_s
       path = CGI.unescape(params[:filepath]).split('/')
       @athlete = @sport.athletes.find(path[4])    
       path = params[:filepath].split('/')
       imagepath = CGI.unescape(path[2])
       @athlete.processing = true
+      puts "processing job " + @athlete.id.to_s
 
       @athlete.save!
 

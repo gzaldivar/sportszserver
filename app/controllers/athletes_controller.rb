@@ -7,8 +7,6 @@ class AthletesController < ApplicationController
     controller.team_manager?(@athlete, nil)
   end
   
-  respond_to :json
-  
   def new    
     @athlete = Athlete.new
     @height = []
@@ -201,7 +199,7 @@ class AthletesController < ApplicationController
       queue = @sport.photo_queues.new(modelid: @athlete.id, modelname: "athletes", filename: params[:filename], filetype: params[:filetype], 
                                       filepath: params[:filepath])
       if queue.save!
-        puts "queing job from mobile " + @athelete.id.to_s
+        puts "queing job from mobile " + @athlete.id.to_s
         
         Resque.enqueue(PhotoProcessor, queue.id)
       end

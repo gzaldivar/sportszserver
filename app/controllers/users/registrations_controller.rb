@@ -6,6 +6,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
           super
           if current_site?
             resource.default_site = current_site.id   #set default site
+
+            if current_site.beta?
+              resource.tier = "Features"
+            end
+            
             resource.save
           end
         }

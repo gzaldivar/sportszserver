@@ -22,7 +22,11 @@ class SportsController < ApplicationController
       end
       
       if @sport.save!
-        current_user.admin = true
+        
+        if !current_user.beta?
+          current_user.admin = true
+        end
+
         current_user.default_site = @sport.id
         current_user.save
 

@@ -35,7 +35,7 @@ class Sport
   field :address,       type: String
 
   field :adminid, type: String
-  field :tier, type: String, default: "Basic"
+  field :beta, type: Boolean, default: true
   field :mediasize, type: Integer, default: 0
 
   field :alert_interval, type: Integer, default: 120     # Time interval to check for alerts

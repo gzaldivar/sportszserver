@@ -178,7 +178,7 @@ Sportzserver::Application.routes.draw do
     end
 
     collection do
-      get :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo, :ipadexample_path
+      get :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo, :ipadexample_path, :approve
     end
 
     member do
@@ -221,6 +221,7 @@ Sportzserver::Application.routes.draw do
   match '/websiteinfo', to: 'sports#websiteinfo'
   match '/ipadexample', to: 'sports#ipadexample_info'
   match '/user/root',  to: 'sports#show'
+  match '/approve', to: 'sports#approve'
 
   match '/newkicker', to: 'football_kickers#newkicker'
   match '/newpunter', to: 'football_kickers#newpunter'

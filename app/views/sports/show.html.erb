@@ -1,105 +1,105 @@
 <% provide(:title, current_site.sitename) %>
 <p>
-<div class="row">
-	<div class="span2 offset1">
-    <div class="row">
-      <% if user_signed_in? %>
-        <h4><em>Following Players</em></h4>
-      <% else %>
-        <h4><em>Sign in to Follow Players</em></h4>
-      <% end %>
-      <table class="table table-bordered">
-        <thead>
-          <th>No.</th>
-          <th>Name</th>
-		      <th>Alerts</th>
-        </thead>
-        <% if !@followed.nil? and @followed.any? %>
-          <% @followed.each do |f| %>
-            <tbody>
-              <td><%= link_to f.number, sport_athlete_path(@sport, f) %></td>
-              <td><%= link_to f.lastname, sport_athlete_path(@sport, f) %></td>
-              <% if hasAlerts?(f, current_user) %>
-                <td><%= link_to "Alerts", sport_athlete_alerts_path(@sport, f), class: "btn btn-mini btn-inverse" %></td>
-              <% else %>
-                <td></td>
-              <% end %>
-            </tbody>
-          <% end %>
-        <% end %>
-      </table>
-  	</div>
-    <p>
-    <div class="row">
-        <table class="table table-bordered">
-          <thead>
-          </thead>
-          <tbody>
-            <td><% if @sport.sport_logo.blank? %>
-              <%= image_tag current_site.logo.url(:thumb) %>
-            <% else %>
-              <%= image_tag @sport.sport_logo.url(:thumb) %>
-            <% end %></td>
-          </tbody>
-        </table>
-     </div>
-    <% if !(@sponsor = sponsorad(@sport)).nil? %>
-       <div class="row">
-        <table class="table table-bordered">
-          <thead>
-          </thead>
-          <tbody>
-            <td><%= image_tag @sponsor.sponsorpic.url(:medium) %></td>
-          </tbody>
-        </table>
-       </div>
-    <% end %>
-  </div>
-  <div class="span5 offset1">
-  <h3>News for <%= current_site.sitename + " " + @sport.mascot %></h3>
-        <%= render 'newsfeeds/newsfeed', feed: @newsfeed %>
-    <% if @newsfeed.any? %>
-      <div class="row">
-        <div class="span2">
-          <h5>Filter News by Athlete:</h5>
-          <%= form_tag sport_newsfeeds_path(@sport), method: :get, class: "form-horizontal" do %>
-            <%= select_tag "player", options_from_collection_for_select(@athletes, "id", "full_name"), :include_blank => true %>
-            <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
-          <% end %>
-        </div>
-        <div class="span2 offset1">
-          <h5>Filter News by Team:</h5>
-          <%= form_tag sport_newsfeeds_path(@sport), method: :get, class: "form-horizontal" do %>
-            <%= select_tag "teamname", options_from_collection_for_select(@sport.teams, "id", "team_name"), :include_blank => true %>
-            <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
-          <% end %>
-        </div>
-      </div>
-    <% end %>
-    <div class="row">
-      <div class="span4 offset1">
-        <%= link_to "Sport News", sport_newsfeeds_path(@sport), class: "btn btn-medium btn-primary" %>
-        <% if isAdmin? %>
-          <%= link_to "Add News Item", new_sport_newsfeed_path(@sport), class: "btn btn-medium btn-primary" %>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-<p>
-<% if isAdmin? %>
   <div class="row">
-    <div class="span2 offset2">
-      <%= link_to "Edit Sport", edit_sport_path(id: @sport.id), class: "btn btn-medium btn-primary" %>
+  	<div class="span2 offset1">
+      <div class="row">
+        <% if user_signed_in? %>
+          <h4><em>Following Players</em></h4>
+        <% else %>
+          <h4><em>Sign in to Follow Players</em></h4>
+        <% end %>
+        <table class="table table-bordered">
+          <thead>
+            <th>No.</th>
+            <th>Name</th>
+  		      <th>Alerts</th>
+          </thead>
+          <% if !@followed.nil? and @followed.any? %>
+            <% @followed.each do |f| %>
+              <tbody>
+                <td><%= link_to f.number, sport_athlete_path(@sport, f) %></td>
+                <td><%= link_to f.lastname, sport_athlete_path(@sport, f) %></td>
+                <% if hasAlerts?(f, current_user) %>
+                  <td><%= link_to "Alerts", sport_athlete_alerts_path(@sport, f), class: "btn btn-mini btn-inverse" %></td>
+                <% else %>
+                  <td></td>
+                <% end %>
+              </tbody>
+            <% end %>
+          <% end %>
+        </table>
+    	</div>
       <p>
-      <% if @sport.teams.blank? %>
-        <strong>No teams entered.</strong> Click Edit Sport to add teams!
+      <div class="row">
+          <table class="table table-bordered">
+            <thead>
+            </thead>
+            <tbody>
+              <td><% if @sport.sport_logo.blank? %>
+                <%= image_tag current_site.logo.url(:thumb) %>
+              <% else %>
+                <%= image_tag @sport.sport_logo.url(:thumb) %>
+              <% end %></td>
+            </tbody>
+          </table>
+       </div>
+      <% if !(@sponsor = sponsorad(@sport)).nil? %>
+         <div class="row">
+          <table class="table table-bordered">
+            <thead>
+            </thead>
+            <tbody>
+              <td><%= image_tag @sponsor.sponsorpic.url(:medium) %></td>
+            </tbody>
+          </table>
+         </div>
       <% end %>
     </div>
-    &nbsp
-    <div class="span2 offset1">
-      <%= link_to "Delete Sport", @sport,  method: :delete, class: "btn btn-medium btn-danger", 
-                  data: { confirm: "You sure? All data, photos, videos, schedules, etc. will be deleted. Do you want to edit or rename the sport?" } %>
+    <div class="span5 offset1">
+    <h3>News for <%= current_site.sitename + " " + @sport.mascot %></h3>
+          <%= render 'newsfeeds/newsfeed', feed: @newsfeed %>
+      <% if @newsfeed.any? %>
+        <div class="row">
+          <div class="span2">
+            <h5>Filter News by Athlete:</h5>
+            <%= form_tag sport_newsfeeds_path(@sport), method: :get, class: "form-horizontal" do %>
+              <%= select_tag "player", options_from_collection_for_select(@athletes, "id", "full_name"), :include_blank => true %>
+              <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+            <% end %>
+          </div>
+          <div class="span2 offset1">
+            <h5>Filter News by Team:</h5>
+            <%= form_tag sport_newsfeeds_path(@sport), method: :get, class: "form-horizontal" do %>
+              <%= select_tag "teamname", options_from_collection_for_select(@sport.teams, "id", "team_name"), :include_blank => true %>
+              <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+            <% end %>
+          </div>
+        </div>
+      <% end %>
+      <div class="row">
+        <div class="span4 offset1">
+          <%= link_to "Sport News", sport_newsfeeds_path(@sport), class: "btn btn-medium btn-primary" %>
+          <% if isAdmin? %>
+            <%= link_to "Add News Item", new_sport_newsfeed_path(@sport), class: "btn btn-medium btn-primary" %>
+          <% end %>
+        </div>
+      </div>
     </div>
   </div>
-<% end %>
+  <p>
+  <% if isAdmin? %>
+    <div class="row">
+      <div class="span2 offset2">
+        <%= link_to "Edit Sport", edit_sport_path(id: @sport.id), class: "btn btn-medium btn-primary" %>
+        <p>
+        <% if @sport.teams.blank? %>
+          <strong>No teams entered.</strong> Click Edit Sport to add teams!
+        <% end %>
+      </div>
+      &nbsp
+      <div class="span2 offset1">
+        <%= link_to "Delete Sport", @sport,  method: :delete, class: "btn btn-medium btn-danger", 
+                    data: { confirm: "You sure? All data, photos, videos, schedules, etc. will be deleted. Do you want to edit or rename the sport?" } %>
+      </div>
+    </div>
+  <% end %>

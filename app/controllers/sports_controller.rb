@@ -21,12 +21,13 @@ class SportsController < ApplicationController
         @sport.has_stats = true
       end
       
+      if @sport.beta?
+        @sport.approved = false
+      end
+
       if @sport.save!
         
-        if !current_user.beta?
-          current_user.admin = true
-        end
-
+        current_user.admin = true
         current_user.default_site = @sport.id
         current_user.save
 
@@ -227,6 +228,9 @@ class SportsController < ApplicationController
   end
 
   def ipadexample_path
+  end
+
+  def approve
   end
 
   def updatelogo

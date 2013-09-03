@@ -36,6 +36,7 @@ class Sport
 
   field :adminid, type: String
   field :beta, type: Boolean, default: true
+  field :approved, type: Boolean, default: true
   field :mediasize, type: Integer, default: 0
 
   field :alert_interval, type: Integer, default: 120     # Time interval to check for alerts

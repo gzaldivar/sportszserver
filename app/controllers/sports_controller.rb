@@ -46,23 +46,31 @@ class SportsController < ApplicationController
   
   def show
     site_visit(@sport)
-    @newsfeed = @sport.newsfeeds.limit(10).desc(:updated_at)
-    @athletes = @sport.athletes
-    @followed = []
-    if signed_in?
-      cnt = 0
-      @athletes.each do |a|
-        if a.fans.include?(current_user.id)
-          @followed[cnt] = a
-          cnt+=1
+
+    if current_user.admin and !current_site.approved?
+      respond_to do |format|
+        format.html { redirect_to approve_path }
+        format.json
+      end
+    else
+      @newsfeed = @sport.newsfeeds.limit(10).desc(:updated_at)
+      @athletes = @sport.athletes
+      @followed = []
+      if signed_in?
+        cnt = 0
+        @athletes.each do |a|
+          if a.fans.include?(current_user.id)
+            @followed[cnt] = a
+            cnt+=1
+          end
         end
       end
+      
+      respond_to do |format|
+        format.html
+        format.json 
+       end
     end
-    
-    respond_to do |format|
-      format.html
-      format.json 
-     end
   end
   
   def index

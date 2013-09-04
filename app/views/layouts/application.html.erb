@@ -31,23 +31,19 @@
     		<div id="homebanner" style="background-image: url(<%= image_path 'home.jpg' %>);"></div-->
       <% end %>
 
-      <% if current_site? %>
-        <div class="container" id="bodywindow" style="background-color:#ffffff;">
-      <% else %>
-        <!--div class="container" id="bodywindow" style="background-color:#254959;"-->
-      <% end %>
-            <div class="row">
-              <div class="span10">
-        				<% flash.each do |key, value| %>
-        					<div class="alert alert-<%= key %>"><%= value %></div>
-        				<% end %>
+      <div class="container" id="bodywindow" style="background-color:#ffffff;">
+        <div class="row">
+          <div class="span10">
+        		<% flash.each do |key, value| %>
+        			<div class="alert alert-<%= key %>"><%= value %>
               </div>
-            </div>
-    				<%= yield %>
-    				<%= render 'layouts/footer' %>
-    				<%= debug(params) if Rails.env.development? %>
-    			</div>
+        		<% end %>
+          </div>
         </div>
+    		<%= yield %>
+    		<%= render 'layouts/footer' %>
+    		<%= debug(params) if Rails.env.development? %>
+      </div>
+    </div>
   </div>
-</div>
 </html>

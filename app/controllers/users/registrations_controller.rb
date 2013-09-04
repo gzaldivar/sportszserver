@@ -15,47 +15,51 @@ class Users::RegistrationsController < Devise::RegistrationsController
           end
         }
         format.json {
-          if params[:user][:email].nil?
-            render :status => 400,
-                   :json => {:message => 'User request must contain the user email.'}
-            return
-          elsif params[:user][:password].nil?
-            render :status => 400,
-                   :json => {:message => 'User request must contain the user password.'}
-            return
-          elsif params[:user][:name].nil?
-            render :status => 400,
-                   :json => {:message => 'User request must contain the user name.'}
-          end
-          if params[:user][:admin].nil? and params[:user][:site].nil?
-            render status: 400, json: {message: "Site is missing"}
-            return
-          end
-          if params[:user][:admin].nil? and !Sport.find(params[:user][:site].to_s)
-            render status: 400, json: {message: "Site does not exist"}
-            return
-          end
-
-          if params[:user][:email]
-            duplicate_user = User.find_by(email: params[:user][:email])
-            unless duplicate_user.nil?
-              render :status => 409,
-                     :json => {:message => 'Duplicate email. A user already exists with that email address.'}
+          begin
+            if params[:user][:email].nil?
+              render :status => 400,
+                     :json => {:message => 'User request must contain the user email.'}
+              return
+            elsif params[:user][:password].nil?
+              render :status => 400,
+                     :json => {:message => 'User request must contain the user password.'}
+              return
+            elsif params[:user][:name].nil?
+              render :status => 400,
+                     :json => {:message => 'User request must contain the user name.'}
+            end
+            if params[:user][:admin].nil? and params[:user][:site].nil?
+              render status: 400, json: {message: "Site is missing"}
               return
             end
-          end
+            if params[:user][:admin].nil? and !Sport.find(params[:user][:site].to_s)
+              render status: 400, json: {message: "Site does not exist"}
+              return
+            end
 
-          @user = User.create(params[:user])
-          @user.default_site = params[:user][:site]
+            if params[:user][:email]
+              duplicate_user = User.find_by(email: params[:user][:email])
+              unless duplicate_user.nil?
+                render :status => 409,
+                       :json => {:message => 'Duplicate email. A user already exists with that email address.'}
+                return
+              end
+            end
 
-          if params[:user][:admin]
-            @user.admin = true
-          end
+            @user = User.create(params[:user])
+            @user.default_site = params[:user][:site]
 
-          if @user.save
-            render :status => 200, :json => {:user => @user}
-          else
-            render :status => 400, :json => {:message => @user.errors.full_messages}
+            if params[:user][:admin]
+              @user.admin = true
+            end
+
+            if @user.save!
+              render :status => 200, :json => {:user => @user}
+            else
+              render :status => 400, :json => {:message => @user.errors.full_messages}
+            end
+          rescue Exception => e
+            render status: 404, json: { error: e.message }
           end
         }
     end

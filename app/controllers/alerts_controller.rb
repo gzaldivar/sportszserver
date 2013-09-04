@@ -32,33 +32,47 @@ class AlertsController < ApplicationController
 	end
 
 	def destroy
-		@athlete.alerts.find(params[:id]).destroy
+		begin
+			@athlete.alerts.find(params[:id]).destroy
 
-	  	respond_to do |format|
-	  		format.html { redirect_to sport_athlete_alerts_path(@sport, @athlete) }
-	  		format.json { render json: { request: sport_athlete_alerts_url(@sport, @athlete) } }
-	  	end
+		  	respond_to do |format|
+		  		format.html { redirect_to sport_athlete_alerts_path(@sport, @athlete) }
+		  		format.json { render json: { success: "success", request: sport_athlete_alerts_url(@sport, @athlete) } }
+		  	end
+		rescue Exception => e
+			respond_to do |format|
+				format.html { redirect_to :back, alert: e.message }
+				format.json { render status: 404, json: { error: e.message } }
+			end
+		end
 		
 	end
 
 	def clearall
-		if params[:alerttype] == "Stats"
-			@athlete.alerts.where(:football_stat.ne => "", :football_stat.exists => true).destroy
-		elsif params[:alerttype] == "Photo"
-			@athlete.alerts.where(:photo.ne => "", :photo.exists => true).destroy
-		elsif params[:alerttype] == "Video"
-			@athlete.alerts.where(:videoclip.ne => "", :videoclip.exists => true).destroy
-		elsif params[:alerttype] == "Bio"
-			@athlete.alerts.where(:athlete.ne => "", :athlete.exists => true).destroy
-		elsif params[:alerttype] == "Blog"
-			@athlete.alerts.where(:blog.ne => "", :blog.exists => true).destroy
-		else
-			@athlete.alerts.all.destroy
-		end
+		begin
+			if params[:alerttype] == "Stats"
+				@athlete.alerts.where(:football_stat.ne => "", :football_stat.exists => true).destroy
+			elsif params[:alerttype] == "Photo"
+				@athlete.alerts.where(:photo.ne => "", :photo.exists => true).destroy
+			elsif params[:alerttype] == "Video"
+				@athlete.alerts.where(:videoclip.ne => "", :videoclip.exists => true).destroy
+			elsif params[:alerttype] == "Bio"
+				@athlete.alerts.where(:athlete.ne => "", :athlete.exists => true).destroy
+			elsif params[:alerttype] == "Blog"
+				@athlete.alerts.where(:blog.ne => "", :blog.exists => true).destroy
+			else
+				@athlete.alerts.all.destroy
+			end
 
-		respond_to do |format|
-			format.html { redirect_to sport_athlete_alerts_path(@sport, @athlete) }
-			format.json { render json: { request: sport_athlete_alerts_url(@sport, @athlete) } }
+			respond_to do |format|
+				format.html { redirect_to sport_athlete_alerts_path(@sport, @athlete) }
+				format.json { render json: { success: "success", request: sport_athlete_alerts_url(@sport, @athlete) } }
+			end
+		rescue Exception => e
+			respond_to do |format|
+				format.html { redirect_to :back, alert: e.message }
+				format.json { render status: 404, json: { error: e.message } }
+			end
 		end
 	end
 

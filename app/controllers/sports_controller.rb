@@ -47,7 +47,7 @@ class SportsController < ApplicationController
   def show
     site_visit(@sport)
 
-    if current_user.admin and !current_site.approved?
+    if signed_in? and current_user.admin and !current_site.approved?
       respond_to do |format|
         format.html { redirect_to approve_path }
         format.json

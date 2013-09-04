@@ -5,9 +5,9 @@
 		<div class="row">
 		  	<div class="span4 offset2">
 		  		<% if respond_to?("current_site") %>
-		  			<p>Welcome to <%= current_site.sitename %>! You can confirm your account email for <%= current_site.sitename %> through the link below:</p>
+		  			<p>Welcome to <%= current_site.sitename %>! You can confirm your account for <%= current_site.sitename %> through the link below:</p>
 		  		<% else %>
-					<p>Welcome to Eazesportz. You can confirm your account email through the link below:</p>
+					<p>Welcome to Eazesportz. You can confirm your account by clicking the link below:</p>
 				<% end %>
 
 				<p><%= link_to 'Confirm my account', confirmation_url(@resource, :confirmation_token => @resource.confirmation_token) %></p>

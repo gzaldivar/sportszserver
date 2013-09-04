@@ -1,7 +1,7 @@
 module UsersHelper
 
 	def site_owner?
-		if current_site? and !current_user.approved?
+		if current_site? and !current_site.approved?
 			respond_to do |format|
 				format.html { redirect_to approve_path }
 				format.json { render json: { error: "needs approval"} }

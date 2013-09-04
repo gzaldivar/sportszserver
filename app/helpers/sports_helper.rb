@@ -15,8 +15,8 @@ module SportsHelper
   
   def sports_list
     [
-      ['Football', 'Football'],
-      ['Basketball', 'Basketball']
+      ['Football', 'Football']
+#      ['Basketball', 'Basketball']
 #      ['Baseball', 'Baseball']
     ]
   end

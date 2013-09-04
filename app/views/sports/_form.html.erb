@@ -11,24 +11,16 @@
         </div>
       </div>
       <div class="row">
+        <div class="span2">
           <% if @sport.has_stats? %>
-            <div class="span2">
               <h4><%= @sport.name %></h4>
-            </div>
-          <% elsif @sport.name %>
-            <div class="span2">
-              <%= f.input :name,  label:  "Sport Name", 
-                                  hint: "Enter sport name does not have a stat package but all other features will be available." %>
-            </div>
+          <!--% elsif @sport.name %-->
+              <!--%= f.input :name,  label:  "Sport Name", 
+                                  hint: "Enter sport name does not have a stat package but all other features will be available." %-->
           <% else %>
-            <div class="span2">
               <%= f.input :sportname, label: "Sport Name", collection: sports_list, include_blank: true, hint: "These sports have a stat package. If you want to provide stats you should select the sport here." %>
-            </div>
-            <div class="span2 offset3">
-               <%= f.input :name, required: false, label:  "Sport Name", 
-                                  hint: "Enter sport name. Will not have a stat package but all other features will be available." %>
-            </div>
           <% end %>
+        </div>
       </div>
       <p>
       <div class="row">

@@ -16,6 +16,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
         }
         format.json {
           begin
+            puts "processing new user"
             if params[:user][:email].nil?
               render :status => 400,
                      :json => {:message => 'User request must contain the user email.'}
@@ -37,6 +38,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
               return
             end
 
+puts "Check for duplicate user"
             if params[:user][:email]
               duplicate_user = User.find_by(email: params[:user][:email])
               unless duplicate_user.nil?
@@ -46,6 +48,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
               end
             end
 
+puts "Creating new user"
             @user = User.create(params[:user])
             @user.default_site = params[:user][:site]
 
@@ -53,12 +56,14 @@ class Users::RegistrationsController < Devise::RegistrationsController
               @user.admin = true
             end
 
+puts "Saving new user"
             if @user.save!
               render :status => 200, :json => {:user => @user}
             else
               render :status => 400, :json => {:message => @user.errors.full_messages}
             end
           rescue Exception => e
+            puts "Exception raised " + e.message
             render status: 404, json: { error: e.message }
           end
         }

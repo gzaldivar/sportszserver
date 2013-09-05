@@ -17,6 +17,15 @@ class Users::SessionsController < Devise::SessionsController
 		end
 	end
 
+	def destroy
+		respond_to do |format|
+			format.html {
+				 super 
+			}
+			format.json { render status: 200, json: { success: true } }
+		end
+	end
+
 	def failure
 	    return render :status => 401, :json => {:success => false, :errors => ["Login failed."]}
 	end  

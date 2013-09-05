@@ -27,16 +27,10 @@ class ApplicationController < ActionController::Base
   
     def after_sign_out_path_for(resource)
       if current_site?
-        respond_to do |format|
-          format.html { sport_path(current_site) }
-          format.json { render status: 200, json: { success: "sucessfull sign out" } }
-        end
+        sport_path(current_site)
       else
-        respond_to do |format|
-          format.html { root_path }
-          format.json { render status: 200, json: { sucess: "sucessfull sign out" } }
-        end
-      end
+        root_path
+       end
     end
 
     def after_sign_in_path_for(resource)
@@ -50,6 +44,7 @@ class ApplicationController < ActionController::Base
     def render_error(status, exception)
       respond_to do |format|
         format.html { render template: "errors/error_#{status}", layout: 'layouts/application', status: status }
+        format.json { render status: status, json: { error: e.message } }
         format.all { render nothing: true, status: status }
       end
     end

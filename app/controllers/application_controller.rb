@@ -27,9 +27,15 @@ class ApplicationController < ActionController::Base
   
     def after_sign_out_path_for(resource)
       if current_site?
-        sport_path(current_site)
+        respond_to do |format|
+          format.html { sport_path(current_site) }
+          format.json { render status: 200, json: { success: "sucessfull sign out" } }
+        end
       else
-        root_path
+        respond_to do |format|
+          format.html { root_path }
+          format.json { render status: 200, json: { sucess: "sucessfull sign out" } }
+        end
       end
     end
 

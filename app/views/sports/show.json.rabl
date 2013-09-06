@@ -5,3 +5,4 @@ node(:sport_logo) { |t| t.sport_logo(:large) }
 node(:sport_logo_thumb) { |t| t.sport_logo(:thumb) }
 node(:sport_logo_medium) { |t| t.sport_logo(:medium) }
 node(:banner_url) { |b| b.sport_banner.url(:thumb) }
+node(:teamcount) { |t| t.teams.count }

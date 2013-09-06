@@ -8,7 +8,7 @@ class Athlete
   
   before_save :decode_base64_image
   after_save :send_alerts
-  before_destroy :process_statslist
+  before_destroy :process_statslists
   
   field :number, type: Integer
   field :lastname, type: String

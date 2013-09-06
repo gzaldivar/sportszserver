@@ -94,7 +94,7 @@ class AthletesController < ApplicationController
       end
     rescue Exception => e
       respond_to do |format|
-        format.html { redirect_to sport_athletes_path(@sport) }
+        format.html { redirect_to sport_athletes_path(@sport), alert: "Delete failed " + e.message }
         format.json { render status: 404, json: { error: e.message, request: [@sport] } }
       end
     end

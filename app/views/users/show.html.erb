@@ -122,6 +122,11 @@
 					Click here to go back to <em><strong>
 					<%= link_to current_site.sitename, sport_path(current_site) %></strong></em>.<br/>
 				</div>
+				<% if @user.godmode? %>
+					<div class="span2 offset1">
+						<%= link_to "Start Cleanup Queues", cleanup_user_path(@user) %>
+					</div>
+				<% end %>
 	  		</div>
 	  	<% end %>
 	</div>

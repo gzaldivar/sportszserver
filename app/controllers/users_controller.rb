@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	before_filter :authenticate_user!,	only: [:sitechange, :edit, :update, :index, :disable, :enable, :delete_avatar]
-  before_filter :get_user, only: [:edit, :show, :update, :disable, :enable, :delete_avatar, :getuser, :uploadavatar, :createavatar]
+  before_filter :get_user, only: [:edit, :show, :update, :disable, :enable, :delete_avatar, :getuser, :uploadavatar, :createavatar, :cleanup]
   before_filter :owner, only: [:edit, :update]
 
 	def show
@@ -198,6 +198,11 @@ class UsersController < ApplicationController
             format.json { render status: 404, json: { error: e.message, user: @user } }
         end
       end
+  end
+
+  def cleanup
+    Resque.enqueue(CleanupNewsBlog, @user.id)
+    redirect_to user_path(@user), notice: "Clean up queue started!"
   end
 	
 	private

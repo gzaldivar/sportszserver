@@ -44,7 +44,7 @@ class ApplicationController < ActionController::Base
     def render_error(status, exception)
       respond_to do |format|
         format.html { render template: "errors/error_#{status}", layout: 'layouts/application', status: status }
-        format.json { render status: status, json: { error: e.message } }
+        format.json { render status: status, json: { error: exception.message } }
         format.all { render nothing: true, status: status }
       end
     end

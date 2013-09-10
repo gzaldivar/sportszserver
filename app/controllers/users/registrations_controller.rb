@@ -36,7 +36,6 @@ class Users::RegistrationsController < Devise::RegistrationsController
               render status: 400, json: {message: "Site does not exist"}
               return
             end
-
             if params[:user][:email]
               duplicate_user = User.find_by(email: params[:user][:email])
               unless duplicate_user.nil?
@@ -48,6 +47,10 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
             @user = User.create(params[:user])
             @user.default_site = params[:user][:site]
+
+            if !params[:user][:site].nil? and Sport.find(params[:user][:site].to_s).beta?
+              @user.tier = "Features"
+            end
 
             if params[:user][:admin]
               @user.admin = true

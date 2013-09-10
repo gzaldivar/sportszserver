@@ -21,7 +21,7 @@ class BasketballStat
 
   belongs_to :athlete
   belongs_to :gameschedule
-  has_many :alerts
+  belongs_to :alerts
 
   validates_numericality_of :twoattempt, greater_than_or_equal_to: 0
   validates_numericality_of :twomade, greater_than_or_equal_to: 0

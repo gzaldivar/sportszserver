@@ -127,10 +127,10 @@ Sportzserver::Application.routes.draw do
           end
         end
 
-        resources :basketball_stats
-
       end
  
+      resources :basketball_stats
+      
       member do
         get :follow, :unfollow, :stats
         put :updatephoto

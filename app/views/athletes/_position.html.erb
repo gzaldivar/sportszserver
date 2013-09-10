@@ -31,7 +31,9 @@
 			<!--%= f.input :special_teamspos, collection: specialteams_football_positions, label: "Special Teams Position:" %-->
 		</div>
 	<% elsif @sport.sportname == "Basketball" %>
-		<%= f.input :position, collecton: basketball_positions, include_blank: true %>
+		<div class="span2">
+			<%= f.input :position, collection: basketball_positions, include_blank: true %>
+		</div>
 	<% end %>
 <% else %>
 	<div class="span3 offset1">

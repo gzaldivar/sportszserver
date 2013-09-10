@@ -43,6 +43,9 @@ class Gameschedule
   field :currentqtr, type: String, default: "Q1"
   field :final, type: Boolean, default: false
 
+  field :bballpossessionarrow, type: String
+  field :periods, type: Integer
+
   has_mongoid_attached_file :opponentpic,
     :storage        => :s3,
     :s3_credentials => { bucket: S3DirectUpload.config.bucket,
@@ -67,6 +70,7 @@ class Gameschedule
   validates_presence_of :location
   validates_presence_of :opponent
   validates :homeaway, presence: true, format: { with: /Home|Away|home|away/ }
+#  validates :bballpossessionarrow, format: { with: "/Home|Visitor/" }, allow_nil: true
   validates_attachment_content_type :opponentpic, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_numericality_of :homeq1, message: "Value must be 0 or a number greater than 0", greater_than_or_equal_to: 0
   validates_numericality_of :homeq2, message: "Value must be 0 or a number greater than 0", greater_than_or_equal_to: 0

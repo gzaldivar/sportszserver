@@ -46,6 +46,13 @@
 					<%= f.input	:event, hint:	"Senior day, Homecoming, etc.", required: false %>	
 				</div>
 			</div>
+			<% if @sport.sportname == "Basketball" and @gameschedule.periods.nil? %>
+				<div class="row">
+			        <div class="span6" %>
+			            <%= f.input :periods, collection: 2..5, hint: "Enter 2 for halfs, 4 for quarters, 5 for NJB .." %>
+			        </div>
+			    </div>
+			<% end %>
 			<p>
 			<h5>Real Time Game Summary:</h5>
 			<p>
@@ -54,23 +61,27 @@
 					<%= f.input :livegametime, label: "Live Game Time:", as: :time, ignore_date: true, input_html: { style: "width: 50px" } %>
 					<!--%= f.input :current_game_time, label: "Game Time", input_html: { style: "width: 50px" } %-->
 				</div>
-				<div class="span2 offset1">
-					<%= f.input :our, label: "Ball Position", collection: [ @team.team_name, @gameschedule.opponent ] %>
-				</div>
-				<div class="span1 offset1">
-					<%= f.input :ballon, label: "Ball On:", input_html: { style: "width: 50px" } %>
-				</div>
-				<div class="span1 offset1">
-					<%= f.input :possession, collection: ["Home", "Opponent"], input_html: { style: "width: 80px" }  %>
-				</div>
+				<% if @sport.sportname == "Football" %>
+					<div class="span2 offset1">
+						<%= f.input :our, label: "Ball Position", collection: [ @team.team_name, @gameschedule.opponent ] %>
+					</div>
+					<div class="span1 offset1">
+						<%= f.input :ballon, label: "Ball On:", input_html: { style: "width: 50px" } %>
+					</div>
+					<div class="span1 offset1">
+						<%= f.input :possession, collection: ["Home", "Opponent"], input_html: { style: "width: 80px" }  %>
+					</div>
+				<% end %>
 			</div>
 			<div class="row">
-				<div class="span1">
-					<%= f.input :down, collection: 1..4, input_html: { style: "width: 50px" } %>
-				</div>
-				<div class="span1 offset1">
-					<%= f.input :togo, label: "To Go", input_html: { style: "width: 50px" } %>
-				</div>
+				<% if @sport.sportname == "Football" %>
+					<div class="span1">
+						<%= f.input :down, collection: 1..4, input_html: { style: "width: 50px" } %>
+					</div>
+					<div class="span1 offset1">
+						<%= f.input :togo, label: "To Go", input_html: { style: "width: 50px" } %>
+					</div>
+				<% end %>
 				<div class="span6 offset1">
 					<%= f.input :lastplay, label: "Last Play:", input_html: { style: "width: 460px" } %>
 				</div>

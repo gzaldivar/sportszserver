@@ -18,6 +18,7 @@
               <!--%= f.input :name,  label:  "Sport Name", 
                                   hint: "Enter sport name does not have a stat package but all other features will be available." %-->
           <% else %>
+              <h5>Basketball mobile apps are under development. Contact us for a timeline on when development will be completed.</h5>
               <%= f.input :sportname, label: "Sport Name", collection: sports_list, include_blank: true %>
           <% end %>
         </div>

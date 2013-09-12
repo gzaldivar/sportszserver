@@ -126,7 +126,7 @@
 						<ul class="dropdown-menu">
 		                	<% if user_signed_in? %>
 								<li><%= link_to "My Profile", user_path(current_user) %></li>
-								<% if isAdmin? and !@sport.nil? and @sport.teams.count > 0 %>
+								<% if isAdmin? and !@sport.nil?  %>
 							  		<li class="dropdown-submenu">
 							    		<a tabindex="-1" href="#">Admin</a>
 							    			<ul class="dropdown-menu">

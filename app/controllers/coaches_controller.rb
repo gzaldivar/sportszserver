@@ -80,7 +80,9 @@ class CoachesController < ApplicationController
 	
 	def destroy
     begin
-      @coach.delete
+      @coach.newsfeeds = nil
+      @coach.blogs = nil
+      @coach.destroy
       respond_to do |format|    
         format.html { redirect_to sport_coaches_path(@sport) }
         format.json { render json: { message: "success", request: sport_coaches_path(@sport) } }

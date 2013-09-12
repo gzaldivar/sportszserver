@@ -32,7 +32,7 @@ class Photo
   belongs_to :gameschedule
   belongs_to :user
   belongs_to :gamelog
-  has_many :alerts
+  has_many :alerts, dependent: :destroy
   
   validates_presence_of :filename
   validates_presence_of :filepath

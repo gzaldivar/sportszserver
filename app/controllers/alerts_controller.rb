@@ -33,7 +33,8 @@ class AlertsController < ApplicationController
 
 	def destroy
 		begin
-			@athlete.alerts.find(params[:id]).destroy
+			alert = @athlete.alerts.find(params[:id])
+			alert.destroy
 
 		  	respond_to do |format|
 		  		format.html { redirect_to sport_athlete_alerts_path(@sport, @athlete) }

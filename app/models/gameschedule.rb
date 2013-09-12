@@ -69,12 +69,12 @@ class Gameschedule
     }
 
   belongs_to :team, index: true
-  has_many :football_stats
+  has_many :football_stats, dependent: :destroy
   has_many :gamelogs, dependent: :destroy
-  has_many :blogs
-  has_many :photos
-  has_many :videoclips
-  has_many :basketball_stats
+  has_many :blogs, dependent: :nullify
+  has_many :photos, dependent: :nullify
+  has_many :videoclips, dependent: :nullify
+  has_many :basketball_stats, dependent: :destroy
 
   attr_accessor :firstdowns
   

@@ -55,6 +55,8 @@ class TeamsController < ApplicationController
 	def destroy
 		begin
 			destroy_team(@team.id.to_s)
+			@team.athletes = nil
+			@team.coaches = nil
 			@team.destroy
 			respond_to do |format|
 				format.html { redirect_to @sport, notice: "Team delete sucessful!" }

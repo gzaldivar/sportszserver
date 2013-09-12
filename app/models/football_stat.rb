@@ -4,7 +4,7 @@ class FootballStat
 
   belongs_to :athlete
   belongs_to :gameschedule
-  belongs_to :alerts
+  has_many :alerts, dependent: :destroy
 
   embeds_one :football_passings
   embeds_one :football_rushings

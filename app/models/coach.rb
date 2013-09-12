@@ -33,8 +33,8 @@ class Coach
 
     belongs_to :sport, index: true
     belongs_to :team, index: true
-    has_many :blogs
-    has_many :newsfeeds
+    has_many :blogs, dependent: :nullify
+    has_many :newsfeeds, dependent: :nullify
 
     validates :lastname, presence: true, format: { with: /^[a-zA-Z\d\s]*$/ }
     validates :firstname, presence: true, format: { with: /^[a-zA-Z\d\s]*$/ }

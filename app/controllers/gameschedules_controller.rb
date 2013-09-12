@@ -134,6 +134,9 @@ class GameschedulesController < ApplicationController
   
   def destroy
     begin
+      @gameschedule.blogs = nil
+      @gameschedule.photos = nil
+      @gameschedule.videoclips = nil
       @gameschedule.destroy
       respond_to do |format|
         format.html { redirect_to sport_team_gameschedules_path(@sport, @team), notice: "Schedule deleted!" }

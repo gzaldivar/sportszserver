@@ -41,10 +41,9 @@ class Athlete
 
     belongs_to :sport, index: true
     belongs_to :team
-    has_many :photos
     has_many :football_stats, dependent: :destroy
-    has_many :blogs
-    has_many :newsfeeds
+    has_many :blogs, dependent: :nullify
+    has_many :newsfeeds, dependent: :nullify
     has_many :alerts, dependent: :destroy
     has_many :basketball_stats, dependent: :destroy
     

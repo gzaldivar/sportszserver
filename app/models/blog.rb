@@ -14,7 +14,7 @@ class Blog
   belongs_to :athlete
   belongs_to :coach
   belongs_to :gameschedule
-  has_one :alert
+  has_one :alert, dependent: :destroy
   belongs_to :user
   belongs_to :gamelog
 

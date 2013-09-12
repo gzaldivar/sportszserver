@@ -86,6 +86,8 @@ class AthletesController < ApplicationController
   def destroy
     begin
       destroy_athlete(@athlete.id.to_s)
+      @athlete.newsfeeds = nil
+      @athlete.blogs = nil
       @athlete.destroy    
             
       respond_to do |format|

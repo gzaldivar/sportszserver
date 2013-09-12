@@ -36,11 +36,11 @@ class Team
   embedded_in :sport
   has_many :gameschedules, dependent: :destroy
   has_many :sponsors, dependent: :destroy
-  has_many :coaches
-  has_many :athletes
-  has_many :events
-  has_many :blogs
-  has_many :newsfeeds
+  has_many :coaches, dependent: :nullify
+  has_many :athletes, dependent: :nullify
+  has_many :events, dependent: :destroy
+  has_many :blogs, dependent: :destroy
+  has_many :newsfeeds, dependent: :destroy
     
   def team_name
     title + " " + mascot

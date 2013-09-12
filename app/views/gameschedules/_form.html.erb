@@ -24,12 +24,12 @@
 			</div>
 			<div class="row">
 				<div class="span10">
-					<%= f.input	:starttime, label: "Start Time:", as: :time, ignore_date:  true, input_html: { style: "width: 50px" } %>
+					<%= f.input	:starttime, label: "Game Start Time:", as: :time, ignore_date:  true, input_html: { style: "width: 50px" } %>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span2">
-					<%= f.input :homeaway, label: "Home or Away?" %>
+					<%= f.input :homeaway, label: "Home or Away?" , collection: [ "Home", "Away" ] %>
 				</div>
 				<div class="span2 offset1">
 					<%= f.input	:opponent %>
@@ -46,110 +46,116 @@
 					<%= f.input	:event, hint:	"Senior day, Homecoming, etc.", required: false %>	
 				</div>
 			</div>
-			<% if @sport.sportname == "Basketball" and @gameschedule.periods.nil? %>
+			<p>
+			<% if !@gameschedule.opponent.nil? %>
+				<h5>Real Time Game Summary:</h5>
+				<p>
 				<div class="row">
-			        <div class="span6" %>
-			            <%= f.input :periods, collection: 2..5, hint: "Enter 2 for halfs, 4 for quarters, 5 for NJB .." %>
-			        </div>
-			    </div>
-			<% end %>
-			<p>
-			<h5>Real Time Game Summary:</h5>
-			<p>
-			<div class="row">
-				<div class="span2">
-					<%= f.input :livegametime, label: "Live Game Time:", as: :time, ignore_date: true, input_html: { style: "width: 50px" } %>
-					<!--%= f.input :current_game_time, label: "Game Time", input_html: { style: "width: 50px" } %-->
-				</div>
-				<% if @sport.sportname == "Football" %>
-					<div class="span2 offset1">
-						<%= f.input :our, label: "Ball Position", collection: [ @team.team_name, @gameschedule.opponent ] %>
-					</div>
-					<div class="span1 offset1">
-						<%= f.input :ballon, label: "Ball On:", input_html: { style: "width: 50px" } %>
+					<div class="span2">
+						<%= f.input :livegametime, label: "Live Game Time:", as: :time, ignore_date: true, input_html: { style: "width: 50px" } %>
+						<!--%= f.input :current_game_time, label: "Game Time", input_html: { style: "width: 50px" } %-->
 					</div>
 					<div class="span1 offset1">
 						<%= f.input :possession, collection: ["Home", "Opponent"], input_html: { style: "width: 80px" }  %>
 					</div>
-				<% end %>
-			</div>
-			<div class="row">
-				<% if @sport.sportname == "Football" %>
-					<div class="span1">
-						<%= f.input :down, collection: 1..4, input_html: { style: "width: 50px" } %>
-					</div>
-					<div class="span1 offset1">
-						<%= f.input :togo, label: "To Go", input_html: { style: "width: 50px" } %>
-					</div>
-				<% end %>
-				<div class="span6 offset1">
-					<%= f.input :lastplay, label: "Last Play:", input_html: { style: "width: 460px" } %>
+					<% if @sport.sportname == "Football" %>
+						<div class="span1 offset1">
+							<%= f.input :ballon, label: "Ball On:", input_html: { style: "width: 50px" } %>
+						</div>
+						<div class="span2 offset1">
+							<%= f.input :our, label: "Ball Position", collection: [ @team.team_name, @gameschedule.opponent ] %>
+						</div>
+					<% elsif @sport.sportname == "Basketball" %>
+						<div class="span1 offset1">
+							<%= f.input :currentperiod, label: "Period", collection: 1..4, input_html: { style: "width: 50px" } %>
+						</div>
+						<div class="span2 offset1">
+							<%= f.input :bballpossessionarrow, label: "Possession Arrow:", collection: [ @team.team_name, @gameschedule.opponent ] %>
+						</div>
+					<% end %>
 				</div>
-			</div>
-			<div class="row">
-				<div class="span2">
-					<%= f.input :final, as: :boolean, label: "Mark game as final" %>
-				</div>
-			</div>
-			<p>
-			<h5>Game Score:</h5>
-			<p>
-			<div class="row">
-				<div class="span1">
-					<%= f.input :homeq1, label: "Q1 Score", input_html: { style: "width: 50px" } %>
-				</div>
-				<div class="span1 offset1">
-					<%= f.input :homeq2, label: "Q2 Score", input_html: { style: "width: 50px" } %>
-				</div>
-				<div class="span1 offset1">
-					<%= f.input :homeq3, label: "Q3 Score", input_html: { style: "width: 50px" }%>
-				</div>
-				<div class="span1 offset1">
-					<%= f.input :homeq4, label: "Q4 Score", input_html: { style: "width: 50px" } %>
-				</div>
-			</div>
-			<p>
-			<div class="row">
-				<div class="span4">
-					<h4><%= @team.team_name %>: <%= @gameschedule.homeq1 + @gameschedule.homeq2 + @gameschedule.homeq3 + @gameschedule.homeq4 %></h4>
-				</div>
-			</div>
-			<p>
-			<div class="row">
-				<div class="span1">
-					<%= f.input :opponentq1, label: "Q1 Score", input_html: { style: "width: 50px" } %>
-				</div>
-				<div class="span1 offset1">
-					<%= f.input :opponentq2, label: "Q2 Score", input_html: { style: "width: 50px" } %>
-				</div>
-				<div class="span1 offset1">
-					<%= f.input :opponentq3, label: "Q3 Score", input_html: { style: "width: 50px" }%>
-				</div>
-				<div class="span1 offset1">
-					<%= f.input :opponentq4, label: "Q4 Score", input_html: { style: "width: 50px" } %>
-				</div>
-			</div>
-			<p>
-			<% if !@gameschedule.opponent.nil? %>
 				<div class="row">
-					<div class="span4">
-						<h4><%= @gameschedule.opponent %>: <%= @gameschedule.opponentq1 + @gameschedule.opponentq2 + @gameschedule.opponentq3 + 
-								@gameschedule.opponentq4 %></h4>
+					<div class="span6">
+						<%= f.input :lastplay, label: "Last Play:", input_html: { style: "width: 460px" } %>
+					</div>
+					<% if @sport.sportname == "Football" %>
+						<div class="span1 offset1">
+							<%= f.input :down, collection: 1..4, input_html: { style: "width: 50px" } %>
+						</div>
+						<div class="span1 offset1">
+							<%= f.input :togo, label: "To Go", input_html: { style: "width: 50px" } %>
+						</div>
+					<% end %>
+				</div>
+				<% if @sport.sportname == "Football" %>
+					<div class="row">
+						<div class="span2">
+							<%= f.input :penalty, label: "Number of Penalties:", input_html: { style: "width: 50px" } %>
+						</div>
+						<div class="span2">
+							<%= f.input :penaltyyards, label: "Penalty Yards:", input_html: { style: "width: 50px" } %>
+						</div>
+					</div>
+				<% elsif @sport.sportname == "Basketball" %>
+					<div class="row">
+						<div class="span2">
+							<%= f.input :hometimeouts, label: "Home Time Outs", input_html: { style: "width: 50px" } %>
+						</div>
+						<div class="span2 offset1">
+							<%= f.input :opponenttimeouts, label: "Vistor Time Outs", input_html: { style: "width: 50px" } %>
+						</div>
+					</div>
+				<% end %>
+				<div class="row">
+					<div class="span2">
+						<%= f.input :final, as: :boolean, label: "Mark game as final" %>
 					</div>
 				</div>
+				<p>
+				<h5>Enter Game Score:</h5>
+				<p>
+					Game score data for home team below is automatically generated via the entry of stats for athletes. Changing the data below can result in statistical data being out of sync with the athlete stats. Use with caution!
+				<p>
+				<% if @sport.sportname == "Football" %>
+					<%= render "quarters_form", f: f %>
+					<p>
+					<div class="row">
+						<div class="span2">
+							<%= f.input :firstdowns, label: "First Downs:", input_html: { style: "width: 50px" } %>
+						</div>
+					</div>
+				<% elsif @sport.sportname == "Basketball" %>
+					<div class="row">
+						<div class="span1">
+							<h4>Home</h4>
+						</div>
+					</div>
+					<div class="row">
+						<div class="span2">
+							<%= f.input :homescore, label: "Home Score", input_html: { style: "width: 50px" } %>
+						</div>
+						<div class="span2">
+							<%= f.input :homefouls, label: "Fouls", input_html: { style: "width: 50px" } %>
+						</div>
+					</div>
+					<div class="row">
+						<div class="span1">
+							<h4>Visitor</h4>
+						</div>
+					</div>
+					Opponent data is not comupted automatically since only your team roster is available for this information. You can update the opponents score
+					below as needed so your fans can keep track of the action.
+					<p>
+					<div class="row">
+						<div class="span2">
+							<%= f.input :opponentscore, label: "Opponenet Score", input_html: { style: "width: 50px" } %>
+						</div>
+						<div class="span2">
+							<%= f.input :opponentfouls, label: "Fouls", input_html: { style: "width: 50px" } %>
+						</div>
+					</div>
+				<% end %>
 			<% end %>
-			<p>
-			<div class="row">
-				<div class="span2">
-					<%= f.input :firstdowns, label: "First Downs:", input_html: { style: "width: 50px" } %>
-				</div>
-				<div class="span2">
-					<%= f.input :penalty, label: "Number of Penalties:", input_html: { style: "width: 50px" } %>
-				</div>
-				<div class="span2">
-					<%= f.input :penaltyyards, label: "Penalty Yards:", input_html: { style: "width: 50px" } %>
-				</div>
-			</div>
 			<p>
 			<div class="span1 offset3">
 				<%= f.button :submit, "Submit", class: "btn btn-medium btn-primary" %>

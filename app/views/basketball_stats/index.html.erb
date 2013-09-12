@@ -1,0 +1,34 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Basketball Stats") %>
+<p>
+<div class="row">
+	<div class="span10">
+		<% if !@athlete.nil? and !@gameschedule.nil? %>
+			<% if @bballstats.empty? %>
+				<h4>There are no stats for <%= @athlete.logname %> and <%= @gameschedule.game_name %></h4>
+				<%= link_to "Add Stats", newstat_sport_athlete_basketball_stats_path(@sport, @athlete, gameschedule_id: @gameschedule), 
+							class: "btn btn-medium btn-primary" %>
+			<% else %>
+				<h4>Stats for <%= @athlete.logname %> for game <%= @gameschedule.game_name %></h4>
+				<%= render "stats", bballstats: @bballstats %>
+			<% end %>
+		<% elsif !@athlete.nil? %>
+			<% if @bballstats.empty? %>
+				<h4>There are no stats for <%= @athlete.logname %></h4>
+				<%= link_to "Add Stats", newstat_sport_athlete_basketball_stats_path(@sport, @athlete), 
+							class: "btn btn-medium btn-primary" %>
+			<% else %>
+				<h4>Stats for <%= @athlete.logname %></h4>
+				<%= render "stats", bballstats: @bballstats %>
+			<% end %>
+		<% elsif !@gameschedule.nil? %>
+			<% if @bballstats.empty? %>
+				<h4>There are no stats for <%= @gameschedule.game_name %></h4>
+				<%= link_to "Add Stats", newstat_sport_athlete_basketball_stats_path(@sport, @athlete), 
+							class: "btn btn-medium btn-primary" %>
+			<% else %>
+				<h4>Stats for game <%= @gameschedule.game_name %></h4>
+				<%= render "stats", bballstats: @bballstats %>
+			<% end %>
+		<% end %>
+	</div>
+</div>

@@ -1,0 +1,35 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - New Basketball Stats") %>
+<p>
+<div class="row">
+	<div class="span10">
+		<% if @gameschedule.nil? %>
+			<h4>Select game to add stats for <%= @athlete.logname %>:</h4>
+			<p>
+			<%= form_tag newstat_sport_athlete_basketball_stats_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
+				<%= label_tag "Select Game" %>
+				<%= select_tag "gameschedule_id", options_from_collection_for_select(@games, "id", "game_name") %>
+				<%= select_tag "livestats", options_for_select(["Live", "Totals"]) %>
+				<%= submit_tag "Submit", class: "btn btn-medium btn-primary", name: nil %>
+			<% end %>
+		<% else %>
+			<h4>Stats for <%= @athlete.logname %> for <%= @gameschedule.game_name %>:</h4>
+			<%= simple_form_for [@sport, @athlete, @bbstats],  html: { multipart: true } do |f| %>
+				<%= render 'shared/error_messages', object: f.object %>
+				<% if @live %>
+					<h5>Entering Stats play by play<h5>
+					<%= render "livestats" %>
+				<% else %>
+					<h5><font color="red"><em>Warning! Entering Stat totals. If you entered stats play by play they will be overwritten. 
+						All automated live game scoring will also be overwritten.</em></font></h5>
+						<%= render "totals", f: f %>
+				<% end %>
+		    	<p>
+			    <div class="row">
+					<div class="span1 offset4">
+						<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+			        </div>
+				</div>
+		    <% end %>
+		<% end %>
+	</div>
+</div>

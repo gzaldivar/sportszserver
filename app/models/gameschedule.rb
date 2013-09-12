@@ -28,6 +28,9 @@ class Gameschedule
   field :opponenth1, type: Integer, default: 0
   field :opponenth2, type: Integer, default: 0
 
+  field :homescore, type: Integer, default: 0
+  field :opponentscore, type: Integer, default: 0
+
 #  field :firstdowns, type: Integer, default: 0
   field :penalty, type: Integer, default: 0
   field :penaltyyards, type: Integer, default: 0
@@ -41,10 +44,20 @@ class Gameschedule
   field :down, type: Integer, default: 1
   field :togo, type: Integer, default: 0
   field :currentqtr, type: String, default: "Q1"
+
   field :final, type: Boolean, default: false
 
+  # generic game fields
+
+  field :hometimeouts, type: Integer, default: 0
+  field :opponenttimeouts, type: Integer, default: 0
+
+  # Basketball fields
+
   field :bballpossessionarrow, type: String
-  field :periods, type: Integer
+  field :homefouls, type: Integer, default: 0
+  field :opponentfouls, type: Integer, default: 0
+  field :currentperiod, type: Integer, default: 1
 
   has_mongoid_attached_file :opponentpic,
     :storage        => :s3,

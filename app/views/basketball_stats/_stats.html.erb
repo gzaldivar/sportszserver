@@ -1,0 +1,47 @@
+<table class="table table-bordered">
+	<thead>
+		<th>Game</th>
+		<th>FGA</th>
+		<th>FGM</th>
+		<th>FG%</th>
+		<th>3FGA</th>
+		<th>3FGM</th>
+		<th>3FG%</th>
+		<th>FTA</th>
+		<th>FTM</th>
+		<th>FT%</th>
+		<th>Edit</th>
+	</thead>
+	<tbody>
+		<% bballstats.each do |b| %>
+			<% if !b.nil? %>
+				<tr>
+					<td><%= Gameschedule.find(b.gameschedule_id.to_s).game_name %></td>
+					<td><%= b.twoattempt %></td>
+					<td><%= b.twomade %></td>
+					<% if b.twomade > 0 %>
+						<td><%= b.twoattempt/b.twomade %></td>
+					<% else %>
+						<td>0.0</td>
+					<% end %>
+					<td><%= b.threeattempt %></td>
+					<td><%= b.threemade %></td>
+					<% if b.threemade > 0 %>
+						<td><%= b.threeattempt/b.threemade %></td>
+					<% else %>
+						<td>0.0</td>
+					<% end %>
+					<td><%= b.ftattempt %></td>
+					<td><%= b.ftmade %></td>
+					<% if b.ftmade > 0 %>
+						<td><%= b.ftattempt/b.ftmade %></td>
+					<% else %>
+						<td>0.0</td>
+					<% end %>
+					<td><%= link_to "Stats", edit_sport_athlete_basketball_stat_path(@sport, @athlete, b, gameschedule_id: b.gameschedule_id), 
+								class: "btn btn-mini btn-primary" %></td>
+				</tr>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>

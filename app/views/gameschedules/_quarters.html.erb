@@ -1,0 +1,30 @@
+<thead>
+	<th>Team</th>
+	<th>Q1</th>
+	<th>Q2</th>
+	<th>Q3</th>
+	<th>Q4</th>
+	<% if @gameschedule.final %>
+		<th>Final</th>
+	<% else %>
+		<th>Score</th>
+	<% end %>
+</thead>
+<tbody>
+	<tr>
+		<td><%= @team.team_name %></td>
+		<td><%= @gameschedule.homeq1 %></td>
+		<td><%= @gameschedule.homeq2 %></td>
+		<td><%= @gameschedule.homeq3 %></td>
+		<td><%= @gameschedule.homeq4 %></td>
+		<td><%= @gameschedule.homeq1 + @gameschedule.homeq2 + @gameschedule.homeq3 + @gameschedule.homeq4 %></td>
+	</tr>
+	<tr>
+		<td><%= @gameschedule.opponent_name %></td>
+		<td><%= @gameschedule.opponentq1 %></td>
+		<td><%= @gameschedule.opponentq2 %></td>
+		<td><%= @gameschedule.opponentq3 %></td>
+		<td><%= @gameschedule.opponentq4 %></td>
+		<td><%= @gameschedule.opponentq1 + @gameschedule.opponentq2 + @gameschedule.opponentq3 + @gameschedule.opponentq4 %></td>
+	</tr>
+</tbody>

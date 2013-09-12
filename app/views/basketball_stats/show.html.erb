@@ -1,0 +1,8 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Edit Basketball Stats") %>
+<p>
+<div class="row">
+	<div class="span10">
+		<h4>Stats for <%= @athlete.logname %> for game <%= Gameschedule.find(@bbstats.gameschedule_id).game_name %></h4>
+		<%=render "stats", bballstats: @stats %>
+	</div>
+</div>

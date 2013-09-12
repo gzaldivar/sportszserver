@@ -7,7 +7,24 @@ class GameschedulesController < ApplicationController
   end
   
   def new
-    @gameschedule = Gameschedule.new    
+#    if @sport.sportname == "Basketball" and @sport.periods.nil?
+#      redirect_to periods_sport_team_gameschedules_path(@sport, @team)
+#    else
+      @gameschedule = Gameschedule.new
+#    end
+  end
+
+  def periods
+  end
+
+  def defineperiods
+    begin
+      @sport.periods = params[:periods]
+      @sport.save!
+      redirect_to new_sport_team_gameschedule_path(@sport, @team)
+    rescue Exception => e
+      redirect_to @sport, alert: "Error defining basketball periods - " + e.message
+    end
   end
   
   def create
@@ -40,10 +57,10 @@ class GameschedulesController < ApplicationController
   end
 
   def show
-    @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
-    @gamelog = @gameschedule.gamelogs.build
     @players = @sport.athletes.where(team_id: @team.id.to_s).asc(:number)
     if @sport.name == "Football"
+      @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
+      @gamelog = @gameschedule.gamelogs.build
       @stats = AthleteFootballStatsTotal.new
       @stats.passing_totals(@gameschedule)
       @ath_totals = @gameschedule.football_stats

@@ -44,6 +44,12 @@ Sportzserver::Application.routes.draw do
       end
       
       resources :gameschedules, only: [:show, :new, :create, :edit, :update, :index, :destroy] do
+        
+        collection do
+          get   :periods
+          put   :defineperiods
+        end
+
         resources :gamelogs, only: [:create, :edit, :destroy, :show, :update] do
           collection do
             get :gamelogs
@@ -129,7 +135,11 @@ Sportzserver::Application.routes.draw do
 
       end
  
-      resources :basketball_stats
+      resources :basketball_stats, only: [:create, :show, :update, :index, :destroy, :edit] do
+        collection do
+          get   :newstat
+        end
+      end
       
       member do
         get :follow, :unfollow, :stats

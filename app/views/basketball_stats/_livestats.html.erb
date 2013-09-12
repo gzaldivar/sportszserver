@@ -1,0 +1,58 @@
+<div class="row">
+	<%= hidden_field_tag "livestats" %>
+	<%= hidden_field_tag "gameschedule_id", value=@gameschedule.id.to_s %>
+	<div class="span2 offset1">
+		<%= label_tag "FGA" %>
+		<%= check_box_tag "twoattempt", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "FGM" %>
+		<%= check_box_tag "twomade", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "3FGA" %>
+		<%= check_box_tag "threeattempt", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "3FGM" %>
+		<%= check_box_tag "threemade", 1 %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span2 offset1">
+		<%= label_tag "FTA" %>
+		<%= check_box_tag "ftattempt", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "FTM" %>
+		<%= check_box_tag "ftmade", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "Fouls" %>
+		<%= check_box_tag "fouls", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "Assists" %>
+		<%= check_box_tag "assists", 1 %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span2 offset1">
+		<%= label_tag "Steals" %>
+		<%= check_box_tag "steals", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "Blocks" %>
+		<%= check_box_tag "blocks", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "Off Rebound" %>
+		<%= check_box_tag "offrebound", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "Def Rebound" %>
+		<%= check_box_tag "defrebound", 1 %>
+	</div>
+</div>

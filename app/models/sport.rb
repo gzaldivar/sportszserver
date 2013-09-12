@@ -39,6 +39,8 @@ class Sport
   field :approved, type: Boolean, default: true
   field :mediasize, type: Integer, default: 0
 
+  field :periods, type: Integer          # periods to display for basketball, hockey, etc.
+
   field :alert_interval, type: Integer, default: 120     # Time interval to check for alerts
   field :gamelog_interval, type: Integer, default: 360     # Time interval to check for game log updates
   field :newsfeed_interval, type: Integer, default: 3600  # Time interval to check for news feeds
@@ -108,6 +110,7 @@ class Sport
 #  validates :sex, presence: true, format: { with: /Male|Female/ }
   validates :state, presence: true
   validates :contactemail, presence: true
+  validates_numericality_of :periods, message: "Value must be greater than 0", greater_than: 0, less_than: 5
    
   validates_attachment_content_type :sport_banner, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_attachment_content_type :sport_logo, content_type: ['image/jpg', 'image/jpeg', 'image/png']

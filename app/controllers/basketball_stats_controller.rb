@@ -83,10 +83,14 @@ class BasketballStatsController < ApplicationController
 			end
 
 			if  live == "Totals"
+				game.homescore -= @bbstats.ftmade - (@bbstats.twomade * 2) - (@bbstats.threemade * 3)
+				game.homefouls -= @bbstats.fouls
 				@bbstats.update_attributes!(params[:basketball_stat])
-				game.homescore = @bbstats.ftmade  + (@bbstats.twomade * 2) + (@bbstats.threemade * 3)
-				game.homefouls = @bbstats.fouls
+				game.homescore += @bbstats.ftmade  + (@bbstats.twomade * 2) + (@bbstats.threemade * 3)
+				game.homefouls += @bbstats.fouls
 			else
+				game.homescore -= params[:ftmade].to_i + (params[:twomade].to_i * 2) + (params[:threemade].to_i * 3)
+				game.homefouls -= params[:fouls].to_i
 				livestats(@bbstats, @athlete, params)
 				game.homescore += params[:ftmade].to_i + (params[:twomade].to_i * 2) + (params[:threemade].to_i * 3)
 				game.homefouls += params[:fouls].to_i

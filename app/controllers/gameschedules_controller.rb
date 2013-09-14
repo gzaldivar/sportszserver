@@ -114,9 +114,9 @@ class GameschedulesController < ApplicationController
       @gameschedules = []
       @team.gameschedules.asc(:gamedate).each_with_index do |s, cnt|
         @gameschedules[cnt] = s
+        @gameschedules[cnt].firstdowns = 0
 
         if @sport.sportname == "Football"
-          @gameschedules[cnt].firstdowns = 0
           s.football_stats.each do |f|
             if !f.football_passings.nil?
               @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_passings.firstdowns

@@ -110,26 +110,37 @@ class GameschedulesController < ApplicationController
   end
   
   def index
-    @gameschedules = []
-    @team.gameschedules.asc(:gamedate).each_with_index do |s, cnt|
-      @gameschedules[cnt] = s
-      @gameschedules[cnt].firstdowns = 0
-      s.football_stats.each do |f|
-        if !f.football_passings.nil?
-          @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_passings.firstdowns
+    begin
+      @gameschedules = []
+      @team.gameschedules.asc(:gamedate).each_with_index do |s, cnt|
+        @gameschedules[cnt] = s
+
+        if @sport.sportname == "Football"
+          @gameschedules[cnt].firstdowns = 0
+          s.football_stats.each do |f|
+            if !f.football_passings.nil?
+              @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_passings.firstdowns
+            end
+          end
+          s.football_stats.each do |f|
+            if !f.football_rushings.nil?
+              @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_rushings.firstdowns
+            end
+          end
         end
+        
       end
-      s.football_stats.each do |f|
-        if !f.football_rushings.nil?
-          @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_rushings.firstdowns
-        end
+      
+      respond_to do |format|
+        format.html
+        format.json 
       end
-    end
-    
-    respond_to do |format|
-      format.html
-      format.json 
-    end    
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: e.message }
+        format.json { render status: 404, json: { error: e.message } }
+      end
+    end  
   end
   
   def destroy

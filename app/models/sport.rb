@@ -8,8 +8,8 @@ class Sport
 
   before_save :decode_base64_image
 
-  field :name, type: String
-  field :sportname, type: String
+  field :name, type: String, default: ""
+  field :sportname, type: String, default: ""
   field :has_stats, type: Boolean, default: false
   field :year, type: String
   field :season, type: String

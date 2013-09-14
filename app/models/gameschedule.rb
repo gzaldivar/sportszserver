@@ -36,7 +36,7 @@ class Gameschedule
   field :penaltyyards, type: Integer, default: 0
   field :livegametime, type: DateTime
   field :current_game_time, type: String
-  field :own, type: Boolean
+  field :own, type: Boolean, default: true
   field :our, type: String, default: ""
   field :ballon, type: Integer, default: 0
   field :possession, type: String, default: ""
@@ -54,7 +54,7 @@ class Gameschedule
 
   # Basketball fields
 
-  field :bballpossessionarrow, type: String
+  field :bballpossessionarrow, type: String, default: "Home"
   field :homefouls, type: Integer, default: 0
   field :opponentfouls, type: Integer, default: 0
   field :currentperiod, type: Integer, default: 1

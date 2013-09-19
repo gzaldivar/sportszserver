@@ -35,7 +35,7 @@ class BasketballStatsController < ApplicationController
 				game.homescore = (bbstats.ftmade * 1) + (bbstats.twomade * 2) + (bbstats.threemade * 3)
 				game.homefouls = bbstats.fouls
 			else
-				bbstats = @athlete.basketball_stats.new(gameschedule_id: params[:basketball_stat][:gameschedule_id].to_s)
+				bbstats = @athlete.basketball_stats.new(gameschedule_id: game.id.to_s)
 				livestats(bbstats, @athlete, params)
 				game.homescore += params[:ftmade].to_i + (params[:twomade].to_i * 2) + (params[:threemade].to_i * 3)
 				game.homefouls += params[:fouls].to_i

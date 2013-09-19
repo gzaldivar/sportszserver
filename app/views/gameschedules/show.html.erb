@@ -89,14 +89,15 @@
   					<td><%= @gameschedule.bballpossessionarrow %></td>
   				</tbody>
   			</table>
+  			<%= render 'basketball_stats/stats', bballstats: @stats, name: "Player" %>
   		<% end %>
-	  		<% if @sport.sportname == "Football" %>
-				<h4>Scoring Summary</h4>
-		  		<table class="table table-bordered">
-          			<p>
-  					<%= render "quarters" %>
-			  	</table>
-	  		<% end %>
+  		<% if @sport.sportname == "Football" %>
+			<h4>Scoring Summary</h4>
+	  		<table class="table table-bordered">
+      			<p>
+					<%= render "quarters" %>
+		  	</table>
+  		<% end %>
 	  	<% if @sport.sportname == "Football" and !@gameschedule.current_game_time.nil? %>
 		  	<h4>Real Time Game Summary:</h4>
   			<table class="table table-bordered">

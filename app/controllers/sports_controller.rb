@@ -21,6 +21,7 @@ class SportsController < ApplicationController
         @sport.has_stats = true
       else
         @sport.sportname = @sport.name  # Keep capability to allow non stat sports. Mobile sends name not sportname
+        @sport.has_stats = true
       end
       
       if @sport.beta?

@@ -38,11 +38,11 @@ module SitesHelper
   end
 
   def roomformedia?(sport)
-    if sport.tier == "Basic" and sport.mediasize > 300000000
+    if sport.mediatier == "Basic" and sport.mediasize > 300000000
       return false
-    elsif sport.tier == "Mobile" and sport.mediasize > 1000000000
+    elsif sport.mediatier == "Mobile" and sport.mediasize > 1000000000
       return false
-    elsif sport.tier == "All"
+    elsif sport.mediatier == "All"
       return true
     else
       return true

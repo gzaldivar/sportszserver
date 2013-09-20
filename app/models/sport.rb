@@ -38,6 +38,7 @@ class Sport
   field :beta, type: Boolean, default: true
   field :approved, type: Boolean, default: true
   field :mediasize, type: Integer, default: 0
+  field :mediatier, type: String, default: "Basic"
 
   field :periods, type: Integer, default: 0          # periods to display for basketball, hockey, etc.
 

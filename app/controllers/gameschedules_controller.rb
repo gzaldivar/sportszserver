@@ -57,51 +57,58 @@ class GameschedulesController < ApplicationController
   end
 
   def show
-    @players = @sport.athletes.where(team_id: @team.id.to_s).asc(:number)
-    if @sport.name == "Football"
-      @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
-      @gamelog = @gameschedule.gamelogs.build
-      @stats = AthleteFootballStatsTotal.new
-      @stats.passing_totals(@gameschedule)
-      @ath_totals = @gameschedule.football_stats
-      @stats.rushing_totals(@gameschedule)
-      @stats.receiving_totals(@gameschedule)
-      @stats.defense_totals(@gameschedule)
-      @stats.specialteams_totals(@gameschedule)
-      @gameschedule.firstdowns = 0
-      @gameschedule.football_stats.each do |f|
-        if !f.football_passings.nil?
-          @gameschedule.firstdowns = @gameschedule.firstdowns + f.football_passings.firstdowns
-        end
-      end
-      @gameschedule.football_stats.each do |f|
-        if !f.football_rushings.nil?
-          @gameschedule.firstdowns = @gameschedule.firstdowns + f.football_rushings.firstdowns
-        end
-      end
-    elsif @sport.name == "Basketball"
-      athletes = @sport.athletes.where(team_id: @gameschedule.team_id.to_s).asc(:number)
-      bbstats = @gameschedule.basketball_stats
-      @stats = []
-
-      athletes.each_with_index do |a, cnt|
-        stat = nil
-        bbstats.each do |b|
-          if b.athlete_id == a.id
-            stat = b
-            break
+    begin
+      @players = @sport.athletes.where(team_id: @team.id.to_s).asc(:number)
+      if @sport.name == "Football"
+        @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
+        @gamelog = @gameschedule.gamelogs.build
+        @stats = AthleteFootballStatsTotal.new
+        @stats.passing_totals(@gameschedule)
+        @ath_totals = @gameschedule.football_stats
+        @stats.rushing_totals(@gameschedule)
+        @stats.receiving_totals(@gameschedule)
+        @stats.defense_totals(@gameschedule)
+        @stats.specialteams_totals(@gameschedule)
+        @gameschedule.firstdowns = 0
+        @gameschedule.football_stats.each do |f|
+          if !f.football_passings.nil?
+            @gameschedule.firstdowns = @gameschedule.firstdowns + f.football_passings.firstdowns
           end
         end
-        if stat
-          @stats[cnt] = stat
-        else
-          @stats[cnt] = nil
+        @gameschedule.football_stats.each do |f|
+          if !f.football_rushings.nil?
+            @gameschedule.firstdowns = @gameschedule.firstdowns + f.football_rushings.firstdowns
+          end
+        end
+      elsif @sport.name == "Basketball"
+        athletes = @sport.athletes.where(team_id: @gameschedule.team_id.to_s).asc(:number)
+        bbstats = @gameschedule.basketball_stats
+        @stats = []
+
+        athletes.each_with_index do |a, cnt|
+          stat = nil
+          bbstats.each do |b|
+            if b.athlete_id == a.id
+              stat = b
+              break
+            end
+          end
+          if stat
+            @stats[cnt] = stat
+          else
+            @stats[cnt] = nil
+          end
         end
       end
-    end
-    respond_to do |format|
-      format.html
-      format.json
+      respond_to do |format|
+        format.html
+        format.json
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Error: " + e.message }
+        format.json { render status: 404, json: { error: e.message } }
+      end
     end
   end
   

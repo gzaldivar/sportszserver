@@ -119,11 +119,11 @@
 				<% if @sport.sportname == "Football" %>
 					<%= render "quarters_form", f: f %>
 					<p>
-					<div class="row">
+					<!--div class="row">
 						<div class="span2">
 							<%= f.input :firstdowns, label: "First Downs:", input_html: { style: "width: 50px" } %>
 						</div>
-					</div>
+					</div-->
 				<% elsif @sport.sportname == "Basketball" %>
 					<div class="row">
 						<div class="span1">

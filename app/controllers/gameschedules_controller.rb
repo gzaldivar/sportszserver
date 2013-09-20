@@ -100,6 +100,7 @@ class GameschedulesController < ApplicationController
           end
         end
       end
+      puts "rendering show"
       respond_to do |format|
         format.html
         format.json

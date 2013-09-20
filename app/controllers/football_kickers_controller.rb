@@ -93,8 +93,8 @@ class FootballKickersController < ApplicationController
 				@kicker.fgmade = @kicker.fgmade + 1
 
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
-					gamelog = @kicker.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
-																			  logentry: @athlete.logname + " " + params[:fglong], score: "FG")
+					gamelog = @kicker.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], player: @athlete.id,
+																			  logentry: @athlete.logname, yards: params[:fglong], score: "FG")
 					gamelog.save!
 					if params[:quarter]
 						@gameschedule = Gameschedule.find(@kicker.football_stat.gameschedule)
@@ -115,7 +115,7 @@ class FootballKickersController < ApplicationController
 				@kicker.xpmade = @kicker.xpmade + 1
 
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
-					gamelog = @kicker.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
+					gamelog = @kicker.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], player: @athlete.id,
 																			  logentry: @athlete.logname, score: "XP")
 					gamelog.save!
 					if params[:quarter]

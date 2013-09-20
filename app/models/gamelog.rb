@@ -34,8 +34,12 @@ class Gamelog
         Athlete.find(self.assist).logname + " - " + self.score
       elsif isReturner?
         self.period + ": " + self.time + " - " +  theplayer.logname + " " + self.yards.to_s + " yard " + self.logentry + " - " + self.score
-      else
+      elsif isDefense?
         self.period + ": " + self.time + " - " +  theplayer.logname + " " + self.yards.to_s + " " + self.logentry + " - " + self.score
+      elsif self.score == "FG"
+        self.period + ": " + self.time + " - " + theplayer.logname + " " + self.yards.to_s + " yard " + self.score
+      elsif self.score == "XP"
+        self.period + ": " + self.time + " - " + theplayer.logname + " " + self.score
       end
     end
   end

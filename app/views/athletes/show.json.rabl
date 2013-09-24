@@ -42,7 +42,7 @@ if @sport.name == "Football"
 elsif @sport.name == "Basketball"
 	child :basketball_stats do
 		node(:basketball_stat_id) { |b| b.id.to_s }
-		node(:gamescheduleid) { |g| g.gameschedule_id.to_s }
+		node(:gameschedule_id) { |g| g.gameschedule_id.to_s }
 		attributes :twoattempt, :twomade, :threeattempt, :threemade, :ftmade, :ftattempt, :fouls, :assists, :steals, :blocks, :offrebound, :defrebound
 	end
 end

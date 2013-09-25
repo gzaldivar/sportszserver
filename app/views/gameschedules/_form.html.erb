@@ -4,7 +4,7 @@
 			<%= render 'shared/error_messages', object: f.object %>
 			<div class="row">
 				<div class="span4">
-					<%= f.input :startdate, as: :string, input_html: { class: 'datepicker', 
+					<%= f.input :startdate, label: "Start Date", as: :string, input_html: { class: 'datepicker', 
 											:value => @gameschedule.try(:gamedate).try(:strftime,'%m/%d/%Y') } %>
 					<%= f.input :gamedate, :as => :hidden, :input_html => { :id => 'recorded-at-alt'} %>
 					<!--%= f.input :gamedate,  as: :date, start_year: Date.today.year, start_month: Date.today, 

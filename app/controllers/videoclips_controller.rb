@@ -274,9 +274,9 @@ class VideoclipsController < ApplicationController
             video.frame_rate = movie.frame_rate
             video.resolution = movie.resolution
 
-            if @videoclip.duration > 24.0
-              @videoclip.error_status = true
-              @videoclip.error_message = "Video clip exceeds maximum duration of 24 seconds"
+            if video.duration > 24.0
+              video.error_status = true
+              video.error_message = "Video clip exceeds maximum duration of 24 seconds"
             end
 
           end

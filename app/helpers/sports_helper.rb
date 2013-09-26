@@ -11,6 +11,8 @@ module SportsHelper
     PhotoError.where(sport: sport.id).each do |p|
       p.delete
     end
+    current_user.default_site = ""
+    current_user.save!
   end
   
   def sports_list

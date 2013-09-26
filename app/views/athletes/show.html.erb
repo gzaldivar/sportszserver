@@ -111,10 +111,10 @@
 <p>
 <div class="row">
   <div class="span7 offset3">
-    <% if user_signed_in? and user_pics_ok? and !@athlete.team_id.nil? %>
+    <% if user_signed_in? and (user_pics_ok? or isAdmin? or isTeamManager?(@athlete)) and !@athlete.team_id.nil? %>
 		  <%= link_to	"Add Photo", newathlete_sport_photo_path(@sport, @athlete), class:	"btn btn-medium btn-primary" %>&nbsp;  
     <% end %>
-    <% if user_signed_in? and user_videos_ok? and !@athlete.team_id.nil? %>
+    <% if user_signed_in? and (user_videos_ok? or isAdmin? or isTeamManager?(@athlete)) and !@athlete.team_id.nil? %>
 		  <%= link_to	"Add Video", newathlete_sport_videoclip_path(@sport, @athlete), class:	"btn btn-medium btn-primary" %>&nbsp;  
     <% end %>
     <% if isAdmin? or isTeamManager?(@athlete) %>

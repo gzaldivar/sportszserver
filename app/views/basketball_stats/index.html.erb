@@ -9,7 +9,7 @@
 							class: "btn btn-medium btn-primary" %>
 			<% else %>
 				<h4>Stats for <%= @athlete.logname %> for game <%= @gameschedule.game_name %></h4>
-				<%= render "stats", bballstats: @bballstats %>
+				<%= render "stats", bballstats: @bballstats, name: "Game" %>
 			<% end %>
 		<% elsif !@athlete.nil? %>
 			<% if @bballstats.empty? %>
@@ -18,7 +18,7 @@
 							class: "btn btn-medium btn-primary" %>
 			<% else %>
 				<h4>Stats for <%= @athlete.logname %></h4>
-				<%= render "stats", bballstats: @bballstats %>
+				<%= render "stats", bballstats: @bballstats, name: "Game" %>
 			<% end %>
 		<% elsif !@gameschedule.nil? %>
 			<% if @bballstats.empty? %>
@@ -27,7 +27,7 @@
 							class: "btn btn-medium btn-primary" %>
 			<% else %>
 				<h4>Stats for game <%= @gameschedule.game_name %></h4>
-				<%= render "stats", bballstats: @bballstats %>
+				<%= render "stats", bballstats: @bballstats, name: "Player" %>
 			<% end %>
 		<% end %>
 	</div>

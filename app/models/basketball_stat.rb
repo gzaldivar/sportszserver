@@ -19,6 +19,8 @@ class BasketballStat
   belongs_to :gameschedule
   belongs_to :alerts
 
+  index({ gameschedule: 1 }, { unique: true })
+
   validates_numericality_of :twoattempt, greater_than_or_equal_to: 0
   validates_numericality_of :twomade, greater_than_or_equal_to: 0
   validates_numericality_of :threeattempt, greater_than_or_equal_to: 0

@@ -14,6 +14,12 @@
 		<th>FTA</th>
 		<th>FTM</th>
 		<th>FT%</th>
+		<th>Fouls</th>
+		<th>Assists</th>
+		<th>Blocks</th>
+		<th>Steals</th>
+		<th>Off Reb</th>
+		<th>Def Reb</th>
 		<th>Edit</th>
 	</thead>
 	<tbody>
@@ -46,6 +52,12 @@
 					<% else %>
 						<td>0.0</td>
 					<% end %>
+					<td><%= b.fouls %></td>
+					<td><%= b.assists %></td>
+					<td><%= b.blocks %></td>
+					<td><%= b.steals %></td>
+					<td><%= b.offrebound %></td>
+					<td><%= b.defrebound %></td>
 					<td><%= link_to "Stats", edit_sport_athlete_basketball_stat_path(@sport, b.athlete_id, b, gameschedule_id: b.gameschedule_id), class: "btn btn-mini btn-primary" %></td>
 				</tr>
 			<% end %>

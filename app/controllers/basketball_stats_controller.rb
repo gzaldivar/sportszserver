@@ -125,7 +125,7 @@ class BasketballStatsController < ApplicationController
 			@bballstats = []
 			cnt = 0
 			@sport.teams.find(@athlete.team_id.to_s).gameschedules.desc(:starttime).each do |g|
-				stats = @athlete.basketball_stats(gameschedule_id: g.id.to_s).first
+				stats = @athlete.basketball_stats.where(gameschedule_id: g.id.to_s).first
 				if !stats.nil?
 					@bballstats[cnt] = stats
 					cnt += 1
@@ -210,7 +210,7 @@ class BasketballStatsController < ApplicationController
 
 				bbstats.save!
 			rescue Exception => e
-				throw e.message
+				throw "Error updating live stats!"
 			end
 		end
 end

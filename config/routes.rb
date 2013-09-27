@@ -188,7 +188,8 @@ Sportzserver::Application.routes.draw do
     end
 
     collection do
-      get :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo, :ipadexample_path, :approve
+      get :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo, :ipadexample_path, :approve, :eazefootball, :eazebasketball,
+          :infobasketball, :webbballinfo
     end
 
     member do
@@ -224,7 +225,7 @@ Sportzserver::Application.routes.draw do
   match '/help',    to: 'sports#help'
   match '/contacts', to: 'sports#contact'
   match '/about',   to: 'sports#about'
-  match '/info',    to: 'sports#info'
+  match '/info',    to: 'sports#infofootball'
   match '/admininfo', to: 'sports#admin_info'
   match '/pricing',  to: 'sports#pricing'
   match '/mobileinfo',  to: 'sports#mobileinfo'

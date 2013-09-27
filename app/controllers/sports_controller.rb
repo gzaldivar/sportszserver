@@ -224,7 +224,13 @@ class SportsController < ApplicationController
     end
   end
   
-  def info
+  def infofootball
+  end
+
+  def infobasketball
+  end
+
+  def webbballinfo
   end
 
   def pricing
@@ -243,6 +249,12 @@ class SportsController < ApplicationController
   end
 
   def approve
+  end
+
+  def eazefootball
+  end
+
+  def eazebasketball
   end
 
   def updatelogo

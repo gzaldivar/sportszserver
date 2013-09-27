@@ -18,6 +18,6 @@ class Contact
   validates_format_of :phone, with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/, allow_nil: true, allow_blank: true
   validates_format_of :mobile, with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/, allow_nil: true, allow_blank: true
   validates_format_of :fax, with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})\2([0-9]{4})/, allow_nil: true, allow_blank: true
-  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX },
-                    				uniqueness: { case_sensitive: false }
+  validates :email, presence: true, format: { with: VALID_EMAIL_REGEX }
+  
 end

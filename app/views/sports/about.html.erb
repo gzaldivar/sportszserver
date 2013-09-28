@@ -4,23 +4,36 @@
 		</p><% provide(:title, 'About Us') %>
 		<h1>About Us</h1>
 		<p>
-		Eazesportz specializes in providing software solutions to 
-		athletic programs allowing them to make their sports programs content available via mobile devices in addition to the web. We provide you with a template model alleviating you from the need to manually manage your web sites with 
-		custom solutions. You enter the data and your site is automatically created and available to your users via our iPhone/iPad app.</p>
-		<p>
-		When you work with us, you will reach your fan base on mobile devices and in the future connected TV's in addition to a web site.</p>
-		<p>
-		You own the site and the product. We provide the technology. The rest is up to you!
-		<p>
-		Thanks for looking at us and considering our solution for your needs.
-		<br/>
-		<% if isAdmin? %>
-			<div class="span6 offset2"%>
-				<h4>Enter your own About Page:
-				<%= link_to "Replace", updateabout_sport_path(current_site), class: "btn btn-medium btn-primary" %><p>
-				You will be required to enter a jpg. If you do not want to enter a new about page the text above will be displayed.</h4>
+		<div class="row">
+	    	<div class="span4">
+	      		<%= image_tag "FC_OffenseStatsPortrait.png" %>
+	    	</div>
+			<div class="span4 offset1">
+	      		<%= image_tag "BasketballConsoleLiveStats.png" %>
+	    	</div>
+	    </div>
+		<div class="row">
+			<div class="span10">
+				<h5>
+				Eazesportz specializes in providing mobile solutions to 
+				athletic programs allowing them to make their sports programs content available via mobile devices. We currently have apps available for Football and Basketball. You can use our iPad apps to manage your program while your fans will use the iPhone apps to consume what you post in the cloud. We provide you with the capability to post live stats, photos, video clips, etc.</p>
+				<p>
+				When you work with us, you will reach your fan base on mobile devices and other connected devices.</p>
+				<p>
+				You own the site and the product. We provide the technology. The rest is up to you!
+				<p>
+				Thanks for looking at us and considering our solution for your needs.
+				<br/>
+				<% if isAdmin? %>
+					<div class="span6 offset2"%>
+						<h4>Enter your own About Page:
+						<%= link_to "Replace", updateabout_sport_path(current_site), class: "btn btn-medium btn-primary" %><p>
+						You will be required to enter a jpg. If you do not want to enter a new about page the text above will be displayed.</h4>
+					</div>
+				<% end %>
+				</h5>
 			</div>
-		<% end %>
+		</div>
 	<% else %>
 		<% provide(:title, current_site.sitename + " - About Us") %>
 		<h1>About <%= current_site.sitename %></h1>

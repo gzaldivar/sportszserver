@@ -1,3 +1,4 @@
+<% provide(:title, "Easzesportz Mobile - Football and Basketball") %>
 <p>
 <!--font color="b3f10c"-->
 <% if user_signed_in? %>
@@ -30,31 +31,54 @@
 			<p>
 			<h2>Who we are:</h2>
 			<p>
-			<h4>Easy Sports provides mobile applications for you to manage your sports program. Our initial offerings are targeted to support your football and basketball programs.</h4>
+			<h4>Easy Sports provides mobile applications for you to manage your sports program. Our initial offerings are targeted to support your football or basketball programs.</h4>
 			<p>
 			<em><font color="blue">More apps are planned to support other sports including Soccer, Hockey, etc. Check back if you are looking for apps for those sports.</font></em>
 			<p>
-			<h4><font color="red">Our apps are currently under review by Apple. Feel free to contact us in the interim. Links will be added when the apps become available in iTunes.</font></h4>
-			<p>
 			You can use our iPad app to update and manage all the sports content you want your fans to see. Your fans can view the your programs content via our iPhone app. There is no charge for you to use our iPad app to manage your sports program. If you do not have an iPad, you can use our web site to manage your sports program.
 			<p>
-			<h4>Click on the images below to learn more about our iPad apps.</h4>
+			<h3>Click on the images below to learn more about our iPad apps.</h3>
 		</div>
 	</div>
 	<div class="row">
-		<div class="span4">
-			<h4><em>iPad Eazesportz Football Console</em></h4>
+		<div class="span5 offset1">
+			<h4><em><font color="blue">iPad Eazesportz Football Management Console</font></em></h4>
 		</div>
-		<div class="span4 offset1">
-			<h4><em>iPad Eazesportz Basketball Console</em></h4>
+		<div class="span4">
+			<h4><em><font color="blue">Get the app - iTunes!</font></em></h4>
 		</div>
 	</div>
 	<div class="row">
-		<div class="span4">
+		<div class="span5 offset1">
 			<%= link_to (image_tag "FC_OffenseStatsPortrait.png"), eazefootball_sports_path %>
 		</div>
-		<div class="span4 offset1">
+		<div class="span4">
+			<div class="row">
+				<div class="span2">
+					<%= link_to (image_tag "EazeFBConsoleiTunesArtwork.png"), "https://itunes.apple.com/us/app/eazesportz-football-management/id703243944?mt=8" %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span4">
+					<h5><font color="blue">Eazesportz Football Management Console</font></h5>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span5 offset1">
+			<h4><em><font color="blue">iPad Eazesportz Basketball Console</font></em></h4>
+		</div>
+		<div class="span2">
+			<h4><em><font color="blue">Get the app</font></em></h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span5 offset1">
 			<%= link_to (image_tag "BasketballConsoleLiveStats.png"), eazebasketball_sports_path %>
+		</div>
+		<div class="span2">
+			<%= link_to (image_tag "ComingSoon.jpg"), "#" %>
 		</div>
 	</div>
 	<div class="row">

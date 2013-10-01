@@ -78,21 +78,28 @@ class SportsController < ApplicationController
   end
   
   def index
+    if !params[:sport].nil? and !params[:sport].blank?
+      thesport = params[:sport].to_s
+    else
+      thesport = "Football"   # Fix for forgetting to add this parameter to the football apps
+    end
+
     @sports = []
     if !params[:zip].blank? and !params[:city].blank? and !params[:state].blank? and !params[:sitename].blank?
-      site = Sport.full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s + " " + params[:sitename].to_s, match: :all)      
+      site = Sport.where(name: thesport).full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s + " " + 
+            params[:sitename].to_s, match: :all)      
     elsif !params[:zip].blank? and !params[:city].blank? and !params[:state].blank?
-      site = Sport.full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s, match: :all)
+      site = Sport.where(name: thesport).full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s, match: :all)
     elsif !params[:zip].blank?
-      site = Sport.full_text_search(params[:zip].to_s)
+      site = Sport.where(name: thesport).full_text_search(params[:zip].to_s)
     elsif !params[:city].blank?
-      site = Sport.full_text_search(params[:city].to_s)
+      site = Sport.where(name: thesport).full_text_search(params[:city].to_s)
     elsif !params[:state].blank?
-      site = Sport.full_text_search(params[:state].to_s)
+      site = Sport.where(name: thesport).full_text_search(params[:state].to_s)
     elsif !params[:sitename].blank?
-      site = Sport.full_text_search(params[:sitename].to_s)
+      site = Sport.where(name: thesport).full_text_search(params[:sitename].to_s)
     elsif params[:all]
-      site = Sport.all
+      site = Sport.where(name: thesport)
      end
 
     if site 

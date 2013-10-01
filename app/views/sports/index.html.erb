@@ -15,7 +15,7 @@
 <div class="row">
   <div class="span10" style="background-color:#ffffff;">
     <div class="row">
-      <div class="span10 offset2">
+      <div class="span10 offset1">
         <h3>Find Eazesportz Sports Program:</h3>
         <%= form_tag sports_path, class: "form-horizontal", method: 'get' do %>
           <div class="row">
@@ -26,6 +26,10 @@
             <div class="span2 offset1">
               <%= label_tag "City: " %>
               <%= text_field_tag "city" %>
+            </div>
+            <div class="span2 offset1">
+              <%= label_tag "Sport: " %>
+              <%= select_tag :sport, options_for_select(sports_list), include_blank: true %>
             </div>
           </div>
           <p>
@@ -52,6 +56,7 @@
         <table class="table table-hover">
           <thead>
             <tr>
+              <th>Sport</th>
               <th>Site Name</th>
               <th>Mascot</th>
               <th>City</th>
@@ -67,6 +72,7 @@
         <% if @sports.any? %>
               <% @sports.each do |s| %>
                 <tr>
+                  <td><%= s.name %></td>
                   <td><%= link_to s.sitename, s %></td>
                   <td><%= s.mascot %></td>
                   <td><%= s.city %></td>

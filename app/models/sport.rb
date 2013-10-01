@@ -48,7 +48,7 @@ class Sport
 
   field :logoprocessing, type: Boolean, default: false
 
-  search_in :sitename, :mascot, :state, :zip, :city
+  search_in :sitename, :mascot, :state, :zip, :city, :name, :sportname
 
 #  belongs_to :site
   belongs_to :user

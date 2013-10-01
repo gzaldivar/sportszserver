@@ -59,6 +59,7 @@ class GameschedulesController < ApplicationController
   def show
     begin
       @players = @sport.athletes.where(team_id: @team.id.to_s).asc(:number)
+
       if @sport.name == "Football"
         @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
         @gamelog = @gameschedule.gamelogs.build
@@ -100,7 +101,7 @@ class GameschedulesController < ApplicationController
           end
         end
       end
-      puts "rendering show"
+ 
       respond_to do |format|
         format.html
         format.json

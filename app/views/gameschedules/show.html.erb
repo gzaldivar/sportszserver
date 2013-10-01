@@ -46,10 +46,16 @@
   					<table class="table table-bordered">
   						<thead>
 		  					<th>Fouls</th>
+		  					<% if @gameschedule.homebonus %>
+		  						<th>Bonus</th>
+		  					<% end %>
 		  					<th>Time Outs</th>
 		  				</thead>
 		  				<tbody>
 		  					<td><%= @gameschedule.homefouls %></td>
+		  					<% if @gameschedule.homebonus %>
+		  						<td><strong><font color="red">Bonus</font></strong></td>
+		  					<% end %>
 		  					<td><%= @gameschedule.hometimeouts %></td>
 		  				</tbody>
   					</table>
@@ -68,10 +74,16 @@
   					<table class="table table-bordered">
   						<thead>
 		  					<th>Fouls</th>
+		  					<% if @gameschedule.visitorbonus %>
+		  						<th>Bonus</th>
+		  					<% end %>
 		  					<th>Time Outs</th>
 		  				</thead>
 		  				<tbody>
 		  					<td><%= @gameschedule.opponentfouls %></td>
+		  					<% if @gameschedule.visitorbonus %>
+		  						<td><strong><font color="red">Bonus</font></strong></td>
+		  					<% end %>
 		  					<td><%= @gameschedule.opponenttimeouts %></td>
 		  				</tbody>
   					</table>

@@ -58,6 +58,8 @@ class Gameschedule
   field :homefouls, type: Integer, default: 0
   field :opponentfouls, type: Integer, default: 0
   field :currentperiod, type: Integer, default: 1
+  field :homebonus, type: Boolean, default: false
+  field :visitorbonus, type: Boolean, default: false
 
   has_mongoid_attached_file :opponentpic,
     :storage        => :s3,

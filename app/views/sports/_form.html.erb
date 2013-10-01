@@ -22,6 +22,11 @@
               <%= f.input :sportname, label: "Sport Name", collection: sports_list, include_blank: true %>
           <% end %>
         </div>
+        <% if @sport.name == "Basketball" %>
+          <div class="span2 offset1">
+            <%= f.input :periods, collection: ["2", "4"], hint: "Default is two" %>
+          </div>
+        <% end %>
       </div>
       <p>
       <div class="row">

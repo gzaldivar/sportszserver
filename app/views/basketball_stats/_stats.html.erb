@@ -14,6 +14,7 @@
 		<th>FTA</th>
 		<th>FTM</th>
 		<th>FT%</th>
+		<th><strong>Total</strong></th>
 		<th>Fouls</th>
 		<th>Assists</th>
 		<th>Blocks</th>
@@ -52,13 +53,20 @@
 					<% else %>
 						<td>0.0</td>
 					<% end %>
+					<td><%= (b.twomade * 2) + (b.threemade * 3) + b.ftmade %></td>
 					<td><%= b.fouls %></td>
 					<td><%= b.assists %></td>
 					<td><%= b.blocks %></td>
 					<td><%= b.steals %></td>
 					<td><%= b.offrebound %></td>
 					<td><%= b.defrebound %></td>
-					<td><%= link_to "Stats", edit_sport_athlete_basketball_stat_path(@sport, b.athlete_id, b, gameschedule_id: b.gameschedule_id), class: "btn btn-mini btn-primary" %></td>
+					<% if BasketballStat.find(b.id).nil? %>
+						<td><%= link_to "Stats", newstat_sport_athlete_basketball_stats_path(@sport, b.athlete_id, gameschedule_id: b.gameschedule_id), 
+								class: "btn btn-mini btn-primary" %></td>
+					<% else %>
+						<td><%= link_to "Stats", edit_sport_athlete_basketball_stat_path(@sport, b.athlete_id, b, gameschedule_id: b.gameschedule_id), 
+								class: "btn btn-mini btn-primary" %></td>
+					<% end %>
 				</tr>
 			<% end %>
 		<% end %>

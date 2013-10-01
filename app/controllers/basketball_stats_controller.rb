@@ -11,13 +11,15 @@ class BasketballStatsController < ApplicationController
 
 		if params[:livestats] == "Live"
 			@live = "Live"
+		elsif params[:livestats] == "Totals"
+			@live = "Totals"
 		end
 
-		if @gameschedule.nil?
-			@games = @sport.teams.find(@athlete.team_id.to_s).gameschedules
-		else
+#		if @gameschedule.nil?
+			@games = @sport.teams.find(@athlete.team_id.to_s).gameschedules.asc(:starttime)
+#		else
 			@bbstats = BasketballStat.new
-		end
+#		end
 	end
 
 	def create
@@ -116,7 +118,7 @@ class BasketballStatsController < ApplicationController
 		end
 
 		if params[:gameschedule_id]
-			@gameschedule = @sport.gameschedules.find(params[:gameschedule_id].to_s)
+			@gameschedule = @sport.gameschedules.find(params[:gameschedule_id].to_s).asc(:starttime)
 		end
 
 		if !@athlete.nil? and !@gameschedules.nil?
@@ -124,12 +126,14 @@ class BasketballStatsController < ApplicationController
 		elsif !@athlete.nil?
 			@bballstats = []
 			cnt = 0
-			@sport.teams.find(@athlete.team_id.to_s).gameschedules.desc(:starttime).each do |g|
+			@sport.teams.find(@athlete.team_id.to_s).gameschedules.asc(:starttime).each do |g|
 				stats = @athlete.basketball_stats.where(gameschedule_id: g.id.to_s).first
 				if !stats.nil?
 					@bballstats[cnt] = stats
-					cnt += 1
+				else
+					@bballstats[cnt] = BasketballStat.new(athlete_id: @athlete.id, gameschedule_id: g.id)
 				end
+				cnt += 1
 			end
 		elsif !@gameschedule.nil?
 #			Team.find(@gameschedule.team_id.to_s)
@@ -162,30 +166,39 @@ class BasketballStatsController < ApplicationController
 			begin
 				if params[:twoattempt].to_i == 1
 					bbstats.twoattempt += 1
+				end
 
-					if params[:twomade].to_i == 1
-						bbstats.twomade += 1
+				if params[:twomade].to_i == 1
+					bbstats.twomade += 1
+					if params[:twoattempt].to_i != 1
+						bbstats.twoattempt += 1
 					end
 				end
 
 				if params[:threeattempt].to_i == 1
 					bbstats.threeattempt += 1
+				end
 
-					if params[:threemade].to_i == 1
-						bbstats.threemade += 1
+				if params[:threemade].to_i == 1
+					bbstats.threemade += 1
+					if params[:threeattempt].to_i != 1
+						bbstats.threeattempt += 1
 					end
 				end
 
 				if params[:ftattempt].to_i == 1
 					bbstats.ftattempt += 1
-
-					if params[:ftmade].to_i == 1
-						bbstats.ftmade += 1
-					end
 				end
 
 				if params[:fouls].to_i == 1
 					bbstats.fouls += 1
+				end
+
+				if params[:ftmade].to_i == 1
+					bbstats.ftmade += 1
+					if params[:ftattempt].to_i != 1
+						bbstats.ftattempt += 1
+					end
 				end
 
 				if params[:assists].to_i == 1

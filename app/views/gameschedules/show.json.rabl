@@ -24,5 +24,5 @@ if @sport.name == "Football"
 		end
 	end
 elsif @sport.name == "Basketball"
-	attributes :current_game_time, :opponentfouls, :currentperiod, :homefouls
+	attributes :opponentfouls, :currentperiod, :homefouls
 end

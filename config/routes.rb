@@ -189,7 +189,7 @@ Sportzserver::Application.routes.draw do
 
     collection do
       get :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo, :ipadexample_path, :approve, :eazefootball, :eazebasketball,
-          :infobasketball, :webbballinfo
+          :infobasketball, :webbballinfo, :iphone_basketballinfo
     end
 
     member do

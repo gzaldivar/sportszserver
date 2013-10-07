@@ -237,6 +237,9 @@ class SportsController < ApplicationController
   def infobasketball
   end
 
+  def iphone_basketballinfo
+  end
+
   def webbballinfo
   end
 

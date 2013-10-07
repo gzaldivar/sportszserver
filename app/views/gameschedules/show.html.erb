@@ -101,7 +101,25 @@
   					<td><%= @gameschedule.bballpossessionarrow %></td>
   				</tbody>
   			</table>
-  			<%= render 'basketball_stats/stats', bballstats: @stats, name: "Player" %>
+			<table class="table table-bordered">
+				<%= render "basketball_stats/stat_header", name: "Player" %>
+				<% @athletes.each do |a| %>
+					<% @thestat = nil %>
+					<% @stats.each do |s| %>
+						<% if a.id == s.athlete_id %>
+							<% @thestat = s %>
+							<% break %>
+						<% end %>
+					<% end %>
+					<% if @thestat %>
+						<%= render "basketball_stats/stat_body", stat: @thestat, name: "Player" %>
+					<% else %>
+						<%= render "basketball_stats/stat_body", stat: BasketballStat.new(gameschedule: @gameschedule.id, athlete: a.id), 
+									name: "Player" %>					
+					<% end %>
+				<% end %>
+			</table>
+  			<!--%= render 'basketball_stats/stats', bballstats: @stats, name: "Player" %-->
   		<% end %>
   		<% if @sport.sportname == "Football" %>
 			<h4>Scoring Summary</h4>

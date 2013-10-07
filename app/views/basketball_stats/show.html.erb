@@ -2,7 +2,10 @@
 <p>
 <div class="row">
 	<div class="span10">
-		<h4>Stats for <%= @athlete.logname %> for game <%= Gameschedule.find(@bbstats.gameschedule_id).game_name %></h4>
-		<%=render "stats", bballstats: @stats, name: "Game" %>
+		<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for game <%= Gameschedule.find(@bbstats.gameschedule_id).game_name %></h4>
+		<table class="table table-bordered">
+			<%= render "stat_header", name: "Game" %>
+			<%= render "stat_body", stat: @bbstats, name: "Game" %>
+		</table>
 	</div>
 </div>

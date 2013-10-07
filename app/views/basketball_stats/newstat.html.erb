@@ -2,7 +2,7 @@
 <p>
 <div class="row">
 	<div class="span10">
-		<% if @gameschedule.nil? or @live.nil? %>
+		<% if @gameschedule.nil? %>
 			<h4>Select game to add stats for <%= @athlete.logname %>:</h4>
 			<p>
 			<%= form_tag newstat_sport_athlete_basketball_stats_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
@@ -11,11 +11,13 @@
 				<%= select_tag "livestats", options_for_select(["Live", "Totals"]) %>
 				<%= submit_tag "Submit", class: "btn btn-medium btn-primary", name: nil %>
 			<% end %>
-		<% elsif @live.nil? %>
+		<% elsif @live.nil? and @gameschedule %>
+			<h4>Stats for <%= @athlete.logname %> for <%= @gameschedule.game_name %>:</h4>
 			<%= form_tag newstat_sport_athlete_basketball_stats_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
+				<%= hidden_field_tag "gameschedule_id", value=@gameschedule.id %>
 				<%= select_tag "livestats", options_for_select(["Live", "Totals"]) %>
 				<%= submit_tag "Submit", class: "btn btn-medium btn-primary", name: nil %>
-			<% end %>
+		    <% end %>
 		<% elsif !@athlete.nil? %>
 			<h4>Stats for <%= @athlete.logname %> for <%= @gameschedule.game_name %>:</h4>
 			<%= simple_form_for [@sport, @athlete, @bbstats],  html: { multipart: true } do |f| %>
@@ -34,7 +36,7 @@
 						<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
 			        </div>
 				</div>
-		    <% end %>
+			<% end %>
 		<% end %>
 	</div>
 </div>

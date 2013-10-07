@@ -136,7 +136,7 @@ class AthletesController < ApplicationController
   end
   
   def follow
-    @athlete.fans.push(current_user.id)
+    @athlete.fans.push(current_user.id) unless @athlete.fans.include?(current_user.id)
     @athlete.save
     
     respond_to do |format|

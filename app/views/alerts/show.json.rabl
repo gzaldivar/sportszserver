@@ -8,7 +8,9 @@ node(:photo) { |u| u.photo_id.to_s }
 node(:videoclip) { |u| u.videoclip_id.to_s }
 node(:blog) { |u| u.blog_id.to_s }
 node(:sport) { |u| u.sport_id.to_s }
-node(:football_stat) { |u| u.football_stat_id.to_s }
 if @sport.sportname == "Football"
+	node(:football_stat) { |u| u.football_stat_id.to_s }
 	node(:stat_football) { |s| s.stat_football }
+elsif @sport.name == "Basketball"
+	node(:basketball_stat) { |u| u.basketball_stat_id.to_s }
 end

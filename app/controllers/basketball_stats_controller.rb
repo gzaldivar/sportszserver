@@ -8,6 +8,7 @@ class BasketballStatsController < ApplicationController
 
 	def newstat
 		@gameschedule = Gameschedule.find(params[:gameschedule_id].to_s)
+		@athlete = Athlete.find(params[:athlete_id].to_s)
 
 		if params[:livestats] == "Live"
 			@live = "Live"
@@ -58,8 +59,7 @@ class BasketballStatsController < ApplicationController
 	end
 
 	def show
-		@stats = []
-		@stats[0] = @bbstats
+		@bbstats
 	end
 
 	def edit
@@ -122,25 +122,34 @@ class BasketballStatsController < ApplicationController
 		end
 
 		if !@athlete.nil? and !@gameschedules.nil?
-			@bballstats = @athlete.basketball_stats.where(gameschedule_id: @gameschedule.id.to_s)
-		elsif !@athlete.nil?
 			@bballstats = []
-			cnt = 0
-			@sport.teams.find(@athlete.team_id.to_s).gameschedules.asc(:starttime).each do |g|
-				stats = @athlete.basketball_stats.where(gameschedule_id: g.id.to_s).first
-				if !stats.nil?
-					@bballstats[cnt] = stats
-				else
-					@bballstats[cnt] = BasketballStat.new(athlete_id: @athlete.id, gameschedule_id: g.id)
-				end
-				cnt += 1
-			end
-		elsif !@gameschedule.nil?
-#			Team.find(@gameschedule.team_id.to_s)
-			@bballstats = @gameschedule.basketball_stats.asc(Athlete.find(athlete_id: @athlete.id.to_s).number)
-		else
-#			@bballstats = BasketballStat.where()
+			@bballstats[0] = @athlete.basketball_stats.where(gameschedule_id: @gameschedule.id.to_s)
+		elsif !@athlete.nil?
+			@bballstats = @athlete.basketball_stats
+			@gameschedules = Gameschedule.where(team_id: @athlete.team_id).asc(:starttime)
+		elsif !gameschedule.nil?
+			@bballstats = @gameschedule.basketball_stats
+			@athletes = Athlete.where(team_id: @gameschedule.team_id).asc(:number)
 		end
+			
+
+#			@bballstats = []
+#			cnt = 0
+#			@sport.teams.find(@athlete.team_id.to_s).gameschedules.asc(:starttime).each do |g|
+#				stats = @athlete.basketball_stats.where(gameschedule_id: g.id.to_s).first
+#				if !stats.nil?
+#					@bballstats[cnt] = stats
+#				else
+#					@bballstats[cnt] = BasketballStat.new(athlete_id: @athlete.id, gameschedule_id: g.id)
+#				end
+#				cnt += 1
+#			end
+#		elsif !@gameschedule.nil?
+#			Team.find(@gameschedule.team_id.to_s)
+#			@bballstats = @gameschedule.basketball_stats.asc(Athlete.find(athlete_id: @athlete.id.to_s).number)
+#		else
+#			@bballstats = BasketballStat.where()
+#		end
 
 		respond_to do |format|
 			format.html

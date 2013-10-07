@@ -5,11 +5,14 @@
 		<% if !@athlete.nil? and !@gameschedule.nil? %>
 			<% if @bballstats.empty? %>
 				<h4>There are no stats for <%= @athlete.logname %> and <%= @gameschedule.game_name %></h4>
-				<%= link_to "Add Stats", newstat_sport_athlete_basketball_stats_path(@sport, @athlete, gameschedule_id: @gameschedule), 
+				<%= link_to "Add Stat", newstat_sport_athlete_basketball_stats_path(@sport, @athlete, gameschedule_id: @gameschedule), 
 							class: "btn btn-medium btn-primary" %>
 			<% else %>
 				<h4>Stats for <%= @athlete.logname %> for game <%= @gameschedule.game_name %></h4>
-				<%= render "stats", bballstats: @bballstats, name: "Game" %>
+				<table class="table table-bordered">
+					<%= render "stat_header", name: "Game" %>
+					<%= render "stat_body", stat: @bballstats[0], name: "Game" %>
+				</table>
 			<% end %>
 		<% elsif !@athlete.nil? %>
 			<% if @bballstats.empty? %>
@@ -18,7 +21,23 @@
 							class: "btn btn-medium btn-primary" %>
 			<% else %>
 				<h4>Stats for <%= @athlete.logname %></h4>
-				<%= render "stats", bballstats: @bballstats, name: "Game" %>
+				<table class="table table-bordered">
+					<%= render "stat_header", name: "Player" %>
+					<% @gameschedules.each do |g| %>
+						<% @thestat = nil %>
+						<% @bballstats.each do |b| %>
+							<% if g.id == b.gameschedule_id %>
+								<% @thestat = b %>
+								<% break %>
+							<% end %>
+						<% end %>
+						<% if @thestat %>
+							<%= render "stat_body", stat: @thestat, name: "Game" %>
+						<% else %>
+							<%= render "stat_body", stat: BasketballStat.new(gameschedule: g.id, athlete: @athlete.id), name: "Game" %>
+						<% end %>
+					<% end %>
+				</table>
 			<% end %>
 		<% elsif !@gameschedule.nil? %>
 			<% if @bballstats.empty? %>
@@ -27,7 +46,23 @@
 							class: "btn btn-medium btn-primary" %>
 			<% else %>
 				<h4>Stats for game <%= @gameschedule.game_name %></h4>
-				<%= render "stats", bballstats: @bballstats, name: "Player" %>
+				<table class="table table-bordered">
+					<%= render "stat_header", name: "Player" %>
+					<% @athletes.each do |a| %>
+						<% @thestat = nil %>
+						<% @bballstats.each do |b| %>
+							<% if a.id == b.athlete_id %>
+								<% @thestat = b %>
+								<% break %>
+							<% end %>
+						<% end %>
+						<% if @thestat %>
+							<%= render "stat_body", stat: b, name: "Player" %>
+						<% else %>
+							<%= render "stat_body", stat: BasketballStat.new(gameschedule: @gameschedule.id, athlete: a.id), name: "Player" %>
+						<% end %>
+					<% end %>
+				</table>
 			<% end %>
 		<% end %>
 	</div>

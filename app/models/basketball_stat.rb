@@ -2,6 +2,8 @@ class BasketballStat
   include Mongoid::Document
   include Mongoid::Timestamps
 
+  after_save :send_alerts
+
   field :twoattempt, type: Integer, default: 0
   field :twomade, type: Integer, default: 0
   field :threeattempt, type: Integer, default: 0
@@ -17,7 +19,7 @@ class BasketballStat
 
   belongs_to :athlete
   belongs_to :gameschedule
-  belongs_to :alerts
+  has_many :alerts, dependent: :destroy
 
   index({ gameschedule: 1 }, { unique: true })
 
@@ -33,5 +35,15 @@ class BasketballStat
   validates_numericality_of :blocks, greater_than_or_equal_to: 0
   validates_numericality_of :offrebound, greater_than_or_equal_to: 0
   validates_numericality_of :defrebound, greater_than_or_equal_to: 0
+
+  private
+
+    def send_alerts
+         player = Athlete.find(self.athlete_id)
+         player.fans.each do |user|
+            alert = athlete.alerts.create!(sport: player.sport, user: user, athlete: player.id, message: "Stat alert for " + 
+                                          Gameschedule.find(gameschedule).game_name, basketball_stat: self.id)
+        end   
+    end
 
 end

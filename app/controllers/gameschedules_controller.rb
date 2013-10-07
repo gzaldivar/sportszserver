@@ -82,24 +82,8 @@ class GameschedulesController < ApplicationController
           end
         end
       elsif @sport.name == "Basketball"
-        athletes = @sport.athletes.where(team_id: @gameschedule.team_id.to_s).asc(:number)
-        bbstats = @gameschedule.basketball_stats
-        @stats = []
-
-        athletes.each_with_index do |a, cnt|
-          stat = nil
-          bbstats.each do |b|
-            if b.athlete_id == a.id
-              stat = b
-              break
-            end
-          end
-          if stat
-            @stats[cnt] = stat
-          else
-            @stats[cnt] = nil
-          end
-        end
+        @athletes = @sport.athletes.where(team_id: @gameschedule.team_id.to_s).asc(:number)
+        @stats = @gameschedule.basketball_stats
       end
  
       respond_to do |format|

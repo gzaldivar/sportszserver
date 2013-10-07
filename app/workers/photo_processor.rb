@@ -30,12 +30,12 @@ class PhotoProcessor
         if img.format == 'JPEG'      
           if img.columns > img.rows
             thumb = img.scale(125, 125)
-            medium = img.scale(512, 374)
-            large = img.scale(1024, 748)
+            medium = img.scale(512, 345)
+            large = img.scale(1024, 680)
           else
             thumb = img.scale(125, 125)
-            medium = img.scale(320, 480)
-            large = img.scale(640, 960)
+            medium = img.scale(345, 512)
+            large = img.scale(680, 1024)
           end
           
           # write thumbnail to S3

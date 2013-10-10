@@ -74,6 +74,7 @@ end
 group :production do
   gem 'pg', '0.12.2'
   gem 'newrelic_rpm'
+  gem 'fog'
 end
 
 #gem 'resque', :require => "resque/server"

@@ -13,14 +13,14 @@ SitemapGenerator::Sitemap.adapter = SitemapGenerator::S3Adapter.new(aws_access_k
 
 SitemapGenerator::Sitemap.create do
   # Put links creation logic here.
-  Add '/contacts'
-  Add '/home'
-  Add '/about'
-  Add '/eazefootball'
-  Add '/eazebasketball'
-  Add '/infobasketball'
-  Add '/iphone_basketball'
-  Add '/mobileinfo'
+  add '/contacts'
+  add '/home'
+  add '/about'
+  add '/eazefootball'
+  add '/eazebasketball'
+  add '/infobasketball'
+  add '/iphone_basketball'
+  add '/mobileinfo'
 
   #
   # The root path '/' and sitemap index file are added automatically for you.

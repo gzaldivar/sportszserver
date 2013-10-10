@@ -1,11 +1,15 @@
 # Set the host name for URL creation
 SitemapGenerator::Sitemap.default_host = "http://www.eazesportz.com"
-SitemapGenerator::S3Adapter
-SitemapGenerator::S3Adapter:AWS_ACCESS_KEY_ID = "AKIAIPCK7WD7Z53FKBEQ"
-SitemapGenerator::S3Adapter:AWS_SECRET_ACCESS_KEY = "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"
-SitemapGenerator::S3Adapter:FOG_PROVIDER = "AWS"
-SitemapGenerator::S3Adapter:FOG_DIRECTORY = "sportzteams"
+SitemapGenerator::Sitemap.public_path = 'tmp/'
+SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
 
+SitemapGenerator::Sitemap.adapter = SitemapGenerator::S3Adapter.new(aws_access_key_id: "AKIAIPCK7WD7Z53FKBEQ", 
+																	aws_secret_access_key: "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",
+																	fog_provider: "AWS",
+																	fog_directory: "sportzteams")
+
+
+#SitemapGenerator::Sitemap.sitemaps_host = "http://sportzteams.s3.amazonaws.com/"
 
 SitemapGenerator::Sitemap.create do
   # Put links creation logic here.

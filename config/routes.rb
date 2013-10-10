@@ -233,6 +233,10 @@ Sportzserver::Application.routes.draw do
   match '/ipadexample', to: 'sports#ipadexample_info'
   match '/user/root',  to: 'sports#show'
   match '/approve', to: 'sports#approve'
+  match '/eazefootball', to: 'sports#eazefootball'
+  match '/eazebasketball', to: 'sports#eazebasketball'
+  match '/infobasketball', to: 'sports#infobasketball'
+  match '/iphone_basketball', to: 'sports#iphone_basketballinfo'
 
   match '/newkicker', to: 'football_kickers#newkicker'
   match '/newpunter', to: 'football_kickers#newpunter'

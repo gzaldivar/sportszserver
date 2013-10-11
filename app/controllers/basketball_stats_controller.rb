@@ -153,7 +153,23 @@ class BasketballStatsController < ApplicationController
 
 		respond_to do |format|
 			format.html
-			format.json
+			format.json {
+				stats = @bballstats
+				@bballstats = []
+				@gameschedules.each_with_index do |g, cnt|
+					thestat = nil
+					stats.each do |b|
+						if g.id == b.gameschedule_id
+							thestat = b
+							break
+						end
+					end
+					if thestat.nil?
+						thestat = BasketballStat.new(gameschedule: g.id, athlete: @athlete.id)
+					end
+					@bballstats[cnt] = thestat
+				end
+			}
 		end
 	end
 

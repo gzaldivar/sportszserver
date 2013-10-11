@@ -22,6 +22,7 @@ SitemapGenerator::Sitemap.create do
   add '/iphone_basketball'
   add '/mobileinfo'
   add '/websiteinfo'
+  add '/webbballinfo'
 
   #
   # The root path '/' and sitemap index file are added automatically for you.

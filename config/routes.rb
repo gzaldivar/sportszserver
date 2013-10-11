@@ -237,6 +237,8 @@ Sportzserver::Application.routes.draw do
   match '/eazebasketball', to: 'sports#eazebasketball'
   match '/infobasketball', to: 'sports#infobasketball'
   match '/iphone_basketball', to: 'sports#iphone_basketballinfo'
+  match '/webbballinfo', to: 'sports#webbballinfo'
+  match '/webbballinfo', to: 'sports#websiteinfo'
 
   match '/newkicker', to: 'football_kickers#newkicker'
   match '/newpunter', to: 'football_kickers#newpunter'

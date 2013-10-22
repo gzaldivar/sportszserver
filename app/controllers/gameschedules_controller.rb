@@ -7,11 +7,12 @@ class GameschedulesController < ApplicationController
   end
   
   def new
-#    if @sport.sportname == "Basketball" and @sport.periods.nil?
-#      redirect_to periods_sport_team_gameschedules_path(@sport, @team)
-#    else
-      @gameschedule = Gameschedule.new
-#    end
+    @gameschedule = Gameschedule.new
+
+    if params[:opponent]
+      @opposingsport = Sport.find(params[:opponent].to_s)
+      @opposingteam = @opposingsport.teams.find(params[:opposingteam])
+    end
   end
 
   def periods
@@ -99,6 +100,13 @@ class GameschedulesController < ApplicationController
   end
   
   def edit
+    if params[:opponent]
+      @opposingsport = Sport.find(params[:opponent].to_s)
+      @opposingteam = @opposingsport.teams.find(params[:opposingteam])
+    elsif !@gameschedule.opponent_sport_id.nil?
+      @opposingsport = Sport.find(@gameschedule.opponent_sport_id)
+      @opposingteam = @opposingsport.teams.find(@gameschedule.opponent_team_id)
+    end
   end
   
   def update
@@ -153,6 +161,26 @@ class GameschedulesController < ApplicationController
         format.json { render status: 404, json: { error: e.message } }
       end
     end  
+  end
+
+  def findsport
+    @sports = find_a_sport(@sport.name)
+    if params[:gameschedule_id]
+      @gameschedule = @team.gameschedules.find(params[:gameschedule_id].to_s)
+    else
+      @gameschedule = nil
+    end
+  end
+
+  def findteam
+    @opposingsport = Sport.find(params[:opponent])
+    @opposingteams = @opposingsport.teams
+
+    if params[:gameschedule_id]
+      @gameschedule = @team.gameschedules.find(params[:gameschedule_id].to_s)
+    else
+      @gameschedule = nil
+    end
   end
   
   def destroy

@@ -1,41 +1,96 @@
 <div class="row">
-	<div class="span10 offset1">
+	<div class="span10">
 		<%= simple_form_for [@sport, @team, @gameschedule], html: { class: 'form-horizontal' } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 			<div class="row">
 				<div class="span4">
+					<h4>
+						<% if @gameschedule.nil? %>
+							<%= link_to "Search for Eazesportz Opponent?", findsport_sport_team_gameschedules_path %>
+						<% else %>
+							<%= link_to "Search for Eazesportz Opponent?", 
+										findsport_sport_team_gameschedules_path(gameschedule_id: @gameschedule.id) %>
+						<% end %>
+					</h4>
+				</div>
+			</div>
+			<% if @opposingsport.nil? %>
+				<div class="row">
+					<div class="span10">
+						<h4>You can also enter opposing team information below if you could not find them in Eazesportz</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span2">
+						<%= f.input	:opponent, label: "Opponent Name" %>
+					</div>
+					<div class="span2 offset1">
+						<%= f.input	:opponent_mascot, label: "Opponent Mascot" %>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span4">
+						We encourage you to upload an image for your opponent if you have one. Looks good on the mobile app.<p>
+						<% if !@gameschedule.opponentpic.blank? %>
+							<h5>Current opponent image</h5>
+							<%= image_tag @gameschedule.opponentpic.url(:thumb) %>
+			          	<% else %>
+			          		<h5>We will use our standard image for the opponent if you don't upload one.</h5>
+			            	<%= image_tag "teambutton.jpg" %>
+						<%end %>
+						<%= f.input	:opponentpic,	label: "Opponent image:", hint: "Change image" %>
+					</div>
+				</div>
+			<% else %>
+				<%= f.input :opponent_sport_id, as: :hidden, input_html: { value: @opposingsport.id.to_s } %>
+				<%= f.input :opponent_team_id, as: :hidden, input_html: { value: @opposingteam.id.to_s } %>
+				<h3>Selected Eazesportz Opposing Team</h3>
+				<div class="row">
+					<div class="span2">
+						<%= f.input	:opponent, input_html: { value: @opposingteam.title } %>
+					</div>
+					<div class="span2 offset1">
+						<% if @opposingteam.mascot.nil? %>
+							<%= f.input :opponent_mascot, label: "Opponent Mascot", input_html: { value: @opposingsport.mascot } %>
+						<% else %>
+							<%= f.input	:opponent_mascot, label: "Opponent Mascot", input_html: { value: @opposingteam.mascot } %>
+						<% end %>
+					</div>
+				</div>
+				<div class="row">
+					<div class="span4">
+						<% if @opposingteam.team_logo? %>
+							<%= image_tag @opposingteam.team_logo.url(:thumb) %>
+						<% elsif @opposingsport.sport_logo? %>
+							<%= image_tag @opposingsport.sport_logo.url(:thumb) %>
+			          	<% else %>
+			          		<h5>Opposing team has no logo uploaded.</h5>
+			            	<%= image_tag "teambutton.jpg" %>
+						<%end %>
+					</div>
+				</div>
+			<% end %>
+			<div class="row">
+				<div class="span2">
 					<%= f.input :startdate, label: "Start Date", as: :string, input_html: { class: 'datepicker', 
 											:value => @gameschedule.try(:gamedate).try(:strftime,'%m/%d/%Y') } %>
 					<%= f.input :gamedate, :as => :hidden, :input_html => { :id => 'recorded-at-alt'} %>
 					<!--%= f.input :gamedate,  as: :date, start_year: Date.today.year, start_month: Date.today, 
 					 			ignore_time: true %-->
 				</div>
-				<div class="span4 offset1">
-					We encourage you to upload an image for your opponent if you have one. Looks good on the mobile app. Your team logo or mascot logo will be used on the mobile for your team.<p>
-					<h5>Current opponent image</h5>
-					<% if !@gameschedule.opponentpic.blank? %>
-						<%= image_tag @gameschedule.opponentpic.url(:medium) %>
-		          	<% else %>
-		          		<h5>We will use the image for the opponent if you don't upload one.</h5>
-		            	<%= image_tag "teambutton.jpg" %>
-					<%end %>
-					<%= f.input	:opponentpic,	label: "Opponent image:", hint: "Change image" %>
+				<div class="span1 offset1">
+					<%= f.input :league, as: :radio_buttons, label: "League Game?" %>
+				</div>
+				<div class="span2 offset1">
+					<%= f.input	:starttime, label: "Game Start Time:", as: :time, ignore_date:  true, input_html: { style: "width: 50px" } %>
+				</div>
+				<div class="span2 offset1">
+					<%= f.input :homeaway, label: "Home Game?" , collection: [ "Home", "Away" ] %>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span10">
-					<%= f.input	:starttime, label: "Game Start Time:", as: :time, ignore_date:  true, input_html: { style: "width: 50px" } %>
-				</div>
-			</div>
-			<div class="row">
-				<div class="span2">
-					<%= f.input :homeaway, label: "Home or Away?" , collection: [ "Home", "Away" ] %>
-				</div>
-				<div class="span2 offset1">
-					<%= f.input	:opponent %>
-				</div>
-				<div class="span2 offset1">
-					<%= f.input	:opponent_mascot, label: "Opponent Mascot" %>
+					<h3>Game Location</h3>
 				</div>
 			</div>
 			<div class="row">
@@ -48,7 +103,11 @@
 			</div>
 			<p>
 			<% if !@gameschedule.opponent.nil? %>
-				<h5>Real Time Game Summary:</h5>
+				<div class="row">
+					<div class="span10">
+						<h4>Real Time Game Summary:</h4>
+					</div>
+				</div>
 				<p>
 				<div class="row">
 					<div class="span2">

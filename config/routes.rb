@@ -46,7 +46,7 @@ Sportzserver::Application.routes.draw do
       resources :gameschedules, only: [:show, :new, :create, :edit, :update, :index, :destroy] do
         
         collection do
-          get   :periods
+          get   :periods, :findsport, :findteam
           put   :defineperiods
         end
 
@@ -54,6 +54,13 @@ Sportzserver::Application.routes.draw do
           collection do
             get :gamelogs
           end
+        end
+      end
+
+      resources :standings, only: [:index] do
+        collection do
+          get :addgamerecord, :importteamrecord
+          put :savegamerecord
         end
       end
     end

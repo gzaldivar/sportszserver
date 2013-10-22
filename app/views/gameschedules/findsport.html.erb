@@ -1,0 +1,6 @@
+<% provide(:title, current_site.sitename + "  Find Eazesportz Sport") %>
+<div class="row">
+	<div class="span10">
+		<%= render 'sports/findsport', sports: @sports, path: findsport_sport_team_gameschedules_path, findsite: false %>
+	</div>
+</div>

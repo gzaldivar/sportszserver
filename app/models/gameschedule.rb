@@ -8,10 +8,19 @@ class Gameschedule
   field :starttime, type: DateTime
   field :gamedate, type: Date
   field :location, type: String
+
   field :opponent, type: String
   field :opponent_mascot, type: String, default: ""
+  field :opponent_sport_id, type: String
+  field :opponent_team_id, type: String
+  field :opponent_league_wins, type: Integer, default: 0
+  field :opponent_league_losses, type: Integer, default: 0
+  field :opponent_nonleague_wins, type: Integer, default: 0
+  field :opponent_nonleague_losses, type: Integer, default: 0
+
   field :event, type: String
   field :homeaway, type: String
+  field :league, type: Boolean, default: false
   field :live, type: Boolean
   field :live_url, type: String
 

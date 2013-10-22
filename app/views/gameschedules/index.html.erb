@@ -2,47 +2,65 @@
 <div class="row">
   <div class="span10">
 		<table class="table table-hover">
-				<thead> 
-					<tr>
-						<th>Team</th>
-						<th>Game</th>
-						<th>Date</th>
-						<th>Home/Away</th>
-						<th>Opponent</th>
-						<th>Time</th>
-						<th>Location</th>
-						<th>Event</th>
-						<th>Summary</th>
+			<thead> 
+				<tr>
+					<th>Team</th>
+					<th>Game</th>
+					<th>Date</th>
+					<th>Home/Away</th>
+					<th>Opponent</th>
+					<th>Time</th>
+					<th>Location</th>
+					<th>Event</th>
+					<th>Score</th>
+					<th>Details</th>
+					<% if user_signed_in? and user_pics_ok? %>
+						<th>Photos</th>
+					<% end %>
+					<% if user_signed_in? and user_videos_ok? %>
+						<th>Photos</th>
+					<% end %>
+				</tr>
+			</thead>
+	        <% @gameschedules.each_with_index do |g, count| %>
+	          	<tbody>
+		          	<tr>
+		          		<td><%= link_to (@team.title + " " + @team.mascot), [@sport, @team, g] %></td>
+		          		<td><%= link_to (count += 1), [@sport, @team, g] %></td>
+		          		<td><%= g.gamedate.strftime("%m/%d/%Y") %></td>
+		          		<td><%= g.homeaway %></td>
+		          		<td><% if g.league? %>
+		          				<%= g.opponent_name + " *" %>
+		          			<% else %>
+		          				<%= g.opponent_name %>
+		          			<% end %>
+		          		<td><%= g.starttime.strftime("%I:%M%p") %></td>
+		          		<td><%= g.location %></td>
+		          		<td><%= g.event %></td>
+
+		          		<% if g.final == true
+		          			if g.homescore > g.opponentscore
+		          				result = "W "
+		          		   	else g.homescore < g.opponentscore
+		          		   		result = "L "
+		          		    end 
+		          		   else
+		          		   	result = ""
+		          		   end %>
+
+		          		<td><%= result + g.homescore.to_s + "-" + g.opponentscore.to_s %></td>
+		          		<td><%= link_to "Details", sport_team_gameschedule_path(@sport, @team, g), class: "btn btn-mini btn-primary" %></td>
 						<% if user_signed_in? and user_pics_ok? %>
-							<th>Photos</th>
+							<td><%= link_to "Photo", newschedule_sport_photo_path(@sport, g), class: "btn btn-mini btn-primary" %></td>
 						<% end %>
 						<% if user_signed_in? and user_videos_ok? %>
-							<th>Photos</th>
+							<td><%= link_to "Video", newschedule_sport_videoclip_path(@sport, g), class: "btn btn-mini btn-primary" %></td>
 						<% end %>
-					</tr>
-				</thead>
-        <% @gameschedules.each_with_index do |g, count| %>
-          <tbody>
-          	<tr>
-          		<td><%= link_to (@team.title + " " + @team.mascot), [@sport, @team, g] %></td>
-          		<td><%= link_to (count += 1), [@sport, @team, g] %></td>
-          		<td><%= g.gamedate.strftime("%m/%d/%Y") %></td>
-          		<td><%= g.homeaway %></td>
-          		<td><%= g.opponent_name %></td>
-          		<td><%= g.starttime.strftime("%I:%M%p") %></td>
-          		<td><%= g.location %></td>
-          		<td><%= g.event %></td>
-          		<td><%= link_to "Summary", sport_team_gameschedule_path(@sport, @team, g), class: "btn btn-mini btn-primary" %></td>
-				<% if user_signed_in? and user_pics_ok? %>
-					<td><%= link_to "Photo", newschedule_sport_photo_path(@sport, g), class: "btn btn-mini btn-primary" %></td>
-				<% end %>
-				<% if user_signed_in? and user_videos_ok? %>
-					<td><%= link_to "Video", newschedule_sport_videoclip_path(@sport, g), class: "btn btn-mini btn-primary" %></td>
-				<% end %>
-          	</tr>
-          </tbody>
-        <% end %>
+		          	</tr>
+		        </tbody>
+	        <% end %>
 		</table>
+		<h5>* - Denotes league game</h5>
 	</div>
 </div>
 <div class="row">

@@ -1,0 +1,45 @@
+<% provide(:title, current_site.sitename + " " + @sport.sportname + " - Standings") %>
+<div class="row">
+  <div class="span10">
+  	<h4>You can import records from other Eazesportz programs. Hopefully, they keep their data up to date!</h4>
+		<table class="table table-hover">
+			<thead> 
+				<th>Team</th>
+				<th>League Wins</th>
+				<th>League Losses</th>
+				<th>Total Wins</th>
+				<th>Total Losses</th>
+				<% if isAdmin? %>
+					<th>Eazesport User</th>
+					<th>Edit</th>
+				<% end %>
+			</thead>
+			<tbody>
+				<% @gamerecords.each do |g| %>
+					<tr>
+						<td><%= g.teamname + " " + g.mascot %></td>
+						<td><%= g.leaguewins %></td>
+						<td><%= g.leaguelosses %></td>
+						<td><%= g.nonleaguewins + g.leaguewins %></td>
+						<td><%= g.nonleaguelosses + g.leaguelosses %></td>
+						<% if isAdmin? %>
+							<% if !g.sportid.nil? %>
+								<td><%= link_to "Import Record", importteamrecord_sport_team_standings_path(@sport, @team, 
+																 gameschedule_id: g.gameschedule_id), 
+																 class: "btn btn-mini btn-primary" %></td>
+							<% else %>
+								<td></td>
+							<% end %>
+							<% if g.gameschedule_id.nil? %>
+								<td></td>
+							<% else %>
+								<td><%= link_to "Edit", addgamerecord_sport_team_standings_path(@sport, @team, gameschedule_id: g.gameschedule_id), 
+													class: "btn btn-mini btn-primary" %></td>
+							<% end %>
+						<% end %>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>

@@ -16,18 +16,20 @@
 				<ul class="nav pull-left">
           			<% if @sport.nil? %>
 			            <li class="disabled"><%= link_to "Schedule", "#" %></li>
-			      			<li class="disabled"><%= link_to "Rosters", "#" %></li>
-			      			<li class="disabled"><%= link_to "Blog", "#" %></li>
-			        		<li class="disabled"><%= link_to "Photos", "#" %></li>
-			        		<li class="disabled"><a href="#">Video Clips</a></li>
-			        		<li class="disabled"><a href="#">More</a></li>
+			            <li class="disabled"><%= link_to "Standings", "#" %></li>			            
+		      			<li class="disabled"><%= link_to "Rosters", "#" %></li>
+		      			<li class="disabled"><%= link_to "Blog", "#" %></li>
+		        		<li class="disabled"><%= link_to "Photos", "#" %></li>
+		        		<li class="disabled"><a href="#">Video Clips</a></li>
+		        		<li class="disabled"><a href="#">More</a></li>
 			        <% elsif !@sport.teams.nil? and @sport.teams.count == 0 %>
 			            <li><%= link_to "Schedule", "#" %></li>
-			      			<li><%= link_to "Rosters", "#" %></li>
-			      			<li><%= link_to "Blog", "#" %></li>
-			        		<li><%= link_to "Photos", "#"%></li>
-			        		<li><a href="#">Video Clips</a></li>
-			        		<li><a href="#">More</a></li>
+			            <li class="disabled"><%= link_to "Standings", "#" %></li>			            
+		      			<li><%= link_to "Rosters", "#" %></li>
+		      			<li><%= link_to "Blog", "#" %></li>
+		        		<li><%= link_to "Photos", "#"%></li>
+		        		<li><a href="#">Video Clips</a></li>
+		        		<li><a href="#">More</a></li>
 			        <% else %>
 		      			<li id="fat-menu" class="dropdown">
 		      				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -36,6 +38,17 @@
 		      				<ul class="dropdown-menu">
 		        				<% @sport.teams.each do |t| %>
 		        					<li><%= link_to (t.title + " " + t.mascot), sport_team_gameschedules_path(@sport, t) %></li>
+		        					<li class="divider"></li>
+		        				<% end %>	
+		      				</ul>
+		      			</li>
+		      			<li id="fat-menu" class="dropdown">
+		      				<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+		      				Standings <b class="caret"></b>
+		      				</a>
+		      				<ul class="dropdown-menu">
+		        				<% @sport.teams.each do |t| %>
+		        					<li><%= link_to (t.title + " " + t.mascot), sport_team_standings_path(@sport, t) %></li>
 		        					<li class="divider"></li>
 		        				<% end %>	
 		      				</ul>

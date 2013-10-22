@@ -1,0 +1,36 @@
+<% provide(:title, current_site.sitename + " " + @sport.sportname + " - Update Standings") %>
+<div class="row">
+ 	<div class="span8 offset2">
+ 		<h4><%= @gameschedule.opponent_name %></h4>
+		<%= form_tag savegamerecord_sport_team_standings_path(@sport, @team), method: :put, html: { class: 'form-horizontal' } do %>
+			<%= render 'shared/error_messages', object: @gameschedule %>
+			<%= hidden_field_tag "gameschedule_id", @gameschedule.id %>
+			<div class="row">
+				<div class="span2">
+					<%= label_tag "League Wins" %>
+					<%= text_field_tag "league_wins" %>
+				</div>
+				<div class="span2 offset1">
+					<%= label_tag "League Losses" %>
+					<%= text_field_tag "league_losses" %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="span2">
+					<%= label_tag "Non League Wins" %>
+					<%= text_field_tag "nonleague_wins" %>
+				</div>
+				<div class="span2 offset1">
+					<%= label_tag "Non League Losses" %>
+					<%= text_field_tag "nonleague_losses" %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="span1 offset2">
+					<%= submit_tag "Submit", class: "btn btn-medium btn-primary" %>
+				</div>
+			</div>
+		<% end %>	
+ 	</div>
+ </div>

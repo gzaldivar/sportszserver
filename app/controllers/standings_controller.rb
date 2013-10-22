@@ -41,6 +41,9 @@ class StandingsController < ApplicationController
         end
       end
 
+      if !found
+        @gamerecords << teamrecord
+      end
   	end
 
     def addgamerecord

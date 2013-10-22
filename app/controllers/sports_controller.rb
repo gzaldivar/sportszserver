@@ -245,6 +245,9 @@ class SportsController < ApplicationController
   def eazebasketball
   end
 
+  def publisher
+  end
+
   def updatelogo
     begin    
       @sport.logoprocessing = true

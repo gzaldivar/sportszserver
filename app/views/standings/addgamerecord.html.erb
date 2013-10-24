@@ -8,21 +8,21 @@
 			<div class="row">
 				<div class="span2">
 					<%= label_tag "League Wins" %>
-					<%= text_field_tag "league_wins" %>
+					<%= text_field_tag "league_wins", @gameschedule.opponent_league_wins %>
 				</div>
 				<div class="span2 offset1">
 					<%= label_tag "League Losses" %>
-					<%= text_field_tag "league_losses" %>
+					<%= text_field_tag "league_losses", @gameschedule.opponent_league_losses %>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span2">
 					<%= label_tag "Non League Wins" %>
-					<%= text_field_tag "nonleague_wins" %>
+					<%= text_field_tag "nonleague_wins", @gameschedule.opponent_nonleague_wins %>
 				</div>
 				<div class="span2 offset1">
 					<%= label_tag "Non League Losses" %>
-					<%= text_field_tag "nonleague_losses" %>
+					<%= text_field_tag "nonleague_losses", @gameschedule.opponent_nonleague_losses %>
 				</div>
 			</div>
 			<p>

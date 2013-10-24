@@ -19,6 +19,20 @@ class StandingsController < ApplicationController
           arecord.nonleaguewins = s.opponent_nonleague_wins
           arecord.nonleaguelosses = s.opponent_nonleague_losses
           arecord.gameschedule_id = s.id
+          arecord.teamid = s.opponent_team_id
+
+          if s.opponentpic?
+            arecord.oppimageurl = s.opponentpic.url(:thumb)
+          elsif s.opponent_team_id
+            oppsport = Sport.find(s.opponent_sport_id)
+            oppteam = oppsport.teams.find(s.opponent_team_id)
+
+            if oppteam.team_logo?
+              arecord.oppimageurl = oppteam.team_logo.url(:thumb)
+            else
+              arecord.oppimageurl = oppsport.sport_logo.url(:thumb)
+            end
+          end
 
           if !s.opponent_sport_id.nil? 
             arecord.sportid = s.opponent_sport_id
@@ -44,6 +58,11 @@ class StandingsController < ApplicationController
       if !found
         @gamerecords << teamrecord
       end
+
+      respond_to do |format|
+        format.html
+        format.json
+      end
   	end
 
     def addgamerecord
@@ -61,36 +80,39 @@ class StandingsController < ApplicationController
 
         respond_to do |format|
           format.html { redirect_to sport_team_standings_path(@sport, @team) }
+          format.json { render status: 200, json: { game: game } }
         end
       rescue Exception => e
         respond_to do |format|
           format.html { redirect_to :back, alert: e.message }
+          format.json { render status: 404, json: { error: e.message } }
         end
       end
     end
 
     def importteamrecord
       begin
+        puts params[:gameschedule_id]
         gameschedule = @team.gameschedules.find(params[:gameschedule_id])
+        puts gameschedule.opponent_mascot
         sport = Sport.find(gameschedule.opponent_sport_id)
         team = sport.teams.find(gameschedule.opponent_team_id)
         schedules = team.gameschedules.desc(:opponent_league_wins)
-        puts 'got schedules'
         teamrecord = getgamerecord(schedules)
-        puts 'got record'
         gameschedule.opponent_nonleague_losses = teamrecord.nonleaguelosses
         gameschedule.opponent_nonleague_wins = teamrecord.nonleaguewins
         gameschedule.opponent_league_wins = teamrecord.leaguewins
         gameschedule.opponent_league_losses = teamrecord.leaguelosses
         gameschedule.save!
-        puts 'saved it'
 
         respond_to do |format|
           format.html { redirect_to sport_team_standings_path(@sport, @team) }
+          format.json { render status: 200, json: { gameschedule: gameschedule } }
         end
       rescue Exception => e
         respond_to do |format|
           format.html { redirect_to :back, alert: e.message }
+          format.json { render status: 404, json: { error: e.message } }
         end
       end
     end

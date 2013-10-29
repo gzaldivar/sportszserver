@@ -1,18 +1,18 @@
 class Users::RegistrationsController < Devise::RegistrationsController
-  
+
   def create
     respond_to do |format|
         format.html {
-          super
-          if current_site?
-            resource.default_site = current_site.id   #set default site
+           super
+            if current_site?
+              resource.default_site = current_site.id   #set default site
 
-            if current_site.beta?
-              resource.tier = "Features"
+              if current_site.beta?
+                resource.tier = "Features"
+              end
+              
+              resource.save
             end
-            
-            resource.save
-          end
         }
         format.json {
           begin

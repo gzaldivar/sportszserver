@@ -83,8 +83,21 @@ class GameschedulesController < ApplicationController
           end
         end
       elsif @sport.name == "Basketball"
-        @athletes = @sport.athletes.where(team_id: @gameschedule.team_id.to_s).asc(:number)
         @stats = @gameschedule.basketball_stats
+      elsif @sport.name == "Soccer"
+        @stats = @gameschedule.soccers
+
+        athletes = @players
+        @players = []
+        @goalies = []
+        athletes.each do |a|
+          if is_soccer_goalie?(a.position)
+            @goalies << a
+            @athlete = a
+          else
+            @players << a
+          end
+        end
       end
  
       respond_to do |format|
@@ -165,6 +178,7 @@ class GameschedulesController < ApplicationController
 
   def findsport
     @sports = find_a_sport(@sport.name)
+    @thesport = params[:sport]
     if params[:gameschedule_id]
       @gameschedule = @team.gameschedules.find(params[:gameschedule_id].to_s)
     else

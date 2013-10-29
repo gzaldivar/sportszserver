@@ -18,7 +18,12 @@
             </div>
             <div class="span2 offset1">
               <%= label_tag "Sport: " %>
-              <%= select_tag :sport, options_for_select(sports_list), include_blank: true %>
+              <% if thesport %>
+                <%= hidden_field_tag "sport", thesport %>
+                <%= thesport %>
+              <% else %>
+                <%= select_tag :sport, options_for_select(sports_list), include_blank: true %>
+              <% end %>
             </div>
           </div>
           <p>

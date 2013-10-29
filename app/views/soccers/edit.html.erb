@@ -1,21 +1,21 @@
-<% provide(:title, current_site.sitename + " " + @sport.name + " - Edit Basketball Stats") %>
+<% provide(:title, current_site.sitename + " " + @athlete.name + " - Edit Soccer Stats") %>
 <p>
 <div class="row">
 	<div class="span10">
 		<h4>Edit Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for game <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
 		<% if @live.nil? %>
-			<%= form_tag edit_sport_athlete_basketball_stat_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
+			<%= form_tag edit_sport_athlete_soccer_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
 				<%= select_tag "livestats", options_for_select(["Live", "Totals"]) %>
 				<%= submit_tag "Submit", class: "btn btn-medium btn-primary", name: nil %>
 			<% end %>
 		<% else %>
-			<%= simple_form_for [@sport, @athlete, @bbstats],  html: { multipart: true } do |f| %>
+			<%= simple_form_for [@sport, @athlete, @stats],  html: { multipart: true } do |f| %>
 				<%= render 'shared/error_messages', object: f.object %>
 				<% if @live == "Live" %>
 					<h5>Entering Stats play by play<h5>
 					<%= render "livestats" %>
 				<% else %>
-					<h5><font color="red"><em>Warning! Entering Stat totals. If you entered stats play by play they will be overwritten. 
+					<h5><font color="red"><em>Use this form to enter goalie information after the game is final.  Warning! Entering Stat totals. If you entered stats play by play they will be overwritten. 
 						All automated live game scoring will also be overwritten.</em></font></h5>
 						<%= render "totals", f: f %>
 				<% end %>

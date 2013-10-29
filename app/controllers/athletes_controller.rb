@@ -10,17 +10,21 @@ class AthletesController < ApplicationController
   def new    
     @athlete = Athlete.new
     @height = []
-    if @sport.sportname == "Football"
+    if @sport.sportname == "Football" or @sport.sportname == "Soccer"
       @position = []
     end
   end
   
   def create
     begin
-      athlete = @sport.athletes.build(params[:athlete]) 
+      athlete = @sport.athletes.build(params[:athlete])
+
       if @sport.name == "Football"
-        update_postions(athlete)
+        update_fbpostions(athlete)
+      elsif @sport.name == "Soccer"
+        update_soccer_positions(athlete)
       end
+
       update_height(athlete)
       athlete.fans = Array.new
       athlete.save!
@@ -30,7 +34,7 @@ class AthletesController < ApplicationController
       end
     rescue Exception => e
       respond_to do |format|   
-        format.html { redirect_to :back, alert: "Error creating athlete" }
+        format.html { redirect_to :back, alert: "Error creating athlete " + e.message }
         format.json { render status: 404, json: { error: e.message, request: [@sport, @athlete] } }
       end
     end
@@ -55,7 +59,7 @@ class AthletesController < ApplicationController
     else
       @height = []
     end
-    if @sport.name == "Football"
+    if @sport.name == "Football" or @sport.name == "Soccer"
       if @athlete.position.nil?
         @position = []
       else
@@ -66,9 +70,13 @@ class AthletesController < ApplicationController
   
   def update
     begin
+
       if @sport.name == "Football"
-        update_postions(@athlete)
+        update_fbpostions(@athlete)
+      elsif @sport.name == "Soccer"
+        update_soccer_positions(athlete)
       end
+
       update_height(@athlete)
       @athlete.update_attributes!(params[:athlete])
       respond_to do |format|
@@ -237,7 +245,7 @@ class AthletesController < ApplicationController
       end
 	  end
 
-    def update_postions(athlete)
+    def update_fbpostions(athlete)
       if !params[:offpos].nil? and !params[:offpos].blank?
         athlete.position = params[:offpos]
       end
@@ -246,6 +254,18 @@ class AthletesController < ApplicationController
       end
       if !params[:special_teamspos].nil? and !params[:special_teamspos].blank?
         athlete.position = athlete.position + "/" + params[:special_teamspos]
+      end
+    end
+
+    def update_soccer_positions(athlete)
+      if !params[:soccer1_pos].nil? and !params[:soccer1_pos].blank?
+        athlete.position = params[:soccer1_pos]
+      end
+      if !params[:soccer2_pos].nil? and !params[:soccer2_pos].blank?
+        athlete.position = athlete.position + "/" + params[:soccer2_pos]
+      end
+      if !params[:soccer3_pos].nil? and !params[:soccer3_pos].blank?
+        athlete.position = athlete.position + "/" + params[:soccer3_pos]
       end
     end
 

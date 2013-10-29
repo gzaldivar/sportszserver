@@ -1,11 +1,11 @@
-<% provide(:title, current_site.sitename + " " + @athlete.name + " - Basketball Stats") %>
+<% provide(:title, current_site.sitename + " " + @athlete.name + " - Soccer Stats") %>
 <p>
 <div class="row">
 	<div class="span10">
 		<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for game <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
 		<table class="table table-bordered">
 			<%= render "stat_header", name: "Game" %>
-			<%= render "stat_body", stat: @bbstats, name: "Game" %>
+			<%= render "stat_body", stat: @stats, name: "Game" %>
 		</table>
 	</div>
 </div>

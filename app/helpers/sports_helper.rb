@@ -46,7 +46,8 @@ module SportsHelper
   def sports_list
     [
       ['Football', 'Football'],
-      ['Basketball', 'Basketball']
+      ['Basketball', 'Basketball'],
+      ['Soccer', 'Soccer']
 #      ['Baseball', 'Baseball']
     ]
   end
@@ -117,6 +118,26 @@ module SportsHelper
       ["First Half", "1"],
       ["Second Half", "2"]
     ]
+  end
+
+  def soccer_positions
+    [
+      ['Goal Keeper','GK'],
+      ['Sweeper', 'SWEP'],
+      ['Defender', 'D'],
+      ['Mid Fielder', 'MF'],
+      ['Forward', 'FORW'],
+      ['Fullback', 'FB'],
+      ['Stryker', 'STRK']
+    ]
+  end
+
+  def is_soccer_goalie?(positions)
+    if positions.include? "GK"
+      return true
+    else
+      return false
+    end
   end
   
 end

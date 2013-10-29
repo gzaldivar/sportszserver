@@ -1,0 +1,49 @@
+<div class="row">
+	<div class="span10">
+		<%= hidden_field_tag "livestats", value="Live" %>
+		<%= hidden_field_tag "gameschedule_id", value=@gameschedule.id.to_s %>
+	</div>
+</div>
+<% if is_soccer_goalie?(@athlete.position) %>
+	<h4>Goalie statistics</h4>
+	<div class="row">
+		<div class="span2 offset1">
+			<%= label_tag "Saves" %>
+			<%= check_box_tag "goalssaved", 1 %>
+		</div>
+		<div class="span2">
+			<%= label_tag "Goals Against" %>
+			<%= check_box_tag "goalsagainst", 1 %>
+		</div>
+		<div class="span2">
+			<%= label_tag "Shutouts" %>
+			<%= check_box_tag "shutouts", 1 %>
+		</div>
+	</div>
+<% else %>
+	<div class="row">
+		<div class="span2 offset1">
+			<%= label_tag "Goal" %>
+			<%= check_box_tag "goals", 1 %>
+		</div>
+		<div class="span2">
+			<%= label_tag "Shot" %>
+			<%= check_box_tag "shotstaken", 1 %>
+		</div>
+		<div class="span2">
+			<%= label_tag "Assists" %>
+			<%= check_box_tag "assists", 1 %>
+		</div>
+		<div class="span2">
+			<%= label_tag "Steals" %>
+			<%= check_box_tag "steals", 1 %>
+		</div>
+	</div>
+<% end %>
+<p>
+<div class="row">
+	<div class="span2 offset1">
+		<%= label_tag "Minutes Played" %>
+		<%= text_field_tag "minutesplayed" %>
+	</div>
+</div>

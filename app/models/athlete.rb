@@ -46,6 +46,7 @@ class Athlete
     has_many :newsfeeds, dependent: :nullify
     has_many :alerts, dependent: :destroy
     has_many :basketball_stats, dependent: :destroy
+    has_many :soccers, dependent: :destroy
     
     validates :number, presence: true, numericality: { greater_than: 0 }
     validates :lastname, presence: true, format: { with: /^[a-zA-Z\d\s]*$/ }

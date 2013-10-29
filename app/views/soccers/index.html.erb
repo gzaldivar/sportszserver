@@ -1,35 +1,36 @@
-<% provide(:title, current_site.sitename + " " + @sport.name + " - Basketball Stats") %>
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Soccer Stats") %>
 <p>
 <div class="row">
 	<div class="span10">
 		<% if !@athlete.nil? and !@gameschedule.nil? %>
-			<% if @bballstats.empty? %>
-				<h4>There are no stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> and <%= @gameschedule.game_name %></h4>
+			<% if @stats.empty? %>
+				<h4>There are no stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> and 
+										   <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
 				<% if isAdmin? %>
-					<%= link_to "Add Stat", newstat_sport_athlete_basketball_stats_path(@sport, @athlete, gameschedule_id: @gameschedule), 
+					<%= link_to "Add Stat", new_sport_athlete_soccer_path(@sport, @athlete, gameschedule_id: @gameschedule), 
 							class: "btn btn-medium btn-primary" %>
 				<% end %>
 			<% else %>
-				<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for game <%= @gameschedule.game_name %></h4>
+				<h4>Stats for <%= @athlete.logname %> for game <%= @gameschedule.game_name %></h4>
 				<table class="table table-bordered">
 					<%= render "stat_header", name: "Game" %>
-					<%= render "stat_body", stat: @bballstats[0], name: "Game" %>
+					<%= render "stat_body", stat: @stats[0], name: "Game" %>
 				</table>
 			<% end %>
 		<% elsif !@athlete.nil? %>
-			<% if @bballstats.empty? %>
+			<% if @stats.empty? %>
 				<h4>There are no stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %></h4>
 				<% if isAdmin? %>
-					<%= link_to "Add Stats", newstat_sport_athlete_basketball_stats_path(@sport, @athlete), 
+				 	<%= link_to "Add Stats", new_sport_athlete_soccer_path(@sport, @athlete), 
 							class: "btn btn-medium btn-primary" %>
 				<% end %>
 			<% else %>
-				<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %></h4>
+				<h4>Stats for <%= @athlete.logname %></h4>
 				<table class="table table-bordered">
 					<%= render "stat_header", name: "Player" %>
 					<% @gameschedules.each do |g| %>
 						<% @thestat = nil %>
-						<% @bballstats.each do |b| %>
+						<% @stats.each do |b| %>
 							<% if g.id == b.gameschedule_id %>
 								<% @thestat = b %>
 								<% break %>
@@ -38,25 +39,25 @@
 						<% if @thestat %>
 							<%= render "stat_body", stat: @thestat, name: "Game" %>
 						<% else %>
-							<%= render "stat_body", stat: BasketballStat.new(gameschedule: g.id, athlete: @athlete.id), name: "Game" %>
+							<%= render "stat_body", stat: Soccer.new(gameschedule: g.id, athlete: @athlete.id), name: "Game" %>
 						<% end %>
 					<% end %>
 				</table>
 			<% end %>
 		<% elsif !@gameschedule.nil? %>
-			<% if @bballstats.empty? %>
+			<% if @stats.empty? %>
 				<h4>There are no stats for <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
-				<% if isAdmin %>
-					<%= link_to "Add Stats", newstat_sport_athlete_basketball_stats_path(@sport, @athlete), 
+				<% if isAdmin? %>
+					<%= link_to "Add Stats", new_sport_athlete_soccer_path(@sport, @athlete), 
 							class: "btn btn-medium btn-primary" %>
 				<% end %>
 			<% else %>
-				<h4>Stats for game <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
+				<h4>Stats for game <%= @gameschedule.game_name %></h4>
 				<table class="table table-bordered">
 					<%= render "stat_header", name: "Player" %>
 					<% @athletes.each do |a| %>
 						<% @thestat = nil %>
-						<% @bballstats.each do |b| %>
+						<% @stats.each do |b| %>
 							<% if a.id == b.athlete_id %>
 								<% @thestat = b %>
 								<% break %>
@@ -65,7 +66,7 @@
 						<% if @thestat %>
 							<%= render "stat_body", stat: b, name: "Player" %>
 						<% else %>
-							<%= render "stat_body", stat: BasketballStat.new(gameschedule: @gameschedule.id, athlete: a.id), name: "Player" %>
+							<%= render "stat_body", stat: Soccer.new(gameschedule: @gameschedule.id, athlete: a.id), name: "Player" %>
 						<% end %>
 					<% end %>
 				</table>

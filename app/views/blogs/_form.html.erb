@@ -59,12 +59,14 @@
                                 hint: "Blog for Game .....", input_html: { id: "select_game"} %>
               	 </div>
                 </div>
-                <div class="row">
-                  <div class="span4">
-                    <%= f.input :gamelog_id, collection: @gamelogs.collect{ |t| [t.logentrytext, t.id] }, label: "Play", 
-                                hint: "Blog for Play .....", input_html: { id: "gamelogs_select"} %>
-                 </div>
-                </div>
+                <% if @sport.name == "Football" %>
+                  <div class="row">
+                    <div class="span4">
+                      <%= f.input :gamelog_id, collection: @gamelogs.collect{ |t| [t.logentrytext, t.id] }, label: "Play", 
+                                  hint: "Blog for Play .....", input_html: { id: "gamelogs_select"} %>
+                   </div>
+                  </div>
+                <% end %>
              		<div class="row">
               			<div class="span4">
                         <%= f.input :athlete_id, collection: @athletes.collect{ |t| [t.full_name, t.id] }, label: "Athlete", hint: "Blog for Athlete ...",

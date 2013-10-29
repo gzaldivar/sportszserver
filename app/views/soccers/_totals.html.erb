@@ -1,0 +1,36 @@
+<% if is_soccer_goalie?(@athlete.position) %>
+	<h4>Goalie Statistics</h4>
+	<div class="row">
+		<div class="span2 offset1">
+			<%= f.input :goalsagainst, label: "Goals Against", input_html: { style: "width: 50px" } %>
+		</div>
+		<div class="span2">
+			<%= f.input :goalssaved, label: "Goals Saved", input_html: { style: "width: 50px" } %>
+		</div>
+		<div class="span2">
+			<%= f.input :shutouts, label: "Shutouts", input_html: { style: "width: 50px" } %>
+		</div>
+	</div>
+<% else %>
+	<div class="row">
+		<%= f.input :gameschedule_id, as: :hidden, input_html: { value: @gameschedule.id.to_s } %>
+		<%= f.input :livestats, as: :hidden, input_html: { value: "Totals" } %>
+		<div class="span2 offset1">
+			<%= f.input :goals, label: "Goals", input_html: { style: "width: 50px" } %>
+		</div>
+		<div class="span2">
+			<%= f.input :shotstaken, label: "Shots Taken", input_html: { style: "width: 50px" } %>
+		</div>
+		<div class="span2">
+			<%= f.input :assists, label: "Assists", input_html: { style: "width: 50px" } %>
+		</div>
+		<div class="span2">
+			<%= f.input :steals, label: "Steals", input_html: { style: "width: 50px" } %>
+		</div>
+	</div>
+<% end %>
+<div class="row">
+	<div class="span2 offset1">
+		<%= f.input :minutesplayed, label: "Minutes Played", input_html: { style: "width: 50px" } %>
+	</div>
+</div>

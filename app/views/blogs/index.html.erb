@@ -69,15 +69,17 @@
 					        <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
 					  	<% end %>
 			      	</div>
-			      	<div class="span2 offset1">
-			  			<%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
-			        		<h5>Filter Blog by Game:</h5>
-		        			<%= hidden_field_tag 'team_id', @team.id.to_s %>
-			        		<%= select_tag "gamelog", options_from_collection_for_select(@gamelogs, "id", "logentrytext"), :include_blank => true, 
-			        					 id: "gamelogs_select" %>
-					        <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
-					  	<% end %>
-			      	</div>
+			      	<% if @sport == "Football" %>
+				      	<div class="span2 offset1">
+				  			<%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
+				        		<h5>Filter Blog by Game:</h5>
+			        			<%= hidden_field_tag 'team_id', @team.id.to_s %>
+				        		<%= select_tag "gamelog", options_from_collection_for_select(@gamelogs, "id", "logentrytext"), :include_blank => true, 
+				        					 id: "gamelogs_select" %>
+						        <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+						  	<% end %>
+				      	</div>
+				      <% end %>
 			    <% end %>
 		    </div>
 		    <p>

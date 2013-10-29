@@ -1,0 +1,21 @@
+<thead>
+	<% if name == "Game" %>
+		<th>Game</th>
+	<% else %>
+		<td>Player</td>
+	<% end %>
+	<% if !@athlete.nil? and is_soccer_goalie?(@athlete.position) %>
+		<th>Goals Against</th>
+		<th>Goals Saved</th>
+		<th>Shutouts</th>
+		<th>Minutes Played</th>
+	<% else %>
+		<th>Goals</th>
+		<th>Shots</th>
+		<th>Assists</th>
+		<th>Steals</th>
+	<% end %>
+	<% if isAdmin? %>
+		<th>Edit</th>
+	<% end %>
+</thead>

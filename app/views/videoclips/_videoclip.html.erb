@@ -7,7 +7,9 @@
 		<th>Team</th>
 		<th>Athletes</th>
 		<th>Game</th>
-		<th>Play</th>
+		<% if @sport.name == "Football" %>
+			<th>Play</th>
+		<% end %>
 		<th>Errors?</th>
     </tr>
   </thead>
@@ -48,7 +50,7 @@
 			<% else %>
 				<td></td>
 			<% end %>
-			<% if !videoclip.gamelog.nil? and !videoclip.gamelog.blank? %>
+			<% if @sport.name == "Football" and !videoclip.gamelog.nil? and !videoclip.gamelog.blank? %>
 				<td><%= @sport.teams.find(videoclip.teamid).gameschedules.find(videoclip.gameschedule).gamelogs.find(videoclip.gamelog).logentrytext %></td>
 			<% else %>
 				<td></td>

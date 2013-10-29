@@ -15,6 +15,7 @@ class Alert
   	belongs_to :football_stat
   	belongs_to :basketball_stat
 	belongs_to :gamelog
+	belongs_to :soccer
 
 	validates :stat_football, format: { with: /Defense|Passing|Receiving|Kicker|Returner|Rushing/ }, allow_nil: true, allow_blank: true
 

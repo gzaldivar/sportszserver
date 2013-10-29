@@ -96,6 +96,8 @@
           <%= link_to "Stats", passing_sport_athlete_football_stats_path(@sport, @athlete), class:  "btn btn-medium btn-primary" %>
         <% elsif @sport.sportname == "Basketball" %>
           <%= link_to "Stats", sport_athlete_basketball_stats_path(@sport, @athlete), class:  "btn btn-medium btn-primary" %>
+        <% elsif @sport.sportname == "Soccer" %>
+          <%= link_to "Stats", sport_athlete_soccers_path(@sport, @athlete), class:  "btn btn-medium btn-primary" %>
         <% end %>
       <% end %>
     </div>

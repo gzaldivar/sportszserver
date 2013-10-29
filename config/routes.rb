@@ -147,11 +147,14 @@ Sportzserver::Application.routes.draw do
           get   :newstat
         end
       end
+
+      resources :soccers
       
       member do
         get :follow, :unfollow, :stats
         put :updatephoto
       end
+      
       collection do
         post :createathletephoto
       end

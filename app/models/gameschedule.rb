@@ -86,6 +86,7 @@ class Gameschedule
   has_many :photos, dependent: :nullify
   has_many :videoclips, dependent: :nullify
   has_many :basketball_stats, dependent: :destroy
+  has_many :soccers, dependent: :destroy
 
   attr_accessor :firstdowns
   

@@ -14,7 +14,9 @@
 	    <th>Team</th>
 	    <th>Athletes</th>
 	    <th>Game</th>
-	    <th>Play</th>
+	    <% if @sport.name == "Football" %>
+	    	<th>Play</th>
+	    <% end %>
 	    <th>Status</th>
 	    <% if @sport.review_media? %>
     		<th>Approved?</th>
@@ -61,7 +63,7 @@
 			<% else %>
 				<td></td>
 			<% end %>
-			<% if !photo.gamelog.nil? and !photo.gamelog.blank? %>
+			<% if @sport.name == "Football" and !photo.gamelog.nil? and !photo.gamelog.blank? %>
 				<td><%= @sport.teams.find(photo.teamid).gameschedules.find(photo.gameschedule).gamelogs.find(photo.gamelog).logentrytext %></td>
 			<% else %>
 				<td></td>

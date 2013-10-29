@@ -1,0 +1,58 @@
+<h4>Real Time Game Summary:</h4>
+<h3>
+<div class="row">
+	<div class="span3">
+		<%= @team.team_name %>
+	</div>
+	<div class="span3 offset1">
+		<%= @gameschedule.opponent_name %>
+	</div>
+</div>
+</h3>
+<h1><font color="blue">
+<div class="row">
+	<div class="span3">
+		<%= @gameschedule.homescore %>
+	</div>
+	<div class="span3 offset1">
+		<%= @gameschedule.opponentscore %>
+	</div>
+</div>
+</font></h1>
+<h4>Goalie Stats</h4>
+<table class="table table-bordered">
+	<%= render "soccers/stat_header", name: "Player" %>
+	<% @goalies.each do |a| %>
+		<% @thestat = nil %>
+		<% @stats.each do |s| %>
+			<% if a.id == s.athlete_id %>
+				<% @thestat = s %>
+				<% break %>
+			<% end %>
+		<% end %>
+		<% if @thestat %>
+			<%= render "soccers/stat_body", stat: @thestat, name: "Player" %>
+		<% else %>
+			<%= render "soccers/stat_body", stat: Soccer.new(gameschedule: @gameschedule.id, athlete: a.id), name: "Player" %>					
+		<% end %>
+	<% end %>
+</table>
+<% @athlete = nil %>
+<h4>Player Stats</h4>
+<table class="table table-bordered">
+	<%= render "soccers/stat_header", name: "Player" %>
+	<% @players.each do |a| %>
+		<% @thestat = nil %>
+		<% @stats.each do |s| %>
+			<% if a.id == s.athlete_id %>
+				<% @thestat = s %>
+				<% break %>
+			<% end %>
+		<% end %>
+		<% if @thestat %>
+			<%= render "soccers/stat_body", stat: @thestat, name: "Player" %>
+		<% else %>
+			<%= render "soccers/stat_body", stat: Soccer.new(gameschedule: @gameschedule.id, athlete: a.id), name: "Player" %>					
+		<% end %>
+	<% end %>
+</table>

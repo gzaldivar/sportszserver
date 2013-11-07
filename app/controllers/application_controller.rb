@@ -13,6 +13,7 @@ class ApplicationController < ActionController::Base
   include TeamsHelper
   include AlertsHelper
   include SponsorsHelper
+  include SoccersHelper
 
 #  def not_authorized
 #    raise ActionController::RoutingError.new('You are not Authorized for this')
@@ -60,10 +61,8 @@ class ApplicationController < ActionController::Base
 
           resource.default_site = current_site.id
           resource.save!
-        elsif resource.admin
-          if !current_site.nil?
-            flash[:error] = "Admin user cannot be used to login to other Eazesportz sites. Login to " + current_site.sitename + " failed!"
-           end
+        elsif resource.admin and !current_site.nil? and current_site.adminid.to_s != resource.id.to_s
+          flash[:error] = "Admin user cannot be used to login to other Eazesportz sites. Login to " + current_site.sitename + " failed!"
         end
 
         sport_path(resource.default_site)

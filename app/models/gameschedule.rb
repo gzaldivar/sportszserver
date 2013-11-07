@@ -70,6 +70,11 @@ class Gameschedule
   field :homebonus, type: Boolean, default: false
   field :visitorbonus, type: Boolean, default: false
 
+  # Soccer fields
+  field :socceroppsog, type: Integer, default: 0
+  field :socceroppck, type: Integer, default: 0
+  field :socceroppsaves, type: Integer, default: 0
+
   has_mongoid_attached_file :opponentpic,
     :storage        => :s3,
     :s3_credentials => { bucket: S3DirectUpload.config.bucket,

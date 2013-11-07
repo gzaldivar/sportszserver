@@ -12,10 +12,18 @@
 				<% end %>
 			<% else %>
 				<h4>Stats for <%= @athlete.logname %> for game <%= @gameschedule.game_name %></h4>
-				<table class="table table-bordered">
-					<%= render "stat_header", name: "Game" %>
-					<%= render "stat_body", stat: @stats[0], name: "Game" %>
-				</table>
+				<% if hasSoccerPlayerStats?(@stats) %>
+					<table class="table table-bordered">
+						<%= render "playerstatsheader", name: "Game"%>
+						<%= render "playerstatsbody", stat: @stats[0], name: "Game" %>
+					</table>
+				<% end %>
+				<% if is_soccer_goalie?(@athlete.position) %>
+					<table class="table table-bordered">
+						<%= render "goalieheader", name: "Game"%>
+						<%= render "goaliebody", stat: @stats[0], name: "Game" %>
+					</table>
+				<% end %>
 			<% end %>
 		<% elsif !@athlete.nil? %>
 			<% if @stats.empty? %>
@@ -26,23 +34,45 @@
 				<% end %>
 			<% else %>
 				<h4>Stats for <%= @athlete.logname %></h4>
-				<table class="table table-bordered">
-					<%= render "stat_header", name: "Player" %>
-					<% @gameschedules.each do |g| %>
-						<% @thestat = nil %>
-						<% @stats.each do |b| %>
-							<% if g.id == b.gameschedule_id %>
-								<% @thestat = b %>
-								<% break %>
+				<% if hasSoccerPlayerStats?(@stats) %>
+					<table class="table table-bordered">
+						<%= render "playerstatsheader", name: "Player" %>
+						<% @gameschedules.each do |g| %>
+							<% @thestat = nil %>
+							<% @stats.each do |b| %>
+								<% if g.id == b.gameschedule_id %>
+									<% @thestat = b %>
+									<% break %>
+								<% end %>
+							<% end %>
+							<% if @thestat %>
+								<%= render "playerstatsbody", stat: @thestat, name: "Game" %>
+							<% else %>
+								<%= render "playerstatsbody", stat: Soccer.new(gameschedule: g.id, athlete: @athlete.id), name: "Game" %>
 							<% end %>
 						<% end %>
-						<% if @thestat %>
-							<%= render "stat_body", stat: @thestat, name: "Game" %>
-						<% else %>
-							<%= render "stat_body", stat: Soccer.new(gameschedule: g.id, athlete: @athlete.id), name: "Game" %>
+					</table>
+				<% end %>
+				<% if is_soccer_goalie?(@athlete.position) %>
+					<h4>Goalie Stats</h4>
+					<table class="table table-bordered">
+						<%= render "goalieheader", name: "Player" %>
+						<% @gameschedules.each do |g| %>
+							<% @thestat = nil %>
+							<% @stats.each do |b| %>
+								<% if g.id == b.gameschedule_id %>
+									<% @thestat = b %>
+									<% break %>
+								<% end %>
+							<% end %>
+							<% if @thestat %>
+								<%= render "goaliebody", stat: @thestat, name: "Game" %>
+							<% else %>
+								<%= render "goaliebody", stat: Soccer.new(gameschedule: g.id, athlete: @athlete.id), name: "Game" %>
+							<% end %>
 						<% end %>
-					<% end %>
-				</table>
+					</table>
+				<% end %>
 			<% end %>
 		<% elsif !@gameschedule.nil? %>
 			<% if @stats.empty? %>
@@ -54,7 +84,7 @@
 			<% else %>
 				<h4>Stats for game <%= @gameschedule.game_name %></h4>
 				<table class="table table-bordered">
-					<%= render "stat_header", name: "Player" %>
+					<%= render "playerstatsheader", name: "Player" %>
 					<% @athletes.each do |a| %>
 						<% @thestat = nil %>
 						<% @stats.each do |b| %>
@@ -63,10 +93,27 @@
 								<% break %>
 							<% end %>
 						<% end %>
-						<% if @thestat %>
-							<%= render "stat_body", stat: b, name: "Player" %>
+						<% if @thestat and hasSoccerPlayerStats?(@thestat) %>
+							<%= render "playerstatsbody", stat: b, name: "Player" %>
 						<% else %>
-							<%= render "stat_body", stat: Soccer.new(gameschedule: @gameschedule.id, athlete: a.id), name: "Player" %>
+							<%= render "playerstatsbody", stat: Soccer.new(gameschedule: @gameschedule.id, athlete: a.id), name: "Player" %>
+						<% end %>
+					<% end %>
+				</table>
+				<table class="table table-bordered">
+					<%= render "goalieheader", name: "Player" %>
+					<% @athletes.each do |a| %>
+						<% @thestat = nil %>
+						<% @stats.each do |b| %>
+							<% if a.id == b.athlete_id %>
+								<% @thestat = b %>
+								<% break %>
+							<% end %>
+						<% end %>
+						<% if @thestat and is_soccer_goalie?(a.position) %>
+							<%= render "goaliebody", stat: b, name: "Player" %>
+						<% elsif is_soccer_goalie?(a.position) %>
+							<%= render "goaliebody", stat: Soccer.new(gameschedule: @gameschedule.id, athlete: a.id), name: "Player" %>
 						<% end %>
 					<% end %>
 				</table>

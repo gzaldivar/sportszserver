@@ -10,34 +10,40 @@ class SportsController < ApplicationController
   
   def create
     begin
-      @sport = current_user.sports.build(params[:sport])
-      @sport.city = @sport.zip.to_region(city: true)
-      @sport.state = @sport.zip.to_region(state: true)
-      @sport.contactemail = current_user.email
-      @sport.adminid = current_user.id
+      duplicate_user = Sport.find_by(adminid: current_site.id)
 
-      if !@sport.sportname.blank?
-        @sport.name = @sport.sportname
-        @sport.has_stats = true
-      else
-        @sport.sportname = @sport.name  # Keep capability to allow non stat sports. Mobile sends name not sportname
-        @sport.has_stats = true
-      end
-      
-      if @sport.beta?
-        @sport.approved = false
-      end
+      if duplicate_user.nil?
+        @sport = current_user.sports.build(params[:sport])
+        @sport.city = @sport.zip.to_region(city: true)
+        @sport.state = @sport.zip.to_region(state: true)
+        @sport.contactemail = current_user.email
+        @sport.adminid = current_user.id
 
-      if @sport.save!
+        if !@sport.sportname.blank?
+          @sport.name = @sport.sportname
+          @sport.has_stats = true
+        else
+          @sport.sportname = @sport.name  # Keep capability to allow non stat sports. Mobile sends name not sportname
+          @sport.has_stats = true
+        end
         
-        current_user.admin = true
-        current_user.default_site = @sport.id
-        current_user.tier = "Features"
-        current_user.save
+        if @sport.beta?
+          @sport.approved = false
+        end
 
-        respond_to do |format|
-          format.html { redirect_to @sport, notice: "New Sport Site created!" }
-          format.json { render json: { sport: @sport, request: @sport } }
+        if @sport.save!
+          
+          current_user.admin = true
+          current_user.default_site = @sport.id
+          current_user.tier = "Features"
+          current_user.save
+
+          respond_to do |format|
+            format.html { redirect_to @sport, notice: "New Sport Site created!" }
+            format.json { render json: { sport: @sport, request: @sport } }
+          end
+        else
+          throw "User and email is already administering a site!"
         end
       end
     rescue Exception => e

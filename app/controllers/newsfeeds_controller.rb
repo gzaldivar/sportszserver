@@ -18,7 +18,7 @@ class NewsfeedsController < ApplicationController
        
       respond_to do |format|
         format.html { redirect_to [@sport, newsfeed], notice: "News item created for #{@sport.sport_name}!" }
-        format.json { render json: { newsfeed: newsfeed, request: sport_newsfeed_url(@sport, newsfeed) } }
+        format.json { render json: { newsfeed: newsfeed } }
       end
     rescue Exception => e
       respond_to do |format|
@@ -76,7 +76,7 @@ class NewsfeedsController < ApplicationController
       @newsfeed.update_attributes!(params[:newsfeed])
       respond_to do |format|
         format.html { redirect_to [@sport, @newsfeed], notice: "Update sucessful!" }
-        format.json { render json: { newsfeed: @newsfeed, request: [@sport, @newsfeed] } }
+        format.json { render json: { newsfeed: @newsfeed } }
       end
     rescue Exception => e
       respond_to do |format|

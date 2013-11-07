@@ -8,6 +8,7 @@ class Soccer
   field :shotstaken, type: Integer, default: 0
   field :assists, type: Integer, default: 0
   field :steals, type: Integer, default: 0
+  field :cornerkick, type: Integer, default: 0
 
   field :goalsagainst, type: Integer, default: 0
   field :goalssaved, type: Integer, default: 0
@@ -24,6 +25,7 @@ class Soccer
   validates_numericality_of :shotstaken, greater_than_or_equal_to: 0
   validates_numericality_of :assists, greater_than_or_equal_to: 0
   validates_numericality_of :steals, greater_than_or_equal_to: 0
+  validates_numericality_of :cornerkick, greater_than_or_equal_to: 0
 
   validates_numericality_of :goalsagainst, greater_than_or_equal_to: 0
   validates_numericality_of :goalssaved, greater_than_or_equal_to: 0

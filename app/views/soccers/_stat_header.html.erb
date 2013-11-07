@@ -9,7 +9,8 @@
 		<th>Goals Saved</th>
 		<th>Shutouts</th>
 		<th>Minutes Played</th>
-	<% else %>
+	<% end %>
+	<% if !@athlete.nil? and hasSoccerPlayerStats?(stat) %>
 		<th>Goals</th>
 		<th>Shots</th>
 		<th>Assists</th>

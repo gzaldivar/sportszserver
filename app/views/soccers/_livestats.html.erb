@@ -20,26 +20,26 @@
 			<%= check_box_tag "shutouts", 1 %>
 		</div>
 	</div>
-<% else %>
-	<div class="row">
-		<div class="span2 offset1">
-			<%= label_tag "Goal" %>
-			<%= check_box_tag "goals", 1 %>
-		</div>
-		<div class="span2">
-			<%= label_tag "Shot" %>
-			<%= check_box_tag "shotstaken", 1 %>
-		</div>
-		<div class="span2">
-			<%= label_tag "Assists" %>
-			<%= check_box_tag "assists", 1 %>
-		</div>
-		<div class="span2">
-			<%= label_tag "Steals" %>
-			<%= check_box_tag "steals", 1 %>
-		</div>
-	</div>
 <% end %>
+<h4>Player Statistics</h4>
+<div class="row">
+	<div class="span2 offset1">
+		<%= label_tag "Goal" %>
+		<%= check_box_tag "goals", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "Shot" %>
+		<%= check_box_tag "shotstaken", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "Assists" %>
+		<%= check_box_tag "assists", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "Steals" %>
+		<%= check_box_tag "steals", 1 %>
+	</div>
+</div>
 <p>
 <div class="row">
 	<div class="span2 offset1">

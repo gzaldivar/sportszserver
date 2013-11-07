@@ -74,7 +74,7 @@ class AthletesController < ApplicationController
       if @sport.name == "Football"
         update_fbpostions(@athlete)
       elsif @sport.name == "Soccer"
-        update_soccer_positions(athlete)
+        update_soccer_positions(@athlete)
       end
 
       update_height(@athlete)

@@ -87,14 +87,26 @@ class GameschedulesController < ApplicationController
       elsif @sport.name == "Soccer"
         @stats = @gameschedule.soccers
 
+        @soccerhomesog = 0
+        @soccerhomeck = 0
+        @soccerhomesaves = 0
+
+        @stats.each do |s|
+          @soccerhomesog += s.shotstaken
+          @soccerhomeck += s.cornerkick
+          @soccerhomesaves += s.goalssaved
+        end
+
         athletes = @players
         @players = []
         @goalies = []
         athletes.each do |a|
-          if is_soccer_goalie?(a.position)
+          if is_soccer_goalie?(a.position) and hasSoccerPlayerStats?(@stats)
             @goalies << a
-            @athlete = a
-          else
+            @players << a
+          elsif is_soccer_goalie?(a.position)
+            @goalies << a
+         else
             @players << a
           end
         end
@@ -119,6 +131,18 @@ class GameschedulesController < ApplicationController
     elsif !@gameschedule.opponent_sport_id.nil?
       @opposingsport = Sport.find(@gameschedule.opponent_sport_id)
       @opposingteam = @opposingsport.teams.find(@gameschedule.opponent_team_id)
+    end
+
+    @stats = @gameschedule.soccers
+
+    @soccerhomesog = 0
+    @soccerhomeck = 0
+    @soccerhomesaves = 0
+
+    @stats.each do |s|
+      @soccerhomesog += s.shotstaken
+      @soccerhomeck += s.cornerkick
+      @soccerhomesaves += s.goalssaved
     end
   end
   
@@ -152,16 +176,16 @@ class GameschedulesController < ApplicationController
         if @sport.sportname == "Football"
           s.football_stats.each do |f|
             if !f.football_passings.nil?
-              @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_passings.firstdowns
+               @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_passings.firstdowns
             end
           end
+
           s.football_stats.each do |f|
             if !f.football_rushings.nil?
               @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_rushings.firstdowns
             end
           end
-        end
-        
+        end        
       end
       
       respond_to do |format|

@@ -131,13 +131,5 @@ module SportsHelper
       ['Stryker', 'STRK']
     ]
   end
-
-  def is_soccer_goalie?(positions)
-    if positions.include? "GK"
-      return true
-    else
-      return false
-    end
-  end
   
 end

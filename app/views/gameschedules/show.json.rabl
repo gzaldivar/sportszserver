@@ -11,6 +11,7 @@ node :opponentpic, :if => lambda { |a| !a.opponent_team_id? } do |a|
 	a.opponentpic
 end
 node(:starttime) { |t| t.starttime.strftime("%I:%M%p") }
+node(:startdate) { |t| t.gamedate.strftime("%m-%d-%Y") }
 node(:current_game_time) { |t| t.livegametime.strftime("%I:%M") }
 attributes :gamedate, :location, :opponent, :event, :homeaway, :game_name, :homeq1, :homeq2, :homeq3, :homeq4, :opponentq1, :opponentq2, 
 		   :opponentq3, :opponentq4, :possession, :lastplay, :final, :opponent_mascot, 
@@ -35,4 +36,6 @@ if @sport.name == "Football"
 	end
 elsif @sport.name == "Basketball"
 	attributes :opponentfouls, :currentperiod, :homefouls
+elsif @sport.name == "Soccer"
+	attributes :socceroppck, :socceroppsog, :socceroppsaves
 end

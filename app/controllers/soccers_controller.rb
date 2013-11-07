@@ -36,7 +36,7 @@ class SoccersController < ApplicationController
 			if live == "Totals"
 				stats = @athlete.soccers.create!(params[:soccer])
 				game.homescore = stats.goals
-				if !params[:soccer][:goalsagainst].blank? of !params[:soccer][:goalssaved].blank? or
+				if !params[:soccer][:goalsagainst].blank? or !params[:soccer][:goalssaved].blank? or
 				   !params[:soccer][:shutouts].blank?
 				   	@goalie = true
 				else
@@ -61,7 +61,7 @@ class SoccersController < ApplicationController
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error " + e.message }
-				format.json { render status: 404, json: { error: "e.message" } }
+				format.json { render status: 404, json: { error: e.message } }
 			end
 		end
 	end
@@ -96,7 +96,7 @@ class SoccersController < ApplicationController
 			end
 
 			if live == "Totals"
-				@stats = @athlete.soccers.update_attributes!(params[:soccer])
+				@stats.update_attributes!(params[:soccer])
 				game.homescore = @stats.goals
 			else
 				livestats(@stats, @athlete, params)
@@ -116,7 +116,7 @@ class SoccersController < ApplicationController
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error " + e.message }
-				format.json { render status: 404, json: { error: "e.message" } }
+				format.json { render status: 404, json: { error: e.message } }
 			end
 		end
 	end
@@ -185,7 +185,7 @@ class SoccersController < ApplicationController
 
 				if params[:goals].to_i == 1
 					stats.goals += 1
-					if params[:shottaken] == 0
+					if params[:shottaken].to_i == 0
 						stats.shotstaken += 1
 					end
 				end
@@ -200,6 +200,10 @@ class SoccersController < ApplicationController
 
 				if params[:steals].to_i == 1
 					stats.steals += 1
+				end
+
+				if params[:cornerkick].to_i == 1
+					stats.cornerkick += 1
 				end
 
 				if params[:goalsagainst].to_i == 1

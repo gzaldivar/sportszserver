@@ -1,0 +1,15 @@
+<thead>
+	<% if name == "Game" %>
+		<th>Game</th>
+	<% else %>
+		<td>Player</td>
+	<% end %>
+	<th>Goals</th>
+	<th>Shots</th>
+	<th>Corner Kicks</th>
+	<th>Assists</th>
+	<th>Steals</th>
+	<% if isAdmin? %>
+		<th>Edit</th>
+	<% end %>
+</thead>

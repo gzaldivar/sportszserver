@@ -45,6 +45,12 @@ elsif @sport.name == "Basketball"
 		node(:gameschedule_id) { |g| g.gameschedule_id.to_s }
 		attributes :twoattempt, :twomade, :threeattempt, :threemade, :ftmade, :ftattempt, :fouls, :assists, :steals, :blocks, :offrebound, :defrebound
 	end
+elsif @sport.name == "Soccer"
+	child :soccers do
+		node(:soccerid) { |s| s.id.to_s }
+		node(:gameschedule_id) { |g| g.gameschedule_id.to_s }
+		attributes :goals, :shotstaken, :assists, :steals, :goalsagainst, :goalssaved, :shutouts, :minutesplayed, :cornerkick
+	end
 end
 node :hasphotos, :if => lambda { |a| !@sport.photos.where(players: a.id.to_s).empty? } do
 	true

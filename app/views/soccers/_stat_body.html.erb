@@ -8,12 +8,12 @@
 			<td><%= link_to(athlete.logname, [@sport, athlete]) %></td>
 		<% end %>
 
-		<% if !@athlete.nil? and is_soccer_goalie?(@athlete.position) %>
+		<% if is_soccer_goalie?(@athlete.position) %>
 			<td><%= stat.goalsagainst %></td>
 			<td><%= stat.goalssaved %></td>
 			<td><%= stat.shutouts %></td>
 			<td><%= stat.minutesplayed %></td>
-		<% else %>
+		<% elsif hasSoccerPlayerStats?(stat) %>
 			<td><%= stat.goals %></td>
 			<td><%= stat.shotstaken %></td>
 			<td><%= stat.assists %></td>

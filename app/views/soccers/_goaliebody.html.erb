@@ -1,0 +1,22 @@
+<tr>
+	<% if name == "Game" %>
+		<% @game = Gameschedule.find(stat.gameschedule_id.to_s) %>
+		<td><%= link_to(@game.game_name, [@sport, @sport.teams.find(@game.team_id), @game]) %></td>
+	<% else %>
+		<% athlete = Athlete.find(stat.athlete_id.to_s) %>
+		<td><%= link_to(athlete.logname, [@sport, athlete]) %></td>
+	<% end %>
+
+	<td><%= stat.goalsagainst %></td>
+	<td><%= stat.goalssaved %></td>
+	<td><%= stat.shutouts %></td>
+	<td><%= stat.minutesplayed %></td>
+
+	<% if Soccer.find(stat.id).nil? and isAdmin? %>
+		<td><%= link_to "Stats", new_sport_athlete_soccer_path(@sport, stat.athlete_id, gameschedule_id: stat.gameschedule_id), 
+						class: "btn btn-mini btn-primary" %></td>
+	<% elsif isAdmin? %>
+		<td><%= link_to "Stats", edit_sport_athlete_soccer_path(@sport, stat.athlete_id, stat, gameschedule_id: stat.gameschedule_id), 
+				class: "btn btn-mini btn-primary" %></td>
+	<% end %>
+</tr>

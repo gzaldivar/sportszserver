@@ -10,7 +10,7 @@ class SportsController < ApplicationController
   
   def create
     begin
-      duplicate_user = Sport.find_by(adminid: current_user.id)
+      duplicate_user = Sport.find_by(adminid: current_user.id.to_s)
 
       if duplicate_user.nil?
         @sport = current_user.sports.build(params[:sport])

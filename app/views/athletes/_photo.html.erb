@@ -3,7 +3,7 @@
     <h4><em><font color="red">Processing Replacement Photo ...</font></em></h4>
   <% end %>
   <h4>Change Athlete Image:</h4>
-	<% if athlete.pic.file? %> 
+	<% if athlete.pic? %> 
 		<%= image_tag athlete.pic.url(:medium) %>
 	<% else %>
 		<%= image_tag 'Photo_Not_Available.jpg' %>

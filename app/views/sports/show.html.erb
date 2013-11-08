@@ -36,7 +36,7 @@
             </thead>
             <tbody>
               <td><% if @sport.sport_logo? %>
-                <%= image_tag current_site.sport_logo.url(:thumb) %>
+                <%= image_tag 'Photo_Not_Available.jpg' %>
               <% else %>
                 <%= image_tag @sport.sport_logo.url(:thumb) %>
               <% end %></td>

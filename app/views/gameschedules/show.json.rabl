@@ -7,6 +7,9 @@ node :opponentpic, :if => lambda { |a| a.opponent_team_id? } do |a|
 		Sport.find(a.opponent_sport_id).sport_logo(:thumb)
 	end
 end 
+node :eazesportzOpponent, :if => lambda { |a| a.opponent_team_id? } do
+	true
+end
 node :opponentpic, :if => lambda { |a| !a.opponent_team_id? } do |a|
 	a.opponentpic
 end

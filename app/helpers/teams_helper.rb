@@ -38,4 +38,14 @@ module TeamsHelper
 		end
 	end
 
+	def get_team_logo(sport, team)
+		if team.team_logo?
+			return team.team_logo(:thumb)
+		elsif @sport.sport_logo?
+			sport.sport_logo(:thumb)
+		else
+			return "photo_not_available.png"
+		end
+	end
+
 end

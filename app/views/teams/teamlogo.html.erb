@@ -12,7 +12,7 @@
 			<%= image_tag @team.team_logo.url(:thumb) %>
         <% elsif current_site.sport_logo.file? %>
         	<p>
-        	<h5>Using progam image....</h5>
+        	<h5>Using sport program logo....</h5>
         	<%= image_tag current_site.sport_logo.url(:thumb) %>
 		<% else %>
 			<%= image_tag "photo_not_available.png" %>

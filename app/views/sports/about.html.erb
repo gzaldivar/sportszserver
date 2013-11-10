@@ -1,8 +1,8 @@
+<% provide(:title, 'About Us') %>
 <p>
 <div class="span10" id="backcolor">
 	<% if !current_site? or current_site.about_filename_url.nil? %>
-		</p><% provide(:title, 'About Us') %>
-		<h1>About Us</h1>
+		<h1>About EazeSportz</h1>
 		<p>
 		<div class="row">
 	    	<div class="span4">
@@ -24,13 +24,6 @@
 				<p>
 				Thanks for looking at us and considering our solution for your needs.
 				<br/>
-				<% if isAdmin? %>
-					<div class="span6 offset2"%>
-						<h4>Enter your own About Page:
-						<%= link_to "Replace", updateabout_sport_path(current_site), class: "btn btn-medium btn-primary" %><p>
-						You will be required to enter a jpg. If you do not want to enter a new about page the text above will be displayed.</h4>
-					</div>
-				<% end %>
 				</h5>
 			</div>
 		</div>
@@ -50,8 +43,13 @@
 				<h5>In the future, our product will provide support for additional connected devices in addition to live video support to help you reach a wider fan base.</h5>
 			</div>
 		</div>
+		<% if isAdmin? and !current_site.nil?%>
+			<h4>You can enter your own About page to replace this one that is customized for your site.</h4>
+			<h4><em><%= link_to "Click here to create your own about page!", updateabout_sport_path(current_site) %></em></h4>
+			<h4>You will be required to enter a jpg. If you do not want to enter a new about page the text above will be displayed.</h4>
+		<% end %>
 	<% else %>
-		<% provide(:title, current_site.sitename + " - About Us") %>
+		<!--% provide(:title, current_site.sitename + " - About Us") %-->
 		<h1>About <%= current_site.sitename %></h1>
 		<div class="span10 offset1">
 			<%= image_tag current_site.about_filename_url %><p>

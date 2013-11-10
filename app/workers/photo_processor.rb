@@ -213,6 +213,30 @@ class PhotoProcessor
         error.save
         item.delete
       end
+    elsif item.modelname == "gameschedulelogo"
+      begin
+        gameschedule = Gameschedule.find(item.modelid)
+        s3 = AWS::S3.new
+        bucket = s3.buckets[S3DirectUpload.config.bucket]
+        obj = bucket.objects[item.filepath]
+
+        gameschedule.image_data = obj.read
+        gameschedule.original_filename = item.filename
+        gameschedule.content_type = item.filetype
+#        gameschedule.logoprocessing = false
+        gameschedule.save!
+
+        obj.delete
+        item.delete
+      rescue Exception => e
+        error = item.sport.photo_errors.new
+        error.error_message = e.message
+        error.modelname = item.modelname
+        error.modelid = item.modelid
+        error.sport = item.sport
+        error.save
+        item.delete
+      end
     elsif item.modelname == "useravatar"
       begin
         user = User.find(item.modelid)

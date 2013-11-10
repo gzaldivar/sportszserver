@@ -1,0 +1,11 @@
+<%= s3_uploader_form callback_url: createlogo_sport_team_gameschedules_path, callback_param: "gameschedule[image_url]", 
+         key: "uploads/gameschedulephotos/#{@gameschedule.id}/${filename}", id:  "myS3Uploader" do %>
+ 	<%= file_field_tag :file %>
+<% end %>
+
+<script id="template-upload" type="text/x-tmpl">
+	<div id="file-{%=o.unique_id%}" class="upload">
+		{%=o.name%}
+	 	<div class="progress"><div class="bar" style="width: 0%"></div></div>
+	</div>
+</script>

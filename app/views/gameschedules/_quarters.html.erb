@@ -12,7 +12,7 @@
 </thead>
 <tbody>
 	<tr>
-		<td><%= @team.team_name %></td>
+		<td><%= image_tag(get_team_logo(@sport, @team)) %><%=  @team.team_name %></td>
 		<td><%= @gameschedule.homeq1 %></td>
 		<td><%= @gameschedule.homeq2 %></td>
 		<td><%= @gameschedule.homeq3 %></td>
@@ -20,7 +20,13 @@
 		<td><%= @gameschedule.homeq1 + @gameschedule.homeq2 + @gameschedule.homeq3 + @gameschedule.homeq4 %></td>
 	</tr>
 	<tr>
-		<td><%= @gameschedule.opponent_name %></td>
+		<td>
+			<% if @opposingteam %>
+				<%= image_tag get_team_logo(@opposingsport, @opposingteam) %><%= @gameschedule.opponent_name %>
+			<% else %>
+				<%= @gameschedule.opponent_name %>
+			<% end %>
+		</td>
 		<td><%= @gameschedule.opponentq1 %></td>
 		<td><%= @gameschedule.opponentq2 %></td>
 		<td><%= @gameschedule.opponentq3 %></td>

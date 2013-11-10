@@ -185,13 +185,11 @@ class AthletesController < ApplicationController
       path = params[:filepath].split('/')
       imagepath = CGI.unescape(path[2])
       @athlete.processing = true
-      puts "processing job " + @athlete.id.to_s
 
       @athlete.save!
 
       queue = @sport.photo_queues.new(modelid: @athlete.id, modelname: "athletes", filename: params[:filename], filetype: params[:filetype], filepath: imagepath)
       if queue.save!
-        puts "added it to the queue from web " + @athlete.id.to_s
         Resque.enqueue(PhotoProcessor, queue.id)
       end
     rescue Exception => e
@@ -205,12 +203,9 @@ class AthletesController < ApplicationController
 
       @athlete.save!
 
-      puts "processing mobile job " + @athlete.id.to_s
       queue = @sport.photo_queues.new(modelid: @athlete.id, modelname: "athletes", filename: params[:filename], filetype: params[:filetype], 
                                       filepath: params[:filepath])
       if queue.save!
-        puts "queing job from mobile " + @athlete.id.to_s
-        
         Resque.enqueue(PhotoProcessor, queue.id)
       end
 

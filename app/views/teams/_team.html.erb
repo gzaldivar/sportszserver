@@ -21,13 +21,7 @@
           <% if t.logoprocessing? %>
             <em><font color="red">Logo Processing ...</font><em>
           <% else %>
-            <% if t.team_logo.file? %>
-              <%= image_tag t.team_logo.url(:thumb) %>
-            <% elsif current_site.sport_logo.file? %>
-              <%= image_tag current_site.sport_logo.url(:thumb) %>
-            <% else %>
-              <%= image_tag "photo_not_available.png" %>
-            <% end %>
+              <%= image_tag get_team_logo(t) %>
           <% end %>
         </td>
         <% if isAdmin? %>

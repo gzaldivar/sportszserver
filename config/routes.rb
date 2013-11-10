@@ -40,7 +40,7 @@ Sportzserver::Application.routes.draw do
       member do
         get   :getplayers, :teamlogo
         post  :addplayers
-        put :createteamlogo, :updatelogo
+        put   :createteamlogo, :updatelogo
       end
       
       resources :gameschedules, only: [:show, :new, :create, :edit, :update, :index, :destroy] do
@@ -48,6 +48,11 @@ Sportzserver::Application.routes.draw do
         collection do
           get   :periods, :findsport, :findteam
           put   :defineperiods
+          post  :createlogo
+        end
+
+        member do
+          put   :updatelogo
         end
 
         resources :gamelogs, only: [:create, :edit, :destroy, :show, :update] do

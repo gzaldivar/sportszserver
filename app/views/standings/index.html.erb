@@ -20,11 +20,7 @@
 						<% if g.oppimageurl %>
 							<td><%= image_tag(g.oppimageurl) %><%= g.teamname + " " + g.mascot %></td>
 						<% elsif g.gameschedule_id.nil? %>
-							<% if @team.team_logo? %>
-								<td><%= image_tag(@team.team_logo(:thumb)) %><%= g.teamname + " " + g.mascot %></td>
-							<% elsif @sport.sport_logo? %>
-								<td><%= image_tag(@sport.sport_logo(:thumb)) %><%= g.teamname + " " + g.mascot %></td>
-							<% end %>
+							<td><%= image_tag get_team_logo(@sport, @team) %><%= g.teamname + " " + g.mascot %></td>
 						<% else %>
 							<td><%= image_tag("photo_not_available.png") %><%= g.teamname + " " + g.mascot %></td>
 						<% end %>

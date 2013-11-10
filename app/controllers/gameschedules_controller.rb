@@ -1,8 +1,8 @@
 class GameschedulesController < ApplicationController
 	before_filter	:authenticate_user! #,   only: [:destroy, :new, :edit, :update, :create]
   before_filter :get_sport
-  before_filter :get_schedule,        only: [:show, :edit, :update, :destroy]
-  before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
+  before_filter :get_schedule,        only: [:show, :edit, :update, :destroy, :updatelogo]
+  before_filter only: [:destroy, :update, :create, :edit, :new, :createlogo, :updatelogo] do |controller| 
     controller.team_manager?(@gameschedule, @team)
   end
   
@@ -44,10 +44,8 @@ class GameschedulesController < ApplicationController
 
       respond_to do |format|
         format.html { redirect_to [@sport, @team, schedule] }
-        format.xml
         format.json { render json: { schedule: schedule } }
-        format.js
-      end
+       end
     rescue Exception => e
       respond_to do |format|
         format.html { redirect_to :back, alert: "Error creating game schedule " + schedule.message }
@@ -60,6 +58,11 @@ class GameschedulesController < ApplicationController
   def show
     begin
       @players = @sport.athletes.where(team_id: @team.id.to_s).asc(:number)
+
+      if @gameschedule.opponent_team_id?
+        @opposingsport = Sport.find(@gameschedule.opponent_sport_id)
+        @opposingteam = @opposingsport.teams.find(@gameschedule.opponent_team_id)
+      end
 
       if @sport.name == "Football"
         @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
@@ -239,6 +242,42 @@ class GameschedulesController < ApplicationController
     end
   end
   
+  def createlogo
+    begin    
+      path = CGI.unescape(params[:filepath]).split('/')
+      @gameschedule = @team.gameschedules.find(path[4])    
+      path = params[:filepath].split('/')
+      imagepath = CGI.unescape(path[2])
+
+      queue = @sport.photo_queues.new(modelid: @gameschedule.id, modelname: "gameschedulelogo", filename: params[:filename], 
+                                      filetype: params[:filetype], filepath: imagepath)
+      if queue.save!
+        Resque.enqueue(PhotoProcessor, queue.id)
+      end
+
+    rescue Exception => e
+      puts e.message
+    end
+  end
+
+  def updatelogo
+    begin
+      queue = @sport.photo_queues.new(modelid: @gameschedule.id, modelname: "gameschedulelogo", filename: params[:filename], filetype: params[:filetype], 
+                                      filepath: params[:filepath])
+        if queue.save!
+            Resque.enqueue(PhotoProcessor, queue.id)
+        end
+
+        respond_to do |format|
+            format.json { render json: { success: "success", gameschedule: @gameschedule } }
+        end
+      rescue Exception => e
+        respond_to do |format|
+            format.json { render status: 404, json: { error: e.message } }
+        end
+      end
+  end
+
   private
   
     def get_sport

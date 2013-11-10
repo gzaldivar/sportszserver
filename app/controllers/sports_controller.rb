@@ -186,16 +186,16 @@ class SportsController < ApplicationController
   end
 
   def uploadpage
-    if params[:site][:page] == "About"
-      if !params[:site][:about_filename].blank?
-        @site.sitepages("About", params[:site][:about_filename])
-        @site.save
+    if params[:page] == "About"
+      if !params[:about_filename].blank?
+        @sport.sitepages("About", params[:about_filename])
+        @sport.save!
         redirect_to about_path
       else
         flash[:notice] = "No filename entered for About page"
         redirect_to :back
       end
-    elsif params[:site][:page] == "Contact"    
+    elsif params[:page] == "Contact"    
     end
   end
 

@@ -3,16 +3,20 @@ class Gameschedule
   include Mongoid::Timestamps
   include Mongoid::Paperclip
 
+  attr_accessor :content_type, :original_filename, :image_data
+
+  before_save :decode_base64_image
   before_create :set_live_game_time
 
   field :starttime, type: DateTime
   field :gamedate, type: Date
   field :location, type: String
 
-  field :opponent, type: String
-  field :opponent_mascot, type: String, default: ""
   field :opponent_sport_id, type: String
   field :opponent_team_id, type: String
+  
+  field :opponent, type: String
+  field :opponent_mascot, type: String, default: ""
   field :opponent_league_wins, type: Integer, default: 0
   field :opponent_league_losses, type: Integer, default: 0
   field :opponent_nonleague_wins, type: Integer, default: 0
@@ -135,5 +139,23 @@ class Gameschedule
   def set_live_game_time
     self.livegametime = Date.today.midnight
   end
+
+  private
+
+    def decode_base64_image
+      if self.image_data && self.content_type && self.original_filename
+#        decoded_data = Base64.decode64(self.image_data)
+ 
+        data = StringIO.new(image_data)
+        data.class_eval do
+          attr_accessor :content_type, :original_filename
+        end
+ 
+        data.content_type = self.content_type
+        data.original_filename = File.basename(self.original_filename)
+ 
+        self.opponentpic = data
+      end
+    end
 
 end

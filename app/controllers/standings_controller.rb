@@ -22,7 +22,7 @@ class StandingsController < ApplicationController
           arecord.teamid = s.opponent_team_id
 
           if s.opponentpic?
-            arecord.oppimageurl = s.opponentpic.url(:thumb)
+            arecord.oppimageurl = s.opponentpic.url(:tiny)
           elsif s.opponent_team_id
             oppsport = Sport.find(s.opponent_sport_id)
             oppteam = oppsport.teams.find(s.opponent_team_id)

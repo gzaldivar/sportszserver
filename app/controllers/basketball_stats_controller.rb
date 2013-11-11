@@ -36,23 +36,24 @@ class BasketballStatsController < ApplicationController
 
 			if live == "Totals"
 				bbstats = @athlete.basketball_stats.create!(params[:basketball_stat])
-				game.homescore = (bbstats.ftmade * 1) + (bbstats.twomade * 2) + (bbstats.threemade * 3)
-				game.homefouls = bbstats.fouls
+#				game.homescore = (bbstats.ftmade * 1) + (bbstats.twomade * 2) + (bbstats.threemade * 3)
+#				game.homefouls = bbstats.fouls
 			else
 				bbstats = @athlete.basketball_stats.new(gameschedule_id: game.id.to_s)
 				livestats(bbstats, @athlete, params)
-				game.homescore += params[:ftmade].to_i + (params[:twomade].to_i * 2) + (params[:threemade].to_i * 3)
-				game.homefouls += params[:fouls].to_i
+#				game.homescore += params[:ftmade].to_i + (params[:twomade].to_i * 2) + (params[:threemade].to_i * 3)
+#				game.homefouls += params[:fouls].to_i
 				
-				if params[:threemade]
-					game.lastplay = @athlete.logname + " 3PT"
-				elsif params[:twomade]
-					game.lastplay = @athlete.logname + " 2PT"
-				elsif params[:ftmade]
-					game.lastplay = @athlete.logname + " FT"
-				elsif params[:fouls]
-					game.lastplay = @athlete.logname + " Foul"
-				end
+			end
+
+			if params[:threemade]
+				game.lastplay = @athlete.logname + " 3PT"
+			elsif params[:twomade]
+				game.lastplay = @athlete.logname + " 2PT"
+			elsif params[:ftmade]
+				game.lastplay = @athlete.logname + " FT"
+			elsif params[:fouls]
+				game.lastplay = @athlete.logname + " Foul"
 			end
 
 			game.save!
@@ -71,6 +72,8 @@ class BasketballStatsController < ApplicationController
 
 	def show
 		@gameschedule = Gameschedule.find(@bbstats.gameschedule_id)
+		@game.homescore = basketball_home_score(@game)
+		@game.homefouls = basketball_home_fouls(@game)
 		@team = @sport.teams.find(@gameschedule.team_id)
 	end
 
@@ -98,27 +101,28 @@ class BasketballStatsController < ApplicationController
 			end
 
 			if live == "Totals"
-				game.homescore -= @bbstats.ftmade - (@bbstats.twomade * 2) - (@bbstats.threemade * 3)
-				game.homefouls -= @bbstats.fouls
+#				game.homescore -= @bbstats.ftmade - (@bbstats.twomade * 2) - (@bbstats.threemade * 3)
+#				game.homefouls -= @bbstats.fouls
 				@bbstats.update_attributes!(params[:basketball_stat])
-				game.homescore += @bbstats.ftmade  + (@bbstats.twomade * 2) + (@bbstats.threemade * 3)
-				game.homefouls += @bbstats.fouls
+#				game.homescore += @bbstats.ftmade  + (@bbstats.twomade * 2) + (@bbstats.threemade * 3)
+#				game.homefouls += @bbstats.fouls
 			else
 #				game.homescore -= params[:ftmade].to_i + (params[:twomade].to_i * 2) + (params[:threemade].to_i * 3)
 #				game.homefouls -= params[:fouls].to_i
 				livestats(@bbstats, @athlete, params)
-				game.homescore += params[:ftmade].to_i + (params[:twomade].to_i * 2) + (params[:threemade].to_i * 3)
-				game.homefouls += params[:fouls].to_i
+#				game.homescore += params[:ftmade].to_i + (params[:twomade].to_i * 2) + (params[:threemade].to_i * 3)
+#				game.homefouls += params[:fouls].to_i
 
-				if params[:threemade]
-					game.lastplay = @athlete.logname + " 3PT"
-				elsif params[:twomade]
-					game.lastplay = @athlete.logname + " 2PT"
-				elsif params[:ftmade]
-					game.lastplay = @athlete.logname + " FT"
-				elsif params[:fouls]
-					game.lastplay = @athlete.logname + " Foul"
-				end
+			end
+
+			if params[:threemade]
+				game.lastplay = @athlete.logname + " 3PT"
+			elsif params[:twomade]
+				game.lastplay = @athlete.logname + " 2PT"
+			elsif params[:ftmade]
+				game.lastplay = @athlete.logname + " FT"
+			elsif params[:fouls]
+				game.lastplay = @athlete.logname + " Foul"
 			end
 
 			game.save!

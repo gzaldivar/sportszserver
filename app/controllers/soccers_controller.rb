@@ -35,7 +35,7 @@ class SoccersController < ApplicationController
 
 			if live == "Totals"
 				stats = @athlete.soccers.create!(params[:soccer])
-				game.homescore = stats.goals
+#				game.homescore = stats.goals
 				if !params[:soccer][:goalsagainst].blank? or !params[:soccer][:goalssaved].blank? or
 				   !params[:soccer][:shutouts].blank?
 				   	@goalie = true
@@ -45,11 +45,12 @@ class SoccersController < ApplicationController
 			else
 				stats = @athlete.soccers.new(gameschedule_id: game.id.to_s)
 				@goalie = livestats(stats, @athlete, params)
-				game.homescore += params[:goals].to_i
+#				game.homescore += params[:goals].to_i
 				
-				if params[:goals]
-					game.lastplay = @athlete.logname + " Goal Scored"
-				end
+			end
+
+			if params[:goals]
+				game.lastplay = @athlete.logname + " Goal Scored"
 			end
 
 			game.save!
@@ -97,14 +98,14 @@ class SoccersController < ApplicationController
 
 			if live == "Totals"
 				@stats.update_attributes!(params[:soccer])
-				game.homescore = @stats.goals
+#				game.homescore = @stats.goals
 			else
 				livestats(@stats, @athlete, params)
-				game.homescore += params[:goals].to_i
-				
-				if params[:goals]
-					game.lastplay = @athlete.logname + " Goal Scored"
-				end
+#				game.homescore += params[:goals].to_i				
+			end
+
+			if params[:goals]
+				game.lastplay = @athlete.logname + " Goal Scored"
 			end
 
 			game.save!

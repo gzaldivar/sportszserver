@@ -87,18 +87,26 @@ class GameschedulesController < ApplicationController
         end
       elsif @sport.name == "Basketball"
         @stats = @gameschedule.basketball_stats
+        totals = StatTotal.new(@sport, @gameschedule)
+        
+        @gameschedule.homescore = totals.basketball_home_totals
+        @gameschedule.homefouls = totals.fouls
       elsif @sport.name == "Soccer"
         @stats = @gameschedule.soccers
 
         @soccerhomesog = 0
         @soccerhomeck = 0
         @soccerhomesaves = 0
+        @gameschedule.homescore = 0
 
         @stats.each do |s|
           @soccerhomesog += s.shotstaken
           @soccerhomeck += s.cornerkick
           @soccerhomesaves += s.goalssaved
         end
+
+        totals = StatTotal.new(@sport, @gameschedule)
+        @gameschedule.homescore = totals.soccer_home_score
 
         athletes = @players
         @players = []
@@ -174,9 +182,10 @@ class GameschedulesController < ApplicationController
       @gameschedules = []
       @team.gameschedules.asc(:gamedate).each_with_index do |s, cnt|
         @gameschedules[cnt] = s
-        @gameschedules[cnt].firstdowns = 0
 
         if @sport.sportname == "Football"
+          @gameschedules[cnt].firstdowns = 0
+
           s.football_stats.each do |f|
             if !f.football_passings.nil?
                @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_passings.firstdowns
@@ -188,6 +197,13 @@ class GameschedulesController < ApplicationController
               @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_rushings.firstdowns
             end
           end
+        elsif @sport.name == "Basketball"
+          totals = StatTotal.new(@sport, @gameschedules[cnt])          
+          @gameschedules[cnt].homescore = totals.basketball_home_totals
+          @gameschedules[cnt].homefouls = totals.fouls
+        elsif @sport.name == "Soccer" 
+          totals = StatTotal.new(@sport, @gameschedules[cnt])
+          @gameschedules[cnt].homescore = totals.soccer_home_score
         end        
       end
       

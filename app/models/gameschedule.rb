@@ -41,7 +41,7 @@ class Gameschedule
   field :opponenth1, type: Integer, default: 0
   field :opponenth2, type: Integer, default: 0
 
-  field :homescore, type: Integer, default: 0
+#  field :homescore, type: Integer, default: 0
   field :opponentscore, type: Integer, default: 0
 
 #  field :firstdowns, type: Integer, default: 0
@@ -68,7 +68,7 @@ class Gameschedule
   # Basketball fields
 
   field :bballpossessionarrow, type: String, default: "Home"
-  field :homefouls, type: Integer, default: 0
+#  field :homefouls, type: Integer, default: 0
   field :opponentfouls, type: Integer, default: 0
   field :currentperiod, type: Integer, default: 1
   field :homebonus, type: Boolean, default: false
@@ -97,7 +97,7 @@ class Gameschedule
   has_many :basketball_stats, dependent: :destroy
   has_many :soccers, dependent: :destroy
 
-  attr_accessor :firstdowns
+  attr_accessor :firstdowns, :homescore, :homefouls
   
   validates_presence_of :starttime
   validates_presence_of :gamedate

@@ -11,7 +11,7 @@ node :eazesportzOpponent, :if => lambda { |a| a.opponent_team_id? } do
 	true
 end
 node :opponentpic, :if => lambda { |a| !a.opponent_team_id? } do |a|
-	a.opponentpic
+	a.opponentpic.url(:tiny)
 end
 node(:starttime) { |t| t.starttime.strftime("%I:%M%p") }
 node(:startdate) { |t| t.gamedate.strftime("%m-%d-%Y") }

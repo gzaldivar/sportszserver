@@ -21,7 +21,7 @@
           <% if t.logoprocessing? %>
             <em><font color="red">Logo Processing ...</font><em>
           <% else %>
-              <%= image_tag get_team_logo(t) %>
+              <%= image_tag get_team_logo(@sport, t) %>
           <% end %>
         </td>
         <% if isAdmin? %>

@@ -40,5 +40,5 @@ if @sport.name == "Football"
 elsif @sport.name == "Basketball"
 	attributes :opponentfouls, :currentperiod, :homefouls, :homebonus, :visitorbonus
 elsif @sport.name == "Soccer"
-	attributes :socceroppck, :socceroppsog, :socceroppsaves
+	attributes :socceroppck, :socceroppsog, :socceroppsaves, :currentperiod
 end

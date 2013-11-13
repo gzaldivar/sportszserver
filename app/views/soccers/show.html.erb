@@ -4,8 +4,18 @@
 	<div class="span10">
 		<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for game <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
 		<table class="table table-bordered">
-			<%= render "stat_header", name: "Game" %>
-			<%= render "stat_body", stat: @stats, name: "Game" %>
+			<% if hasSoccerPlayerStats?(@stats) %>
+				<table class="table table-bordered">
+					<%= render "playerstatsheader", name: "Game"%>
+					<%= render "playerstatsbody", stat: @stats, name: "Game" %>
+				</table>
+			<% end %>
+			<% if is_soccer_goalie?(@athlete.position) %>
+				<table class="table table-bordered">
+					<%= render "goalieheader", name: "Game"%>
+					<%= render "goaliebody", stat: @stats, name: "Game" %>
+				</table>
+			<% end %>
 		</table>
 	</div>
 </div>

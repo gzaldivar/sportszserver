@@ -107,9 +107,6 @@ class GameschedulesController < ApplicationController
 
         totals = StatTotal.new(@sport, @gameschedule)
         @gameschedule.homescore = totals.soccer_home_score
-        
-        puts "Display homescore"
-        puts @gameschedule.homescore
 
         athletes = @players
         @players = []

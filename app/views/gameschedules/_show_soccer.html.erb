@@ -99,7 +99,7 @@
 	<% @goalies.each do |a| %>
 		<% @thestat = nil %>
 		<% @stats.each do |b| %>
-			<% if a.id == b.athlete_id %>
+			<% if a.id.to_s == b.athlete_id.to_s %>
 				<% @thestat = b %>
 				<% break %>
 			<% end %>
@@ -117,7 +117,7 @@
 	<% @players.each do |a| %>
 		<% @thestat = nil %>
 		<% @stats.each do |b| %>
-			<% if a.id == b.athlete_id %>
+			<% if a.id.to_s == b.athlete_id.to_s %>
 				<% @thestat = b %>
 				<% break %>
 			<% end %>

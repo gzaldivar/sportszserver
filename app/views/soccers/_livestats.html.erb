@@ -23,13 +23,17 @@
 <% end %>
 <h4>Player Statistics</h4>
 <div class="row">
-	<div class="span2 offset1">
+	<div class="span2">
 		<%= label_tag "Goal" %>
 		<%= check_box_tag "goals", 1 %>
 	</div>
 	<div class="span2">
 		<%= label_tag "Shot" %>
 		<%= check_box_tag "shotstaken", 1 %>
+	</div>
+	<div class="span2">
+		<%= label_tag "C/K" %>
+		<%= check_box_tag "cornerkicks", 1 %>
 	</div>
 	<div class="span2">
 		<%= label_tag "Assists" %>
@@ -42,7 +46,7 @@
 </div>
 <p>
 <div class="row">
-	<div class="span2 offset1">
+	<div class="span2">
 		<%= label_tag "Minutes Played" %>
 		<%= text_field_tag "minutesplayed" %>
 	</div>

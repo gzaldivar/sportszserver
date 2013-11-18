@@ -2,7 +2,15 @@
 <p>
 <div class="row">
 	<div class="span10">
-		<h4>Edit Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for game <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
+		<div class="row">
+			<div class="span2">
+				<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+			</div>
+			<div class="span8">
+				<h4>Edit Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for game <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
+			</div>
+		</div>
+		<p>
 		<% if @live.nil? %>
 			<%= form_tag edit_sport_athlete_soccer_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
 				<%= select_tag "livestats", options_for_select(["Live", "Totals"]) %>

@@ -1,6 +1,11 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + " - Basketball Stats") %>
 <p>
 <div class="row">
+	<div class="span2">
+		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+	</div>
+</div>
+<div class="row">
 	<div class="span10">
 		<% if !@athlete.nil? and !@gameschedule.nil? %>
 			<% if @bballstats.empty? %>

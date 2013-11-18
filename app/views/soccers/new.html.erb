@@ -2,6 +2,11 @@
 <p>
 <div class="row">
 	<div class="span10">
+		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+	</div>
+</div>
+<div class="row">
+	<div class="span10">
 		<% if @gameschedule.nil? %>
 			<h4>Select game to add stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %>:</h4>
 			<p>

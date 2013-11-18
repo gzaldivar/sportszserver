@@ -339,7 +339,7 @@ class VideoclipsController < ApplicationController
     end
 
     if !params[:number].nil? && !params[:number][:id].blank? && !params[:game].nil? && !params[:game][:id].blank? && 
-      !params[:gamelog].nil? && !params[:gamelog][:id].blank? && !params[:athlete].nil? && !params[:athlete][:id].blank?
+       !params[:gamelog].nil? && !params[:gamelog][:id].blank? && !params[:athlete].nil? && !params[:athlete][:id].blank?
 
       clips = @sport.videoclips.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
                                  :players.in => [params[:number][:id].to_s], gamelog: params[:gamelog][:id].to_s,

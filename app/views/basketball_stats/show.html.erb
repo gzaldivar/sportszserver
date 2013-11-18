@@ -2,7 +2,14 @@
 <p>
 <div class="row">
 	<div class="span10">
-		<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for game <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
+		<div class="row">
+			<div class="span2">
+				<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+			</div>
+			<div class="span8">
+				<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for game <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
+			</div>
+		</div>
 		<table class="table table-bordered">
 			<%= render "stat_header", name: "Game" %>
 			<%= render "stat_body", stat: @bbstats, name: "Game" %>

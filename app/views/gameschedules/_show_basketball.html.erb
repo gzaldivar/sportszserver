@@ -37,7 +37,7 @@
 		<div class="span1 offset1">
 			<%= @gameschedule.livegametime.strftime("%I:%M") %>
 		</div>
-		<div class="span2 offset2">
+		<div class="span2 offset3">
 			<%= @gameschedule.opponentscore %>
 		</div>
 	</div>
@@ -47,15 +47,15 @@
 			<table class="table table-bordered">
 				<thead>
 					<th>Fouls</th>
-					<% if @gameschedule.homebonus %>
-						<th>Bonus</th>
-					<% end %>
+					<th>Bonus</th>
 					<th>Time Outs</th>
 				</thead>
 				<tbody>
 					<td><%= @gameschedule.homefouls %></td>
 					<% if @gameschedule.homebonus %>
 						<td><strong><font color="red">Bonus</font></strong></td>
+					<% else %>
+						<td></td>
 					<% end %>
 					<td><%= @gameschedule.hometimeouts %></td>
 				</tbody>
@@ -71,19 +71,19 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="span3 offset1">
+		<div class="span3 offset2">
 			<table class="table table-bordered">
 				<thead>
 					<th>Fouls</th>
-					<% if @gameschedule.visitorbonus %>
-						<th>Bonus</th>
-					<% end %>
+					<th>Bonus</th>
 					<th>Time Outs</th>
 				</thead>
 				<tbody>
 					<td><%= @gameschedule.opponentfouls %></td>
 					<% if @gameschedule.visitorbonus %>
 						<td><strong><font color="red">Bonus</font></strong></td>
+					<% else %>
+						<td></td>
 					<% end %>
 					<td><%= @gameschedule.opponenttimeouts %></td>
 				</tbody>

@@ -1,0 +1,42 @@
+<%= simple_form_for [@sport, @athlete, @stat, @returner] do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+	<h5>Punt Return Statistics</h5>
+	<div class="row">
+		<div class="span2">
+			<%= f.input :punt_return, label: "Punt Returns" %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :punt_returntd, label: "Punt Return TD" %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span2">
+			<%= f.input :punt_returnlong, label: "Longest Return" %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :punt_returnyards, label: "Punt Return Yards" %>
+		</div>
+	</div>
+	<p>
+	<h5>Kickoff Return Statistics</h5>
+	<div class="row">
+		<div class="span2">
+			<%= f.input :koreturns, label: "Kickoff Returns" %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :kotd, label: "Kickoff Return for TD" %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="span2">
+			<%= f.input :kolong, label: "Kickoff Longest Return" %>
+		</div>
+		<div class="span2 offset1">
+			<%= f.input :koyards, label: "Kickoff Return Yards" %>
+		</div>
+	</div>
+	<p>
+	<div class="span2 offset2">
+		<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+	</div>
+<% end %>

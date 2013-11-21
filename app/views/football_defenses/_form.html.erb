@@ -1,45 +1,42 @@
-<%= simple_form_for [@sport, @athlete, @stat, @defense] do |f| %>
-	<%= render 'shared/error_messages', object: f.object %>
-	<div class="row">
-		<div class="span2">
-			<%= f.input :tackles, required: true %>
-		</div>
-		<div class="span2 offset1">
-			<%= f.input :assists %>
-		</div>
-		<div class="span2 offset1">
-			<%= f.input :sacks %>
-		</div>
+<div class="row">
+	<div class="span2">
+		<%= f.input :tackles %>
 	</div>
-	<div class="row">
-		<div class="span2">
-			<%= f.input :pass_defended, label: "Passes Defended" %>
-		</div>
-		<div class="span2 offset1">
-			<%= f.input :interceptions %>
-		</div>
-		<div class="span2 offset1">
-			<%= f.input :int_yards, label: "Interception Yards" %>
-		</div>
+	<div class="span2 offset1">
+		<%= f.input :assists %>
 	</div>
-	<div class="row">
-		<div class="span2">
-			<%= f.input :int_long, label: "Interception Return Long" %>
-		</div>
-		<div class="span2 offset1">
-			<%= f.input :int_td, label: "Interception TD's" %>
-		</div>
-		<div class="span2 offset1">
-			<%= f.input :fumbles_recovered %>
-		</div>
+	<div class="span2 offset1">
+		<%= f.input :sacks %>
 	</div>
-	<div class="row">
-		<div class="span4">
-			<%= f.input :safety, required: false %>
-		</div>
+</div>
+<div class="row">
+	<div class="span2">
+		<%= f.input :pass_defended, label: "Passes Defended" %>
 	</div>
-	<p>
-	<div class="span2 offset3">
-		<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+	<div class="span2 offset1">
+		<%= f.input :interceptions %>
 	</div>
-<% end %>
+	<div class="span2 offset1">
+		<%= f.input :int_yards, label: "Interception Yards" %>
+	</div>
+</div>
+<div class="row">
+	<div class="span2">
+		<%= f.input :int_long, label: "Interception Return Long" %>
+	</div>
+	<div class="span2 offset1">
+		<%= f.input :int_td, label: "Interception TD's" %>
+	</div>
+	<div class="span2 offset1">
+		<%= f.input :fumbles_recovered %>
+	</div>
+</div>
+<div class="row">
+	<div class="span4">
+		<%= f.input :safety, required: false %>
+	</div>
+</div>
+<p>
+<div class="span2 offset3">
+	<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+</div>

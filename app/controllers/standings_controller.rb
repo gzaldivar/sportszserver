@@ -131,19 +131,23 @@ class StandingsController < ApplicationController
         schedules.each do |s|
           stat = StatTotal.new(@sport, s)
 
+          homescore = 0
+
           if @sport.name == "Basketball"
-            s.homescore = stat.basketball_home_totals
+            homescore = stat.basketball_home_totals
           elsif @sport.name == "Soccer"
-            s.homescore = stat.soccer_home_score
+            homescore = stat.soccer_home_score
+          elsif @sport.name == "Football"
+            homescore = footballhomescore(@sport, s)
           end
 
-          if s.homescore > s.opponentscore and s.league == true and s.final == true
+          if homescore > s.opponentscore and s.league == true and s.final == true
             teamwins += 1
             leaguewins += 1
           elsif s.league and s.final
             teamlosses += 1
             leaguelosses += 1
-          elsif s.homescore > s.opponentscore and s.final
+          elsif homescore > s.opponentscore and s.final
             teamwins += 1
           elsif s.final
             teamlosses += 1

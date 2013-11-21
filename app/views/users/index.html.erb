@@ -3,7 +3,7 @@
 <div class="row">
 	<div class="span10">
 		<div class="row">
-			<div class="span6 offset2">
+			<div class="span10">
 				Team managers have edit capabilities for the teams they manage. This includes approval of user uploaded photos and videos if you chosen to enable that feature for this site.
 			</div>
 		</div>
@@ -30,6 +30,9 @@
 				<th>Username</th>
 				<th>Email</th>
 				<th>Manager</th>
+				<% if current_user.godmode %>
+					<th>Site</th>
+				<% end %>
 				<th>Disable</th>
 			</thead>
 			<tbody>
@@ -47,7 +50,12 @@
 						<% else %>
 							<td>None</td>
 						<% end %>
-						<% if u.is_active and !u.admin %>
+						<% if current_user.godmode and !u.default_site.nil? %>
+							<td><%= link_to Sport.find(u.default_site).sitename, sport_path(u.default_site) %></td>
+						<% else %>
+							<td></td>
+						<% end %>
+						<% if (u.is_active and !u.admin) or current_user.godmode %>
 							<td><%= link_to "Disable User", disable_user_path(u), class: "btn btn-mini btn-danger" %></td>
 						<% elsif !u.admin %>
 							<td><%= link_to "Enable User", enable_user_path(u), class: "btn btn-mini btn-danger" %></td>

@@ -1,5 +1,6 @@
 class FootballReturner
   	include Mongoid::Document
+  	include Mongoid::Timestamps
   
   	field	:punt_return, type: Integer, default: 0
 	field	:punt_returntd, type: Integer, default: 0
@@ -11,7 +12,9 @@ class FootballReturner
 	field	:kolong, type: Integer, default: 0
 	field	:koyards, type: Integer, default: 0
 	
-	embedded_in :football_stat
+  	belongs_to :athlete
+	belongs_to :gameschedule
+	has_many :alerts, dependent: :destroy
 	
 	validates_numericality_of :punt_return, greater_than_or_equal_to: 0
 	validates_numericality_of :punt_returntd, greater_than_or_equal_to: 0

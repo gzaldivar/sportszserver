@@ -13,7 +13,10 @@ class FootballDefense
   field :fumbles_recovered, type: Integer, default: 0
   field :safety, type: Integer, default: 0
   
-  embedded_in :football_stat
+#  embedded_in :football_stat
+  belongs_to :athlete
+  belongs_to :gameschedule
+  has_many :alerts, dependent: :destroy
 
   validates_numericality_of :tackles, greater_than_or_equal_to: 0
   validates_numericality_of :assists, greater_than_or_equal_to: 0

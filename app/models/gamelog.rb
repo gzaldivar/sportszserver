@@ -89,8 +89,8 @@ class Gamelog
     def updatestats
       if Athlete.find(player).sport.isFootball?
         if isReceiver?
-          stat = gameschedule.football_stats.find_by(athlete: self.player).football_passings
-          rec = gameschedule.football_stats.find_by(athlete: self.assist).football_receivings
+          stat = gameschedule.football_passings.find_by(athlete: self.player)
+          rec = gameschedule.football_receivings.find_by(athlete: self.assist)
           if stat.yards > 0
             stat.yards = stat.yards - self.yards
           end
@@ -124,7 +124,7 @@ class Gamelog
           stat.save!
           rec.save!
         elsif isRusher?
-          stat = gameschedule.football_stats.find_by(athlete: self.player).football_rushings
+          stat = gameschedule.football_rushings.find_by(athlete: self.player)
           if stat.yards > 0
             stat.yards -= self.yards
           end
@@ -138,7 +138,7 @@ class Gamelog
           end
           stat.save!
         elsif isDefense?
-          stat = gameschedule.football_stats.find_by(athlete: self.player).football_defenses
+          stat = gameschedule.football_defenses.find_by(athlete: self.player)
           stat.int_yards-= self.yards
           if footballPosition == "interception" and stat.interception > 0
             stat.interceptions -= 1
@@ -153,7 +153,7 @@ class Gamelog
           stat.save!
         elsif isReturner?
           rettype = logentry.split(" ")
-          stat = gameschedule.football_stats.find_by(athlete: self.player).football_returners
+          stat = gameschedule.football_returners.find_by(athlete: self.player)
           if rettype[0] == "punt"
             if stat.punt_returnyards > 0
               stat.punt_returnyards -= self.yards

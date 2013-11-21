@@ -1,127 +1,20 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span9 offset1">
+	<div class="span10">
 		<p>
-		<!--%= render 'tabs_game' %-->
-		<% if !@kicker.fgattempts.nil? or !@kicker.xpattempts.nil? %>
-			<p>
-			<h4>Place kicking game statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for<br/>
-				<%= @stat.gameschedule.game_name %></h4>
-			<p>
-			<h5>Field Goal Statistics</h5>
-			<table class="table table-bordered">
-				<em>
-				<thead>
-					<th>FG Attempts</th>
-					<th>FG Made</th>
-					<th>FG Blocked</th>
-					<th>FG Long</th>
-				</thead>
-			</em>
-				<tbody>
-					<td><%= @kicker.fgattempts %></td>
-					<td><%= @kicker.fgmade %></td>
-					<td><%= @kicker.fgblocked %></td>
-					<td><%= @kicker.fglong %></td>
-				</tbody>
-			</table>
-			<p>
-			<h5>Extra Point Statistics</h5>
-			<table class="table table-bordered">
-				<em>			
-					<th>Extra Point Attempts</th>
-					<th>Extra Points Made</th>
-					<th>Missed</th>
-					<th>Blocked</th>
-				</thead>
-				</em>
-				<tbody>
-					<td><%= @kicker.xpattempts %></td>
-					<td><%= @kicker.xpmade %></td>
-					<td><%= @kicker.xpmissed %></td>
-					<td><%= @kicker.xpblocked %></td>
-				</tbody>
-			</table>
-			<% if isAdmin? or isTeamManager?(@athlete) %>
-				<div class="span6 offset2">
-					<%= link_to "Add Place Kicker Play", addplacekicker_sport_athlete_football_stat_football_kicker_path(@sport, @athlete, 
-														@stat, id: @kicker), 
-								class: "btn btn-mini btn-primary" %>
-					<%= link_to "Edit", editkicker_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat, @kicker), class: "btn btn-mini btn-primary" %>
-				</div>
-			<% end %>
-		<% end %>
-		<br/><p>
-		<% if !@kicker.punts.nil? %>
-			<p>
-			<h4>Punting game statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for<br/>
-				<%= @stat.gameschedule.game_name %></h4>
-			<p>
-			<h5>Punting Statistics</h5>
-			<table class="table table-bordered">
-				<em>
-				<thead>
-					<th>Punts</th>
-					<th>Punts Blocked</th>
-					<th>Punts Yards</th>
-					<th>Punts Long</th>
-				</thead>
-			</em>
-				<tbody>
-					<td><%= @kicker.punts %></td>
-					<td><%= @kicker.punts_blocked %></td>
-					<td><%= @kicker.punts_yards %></td>
-					<td><%= @kicker.punts_long %></td>
-				</tbody>
-			</table>
-			<p>
-			<% if isAdmin? or isTeamManager?(@athlete) %>
-				<div class="span6 offset2">
-					<%= link_to "Add Punt Play", addpunter_sport_athlete_football_stat_football_kicker_path(@sport, @athlete, @stat, id: @kicker), 
-								class: "btn btn-mini btn-primary" %>
-					<%= link_to "Edit", editpunter_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat, @kicker), class: "btn btn-mini btn-primary" %>
-				</div>
-			<% end %>
-		<% end %>
-		<br/><p>
-		<% if !@kicker.koattempts.nil? %>
-			<p>
-			<h4>Kickoff statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for<br/>
-				<%= @stat.gameschedule.game_name %></h4>
-			<p>
-			<h5>Kickoff Statistics</h5>
-			<table class="table table-bordered">
-				<em>
-				<thead>
-					<th>Kickoff Attempts</th>
-					<th>Touchbacks</th>
-					<th>Kickoff Return Yards</th>
-				</thead>
-			</em>
-				<tbody>
-					<td><%= @kicker.koattempts %></td>
-					<td><%= @kicker.kotouchbacks %></td>
-					<td><%= @kicker.koreturned %></td>
-				</tbody>
-			</table>
-			<p>
-			<% if isAdmin? or isTeamManager?(@athlete) %>
-				<div class="span6 offset2">
-					<%= link_to "Add Kickoff Play", addkickoff_sport_athlete_football_stat_football_kicker_path(@sport, @athlete, @stat, id: @kicker), 
-								class: "btn btn-mini btn-primary" %>
-					<%= link_to "Edit", editkickoff_sport_athlete_football_stat_football_kickers_path(@sport, @athlete, @stat, @kicker), class: "btn btn-mini btn-primary" %>
-				</div>
-			<% end %>
-		<% end %>
-		<br/><p>
-		<div class="row">
-			<div class="span4 offset3">
-				<%= link_to "Totals", specialteams_sport_athlete_football_stats_path(@sport, @athlete), class: "btn btn-medium btn-primary" %>
-				<%= link_to "Delete", sport_athlete_football_stat_football_kicker_path(@sport, @athlete, @stat, @kicker), method: :delete, 
-									  class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
-			</div>
-		</div>
+		<h4>Kicker statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for <%= @gameschedule.game_name %></h4>
+		<p>
+		<table class="table table-bordered">
+			<%= render 'stat_header', name: "Game" %>
+			<%= render 'stat_body', stat: @kicker, player: @athlete, name: @gameschedule %>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="span2 offset4">
+		<%= link_to "Totals", sport_athlete_football_kickers_path(@sport, @athlete, gameschedule_id: @kicker.gameschedule_id), 
+			class: "btn btn-medium btn-primary"%>
 	</div>
 </div>
 <div class="row">

@@ -1,49 +1,18 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span9 offset1">
-		<p>
-		<!--%= render 'tabs_game' %-->
-		<p>
-		<h4>Receiving game statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for <%= @stat.gameschedule.game_name %></h4>
-		<p>
+	<div class="span10">
+		<h4>Receiving game statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for <%= @gameschedule.game_name %></h4>
 		<table class="table table-bordered">
-			<em>
-			<thead>
-				<th>Receptions</th>
-				<th>Yards</th>
-				<th>Average</th>
-			</thead>
-			</em>
-			<tbody>
-				<td><%= @receiving.receptions %></td>
-				<td><%= @receiving.yards %></td>
-				<td><%= number_with_precision(@receiving.average, precision: 2) %></td>
-			</tbody>
+			<%= render 'stat_header', name: "Game" %>
+			<%= render 'stat_body', stat: @receiving, player: @athlete, name: @gameschedule %>
 		</table>
-		<table class="table table-bordered">
-			<thead>
-				<th>Receiving TD</th>
-				<th>Fumbles</th>
-				<th>Fumbles Lost</th>
-				<th>Two Point Conv</th>
-			</thead>
-			<tbody>
-				<td><%= @receiving.td %></td>
-				<td><%= @receiving.fumbles %></td>
-				<td><%= @receiving.fumbles_lost %></td>
-				<td><%= @receiving.twopointconv %></td>
-			</tbody>
-		</table>
-		<% if isAdmin? or isTeamManager?(@athlete) %>
-			<strong>Individual receptions per receiver are added from the pass attempts page.</strong> Select that tab if you want to add individual receptions real time during a game. You can still use this page to add stats that have already been totalled. Use this page to make adjustments to the totals.
-			<p>
-			<div class="span2 offset3">
-				<%= link_to "Edit", edit_sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat, @receiving), class: "btn btn-medium btn-primary" %>
-				<%= link_to "Delete", sport_athlete_football_stat_football_receiving_path(@sport, @athlete, @stat, @receiving), method: :delete, 
-							class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
-			</div>
-		<% end %>
+	</div>
+</div>
+<div class="row">
+	<div class="span2 offset4">
+		<%= link_to "Totals", sport_athlete_football_receivers_path(@sport, @athlete, gameschedule_id: @receiving.gameschedule_id), 
+			class: "btn btn-medium btn-primary"%>
 	</div>
 </div>
 <div class="row">

@@ -1,0 +1,24 @@
+<em>
+<thead>
+	<th>
+		<% if name == "Game" %>
+			Game
+		<% else %>
+			Player
+		<% end %>
+	</th>
+	<th>Tackles</th>
+	<th>Assists</th>
+	<th>Sacks</th>
+	<th>Interceptions</th>
+	<th>Passes Defended</th>
+	<th>Return Yards</th>
+	<th>Return Long</th>
+	<th>Defensive TD</th>
+	<th>Fumbles Recoveredd</th>
+	<th>Safeties</th>
+	<% if isAdmin? or isTeamManager?(@athlete.team_id) %>
+		<th>Edit</th>
+	<% end %>
+</thead>
+</em>

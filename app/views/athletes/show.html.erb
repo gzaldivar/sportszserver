@@ -93,7 +93,7 @@
     <div class="span4 offset2">
       <% if @sport.has_stats? %>
         <% if @sport.sportname == "Football" %>
-          <%= link_to "Stats", passing_sport_athlete_football_stats_path(@sport, @athlete), class:  "btn btn-medium btn-primary" %>
+          <%= link_to "Stats", playerstats_sport_athlete_path(@sport, @athlete), class:  "btn btn-medium btn-primary" %>
         <% elsif @sport.sportname == "Basketball" %>
           <%= link_to "Stats", sport_athlete_basketball_stats_path(@sport, @athlete), class:  "btn btn-medium btn-primary" %>
         <% elsif @sport.sportname == "Soccer" %>

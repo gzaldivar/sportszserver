@@ -1,0 +1,24 @@
+<em>
+<thead>
+	<th>
+		<% if name == "Game" %>
+			Game
+		<% else %>
+			Player
+		<% end %>
+	</th>
+	<th>Passing Attempts</th>
+	<th>Passing Completions</th>
+	<th>Completion Percentage</th>
+	<th>Passing Yards</th>
+	<th>Passing TD</th>
+	<th>First Downs</th>
+	<th>Interceptions</th>
+	<th>Sacks</th>
+	<th>Yards Lost</th>
+	<th>Two Point Conv</th>
+	<% if isAdmin? or isTeamManager?(@athlete.team_id) %>
+		<th>Edit</th>
+	<% end %>
+</thead>
+</em>

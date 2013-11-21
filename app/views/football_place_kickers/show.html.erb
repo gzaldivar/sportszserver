@@ -1,0 +1,29 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
+<p>
+<div class="row">
+	<div class="span10">
+		<p>
+		<h4>Place kicker statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for<br/>
+			<%= @gameschedule.game_name %></h4>
+		<p>
+		<h5>Field Goal Statistics</h5>
+		<table class="table table-bordered">
+			<%= render 'fieldgoal_header', name: "Game" %>
+			<%= render 'fieldgoal_body', stat: @placekicker, player: @athlete, name: @gameschedule %>
+		</table>
+		<h5>Extra Point Statistics</h5>
+		<table class="table table-bordered">
+			<%= render 'extrapoint_header', name: "Game" %>
+			<%= render 'extrapoint_body', stat: @placekicker, player: @athlete, name: @gameschedule %>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="span2 offset4">
+		<%= link_to "Totals", sport_athlete_football_placekickers_path(@sport, @athlete, gameschedule_id: @placekicker.gameschedule_id), 
+			class: "btn btn-medium btn-primary"%>
+	</div>
+</div>
+<div class="row">
+	<%= render "layouts/sponsor" %>
+</div>

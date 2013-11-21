@@ -1,0 +1,35 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
+<p>
+<div class="row">
+	<div class="span2">
+		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+	</div>
+	<div class="span8">
+		<h4>Edit return statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for <%= @gameschedule.game_name %></h4>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span10">
+		<% if @live.nil? %>
+			<%= form_tag edit_sport_athlete_football_returner_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
+				<%= hidden_field_tag "gameschedule_id", value=@gameschedule.id %>
+				<%= select_tag "livestats", options_for_select(["Play by Play", "Adjust", "Totals"]) %>
+				<%= submit_tag "Submit", class: "btn btn-medium btn-primary", name: nil %>
+		    <% end %>
+		<% else %>
+			<%= simple_form_for [@sport, @athlete, @returner],  html: { multipart: true } do |f| %>
+				<%= render 'shared/error_messages', object: f.object %>
+				<% if @live == "Play by Play" %>
+					<h5>Entering Stats play by play<h5>
+					<%= render 'addlive' %>
+				<% elsif @live == "Adjust" %>
+					<%= render 'adjust' %>
+				<% else %>
+					<h5><font color="red">Entering totals here will not be linked to automatic game log scoring. Use this form only if you do not want to provide that data for your users.</font></h5>
+					<%= render 'form', f: f %>
+				<% end %>
+			<% end %>
+		<% end %>
+	</div>
+</div>

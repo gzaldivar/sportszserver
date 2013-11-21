@@ -32,7 +32,7 @@
 	<h1><font color="blue">
 	<div class="row">
 		<div class="span2 offset1">
-			<%= @gameschedule.homescore %>
+			<%= basketball_home_score(@gameschedule) %>
 		</div>
 		<div class="span1 offset1">
 			<%= @gameschedule.livegametime.strftime("%I:%M") %>
@@ -51,7 +51,7 @@
 					<th>Time Outs</th>
 				</thead>
 				<tbody>
-					<td><%= @gameschedule.homefouls %></td>
+					<td><%= basketball_home_fouls(@gameschedule) %></td>
 					<% if @gameschedule.homebonus %>
 						<td><strong><font color="red">Bonus</font></strong></td>
 					<% else %>

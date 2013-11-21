@@ -41,10 +41,4 @@ class StatTotal
 		return @homescore
 	end
 
-	def football_totals
-		players = @sport.athletes.where(team_id: @gameschedule_id.team_id)
-
-		players.each do |p|
-		end
-	end
 end

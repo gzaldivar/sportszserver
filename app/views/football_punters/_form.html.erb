@@ -1,0 +1,22 @@
+<div class="row">
+	<div class="span2">
+		<%= f.input :punts, label: "Punt Attempts" %>
+	</div>
+	<div class="span2 offset1">
+		<%= f.input :punts_yards, label: "Total Punt Yards" %>
+	</div>
+</div>
+<div class="row">
+	<div class="span2">
+		<%= f.input :punts_long, label: "Longest" %>
+	</div>
+	<div class="span2 offset1">
+		<%= f.input :punts_blocked, label: "Punts Blocked" %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span2 offset2">
+		<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+	</div>
+</div>

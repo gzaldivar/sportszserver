@@ -1,0 +1,21 @@
+<tbody>
+	<% if name.kind_of?(Athlete) %>
+		<td><%= link_to name.logname, [@sport, name] %></td>
+	<% elsif name.kind_of?(Gameschedule) %>
+		<td><%= link_to ("vs " + name.opponent), [@sport, @sport.teams.find(name.team_id), name] %></td>
+	<% else %>
+		<td><%= name %></td>
+	<% end %>
+	<td><%= stat.fgattempts %></td>
+	<td><%= stat.fgmade %></td>
+	<td><%= stat.fgblocked %></td>
+	<td><%= stat.fglong %></td>
+	<% if FootballPlaceKicker.find(stat.id).nil? and isAdmin? or isTeamManager?(player.team_id) and name != "Totals" %>
+		<td><%= link_to "Edit", new_sport_athlete_football_place_kicker_path(@sport, player, gameschedule_id: stat.gameschedule_id), 
+				class: "btn btn-mini btn-primary"%></td>
+	<% elsif name != "Totals" %>
+		<td><%= link_to "Edit", edit_sport_athlete_football_place_kicker_path(@sport, player, stat), class: "btn btn-mini btn-primary"%></td>
+	<% else %>
+		<td></td>
+	<% end %>
+</tbody>

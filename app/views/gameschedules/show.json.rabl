@@ -18,14 +18,12 @@ node(:startdate) { |t| t.gamedate.strftime("%m-%d-%Y") }
 node(:current_game_time) { |t| t.livegametime.strftime("%I:%M") }
 attributes :gamedate, :location, :opponent, :event, :homeaway, :game_name, :homeq1, :homeq2, :homeq3, :homeq4, :opponentq1, :opponentq2, 
 		   :opponentq3, :opponentq4, :possession, :lastplay, :final, :opponent_mascot, 
-		   :opponent_name, :homescore, :opponentscore, :hometimeouts, :opponenttimeouts, :league, :opponent_sport_id, :opponent_team_id,
+		   :opponent_name, :opponentscore, :hometimeouts, :opponenttimeouts, :league, :opponent_sport_id, :opponent_team_id,
 		   :opponent_league_wins, :opponent_league_losses, :opponent_nonleague_wins, :opponent_nonleague_losses
 if @sport.name == "Football"
-	node(:firstdowns) { |f| f.firstdowns }
+	node(:homescore) { |t| footballhomescore(@sport, t) }
+	node(:firstdowns) { |f| totalfirstdowns(@sport, f) }
 	attributes :currentqtr, :penaltyyards, :down, :own, :ballon, :our, :togo, :penalty, :penaltyyards
-	if !@stats.nil?
-		extends 'gameschedules/stats'
-	end
 	child :gamelogs do
 		attributes :period, :time, :score, :logentry, :yards, :player
 		attributes :logentrytext, :if => lambda { |m| !m.player.nil? and !m.player.blank? }
@@ -39,6 +37,9 @@ if @sport.name == "Football"
 	end
 elsif @sport.name == "Basketball"
 	attributes :opponentfouls, :currentperiod, :homefouls, :homebonus, :visitorbonus
+	node(:homescore) { |g| soccer_home_score(g) }
 elsif @sport.name == "Soccer"
 	attributes :socceroppck, :socceroppsog, :socceroppsaves, :currentperiod
+	node(:homescore) { |g| basketball_home_score(g) }
+	node(:homefouls) { |g| basketball_home_fouls(g) }
 end

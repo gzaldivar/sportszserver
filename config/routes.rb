@@ -84,68 +84,32 @@ Sportzserver::Application.routes.draw do
         end
       end
  
-      resources :football_stats, only: [:create, :edit, :update, :destroy] do
-        collection do
-          get :passing, :rushing, :receiving, :defense, :specialteams, :showdata
-        end
+#      resources :football_stats, only: [:create, :edit, :update, :destroy] do
+#        collection do
+#          get :passing, :rushing, :receiving, :defense, :specialteams, :showdata
+#        end
 
-        member do
-          get :newstat, :getrushing, :getpassing, :getreceiving, :getdefense, :getkicker, :getreturner
-        end
+#        member do
+#          get :newstat, :getrushing, :getpassing, :getreceiving, :getdefense, :getkicker, :getreturner
+#        end
 
-        resources :football_passings, only: [:new, :create, :show, :edit, :update, :destroy] do
-          member do
-            get :add
-          end 
+      resources :football_passings
 
-          collection do
-            get :addattempt
-          end
-        end
+      resources :football_rushings
 
-        resources :football_rushings, only: [:new, :create, :show, :edit, :update, :destroy] do
-          member do
-            get :add
-          end 
+      resources :football_receivings
 
-          collection do
-            get :addcarry
-          end
-        end
+      resources :football_defenses
 
-        resources :football_receivings, only: [:new, :create, :show, :edit, :update, :destroy]
+      resources :football_kickers
 
-        resources :football_defenses, only: [:new, :create, :show, :edit, :update, :destroy] do
-          member do
-            get :add
-          end 
+      resources :football_returners
 
-          collection do
-            get :adddefense
-          end
-        end          
+      resources :football_place_kickers
 
-        resources :football_kickers, only: [:create, :show, :update, :destroy] do
-          member do
-            get :addplacekicker, :addpunter, :addkickoff
-          end
+      resources :football_punters
 
-          collection do
-            get :newkicker, :newpunter, :newkickoff, :editkicker, :editpunter, :editkickoff, :placekicker, :punter, :kickoff
-          end
-        end
-
-        resources :football_returners, only: [:create, :show, :update, :destroy] do
-          member do
-            get :addko, :addpunt
-          end
-
-          collection do
-            get :newkoreturn, :newpuntreturn, :editkoreturn, :editpuntreturn, :koreturn, :puntreturn
-          end
-        end
-
-      end
+#      end
  
       resources :basketball_stats, only: [:create, :show, :update, :index, :destroy, :edit] do
         collection do
@@ -156,8 +120,8 @@ Sportzserver::Application.routes.draw do
       resources :soccers
       
       member do
-        get :follow, :unfollow, :stats
-        put :updatephoto
+        get :follow, :unfollow, :stats, :playerstats
+        put :updatephoto, :selectedstat
       end
       
       collection do

@@ -14,6 +14,7 @@ class ApplicationController < ActionController::Base
   include AlertsHelper
   include SponsorsHelper
   include SoccersHelper
+  include GameschedulesHelper
 
 #  def not_authorized
 #    raise ActionController::RoutingError.new('You are not Authorized for this')

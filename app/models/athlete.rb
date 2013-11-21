@@ -41,13 +41,24 @@ class Athlete
 
     belongs_to :sport, index: true
     belongs_to :team
-    has_many :football_stats, dependent: :destroy
+#    has_many :football_stats, dependent: :destroy
     has_many :blogs, dependent: :nullify
     has_many :newsfeeds, dependent: :nullify
     has_many :alerts, dependent: :destroy
+
     has_many :basketball_stats, dependent: :destroy
+
     has_many :soccers, dependent: :destroy
-    
+
+    has_many :football_kickers, dependent: :destroy
+    has_many :football_defenses, dependent: :destroy
+    has_many :football_passings, dependent: :destroy
+    has_many :football_place_kickers, dependent: :destroy
+    has_many :football_punters, dependent: :destroy
+    has_many :football_receivings, dependent: :destroy
+    has_many :football_returners, dependent: :destroy
+    has_many :football_rushings, dependent: :destroy
+
     validates :number, presence: true, numericality: { greater_than: 0 }
     validates :lastname, presence: true, format: { with: /^[a-zA-Z\d\s]*$/ }
     validates :firstname, presence: true, format: { with: /^[a-zA-Z\d\s]*$/ }

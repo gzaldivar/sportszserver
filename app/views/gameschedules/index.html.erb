@@ -39,16 +39,16 @@
 		          		<td><%= g.event %></td>
 
 		          		<% if g.final == true
-		          			if g.homescore > g.opponentscore
+		          			if footballhomescore(@sport, g) > g.opponentscore
 		          				result = "W "
-		          		   	else g.homescore < g.opponentscore
+		          		   	else footballhomescore(@sport, g) < g.opponentscore
 		          		   		result = "L "
 		          		    end 
 		          		   else
 		          		   	result = ""
 		          		   end %>
 
-		          		<td><%= result + g.homescore.to_s + "-" + g.opponentscore.to_s %></td>
+		          		<td><%= result + footballhomescore(@sport, g).to_s + "-" + g.opponentscore.to_s %></td>
 		          		<td><%= link_to "Details", sport_team_gameschedule_path(@sport, @team, g), class: "btn btn-mini btn-primary" %></td>
 						<% if user_signed_in? and user_pics_ok? %>
 							<td><%= link_to "Photo", newschedule_sport_photo_path(@sport, g), class: "btn btn-mini btn-primary" %></td>

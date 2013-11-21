@@ -1,58 +1,26 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span9 offset1">
-		<p>
-		<!--%= render 'tabs_game' %-->
-		<p>
-		<h4>Passing game statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for <%= @stat.gameschedule.game_name %></h4>
-		<p>
+	<div class="span2">
+		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+	</div>
+	<div class="span6">
+		<h4>Passing game statistics for <%= link_to(@athlete.full_name, sport_athlete_path(@sport, @athlete)) %></h4>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span10">
 		<table class="table table-bordered">
-			<em>
-			<thead>
-				<th>Passing Attempts</th>
-				<th>Passing Completions</th>
-				<th>Completion Percentage</th>
-				<th>Passing Yards</th>
-				<th>Passing TD</th>
-			</thead>
-			</em>
-			<tbody>
-				<td><%= @fbpassing.attempts %></td>
-				<td><%= @fbpassing.completions %></td>
-				<td><%= number_with_precision(@fbpassing.comp_percentage, precision: 2) %></td>
-				<td><%= @fbpassing.yards %></td>
-				<td><%= @fbpassing.td %></td>
-			</tbody>
+			<em><%= render "stat_header", name: "Game" %></em>
+			<%= render "stat_body", stat: @fbpassing, player: @athlete, name: @gameschedule %>
 		</table>
-		<table class="table table-bordered">
-			<thead>
-				<th>First Downs</th>
-				<th>Interceptions</th>
-				<th>Sacks</th>
-				<th>Yards Lost</th>
-				<th>Two Point Conv</th>
-			</thead>
-			<tbody>
-				<td><%= @fbpassing.firstdowns %></td>
-				<td><%= @fbpassing.interceptions %></td>
-				<td><%= @fbpassing.sacks %></td>
-				<td><%= @fbpassing.yards_lost %></td>
-				<td><%= @fbpassing.twopointconv %></td>
-			</tbody>
-		</table>
-		<% if isAdmin? or isTeamManager?(@athlete) %>
-			Select <strong>Add Passing Attempt</strong> below to enter real time stats during a game. You can still use this page to add stats that have already been totalled. Use this page to make adjustments to the totals.
-			<p>
-			<div class="span6 offset2">
-				<%= link_to "Add Passing Attempt", add_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @fbpassing), 
-							class: "btn btn-mini btn-primary" %>
-				<%= link_to "Edit", edit_sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @fbpassing), 
-							class: "btn btn-mini btn-primary" %>
-				<%= link_to "Delete", sport_athlete_football_stat_football_passing_path(@sport, @athlete, @stat, @fbpassing), method: :delete, 
-							class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
-			</div>
-		<% end %>
+	</div>
+</div>
+<div class="row">
+	<div class="span2 offset4">
+		<%= link_to "Totals", sport_athlete_football_passings_path(@sport, @athlete, gameschedule_id: @fbpassing.gameschedule_id), 
+			class: "btn btn-medium btn-primary"%>
 	</div>
 </div>
 <div class="row">

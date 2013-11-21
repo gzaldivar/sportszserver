@@ -1,4 +1,6 @@
 class GameschedulesController < ApplicationController
+  include FootballStatistics
+
 	before_filter	:authenticate_user! #,   only: [:destroy, :new, :edit, :update, :create]
   before_filter :get_sport
   before_filter :get_schedule,        only: [:show, :edit, :update, :destroy, :updatelogo]
@@ -56,7 +58,7 @@ class GameschedulesController < ApplicationController
   end
 
   def show
-    begin
+#    begin
       @players = @sport.athletes.where(team_id: @team.id.to_s).asc(:number)
 
       if @gameschedule.opponent_team_id?
@@ -67,24 +69,62 @@ class GameschedulesController < ApplicationController
       if @sport.name == "Football"
         @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
         @gamelog = @gameschedule.gamelogs.build
-        @stats = AthleteFootballStatsTotal.new
-        @stats.passing_totals(@gameschedule)
-        @ath_totals = @gameschedule.football_stats
-        @stats.rushing_totals(@gameschedule)
-        @stats.receiving_totals(@gameschedule)
-        @stats.defense_totals(@gameschedule)
-        @stats.specialteams_totals(@gameschedule)
-        @gameschedule.firstdowns = 0
-        @gameschedule.football_stats.each do |f|
-          if !f.football_passings.nil?
-            @gameschedule.firstdowns = @gameschedule.firstdowns + f.football_passings.firstdowns
-          end
-        end
-        @gameschedule.football_stats.each do |f|
-          if !f.football_rushings.nil?
-            @gameschedule.firstdowns = @gameschedule.firstdowns + f.football_rushings.firstdowns
-          end
-        end
+
+        passstats = Passingstats.new(@sport, @gameschedule)
+        @passingstats = passstats.stats
+        @passingtotals = passstats.passingtotals
+
+        rushingstats = Rushingstats.new(@sport, @gameschedule)
+        @rushingstats = rushingstats.stats
+        @rushingtotals = rushingstats.rushingtotals
+
+        @firstdowns = passstats.gamefirstdowns + rushingstats.gamefirstdowns
+
+        receivingstats = Receivingstats.new(@sport, @gameschedule)
+        @receivingstats = receivingstats.stats
+        @receivingtotals = receivingstats.receivingtotals
+
+        defense = Defensestats.new(@sport, @gameschedule)
+        @defensivestats = defense.stats
+        @defensivetotals = defense.defensetotals
+
+        placekicker = Placekickerstats.new(@sport, @gameschedule)
+        @placekickerstats = placekicker.stats
+        @placekickertotals = placekicker.placekickertotals
+
+        returnerstats = Returnerstats.new(@sport, @gameschedule)
+        @returnerstats = returnerstats.stats
+        @returnertotals = returnerstats.returnertotals
+
+        kickoffstats = Kickerstats.new(@sport, @gameschedule)
+        @kickoffstats = kickoffstats.stats
+        @kickofftotals = kickoffstats.kickertotals
+
+        punterstats = Punterstats.new(@sport, @gameschedule)
+        @punterstats = punterstats.stats
+        @puntertotals = punterstats.puntertotals
+
+  #      @firstdowns = totalfirstdowns(@sport, @gameschedule)
+  #      @homescore = footballhomescore(@sport, @gameschedule)
+
+#        @stats = AthleteFootballStatsTotal.new
+#        @stats.passing_totals(@gameschedule)
+#        @ath_totals = @gameschedule.football_stats
+#        @stats.rushing_totals(@gameschedule)
+#        @stats.receiving_totals(@gameschedule)
+#        @stats.defense_totals(@gameschedule)
+#        @stats.specialteams_totals(@gameschedule)
+#        @gameschedule.firstdowns = 0
+#        @gameschedule.football_stats.each do |f|
+#          if !f.football_passings.nil?
+#            @gameschedule.firstdowns = @gameschedule.firstdowns + f.football_passings.firstdowns
+#          end
+#        end
+#        @gameschedule.football_stats.each do |f|
+#          if !f.football_rushings.nil?
+#            @gameschedule.firstdowns = @gameschedule.firstdowns + f.football_rushings.firstdowns
+#          end
+#        end
       elsif @sport.name == "Basketball"
         @stats = @gameschedule.basketball_stats
         totals = StatTotal.new(@sport, @gameschedule)
@@ -127,12 +167,12 @@ class GameschedulesController < ApplicationController
         format.html
         format.json
       end
-    rescue Exception => e
-      respond_to do |format|
-        format.html { redirect_to :back, alert: "Error: " + e.message }
-        format.json { render status: 404, json: { error: e.message } }
-      end
-    end
+#    rescue Exception => e
+#      respond_to do |format|
+#        format.html { redirect_to :back, alert: "Error: " + e.message }
+#        format.json { render status: 404, json: { error: e.message } }
+#      end
+#    end
   end
   
   def edit
@@ -184,19 +224,19 @@ class GameschedulesController < ApplicationController
         @gameschedules[cnt] = s
 
         if @sport.sportname == "Football"
-          @gameschedules[cnt].firstdowns = 0
+#          @gameschedules[cnt].firstdowns = 0
 
-          s.football_stats.each do |f|
-            if !f.football_passings.nil?
-               @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_passings.firstdowns
-            end
-          end
+#          s.football_stats.each do |f|
+#            if !f.football_passings.nil?
+#               @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_passings.firstdowns
+#            end
+ #         end
 
-          s.football_stats.each do |f|
-            if !f.football_rushings.nil?
-              @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_rushings.firstdowns
-            end
-          end
+#          s.football_stats.each do |f|
+#            if !f.football_rushings.nil?
+#              @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_rushings.firstdowns
+#            end
+#          end
         elsif @sport.name == "Basketball"
           totals = StatTotal.new(@sport, @gameschedules[cnt])          
           @gameschedules[cnt].homescore = totals.basketball_home_totals

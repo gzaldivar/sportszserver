@@ -1,0 +1,59 @@
+<div class="row">
+	<div class="span10">
+		<h5><font color="blue">Adjust stats here. If you want to adjust a score, use the game page to delete the game log. Stats will be automatically adjusted when you remove the score.</font></h5>
+	</div>
+</div>
+<%= hidden_field_tag "livestats", value=@live %>
+<%= hidden_field_tag "gameschedule_id", value=@defense.gameschedule_id.to_s %>
+<div class="row">
+</div>
+<p>
+<div class="row">
+	<div class="span2">
+		<h5>Interceptions: <font color="blue"><%= @defense.interceptions %></font></h5>
+        <%= label_tag "Remove Interception: " %>
+        <%= check_box_tag 'int', 1 %>
+	</div>
+	<div class="span2 offset1">
+		<h5>Interceptions Yards: <font color="blue"><%= @defense.int_yards %></font></h5>
+        <%= label_tag "Adjust Interception Yards: " %>
+        <%= text_field_tag "int_yards", '0' %>
+	</div>
+	<div class="span2 offset1">
+		<h5>Tackles: <font color="blue"><%= @defense.tackles %></font></h5>
+        <%= label_tag "Remove Tackle: " %>
+        <%= check_box_tag "tackles", '1' %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span2">
+		<h5>Assists: <font color="blue"><%= @defense.assists %></font></h5>
+        <%= label_tag "Remove Assist: " %>
+        <%= check_box_tag "assists", '1' %>
+	</div>
+	<div class="span2 offset1">
+		<h5>Fumbles Recovered: <font color="blue"><%= @defense.fumbles_recovered %></font></h5>
+        <%= label_tag "Remove Fumbles Recovered: " %>
+        <%= check_box_tag 'fumbles_recovered', 1 %>
+	</div>
+	<div class="span2 offset1">
+		<h5>Sacks: <font color="blue"><%= @defense.sacks %></font></h5>
+        <%= label_tag "Remove Sack: " %>
+        <%= check_box_tag 'sack', 1 %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span2">
+		<h5>Passes Defended: <font color="blue"><%= @defense.pass_defended %></font></h5>
+        <%= label_tag "Remove Passes Defended: " %>
+        <%= check_box_tag "pass_defended", 1 %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span1 offset2">
+		<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+	</div>
+</div>

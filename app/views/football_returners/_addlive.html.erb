@@ -1,0 +1,42 @@
+<%= hidden_field_tag "livestats", value=@live %>
+<%= hidden_field_tag "gameschedule_id", value=@returner.gameschedule_id.to_s %>
+<div class="row">
+	<div class="span2">
+        <%= label_tag "Quarter: " %>
+		<%= select_tag "quarter", options_for_select(quarters) %>
+	</div>
+	<div class="span6 offset1">
+        <%= label_tag "Game Time (Needed for scoring summary. Optional for Kickoff and Punts): " %>
+        <%= text_field_tag "time", '00:00' %>
+	</div>
+</div>
+<p>
+<h5>Punt Return Statistics</h5>
+<div class="row">
+	<div class="span2">
+        <%= label_tag "Punt Return Yards: " %>
+        <%= text_field_tag 'punt_returnyards', '0' %>
+	</div>
+	<div class="span2 offset1">
+        <%= label_tag "Punt Return for TD: " %>
+        <%= check_box_tag 'punt_returntd', 1 %>
+	</div>
+</div>
+<p>
+<h5>Kickoff Return Statistics</h5>
+<div class="row">
+	<div class="span2">
+        <%= label_tag "Kickoff Return Yards: " %>
+        <%= text_field_tag 'koyards', '0' %>
+	</div>
+	<div class="span2 offset1">
+        <%= label_tag "Kickoff Return for TD: " %>
+        <%= check_box_tag 'kotd', 1 %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span1 offset3">
+		<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+	</div>
+</div>

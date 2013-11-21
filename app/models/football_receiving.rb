@@ -13,7 +13,10 @@ class FootballReceiving
   field :fumbles_lost, type: Integer, default: 0
   field :twopointconv, type: Integer, default: 0
   
-  embedded_in :football_stat
+#  embedded_in :football_stat
+  belongs_to :athlete
+  belongs_to :gameschedule
+  has_many :alerts, dependent: :destroy
 
   validates_numericality_of :receptions, greater_than_or_equal_to: 0
   validates_numericality_of :yards, greater_than_or_equal_to: 0

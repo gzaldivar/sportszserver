@@ -1,0 +1,68 @@
+<div class="row">
+	<div class="span10">
+		<h5><font color="blue">Adjust stats here. If you want to adjust a score, use the game page to delete the game log. Stats will be automatically adjusted when you remove the score.</font></h5>
+	</div>
+</div>
+<%= hidden_field_tag "livestats", value="Adjust" %>
+<%= hidden_field_tag "gameschedule_id", value=@fbpassing.gameschedule_id.to_s %>
+<div class="row">
+	<div class="span2">
+		<h5>Completions: <font color="blue"><%= @fbpassing.completions %></font></h5>
+        <%= label_tag "Remove completion: " %>
+        <%= check_box_tag "comp", '1' %>
+	</div>
+	<div class="span2 offset1">
+        <%= label_tag "Remove completion from: " %>
+		<%= select_tag "receiver", options_from_collection_for_select(@sport.athletes.where(team_id: @athlete.team_id), "id", "full_name"),
+									include_blank: true %>
+	</div>
+	<div class="span2 offset1">
+        <%= label_tag "Yards: " %>
+        <%= text_field_tag "yards", '0' %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span2">
+        <%= label_tag "Remove Receiver Fumble: " %>
+        <%= check_box_tag "rec_fumble", '1' %>
+	</div>
+	<div class="span3 offset1">
+        <%= label_tag "Remove Receiver Fumble Lost?: " %>
+        <%= check_box_tag "rec_fumble_lost", '0' %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span2">
+		<h5>QB First Downs: <font color="blue"><%= @fbpassing.firstdowns %></font></h5>
+        <%= label_tag "Click to remove first down: " %>
+        <%= check_box_tag 'fd', '1' %>
+	</div>
+	<div class="span2 offset1">
+		<h5>QB Interceptions: <font color="blue"><%= @fbpassing.interceptions %></font></h5>
+        <%= label_tag "Interception: " %>
+        <%= check_box_tag "int", '1' %>
+	</div>
+	<div class="span2 offset1">
+		<h5>QB Sacks: <font color="blue"><%= @fbpassing.sacks %></font></h5>
+        <%= label_tag "Remove Sack: " %>
+        <%= check_box_tag 'sack', '1' %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span2">
+		<h5>QB Lost Yards: <font color="blue"><%= @fbpassing.yards_lost %></font></h5>
+        <%= label_tag "Add yards to adjust yards lost entry: " %>
+        <%= text_field_tag "yards_lost", '0' %>
+	</div>
+</div>
+<div class="row">
+</div>					
+<p>
+<div class="row">
+	<div class="span1 offset4">
+		<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+	</div>
+</div>

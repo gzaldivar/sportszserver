@@ -1,9 +1,12 @@
 class AthletesController < ApplicationController  
+  include FootballStatistics
+
 	before_filter	:authenticate_user! #,	only: [:destroy, :update, :create, :edit, :new, :follow, :unfollow]
  #  before_filter :site_owner?,         only: [:destroy, :update, :create, :edit, :new]
   before_filter :get_sport
-  before_filter :correct_athlete,     only: [:show, :edit, :update, :destroy, :follow, :unfollow, :stats, :updatephoto]
-  before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
+  before_filter :correct_athlete,     only: [:show, :edit, :update, :destroy, :follow, :unfollow, :stats, :updatephoto, 
+                                            :playerstats, :selectedstat]
+  before_filter only: [:destroy, :update, :create, :edit, :new, :playerstats, :selectedstat] do |controller| 
     controller.team_manager?(@athlete, nil)
   end
   
@@ -219,6 +222,66 @@ class AthletesController < ApplicationController
     end
   end
   
+  def playerstats
+    if @sport.name == "Football"
+      @statlist = ["Passing", "Rushing", "Receiving", "Defense", "Place Kicker", "Kicker", "Punter", "Returner"]
+
+      passingstats = Passingstats.new(@sport, @athlete)
+      @passingstats = passingstats.stats
+      @passingtotals = passingstats.passingtotals
+
+      rushingstats = Rushingstats.new(@sport, @athlete)
+      @rushingstats = rushingstats.stats
+      @rushingtotals = rushingstats.rushingtotals
+
+      receivingstats = Receivingstats.new(@sport, @athlete)
+      @receivingstats = receivingstats.stats
+      @receivingtotals = receivingstats.receivingtotals
+
+      defensestats = Defensestats.new(@sport, @athlete)
+      @defensivestats = defensestats.stats
+      @defensivetotals = defensestats.defensetotals
+
+      placekickerstats = Placekickerstats.new(@sport, @athlete)
+      @placekickerstats = placekickerstats.stats
+      @placekickertotals = placekickerstats.placekickertotals
+
+      returnerstats = Returnerstats.new(@sport, @athlete)
+      @returnerstats = returnerstats.stats
+      @returnertotals = returnerstats.returnertotals
+
+      kickoffstats = Kickerstats.new(@sport, @athlete)
+      @kickoffstats = kickoffstats.stats
+      @kickofftotals = kickoffstats.kickertotals
+
+      punterstats = Punterstats.new(@sport, @athlete)
+      @punterstats = punterstats.stats
+      @puntertotals = punterstats.puntertotals
+    end
+  end
+
+  def selectedstat
+    if @sport.name == "Football"
+      if params[:selectedstat] == "Passing"
+        redirect_to sport_athlete_football_passings_path(@sport, @athlete, gameschedule_id: params[:game])
+      elsif params[:selectedstat] == "Rushing"
+        redirect_to sport_athlete_football_rushings_path(@sport, @athlete, gameschedule_id: params[:game])
+      elsif params[:selectedstat] == "Receiving"
+        redirect_to sport_athlete_football_receivings_path(@sport, @athlete, gameschedule_id: params[:game])
+      elsif params[:selectedstat] == "Defense"
+        redirect_to sport_athlete_football_defenses_path(@sport, @athlete, gameschedule_id: params[:game])
+      elsif params[:selectedstat] == "Returner"
+        redirect_to sport_athlete_football_returners_path(@sport, @athlete, gameschedule_id: params[:game])
+      elsif params[:selectedstat] == "Place Kicker"
+        redirect_to sport_athlete_football_place_kickers_path(@sport, @athlete, gameschedule_id: params[:game])
+      elsif params[:selectedstat] == "Punter"
+        redirect_to sport_athlete_football_punters_path(@sport, @athlete, gameschedule_id: params[:game])
+      elsif params[:selectedstat] == "Kicker"
+        redirect_to sport_athlete_football_kickers_path(@sport, @athlete, gameschedule_id: params[:game])
+      end
+    end
+  end
+
   private
     
     def correct_athlete

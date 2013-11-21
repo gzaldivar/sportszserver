@@ -15,7 +15,7 @@ class AlertsController < ApplicationController
 			@list = "Video"
 		elsif params[:alerttype] == "Stats"
 			if @sport.name == "Football"
-				@alerts = @athlete.alerts.where(user_id: current_user.id.to_s, :footall_stat.ne => "", :football_stat.exists => true,
+				@alerts = @athlete.alerts.where(user_id: current_user.id.to_s, :footall_stat.ne => "", 
 												:stat_football.ne => "", :stat_football.exists => true).desc(:created_at).entries
 			elsif @sport.name == "Basketball"
 				@alerts = @athlete.alerts.where(user_id: current_user.id.to_s, :basketball_stat.ne => "", 
@@ -25,7 +25,7 @@ class AlertsController < ApplicationController
 		elsif params[:alerttype] == "Bio"
 			if @sport.name == "Football"
 				@alerts = @athlete.alerts.where(:athlete.ne => "", :photo.ne => "", :photo.exists => false, :videoclip.ne => "", :videoclip.exists => false, 
-					:blog.ne => "", :blog.exists => false, :football_stat.ne => "", :football_stat.exists => false, :athlete.exists => true).desc(:created_at)
+					:blog.ne => "", :blog.exists => false, :stat_football.ne => "", :stat_football.exists => false, :athlete.exists => true).desc(:created_at)
 			elsif @sport.name == "Basketball"
 				@alerts = @athlete.alerts.where(:athlete.ne => "", :photo.ne => "", :photo.exists => false, :videoclip.ne => "", :videoclip.exists => false, 
 					:blog.ne => "", :blog.exists => false, :basketball_stat.ne => "", :basketball_stat.exists => false, :athlete.exists => true).desc(:created_at)

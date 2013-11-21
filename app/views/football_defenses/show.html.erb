@@ -1,58 +1,17 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span9 offset1">
-		<p>
-		<!--%= render 'tabs_game' %-->
-		<p>
-		<h4>Defensive game statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for <%= @stat.gameschedule.game_name %></h4>
-		<p>
+	<div class="span10">
 		<table class="table table-bordered">
-			<em>
-			<thead>
-				<th>Tackles</th>
-				<th>Assists</th>
-				<th>Sacks</th>
-				<th>Interceptions</th>
-				<th>Passes Defended</th>
-			</thead>
-			</em>
-			<tbody>
-				<td><%= @defense.tackles %></td>
-				<td><%= @defense.assists %></td>
-				<td><%= @defense.sacks %></td>
-				<td><%= @defense.interceptions %></td>
-				<td><%= @defense.pass_defended %></td>
-			</tbody>
+			<%= render 'stat_header', name: "Game" %>
+			<%= render 'stat_body', stat: @defense, player: @athlete, name: @gameschedule %>
 		</table>
-		<table class="table table-bordered">
-			<thead>
-				<th>Return Yards</th>
-				<th>Return Long</th>
-				<th>Defensive TD</th>
-				<th>Fumbles Recoveredd</th>
-				<th>Safeties</th>
-			</thead>
-			<tbody>
-				<td><%= @defense.int_yards %></td>
-				<td><%= @defense.int_long %></td>
-				<td><%= @defense.int_td %></td>
-				<td><%= @defense.fumbles_recovered %></td>
-				<td><%= @defense.safety %></td>
-			</tbody>
-		</table>
-		<% if isAdmin? or isTeamManager?(@athlete) %>
-			Select <strong>Add Defensive Play</strong> below to enter real time stats during a game. You can still use this page to add stats that have already been totalled. Use this page to make adjustments to the totals.
-			<p>
-			<div class="span6 offset2">
-				<%= link_to "Add Defensive Play", add_sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, id: @defense), 
-							class: "btn btn-mini btn-primary" %>
-				<%= link_to "Edit", edit_sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, @defense), 
-							class: "btn btn-mini btn-primary" %>
-				<%= link_to "Delete", sport_athlete_football_stat_football_defense_path(@sport, @athlete, @stat, @defense), 
-							method: :delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
-			</div>
-		<% end %>
+	</div>
+</div>
+<div class="row">
+	<div class="span2 offset4">
+		<%= link_to "Totals", sport_athlete_football_defenses_path(@sport, @athlete, gameschedule_id: @defense.gameschedule_id), 
+			class: "btn btn-medium btn-primary"%>
 	</div>
 </div>
 <div class="row">

@@ -41,10 +41,8 @@ class Gameschedule
   field :opponenth1, type: Integer, default: 0
   field :opponenth2, type: Integer, default: 0
 
-#  field :homescore, type: Integer, default: 0
   field :opponentscore, type: Integer, default: 0
 
-#  field :firstdowns, type: Integer, default: 0
   field :penalty, type: Integer, default: 0
   field :penaltyyards, type: Integer, default: 0
   field :livegametime, type: DateTime
@@ -68,7 +66,6 @@ class Gameschedule
   # Basketball fields
 
   field :bballpossessionarrow, type: String, default: "Home"
-#  field :homefouls, type: Integer, default: 0
   field :opponentfouls, type: Integer, default: 0
   field :currentperiod, type: Integer, default: 1
   field :homebonus, type: Boolean, default: false
@@ -89,7 +86,6 @@ class Gameschedule
     }
 
   belongs_to :team, index: true
-  has_many :football_stats, dependent: :destroy
   has_many :gamelogs, dependent: :destroy
   has_many :blogs, dependent: :nullify
   has_many :photos, dependent: :nullify
@@ -97,8 +93,16 @@ class Gameschedule
   has_many :basketball_stats, dependent: :destroy
   has_many :soccers, dependent: :destroy
 
-  attr_accessor :firstdowns, :homescore, :homefouls
-  
+  has_many :football_kickers, dependent: :destroy
+  has_many :football_defenses, dependent: :destroy
+  has_many :football_passings, dependent: :destroy
+  has_many :football_place_kickers, dependent: :destroy
+  has_many :football_punters, dependent: :destroy
+  has_many :football_receivings, dependent: :destroy
+  has_many :football_returners, dependent: :destroy
+  has_many :football_rushings, dependent: :destroy
+
+
   validates_presence_of :starttime
   validates_presence_of :gamedate
   validates_presence_of :location

@@ -1,0 +1,22 @@
+<%= hidden_field_tag "livestats", value=@live %>
+<%= hidden_field_tag "gameschedule_id", value=@kicker.gameschedule_id.to_s %>
+<div class="row">
+	<div class="span2">
+        <%= label_tag "Kickoff: " %>
+        <%= check_box_tag "koattempts", '0' %>
+	</div>
+	<div class="span2 offset1">
+        <%= label_tag "Touchbacks: " %>
+        <%= check_box_tag "kotouchbacks", 1 %>
+	</div>
+	<div class="span2 offset1">
+        <%= label_tag "Return yards: " %>
+        <%= text_field_tag "koreturned", '0' %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="span1 offset3">
+		<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+	</div>
+</div>

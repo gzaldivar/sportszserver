@@ -1,5 +1,7 @@
 module GameschedulesHelper
 
+	include FootballStatistics
+
 	def basketball_home_score(game)
 		players = @sport.athletes.where(team_id: game.team_id)
 		score = 0

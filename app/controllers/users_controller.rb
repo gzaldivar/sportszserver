@@ -23,7 +23,7 @@ class UsersController < ApplicationController
       @users = User.full_text_search(params[:site] + " " + params[:email].to_s, match: :all).asc(:name, :updated_at).entries
      elsif !params[:site].nil? and !params[:site].blank?
       @users = User.where(default_site: params[:site].to_s).asc(:name, :updated_at).entries
-    else
+    elsif current_user.godmode
       @users = User.all.entries
     end
 

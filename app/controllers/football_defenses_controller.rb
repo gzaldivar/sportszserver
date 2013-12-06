@@ -89,7 +89,7 @@ class FootballDefensesController < ApplicationController
 				elsif current_user.stat_alert?
 					send_alert("Defensive stat alert for ", @defense, @gameschedule)
 				end
-			elsif live = "Adjust"
+			elsif live == "Adjust"
 				adjust(@defense, @athlete, params)
 			else
 				livestats(@defense, @athlete, params, @gameschedule)
@@ -134,8 +134,8 @@ class FootballDefensesController < ApplicationController
 		def livestats(stat, athlete, params, game)
 			stat.tackles = stat.tackles + params[:tackles].to_i
 			stat.int_yards = stat.int_yards + params[:int_yards].to_i
-			stat.fumbles_recovered = stat.fumbles_recovered + params[:fumbles_recovered].to_i
 			stat.assists = stat.assists + params[:assists].to_i
+			stat.sackassist += params[:sackassits].to_i
 
 			if params[:sack].to_i > 0
 				stat.sacks = stat.sacks + 1
@@ -155,20 +155,21 @@ class FootballDefensesController < ApplicationController
 
 			if params[:int_td].to_i > 0
 				stat.int_td = stat.int_td + 1
+			elsif params[:safety].to_i > 0
+				stat.safety = stat.safety + 1
+			end
+
+			stat.save!
+
+			if params[:int_td].to_i > 0
 
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
 					if params[:int].to_i > 0
-						gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time],
-																					logentry: "yard interception return", score: "TD", yards: params[:yards],
-																					player: athlete.id)
-#						gamelog = stat.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], 
-#																				   logentry: @athlete.logname + " interception return", score: "TD")
+						gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "yard interception return", 
+													score: "TD", yards: params[:int_yards], football_defense_id: athlete.id)
 					else
-						gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time],
-																					logentry: "yard fumble return", score: "TD", yards: params[:yards],
-																					player: athlete.id)
-#						gamelog = stat.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
-#																				   logentry: @athlete.logname + " fumble return", score: "TD")
+						gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "yard fumble return", 
+													score: "TD", yards: params[:int_yards], football_defense_id: stat.id)
 					end
 
 					gamelog.save!
@@ -186,17 +187,11 @@ class FootballDefensesController < ApplicationController
 						game.save!
 					end
 				end
-			end
-
-			if params[:safety].to_i > 0
-				stat.safety = stat.safety + 1
+			elsif params[:safety].to_i > 0
 
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
-					gamelog = stat.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
-																				logentry: "defensive safety", score: "2P", yards: params[:yards],
-																				player: athlete.id)
-#					gamelog = stat.football_stat.gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
-#																			   logentry: @athlete.logname + " safety", score: "2P")
+					gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "defensive safety", 
+												score: "2P", yards: params[:int_yards], football_defense_id: stat.id)
 
 					gamelog.save!
 					if params[:quarter]
@@ -214,8 +209,6 @@ class FootballDefensesController < ApplicationController
 					end
 				end
 			end
-
-			stat.save!
 
 			if current_user.score_alert? and (params[:int_td].to_i > 0 or params[:safety].to_i > 0)
 				send_alert(athlete, "Defensive score alert for ", stat, game)
@@ -248,6 +241,10 @@ class FootballDefensesController < ApplicationController
 
 			if params[:sack].to_i > 0 and stat.sacks > 0
 				stat.sacks -= 1
+			end
+
+			if params[:sackassits].to_i
+				stat.sackassist -= 1
 			end
 
 			if params[:pass_defended].to_i > 0 and stat.pass_defended > 0

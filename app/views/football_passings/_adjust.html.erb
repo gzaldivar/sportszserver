@@ -16,6 +16,12 @@
 		<%= select_tag "receiver", options_from_collection_for_select(@sport.athletes.where(team_id: @athlete.team_id), "id", "full_name"),
 									include_blank: true %>
 	</div>
+</div>
+<div class="row">
+	<div class="span2">
+        <%= label_tag "First Down: " %>
+        <%= check_box_tag "fd", '1' %>
+	</div>
 	<div class="span2 offset1">
         <%= label_tag "Yards: " %>
         <%= text_field_tag "yards", '0' %>

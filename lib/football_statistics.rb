@@ -449,7 +449,7 @@ module FootballStatistics
 				end
 
 				totals.xpattempts = s.xpattempts
-				totals.xpmissed += s.xpmade
+				totals.xpmade += s.xpmade
 				totals.xpmissed += s.xpmissed
 				totals.xpblocked += s.xpblocked
 			end

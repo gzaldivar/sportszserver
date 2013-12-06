@@ -44,7 +44,7 @@ class FootballPassingsController < ApplicationController
 
 			respond_to do |format|
 		        format.html { redirect_to [@sport, @athlete, stats], notice: 'Stat created for ' + @athlete.full_name }
-		        format.json { render json: { football_passing: stats } }
+		        format.json { render json: { passing: stats } }
 		     end			
 		rescue Exception => e
 			respond_to do |format|
@@ -69,7 +69,7 @@ class FootballPassingsController < ApplicationController
 	end
 
 	def update		
-		begin
+#		begin
 			if params[:football_passing].nil?
 				live = params[:livestats].to_s
 			else
@@ -94,12 +94,12 @@ class FootballPassingsController < ApplicationController
 		        format.html { redirect_to [@sport, @athlete, @fbpassing], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json { render json: { passing: @fbpassing } }
 		     end			
-		rescue Exception => e
-			respond_to do |format|
-				format.html { redirect_to :back, alert: "Error updating stats for " + @athlete.full_name + " " + e.message }
-		        format.json { render status: 404, json: { error: e.message } }
-		     end			
-		end
+#		rescue Exception => e
+#			respond_to do |format|
+#				format.html { redirect_to :back, alert: "Error updating stats for " + @athlete.full_name + " " + e.message }
+#		        format.json { render status: 404, json: { error: e.message } }
+#		     end			
+#		end
 	end
 
 	def destroy
@@ -208,57 +208,19 @@ class FootballPassingsController < ApplicationController
 						receiver.fumbles_lost = receiver.fumbles_lost + 1
 					end
 
+					if params[:fd].to_i > 0
+						receiver.firstdowns += 1
+					end
+
 					receiver.save!		
 				end
 
 				if params[:td].to_i > 0
 					stats.td = stats.td + 1
-
-					if !receiver.nil? and !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
-						puts params[:quarter].to_s
-						gamelog = gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
-																logentry: "yard pass to", score: "TD", yards: params[:yards],
-																player: @athlete.id, assist: player.id)
-						gamelog.save!
-
-						if params[:quarter]
-							case params[:quarter]
-							when "Q1"
-								gameschedule.homeq1 = gameschedule.homeq1 + 6
-							when "Q2"
-								gameschedule.homeq2 = gameschedule.homeq2 + 6
-							when "Q3"
-								gameschedule.homeq3 = gameschedule.homeq3 + 6
-							when "Q4"
-								gameschedule.homeq4 = gameschedule.homeq4 + 6
-							end
-							gameschedule.save!
-						end
-					end
 				end
 
 				if params[:two].to_i > 0
 					stats.twopointconv = stats.twopointconv + 1
-
-					if !receiver.nil? and !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
-						gamelog = gameschedule.gamelogs.new(period: params[:quarter], time: params[:time],
-																					logentry: " yards to", score: "2P", yards: params[:yards], 
-																					player: player.id, assist: receiver.id)
-						gamelog.save!
-						if params[:quarter]
-							case params[:quarter]
-							when "Q1"
-								gameschedule.homeq1 = gameschedule.homeq1 + 2
-							when "Q2"
-								gameschedule.homeq2 = gameschedule.homeq2 + 2
-							when "Q3"
-								gameschedule.homeq3 = gameschedule.homeq3 + 2
-							when "Q4"
-								gameschedule.homeq4 = gameschedule.homeq4 + 2
-							end
-							gameschedule.save!
-						end
-					end
 				end
 
 				if current_user.score_alert? and params[:td].to_i > 0
@@ -275,12 +237,60 @@ class FootballPassingsController < ApplicationController
 			end
 
 			stats.save!
+
+			if params[:td].to_i > 0
+				if !receiver.nil? and !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
+					gamelog = gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], score: "TD", yards: params[:yards],
+														football_passing_id: stats.id, assist: player.id)
+					gamelog.save!
+
+					if params[:quarter]
+						case params[:quarter]
+						when "Q1"
+							gameschedule.homeq1 = gameschedule.homeq1 + 6
+						when "Q2"
+							gameschedule.homeq2 = gameschedule.homeq2 + 6
+						when "Q3"
+							gameschedule.homeq3 = gameschedule.homeq3 + 6
+						when "Q4"
+							gameschedule.homeq4 = gameschedule.homeq4 + 6
+						end
+						gameschedule.save!
+					end
+				end
+			elsif params[:two].to_i > 0
+				stats.twopointconv = stats.twopointconv + 1
+
+				if !receiver.nil? and !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
+					gamelog = gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], score: "2P", yards: params[:yards], 
+														football_passing_id: stats.id, assist: player.id)
+					gamelog.save!
+					if params[:quarter]
+						case params[:quarter]
+						when "Q1"
+							gameschedule.homeq1 = gameschedule.homeq1 + 2
+						when "Q2"
+							gameschedule.homeq2 = gameschedule.homeq2 + 2
+						when "Q3"
+							gameschedule.homeq3 = gameschedule.homeq3 + 2
+						when "Q4"
+							gameschedule.homeq4 = gameschedule.homeq4 + 2
+						end
+						gameschedule.save!
+					end
+				end
+			end
+
 		end
 
 		def adjust(stats, athlete, params, gameschedule)
 			if params[:comp].to_i > 0
 				stats.completions -= 1
 				stats.attempts -= 1
+			end
+
+			if params[:fd].to_i > 0
+				stats.firstdowns -= 1
 			end
 
 			if params[:comp].to_i > 0 and !params[:receiver].nil? and !params[:receiver].blank?
@@ -301,6 +311,10 @@ class FootballPassingsController < ApplicationController
 
 				if params[:rec_fumble_lost].to_i > 0 and receiver.fumbles_lost > 0
 					receiver.fumbles_lost = receiver.fumbles_lost + 1
+				end
+
+				if params[:fd].to_i > 0
+					receiver.firstdowns -= 1
 				end
 
 				receiver.save!		

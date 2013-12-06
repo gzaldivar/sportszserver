@@ -54,23 +54,30 @@ module SportsHelper
 
   def offense_football_positions
     [
-      ['Wide Receiver', 'WR'],
-      ['Offesnsive Line', 'OL'],
       ['Running Back', 'RB'],
+      ['Tail Back', 'TB'],
       ['Fullback', 'FB'],
       ['Quarterback', 'QB'],
+      ['Offesnsive Line', 'OL'],
       ['Center', 'C'],
+      ['Guard', 'G'],
+      ['Tackle', 'T'],
+      ['Wide Receiver', 'WR'],
       ['Tight End', 'TE']
     ]
   end
 
   def defense_football_positions
     [
-      ['Defensive Back', 'DB'],
       ['Defensive Line', 'DL'],
+      ['Nose Guard', 'NG'],
+      ['Defensive Tackle', 'DT'],
+      ['Defensive End', 'DE'],
       ['Line Backer', 'LB'],
-      ['Corner', 'CR'],
-      ['Safety', 'S']
+      ['Defensive Back', 'DB'],
+      ['Corner', 'CB'],
+      ['Safety', 'S'],
+      ['Strong Safety', 'SS']
     ]
   end
 

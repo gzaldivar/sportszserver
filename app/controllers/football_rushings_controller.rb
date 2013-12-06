@@ -79,9 +79,9 @@ class FootballRushingsController < ApplicationController
 				@rushing.update_attributes!(params[:football_rushing])
 
 				if current_user.score_alert? and (params[:football_rushing][:td].to_i > 0 or params[:football_rushing][:twopointconv].to_i > 0)
-					send_alert(@athlete, "Rushing score alert for ")
+					send_alert(@athlete, "Rushing score alert for ", @rushing, @gameschedule)
 				elsif current_user.stat_alert?
-					send_alert(@athlete, "Rushing stat alert for ")
+					send_alert(@athlete, "Rushing stat alert for ", @rushing, @gameschedule)
 				end
 			elsif live == "Adjust"
 				adjust(@rushing, params)
@@ -140,14 +140,24 @@ class FootballRushingsController < ApplicationController
 			if params[:yards].to_i > stat.longest
 				stat.longest = params[:yards].to_i
 			end
+
 			if params[:fd].to_i > 0
 				stat.firstdowns = stat.firstdowns + 1
 			end
+
 			if params[:td].to_i > 0
 				stat.td = stat.td + params[:td].to_i
-				gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time],
-																			logentry: "yard run", score: "TD", yards: params[:yards],
-																			player: @athlete.id)
+			end
+
+			if params[:two].to_i > 0
+				stat.twopointconv = stat.twopointconv + params[:two].to_i
+			end
+
+			stat.save!
+
+			if params[:td].to_i > 0
+				gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "yard run", score: "TD", yards: params[:yards],
+																			football_rushing_id: stat.id)
 				gamelog.save!
 				if params[:quarter]
 					case params[:quarter]
@@ -162,12 +172,9 @@ class FootballRushingsController < ApplicationController
 					end
 					game.save!
 				end
-			end
-			if params[:two].to_i > 0
-				stat.twopointconv = stat.twopointconv + params[:two].to_i
-				gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time],
-																			logentry: "yard run", score: "TD", yards: params[:yards],
-																			player: @athlete.id)
+			elsif params[:two].to_i > 0
+				gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "yard run", score: "TD", yards: params[:yards],
+																			football_rushing_id: stat.id)
 				gamelog.save!
 				if params[:quarter]
 					case params[:quarter]
@@ -183,9 +190,7 @@ class FootballRushingsController < ApplicationController
 					game.save!
 				end
 			end
-
-			stat.save!
-
+			
 			if current_user.score_alert? and params[:td].to_i > 0
 				send_alert(@athlete, "Rushing score alert for ", stat, game)
 			elsif current_user.stat_alert?

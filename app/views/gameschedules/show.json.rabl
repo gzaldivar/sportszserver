@@ -23,11 +23,17 @@ attributes :gamedate, :location, :opponent, :event, :homeaway, :game_name, :home
 if @sport.name == "Football"
 	node(:homescore) { |t| footballhomescore(@sport, t) }
 	node(:firstdowns) { |f| totalfirstdowns(@sport, f) }
-	attributes :currentqtr, :penaltyyards, :down, :own, :ballon, :our, :togo, :penalty, :penaltyyards
+	attributes :currentqtr, :penaltyyards, :down, :own, :ballon, :our, :togo, :penalty, :penaltyyards, :currentperiod
 	child :gamelogs do
-		attributes :period, :time, :score, :logentry, :yards, :player
+		attributes :period, :time, :score, :logentry, :player, :assist, :yards
 		attributes :logentrytext, :if => lambda { |m| !m.player.nil? and !m.player.blank? }
 		node(:id) { |o| o.id.to_s }
+		node(:gameschedule_id) { |g| g.id.to_s }
+		node(:football_passing_id) { |g| g.football_passing_id.to_s }
+		node(:football_rushing_id) { |g| g.football_rushing_id.to_s }
+		node(:football_returner_id) { |g| g.football_returner_id.to_s }
+		node(:football_defense_id) { |g| g.football_defense_id.to_s }
+		node(:football_place_kicker_id) { |g| g.football_place_kicker_id.to_s }
 		node :hasphotos, :if => lambda { |a| !@sport.photos.where(gamelog_id: a.id.to_s).empty? } do
 			true
 		end

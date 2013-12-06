@@ -120,11 +120,20 @@ class Athlete
             if !t.fb_rush_players.nil?
               t.fb_rush_players.delete_if{|x| x == self.id.to_s}
             end
-            if !t.fb_spec_players.nil?
-              t.fb_spec_players.delete_if{|x| x == self.id.to_s}
-            end
             if !t.fb_rec_players.nil?
               t.fb_rec_players.delete_if{|x| x == self.id.to_s}
+            end
+            if !t.fb_placekickers.nil?
+              t.fb_placekickers.delete_if{|x| x == self.id.to_s}
+            end
+            if !t.fb_kickers.nil?
+              t.fb_kickers.delete_if{|x| x == self.id.to_s}
+            end
+            if !t.fb_punters.nil?
+              t.fb_punters.delete_if{|x| x == self.id.to_s}
+            end
+            if !t.fb_returners.nil?
+              t.fb_returners.delete_if{|x| x == self.id.to_s}
             end
             t.save!
           elsif self.sport.name == "Basketball"

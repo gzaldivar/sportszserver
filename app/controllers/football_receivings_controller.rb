@@ -85,7 +85,7 @@ class FootballReceivingsController < ApplicationController
 		end
 
 		def correct_stat
-			@receiving = @stat.football_receivings.find(params[:id])
+			@receiving = @athlete.football_receivings.find(params[:id])
 			@gameschedule = @sport.teams.find(@athlete.team_id).gameschedules.find(@receiving.gameschedule_id)
 		end
 		

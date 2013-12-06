@@ -13,12 +13,12 @@ class TeamsController < ApplicationController
 			@team = @sport.teams.create!(params[:team])
 			respond_to do |format|
 				format.html { redirect_to @sport, notice: "Added #{@team.title} #{@team.mascot}!" }
-				format.json { render json: { team: @team, request: sport_team_url(@sport, @team) } }
+				format.json { render json: { team: sport_team_url(@sport, @team) } }
 			end
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to @sport, alert: "Error adding team" }
-				format.json { render json: { error: e.message, request: sport_team_url(@sport, @team) } }
+				format.json { render json: { error: e.message } }
 			end
 		end
 	end
@@ -31,12 +31,12 @@ class TeamsController < ApplicationController
 			@team.update_attributes!(params[:team])
 			respond_to do |format|
 				format.html { redirect_to @sport, notice: "Team updated" }
-				format.json { render json: { team: @team, request: sport_team_url(@sport, @team) } }
+				format.json { render json: { team: sport_team_url(@sport, @team) } }
 			end
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to @sport, alert: "Error updating team" }
-				format.json  { render json: { error: e.message, request: sport_team_url(@sport, @team) } }
+				format.json  { render json: { error: e.message } }
 			end
 		end
 	end
@@ -65,84 +65,8 @@ class TeamsController < ApplicationController
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to @sport, alert: "Error deleting team " + e.message }
-				format.json { render status: 404, json: { error: e.message, request: [@sport, @team] } }
+				format.json { render status: 404, json: { error: e.message } }
 			end
-		end
-	end
-
-	def addplayers
-		begin
-		    if params[:pass_players]
-		     	 params[:pass_players].each do |key,value|
-		        	if player = Athlete.find(value.to_s)
-		            	@team.fb_pass_players = Array.new
-		          		@team.fb_pass_players.push(value)
-		        	else
-		          		throw "Athlete does not exist"
-		        	end
-		      	end
-		    end
-		    if params[:rush_players]	      		
-		     	 params[:rush_players].each do |key,value|
-		        	if player = Athlete.find(value.to_s)
-		            	@team.fb_rush_players = Array.new
-		          		@team.fb_rush_players.push(value)
-		        	else
-		          		throw "Athlete does not exist"
-		        	end
-		      	end
-		    end
-		    if params[:rec_players]	      		
-		     	 params[:rec_players].each do |key,value|
-		        	if player = Athlete.find(value.to_s)
-		            	@team.fb_rec_players = Array.new
-		          		@team.fb_rec_players.push(value)
-		        	else
-		          		throw "Athlete does not exist"
-		        	end
-		      	end
-		    end
-		    if params[:def_players]	      		
-		     	 params[:def_players].each do |key,value|
-		        	if player = Athlete.find(value.to_s)
-		            	@team.fb_def_players = Array.new
-		          		@team.fb_def_players.push(value)
-		        	else
-		          		throw "Athlete does not exist"
-		        	end
-		      	end
-		    end
-		    if params[:spec_players]	      		
-		     	 params[:spec_players].each do |key,value|
-		        	if player = Athlete.find(value.to_s)
-		            	@team.fb_spec_players = Array.new
-		          		@team.fb_spec_players.push(value)
-		        	else
-		          		throw "Athlete does not exist"
-		        	end
-		      	end
-			end
-			if params[:placekicker]
-				if player = Athlete.find(params[:placekicker].to_s)
-					@team.placekicker = params[:placekicker].to_s
-				end
-			end
-			if params[:punter]
-				if player = Athlete.find(params[:punter].to_s)
-					@team.punter = params[:punter].to_s
-				end
-			end
-			if params[:kicker]
-				if player = Athlete.find(params[:kicker].to_s)
-					@team.kicker = params[:kicker].to_s
-				end
-			end
-		    @team.save!
-		    respond_to do |format|
-		      format.json { render json: { team: @team, request: sport_team_url(@sport, @team) } }
-		    end
-		rescue Exception => e
-		  render status: 404, json: { error: e.message }
 		end
 	end
 
@@ -193,6 +117,84 @@ class TeamsController < ApplicationController
 	end
 
 	private
+
+		def addplayers
+			begin
+			    if params[:pass_players]
+	            	@team.fb_pass_players = Array.new
+			     	 params[:pass_players].each do |key,value|
+			        	if player = Athlete.find(value.to_s)
+			          		@team.fb_pass_players.push(value)
+			        	else
+			          		raise "Athlete does not exist"
+			        	end
+			      	end
+			    end
+			    if params[:rush_players]	      		
+			     	 params[:rush_players].each do |key,value|
+			        	if player = Athlete.find(value.to_s)
+			            	@team.fb_rush_players = Array.new
+			          		@team.fb_rush_players.push(value)
+			        	else
+			          		raise "Athlete does not exist"
+			        	end
+			      	end
+			    end
+			    if params[:rec_players]	      		
+			     	 params[:rec_players].each do |key,value|
+			        	if player = Athlete.find(value.to_s)
+			            	@team.fb_rec_players = Array.new
+			          		@team.fb_rec_players.push(value)
+			        	else
+			          		raise "Athlete does not exist"
+			        	end
+			      	end
+			    end
+			    if params[:def_players]	      		
+			     	 params[:def_players].each do |key,value|
+			        	if player = Athlete.find(value.to_s)
+			            	@team.fb_def_players = Array.new
+			          		@team.fb_def_players.push(value)
+			        	else
+			          		raise "Athlete does not exist"
+			        	end
+			      	end
+			    end
+			    if params[:fb_placekickers]	      		
+			     	 params[:fb_placekickers].each do |key,value|
+			        	if player = Athlete.find(value.to_s)
+			            	@team.fb_placekickers = Array.new
+			          		@team.fb_placekickers << value
+			        	else
+			          		raise "Athlete does not exist"
+			        	end
+			      	end
+				end
+				if params[:fb_kickers]
+					params[:fb_kickers].each do |key, value|
+						@team.fb_kickers = Array.new
+						@team.fb_kickers << params[:fb_kickers].to_s
+					end
+				end
+				if params[:fb_punters]
+					params[:fb_punters].each do |key, value|
+						@team.fb_punters = Array.new(10) { iii }
+						@team.fb_punters << params[:fb_punters].to_s
+					end
+				end
+				if params[:kicker]
+					if player = Athlete.find(params[:kicker].to_s)
+						@team.kicker = params[:kicker].to_s
+					end
+				end
+			    @team.save!
+			    respond_to do |format|
+			      format.json { render json: { team: sport_team_url(@sport, @team) } }
+			    end
+			rescue Exception => e
+			  render status: 404, json: { error: e.message }
+			end
+		end
 
 		def get_sport
 			@sport = Sport.find(params[:sport_id])

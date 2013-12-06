@@ -153,10 +153,17 @@ class FootballPlaceKickersController < ApplicationController
 
 			if params[:fgmade].to_i > 0
 				stat.fgmade = stat.fgmade + 1
+			elsif params[:xpmade].to_i > 0
+				stat.xpmade = stat.xpmade + 1
+			end
+
+			stat.save!
+
+			if params[:fgmade].to_i > 0
 
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
-					gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], player: @athlete.id,
-																			  logentry: @athlete.logname, yards: params[:fglong], score: "FG")
+					gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], football_place_kicker_id: stat.id, 
+												logentry: @athlete.logname, yards: params[:fglong], score: "FG")
 					gamelog.save!
 					if params[:quarter]
 						case params[:quarter]
@@ -173,11 +180,10 @@ class FootballPlaceKickersController < ApplicationController
 					end
 				end
 			elsif params[:xpmade].to_i > 0
-				stat.xpmade = stat.xpmade + 1
 
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
-					gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], player: @athlete.id,
-																			  logentry: @athlete.logname, score: "XP")
+					gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], football_place_kicker_id: stat.id,
+												logentry: @athlete.logname, score: "XP")
 					gamelog.save!
 					if params[:quarter]
 						case params[:quarter]
@@ -194,7 +200,6 @@ class FootballPlaceKickersController < ApplicationController
 					end
 				end
 			end
-			stat.save!
 
 			if current_user.score_alert? and params[:fgmade].to_i > 0
 				send_alert(@athlete, "Field Goal score alert for ", stat, game)

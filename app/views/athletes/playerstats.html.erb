@@ -99,7 +99,6 @@
 		<table class="table table-bordered">
 		   	<%= render "football_place_kickers/extrapoint_header", name: "Player" %>
 
-			<table class="table table-bordered">
 		  	<% @placekickerstats.each do |p| %>
 		  		<% if p.xpattempts > 0 %>
 					<%= render 'football_place_kickers/extrapoint_body', stat: p, player: @athlete, name: @player %>

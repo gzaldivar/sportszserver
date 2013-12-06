@@ -14,10 +14,11 @@ class Team
   field :fb_rush_players, type: Array    # List of players user has for stat console
   field :fb_rec_players, type: Array    # List of players user has for stat console
   field :fb_def_players, type: Array    # List of players user has for stat console
-  field :fb_spec_players, type: Array    # List of players user has for stat console
-  field :placekicker, type: String
-  field :kicker, type: String
-  field :punter, type: String
+  field :fb_placekickers, type: Array
+  field :fb_kickers, type: Array
+  field :fb_punters, type: Array
+  field :fb_returners, type: Array
+
   field :logoprocessing, type: Boolean, default: false
 
   has_mongoid_attached_file :team_logo,

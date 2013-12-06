@@ -15,6 +15,7 @@ class FootballReturner
   	belongs_to :athlete
 	belongs_to :gameschedule
 	has_many :alerts, dependent: :destroy
+	has_many :gamelogs, dependent: :destroy
 	
 	validates_numericality_of :punt_return, greater_than_or_equal_to: 0
 	validates_numericality_of :punt_returntd, greater_than_or_equal_to: 0

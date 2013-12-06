@@ -11,13 +11,13 @@
 </div>
 <div class="row">
 	<div class="span2">
-		<%= f.input :pass_defended, label: "Passes Defended" %>
+		<%= f.input :sackassists %>
 	</div>
 	<div class="span2 offset1">
 		<%= f.input :interceptions %>
 	</div>
 	<div class="span2 offset1">
-		<%= f.input :int_yards, label: "Interception Yards" %>
+		<%= f.input :int_yards, label: "Return Yards" %>
 	</div>
 </div>
 <div class="row">
@@ -25,14 +25,17 @@
 		<%= f.input :int_long, label: "Interception Return Long" %>
 	</div>
 	<div class="span2 offset1">
-		<%= f.input :int_td, label: "Interception TD's" %>
+		<%= f.input :int_td, label: "TD's" %>
 	</div>
 	<div class="span2 offset1">
 		<%= f.input :fumbles_recovered %>
 	</div>
 </div>
 <div class="row">
-	<div class="span4">
+	<div class="span2">
+		<%= f.input :pass_defended, label: "Passes Defended" %>
+	</div>
+	<div class="span2 offset1">
 		<%= f.input :safety, required: false %>
 	</div>
 </div>

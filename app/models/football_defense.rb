@@ -5,6 +5,7 @@ class FootballDefense
   field :tackles, type: Integer, default: 0
   field :assists, type: Integer, default: 0
   field :sacks, type: Integer, default: 0
+  field :sackassist, type: Integer, default: 0
   field :pass_defended, type: Integer, default: 0
   field :interceptions, type: Integer, default: 0
   field :int_yards, type: Integer, default: 0
@@ -17,10 +18,12 @@ class FootballDefense
   belongs_to :athlete
   belongs_to :gameschedule
   has_many :alerts, dependent: :destroy
+  has_many :gamelogs, dependent: :destroy
 
   validates_numericality_of :tackles, greater_than_or_equal_to: 0
   validates_numericality_of :assists, greater_than_or_equal_to: 0
   validates_numericality_of :sacks, greater_than_or_equal_to: 0
+  validates_numericality_of :sackassist, greater_than_or_equal_to: 0
   validates_numericality_of :pass_defended, greater_than_or_equal_to: 0
   validates_numericality_of :interceptions, greater_than_or_equal_to: 0
   validates_numericality_of :int_yards, greater_than_or_equal_to: 0

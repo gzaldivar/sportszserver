@@ -16,14 +16,17 @@
 			<%= f.input :td, label: "Touchdowns" %>
 		</div>
 		<div class="span2 offset1">
-			<%= f.input :fumbles %>
+			<%= f.input :firstdowns %>
 		</div>
 		<div class="span2 offset1">
-			<%= f.input :fumbles_lost %>
+			<%= f.input :fumbles %>
 		</div>
 	</div>
 	<div class="row">
-		<div class="span4">
+		<div class="span2">
+			<%= f.input :fumbles_lost %>
+		</div>
+		<div class="span4 offset1">
 			<%= f.input :twopointconv,  label: "Enter Number of 2 point conversions" %>
 		</div>
 	</div>

@@ -16,7 +16,7 @@
 	</div>
 	<div class="span2 offset1">
 		<h5>Interceptions Yards: <font color="blue"><%= @defense.int_yards %></font></h5>
-        <%= label_tag "Adjust Interception Yards: " %>
+        <%= label_tag "Adjust Return Yards: " %>
         <%= text_field_tag "int_yards", '0' %>
 	</div>
 	<div class="span2 offset1">
@@ -46,6 +46,11 @@
 <p>
 <div class="row">
 	<div class="span2">
+		<h5>Sack Assists: <font color="blue"><%= @defense.sackassist %></font></h5>
+        <%= label_tag "Remove Sack Assist: " %>
+        <%= check_box_tag 'sackassist', 1 %>
+	</div>
+	<div class="span2 offset1">
 		<h5>Passes Defended: <font color="blue"><%= @defense.pass_defended %></font></h5>
         <%= label_tag "Remove Passes Defended: " %>
         <%= check_box_tag "pass_defended", 1 %>

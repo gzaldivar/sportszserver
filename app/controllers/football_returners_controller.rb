@@ -147,27 +147,11 @@ class FootballReturnersController < ApplicationController
 
 			if params[:punt_returntd].to_i > 0
 				stat.punt_returntd = stat.punt_returntd + 1
-
-				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
-					gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time],
-																				logentry: "punt return", score: "TD", yards: params[:punt_returnyards],
-																				player: athlete.id)
-					gamelog.save!
-					if params[:quarter]
-						case params[:quarter]
-						when "Q1"
-							game.homeq1 = game.homeq1 + 6
-						when "Q2"
-							game.homeq2 = game.homeq2 + 6
-						when "Q3"
-							game.homeq3 = game.homeq3 + 6
-						when "Q4"
-							game.homeq4 = game.homeq4 + 6
-						end
-						game.save!
-					end
-				end
+			elsif params[:kotd].to_i > 0
+				stat.kotd = stat.kotd + 1
 			end
+
+
 			if params[:koyards].to_i > 0
 				stat.koyards = stat.koyards + params[:koyards].to_i
 				stat.koreturns = stat.koreturns + 1
@@ -177,13 +161,34 @@ class FootballReturnersController < ApplicationController
 				stat.kolong = params[:koyards].to_i
 			end
 
-			if params[:kotd].to_i > 0
-				stat.kotd = stat.kotd + 1
+			stat.save!
+
+			if params[:punt_returntd].to_i > 0
 
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
-					gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time],
-																				logentry: "kickoff return", score: "TD", yards: params[:koyards],
-																				player: @athlete.id)
+					gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "punt return", score: "TD", 
+												yards: params[:punt_returnyards], football_returner_id: stat.id)
+					gamelog.save!
+					if params[:quarter]
+						case params[:quarter]
+						when "Q1"
+							game.homeq1 = game.homeq1 + 6
+						when "Q2"
+							game.homeq2 = game.homeq2 + 6
+						when "Q3"
+							game.homeq3 = game.homeq3 + 6
+						when "Q4"
+							game.homeq4 = game.homeq4 + 6
+						end
+						game.save!
+					end
+				end
+			elsif params[:kotd].to_i > 0
+
+				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
+					gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "kickoff return", score: "TD", 
+												yards: params[:koyards], football_returner_id: stat.id)
+
 					gamelog.save!
 					if params[:quarter]
 						case params[:quarter]
@@ -200,13 +205,11 @@ class FootballReturnersController < ApplicationController
 					end
 				end
 			end
-
-			stat.save!
-
+			
 			if current_user.score_alert? and params[:kotd].to_i > 0
 				send_alert(athlete, "Kickoff Return TD score alert for ", stat, game)
 			elsif current_user.score_alert? and params[:punt_returntd].to_i > 0
-				send_alert(athlete, "Punt Return TD score alert for ")
+				send_alert(athlete, "Punt Return TD score alert for ", stat, game)
 			elsif current_user.stat_alert?
 				send_alert(athlete, "Return stat alert for ", stat, game)
 			end

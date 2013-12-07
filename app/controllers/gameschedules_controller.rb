@@ -137,7 +137,7 @@ class GameschedulesController < ApplicationController
         @soccerhomesog = 0
         @soccerhomeck = 0
         @soccerhomesaves = 0
-        @gameschedule.homescore = 0
+#        @gameschedule.homescore = 0
 
         @stats.each do |s|
           @soccerhomesog += s.shotstaken
@@ -146,7 +146,7 @@ class GameschedulesController < ApplicationController
         end
 
         totals = StatTotal.new(@sport, @gameschedule)
-        @gameschedule.homescore = totals.soccer_home_score
+#        @gameschedule.homescore = totals.soccer_home_score
 
         athletes = @players
         @players = []

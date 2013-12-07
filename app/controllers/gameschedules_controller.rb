@@ -239,11 +239,11 @@ class GameschedulesController < ApplicationController
 #          end
         elsif @sport.name == "Basketball"
           totals = StatTotal.new(@sport, @gameschedules[cnt])          
-          @gameschedules[cnt].homescore = totals.basketball_home_totals
-          @gameschedules[cnt].homefouls = totals.fouls
+#          @gameschedules[cnt].homescore = totals.basketball_home_totals
+#          @gameschedules[cnt].homefouls = totals.fouls
         elsif @sport.name == "Soccer" 
           totals = StatTotal.new(@sport, @gameschedules[cnt])
-          @gameschedules[cnt].homescore = totals.soccer_home_score
+  #        @gameschedules[cnt].homescore = totals.soccer_home_score
         end        
       end
       

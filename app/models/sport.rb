@@ -86,9 +86,7 @@ class Sport
     :styles => {
 #      :original => ['1920x1680', :jpg],
       :tiny     => ['50x50',      :jpg],
-      :thumb    => ['125x125',   :jpg],
-      :medium   => ['320x480',    :jpg],
-      :large    => ['640x960',   :jpg]
+      :thumb    => ['125x125',   :jpg]
     }
 
   has_mongoid_attached_file :background,

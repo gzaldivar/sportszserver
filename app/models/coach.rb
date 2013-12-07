@@ -27,8 +27,7 @@ class Coach
     :styles => {
       :tiny     => ['50x50', :jpg],
       :thumb    => ['125x125',   :jpg],
-      :medium   => ['320x480',    :jpg],
-      :large    => ['640x960',   :jpg]
+      :medium   => ['512x512',    :jpg],
     }
 
     belongs_to :sport, index: true

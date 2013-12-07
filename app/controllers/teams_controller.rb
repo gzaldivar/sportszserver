@@ -13,7 +13,7 @@ class TeamsController < ApplicationController
 			@team = @sport.teams.create!(params[:team])
 			respond_to do |format|
 				format.html { redirect_to @sport, notice: "Added #{@team.title} #{@team.mascot}!" }
-				format.json { render json: { team: [@sport, @team] } }
+				format.json { render json: { team: @team } }
 			end
 		rescue Exception => e
 			respond_to do |format|
@@ -31,7 +31,7 @@ class TeamsController < ApplicationController
 			@team.update_attributes!(params[:team])
 			respond_to do |format|
 				format.html { redirect_to @sport, notice: "Team updated" }
-				format.json { render json: { team: [@sport, @team] } }
+				format.json { render json: { team: @team } }
 			end
 		rescue Exception => e
 			respond_to do |format|

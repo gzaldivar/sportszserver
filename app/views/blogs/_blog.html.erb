@@ -44,7 +44,9 @@
       		  Coach:
               <%= link_to @sport.coaches.find(b.coach).full_name, sport_coach_path(b.sport, b.coach) %>
             <% end %>
-            <%= link_to "Comment", comment_sport_blog_path(@sport, b), class: "btn btn-mini btn-info" %>
+            <% if user_signed_in? %>
+                <%= link_to "Comment", comment_sport_blog_path(@sport, b), class: "btn btn-mini btn-info" %>
+            <% end %>
             <p>
           </em>
           </div>
@@ -58,7 +60,7 @@
         </div>
         <div class="row">
           <div class="span4 offset2">
-      			<% if isAdmin? or (current_user.id == user.id) %>
+      			<% if isAdmin? or (user_signed_in? and (current_user.id == user.id)) %>
       				<%= link_to "Edit", edit_sport_blog_path(b.sport, b),  class: "btn btn-mini btn-warning" %>
       				<%= link_to "Delete", sport_blog_path(b.sport, b),  method:	:delete,  class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
       			<% end %>

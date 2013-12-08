@@ -13,22 +13,26 @@
   });
 </script>
 <p>
-<div class="row">
-	<div class="span2 offset6">
-		<%= link_to "New Blog Entry", newteamblog_sport_blogs_path(@sport, team_id: @team.id.to_s), class: "btn btn-medium btn-primary" %>
+<% if user_signed_in? %>
+	<div class="row">
+		<div class="span2 offset6">
+			<%= link_to "New Blog Entry", newteamblog_sport_blogs_path(@sport, team_id: @team.id.to_s), class: "btn btn-medium btn-primary" %>
+		</div>
 	</div>
-</div>
+<% end %>
 <div class="row">
   <div class="span10 offset1">
     <%= render 'blog', blog: @blogs %>
   </div>
 </div>
 <%= hidden_field_tag 'team_id', @team.id %>
-<div class="row">
-	<div class="span2 offset6">
-		<%= link_to "New Blog Entry", newteamblog_sport_blogs_path(@sport, team_id: @team.id.to_s), class: "btn btn-medium btn-primary" %>
+<% if user_signed_in? %>
+	<div class="row">
+		<div class="span2 offset6">
+			<%= link_to "New Blog Entry", newteamblog_sport_blogs_path(@sport, team_id: @team.id.to_s), class: "btn btn-medium btn-primary" %>
+		</div>
 	</div>
-</div>
+<% end %>
 <div class="row">
 	<div class="span10">
 		<% if @blogs.any? %>

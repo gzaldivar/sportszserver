@@ -1,7 +1,7 @@
 class AthletesController < ApplicationController  
   include FootballStatistics
 
-	before_filter	:authenticate_user! #,	only: [:destroy, :update, :create, :edit, :new, :follow, :unfollow]
+	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :playerstats, :new, :follow, :unfollow]
  #  before_filter :site_owner?,         only: [:destroy, :update, :create, :edit, :new]
   before_filter :get_sport
   before_filter :correct_athlete,     only: [:show, :edit, :update, :destroy, :follow, :unfollow, :stats, :updatephoto, 

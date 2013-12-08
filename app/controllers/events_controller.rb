@@ -1,5 +1,5 @@
 class EventsController < ApplicationController
-	before_filter :authenticate_user! #,  only: [:new, :create, :edit, :update, :destroy]
+	before_filter :authenticate_user!,  only: [:new, :create, :edit, :update, :destroy]
   	before_filter :get_sport
   	before_filter :get_event,			only: [:edit, :update, :show, :destroy]
 	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 

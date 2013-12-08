@@ -1,5 +1,5 @@
 class StandingsController < ApplicationController
-	before_filter	:authenticate_user! #,   only: [:destroy, :new, :edit, :update, :create]
+	before_filter	:authenticate_user!,   only: [:destroy, :new, :edit, :update, :create]
   	before_filter :get_sport
 
   	def index

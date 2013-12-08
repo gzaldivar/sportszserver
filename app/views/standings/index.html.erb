@@ -1,7 +1,9 @@
 <% provide(:title, current_site.sitename + " " + @sport.sportname + " - Standings") %>
 <div class="row">
-  <div class="span10">
-  	<h4>You can import records from other Eazesportz programs. Hopefully, they keep their data up to date!</h4>
+  	<div class="span10">
+  		<% if user_signed_in? and site_owner? %>
+	  		<h4>You can import records from other Eazesportz programs. Hopefully, they keep their data up to date!</h4>
+		<% end %>
 		<table class="table table-hover">
 			<thead> 
 				<th>Team</th>

@@ -23,6 +23,8 @@
 		<td>
 			<% if @opposingteam %>
 				<%= image_tag get_team_logo(@opposingsport, @opposingteam) %><%= @gameschedule.opponent_name %>
+			<% elsif @gameschedule.opponentpic? %>
+				<%= image_tag @gameschedule.opponentpic.url(:tiny) %>
 			<% else %>
 				<%= @gameschedule.opponent_name %>
 			<% end %>

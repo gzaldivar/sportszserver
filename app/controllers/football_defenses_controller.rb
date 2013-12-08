@@ -85,9 +85,9 @@ class FootballDefensesController < ApplicationController
 				@defense.update_attributes!(params[:football_defense])
 
 				if current_user.score_alert? and (params[:football_defense][:int_td].to_i > 0 or params[:football_defense][:safety].to_i > 0)
-					send_alert("Defensive score alert for ", @defense, @gameschedule)
+					send_alert(@athlete, "Defensive score alert for ", @defense, @gameschedule)
 				elsif current_user.stat_alert?
-					send_alert("Defensive stat alert for ", @defense, @gameschedule)
+					send_alert(@athlete, "Defensive stat alert for ", @defense, @gameschedule)
 				end
 			elsif live == "Adjust"
 				adjust(@defense, @athlete, params)

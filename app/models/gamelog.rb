@@ -119,7 +119,9 @@ class Gamelog
       elsif football_defense_id
         theplayer = Athlete.find(FootballDefense.find(football_defense_id).athlete_id)
         stat = FootballDefense.find(football_defense_id)
-        stat.int_yards-= self.yards
+        if self.yards > stat.int_yards
+          stat.int_yards -= self.yards
+        end
         if footballPosition == "interception" and stat.interception > 0
           stat.interceptions -= 1
         elsif stat.fumbles_recovered > 0
@@ -142,7 +144,7 @@ class Gamelog
           if stat.punt_returnlong == stat.punt_returnyards
             stat.punt_returnlong =0
           end
-          if stat.punt_returnyards > 0
+          if stat.punt_returnyards > self.yards
             stat.punt_returnyards -= self.yards
           end
           if stat.punt_return > 0
@@ -155,7 +157,7 @@ class Gamelog
           if stat.kolong == stat.koyards
             stat.kolong =0
           end
-          if stat.koyards > 0
+          if stat.koyards > self.yards
             stat.koyards -= self.yards
           end
           if stat.koreturns > 0

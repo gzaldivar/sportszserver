@@ -10,7 +10,7 @@
       		<%= @gameschedule.opponent %> at 
       		<em><%= @gameschedule.location %></em>
       		<p>
-      		Game time: <%= @gameschedule.starttime.strftime("%l:%M%P") %>
+      		Game time: <%= @gameschedule.starttime.strftime("%H:%M%P") %>
       		<%= @gameschedule.event %>
   		</h4>
   		<% if @sport.sportname == "Basketball" %>

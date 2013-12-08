@@ -16,7 +16,7 @@ class GamelogsController < ApplicationController
         @gamelog = @gameschedule.gamelogs.create!(params[:gamelog])
           respond_to do |format|
             format.html { redirect_to [@sport, @team, @gameschedule], success: "Game log entry created!" }
-            format.json { render json: { gamelog: [@sport, @team, @gameschedule, @gamelog] } }
+            format.json { render json: { gamelog: @gamelog } }
           end
       rescue Exception => e
         respond_to do |format|
@@ -43,12 +43,11 @@ class GamelogsController < ApplicationController
 
     def update
       begin
-        @gamelog = @gameschedule.gamelogs.find(params[:id])
         @gamelog.update_attributes!(params[:gamelog])
         
         respond_to do |format|
           format.html { redirect_to [@sport, @team, @gameschedule, @gamelog], notice: "Game log update sucessful!" }
-          format.json { render json: { gamelog: [@sport, @team, @gameschedule, @gamelog] } }
+          format.json { render json: { gamelog: @gamelog } }
         end
       rescue Exception => e
         respond_to do |format|

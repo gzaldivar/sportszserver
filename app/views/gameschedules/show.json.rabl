@@ -25,8 +25,7 @@ if @sport.name == "Football"
 	node(:firstdowns) { |f| totalfirstdowns(@sport, f) }
 	attributes :currentqtr, :penaltyyards, :down, :own, :ballon, :our, :togo, :penalty, :penaltyyards, :currentperiod
 	child :gamelogs do
-		attributes :period, :time, :score, :logentry, :player, :assist, :yards
-		attributes :logentrytext, :if => lambda { |m| !m.player.nil? and !m.player.blank? }
+		attributes :period, :time, :score, :logentry, :assist, :yards, :logentrytext
 		node(:id) { |o| o.id.to_s }
 		node(:gameschedule_id) { |g| g.id.to_s }
 		node(:football_passing_id) { |g| g.football_passing_id.to_s }

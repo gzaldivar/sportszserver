@@ -61,6 +61,7 @@ class GamelogsController < ApplicationController
 
   	def destroy
       begin
+        puts @gameschedule.id
   		  @gamelog.destroy
         respond_to do |format|
           format.html { redirect_to :back, success: "Game log entry deleted!" }
@@ -76,7 +77,7 @@ class GamelogsController < ApplicationController
 
   	private
 
-      def get_gameschedule
+      def get_gamechedule
         @sport = Sport.find(params[:sport_id])
         @team = @sport.teams.find(params[:team_id])
         @gameschedule = @team.gameschedules.find(params[:gameschedule_id])

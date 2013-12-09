@@ -77,7 +77,7 @@ class GamelogsController < ApplicationController
 
   	private
 
-      def get_gamechedule
+      def get_gameschedule
         @sport = Sport.find(params[:sport_id])
         @team = @sport.teams.find(params[:team_id])
         @gameschedule = @team.gameschedules.find(params[:gameschedule_id])

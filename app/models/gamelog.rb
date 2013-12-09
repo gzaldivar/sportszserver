@@ -66,10 +66,10 @@ class Gamelog
 
         stat = FootballPassing.find(football_passing_id)
         rec = FootballReceiving.where(gameschedule_id: gameschedule_id, athlete_id: assist).first
-        if stat.yards > 0
+        if stat.yards > self.yards
           stat.yards = stat.yards - self.yards
         end
-        if rec.yards > 0
+        if rec.yards > self.yards
           rec.yards = rec.yards - self.yards
         end
         if rec.receptions > 0
@@ -103,7 +103,7 @@ class Gamelog
         theplayer = Athlete.find(FootballRushing.find(football_rushing_id).athlete_id)
 
         stat = FootballRushing.find(football_rushing_id)
-        if stat.yards > 0
+        if stat.yards > self.yards
           stat.yards -= self.yards
         end
         if stat.attempts > 0

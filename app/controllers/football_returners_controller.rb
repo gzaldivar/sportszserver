@@ -93,7 +93,7 @@ class FootballReturnersController < ApplicationController
 				elsif current_user.stat_alert?
 					send_alert(@athlete, "Return stat alert for ", @returner, @gameschedule)
 				end
-			elsif live = "Adjust"
+			elsif live == "Adjust"
 				adjust(@returner, @athlete, params)
 			else
 				livestats(@returner, @athlete, params, game)

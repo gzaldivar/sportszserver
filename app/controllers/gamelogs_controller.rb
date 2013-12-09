@@ -16,7 +16,7 @@ class GamelogsController < ApplicationController
         @gamelog = @gameschedule.gamelogs.create!(params[:gamelog])
           respond_to do |format|
             format.html { redirect_to [@sport, @team, @gameschedule], success: "Game log entry created!" }
-            format.json { render json: { gamelog: @gamelog } }
+            format.json { render json: { gamelog: [@sport, @team, @gameschedule, @gamelog] } }
           end
       rescue Exception => e
         respond_to do |format|

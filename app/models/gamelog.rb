@@ -47,9 +47,12 @@ class Gamelog
       else
         self.period + ": " + self.time + " - " +  theplayer.logname + " " + self.yards.to_s + " " + self.logentry + " - " + self.score
       end        
-    elsif football_place_kicker_id and self.score == "FG" or self.score == "XP"
+    elsif football_place_kicker_id and self.score == "FG"
       theplayer = Athlete.find(FootballPlaceKicker.find(football_place_kicker_id).athlete_id)
       self.period + ": " + self.time + " - " + theplayer.logname + " " + self.yards.to_s + " yard " + self.score
+    elsif football_place_kicker_id and self.score == "XP"
+      theplayer = Athlete.find(FootballPlaceKicker.find(football_place_kicker_id).athlete_id)
+      self.period + ": " + self.time + " - " + theplayer.logname + " " + self.score
     elsif football_rushing_id
       theplayer = Athlete.find(FootballRushing.find(football_rushing_id).athlete_id.to_s)
       self.period + ": " + self.time + " - " + theplayer.logname + " " + self.score

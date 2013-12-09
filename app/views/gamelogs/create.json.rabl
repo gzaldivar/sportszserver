@@ -1,0 +1,3 @@
+object @gamelogs
+
+extends "show"

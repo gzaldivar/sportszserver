@@ -119,7 +119,7 @@ class Gamelog
       elsif football_defense_id
         theplayer = Athlete.find(FootballDefense.find(football_defense_id).athlete_id)
         stat = FootballDefense.find(football_defense_id)
-        if self.yards > stat.int_yards
+        if stat.int_yards > self.yards
           stat.int_yards -= self.yards
         end
         if footballPosition == "interception" and stat.interception > 0

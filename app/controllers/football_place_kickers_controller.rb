@@ -32,9 +32,9 @@ class FootballPlaceKickersController < ApplicationController
 			if live == "Totals"
 				placekicker = @athlete.football_place_kickers.create!(params[:football_place_kicker])
 
-				if current_user.score_alert? and params[:football_kicker][:fgmade].to_i > 0
+				if current_user.score_alert? and params[:football_place_kicker][:fgmade].to_i > 0
 					send_alert(@athlete, "Field Goal score alert for ", placekicker, game)
-				elsif current_user.score_alert? and params[:football_kicker][:xpmade].to_i > 0
+				elsif current_user.score_alert? and params[:football_place_kicker][:xpmade].to_i > 0
 					send_alert(@athlete, "Extra Point score alert for ", placekicker, game)
 				elsif current_user.stat_alert?
 					send_alert(@athlete, "Plack Kicker stat alert for ", placekicker, game)

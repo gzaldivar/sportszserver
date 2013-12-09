@@ -1,3 +1,3 @@
-object @gamelogs
+object @gamelog
 
 extends "gamelogs/show"

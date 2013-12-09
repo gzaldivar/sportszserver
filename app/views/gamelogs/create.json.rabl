@@ -1,3 +1,3 @@
 object @gamelogs
 
-extends "show"
+extends "gamelogs/show"

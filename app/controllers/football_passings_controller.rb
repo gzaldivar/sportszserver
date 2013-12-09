@@ -31,12 +31,6 @@ class FootballPassingsController < ApplicationController
 
 			if live == "Totals"
 				stats = @athlete.football_passings.create!(params[:football_passing])
-
-				if current_user.score_alert? and (params[:football_passing][:td].to_i > 0 or params[:football_passing][:twopointconv].to_i > 0)
-					send_alert(@athlete, "Passing score alert for ", stats, game)
-				elsif current_user.stat_alert? and (params[:football_passing][:td].to_i == 0 or params[:football_passing][:twopointconv].to_i == 0)
-					send_alert(@athlete, "Passing stat alert for ", stats, game)
-				end
 			else
 				stats = @athlete.football_passings.new(gameschedule_id: game.id.to_s)
 				livestats(stats, @athlete, params, game)				
@@ -69,7 +63,7 @@ class FootballPassingsController < ApplicationController
 	end
 
 	def update		
-#		begin
+		begin
 			if params[:football_passing].nil?
 				live = params[:livestats].to_s
 			else
@@ -78,12 +72,6 @@ class FootballPassingsController < ApplicationController
 
 			if live == "Totals"
 				@fbpassing.update_attributes!(params[:football_passing])
-
-				if current_user.score_alert? and (params[:football_passing][:td].to_i > 0  or params[:football_passing][:twopointconv].to_i > 0)
-					send_alert(@athlete, "Passing score alert for ", @fbpassing, @gameschedule)
-				elsif current_user.stat_alert? and (params[:football_passing][:td].to_i == 0 or params[:football_passing][:twopointconv].to_i == 0)
-					send_alert(@athlete, "Passing stat alert for ", @fbpassing, @gameschedule)
-				end
 			elsif live == "Adjust"
 				adjust(@fbpassing, @athlete_id, params, @gameschedule)
 			else
@@ -94,12 +82,12 @@ class FootballPassingsController < ApplicationController
 		        format.html { redirect_to [@sport, @athlete, @fbpassing], notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json { render json: { passing: @fbpassing } }
 		     end			
-#		rescue Exception => e
-#			respond_to do |format|
-#				format.html { redirect_to :back, alert: "Error updating stats for " + @athlete.full_name + " " + e.message }
-#		        format.json { render status: 404, json: { error: e.message } }
-#		     end			
-#		end
+		rescue Exception => e
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error updating stats for " + @athlete.full_name + " " + e.message }
+		        format.json { render status: 404, json: { error: e.message } }
+		     end			
+		end
 	end
 
 	def destroy
@@ -148,13 +136,6 @@ class FootballPassingsController < ApplicationController
 		def correct_stat
 			@fbpassing = @athlete.football_passings.find(params[:id])
 			@gameschedule = @sport.teams.find(@athlete.team_id).gameschedules.find(@fbpassing.gameschedule_id)
-		end
-		
-		def send_alert(athlete, message, stat, game)	
-	        athlete.fans.each do |user|
-	            alert = athlete.alerts.create!(sport: @sport, user: user, athlete: athlete, message: message + game.game_name, 
-	                						   football_passing: stat.id, stat_football: "Passing")
-	        end
 		end
 
 		def livestats(stats, athlete, params, gameschedule)
@@ -222,18 +203,6 @@ class FootballPassingsController < ApplicationController
 				if params[:two].to_i > 0
 					stats.twopointconv = stats.twopointconv + 1
 				end
-
-				if current_user.score_alert? and params[:td].to_i > 0
-					send_alert(@athlete, "Passing score alert for ", stats, gameschedule)
-					if !player.nil?
-						send_alert(player, "Receiver score alert for ", stats, gameschedule)
-					end
-				elsif current_user.stat_alert? and params[:two].to_i == 0
-					send_alert(@athlete, "Passing stat alert for ", stats, gameschedule)
-					if !player.nil?
-						send_alert(player, "Receiver stat alert for ", stats, gameschedule)
-					end
-				end
 			end
 
 			stats.save!
@@ -241,7 +210,7 @@ class FootballPassingsController < ApplicationController
 			if params[:td].to_i > 0
 				if !receiver.nil? and !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
 					gamelog = gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], score: "TD", yards: params[:yards],
-														football_passing_id: stats.id, assist: player.id)
+														football_passing_id: stats.id, assist: player.id, logentry: "yard pass to ")
 					gamelog.save!
 
 					if params[:quarter]
@@ -263,7 +232,7 @@ class FootballPassingsController < ApplicationController
 
 				if !receiver.nil? and !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
 					gamelog = gameschedule.gamelogs.new(period: params[:quarter], time: params[:time], score: "2P", yards: params[:yards], 
-														football_passing_id: stats.id, assist: player.id)
+														football_passing_id: stats.id, assist: player.id, logentry: "yard pass to ")
 					gamelog.save!
 					if params[:quarter]
 						case params[:quarter]

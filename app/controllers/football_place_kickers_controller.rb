@@ -31,14 +31,6 @@ class FootballPlaceKickersController < ApplicationController
 
 			if live == "Totals"
 				placekicker = @athlete.football_place_kickers.create!(params[:football_place_kicker])
-
-				if current_user.score_alert? and params[:football_place_kicker][:fgmade].to_i > 0
-					send_alert(@athlete, "Field Goal score alert for ", placekicker, game)
-				elsif current_user.score_alert? and params[:football_place_kicker][:xpmade].to_i > 0
-					send_alert(@athlete, "Extra Point score alert for ", placekicker, game)
-				elsif current_user.stat_alert?
-					send_alert(@athlete, "Plack Kicker stat alert for ", placekicker, game)
-				end
 			else
 				placekicker = @athlete.football_place_kickers.new(gameschedule_id: game.id.to_s)
 				livestats(placekicker, @athlete, params, game)
@@ -76,14 +68,6 @@ class FootballPlaceKickersController < ApplicationController
 
 			if live == "Totals"
 				@placekicker.update_attributes!(params[:football_place_kicker])
-
-				if current_user.score_alert? and params[:football_place_kicker][:fgmade].to_i > 0
-					send_alert(@athlete, "Field Goal score alert for ", placekicker, game)
-				elsif current_user.score_alert? and params[:football_place_kicker][:xpmade].to_i > 0
-					send_alert(@athlete, "Extra Point score alert for ", placekicker, game)
-				elsif current_user.stat_alert?
-					send_alert(@athlete, "Plack Kicker stat alert for ", placekicker, game)
-				end
 			elsif live == "Adjust"
 				adjust(@placekicker, @athlete, params)
 			else
@@ -121,13 +105,6 @@ class FootballPlaceKickersController < ApplicationController
 		def correct_stat
 			@placekicker = @athlete.football_place_kickers.find(params[:id])
 			@gameschedule = @sport.teams.find(@athlete.team_id).gameschedules.find(@placekicker.gameschedule_id)
-		end
-
-		def send_alert(athlete, message, stat, game)	
-	        athlete.fans.each do |user|
-	            alert = athlete.alerts.create!(sport: @sport, user: user, athlete: athlete, message: message + game.game_name, 
-	                						   football_place_kicker: stat.id, stat_football: "Place Kicker")
-	        end
 		end
 
 		def livestats(stat, athlete, params, game)
@@ -199,14 +176,6 @@ class FootballPlaceKickersController < ApplicationController
 						game.save!
 					end
 				end
-			end
-
-			if current_user.score_alert? and params[:fgmade].to_i > 0
-				send_alert(@athlete, "Field Goal score alert for ", stat, game)
-			elsif current_user.score_alert? and params[:xpmade].to_i > 0
-				send_alert(@athlete, "Extra Point score alert for ", stat, game)
-			elsif current_user.stat_alert?
-				send_alert(@athlete, "Plack Kicker stat alert for ", stat, game)
 			end
 		end
 

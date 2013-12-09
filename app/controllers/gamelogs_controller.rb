@@ -1,4 +1,5 @@
 class GamelogsController < ApplicationController
+
     before_filter	:authenticate_user! #,  only: [:destroy, :create, :show, :update]
     before_filter :get_gameschedule
     before_filter :correct_gamelog, only: [:destroy, :edit, :update, :show]
@@ -13,7 +14,8 @@ class GamelogsController < ApplicationController
 
   	def create
       begin
-        @gamelog = @gameschedule.gamelogs.create!(params[:gamelog])
+          @gamelog = @gameschedule.gamelogs.create!(params[:gamelog])
+
           respond_to do |format|
             format.html { redirect_to [@sport, @team, @gameschedule], success: "Game log entry created!" }
             format.json

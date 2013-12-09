@@ -31,12 +31,6 @@ class FootballRushingsController < ApplicationController
 
 			if live == "Totals"
 				stats = @athlete.football_rushings.create!(params[:football_rushing])
-
-				if current_user.score_alert? and (params[:football_rushing][:td].to_i > 0 or params[:football_rushing][:twopointconv].to_i > 0)
-					send_alert(@athlete, "Rushing score alert for ", stats, game)
-				elsif current_user.stat_alert?
-					send_alert(@athlete, "Rushing stat alert for ", stats, game)
-				end
 			else
 				stats = @athlete.football_rushings.new(gameschedule_id: game.id.to_s)
 				livestats(stats, @athlete, params, game)				
@@ -77,12 +71,6 @@ class FootballRushingsController < ApplicationController
 
 			if live == "Totals"
 				@rushing.update_attributes!(params[:football_rushing])
-
-				if current_user.score_alert? and (params[:football_rushing][:td].to_i > 0 or params[:football_rushing][:twopointconv].to_i > 0)
-					send_alert(@athlete, "Rushing score alert for ", @rushing, @gameschedule)
-				elsif current_user.stat_alert?
-					send_alert(@athlete, "Rushing stat alert for ", @rushing, @gameschedule)
-				end
 			elsif live == "Adjust"
 				adjust(@rushing, params)
 			else
@@ -122,13 +110,6 @@ class FootballRushingsController < ApplicationController
 		def correct_stat
 			@rushing = @athlete.football_rushings.find(params[:id])
 			@gameschedule = @sport.teams.find(@athlete.team_id).gameschedules.find(@rushing.gameschedule_id)
-		end
-
-		def send_alert(athlete, message, stat, game)	
-	        athlete.fans.each do |user|
-	            alert = athlete.alerts.create!(sport: @sport, user: user, athlete: athlete.id, message: message + game.game_name, 
-	                						   football_rushing: stat.id, stat_football: "Rushing")
-	        end
 		end
 
 		def livestats(stat, athlete, params, game)
@@ -189,12 +170,6 @@ class FootballRushingsController < ApplicationController
 					end
 					game.save!
 				end
-			end
-			
-			if current_user.score_alert? and params[:td].to_i > 0
-				send_alert(@athlete, "Rushing score alert for ", stat, game)
-			elsif current_user.stat_alert?
-				send_alert(@athlete, "Rushing stat alert for ", stat, game)
 			end
 
 			return stat

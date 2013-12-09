@@ -31,12 +31,6 @@ class FootballDefensesController < ApplicationController
 
 			if live == "Totals"
 				defense = @athlete.football_defenses.create!(params[:football_defense])
-
-				if current_user.score_alert? and (params[:football_defense][:int_td].to_i > 0 or params[:football_defense][:safety].to_i > 0)
-					send_alert(@athlete, "Defensive score alert for ", defense, game)
-				elsif current_user.stat_alert?
-					send_alert(@athlete, "Defensive stat alert for ", defense, game)
-				end
 			else
 				defense = @athlete.football_defenses.new(gameschedule_id: game.id.to_s)
 				livestats(defense, @athlete, params, game)				
@@ -83,12 +77,6 @@ class FootballDefensesController < ApplicationController
 
 			if live == "Totals"
 				@defense.update_attributes!(params[:football_defense])
-
-				if current_user.score_alert? and (params[:football_defense][:int_td].to_i > 0 or params[:football_defense][:safety].to_i > 0)
-					send_alert(@athlete, "Defensive score alert for ", @defense, @gameschedule)
-				elsif current_user.stat_alert?
-					send_alert(@athlete, "Defensive stat alert for ", @defense, @gameschedule)
-				end
 			elsif live == "Adjust"
 				adjust(@defense, @athlete, params)
 			else
@@ -122,13 +110,6 @@ class FootballDefensesController < ApplicationController
 		def correct_stat
 			@defense = @athlete.football_defenses.find(params[:id])
 			@gameschedule = @sport.teams.find(@athlete.team_id).gameschedules.find(@defense.gameschedule_id)
-		end
-
-		def send_alert(athlete, message, stat, game)	
-	        athlete.fans.each do |user|
-	            alert = stat.athlete.alerts.create!(sport: @sport, user: user, athlete: athlete.id, message: message + game.game_name, 
-	                								 football_defense: stat.id, stat_football: "Defense")
-	        end
 		end
 		
 		def livestats(stat, athlete, params, game)
@@ -166,7 +147,7 @@ class FootballDefensesController < ApplicationController
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
 					if params[:int].to_i > 0
 						gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "yard interception return", 
-													score: "TD", yards: params[:int_yards], football_defense_id: athlete.id)
+													score: "TD", yards: params[:int_yards], football_defense_id: stat.id)
 					else
 						gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "yard fumble return", 
 													score: "TD", yards: params[:int_yards], football_defense_id: stat.id)
@@ -210,11 +191,6 @@ class FootballDefensesController < ApplicationController
 				end
 			end
 
-			if current_user.score_alert? and (params[:int_td].to_i > 0 or params[:safety].to_i > 0)
-				send_alert(athlete, "Defensive score alert for ", stat, game)
-			elsif current_user.stat_alert?
-				send_alert(athlete, "Defensive stat alert for ", stat, game)
-			end
 			return stat
 		end
 

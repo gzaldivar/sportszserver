@@ -27,7 +27,7 @@ if @sport.name == "Football"
 	child :gamelogs do
 		attributes :period, :time, :score, :logentry, :assist, :yards, :logentrytext
 		node(:id) { |o| o.id.to_s }
-		node(:gameschedule_id) { |g| g.id.to_s }
+		node(:gameschedule_id) { |g| g.gameschedule_id.to_s }
 		node(:football_passing_id) { |g| g.football_passing_id.to_s }
 		node(:football_rushing_id) { |g| g.football_rushing_id.to_s }
 		node(:football_returner_id) { |g| g.football_returner_id.to_s }

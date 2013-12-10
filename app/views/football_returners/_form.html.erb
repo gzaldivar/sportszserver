@@ -3,6 +3,7 @@
 	<h5>Punt Return Statistics</h5>
 	<div class="row">
 		<div class="span2">
+			<%= f.input :livestats, as: :hidden, :input_html => { :value => "Totals" } %>
 			<%= f.input :punt_return, label: "Punt Returns" %>
 		</div>
 		<div class="span2 offset1">

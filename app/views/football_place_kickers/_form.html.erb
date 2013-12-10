@@ -1,6 +1,7 @@
 <h4>Field Goals</h4>
 <div class="row">
 	<div class="span2">
+		<%= f.input :livestats, as: :hidden, :input_html => { :value => "Totals" } %>
 		<%= f.input :fgattempts, label: "Field Goal Attempts" %>
 	</div>
 	<div class="span2 offset1">

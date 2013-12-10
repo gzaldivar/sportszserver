@@ -2,6 +2,7 @@
 	<%= render 'shared/error_messages', object: @receiving %>
 	<div class="row">
 		<div class="span2">
+			<%= f.input :livestats, as: :hidden, :input_html => { :value => "Totals" } %>
 			<%= f.input :receptions, required: true %>
 		</div>
 		<div class="span2 offset1">

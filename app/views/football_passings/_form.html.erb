@@ -3,6 +3,7 @@
 		<h5><font color="red">You can edit stat totals here. Doing so will unlink stats associated with receivers. It will also negatively affect generation of automatic game log scoring if you edit the TD or two point conversion fields.</font></h5>
 <div class="row">
 	<div class="span2">
+		<%= f.input :livestats, as: :hidden, :input_html => { :value => "Totals" } %>
 		<%= f.input :attempts, label: "Passing Attempts", required: true %>
 	</div>
 	<div class="span2 offset1">

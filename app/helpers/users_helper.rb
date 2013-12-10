@@ -2,17 +2,10 @@ module UsersHelper
 
 	def site_owner?
 		if current_site? and !current_site.approved?
-			respond_to do |format|
-				format.html { redirect_to approve_path }
-				format.json { render json: { error: "needs approval"} }
-			end
+			return false
 	  	elsif current_site? and !current_user.nil? and current_user.admin?
 		  	if current_user.id.to_s != current_site.adminid
-#		  		not_authorized
-				respond_to do |format|
-		  			format.html { redirect_to :back, alert: "You are not the site owner" }
-		  			format.json { render status: 401, json: { error: "You are not site owner" } }
-		  		end
+		  		return false
 		  	else
 		  		return true
 		  	end

@@ -2,8 +2,8 @@ module GameschedulesHelper
 
 	include FootballStatistics
 
-	def basketball_home_score(game)
-		players = @sport.athletes.where(team_id: game.team_id)
+	def basketball_home_score(sport, game)
+		players = sport.athletes.where(team_id: game.team_id)
 		score = 0
 
 		players.each do |p|
@@ -30,8 +30,8 @@ module GameschedulesHelper
 		return fouls
 	end
 
-	def soccer_home_score(game)
-		players = @sport.athletes.where(team_id: game.team_id)
+	def soccer_home_score(sport, game)
+		players = sport.athletes.where(team_id: game.team_id)
 		score = 0
 
 		players.each do |p|

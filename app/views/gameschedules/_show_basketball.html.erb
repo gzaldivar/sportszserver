@@ -32,7 +32,7 @@
 	<h1><font color="blue">
 	<div class="row">
 		<div class="span2 offset1">
-			<%= basketball_home_score(@gameschedule) %>
+			<%= basketball_home_score(@sport, @gameschedule) %>
 		</div>
 		<div class="span1 offset1">
 			<%= @gameschedule.livegametime.strftime("%I:%M") %>

@@ -9,8 +9,10 @@
 				<th>Team</th>
 				<th>League Wins</th>
 				<th>League Losses</th>
+				<th>League Ties</th>
 				<th>Total Wins</th>
 				<th>Total Losses</th>
+				<th>Total Ties</th>
 				<% if isAdmin? %>
 					<th>Eazesport User</th>
 					<th>Edit</th>
@@ -21,21 +23,19 @@
 					<tr>
 						<% if g.oppimageurl %>
 							<td><%= image_tag(g.oppimageurl) %><%= g.teamname + " " + g.mascot %></td>
-						<% elsif g.gameschedule_id.nil? %>
-							<td><%= image_tag get_team_logo(@sport, @team) %><%= g.teamname + " " + g.mascot %></td>
 						<% else %>
 							<td><%= image_tag("photo_not_available.png") %><%= g.teamname + " " + g.mascot %></td>
 						<% end %>
 
 						<td><%= g.leaguewins %></td>
 						<td><%= g.leaguelosses %></td>
+						<td><%= g.leagueties %></td>
 						<td><%= g.nonleaguewins + g.leaguewins %></td>
 						<td><%= g.nonleaguelosses + g.leaguelosses %></td>
+						<td><%= g.nonleagueties + g.leagueties %></td>
 						<% if isAdmin? %>
 							<% if !g.sportid.nil? %>
-								<td><%= link_to "Import Record", importteamrecord_sport_team_standings_path(@sport, @team, 
-																 gameschedule_id: g.gameschedule_id), 
-																 class: "btn btn-mini btn-primary" %></td>
+								<td><%= link_to g.teamname + " " + g.mascot, sport_path(Sport.find(g.sportid)) %></td>
 							<% else %>
 								<td></td>
 							<% end %>

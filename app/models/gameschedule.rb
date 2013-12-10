@@ -21,6 +21,8 @@ class Gameschedule
   field :opponent_league_losses, type: Integer, default: 0
   field :opponent_nonleague_wins, type: Integer, default: 0
   field :opponent_nonleague_losses, type: Integer, default: 0
+  field :opponent_nonleagueties, type: Integer, default: 0
+  field :opponent_leagueties, type: Integer, default: 0
 
   field :event, type: String
   field :homeaway, type: String

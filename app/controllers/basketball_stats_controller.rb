@@ -72,8 +72,8 @@ class BasketballStatsController < ApplicationController
 
 	def show
 		@gameschedule = Gameschedule.find(@bbstats.gameschedule_id)
-		@game.homescore = basketball_home_score(@game)
-		@game.homefouls = basketball_home_fouls(@game)
+		@game.homescore = basketball_home_score(@sport, @game)
+		@game.homefouls = basketball_home_fouls(@sport, @game)
 		@team = @sport.teams.find(@gameschedule.team_id)
 	end
 

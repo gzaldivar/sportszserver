@@ -1,63 +1,62 @@
 class StandingsController < ApplicationController
-	before_filter	:authenticate_user!,   only: [:destroy, :new, :edit, :update, :create]
+    before_filter	:authenticate_user!,   only: [:destroy, :new, :edit, :update, :create]
   	before_filter :get_sport
 
   	def index
   		schedules = @team.gameschedules.desc(:opponent_league_wins)
+      puts schedules.count
       @gamerecords = []
 
-      teamrecord = getgamerecord(schedules)
+      teamrecord = getgamerecord(@sport, schedules)
+      teamrecord.oppimageurl = get_team_logo(@sport, @team)
+      @gamerecords << teamrecord
 
-      opprecords = []
       schedules.each_with_index do |s, cnt|
         if s.league
           arecord = Gamerecord.new
           arecord.teamname = s.opponent
           arecord.mascot = s.opponent_mascot
-          arecord.leaguewins = s.opponent_league_wins
-          arecord.leaguelosses = s.opponent_league_losses
-          arecord.nonleaguewins = s.opponent_nonleague_wins
-          arecord.nonleaguelosses = s.opponent_nonleague_losses
-          arecord.gameschedule_id = s.id
-          arecord.teamid = s.opponent_team_id
 
-          if s.opponentpic?
-            arecord.oppimageurl = s.opponentpic.url(:tiny)
-          elsif s.opponent_team_id
+          arecord.gameschedule_id = s.id
+
+          if s.opponent_team_id
+            arecord.teamid = s.opponent_team_id
             oppsport = Sport.find(s.opponent_sport_id)
             oppteam = oppsport.teams.find(s.opponent_team_id)
+            oppsport = Sport.find(s.opponent_sport_id)
+            oppschedule = oppsport.teams.find(s.opponent_team_id).gameschedules
+            arecord = getgamerecord(oppsport, oppschedule)
+            arecord.sportid = s.opponent_sport_id
 
             if oppteam.team_logo?
               arecord.oppimageurl = oppteam.team_logo.url(:thumb)
             else
               arecord.oppimageurl = oppsport.sport_logo.url(:thumb)
             end
-          end
 
-          if !s.opponent_sport_id.nil? 
-            arecord.sportid = s.opponent_sport_id
-          else
+          else 
+            puts s.opponent_league_wins
+            puts s.opponent_mascot
+            arecord.leaguewins = s.opponent_league_wins
+            arecord.leaguelosses = s.opponent_league_losses
+            arecord.nonleaguewins = s.opponent_nonleague_wins
+            arecord.nonleaguelosses = s.opponent_nonleague_losses
+            arecord.leagueties = s.opponent_leagueties
+            arecord.nonleagueties = s.opponent_nonleagueties
             arecord.sportid = nil
+
+            if s.opponentpic?
+              arecord.oppimageurl = s.opponentpic.url(:tiny)
+            else 
+              arecord.oppimageurl = nil
+            end
           end
-
-          opprecords << arecord
+ 
+          @gamerecords << arecord
         end
       end
 
-      found = false
-      opprecords.each_with_index do |r, cnt|
-        if teamrecord.leaguewins > r.leaguewins and !found
-          @gamerecords << teamrecord
-          @gamerecords << opprecords[cnt]
-          found = true
-        else
-          @gamerecords << opprecords[cnt]
-        end
-      end
-
-      if !found
-        @gamerecords << teamrecord
-      end
+      @gamerecords.sort_by! { |a| -a.leaguewins }
 
       respond_to do |format|
         format.html
@@ -92,9 +91,7 @@ class StandingsController < ApplicationController
 
     def importteamrecord
       begin
-        puts params[:gameschedule_id]
         gameschedule = @team.gameschedules.find(params[:gameschedule_id])
-        puts gameschedule.opponent_mascot
         sport = Sport.find(gameschedule.opponent_sport_id)
         team = sport.teams.find(gameschedule.opponent_team_id)
         schedules = team.gameschedules.desc(:opponent_league_wins)
@@ -124,44 +121,80 @@ class StandingsController < ApplicationController
     		@team = @sport.teams.find(params[:team_id])
    		end
 
-      def getgamerecord(schedules)
+      def getgamerecord(sport, schedules)
         teamwins = teamlosses = 0
         leaguewins = leaguelosses = 0
+        leagueties = nonleagueties = 0
 
         schedules.each do |s|
           stat = StatTotal.new(@sport, s)
 
           homescore = 0
 
-          if @sport.name == "Basketball"
-            homescore = stat.basketball_home_totals
-          elsif @sport.name == "Soccer"
-            homescore = stat.soccer_home_score
-          elsif @sport.name == "Football"
-            homescore = footballhomescore(@sport, s)
+          if sport.name == "Basketball"
+            homescore = basketball_home_score(sport, s)
+          elsif sport.name == "Soccer"
+            homescore = soccer_home_score(sport, s)
+          elsif sport.name == "Football"
+            homescore = footballhomescore(sport, s)
           end
 
           if homescore > s.opponentscore and s.league == true and s.final == true
             teamwins += 1
             leaguewins += 1
-          elsif s.league and s.final
+          elsif homescore < s.opponentscore and s.league and s.final
             teamlosses += 1
             leaguelosses += 1
           elsif homescore > s.opponentscore and s.final
             teamwins += 1
-          elsif s.final
+          elsif homescore < s.opponentscore and s.final
             teamlosses += 1
+          elsif homescore == s.opponentscore and s.league and s.final
+            leagueties += 1
+          elsif homescore == s.opponentscore and s.final
+            nonleagueties += 1
           end
         end
 
         teamrecord = Gamerecord.new
-        teamrecord.teamname = @sport.sitename
-        teamrecord.mascot = @sport.mascot
+        teamrecord.teamname = sport.sitename
+        teamrecord.mascot = sport.mascot
         teamrecord.leaguewins = leaguewins
         teamrecord.leaguelosses = leaguelosses
         teamrecord.nonleaguewins = teamwins
         teamrecord.nonleaguelosses = teamlosses
+        teamrecord.leagueties = leagueties
+        teamrecord.nonleagueties = nonleagueties
         return teamrecord
       end
+=begin
+            arecord.sportid = s.opponent_sport_id
+            oppsport = Sport.find(s.opponent_sport_id)
+            oppschedule = oppsport.teams.find(s.opponent_team_id).gameschedules
+
+            oppschedule.each do |g|
+              homescore = 0
+              if g.gameisfinal
+                if @sport.name == "Football"
+                  homescore = footballhomescore(oppsport, g)
+                elsif @sport.name == "Basketball"
+                  homescore = basketball_home_score(oppsport, g)
+                elsif @sport.name == "Soccer"
+                end
+
+                if homescore > g.opponentscore and g.league and g.gameisfinal
+                  arecord.leaguewins += 1
+                elsif homescore > g.opponentscore and g.gameisfinal
+                  arecord.nonleaguewins += 1
+                elsif homescore < g.opponentscore and g.league and g.gameisfinal
+                  arecord.leaguelosses += 1
+                elsif homescore < g.opponentscore and g.gameisfinal
+                  arecord.nonleaguelosses += 1
+                end
+              end
+
+              opprecords << arecord
+            end
+=end
 
 end

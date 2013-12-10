@@ -43,7 +43,7 @@ if @sport.name == "Football"
 elsif @sport.name == "Basketball"
 	attributes :opponentfouls, :currentperiod, :homebonus, :visitorbonus
 	node(:homescore) { |g| basketball_home_score(@sport, g) }
-	node(:homefouls) { |g| basketball_home_fouls(@sport, g) }
+	node(:homefouls) { |g| basketball_home_fouls(g) }
 elsif @sport.name == "Soccer"
 	attributes :socceroppck, :socceroppsog, :socceroppsaves, :currentperiod
 	node(:homescore) { |g| soccer_home_score(@sport, g) }

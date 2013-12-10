@@ -39,6 +39,10 @@ class GamelogsController < ApplicationController
       @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
     end
 
+    def index
+      @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
+    end
+    
     def edit
       @players = @sport.athletes.where(team_id: @team.id.to_s)
     end

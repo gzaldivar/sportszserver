@@ -55,7 +55,7 @@ Sportzserver::Application.routes.draw do
           put   :updatelogo
         end
 
-        resources :gamelogs, only: [:new, :create, :edit, :destroy, :show, :update] do
+        resources :gamelogs, only: [:new, :create, :edit, :destroy, :show, :update, :index] do
           collection do
             get :gamelogs
           end

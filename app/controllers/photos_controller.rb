@@ -431,9 +431,9 @@ class PhotosController < ApplicationController
           @photo.players << values.to_s
         end
         @photo.save!
-        respond_to do |format|
-          format.json { render json: { photo: @photo, request: sport_photos_path(@sport, @photo) } }
-        end
+      end
+      respond_to do |format|
+        format.json { render json: { photo: @photo, request: sport_photos_path(@sport, @photo) } }
       end
     rescue Exception => e
       respond_to do |format|

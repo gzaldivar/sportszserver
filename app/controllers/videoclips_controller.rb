@@ -592,13 +592,13 @@ class VideoclipsController < ApplicationController
           @videoclip.players << values.to_s
         end
         @videoclip.save!
-        respond_to do |format|
-          format.json { render json: { videoclip: @videoclip, request: sport_videoclips_path(@sport, @videoclip) } }
-        end
+      end
+      respond_to do |format|
+        format.json { render json: { videoclip: @videoclip } }
       end
     rescue Exception => e
       respond_to do |format|
-        format.json { render status: 404, json: { error: e.message, request: sport_videoclips_path(@sport, @videoclip) } }
+        format.json { render status: 404, json: { error: e.message } }
       end
     end
   end

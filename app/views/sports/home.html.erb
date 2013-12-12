@@ -27,11 +27,11 @@
 <% else %>
 	<div class="row">
 		<div class="span10">
-			<h1>Welcome to Easy Sports Mobile!</h1>
+			<h1>Welcome to Eazesportz Mobile!</h1>
 			<p>
-			<h2>Who we are:</h2>
+			<h3>Who we are:</h3>
 			<p>
-			<h4>Easzesportz provides mobile applications and web site support for you to manage your sports program. Mobiles apps are available for Football, Basketball and Soccer.</h4>
+			<h4>Easzesportz provides mobile applications in addition to web site support to manage your sports program. Mobiles apps are available for Football, Basketball and Soccer.</h4>
 			<h5><font color="blue">Click on the icons below to learn more about our solutions  .....</font></h5>
 		</div>
 	</div>
@@ -57,19 +57,20 @@
 	</div>
 	<div class="row">
 		<div class="span2">
-			<%= link_to (image_tag "FC_OffenseStatsPortrait.png"), eazefootball_path %>
+			<%= link_to (image_tag "FootballLiveGameStats.png"), eazefootball_path %>
 		</div>
 		<div class="span1">
 			<div class="row">
 				<div class="span1">
-					<%= link_to (image_tag "EazeFBConsoleiTunesArtwork.png"), "https://itunes.apple.com/us/app/eazesportz-football-management/id703243944?mt=8" %>
+					<%= link_to (image_tag "Football-iPad-50.png", :height => '50', :width => '50'),
+								 "https://itunes.apple.com/us/app/eazesportz-football-management/id703243944?mt=8" %>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span2">
-					<h4>No iPad?</h4>
+					<h5>No iPad?</h5>
 					<p>
-					<h5><%= link_to "Use the web ....", websiteinfo_path %></h5>
+					<h6><%= link_to "Use the web ....", websiteinfo_path %></h6>
 				</div>
 			</div>
 		</div>
@@ -79,14 +80,15 @@
 		<div class="span1">
 			<div class="row">
 				<div class="span1">
-					<%= link_to (image_tag "basketball-icon.jpg"), "https://itunes.apple.com/us/app/eazesportz-basketball-console/id717200419?mt=8" %>
+					<%= link_to (image_tag "basketball-icon.jpg", :height => '50', :width => '50'),
+											"https://itunes.apple.com/us/app/eazesportz-basketball-console/id717200419?mt=8" %>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span2">
-					<h4>No iPad?</h4>
+					<h5>No iPad?</h5>
 					<p>
-					<h5><%= link_to "Use the web ....", webbballinfo_path %></h5>
+					<h6><%= link_to "Use the web ....", webbballinfo_path %></h6>
 				</div>
 			</div>
 		</div>
@@ -96,14 +98,15 @@
 		<div class="span1">
 			<div class="row">
 				<div class="span1">
-					<%= link_to (image_tag "Soccer_icon.png"), "https://itunes.apple.com/us/app/eazesportz-soccer/id748838917?mt=8" %>
+					<%= link_to (image_tag "Soccer_icon.png", :height => '50', :width => '50'), 
+											"https://itunes.apple.com/us/app/eazesportz-soccer/id748838917?mt=8" %>
 				</div>
 			</div>
 			<div class="row">
 				<div class="span2">
-					<h4>No iPad?</h4>
+					<h5>No iPad?</h5>
 					<p>
-					<h5><!--%= link_to "Use the web ....", webbballinfo_path %-->Use the web ....</h5>
+					<h6><!--%= link_to "Use the web ....", webbballinfo_path %-->Use the web ....</h6>
 				</div>
 			</div>
 		</div>
@@ -111,11 +114,11 @@
 	<div class="row">
 		<div class="span10">
 			<p>
-			<h5>If you a <font color="blue">sports program administrator for a college, high school, youth program, booster, etc.,</font> you can use our software to keep your fans up to date while the game is in progress! Become your own publisher of sports data for your fans on the web and iPhones!</h5>
+			<h5>If you a <font color="blue">sports program administrator for a college, high school, youth program, booster, etc.,</font> your fans up to date while the game is in progress!</h5>
 			<p>
-			<h5>If you are a <font color="blue">publisher or media outlet</font>, we can also provide solutions to assist you in making local sports programs content available to your subscribers. We can provide a scalable integrated solution to aggregate and make local sports program live data available on your platform, <em><font color="red"><%= link_to "click here for more information.", publisher_path %></font></em></h5>
+			<h5><%= link_to "Content publishers or media distributors click here for more information.", publisher_path %></font></em></h5>
 			<p>
-			You use our iPad app or this web site to update and manage all the sports content you want your fans to see. Your fans can view the your programs content via our iPhone app or they can log in and use this web site. There is no charge for you to use our iPad app to manage a sports program. 
+			Our apps or web site provide you the capabilities to update and manage all your sports content. Fans view the sports content using an iPhone app or they can log in and use the web site. There is no charge for you to use our iPad app to manage a sports program. 
 		</div>
 	</div>
 	<p>
@@ -150,11 +153,6 @@
 		</div>
 	</div>
 	<p>
-	<div class="row">
-	    <div class="span5">
-			<h4>Already managing a program? Sign in above</h4>
-		</div>
-	</div>
 <% end %>
 <div class="row">
 	<div class="span10">
@@ -169,8 +167,7 @@
 				<% end %>
 			<% end %>
 		<% end %>
-	    <h4>If you are looking for another school or athletic program powered by Eazesportz.com, click here.
-	  	<%= link_to "Search", sports_path, class: "btn btn-medium btn-primary" %></h4>
+	    <h4>If you are looking for another school or athletic program powered by Eazesportz.com, <%= link_to "Click Here", sports_path %></h4>
 	</div>
 </div>
 <!--/font-->

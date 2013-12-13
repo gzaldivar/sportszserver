@@ -129,7 +129,7 @@ class Gamelog
           if stat.int_yards > self.yards
             stat.int_yards -= self.yards
           end
-          if footballPosition == "interception" and stat.interception > 0
+          if footballPosition == "interception" and stat.interceptions > 0
             stat.interceptions -= 1
           elsif stat.fumbles_recovered > 0
             stat.fumbles_recovered -=1

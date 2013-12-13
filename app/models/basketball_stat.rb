@@ -16,6 +16,7 @@ class BasketballStat
   field :blocks, type: Integer, default: 0
   field :offrebound, type: Integer, default: 0
   field :defrebound, type: Integer, default: 0
+  field :turnovers, type: Integer, default: 0
 
   belongs_to :athlete
   belongs_to :gameschedule
@@ -35,6 +36,7 @@ class BasketballStat
   validates_numericality_of :blocks, greater_than_or_equal_to: 0
   validates_numericality_of :offrebound, greater_than_or_equal_to: 0
   validates_numericality_of :defrebound, greater_than_or_equal_to: 0
+  validates_numericality_of :turnovers, greater_than_or_equal_to: 0
 
   private
 

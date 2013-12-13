@@ -72,8 +72,6 @@ class BasketballStatsController < ApplicationController
 
 	def show
 		@gameschedule = Gameschedule.find(@bbstats.gameschedule_id)
-		@game.homescore = basketball_home_score(@sport, @game)
-		@game.homefouls = basketball_home_fouls(@sport, @game)
 		@team = @sport.teams.find(@gameschedule.team_id)
 	end
 
@@ -253,6 +251,10 @@ class BasketballStatsController < ApplicationController
 
 				if params[:defrebound].to_i == 1
 					bbstats.defrebound += 1
+				end
+
+				if params[:turnover].to_i == 1
+					bbstats.turnovers += 1
 				end
 
 				bbstats.save!

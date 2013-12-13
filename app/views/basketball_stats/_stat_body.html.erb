@@ -35,6 +35,7 @@
 		<td><%= stat.steals %></td>
 		<td><%= stat.offrebound %></td>
 		<td><%= stat.defrebound %></td>
+		<td><%= stat.turnovers %></td>
 		<% if BasketballStat.find(stat.id).nil? and isAdmin? %>
 			<td><%= link_to "Stats", newstat_sport_athlete_basketball_stats_path(@sport, stat.athlete_id, gameschedule_id: stat.gameschedule_id), 
 							class: "btn btn-mini btn-primary" %></td>

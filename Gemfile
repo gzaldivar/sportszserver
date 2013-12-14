@@ -15,6 +15,7 @@ gem 'mongoid', "~> 3.0.0"
 gem 'mongoid_search'
 gem 'multi_json'
 gem 'json'
+gem 'unf'
 
 group :development do
   gem 'sqlite3', '1.3.5'
@@ -24,7 +25,6 @@ group :development do
   gem 'meta_request'
 	gem 'annotate', '2.5.0'
 end
-
 
 gem 'sass-rails',   '~> 3.2.3'
 gem 'bootstrap-sass', '~> 3.0.3.0'

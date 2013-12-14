@@ -14,7 +14,6 @@
 //= require jquery_ujs
 //= require jquery-ui
 //= require bootstrap
-//= require bootstrap-responsive
 //= require s3_direct_upload
 //= require mediaelement_rails
 //= require browser_timezone_rails/application.js

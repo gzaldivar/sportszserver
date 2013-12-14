@@ -307,7 +307,7 @@ DEPENDENCIES
   capybara (= 1.1.2)
   coffee-rails (~> 3.2.1)
   cucumber-rails (= 1.2.1)
-  devise (= 3.0.4)
+  devise
   factory_girl_rails
   faker (= 1.0.1)
   fog

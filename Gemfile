@@ -38,7 +38,7 @@ gem 'simple_form'
 
 gem 'will_paginate', '3.0.3'
 gem 'bootstrap-will_paginate', '0.0.5'
-gem 'devise', '3.0.4'
+gem 'devise'
 gem 'area'
 # gem 'mongoid_paperclip_queue'
 # gem "mongoid_paperclip_queue", :path => "/Users/dirctdt/Development/rails/mongoid_paperclip_queue-master"

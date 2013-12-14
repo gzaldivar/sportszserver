@@ -26,6 +26,7 @@ group :development do
 end
 
 
+gem 'sass-rails',   '~> 3.2.3'
 gem 'bootstrap-sass', '~> 3.0.3.0'
 
 gem 'gravatar_image_tag', '1.0.0.pre2'
@@ -47,7 +48,6 @@ gem 'mongoid-paperclip', :require => "mongoid_paperclip"
 # Gems used only for assets and not required
 # in production environments by default.
 group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
 
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes

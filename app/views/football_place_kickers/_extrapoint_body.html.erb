@@ -10,7 +10,7 @@
 	<td><%= stat.xpmade %></td>
 	<td><%= stat.xpmissed %></td>
 	<td><%= stat.xpblocked %></td>
-	<% if FootballPlaceKicker.find(stat.id).nil? and isAdmin? or isTeamManager?(player.team_id) and name != "Totals" %>
+	<% if FootballPlaceKicker.find(stat.id).nil? and isAdmin? or isTeamManager?(player) and name != "Totals" %>
 		<td><%= link_to "Edit", new_sport_athlete_football_place_kicker_path(@sport, player, gameschedule_id: stat.gameschedule_id), 
 				class: "btn btn-mini btn-primary"%></td>
 	<% elsif name != "Totals" %>

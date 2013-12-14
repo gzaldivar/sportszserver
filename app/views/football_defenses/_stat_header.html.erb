@@ -17,7 +17,7 @@
 	<th>Defensive TD</th>
 	<th>Fumbles Recoveredd</th>
 	<th>Safeties</th>
-	<% if isAdmin? or isTeamManager?(@athlete.team_id) %>
+	<% if isAdmin? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
 		<th>Edit</th>
 	<% end %>
 </thead>

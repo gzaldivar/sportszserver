@@ -11,7 +11,7 @@
 	<th>Return Yards</th>
 	<th>Return TD</th>
 	<th>Longest</th>
-	<% if isAdmin? or isTeamManager?(@athlete.team_id) %>
+	<% if isAdmin? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
 		<th>Edit</th>
 	<% end %>
 </thead>

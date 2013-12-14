@@ -11,10 +11,7 @@ module UsersHelper
 		  	end
 	  	else
 #	  		not_authorized
-			respond_to do |format|
-	    		format.html { redirect_to :back, notice: "Action not allowed" }
-	    		format.json { render status: 401, json: { error: "You are not site owner" } }
-	    	end
+			return false
     	end
 	end
 

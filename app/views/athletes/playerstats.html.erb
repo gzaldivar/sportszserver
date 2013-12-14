@@ -40,7 +40,7 @@
 					<%= render 'football_passings/stat_body', stat: p, player: @athlete, name: @player %>
 				<% end %>
 			<% end %>
-			<%= render 'football_passings/stat_body', stat: @passingtotals, player: @passingtotals.athlete_id, name: "Totals" %>
+			<%= render 'football_passings/stat_body', stat: @passingtotals, player: Athlete.find(@passingtotals.athlete_id), name: "Totals" %>
 		</table>
 
 	  	<p>
@@ -54,7 +54,7 @@
 					<%= render 'football_rushings/stat_body', stat: p, player: @athlete, name: @player %>
 				<% end %>
 			<% end %>
-			<%= render 'football_rushings/stat_body', stat: @rushingtotals, player: @rushingtotals.athlete_id, name: "Totals" %>
+			<%= render 'football_rushings/stat_body', stat: @rushingtotals, player: Athlete.find(@rushingtotals.athlete_id), name: "Totals" %>
 		</table>
 
 	  	<p>
@@ -68,7 +68,7 @@
 					<%= render 'football_receivings/stat_body', stat: p, player: @athlete, name: @player %>
 				<% end %>
 			<% end %>
-			<%= render 'football_receivings/stat_body', stat: @receivingtotals, player: @receivingtotals.athlete_id, name: "Totals" %>
+			<%= render 'football_receivings/stat_body', stat: @receivingtotals, player: Athlete.find(@receivingtotals.athlete_id), name: "Totals" %>
 		</table>
 
 	  	<h5>Defense</h5>
@@ -81,7 +81,7 @@
 					<%= render 'football_defenses/stat_body', stat: p, player: @athlete, name: @player %>
 				<% end %>
 			<% end %>
-			<%= render 'football_defenses/stat_body', stat: @defensivetotals, player: @defensivetotals.athlete_id, name: "Totals" %>
+			<%= render 'football_defenses/stat_body', stat: @defensivetotals, player: Athlete.find(@defensivetotals.athlete_id), name: "Totals" %>
 		</table>
 
 	  	<h5>Place Kicker Stats</h5>
@@ -93,7 +93,7 @@
 					<%= render 'football_place_kickers/fieldgoal_body', stat: p, player: @athlete, name: @player %>
 				<% end %>
 			<% end %>
-			<%= render 'football_place_kickers/fieldgoal_body', stat: @placekickertotals, player: @placekickertotals.athlete_id, name: "Totals" %>
+			<%= render 'football_place_kickers/fieldgoal_body', stat: @placekickertotals, player: Athlete.find(@placekickertotals.athlete_id), name: "Totals" %>
 		</table>
 
 		<table class="table table-bordered">
@@ -104,7 +104,7 @@
 					<%= render 'football_place_kickers/extrapoint_body', stat: p, player: @athlete, name: @player %>
 				<% end %>
 			<% end %>
-			<%= render 'football_place_kickers/extrapoint_body', stat: @placekickertotals, player: @placekickertotals.athlete_id, name: "Totals" %>
+			<%= render 'football_place_kickers/extrapoint_body', stat: @placekickertotals, player: Athlete.find(@placekickertotals.athlete_id), name: "Totals" %>
 		</table>
 
 	  	<h5>Punt Returns</h5>
@@ -116,7 +116,7 @@
 					<%= render 'football_returners/puntreturn_body', stat: p, player: @athlete, name: @player %>
 				<% end %>
 			<% end %>
-			<%= render 'football_returners/puntreturn_body', stat: @returnertotals, player: @returnertotals.athlete_id, name: "Totals" %>
+			<%= render 'football_returners/puntreturn_body', stat: @returnertotals, player: Athlete.find(@returnertotals.athlete_id), name: "Totals" %>
 		</table>
 
 	  	<h5>Kickoff Returns</h5>
@@ -128,7 +128,7 @@
 					<%= render 'football_returners/koreturn_body', stat: p, player: @athlete, name: @player %>
 				<% end %>
 			<% end %>
-			<%= render 'football_returners/koreturn_body', stat: @returnertotals, player: @returnertotals.athlete_id, name: "Totals" %>
+			<%= render 'football_returners/koreturn_body', stat: @returnertotals, player: Athlete.find(@returnertotals.athlete_id), name: "Totals" %>
 		</table>
 
 	  	<h5>Kickoffs</h5>
@@ -140,7 +140,7 @@
 					<%= render 'football_kickers/stat_body', stat: p, player: @athlete, name: @player %>
 				<% end %>
 			<% end %>
-			<%= render 'football_kickers/stat_body', stat: @kickofftotals, player: @kickofftotals.athlete_id, name: "Totals" %>
+			<%= render 'football_kickers/stat_body', stat: @kickofftotals, player: Athlete.find(@kickofftotals.athlete_id), name: "Totals" %>
 		</table>
 
 	  	<h5>Punters</h5>
@@ -152,7 +152,7 @@
 					<%= render 'football_punters/stat_body', stat: p, player: @athlete, name: @player %>
 				<% end %>
 			<% end %>
-			<%= render 'football_punters/stat_body', stat: @puntertotals, player: @puntertotals.athlete_id, name: "Totals" %>
+			<%= render 'football_punters/stat_body', stat: @puntertotals, player: Athlete.find(@puntertotals.athlete_id), name: "Totals" %>
 		</table>
 	</div>
 </div>

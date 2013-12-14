@@ -11,7 +11,7 @@
 	<th>Punts Blocked</th>
 	<th>Punts Yards</th>
 	<th>Punts Long</th>
-	<% if isAdmin? or isTeamManager?(@athlete.team_id) %>
+	<% if isAdmin? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
 		<th>Edit</th>
 	<% end %>
 </thead>

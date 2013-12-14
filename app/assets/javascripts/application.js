@@ -13,7 +13,6 @@
 //= require jquery
 //= require jquery_ujs
 //= require jquery-ui
-//= require bootstrap-dropdown
 //= require bootstrap
 //= require s3_direct_upload
 //= require mediaelement_rails

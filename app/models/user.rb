@@ -4,14 +4,16 @@ class User
   include Mongoid::Timestamps
   include Mongoid::Search
 
+  before_save :ensure_authentication_token
+
   attr_accessor :content_type, :original_filename, :image_data
 
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :trackable, :validatable,
-         :token_authenticatable, :confirmable
+         :recoverable, :rememberable, :trackable, :validatable, :confirmable
+#         :token_authenticatable
 
   ## Database authenticatable
   field :email,              :type => String, :default => ""
@@ -104,26 +106,45 @@ class User
     super and self.is_active?
   end
 
-#  StringIO.open(Base64.decode64(self.avatar_base64)) do |data|
-#      data.original_filename = "image_name.jpg"
-#      data.content_type = "image/jpeg"
-#      self.avatar = data
-#    end
-
-  def decode_base64_image
-    if self.image_data && self.content_type && self.original_filename
-#      decoded_data = Base64.decode64(self.image_data)
-
-      data = StringIO.new(image_data)
-      data.class_eval do
-        attr_accessor :content_type, :original_filename
-      end
-
-      data.content_type = self.content_type
-      data.original_filename = File.basename(self.original_filename)
-
-      self.avatar = data
+  def ensure_authentication_token
+    if authentication_token.blank?
+      self.authentication_token = generate_authentication_token
     end
   end
+
+  def reset_authentication_token
+    generate_authentication_token
+  end
+
+  private
+  
+    def generate_authentication_token
+      loop do
+        token = Devise.friendly_token
+        break token unless User.where(authentication_token: token).first
+      end
+    end
+
+  #  StringIO.open(Base64.decode64(self.avatar_base64)) do |data|
+  #      data.original_filename = "image_name.jpg"
+  #      data.content_type = "image/jpeg"
+  #      self.avatar = data
+  #    end
+
+    def decode_base64_image
+      if self.image_data && self.content_type && self.original_filename
+  #      decoded_data = Base64.decode64(self.image_data)
+
+        data = StringIO.new(image_data)
+        data.class_eval do
+          attr_accessor :content_type, :original_filename
+        end
+
+        data.content_type = self.content_type
+        data.original_filename = File.basename(self.original_filename)
+
+        self.avatar = data
+      end
+    end
 
 end

@@ -1,15 +1,15 @@
 <%= hidden_field_tag "livestats", value=@live %>
 <%= hidden_field_tag "gameschedule_id", value=@fbpassing.gameschedule_id.to_s %>
 <div class="row">
-	<div class="span2">
+	<div class="col-xs-2">
         <%= label_tag "Quarter: " %>
 		<%= select_tag "quarter", options_for_select(quarters) %>
 	</div>
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
         <%= label_tag "Completion: " %>
         <%= check_box_tag "comp", '1' %>
 	</div>
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
         <%= label_tag "Completed pass to: " %>
 		<%= select_tag "receiver", options_from_collection_for_select(@sport.athletes.where(team_id: @athlete.team_id), "id", "full_name"),
 									include_blank: true %>
@@ -17,58 +17,58 @@
 </div>
 <p>
 <div class="row">
-	<div class="span2">
+	<div class="col-xs-2">
         <%= label_tag "Game Time (Needed for scoring summary only): " %>
         <%= text_field_tag "time", '00:00' %>
 	</div>
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
         <%= label_tag "Click for Touchdown: " %>
         <%= check_box_tag 'td', '1' %>
 	</div>
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
         <%= label_tag "Receiver Fumble: " %>
         <%= check_box_tag "rec_fumble", '1' %>
 	</div>
 </div>
 <p>
 <div class="row">
-	<div class="span2">
+	<div class="col-xs-2">
         <%= label_tag "Yards: " %>
         <%= text_field_tag "yards", '0' %>
 	</div>
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
         <%= label_tag "Click for first down: " %>
         <%= check_box_tag 'fd', '1' %>
 	</div>
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
         <%= label_tag "Receiver Fumble Lost?: " %>
         <%= check_box_tag "rec_fumble_lost", '0' %>
 	</div>
 </div>
 <p>
 <div class="row">
-	<div class="span2 ">
+	<div class="col-xs-2 ">
         <%= label_tag "Yards Lost: " %>
         <%= text_field_tag "yards_lost", '0' %>
 	</div>
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
         <%= label_tag "Click for Sack: " %>
         <%= check_box_tag 'sack', '1' %>
 	</div>
-	<div class="span3 offset1">
+	<div class="col-xs-3 col-xs-offset-1">
         <%= label_tag "Click for two point conversion: " %>
         <%= check_box_tag 'two', '1' %>
 	</div>
 </div>
 <div class="row">
-	<div class="span2 offset3">
+	<div class="col-xs-2 col-xs-offset-3">
         <%= label_tag "Interception: " %>
         <%= check_box_tag "int", '1' %>
 	</div>
 </div>					
 <p>
 <div class="row">
-	<div class="span1 offset4">
-		<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+	<div class="col-xs-1 col-xs-offset-4">
+		<%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 	</div>
 </div>

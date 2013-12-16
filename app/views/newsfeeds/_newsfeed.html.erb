@@ -1,66 +1,55 @@
-<div class="row">
-  <div class="span6">
-    <% feed.each do |f| %>
-      <div class="row">
-        <div class="span10">
-          <h4><font color="blue"><%= f.title %></font></h4>
-        </div>
-      </div><p>
-      <div class="row">
-        <% if !f.athlete.blank? or !f.coach.blank? %>
-          <div class="span1">
-            <% if !f.athlete.nil? and !f.athlete.blank? %>
-              <% athlete = f.sport.athletes.find(f.athlete) %>
-              <% if athlete.pic.blank? %>
-                <%= link_to image_tag("Tiny_Photo_Not_Available.png"), sport_athlete_path(f.sport, athlete) %> 
-              <% else %>    
-                <%= link_to image_tag(athlete.pic.url(:tiny)), sport_athlete_path(f.sport, athlete) %>
-              <% end %>
-            <% elsif !f.coach.nil? and !f.coach.blank? %>
-              <% coach = f.sport.coaches.find(f.coach) %>
-              <% if coach.coachpic.blank? %>
-                <%= link_to image_tag("Tiny_Photo_Not_Available.png"), sport_coach_path(f.sport, coach) %> 
-              <% else %>    
-                <%= link_to image_tag(coach.coachpic.url(:tiny)), sport_coach_path(f.sport, coach) %>
-              <% end %>
-            <% end %>
-          </div>
-          <div class="span4">
-        <% else %>
-          <div class="span6">
+<% feed.each do |f| %>
+  <div class="row">
+      <h4><font color="blue"><%= f.title %></font></h4>
+  </div><p>
+  <div class="row">
+    <div class="col-xs-1">
+      <% if !f.athlete.blank? or !f.coach.blank? %>
+        <% if !f.athlete.nil? and !f.athlete.blank? %>
+          <% athlete = f.sport.athletes.find(f.athlete) %>
+          <% if athlete.pic.blank? %>
+            <%= link_to image_tag("Tiny_Photo_Not_Available.png"), sport_athlete_path(f.sport, athlete) %> 
+          <% else %>    
+            <%= link_to image_tag(athlete.pic.url(:tiny)), sport_athlete_path(f.sport, athlete) %>
+          <% end %>
+        <% elsif !f.coach.nil? and !f.coach.blank? %>
+          <% coach = f.sport.coaches.find(f.coach) %>
+          <% if coach.coachpic.blank? %>
+            <%= link_to image_tag("Tiny_Photo_Not_Available.png"), sport_coach_path(f.sport, coach) %> 
+          <% else %>    
+            <%= link_to image_tag(coach.coachpic.url(:tiny)), sport_coach_path(f.sport, coach) %>
+          <% end %>
         <% end %>
-      	<h5><%= f.news %></h5>
-      	</div>
-        </div><p>
-        <div class="row">
-          <div class="span10">
-          <em>
-      		<%= link_to f.sport.name, sport_path(f.sport) %>&nbsp
-            <% if !f.team.nil? and !f.team.blank? %>
-              <%= f.sport.teams.find(f.team).team_name %>&nbsp
-            <% end %>
-            <% if !f.athlete.nil? and !f.athlete.blank? %>
-			  Athlete:
-              <%= link_to f.sport.athletes.find(f.athlete).full_name, sport_athlete_path(f.sport, f.athlete) %>&nbsp
-            <% end %>
-            <% if !f.coach.nil? and !f.coach.blank? %>
-      		  Coach:
-              <%= link_to f.sport.coaches.find(f.coach).full_name, sport_coach_path(f.sport, f.coach) %>
-            <% end %>
-          </em>
-          </div>
-        </div><p>
-        <div class="row">
-          <div class="span2">
-            <% if f.external_url %>
-              <%= link_to f.external_url, f.external_url %>&nbsp
-            <% end %>
-      			<% if isAdmin? %>
-      				<%= link_to "Edit", edit_sport_newsfeed_path(f.sport, f),  class: "btn btn-mini btn-warning" %>
-      				<%= link_to "Delete", sport_newsfeed_path(f.sport, f),  method:	:delete,  class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
-      			<% end %>
-          </div>
-        </div>
-    <% end %>
-  </div>
-</div><p>
+      <% end %>
+    </div>
+    <div class="col-xs-7">
+ 	    <h5><%= f.news %></h5>
+  	</div>
+    </div><p>
+    <div class="row">
+      <em>
+  		<%= link_to f.sport.name, sport_path(f.sport) %>&nbsp
+        <% if !f.team.nil? and !f.team.blank? %>
+          <%= f.sport.teams.find(f.team).team_name %>&nbsp
+        <% end %>
+        <% if !f.athlete.nil? and !f.athlete.blank? %>
+	  Athlete:
+          <%= link_to f.sport.athletes.find(f.athlete).full_name, sport_athlete_path(f.sport, f.athlete) %>&nbsp
+        <% end %>
+        <% if !f.coach.nil? and !f.coach.blank? %>
+  		  Coach:
+          <%= link_to f.sport.coaches.find(f.coach).full_name, sport_coach_path(f.sport, f.coach) %>
+        <% end %>
+      </em>
+    </div>
+    <p>
+    <div class="row">
+        <% if f.external_url %>
+          <%= link_to f.external_url, f.external_url %>&nbsp
+        <% end %>
+  			<% if isAdmin? %>
+  				<%= link_to "Edit", edit_sport_newsfeed_path(f.sport, f),  class: "btn btn-xs btn-warning" %>
+  				<%= link_to "Delete", sport_newsfeed_path(f.sport, f),  method:	:delete,  class: "btn btn-xs btn-danger", data: { confirm: "You sure?" } %>
+  			<% end %>
+    </div>
+<% end %>

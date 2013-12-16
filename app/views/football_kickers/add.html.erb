@@ -1,7 +1,7 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span10 offset1">
+	<div class="col-xs-10 col-xs-offset-1">
 		<em>Add Kicker/Punter Stats for: <%= link_to @athlete.full_name, sport_athlete_path(@sport, @athlete) %> for 
 			<%= @stat.gameschedule.game_name %></em>
 		<p>
@@ -9,11 +9,11 @@
 								football_stat_id: @stat, football_kicker_id: @kicker), class: "form-horizontal", method: 'get' do %>
 			<%= render 'shared/error_messages', object: @kicker %>
 			<div class="row">
-				<div class="span2">
+				<div class="col-xs-2">
 		            <%= label_tag "Quarter: " %>
 					<%= select_tag "quarter", options_for_select(quarters) %>
 				</div>
-				<div class="span6 offset1">
+				<div class="col-xs-6 col-xs-offset-1">
 		            <%= label_tag "Game Time (Needed for scoring summary. Optional for Kickoff and Punts): " %>
 		            <%= text_field_tag "time", '00:00' %>
 				</div>
@@ -21,19 +21,19 @@
 			<p>
 			<h4>Field Goals</h4>
 			<div class="row">
-				<div class="span1">
+				<div class="col-xs-1">
 		            <%= label_tag "Made: " %>
 		            <%= check_box_tag 'fgmade', 1 %>
 				</div>
-				<div class="span1 offset1">
+				<div class="col-xs-1 col-xs-offset-1">
 		            <%= label_tag "Missed: " %>
 		            <%= check_box_tag 'fgmissed', 1 %>
 				</div>
-				<div class="span1 offset1">
+				<div class="col-xs-1 col-xs-offset-1">
 		            <%= label_tag "Blocked: " %>
 		            <%= check_box_tag "fgblocked", 1 %>
 				</div>
-				<div class="span1 offset1">
+				<div class="col-xs-1 col-xs-offset-1">
 		            <%= label_tag "Distance: " %>
 		            <%= text_field_tag 'fglong', '0' %>
 				</div>
@@ -41,15 +41,15 @@
 			<p>
 			<h4>Extra Points</h4>
 			<div class="row">
-				<div class="span2">
+				<div class="col-xs-2">
 		            <%= label_tag "Made: " %>
 		            <%= check_box_tag 'xpmade', 1 %>
 				</div>
-				<div class="span2 offset1">
+				<div class="col-xs-2 col-xs-offset-1">
 		            <%= label_tag "Missed: " %>
 		            <%= check_box_tag 'xpmissed' %>
 				</div>
-				<div class="span2 offset1">
+				<div class="col-xs-2 col-xs-offset-1">
 		            <%= label_tag "Blocked: " %>
 		            <%= check_box_tag 'xpblocked', 1 %>
 				</div>
@@ -57,15 +57,15 @@
 			<p>
 			<h4>Kickoffs</h4>
 			<div class="row">
-				<div class="span2">
+				<div class="col-xs-2">
 		            <%= label_tag "Kickoff: " %>
 		            <%= check_box_tag "koattempts", '0' %>
 				</div>
-				<div class="span2 offset1">
+				<div class="col-xs-2 col-xs-offset-1">
 		            <%= label_tag "Touchbacks: " %>
 		            <%= check_box_tag "kotouchbacks", 1 %>
 				</div>
-				<div class="span2 offset1">
+				<div class="col-xs-2 col-xs-offset-1">
 		            <%= label_tag "Return yards: " %>
 		            <%= text_field_tag "koreturned", '0' %>
 				</div>
@@ -73,23 +73,23 @@
 			<p>
 			<h4>Punts</h4>
 			<div class="row">
-				<div class="span2">
+				<div class="col-xs-2">
 		            <%= label_tag "Punts: " %>
 		            <%= check_box_tag "punts", 1 %>
 				</div>
-				<div class="span2 offset1">
+				<div class="col-xs-2 col-xs-offset-1">
 		            <%= label_tag "Blocked: " %>
 		            <%= check_box_tag 'punts_blocked', 1 %>
 				</div>
-				<div class="span2 offset1">
+				<div class="col-xs-2 col-xs-offset-1">
 		            <%= label_tag "Punts Yards: " %>
 		            <%= text_field_tag 'punts_yards', '0' %>
 				</div>
 			</div>
 			<p>
 			<div class="row">
-				<div class="span1 offset3">
-					<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+				<div class="col-xs-1 col-xs-offset-3">
+					<%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 				</div>
 			</div>
 		<% end %>

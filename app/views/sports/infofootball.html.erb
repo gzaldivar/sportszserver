@@ -1,8 +1,7 @@
 <% provide(:title, "Easzesportz Football -  iPad Mobile Sports Football Management Console") %>
 <p>
-<!--font color="#b3f10c"-->
 <div class="row">
-	<div class="span10" style="background-color:#ffffff;position:relative;top:0">
+	<div class="col-xs-12">
 		<h2>Eazesportz Mobile - Manage your Football program!</h2>
 		<p>
 		<h5>Create and manage your program in the cloud and make your programs content avaiable to your fans via our mobile app!<br>
@@ -10,72 +9,72 @@
 	</div>
 </div>
 <div class="row">
-	<div class="span10">
-		<h4><em><font color="blue">Don't have an iPad app. Use our web site! 
-		<%= link_to "Click here for more info", websiteinfo_path %></font></em></h4>
+	<div class="col-xs-12">
+		<h4><em><p class="text-info">Don't have an iPad app. Use our web site! 
+		<%= link_to "Web Site", websiteinfo_path, class: "btn btn-sm btn-primary" %></p></em></h4>
 	</div>
 </div>
 <div class="row">
-	<div class="span4">
+	<div class="col-xs-4">
 		<h5>Live Game Support</h5>
 	</div>
-	<div class="span4 offset1">
+	<div class="col-xs-4">
 		<h5>Live Game Stats Support</h5>
 	</div>
 </div>
 <div class="row">
-	<div class="span4">
-		<%= image_tag "FootballGameStats.png" %>
+	<div class="col-xs-4">
+		<%= image_tag "FootballGameStats.png", width: "300", height: "400" %>
 	</div>
-	<div class="span4 offset1">
-		<%= image_tag "FootballLiveGameStats.png" %>
+	<div class="col-xs-4">
+		<%= image_tag "FootballLiveGameStats.png", width: "300", height: "400" %>
 	</div>
 </div>
 <div class="row">
-	<div class="span4">
+	<div class="col-xs-4">
 		<h5>Manage your game schedules</h5>
 	</div>
-	<div class="span4 offset1">
+	<div class="col-xs-4">
 		<h5>Manage game photos/h5>
 	</div>
 </div>
 <div class="row">
-	<div class="span4">
-		<%= image_tag "FootballGameSchedule.png" %>
+	<div class="col-xs-4">
+		<%= image_tag "FootballGameSchedule.png", width: "300", height: "400" %>
 	</div>
-	<div class="span4 offset1">
-		<%= image_tag "FootballPhotos.png" %>
+	<div class="col-xs-4">
+		<%= image_tag "FootballPhotos.png", width: "300", height: "400" %>
 	</div>
 </div>
 <div class="row">
-	<div class="span4">
+	<div class="col-xs-4">
 		<h5>Manage video clips</h5>
 	</div>
-	<div class="span4 offset1">
+	<div class="col-xs-4">
 		<h5>Manage your roster</h5>
 	</div>
 </div>
 <div class="row">
-	<div class="span4">
-		<%= image_tag "FootballVideos.png" %>
+	<div class="col-xs-4">
+		<%= image_tag "FootballVideos.png", width: "300", height: "400" %>
 	</div>
-	<div class="span4 offset1">
-		<%= image_tag "FootballRoster.png" %>
+	<div class="col-xs-4">
+		<%= image_tag "FootballRoster.png", width: "300", height: "400" %>
 	</div>
 </div>
 <div class="row">
-	<div class="span4">
+	<div class="col-xs-4">
 		<h5>Watch what your users are saying...</h5>
 	</div>
-	<div class="span4 offset1">
+	<div class="col-xs-4">
 		<h5>And much, much more .......</h5>
 	</div>
 </div>
 <div class="row">
-	<div class="span4">
-		<%= image_tag "FootballBlog.png" %>
+	<div class="col-xs-4">
+		<%= image_tag "FootballBlog.png", width: "300", height: "400" %>
 	</div>
-	<div class="span4 offset1">
+	<div class="col-xs-4">
 		<ul>
 			<li>Manage News feed ...</li>
 			<li>Manage coaches ...</li>
@@ -87,33 +86,32 @@
 </div>
 <p>
 <div class="row">
-	<div class="span10">
-		<h4><%= link_to "Click here", ipadexample_path %> for an example of how to use our iPad app during a game</h4>
-		
+	<div class="col-xs-12">
+		<h4><%= link_to "Click here", ipadexample_path, class: "btn btn-sm btn-primary" %> for an example of how to use our iPad app during a game</h4>	
 	</div>
 </div>
 <div class="row">
-	<div class="span10">
-		<h4><em><font color="blue">Don't have an iPad app. Use our web site!
-		<%= link_to "Click here for more info:", websiteinfo_path %></font></em></h4>
+	<div class="col-xs-12">
+		<h4><em><p class="text-info">Don't have an iPad app. Use our web site!
+		<%= link_to "Web Site", websiteinfo_path, class: "btn btn-sm btn-primary" %></p></em></h4>
 	</div>
 </div>
 <p>
-<div class="span10">
+<div class="col-xs-12">
 	<div class="row">
-		<h4><em><%= link_to "Click here to see how your fans will use our mobile apps!", mobileinfo_path %></em></h4>
+		<h4><em><%= link_to "Fans App!", mobileinfo_path, class: "btn btn-sm btn-primary" %></em> Click here to see how your fans will use our mobile apps</h4>
 	</div>
 </div>
 <div class="row">
-	<div class="span10">
-		<h4>If you are looking for a site powered by Eazesportz.com, click below to find the site.
-			<%= link_to "click below to find the site.", sports_path %></h4>
+	<div class="col-xs-12">
+		<h4>If you are looking for a site powered by Eazesportz.com, click here:
+			<%= link_to "Find Site.", sports_path, class: "btn btn-sm btn-primary" %></h4>
 	</div>
 </div>
 <div class="row">
-	<div class="span4">
-		<h4>Click here to sign up!
-	  	<%= link_to "Sign Up", admininfo_path, class: "btn btn-medium btn-primary" %></h4>
+	<div class="col-xs-4">
+		<p class="text-success">Click here to sign up!
+	  	<%= link_to "Sign Up", admininfo_path, class: "btn btn-sm btn-primary" %></p>
     </div>
 </div>
-<!--/font-->
+

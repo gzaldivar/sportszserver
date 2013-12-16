@@ -11,9 +11,9 @@
 	<td><%= stat.koreturned %></td>
 	<% if FootballKicker.find(stat.id).nil? and isAdmin? or isTeamManager?(player) and name != "Totals" %>
 		<td><%= link_to "Edit", new_sport_athlete_football_kicker_path(@sport, player, gameschedule_id: stat.gameschedule_id), 
-				class: "btn btn-mini btn-primary"%></td>
+				class: "btn btn-xs btn-primary"%></td>
 	<% elsif name != "Totals" %>
-		<td><%= link_to "Edit", edit_sport_athlete_football_kicker_path(@sport, player, stat), class: "btn btn-mini btn-primary"%></td>
+		<td><%= link_to "Edit", edit_sport_athlete_football_kicker_path(@sport, player, stat), class: "btn btn-xs btn-primary"%></td>
 	<% else %>
 		<td></td>
 	<% end %>

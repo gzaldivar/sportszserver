@@ -2,25 +2,25 @@
 <p>
 <% if isAdmin? %>
 	<div class="row">
-		<div class="span2 offset2">
+		<div class="col-xs-2 col-xs-offset-2">
 			<% if @team.nil? %>
-				<%= link_to "New Event", new_sport_event_path(@sport), class: "btn btn-medium btn-primary" %>
+				<%= link_to "New Event", new_sport_event_path(@sport), class: "btn btn-sm btn-primary" %>
 			<% else %>
-				<%= link_to "New Event", newteam_sport_events_path(@sport, team_id: @team.id), class: "btn btn-medium btn-primary" %>
+				<%= link_to "New Event", newteam_sport_events_path(@sport, team_id: @team.id), class: "btn btn-sm btn-primary" %>
 			<% end %>
 		</div>
-		<!--div class="span2 offset1">
+		<!--div class="col-xs-2 col-xs-offset-1">
 		    <%= form_tag sport_events_path, class: "form-horizontal", method: 'get' do %>
 				<%= label_tag "Game Schedule: " %>
 				<%= select(:team, :id, @sport.teams.collect{ |t| [t.team_name, t.id] }, include_blank: true ) %>
 				<p>
-				<%= submit_tag  "Team Schedule", class: "btn btn-medium btn-primary", name: nil %>
+				<%= submit_tag  "Team Schedule", class: "btn btn-sm btn-primary", name: nil %>
 			<% end %>
 		</div-->
 	</div>
 <% end %>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-10">
 		<%= calendar @events do |event| %>
   			<div><%= link_to event.name, [@sport, event] %></div>
 		<% end %>

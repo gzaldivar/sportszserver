@@ -1,7 +1,7 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-10">
 		<p>
 		<ul class="nav nav-tabs">
 		  <li class="active">
@@ -10,7 +10,7 @@
 		  <li><a href="#">Play by Play</a></li>
 		</ul>
 		<p>
-		<div class="span8 offset2">
+		<div class="col-xs-8 col-xs-offset-2">
 			<h4>Enter passing stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
 			Use play by play if you want to enter stats for each play of the game.<br/>
 			This is can be used real time during the game if you want provide real time stats to your users.

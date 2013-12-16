@@ -1,11 +1,11 @@
 <%= hidden_field_tag "livestats", value=@live %>
 <%= hidden_field_tag "gameschedule_id", value=@placekicker.gameschedule_id.to_s %>
 <div class="row">
-	<div class="span2">
+	<div class="col-xs-2">
         <%= label_tag "Quarter: " %>
 		<%= select_tag "quarter", options_for_select(quarters) %>
 	</div>
-	<div class="span6 offset1">
+	<div class="col-xs-6 col-xs-offset-1">
         <%= label_tag "Game Time (Needed for scoring summary. Optional for Kickoff and Punts): " %>
         <%= text_field_tag "time", '00:00' %>
 	</div>
@@ -13,22 +13,22 @@
 <p>
 <h4>Field Goals Made</h4>
 <div class="row">
-	<div class="span1">
+	<div class="col-xs-1">
         <%= label_tag "Made: " %>
         <%= check_box_tag 'fgmade', 1 %>
 	</div>
-	<div class="span1 offset1">
+	<div class="col-xs-1 col-xs-offset-1">
         <%= label_tag "Distance: " %>
         <%= text_field_tag 'fglong', '0' %>
 	</div>
 </div>
 <h4>Field Goals Missed or Blocked</h4>
 <div class="row">
-	<div class="span1">
+	<div class="col-xs-1">
         <%= label_tag "Missed: " %>
         <%= check_box_tag 'fgmissed', 1 %>
 	</div>
-	<div class="span1 offset1">
+	<div class="col-xs-1 col-xs-offset-1">
         <%= label_tag "Blocked: " %>
         <%= check_box_tag "fgblocked", 1 %>
 	</div>
@@ -36,22 +36,22 @@
 <p>
 <h4>Extra Points</h4>
 <div class="row">
-	<div class="span2">
+	<div class="col-xs-2">
         <%= label_tag "Made: " %>
         <%= check_box_tag 'xpmade', 1 %>
 	</div>
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
         <%= label_tag "Missed: " %>
         <%= check_box_tag 'xpmissed' %>
 	</div>
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
         <%= label_tag "Blocked: " %>
         <%= check_box_tag 'xpblocked', 1 %>
 	</div>
 </div>
 <p>
 <div class="row">
-	<div class="span1 offset3">
-		<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+	<div class="col-xs-1 col-xs-offset-3">
+		<%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 	</div>
 </div>

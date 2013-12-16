@@ -1,29 +1,28 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + " - All Athletes") %>
 <p>
 <div class="row">
-  <div class="span10">
+  <div class="col-xs-11">
       <div class="row">
-        <div class="span10 offset1">
+        <div class="col-xs-10 col-xs-offset-1">
           <%= form_tag sport_athletes_path(@sport), class: "form-search", method: 'get' do %>
             <div class="row">
-              <div class="span4">
+              <div class="col-xs-4">
                 <%= label_tag "Number: " %>
                 <%= text_field_tag  'number', value=params[:number] %>
               </div>
-              <div class="spann3">
+              <div class="col-xs-n3">
                 <%= label_tag "Last Name: " %>
                 <%= text_field_tag  'lastname', value=params[:lastname] %>
               </div>
-              <div class="span2">
-                <%= submit_tag  "Search", class: "btn btn-medium btn-primary", name: nil %>
+              <div class="col-xs-2">
+                <%= submit_tag  "Search", class: "btn btn-sm btn-primary", name: nil %>
               </div>
             </div>
           <% end %>
         </div>
       </div>
-			<ul class="homesites">
 				<div class="row">
-					<div class="span10">
+					<div class="col-xs-10">
             <table class="table table-hover">
               <%= render 'athleteheader' %>
               <% @athletes.each do |a| %>
@@ -32,11 +31,10 @@
             </table>
 					</div>
 				</div>   
-			</ul>
       <% if isAdmin? %>
   			<div class="row">
-  				<div class="span8 offset4">
-  					<%= link_to "Add Athlete", new_sport_athlete_path(@sport), class: "btn btn-medium btn-primary" %>
+  				<div class="col-xs-2 col-xs-offset-5">
+  					<%= link_to "Add Athlete", new_sport_athlete_path(@sport), class: "btn btn-sm btn-primary" %>
   				</div>
   			</div>
       <% end %>

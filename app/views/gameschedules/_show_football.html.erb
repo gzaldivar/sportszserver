@@ -49,12 +49,12 @@
 <p>
 <% @gamelogs.each do |g| %>
 	<div class="row">
-		<div class="span8">
+		<div class="col-xs-8">
 		 	<%= g.logentrytext %>
 		 	<% if isAdmin? or isTeamManager?(@gameschedule) %>
-		 		<%= link_to "Edit", edit_sport_team_gameschedule_gamelog_path(@sport, @team, @gameschedule, g), class: "btn btn-mini btn-warning" %>
+		 		<%= link_to "Edit", edit_sport_team_gameschedule_gamelog_path(@sport, @team, @gameschedule, g), class: "btn btn-xs btn-warning" %>
 		 		<%= link_to "Delete", [@sport, @team, @gameschedule, g], method: :delete,
-		 					class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %>
+		 					class: "btn btn-xs btn-danger", data: { confirm: "You sure?" } %>
 		 	<% end %>
 		 </div>
 	</div>
@@ -64,7 +64,7 @@
 		<em>Score entries are added automatically when you add scoring stats and automatically computed . You can override the and edit the entries below.</em>
 		<h5>Be careful entering game log data manually. If you create or update a log entry your stats can get out of sync. If you want to edit an existing log entry, it is much better to delete the entry and update the stats for the players involved in the score. The system will automatically generate a new log. If you want to enter a new log entry, you should update the stats for the players involved and let the system generate the log entry.</h5>
 		<%= link_to "New Gamelog", new_sport_team_gameschedule_gamelog_path(@sport, @team, @gameschedule), 
-	  					class: "btn btn-medium btn-warning" %>
+	  					class: "btn btn-sm btn-warning" %>
 		<!--%= render "gamelogs/gamelog_form" %-->
 		<br>
 <% end %>

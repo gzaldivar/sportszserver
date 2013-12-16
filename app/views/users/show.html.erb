@@ -1,17 +1,17 @@
 <% provide(:title, 'User ' + @user.name) %>
 <p>
 <div class="row">
-	<div class="span10" id="backcolor">
+	<div class="col-xs-11">
       	<% if @user.admin and !current_site.nil?%>
       		<div class="row">
-      			<div class="span8 offset1">
+      			<div class="col-xs-8 ">
       				<h4>Administrator for <%= current_site.sitename %></h4>
       			</div>
       		</div>
       	<% end %>
       	<p>
       	<div class="row">
-      		<div class="span3 offset1">
+      		<div class="col-xs-4">
       			<h5><em>Avatar:</em></h5>
 				<% if @user.avatarprocessing? %>
 					<h4><em><font color="red">Processing new logo .....</font></em></h4>
@@ -25,7 +25,7 @@
 				<h5>Change image</h5>
 				<%= s3_uploader_form callback_url: createavatar_user_path, callback_param: "user[image_url]", callback_method: "PUT",
 				         key: "uploads/usersphotos/#{@user.id}/${filename}", id:  "myS3Uploader" do %>
-				  <%= file_field_tag :file %>
+				  <%= file_field_tag :file, class: 'form-control' %>
 				<% end %>
 				<script id="template-upload" type="text/x-tmpl">
 				  <div id="file-{%=o.unique_id%}" class="upload">
@@ -34,27 +34,27 @@
 				  </div>
 				</script>    
 		    </div>
-		    <div class="span2 offset1">
+		    <div class="col-xs-2">
 		      	<strong>Username: </strong><em><%= @user.name %></em><p>
 		      	<strong>Mobile Tier: </strong><em><font color="red"><%= @user.tier %></font></em>
 		    </div>
-		    <div class="span2 offset1">
+		    <div class="col-xs-2 col-xs-offset-1">
 	      		<strong>Email: </strong><em><%= @user.email %></em><p>
 		    </div>
 		</div>
       	<p>
       	<div class="row">
-      		<div class="span3 offset1">
+      		<div class="col-xs-3">
 		      	<% if !@user.default_site .nil? %>
 		      		<strong>Member of Site: </strong><em><%= link_to Sport.find(@user.default_site).sitename, sport_path(@user.default_site) %></em>
 		      	<% end %>
 		    </div>
-		    <div class="span2 offset1">
+		    <div class="col-xs-2 col-xs-offset-1">
 		      	<% if !@user.teamid.nil? and !@user.teamid.blank? %>
 		      		Team Manager: <%= find_team(@user.teamid).team_name %>
 		      	<% end %>
 		    </div>
-		    <div class="span2 offset1">
+		    <div class="col-xs-2 col-xs-offset-1">
 		    	<strong>User: </strong><em>
 		      	<% if @user.is_active %>
 		      		Enabled
@@ -66,50 +66,50 @@
 		</div>
       	<p>
       	<div class="row">
-      		<div class="span4 offset1">
+      		<div class="col-xs-4">
 				<h4>Athlete Alert Options:</h4>
 			</div>
-			<!--div class="span2 offset1">
+			<!--div class="col-xs-2 col-xs-offset-1">
 				<h4><%= @user.authentication_token %></h4>
 			</div-->
 		</div>
 		<div class="row">
-			<div class="span3 offset1">
+			<div class="col-xs-3">
 				<strong>Enable Bio Alerts: </strong><%= @user.bio_alert %>
 			</div>
-			<div class="span2 offset1">
+			<div class="col-xs-2 col-xs-offset-1">
 				<strong>Enable Blog Alerts: </strong><%= @user.blog_alert %>
 			</div>
-			<div class="span2 offset1">
+			<div class="col-xs-2 col-xs-offset-1">
 				<strong>Enable Stat Alerts: </strong><%= @user.stat_alert %>
 			</div>
 		</div>
 		<p>
 		<div class="row">
-			<div class="span4 offset1">
+			<div class="col-xs-4">
 				<strong>Enable Scoring Alerts: </strong><%= @user.score_alert %>
 			</div>
-			<div class="span2 offset3">
+			<div class="col-xs-2 col-xs-offset-3">
 				<strong>Enable Media Alerts: </strong><%= @user.media_alert %>
 			</div>
 		</div>
 		<p>
 		<div class="row">
-			<div class="span4 offset3">
+			<div class="col-xs-1 col-xs-offset-5">
 				<% if (!current_user.nil?  and !current_site.nil? and (@user.id == current_user.id)) or isAdmin? %>
-				    <%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-medium btn-primary" %>
+				    <%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-sm btn-primary" %>
 				<% end %>
 				<% if isUserAdmin?(@user) or isAdmin? %>
 					<% if @user.is_active and !@user.admin %>
-						<td><%= link_to "Disable User", disable_user_path(@user), class: "btn btn-medium btn-danger" %></td>
+						<td><%= link_to "Disable User", disable_user_path(@user), class: "btn btn-sm btn-danger" %></td>
 					<% elsif !@user.admin %>
-						<td><%= link_to "Enable User", enable_user_path(@user), class: "btn btn-medium btn-danger" %></td>
+						<td><%= link_to "Enable User", enable_user_path(@user), class: "btn btn-sm btn-danger" %></td>
 					<% end %>
 				<% end %>
 	      	</div>
 	    </div>
     	<div class="row">
-  			<div class="span4">
+  			<div class="col-xs-4">
         		<% if @user.confirmed_at.nil? %>
           			<h3>An email has been sent to <%= @user.email %>. Please confirm your account by replying to the email.</h3>
         		<% end %>
@@ -118,12 +118,12 @@
       	<p>
       	<% if !current_site.nil? %> 
 	      	<div class="row">
-				<div class="span4 offset3">
+				<div class="col-xs-6">
 					Click here to go back to <em><strong>
 					<%= link_to current_site.sitename, sport_path(current_site) %></strong></em>.<br/>
 				</div>
 				<% if @user.godmode? %>
-					<div class="span2 offset1">
+					<div class="col-xs-2 col-xs-offset-1">
 						<%= link_to "Start Cleanup Queues", cleanup_user_path(@user) %>
 					</div>
 				<% end %>

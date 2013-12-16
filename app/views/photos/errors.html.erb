@@ -1,7 +1,7 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + " - Photo Errors") %>
 <p>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-10">
 		<table class="table table-hover">
 		    <thead>
 			    <tr>
@@ -39,14 +39,14 @@
 			</tbody>
 		</table>
 		<div class="row">
-			<div class="span2">
+			<div class="col-xs-2">
 				<h5>Error Description:</h5>
 			</div>
-			<div class="span6">
+			<div class="col-xs-6">
 				<em><%= @error.error_message %></em>
 			</div>
-			<div class="span1 offset1">
-				<%= link_to "Clear", clear_error_sport_photos_path(sport_id: @sport, id: @photo), class: "btn btn-medium btn-info", 
+			<div class="col-xs-1 col-xs-offset-1">
+				<%= link_to "Clear", clear_error_sport_photos_path(sport_id: @sport, id: @photo), class: "btn btn-sm btn-info", 
                   			data: { confirm: "Clear photo error?" } %>
             </div>
 		</div>

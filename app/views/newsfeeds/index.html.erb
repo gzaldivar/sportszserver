@@ -1,33 +1,33 @@
 <% provide(:title, current_site.sitename + " - All News") %>
 <p>
 <div class="row">
-  <div class="span10 offset1">
+  <div class="col-xs-11">
     <%= render 'newsfeed', feed: @newsfeeds %>
   </div>
 </div>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-11">
 		<% if @newsfeeds.any? %>
 		    <div class="row">
-		      	<div class="span2 offset1">
+		      	<div class="col-xs-3">
 		  			<%= form_tag sport_newsfeeds_path(@sport), method: :get, class: "form-horizontal" do %>
 		        		<h5>Filter News by Athlete:</h5>
 		        		<%= select_tag "player", options_from_collection_for_select(@athletes, "id", "full_name"), :include_blank => true %>
-		        		<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+		        		<%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 		  			<% end %>
 		      	</div>
-		      	<div class="span2 offset1">
+		      	<div class="col-xs-3">
 		  			<%= form_tag sport_newsfeeds_path(@sport), method: :get, class: "form-horizontal" do %>
 			        	<h5>Filter News by Coach:</h5>
 			        	<%= select_tag "coachname", options_from_collection_for_select(@coaches, "id", "full_name"), :include_blank => true %>
-			        	<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+			        	<%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 			  		<% end %>
 			     </div>
-		      	<div class="span2 offset1">
+		      	<div class="col-xs-3">
 		  			<%= form_tag sport_newsfeeds_path(@sport), method: :get, class: "form-horizontal" do %>
 		        		<h5>Filter News by Team:</h5>
-		        		<%= select_tag "teamname", options_from_collection_for_select(@sport.teams, "id", "team_name"), :include_blank => true %>
-				        <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+		        		<%= select_tag "teamname", options_from_collection_for_select(@sport.teams, "id", "team_name"), :include_blank => true, { class: 'form-control' } %>
+				        <%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 				  	<% end %>
 		      	</div>
 		    </div><p>
@@ -36,9 +36,9 @@
 		<% end %>
 <div class="row">
 	<%= render 'layouts/sponsor' %>
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
 		<% if isAdmin? %>
-		  <%= link_to "Add News Item", new_sport_newsfeed_path(@sport), class: "btn btn-medium btn-primary" %>
+		  <%= link_to "Add News Item", new_sport_newsfeed_path(@sport), class: "btn btn-sm btn-primary" %>
 		<% end %>
 	</div>
 </div>

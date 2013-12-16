@@ -1,7 +1,7 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + " - New Photo") %>
 <p>
 <div class="row">
-	<div class="span8 offset1">
+	<div class="col-xs-8 col-xs-offset-1">
 		<h3>
 		<% if @team %>
 			<%= @team.team_name %>
@@ -20,7 +20,7 @@
 </div>
 <p>
 <div class="row">
-	<div class="span8 offset1">
+	<div class="col-xs-8 col-xs-offset-1">
     <br/>
     Upload photos.<p><p>
       Photo scaling will be processed in the background. Your photo will also be sized for display on mobile devices and other platforms.<p>
@@ -39,7 +39,7 @@
     
     <%= s3_uploader_form callback_url: sport_photos_url, callback_param: "photo[image_url]", 
      					 key: "uploads/photos/#{@id}/#{@prefix}/${filename}", id:  "myS3Uploader" do %>
-      <%= file_field_tag :file, multiple: true %>
+      <%= file_field_tag :file, multiple: true, class: 'form-control' %>
     <% end %>
     
 	<script id="template-upload" type="text/x-tmpl">

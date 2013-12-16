@@ -1,7 +1,7 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + " - New Basketball Stats") %>
 <p>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-10">
 		<% if @gameschedule.nil? %>
 			<h4>Select game to add stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %>:</h4>
 			<p>
@@ -9,14 +9,14 @@
 				<%= label_tag "Select Game" %>
 				<%= select_tag "gameschedule_id", options_from_collection_for_select(@games, "id", "game_name") %>
 				<%= select_tag "livestats", options_for_select(["Live", "Totals"]) %>
-				<%= submit_tag "Submit", class: "btn btn-medium btn-primary", name: nil %>
+				<%= submit_tag "Submit", class: "btn btn-sm btn-primary", name: nil %>
 			<% end %>
 		<% elsif @live.nil? and @gameschedule %>
 			<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule_id]) %>:</h4>
 			<%= form_tag newstat_sport_athlete_basketball_stats_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
 				<%= hidden_field_tag "gameschedule_id", value=@gameschedule.id %>
 				<%= select_tag "livestats", options_for_select(["Live", "Totals"]) %>
-				<%= submit_tag "Submit", class: "btn btn-medium btn-primary", name: nil %>
+				<%= submit_tag "Submit", class: "btn btn-sm btn-primary", name: nil %>
 		    <% end %>
 		<% elsif !@athlete.nil? %>
 			<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule_id]) %>:</h4>
@@ -32,8 +32,8 @@
 				<% end %>
 		    	<p>
 			    <div class="row">
-					<div class="span1 offset4">
-						<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+					<div class="col-xs-1 col-xs-offset-4">
+						<%= f.button :submit, 'Submit', class:	"btn btn-sm btn-primary" %>
 			        </div>
 				</div>
 			<% end %>

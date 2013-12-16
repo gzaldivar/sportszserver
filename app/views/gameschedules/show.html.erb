@@ -1,7 +1,7 @@
 <% provide(:title, current_site.sitename + " " + @sport.sportname + " - Schedule Details") %>
 <p>
 <div class="row">
-  	<div class="span10">
+  	<div class="col-xs-11">
 		  <h4>
        		Date: <%= @gameschedule.gamedate.strftime("%m/%d/%Y") %>
        		<p>
@@ -24,8 +24,8 @@
 	  	<% if isAdmin? or isTeamManager?(@gameschedule) %>
 	  		<div class="center">
 	  			<%= link_to "Edit", edit_sport_team_gameschedule_path(@sport, @team, @gameschedule), 
-	  					class: "btn btn-medium btn-warning" %>
-	  			<%= link_to "Delete", [@sport, @team, @gameschedule],  method:	:delete, class: "btn btn-medium btn-danger",
+	  					class: "btn btn-sm btn-warning" %>
+	  			<%= link_to "Delete", [@sport, @team, @gameschedule],  method:	:delete, class: "btn btn-sm btn-danger",
 	  			 		data: { confirm: "You sure?" } %>
 				<%= link_to "Add", new_sport_team_gameschedule_path(@sport, @team), class: "btn btn-primary" %>	
 			</div>

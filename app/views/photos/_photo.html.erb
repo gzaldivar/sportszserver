@@ -1,6 +1,6 @@
 <% if isTeamManager?(photo.teamid) %>
 	<div class="row">
-		<div class="span6 offset2">
+		<div class="col-xs-6 col-xs-offset-2">
 			As a team manager you click approve below to make the photos available to users. If you do not want to approve a photo, click on the photo to delete it.
 		</div>
 	</div>
@@ -28,13 +28,13 @@
 		<tbody>
 		  <tr>
 			<div class="row">
-				<div class="span2">
+				<div class="col-xs-2">
 				    <% if !photo.processing && !photo.thumbnail_url.nil? and !photo.pending %>
-				      <td><%= link_to image_tag(photo.thumbnail_url), sport_photo_path(@sport, photo) %>
+				      <td><%= link_to image_tag(photo.thumbnail_url, :height => '100', :width => '100'), sport_photo_path(@sport, photo) %>
 					<% elsif !photo.original_url.nil? and !photo.pending %>
-					  <td><%= link_to image_tag(photo.original_url), sport_photo_path(@sport, photo) %>
+					  <td><%= link_to image_tag(photo.original_url, :height => '100', :width => '100'), sport_photo_path(@sport, photo) %>
 				    <% else %>
-				      <td><%= image_tag('Photo_Not_Available.jpg') %></td>
+				      <td><%= image_tag('Photo_Not_Available.jpg', :height => '100', :width => '100') %></td>
 				    <% end %>
 				</div>
 			</div>
@@ -75,7 +75,7 @@
 		    <% end %>
 		    <% if @sport.review_media? %>
 			    <% if @photo.pending and user_signed_in? and isTeamManager?(@photo.teamid) %>
-			    	<td><%= link_to "Approve?", approval_sport_photo_path(@sport, @photo), class: "btn btn-mini btn-primary" %></td>
+			    	<td><%= link_to "Approve?", approval_sport_photo_path(@sport, @photo), class: "btn btn-xs btn-primary" %></td>
 			    <% else %>
 			    	<td><%= @photo.pending %></td>
 			    <% end %>

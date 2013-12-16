@@ -1,7 +1,7 @@
 <p>
 <!--font color="#b3f10c"-->
 <div class="row">
-	<div class="span10" style="background-color:#ffffff;position:relative;top:0">
+	<div class="col-xs-10" style="background-color:#ffffff;position:relative;top:0">
 	 	<ul>
 			<li>Create and manage your athletic site in the cloud and make your programs sports content avaiable to your fans via our mobile app!</li>
 			<li>Follow players updates to their bios, stats, photos, videos and more!</li>
@@ -29,10 +29,10 @@
 		<p>
 		<h4><em><strong>Examples of the kinds of sites you can create to manange your sports program include:</strong></em></h4>
 		<div class="row">
-			<div class="span4">
+			<div class="col-xs-4">
 				Create a Single Team Site. Use this site to manage your teams content. Everything you enter on this site will be available to your users via our mobile app.
 			</div>
-			<div class="span4 offset1">
+			<div class="col-xs-4 col-xs-offset-1">
 				Create a Multi Team Site. This is useful for high school programs (e.g. Varsity, JV, Freshman) or for youth programs that have multiple teams (e.g. Mighty Mite, Jr. Pee Wee, Pee Wee, etc.). Your users will be able to choose the team they are interested in our  mobile app or switch between teams in your program.
 			</div>
 		</div>
@@ -40,31 +40,31 @@
 </div>
 <p>
 <div class="row">
-	<div class="span4">
+	<div class="col-xs-4">
 		<%= image_tag "singlesport.jpg" %>
 	</div>
-	<div class="span4 offset1">
+	<div class="col-xs-4 col-xs-offset-1">
 		<%= image_tag "onesportmulti.jpg" %>
 	</div>
 </div>
 <p>
 <!--div class="row">
-	<div class="span8">
+	<div class="col-xs-8">
 		<h4>Multi Sport Site:</h4>
 		<%= image_tag "multisport.jpg" %>
 	</div>
 </div-->
 <div class="row" style="background-color:#ffffff;position:relative;top:0">
-	<div class="span10">
+	<div class="col-xs-10">
 		<h4><%= link_to "Click here", mobileinfo_sites_path %> to see what our mobile apps can do</h4>
 		<div class="row">
-			<div class="span4">	
+			<div class="col-xs-4">	
 		    	Clicking below will register you and you will become the administrator for the site:<p>
-				<%= link_to "Create Admin", new_user_registration_path, class: "btn btn-medium btn-primary" %>
+				<%= link_to "Create Admin", new_user_registration_path, class: "btn btn-sm btn-primary" %>
 			</div>
-		    <div class="span5">
+		    <div class="col-xs-5">
 			    If you are looking for a site powered by SportzSoftware, click below to find the site.<p>
-				<%= link_to "Search", sites_path, class: "btn btn-medium btn-primary" %>
+				<%= link_to "Search", sites_path, class: "btn btn-sm btn-primary" %>
 			</div>
 		</div>
 	</div>

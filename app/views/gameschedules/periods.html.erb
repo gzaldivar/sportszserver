@@ -1,24 +1,24 @@
 <% provide(:title, current_site.sitename + " " + @sport.name ) %>
 <p>
 <div class="row">
-	<div class="span10 offset1">
+	<div class="col-xs-10 col-xs-offset-1">
 		<h3>Eazesportz Basketball - Enter number of halfs, quarters, etc.</h3>
 	</div>
 </div>
 <div class="row">
-	<div class="span10 offset1">
+	<div class="col-xs-10 col-xs-offset-1">
 		<%= form_tag defineperiods_sport_team_gameschedules_path(sport_id: @sport, team_id: @team), class: "form-horizontal", method: 'put' do %>
 			<%= render 'shared/error_messages', object: @sport %>
 			<div class="row">
-				<div class="span4 offset2">
+				<div class="col-xs-4 col-xs-offset-2">
 					<%= label_tag "Periods:" %>
 					<%= text_field_tag  "periods" %>
 				</div>
 			</div>
 			<p>
 			<div class="row">
-				<div class="span1 offset2">
-					<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+				<div class="col-xs-1 col-xs-offset-2">
+					<%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 				</div>
 			</div>
 		<% end %>

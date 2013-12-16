@@ -15,72 +15,75 @@
 <p>
 <% if user_signed_in? %>
 	<div class="row">
-		<div class="span2 offset6">
-			<%= link_to "New Blog Entry", newteamblog_sport_blogs_path(@sport, team_id: @team.id.to_s), class: "btn btn-medium btn-primary" %>
+		<div class="col-xs-2 col-xs-offset-6">
+			<%= link_to "New Blog Entry", newteamblog_sport_blogs_path(@sport, team_id: @team.id.to_s), class: "btn btn-sm btn-primary" %>
 		</div>
 	</div>
 <% end %>
 <div class="row">
-  <div class="span10 offset1">
+  <div class="col-xs-11">
     <%= render 'blog', blog: @blogs %>
   </div>
 </div>
 <%= hidden_field_tag 'team_id', @team.id %>
 <% if user_signed_in? %>
 	<div class="row">
-		<div class="span2 offset6">
-			<%= link_to "New Blog Entry", newteamblog_sport_blogs_path(@sport, team_id: @team.id.to_s), class: "btn btn-medium btn-primary" %>
+		<div class="col-xs-2 col-xs-offset-6">
+			<%= link_to "New Blog Entry", newteamblog_sport_blogs_path(@sport, team_id: @team.id.to_s), class: "btn btn-sm btn-primary" %>
 		</div>
 	</div>
 <% end %>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-11">
 		<% if @blogs.any? %>
 		    <div class="row">
-		      	<div class="span2 offset1">
+		      	<div class="col-xs-2 col-xs-offset-1">
 		  			<%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
 		        		<h5>Filter Blog by Athlete:</h5>
 		        		<%= hidden_field_tag 'team_id', @team.id.to_s %>
-		        		<%= select_tag "player", options_from_collection_for_select(@athletes, "id", "full_name"), :include_blank => true %>
-		        		<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+		        		<%= select_tag "player", options_from_collection_for_select(@athletes, "id", "full_name"), :include_blank => true,
+		        		 						class: 'form-control' %>
+		        		<%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 		  			<% end %>
 		      	</div>
-		      	<div class="span2 offset1">
+		      	<div class="col-xs-2 col-xs-offset-1">
 		  			<%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
 			        	<h5>Filter Blog by Coach:</h5>
 		        		<%= hidden_field_tag 'team_id', @team.id.to_s %>
-			        	<%= select_tag "coachname", options_from_collection_for_select(@coaches, "id", "full_name"), :include_blank => true %>
-			        	<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+			        	<%= select_tag "coachname", options_from_collection_for_select(@coaches, "id", "full_name"), :include_blank => true,
+			        					class: 'form-control' %>
+			        	<%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 			  		<% end %>
 			     </div>
 			 </div>
 			 <div class="row">
-		      	<div class="span2 offset1">
+		      	<div class="col-xs-2 col-xs-offset-1">
 		  			<%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
 		        		<h5>Filter Blog by Team:</h5>
 		        		<%= hidden_field_tag 'team_id', @team.id.to_s %>
-		        		<%= select_tag "teamname", options_from_collection_for_select(@sport.teams, "id", "team_name"), :include_blank => true %>
-				        <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+		        		<%= select_tag "teamname", options_from_collection_for_select(@sport.teams, "id", "team_name"), :include_blank => true,
+		        						class: 'form-control' %>
+				        <%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 				  	<% end %>
 		      	</div>
 		      	<% if !@gameschedules.nil? %>
-			      	<div class="span2 offset1">
+			      	<div class="col-xs-2 col-xs-offset-1">
 			  			<%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
 			        		<h5>Filter Blog by Game:</h5>
 		        			<%= hidden_field_tag 'team_id', @team.id.to_s %>
 			        		<%= select_tag "gamename", options_from_collection_for_select(@gameschedules, "id", "game_name"), :include_blank => true, 
-			        						id: "select_game" %>
-					        <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+			        						id: "select_game", class: 'form-control' %>
+					        <%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 					  	<% end %>
 			      	</div>
 			      	<% if @sport == "Football" %>
-				      	<div class="span2 offset1">
+				      	<div class="col-xs-2 col-xs-offset-1">
 				  			<%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
 				        		<h5>Filter Blog by Game:</h5>
 			        			<%= hidden_field_tag 'team_id', @team.id.to_s %>
 				        		<%= select_tag "gamelog", options_from_collection_for_select(@gamelogs, "id", "logentrytext"), :include_blank => true, 
-				        					 id: "gamelogs_select" %>
-						        <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+				        					 id: "gamelogs_select", class: 'form-control' %>
+						        <%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 						  	<% end %>
 				      	</div>
 				      <% end %>

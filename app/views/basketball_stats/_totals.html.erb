@@ -1,49 +1,49 @@
 <div class="row">
 	<%= f.input :gameschedule_id, as: :hidden, input_html: { value: @gameschedule.id.to_s } %>
 	<%= f.input :livestats, as: :hidden, input_html: { value: "Totals" } %>
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
 		<%= f.input :twoattempt, label: "FGA", input_html: { style: "width: 50px" } %>
 	</div>
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= f.input :twomade, label: "FGM", input_html: { style: "width: 50px" } %>
 	</div>
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= f.input :threeattempt, label: "3FGA", input_html: { style: "width: 50px" } %>
 	</div>
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= f.input :threemade, label: "3FGM", input_html: { style: "width: 50px" } %>
 	</div>
 </div>
 <div class="row">
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
 		<%= f.input :ftattempt, label: "FTA", input_html: { style: "width: 50px" } %>
 	</div>
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= f.input :ftmade, label: "FTM", input_html: { style: "width: 50px" } %>
 	</div>
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= f.input :fouls, label: "Fouls", input_html: { style: "width: 50px" } %>
 	</div>
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= f.input :assists, label: "Assists", input_html: { style: "width: 50px" } %>
 	</div>
 </div>
 <div class="row">
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
 		<%= f.input :steals, label: "Steals", input_html: { style: "width: 50px" } %>
 	</div>
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= f.input :blocks, label: "Blocks", input_html: { style: "width: 50px" } %>
 	</div>
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= f.input :offrebound, label: "Off Reb", input_html: { style: "width: 50px" } %>
 	</div>
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= f.input :defrebound, label: "Def Reb", input_html: { style: "width: 50px" } %>
 	</div>
 </div>
 <div class="row">
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
 		<%= f.input :turnovers, label: "Turnovers", input_html: { style: "width: 50px" } %>
 	</div>
 </div>

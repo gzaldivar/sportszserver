@@ -1,19 +1,19 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + " - Soccer Stats") %>
 <p>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-10">
 		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
 	</div>
 </div>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-10">
 		<% if !@athlete.nil? and !@gameschedule.nil? %>
 			<% if @stats.empty? %>
 				<h4>There are no stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> and 
 										   <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
 				<% if isAdmin? %>
 					<%= link_to "Add Stat", new_sport_athlete_soccer_path(@sport, @athlete, gameschedule_id: @gameschedule), 
-							class: "btn btn-medium btn-primary" %>
+							class: "btn btn-sm btn-primary" %>
 				<% end %>
 			<% else %>
 				<h4>Stats for <%= @athlete.logname %> for game <%= @gameschedule.game_name %></h4>
@@ -35,7 +35,7 @@
 				<h4>There are no stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %></h4>
 				<% if isAdmin? %>
 				 	<%= link_to "Add Stats", new_sport_athlete_soccer_path(@sport, @athlete), 
-							class: "btn btn-medium btn-primary" %>
+							class: "btn btn-sm btn-primary" %>
 				<% end %>
 			<% else %>
 				<h4>Stats for <%= @athlete.logname %></h4>
@@ -84,7 +84,7 @@
 				<h4>There are no stats for <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
 				<% if isAdmin? %>
 					<%= link_to "Add Stats", new_sport_athlete_soccer_path(@sport, @athlete), 
-							class: "btn btn-medium btn-primary" %>
+							class: "btn btn-sm btn-primary" %>
 				<% end %>
 			<% else %>
 				<h4>Stats for game <%= @gameschedule.game_name %></h4>

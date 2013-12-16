@@ -1,16 +1,16 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-10">
 		<%= render 'tabs', header: "passing" %>
 		<p>
 		<% if params[:games].nil? %>
 			<div class="row">
-				<div class="span6">
+				<div class="col-xs-6">
 					<h4>Passing stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
 				</div>
 				<% if !@athlete.pic.blank? %>
-					<div class="span2 offset1">
+					<div class="col-xs-2 col-xs-offset-1">
 						<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
 					</div>
 				<% end %>
@@ -18,15 +18,15 @@
 			<p>
 			<%= render 'passing_totals', passing: @passing %>
 			<div class="row">
-				<div class="span8 offset2">
+				<div class="col-xs-8 col-xs-offset-2">
 					<% if isAdmin? or isTeamManager?(@athlete) %>
 						<%= link_to "Add Passing Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "passing"), 
-							class: "btn btn-small btn-info" %>
+							class: "btn btn-sm btn-info" %>
 					<% end %>&nbsp
 					<% if @stats.count > 0 %>
 						<em>Click here to enter play by play stats:</em>
 						<%= link_to "Game Stats", passing_sport_athlete_football_stats_path(@sport, @athlete, games: "games"), 
-							class: "btn btn-small btn-primary" %>
+							class: "btn btn-sm btn-primary" %>
 					<% end %>
 				</div>
 			</div>
@@ -66,9 +66,9 @@
 					</tbody>
 				</table>
 			<% end %>	
-			<div class="span4 offset4">
+			<div class="col-xs-4 col-xs-offset-4">
 				<%= link_to "Passing Totals", passing_sport_athlete_football_stats_path(@sport, @athlete, id: "passing"), 
-											class: "btn btn-mini btn-primary" %>
+											class: "btn btn-xs btn-primary" %>
 			</div>
 		<% end %>
 	</div>

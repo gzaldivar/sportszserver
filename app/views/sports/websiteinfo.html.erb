@@ -1,9 +1,9 @@
 <% provide(:title, "Eazesportz Football Web Site Example") %>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-12">
 		<h2>Eazesportz.com Web site</h2>
 		<p>
-		You can use our web site to manage your sports program. The example below is for a football program.
+		You can use our web site to manage your sports program.
 		<p>
 		You can upload a banner if you choose to use the web site giving it a customized look for your program. Your fans will also have access to all your programs contant via the web. There is no charge for using the web site although we will serve ads to your fans in the future.
 		<p>
@@ -14,97 +14,10 @@
 		<p>
 		All the features available in our iPad Management Console are available on the web site also. If you want to map your URL to your page on this site we can help you with that also. There is a cost of $99/yr to do so. 
 		<p>
-		<h5>Check out the examples below:</h5>
-
-		<h4><%= link_to "You can also click here to navigate our test site.", 
-						"http://powerful-everglades-2345.herokuapp.com/sports/522e2ff239ee2f58ca000004" %></h4>
-						<p>
-		<h4>Make sure to use username: <em><font color="blue"> footballeazesportz@gmail.com</font></em> password: <em><font color="blue">tester01</font></em>
+		<h5><%= link_to "Click here to navigate our test site.", "http://powerful-everglades-2345.herokuapp.com/sports/522e2ff239ee2f58ca000004" %>
+		</h5>
+		<h5>Make sure to use username: <em><p class="text-info"> footballeazesportz@gmail.com</p>
+		</em>Password: <em><p class="text-info">tester01</p></em>
 			when prompted. You will be able to navigate features available to registered users.</h4>
 	</div>
-</div>
-<div class="row">
-	<div class="span10">
-		<h5>Home Page with News Feed</h5>
-		This is the landing page your fans will see. When you sign up and upload a banner, your banner will be displayed.
-		<p>
-		You can create news, add teams and update your prgrams information as an administrator. Your fans will not see or have access to these capabilities.
-	</div>
-</div>
-<div class="row">
-	<div class="span10">
-		<%= image_tag "FB_web_home.png" %>
-	</div>
-</div>
-<div class="row">
-	<div class="span10">
-		<h5>Game Score Web Page</h5>
-		You can do everything on the web that our iPad Management Consoles can do. Whatever
-		you enter on the web your fans will be able to access on their iPhones!
-	</div>
-</div>
-<p>
-<div class="row">
-	<div class="span10">
-		<%= image_tag "FB_GameScore.png" %>
-	</div>
-</div>
-<div class="row">
-	<div class="span10">
-		<h5>Roster</h5>
-		Your fans can follow your players!
-	</div>
-</div>
-<p>
-<div class="row">
-	<div class="span10">
-		<%= image_tag "FB_roster.png" %>
-	</div>
-</div>
-<div class="row">
-	<div class="span10">
-		<h5>Live Blog Support!</h5>
-		Your fans can use the web for blogging in addition to our iPhone app. As administrator, you will also be able to manage the blog and keep track of what your fans are saying.
-	</div>
-</div>
-<p>
-<div class="row">
-	<div class="span10">
-		<%= image_tag "FB_blog.png" %>
-	</div>
-</div>
-<div class="row">
-	<div class="span10">
-		<h5>Photos ....</h5>
-		Your fans can use the web to access pics of your players, games, etc, in addition to our iPhone app.
-	</div>
-</div>
-<p>
-<div class="row">
-	<div class="span10">
-		<%= image_tag "FB_photos.png" %>
-	</div>
-</div>
-<p>
-<div class="row">
-	<div class="span10">
-		<h5>Videos ....</h5>
-		and fans can use the web to access videos of your players, games, etc, too in addition to our iPhone app.
-	</div>
-</div>
-<p>
-<div class="row">
-	<div class="span10">
-		<%= image_tag "FB_videos.png" %>
-	</div>
-</div>
-<p>
-<h5>and much more .......</h5>
-<div class="row">
-	<div class="span3">
-		<h4>Click here to sign up!</h4>
-	</div>
-	<div class="span2">
-	  	<%= link_to "Sign Up", admininfo_path, class: "btn btn-medium btn-primary" %>
-    </div>
 </div>

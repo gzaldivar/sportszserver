@@ -1,16 +1,16 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span9 offset1">
+	<div class="col-xs-9 col-xs-offset-1">
 		<%= render 'tabs', header: "specialteams" %>
 		<p>
 		<% if params[:games].nil? %>
 			<div class="row">
-				<div class="span6">
+				<div class="col-xs-6">
 					<h4>Special Team Stats for <em><%= link_to @athlete.full_name, [@sport, @athlete] %></em></h4>
 				</div>
 				<% if !@athlete.pic.blank? %>
-					<div class="span2 offset1">
+					<div class="col-xs-2 col-xs-offset-1">
 						<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
 					</div>
 				<% end %>
@@ -57,28 +57,28 @@
 			<% end %>
 			<br/><p>
 			<div class="row">
-				<div class="span10 offset1">
+				<div class="col-xs-10 col-xs-offset-1">
 					<% if isAdmin? or isTeamManager?(@athlete) %>
 						<%= link_to "Add Place Kicker Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Kicker"), 
-									class: "btn btn-mini btn-info" %>
+									class: "btn btn-xs btn-info" %>
 						<%= link_to "Add Kickoff Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Kickoff"), 
-									class: "btn btn-mini btn-info" %>
+									class: "btn btn-xs btn-info" %>
 						<%= link_to "Add Punter Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Punter"), 
-									class: "btn btn-mini btn-info" %>
+									class: "btn btn-xs btn-info" %>
 						<%= link_to "Add Kick Returner Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Kick Returner"), 
-									class: "btn btn-mini btn-info" %>
+									class: "btn btn-xs btn-info" %>
 						<%= link_to "Add Punt Returner Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "Punt Returner"), 
-									class: "btn btn-mini btn-info" %>
+									class: "btn btn-xs btn-info" %>
 					<% end %>
 				</div>
 			</div>
 			<p>
 			<% if @stats.count > 0 %>
 				<div class="row">
-					<div class="span10 offset1">
+					<div class="col-xs-10 col-xs-offset-1">
 							<em>Click here to enter play by play stats!</em>
 							<%= link_to "Game Stats", specialteams_sport_athlete_football_stats_path(@sport, @athlete, games: "games"), 
-								class: "btn btn-small btn-primary" %>
+								class: "btn btn-sm btn-primary" %>
 					</div>
 				</div>
 			<% end %>

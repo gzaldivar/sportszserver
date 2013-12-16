@@ -1,26 +1,26 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">   
-  <div class="span10">
+  <div class="col-xs-11">
 		<%= render 'shared/error_messages', object:	@athlete %>
 	</div>
 </div>
 <% if signed_in? %>
   <div class="row">
     <h4>
-      <div class="span5">
+      <div class="col-xs-5">
         <% if !@athlete.fans.empty? and @athlete.fans.include?(current_user.id) %>
           You are following this player:&nbsp
-          <%= link_to "Stop Following", unfollow_sport_athlete_path(@sport, @athlete),  class: "btn btn-medium btn-info" %><p>
+          <%= link_to "Stop Following", unfollow_sport_athlete_path(@sport, @athlete),  class: "btn btn-sm btn-info" %><p>
         <% else %>
           Follow this player?&nbsp
-          <%= link_to "Follow", follow_sport_athlete_path(@sport, @athlete),  class: "btn btn-medium btn-info" %><p>
+          <%= link_to "Follow", follow_sport_athlete_path(@sport, @athlete),  class: "btn btn-sm btn-info" %><p>
         <% end %>
       </div>
       <p>
-      <div class="span4 offset1">
+      <div class="col-xs-4 col-xs-offset-1">
         <% if hasAlerts?(@athlete, current_user) %>
-          <%= link_to "Alerts", sport_athlete_alerts_path(@sport, @athlete), class: "btn btn-medium btn-inverse" %>
+          <%= link_to "Alerts", sport_athlete_alerts_path(@sport, @athlete), class: "btn btn-sm btn-inverse" %>
         <% end %>
       </div>
     </h4>
@@ -30,7 +30,7 @@
   <div id="photo">
       <%= render 'athletes/photo', athlete: @athlete %>
   </div>
-  <div class="span6">
+  <div class="col-xs-7">
     <div class="row">
       <table class="table">
       	<thead> 
@@ -75,12 +75,12 @@
     				<% end %>
             <td>
               <% if Photo.where(players: @athlete.id.to_s).any? %>
-              	<%= link_to "Photos", sport_photos_path(@sport, athlete: { id: @athlete.id } ), class: "btn btn-mini btn-primary" %>              
+              	<%= link_to "Photos", sport_photos_path(@sport, athlete: { id: @athlete.id } ), class: "btn btn-xs btn-primary" %>              
               <% end %>
             </td>
             <td>
               <% if Videoclip.where(players: @athlete.id.to_s).any? %>
-                <%= link_to "Videos", sport_videoclips_path(@sport, athlete: { id: @athlete.id } ), class: "btn btn-mini btn-primary" %>              
+                <%= link_to "Videos", sport_videoclips_path(@sport, athlete: { id: @athlete.id } ), class: "btn btn-xs btn-primary" %>              
               <% end %>
             </td>
       		</tr>
@@ -90,14 +90,14 @@
   </div>
   <p>
   <div class="row">
-    <div class="span4 offset2">
+    <div class="col-xs-4 col-xs-offset-2">
       <% if @sport.has_stats? %>
         <% if @sport.sportname == "Football" %>
-          <%= link_to "Stats", playerstats_sport_athlete_path(@sport, @athlete), class:  "btn btn-medium btn-primary" %>
+          <%= link_to "Stats", playerstats_sport_athlete_path(@sport, @athlete), class:  "btn btn-sm btn-primary" %>
         <% elsif @sport.sportname == "Basketball" %>
-          <%= link_to "Stats", sport_athlete_basketball_stats_path(@sport, @athlete), class:  "btn btn-medium btn-primary" %>
+          <%= link_to "Stats", sport_athlete_basketball_stats_path(@sport, @athlete), class:  "btn btn-sm btn-primary" %>
         <% elsif @sport.sportname == "Soccer" %>
-          <%= link_to "Stats", sport_athlete_soccers_path(@sport, @athlete), class:  "btn btn-medium btn-primary" %>
+          <%= link_to "Stats", sport_athlete_soccers_path(@sport, @athlete), class:  "btn btn-sm btn-primary" %>
         <% end %>
       <% end %>
     </div>
@@ -105,26 +105,26 @@
 </div>
 <p>
 <div class="row">
-	<div class="span4 offset1">
+	<div class="col-xs-4 col-xs-offset-1">
 		<h3>Athletes Bio:</h3><p>
 		<%= @athlete.bio %>
 	</div>
 </div>
 <p>
 <div class="row">
-  <div class="span7 offset3">
+  <div class="col-xs-7 col-xs-offset-3">
     <% if user_signed_in? and (user_pics_ok? or isAdmin? or isTeamManager?(@athlete)) and !@athlete.team_id.nil? %>
-		  <%= link_to	"Add Photo", newathlete_sport_photo_path(@sport, @athlete), class:	"btn btn-medium btn-primary" %>&nbsp;  
+		  <%= link_to	"Add Photo", newathlete_sport_photo_path(@sport, @athlete), class:	"btn btn-sm btn-primary" %>&nbsp;  
     <% end %>
     <% if user_signed_in? and (user_videos_ok? or isAdmin? or isTeamManager?(@athlete)) and !@athlete.team_id.nil? %>
-		  <%= link_to	"Add Video", newathlete_sport_videoclip_path(@sport, @athlete), class:	"btn btn-medium btn-primary" %>&nbsp;  
+		  <%= link_to	"Add Video", newathlete_sport_videoclip_path(@sport, @athlete), class:	"btn btn-sm btn-primary" %>&nbsp;  
     <% end %>
     <% if isAdmin? or isTeamManager?(@athlete) %>
-      	<%= link_to "Edit", edit_sport_athlete_path(@sport, @athlete),  class: "btn btn-medium btn-warning" %>&nbsp;
-        <%= link_to "Add News", new_sport_newsfeed_path(@sport),  class: "btn btn-medium btn-info" %>&nbsp;
+      	<%= link_to "Edit", edit_sport_athlete_path(@sport, @athlete),  class: "btn btn-sm btn-warning" %>&nbsp;
+        <%= link_to "Add News", new_sport_newsfeed_path(@sport),  class: "btn btn-sm btn-info" %>&nbsp;
     <% end %>
     <% if isAdmin? %>
-			 <%= link_to "Delete", sport_athlete_path(@sport, @athlete),  method:	:delete,  class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>&nbsp;
+			 <%= link_to "Delete", sport_athlete_path(@sport, @athlete),  method:	:delete,  class: "btn btn-sm btn-danger", data: { confirm: "You sure?" } %>&nbsp;
 		<% end %>
   </div>
 </div>

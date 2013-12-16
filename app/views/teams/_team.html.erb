@@ -25,9 +25,9 @@
           <% end %>
         </td>
         <% if isAdmin? %>
-          <td><%= link_to "Change logo", teamlogo_sport_team_path(@sport, t), class: "btn btn-mini btn-primary" %></td>
-          <td><%= link_to "Edit", edit_sport_team_path(sport, t), class: "btn btn-mini btn-primary" %></td>
-          <td><%= link_to "Delete", sport_team_path(sport, t),  method: :delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure? All game schedules will be deleted. Athletes assigned to this team will be unassigned." } %></td>
+          <td><%= link_to "Change logo", teamlogo_sport_team_path(@sport, t), class: "btn btn-xs btn-primary" %></td>
+          <td><%= link_to "Edit", edit_sport_team_path(sport, t), class: "btn btn-xs btn-primary" %></td>
+          <td><%= link_to "Delete", sport_team_path(sport, t),  method: :delete, class: "btn btn-xs btn-danger", data: { confirm: "You sure? All game schedules will be deleted. Athletes assigned to this team will be unassigned." } %></td>
         <% end %>
       </em>
      </tr>

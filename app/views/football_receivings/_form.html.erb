@@ -1,38 +1,38 @@
 <%= simple_form_for [@sport, @athlete, @stat, @receiving] do |f| %>
 	<%= render 'shared/error_messages', object: @receiving %>
 	<div class="row">
-		<div class="span2">
+		<div class="col-xs-2">
 			<%= f.input :livestats, as: :hidden, :input_html => { :value => "Totals" } %>
 			<%= f.input :receptions, required: true %>
 		</div>
-		<div class="span2 offset1">
+		<div class="col-xs-2 col-xs-offset-1">
 			<%= f.input :yards, required: true %>
 		</div>
-		<div class="span2 offset1">
+		<div class="col-xs-2 col-xs-offset-1">
 			<%= f.input :longest %>
 		</div>
 	</div>
 	<div class="row">
-		<div class="span2">
+		<div class="col-xs-2">
 			<%= f.input :td, label: "Touchdowns" %>
 		</div>
-		<div class="span2 offset1">
+		<div class="col-xs-2 col-xs-offset-1">
 			<%= f.input :firstdowns %>
 		</div>
-		<div class="span2 offset1">
+		<div class="col-xs-2 col-xs-offset-1">
 			<%= f.input :fumbles %>
 		</div>
 	</div>
 	<div class="row">
-		<div class="span2">
+		<div class="col-xs-2">
 			<%= f.input :fumbles_lost %>
 		</div>
-		<div class="span4 offset1">
+		<div class="col-xs-4 col-xs-offset-1">
 			<%= f.input :twopointconv,  label: "Enter Number of 2 point conversions" %>
 		</div>
 	</div>
 	<p>
-	<div class="span2 offset3">
-		<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary" %>
+	<div class="col-xs-2 col-xs-offset-3">
+		<%= f.button :submit, 'Submit', class:	"btn btn-sm btn-primary" %>
 	</div>
 <% end %>

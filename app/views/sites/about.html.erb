@@ -1,5 +1,5 @@
 <p>
-<div class="span10" id="backcolor">
+<div class="col-xs-10" id="backcolor">
 	<% if !current_site? or current_site.about_filename_url.nil? %>
 		</p><% provide(:title, 'About Us') %>
 		<h1>About Us</h1>
@@ -15,20 +15,20 @@
 		Thanks for looking at us and considering our solution for your needs.
 		<br/>
 		<% if isAdmin? %>
-			<div class="span6 offset2"%>
+			<div class="col-xs-6 col-xs-offset-2"%>
 				<h4>Enter your own About Page:
-				<%= link_to "Replace", updateabout_site_path(current_site), class: "btn btn-medium btn-primary" %><p>
+				<%= link_to "Replace", updateabout_site_path(current_site), class: "btn btn-sm btn-primary" %><p>
 				You will be required to enter a jpg. If you do not want to enter a new about page the text above will be displayed.</h4>
 			</div>
 		<% end %>
 	<% else %>
 		<% provide(:title, current_site.sitename + " - About Us") %>
 		<h1>About <%= current_site.sitename %></h1>
-		<div class="span10 offset1">
+		<div class="col-xs-10 col-xs-offset-1">
 			<%= image_tag current_site.about_filename_url %><p>
 			<div class="row">
-				<div class="span2 offset2">
-					<%= link_to "Update Page", updateabout_site_path(current_site), class: "btn btn-medium btn-primary" %>
+				<div class="col-xs-2 col-xs-offset-2">
+					<%= link_to "Update Page", updateabout_site_path(current_site), class: "btn btn-sm btn-primary" %>
 				</div>
 			</div>
 		</div>

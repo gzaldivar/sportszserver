@@ -2,15 +2,15 @@
 	<h4>Real Time Game Summary:</h4>
 	<h3>
 	<div class="row">
-		<div class="span2">
+		<div class="col-xs-2">
 			<%= image_tag get_team_logo(@sport, @team) %>
 		</div>
-		<div class="span1">
+		<div class="col-xs-1">
 			<%= @team.mascot %>
 		</div>
-		<div class="span3">
+		<div class="col-xs-3">
 		</div>
-		<div class="span2">
+		<div class="col-xs-2">
 			<% if @opposingteam %>
 				<%= image_tag get_team_logo(@opposingsport, @opposingteam) %>
 			<% else %>
@@ -24,26 +24,26 @@
 				<% end %>
 			<% end %>
 		</div>
-		<div class="span1">
+		<div class="col-xs-1">
 			<%= @gameschedule.opponent_mascot %>
 		</div>
 	</div>
 	</h3>
 	<h1><font color="blue">
 	<div class="row">
-		<div class="span2 offset1">
+		<div class="col-xs-2 col-xs-offset-1">
 			<%= basketball_home_score(@sport, @gameschedule) %>
 		</div>
-		<div class="span1 offset1">
+		<div class="col-xs-1 col-xs-offset-1">
 			<%= @gameschedule.livegametime.strftime("%I:%M") %>
 		</div>
-		<div class="span2 offset3">
+		<div class="col-xs-2 col-xs-offset-3">
 			<%= @gameschedule.opponentscore %>
 		</div>
 	</div>
 	</font></h1>
 	<div class="row">
-		<div class="span3">
+		<div class="col-xs-3">
 			<table class="table table-bordered">
 				<thead>
 					<th>Fouls</th>
@@ -61,7 +61,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="span1 offset1">
+		<div class="col-xs-1 col-xs-offset-1">
 			<table class="table table-bordered">
 				<thead>
 					<th>Period</th>
@@ -71,7 +71,7 @@
 				</tbody>
 			</table>
 		</div>
-		<div class="span3 offset2">
+		<div class="col-xs-3 col-xs-offset-2">
 			<table class="table table-bordered">
 				<thead>
 					<th>Fouls</th>

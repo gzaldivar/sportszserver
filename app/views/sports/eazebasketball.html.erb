@@ -1,79 +1,73 @@
 <% provide(:title, "Easy Sports Basketball - Mobile Sports Basketball") %>
 <p>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-12">
 		<h2>Eazesportz iPad Basketball apps:</h2>
 	</div>
 </div>
 <div class="row">
-	<div class="span5">
+	<div class="col-xs-6">
+		<h5>
+		iPad Management Features
+		<ul>
+			<li>Update live stats for every game!</li>
+			<li>Automated scoring computed from stats.</li>
+			<li>Upload Photo's and Video's of your team during the game</li>
+			<li>Tag Photo's and Video clips by Game and Player</li>
+			<li>Create and manage individual player metadata and roster</li>
+			<li>Browse and Manage Game Stats after the game</li>
+			<li>Monitor and Mangage your fans live Blog. You never know what they will enter...</li>
+			<li>Manage your programs news feed</li>
+			<li>Manage your teams Coaches</li>
+			<li>Much, much more ......</li>
+		</ul>
+		</h5>
+		<h4><p class="text-info">Click on the image to the right to learn more!</p></h4>
 		<div class="row">
-			<div class="span5">
-				<h5>
-				iPad Management Features
-				<ul>
-					<li>Update live stats for every game!</li>
-					<li>Automated scoring computed from stats.</li>
-					<li>Upload Photo's and Video's of your team during the game</li>
-					<li>Tag Photo's and Video clips by Game and Player</li>
-					<li>Create and manage individual player metadata and roster</li>
-					<li>Browse and Manage Game Stats after the game</li>
-					<li>Monitor and Mangage your fans live Blog. You never know what they will enter...</li>
-					<li>Manage your programs news feed</li>
-					<li>Manage your teams Coaches</li>
-					<li>Much, much more ......</li>
-				</ul>
-				</h5>
-				<h4><font color="blue">Click on the image to the right to learn more!</font></h4>
-			</div>
-		</div>
-		<div class="row">
-			<div class="span2">
+			<div class="col-xs-4">
 				<h5>Get the app - iTunes!</h5>
 			</div>
-			<div class="span1 offset1">
-				<%= link_to (image_tag "basketball-icon.jpg"), "https://itunes.apple.com/us/app/eazesportz-basketball-console/id717200419?mt=8" %>
+			<div class="col-xs-2">
+				<%= link_to (image_tag "basketball-icon.jpg", :height => '100', :width => '100'),
+					"https://itunes.apple.com/us/app/eazesportz-basketball-console/id717200419?mt=8" %>
 			</div>
 		</div>
 	</div>
-	<div class="span4 offset1">
-		<%= link_to (image_tag "BasketballGameStats.png"), infobasketball_path %>
+	<div class="col-xs-6">
+		<%= link_to (image_tag "BasketballGameStats.png", width: "300", height: "400"), infobasketball_path %>
 	</div> 
 </div>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-12">
 		<h4>What your fans can do:</h4>
 	</div>
 </div>
 <div class="row">
-	<div class="span5">
+	<div class="col-xs-6">
+		<h5>
+		Your fans use our iPhone app to access what you create:
+		<ul>
+			<li>Follow live game updates</li>
+			<li>Access live game stats</li>
+			<li>Access live game photos and video clips</li>
+			<li>Track historical season stats</li>
+			<li>Follow players and receive score/stat alerts</li>
+			<li>Live blog support</li>
+			<li>Much, much more ....</li>
+		</ul>
+		</h5>
+		<h4><p class="text-info">Click on the image to the right to learn more!</p></h4>
 		<div class="row">
-			<div class="span5">
-				<h5>
-				Your fans use our iPhone app to access what you create:
-				<ul>
-					<li>Follow live game updates</li>
-					<li>Access live game stats</li>
-					<li>Access live game photos and video clips</li>
-					<li>Track historical season stats</li>
-					<li>Follow players and receive score/stat alerts</li>
-					<li>Live blog support</li>
-					<li>Much, much more ....</li>
-				</ul>
-				</h5>
-				<h4><font color="blue">Click on the image to the right to learn more!</font></h4>
-			</div>
-		</div>
-		<div class="row">
-			<div class="span2">
+			<div class="col-xs-4">
 				<h5>Fans use this app!</h5>
 			</div>
-			<div class="span1 offset1">
-				<%= link_to image_tag("basketball-icon.jpg"), "https://itunes.apple.com/us/app/eazesport-basketball/id721318071?mt=8" %>
+			<div class="col-xs-2">
+				<%= link_to image_tag("basketball-icon.jpg", :height => '100', :width => '100'), 
+									  "https://itunes.apple.com/us/app/eazesport-basketball/id721318071?mt=8" %>
 			</div>
 		</div>
 	</div>
-	<div class="span4 offset1">
-		<%= link_to (image_tag "Bball_iPhone_Screenshot-Game-Clock.png"), iphone_basketball_path %>
+	<div class="col-xs-6">
+		<%= link_to (image_tag "Bball_iPhone_Screenshot-Game-Clock.png", width: "300", height: "400"), iphone_basketball_path %>
 	</div>
 </div>

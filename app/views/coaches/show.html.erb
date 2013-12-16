@@ -2,7 +2,7 @@
 <p>
 <% if !@coach.nil? %>
   <div class="row">
-    <div class="span4">
+    <div class="col-xs-4">
       <% if @coach.processing %>
         <h4><em><font color="red">Processing Replacement Photo ...</font></em></h4>
       <% end %>
@@ -24,7 +24,7 @@
         </div>
       </script>    
     </div>
-  	<div class="span5">
+  	<div class="col-xs-7">
       <div class="row">
     		<table class="table table-hover">
     			<thead> 
@@ -60,13 +60,13 @@
   	</div>
   </div><br/>      
   <div class="row">
-    <div class="span4 offset5">
+    <div class="col-xs-4 col-xs-offset-5">
   		<% if isAdmin? or isTeamManager?(@coach) %>
-        <%= link_to "Edit", edit_sport_coach_path(@sport, @coach),  class: "btn btn-medium btn-warning" %>&nbsp;
-  			<%= link_to "Add News", new_sport_newsfeed_path(@sport),  class: "btn btn-medium btn-info" %>&nbsp;
+        <%= link_to "Edit", edit_sport_coach_path(@sport, @coach),  class: "btn btn-sm btn-warning" %>&nbsp;
+  			<%= link_to "Add News", new_sport_newsfeed_path(@sport),  class: "btn btn-sm btn-info" %>&nbsp;
       <% end %>
       <% if isAdmin? %>
-        <%= link_to "Delete", sport_coach_path(@sport, @coach),  method:  :delete,  class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>&nbsp;
+        <%= link_to "Delete", sport_coach_path(@sport, @coach),  method:  :delete,  class: "btn btn-sm btn-danger", data: { confirm: "You sure?" } %>&nbsp;
   		<% end %>
     </div>
   </div>

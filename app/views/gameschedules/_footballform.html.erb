@@ -1,24 +1,24 @@
 <div class="row">
-	<div class="span1">
+	<div class="col-xs-1">
 		<%= f.input :ballon, label: "Ball On:", input_html: { style: "width: 50px" } %>
 	</div>
-	<div class="span2 offset1">
+	<div class="col-xs-2 col-xs-offset-1">
 		<%= f.input :our, label: "Ball Position", collection: [ @team.team_name, @gameschedule.opponent ] %>
 	</div>
 </div>
 <div class="row">
-	<div class="span1">
+	<div class="col-xs-1">
 		<%= f.input :down, collection: 1..4, input_html: { style: "width: 50px" } %>
 	</div>
-	<div class="span1 offset1">
+	<div class="col-xs-1 col-xs-offset-1">
 		<%= f.input :togo, label: "To Go", input_html: { style: "width: 50px" } %>
 	</div>
 </div>
 <div class="row">
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= f.input :penalty, label: "Number of Penalties:", input_html: { style: "width: 50px" } %>
 	</div>
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= f.input :penaltyyards, label: "Penalty Yards:", input_html: { style: "width: 50px" } %>
 	</div>
 </div>

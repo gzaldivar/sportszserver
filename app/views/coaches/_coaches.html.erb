@@ -33,10 +33,10 @@
 					<td><%= @sport.teams.find(c.team_id).team_name %></td>
 				<% end %>
 				<% if isAdmin? or isTeamManager?(c) %>
-		          <td><%= link_to "Edit", edit_sport_coach_path(@sport, c), class: "btn btn-mini btn-warning" %></td>
+		          <td><%= link_to "Edit", edit_sport_coach_path(@sport, c), class: "btn btn-xs btn-warning" %></td>
 		        <% end %>
 		        <% if isAdmin? %>
-		          <td><%= link_to "Delete", sport_coach_path(@sport, c),  method:	:delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %></td>
+		          <td><%= link_to "Delete", sport_coach_path(@sport, c),  method:	:delete, class: "btn btn-xs btn-danger", data: { confirm: "You sure?" } %></td>
 				<% end %>
 			</tr>
 		<% end %>

@@ -1,10 +1,10 @@
 <% provide(:title, current_site.sitename) %>
 <p>
   <div class="row">
-  	<div class="span2 offset1">
+  	<div class="col-xs-1">
       <div class="row">
         <% if user_signed_in? %>
-          <h4><em>Following Players</em></h4>
+          <h5><em>Following Players</em></h5>
         <% else %>
           <h4><em>Sign in to Follow Players</em></h4>
         <% end %>
@@ -20,7 +20,7 @@
                 <td><%= link_to f.number, sport_athlete_path(@sport, f) %></td>
                 <td><%= link_to f.lastname, sport_athlete_path(@sport, f) %></td>
                 <% if hasAlerts?(f, current_user) %>
-                  <td><%= link_to "Alerts", sport_athlete_alerts_path(@sport, f), class: "btn btn-mini btn-inverse" %></td>
+                  <td><%= link_to "Alerts", sport_athlete_alerts_path(@sport, f), class: "btn btn-xs btn-inverse" %></td>
                 <% else %>
                   <td></td>
                 <% end %>
@@ -55,32 +55,34 @@
          </div>
       <% end %>
     </div>
-    <div class="span5 offset1">
-    <h3>News for <%= current_site.sitename + " " + @sport.mascot %></h3>
+    <div class="col-xs-10 col-xs-offset-1">
+      <h3>News for <%= current_site.sitename + " " + @sport.mascot %></h3>
           <%= render 'newsfeeds/newsfeed', feed: @newsfeed %>
       <% if @newsfeed.any? %>
         <div class="row">
-          <div class="span2">
+          <div class="col-xs-2">
             <h5>Filter News by Athlete:</h5>
             <%= form_tag sport_newsfeeds_path(@sport), method: :get, class: "form-horizontal" do %>
-              <%= select_tag "player", options_from_collection_for_select(@athletes, "id", "full_name"), :include_blank => true %>
-              <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+              <%= select_tag "player", options_from_collection_for_select(@athletes, "id", "full_name"), :include_blank => true,
+                                     class: 'form-control' %><p>
+              <%= submit_tag 'Submit', class:	"btn btn-xs btn-primary" %>
             <% end %>
           </div>
-          <div class="span2 offset1">
+          <div class="col-xs-2 col-xs-offset-1">
             <h5>Filter News by Team:</h5>
             <%= form_tag sport_newsfeeds_path(@sport), method: :get, class: "form-horizontal" do %>
-              <%= select_tag "teamname", options_from_collection_for_select(@sport.teams, "id", "team_name"), :include_blank => true %>
-              <%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+              <%= select_tag "teamname", options_from_collection_for_select(@sport.teams, "id", "team_name"), :include_blank => true,
+                            class: 'form-control'  %><p>
+              <%= submit_tag 'Submit', class:	"btn btn-xs btn-primary" %>
             <% end %>
           </div>
         </div>
       <% end %>
       <div class="row">
-        <div class="span4 offset1">
-          <%= link_to "Sport News", sport_newsfeeds_path(@sport), class: "btn btn-medium btn-primary" %>
+        <div class="col-xs-4 col-xs-offset-1">
+          <%= link_to "Sport News", sport_newsfeeds_path(@sport), class: "btn btn-xs btn-primary" %>
           <% if isAdmin? %>
-            <%= link_to "Add News Item", new_sport_newsfeed_path(@sport), class: "btn btn-medium btn-primary" %>
+            <%= link_to "Add News Item", new_sport_newsfeed_path(@sport), class: "btn btn-xs btn-primary" %>
           <% end %>
         </div>
       </div>
@@ -89,16 +91,16 @@
   <p>
   <% if isAdmin? %>
     <div class="row">
-      <div class="span2 offset2">
-        <%= link_to "Edit Sport", edit_sport_path(id: @sport.id), class: "btn btn-medium btn-primary" %>
+      <div class="col-xs-2 col-xs-offset-2">
+        <%= link_to "Edit Sport", edit_sport_path(id: @sport.id), class: "btn btn-xs btn-primary" %>
         <p>
         <% if @sport.teams.blank? %>
           <strong>No teams entered.</strong> Click Edit Sport to add teams!
         <% end %>
       </div>
       &nbsp
-      <div class="span2 offset1">
-        <%= link_to "Delete Sport", @sport,  method: :delete, class: "btn btn-medium btn-danger", 
+      <div class="col-xs-2 col-xs-offset-1">
+        <%= link_to "Delete Sport", @sport,  method: :delete, class: "btn btn-xs btn-danger", 
                     data: { confirm: "You sure? All data, photos, videos, schedules, etc. will be deleted. Do you want to edit or rename the sport?" } %>
       </div>
     </div>

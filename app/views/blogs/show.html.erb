@@ -7,7 +7,7 @@
 	    item = @blog 
 	  end %>
 <div class ="row">
-	<div class="span10 offset1">
+	<div class="col-xs-10 col-xs-offset-1">
   		<%= render 'blog', blog: item %>
 	</div>
 </div>
@@ -15,7 +15,7 @@
 	<%= render "layouts/sponsor" %>
 </div>
 <div class="row">
-	<div class="span6 offset2">
+	<div class="col-xs-6 col-xs-offset-2">
 		<h5><em><strong><%= link_to "Back to Blog for " + @sport.sitename + " " + @sport.sport_name, sport_blogs_path(@sport, team_id: item[0].team_id) %></strong></em></h5>
 	</div>
 </div>

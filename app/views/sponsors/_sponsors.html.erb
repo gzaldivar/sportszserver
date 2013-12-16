@@ -45,8 +45,8 @@
 				<% end %>
 				<td><%= s.adurl %></td-->
 				<% if site_owner? %>
-          			<td><%= link_to "Edit", edit_sport_sponsor_path(@sport, s), class: "btn btn-mini btn-warning" %></td>
-          			<!--td><%= link_to "Delete", sport_sponsor_path(@sport, s),  method:	:delete, class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %></td-->
+          			<td><%= link_to "Edit", edit_sport_sponsor_path(@sport, s), class: "btn btn-xs btn-warning" %></td>
+          			<!--td><%= link_to "Delete", sport_sponsor_path(@sport, s),  method:	:delete, class: "btn btn-xs btn-danger", data: { confirm: "You sure?" } %></td-->
 				<% end %>
 			</tr>
 		<% end %>

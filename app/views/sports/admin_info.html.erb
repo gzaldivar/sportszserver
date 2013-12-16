@@ -1,56 +1,46 @@
 <% provide(:title, "Easy Sports Mobile - Create Administrator") %>
 <p>
-<!--font color="#b3f10c"-->
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-11">
 		<h2>Create Administor</h2>
 	</div>
 </div>
 <div class="row">
-	<div class="span4">
-		<%= link_to (image_tag "BasketballConsoleLiveStats.png"), info_path %>
+	<div class="col-xs-4">
+		<%= link_to (image_tag "FootballGameStats.png", width: "300", height: "400"), info_path %>
 	</div>
-	<div class="span4 offset1">
-		<%= link_to (image_tag "FC_OffenseStatsPortrait.png"), info_path %>
+	<div class="col-xs-4">
+		<%= link_to (image_tag "BasketballGameStats.png", width: "300", height: "400"), info_path %>
 	</div>
 </div>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-11">
 		<p>
 		<h5>When you click below you will be creating the administrator for the site.</h5>
+		<h5><p class="text-danger"><em>We strongly</em> recommend that you create an admin using an email address that belongs to your program. Most programs already have these but if you don't you should create one before proceeding.</p>
+		You can choose to use a private email address but remember that this email will be used by us to communicate with you. It is also a good idea to use organizational emails since it will also allow your program to transfer the administration rights to the site to someone else if necessary.
 		<p>
-		<h4><em>We strongly</em> recommend that you create an admin using an email address that belongs to your program. Most programs already have these but if you don't you should create one before proceeding.</h4>
-		<p>
-		<h4>You can choose to use a private email address but remember that this email will be used by us to communicate with you. It is also a good idea to use organizational emails since it will also allow your program to transfer the administration rights to the site to someone else if necessary.</h4>
-		<!--p>	
-		The administrator will also have the opportunity to designate team managers who will have certain access rights to make changes like updating player bios, approving photos, etc. This capability should assist you in keeping the number of people who have access to the admin username and password to a minimum. 
-		<p-->
+		The administrator will also have the opportunity to designate team managers who will have certain access rights to make changes like updating player bios, approving photos, etc. This capability should assist you in keeping the number of people who have access to the admin username and password to a minimum.</h5>
+		</p>
 	</div>
 </div>
 <p>
 <div class="row">
-	<div class="span10">
-		<font color="red">
+	<div class="col-xs-11">
+		<p class="text-warning">
 		Currently, we are offering our solution to a controlled set of beta programs and their fans. If you would like to try our solution sign up below and we will contact you with instructions on how to get set up! Your fans will have access to the upgraded features free of charge.
-		<p>
-		<h4>Make sure you send us an email at <em>info@eazesportz.com</em> so we can contact you about activation!</h4>
-		<p>
+		<p class="text-warning">Make sure you send us an email at <em>info@eazesportz.com</em> so we can contact you about activation!</p>
 		We will be monitoring requests for beta but it never hurts to lob in an email to get our attention quicker!
-		</font>
 	</div>
 </div>
 <p>
 <div class="row">
-	<div class="span10" style="background-color:#ffffff;position:relative;top:0">
-		<div class="row">
-			<div class="span4">	
-		    	If you are ready, click below and you will become the administrator for the site:<p>
-				<%= link_to "Create Admin", new_user_registration_path, class: "btn btn-medium btn-primary" %>
-			</div>
-		    <div class="span4 offset1">
-			    If you are looking for a site powered by Eazesportz.com, click below to find the site.<p>
-				<%= link_to "Search", sports_path, class: "btn btn-medium btn-primary" %>
-			</div>
-		</div>
+	<div class="col-xs-4">	
+    	If you are ready, click below and you will become the administrator for the site:<p>
+		<%= link_to "Create Admin", new_user_registration_path, class: "btn btn-sm btn-primary" %>
+	</div>
+    <div class="col-xs-4 col-xs-offset-1">
+	    If you are looking for a site powered by Eazesportz.com, click below to find the site.<p>
+		<%= link_to "Search", sports_path, class: "btn btn-sm btn-primary" %>
 	</div>
 </div>

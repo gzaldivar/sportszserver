@@ -19,20 +19,20 @@
 				<td><%= @sport.teams.find(athlete.team_id).team_name %></td>
 			<% end %>
 			<% if isAdmin? or isTeamManager?(athlete) %>
-				<td><%= link_to "Edit", edit_sport_athlete_path(@sport, athlete),  class: "btn btn-mini btn-warning" %></td>
+				<td><%= link_to "Edit", edit_sport_athlete_path(@sport, athlete),  class: "btn btn-xs btn-warning" %></td>
 			<% end %>
 			<% if isAdmin? %>
 				<td><%= link_to "Delete", sport_athlete_path(@sport, athlete),  method:	:delete,  
-										class: "btn btn-mini btn-danger", data: { confirm: "You sure?" } %></td>
+										class: "btn btn-xs btn-danger", data: { confirm: "You sure?" } %></td>
 			<% end %>
 		    <td>
 		        <% if Photo.where(players: athlete.id.to_s).any? %>
-		        	<%= link_to "Photos", sport_photos_path(@sport, athlete: { id: athlete.id }), class: "btn btn-mini btn-primary" %>              
+		        	<%= link_to "Photos", sport_photos_path(@sport, athlete: { id: athlete.id }), class: "btn btn-xs btn-primary" %>              
 		        <% end %>
 		    </td>
 	    	<td>
 		        <% if Videoclip.where(players: athlete.id.to_s).any? %>
-		        	<%= link_to "Videos", sport_videoclips_path(@sport, athlete: { id: athlete.id }), class: "btn btn-mini btn-primary" %>              
+		        	<%= link_to "Videos", sport_videoclips_path(@sport, athlete: { id: athlete.id }), class: "btn btn-xs btn-primary" %>              
 		        <% end %>
 		    </td>
 		</tr>

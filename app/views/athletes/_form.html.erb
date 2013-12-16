@@ -1,38 +1,39 @@
 <div class="row">
-	<div class="span10 offset1">
-		<%= simple_form_for [@sport, @athlete] do |f| %>
+	<div class="col-xs-11">
+		<%= simple_form_for [@sport, @athlete], 
+							:defaults => { :input_html => { :class => "form-control" } } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 			<div class="row">
-				<div class="span2">
-					<%= f.input :number,	label:	"Jersey number" %>
+				<div class="col-xs-1">
+					<%= f.input :number,	label:	"Num" %>
 				</div>
-				<div class="span3 offset1">
+				<div class="col-xs-3 col-xs-offset-1">
 					<%= f.input	:lastname,	label:	"Last name" %>
 				</div>
-				<div class="span4">
+				<div class="col-xs-4 col-xs-offset-1">
 					<%= f.input :firstname,	label:	"First name" %>
 				</div>
 			</div>
 			<div class="row">
-				<div class="span2">
+				<div class="col-xs-3">
 					<%= f.input	:middlename, required: false,	label:	"Middle name" %>
 				</div>
-				<div class="span2 offset1">
+				<div class="col-xs-2">
 					<div class="input string required"><label class="string required" for="athlete_feet"><abbr title="required">*</abbr> Height Feet:</label>					
 					</div>
 					<% if !@height.any? %>
-						<%= select_tag "feet", options_for_select(height_feet), include_blank: true %>
+						<%= select_tag "feet", options_for_select(height_feet), include_blank: true, class: 'form-control' %>
 					<% else %>
-						<%= select_tag "feet", options_for_select(height_feet, @height[0]), include_blank: true %>
+						<%= select_tag "feet", options_for_select(height_feet, @height[0]), include_blank: true, class: 'form-control' %>
 					<% end %>
 				</div>
-				<div class="span2 offset1">
+				<div class="col-xs-2 col-xs-offset-1">
 					<div class="input string required"><label class="string required" for="athlete_inches"><abbr title="required">*</abbr> Height Inches:</label>					
 					</div>
 					<% if !@height.any? %>
-						<%= select_tag "inches", options_for_select(height_inches), include_blank: true %>
+						<%= select_tag "inches", options_for_select(height_inches), include_blank: true, class: 'form-control' %>
 					<% else %>
-						<%= select_tag "inches", options_for_select(height_inches, @height[1]), include_blank: true %>
+						<%= select_tag "inches", options_for_select(height_inches, @height[1]), include_blank: true, class: 'form-control' %>
 					<% end %>
 					<!--%= f.input	:height %-->	
 				</div>
@@ -40,14 +41,15 @@
 			<div class="row">
 				<%= render 'position', f: f %>
 			</div>
+			<p>
 			<div class="row">
-				<div class="span2">
+				<div class="col-xs-1">
 					<%= f.input	:weight %>
 				</div>
-				<div class="span2 offset1">
+				<div class="col-xs-2 col-xs-offset-2">
 					<%= f.input	:year,	label: "Grade/Age/Class", hint:	"Grade: 10, 11, Age: 7, 8 , Class: Jr., Sr., etc." %>
 				</div>
-				<div class="span2 offset1">
+				<div class="col-xs-2 col-xs-offset-1">
 					<%= f.input	:season %>
 				</div>
 			</div>
@@ -59,39 +61,34 @@
 	          </div>
 	        </div>
 			<div class="row">
-				<div class="span8">
-					<%= f.input	:bio,	as: :text, required: false, hint:	"Some info about the athlete", 
-								input_html: { style: 'width: 800px;height: 100px' } %>
+				<div class="col-xs-12">
+					<%= f.input	:bio,	as: :text, required: false, hint:	"Some info about the athlete" %>
 				</div>
 			</div>
 			<p>
 			<div class="row">
-				<div class="span2">
-					<div class="row">
-		        		<% if !@sport.teams.empty? %>
-		          			<div class="span4">
-								<!--label class="string required" for="athteam_team"></abbr>Assign to Team:</label-->
-								<h5>Assigned Team: 
-								<% if @athlete.team_id.nil?  %>
-									Unassigned
-									<!--%= select("", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true } ) %-->
-								<% else %>
-									<%= @sport.teams.find(@athlete.team_id).team_name %>
-		            				<!--%= select("athteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, selected: @sport.teams.find(@athlete.team).id ) %-->
-								<% end %></h5>
-								<%= f.input :team_id, collection: @sport.teams.collect{ |t| [t.team_name, t.id] }, label: "Change Team:",
-											input_html: { include_blank: true } %>
-		          			</div>
-		        		<% end %>
-					</div>
+				<div class="col-xs-4">
+	        		<% if !@sport.teams.empty? %>
+							<!--label class="string required" for="athteam_team"></abbr>Assign to Team:</label-->
+							<h5>Assigned Team: 
+							<% if @athlete.team_id.nil?  %>
+								Unassigned
+								<!--%= select("", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true } ) %-->
+							<% else %>
+								<%= @sport.teams.find(@athlete.team_id).team_name %>
+	            				<!--%= select("athteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, selected: @sport.teams.find(@athlete.team).id ) %-->
+							<% end %></h5>
+							<%= f.input :team_id, collection: @sport.teams.collect{ |t| [t.team_name, t.id] }, label: "Change Team:",
+										input_html: { include_blank: true } %>
+	        		<% end %>
 				</div>
 			</div>
-			<div class="span8 offset4">
-				<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary", id: "submitbtn" %>
+			<div class="col-xs-2 col-xs-offset-5">
+				<%= f.button :submit, 'Submit', class:	"btn btn-sm btn-primary", id: "submitbtn" %>
 			</div>
 		<% end %>
 		<div class="row">
-			<div class="span6">
+			<div class="col-xs-6">
 				<h4>Current player image</h4>
 				<% if !@athlete.pic.blank? %>
 					<%= image_tag @athlete.pic.url(:medium) %>

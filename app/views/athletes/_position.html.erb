@@ -1,73 +1,73 @@
 <% if @sport.has_stats? %>
 	<% if @sport.sportname == "Football" %>
-		<div class="span2">
+		<div class="col-xs-2">
 			<div class="input string required"><label class="string required" for="athlete_offpos"><abbr title="required">*</abbr>Offense Position:</label>					
 			</div>
 			<% if @position.any? and !@position[0].nil? %>
-				<%= select_tag "offpos", options_for_select(offense_football_positions, @position[0]), include_blank: true %>
+				<%= select_tag "offpos", options_for_select(offense_football_positions, @position[0]), include_blank: true, class: 'form-control' %>
 			<% else %>
-				<%= select_tag "offpos", options_for_select(offense_football_positions), include_blank: true %>
+				<%= select_tag "offpos", options_for_select(offense_football_positions), include_blank: true, class: 'form-control' %>
 			<% end %>
 			<!--%= f.input :offpos, collection: offense_football_positions, include_blank: true, label: "Offense Position:" %-->
 		</div>
-		<div class="span2 offset1">
+		<div class="col-xs-2 col-xs-offset-1">
 			<div class="input string required"><label class="string required" for="athlete_defpos"><abbr title="required">*</abbr>Defense Position:</label>					
 			</div>
 			<% if @position.any? and !@position[1].nil? %>
-				<%= select_tag "defpos", options_for_select(defense_football_positions, @position[1]), include_blank: true %>
+				<%= select_tag "defpos", options_for_select(defense_football_positions, @position[1]), include_blank: true, class: 'form-control' %>
 			<% else %>
-				<%= select_tag "defpos", options_for_select(defense_football_positions), include_blank: true %>
+				<%= select_tag "defpos", options_for_select(defense_football_positions), include_blank: true, class: 'form-control' %>
 			<% end %>
 			<!--%= f.input :defpos, collection: defense_football_positions, include_blank: true, label: "Defense Position:" %-->
 		</div>
-		<div class="span2 offset1">
+		<div class="col-xs-4 col-xs-offset-1">
 			<div class="input string required"><label class="string required" for="athlete_special_teamspos">Special Teams Position:</label>					
 			</div>			
 			<% if @position.any? and !@position[2].nil? %>
-				<%= select_tag "special_teamspos", options_for_select(specialteams_football_positions, @position[2]), include_blank: true %>
+				<%= select_tag "special_teamspos", options_for_select(specialteams_football_positions, @position[2]), include_blank: true, class: 'form-control' %>
 			<% else %>
-				<%= select_tag "special_teamspos", options_for_select(specialteams_football_positions), include_blank: true %>
+				<%= select_tag "special_teamspos", options_for_select(specialteams_football_positions), include_blank: true, class: 'form-control' %>
 			<% end %>
 			<!--%= f.input :special_teamspos, collection: specialteams_football_positions, label: "Special Teams Position:" %-->
 		</div>
 	<% elsif @sport.sportname == "Basketball" %>
-		<div class="span2">
+		<div class="col-xs-2">
 			<%= f.input :position, collection: basketball_positions, include_blank: true %>
 		</div>
 	<% elsif @sport.sportname == "Soccer" %>
-		<div class="span2">
+		<div class="col-xs-2">
 			<div class="input string required"><label class="string required" for="athlete_soc1_pos"><abbr title="required">*</abbr>Position One:</label>					
 			</div>
 			<% if @position.any? and !@position[0].nil? %>
-				<%= select_tag "soccer1_pos", options_for_select(soccer_positions, @position[0]), include_blank: true %>
+				<%= select_tag "soccer1_pos", options_for_select(soccer_positions, @position[0]), include_blank: true, class: 'form-control' %>
 			<% else %>
-				<%= select_tag "soccer1_pos", options_for_select(soccer_positions), include_blank: true %>
+				<%= select_tag "soccer1_pos", options_for_select(soccer_positions), include_blank: true, class: 'form-control' %>
 			<% end %>
 			<!--%= f.input :offpos, collection: offense_football_positions, include_blank: true, label: "Offense Position:" %-->
 		</div>
-		<div class="span2 offset1">
+		<div class="col-xs-2 col-xs-offset-1">
 			<div class="input string required"><label class="string required" for="athlete_defpos"><abbr title="required">*</abbr>Position Two:</label>					
 			</div>
 			<% if @position.any? and !@position[1].nil? %>
-				<%= select_tag "soccer2_pos", options_for_select(soccer_positions, @position[1]), include_blank: true %>
+				<%= select_tag "soccer2_pos", options_for_select(soccer_positions, @position[1]), include_blank: true, class: 'form-control' %>
 			<% else %>
-				<%= select_tag "soccer2_pos", options_for_select(soccer_positions), include_blank: true %>
+				<%= select_tag "soccer2_pos", options_for_select(soccer_positions), include_blank: true, class: 'form-control' %>
 			<% end %>
 			<!--%= f.input :defpos, collection: defense_football_positions, include_blank: true, label: "Defense Position:" %-->
 		</div>
-		<div class="span2 offset1">
+		<div class="col-xs-2 col-xs-offset-1">
 			<div class="input string required"><label class="string required" for="athlete_special_teamspos">Position Three:</label>					
 			</div>			
 			<% if @position.any? and !@position[2].nil? %>
-				<%= select_tag "soccer3_pos", options_for_select(soccer_positions, @position[2]), include_blank: true %>
+				<%= select_tag "soccer3_pos", options_for_select(soccer_positions, @position[2]), include_blank: true, class: 'form-control' %>
 			<% else %>
-				<%= select_tag "soccer3_pos", options_for_select(soccer_positions), include_blank: true %>
+				<%= select_tag "soccer3_pos", options_for_select(soccer_positions), include_blank: true, class: 'form-control' %>
 			<% end %>
 			<!--%= f.input :special_teamspos, collection: specialteams_football_positions, label: "Special Teams Position:" %-->
 		</div>
 	<% end %>
 <% else %>
-	<div class="span3 offset1">
+	<div class="col-xs-3 col-xs-offset-1">
 		<%= f.input :position %>
 	</div>
 <% end %>

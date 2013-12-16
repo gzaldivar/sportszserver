@@ -1,20 +1,20 @@
 <% provide(:title, current_site.sitename + "  Find Eazesportz Sport") %>
 <div class="row">
-	<div class="span10 offset3">
+	<div class="col-xs-10 col-xs-offset-3">
 		<h4>Select Opposing Team</h4>
 		<% if @gameschedule.nil? %>
 			<%= form_tag new_sport_team_gameschedule_path(@sport, @team), method: :get, html: { class: 'form-horizontal' } do %>
 				<%= hidden_field_tag "opponent", @opposingsport.id  %>
 				<div class="row">
-					<div class="span2">
+					<div class="col-xs-2">
              			<%= label_tag "Team:" %>
               			<%= select_tag :opposingteam, options_from_collection_for_select(@opposingteams, "id", "team_name"), include_blank: true %>
 					</div>
 				</div>
 				<p>
 				<div class="row">
-					<div class="span1">
-						<%= submit_tag "Submit", class: "btn btn-medium btn-primary" %>
+					<div class="col-xs-1">
+						<%= submit_tag "Submit", class: "btn btn-sm btn-primary" %>
 					</div>
 				</div>
 			<% end %>
@@ -23,15 +23,15 @@
 				<%= hidden_field_tag "gameschedule_id", @gameschedule.id %>
 				<%= hidden_field_tag "opponent", @opposingsport.id  %>
 				<div class="row">
-					<div class="span2">
+					<div class="col-xs-2">
              			<%= label_tag "Team:" %>
               			<%= select_tag :opposingteam, options_from_collection_for_select(@opposingteams, "id", "team_name"), include_blank: true %>
 					</div>
 				</div>
 				<p>
 				<div class="row">
-					<div class="span1">
-						<%= submit_tag "Submit", class: "btn btn-medium btn-primary" %>
+					<div class="col-xs-1">
+						<%= submit_tag "Submit", class: "btn btn-sm btn-primary" %>
 					</div>
 				</div>
 			<% end %>

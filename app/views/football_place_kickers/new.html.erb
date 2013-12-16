@@ -1,21 +1,21 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
 	</div>
-	<div class="span8">
+	<div class="col-xs-8">
 		<h4>Enter new place kicker statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for <%= @gameschedule.game_name %></h4>
 	</div>
 </div>
 <p>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-10">
 		<% if @live.nil? %>
 			<%= form_tag new_sport_athlete_football_place_kicker_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
 				<%= hidden_field_tag "gameschedule_id", value=@gameschedule.id %>
 				<%= select_tag "livestats", options_for_select(["Play by Play", "Totals"]) %>
-				<%= submit_tag "Submit", class: "btn btn-medium btn-primary", name: nil %>
+				<%= submit_tag "Submit", class: "btn btn-sm btn-primary", name: nil %>
 		    <% end %>
 		<% else %>
 			<%= simple_form_for [@sport, @athlete, @placekicker],  html: { multipart: true } do |f| %>

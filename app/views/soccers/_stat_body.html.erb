@@ -22,10 +22,10 @@
 
 		<% if Soccer.find(stat.id).nil? and isAdmin? %>
 			<td><%= link_to "Stats", new_sport_athlete_soccer_path(@sport, stat.athlete_id, gameschedule_id: stat.gameschedule_id), 
-							class: "btn btn-mini btn-primary" %></td>
+							class: "btn btn-xs btn-primary" %></td>
 		<% elsif isAdmin? %>
 			<td><%= link_to "Stats", edit_sport_athlete_soccer_path(@sport, stat.athlete_id, stat, gameschedule_id: stat.gameschedule_id), 
-					class: "btn btn-mini btn-primary" %></td>
+					class: "btn btn-xs btn-primary" %></td>
 		<% end %>
 	</tr>
 <% end %>

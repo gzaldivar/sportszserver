@@ -1,51 +1,51 @@
 <% provide(:title, @sport.sport_name + " " + @athlete.name + " - Alerts") %>
 <p>
 <div class="row">
-	<div class="span2">
+	<div class="col-xs-2">
 		Alerts for Athlete:
 	</div>
 	<% if !@athlete.pic.blank? %>
-		<div class="span2 offset1">
+		<div class="col-xs-2 col-xs-offset-1">
 			<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
 		</div>
 	<% end %>
-	<div class="span4 offset1">
+	<div class="col-xs-4 col-xs-offset-1">
 		<h3><%= link_to @athlete.name, sport_athlete_path(@sport, @athlete) %></h3>
 	</div>
 </div>
 <p>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-10">
 		<h4>Sort Alerts by:</h4>
 		<%= form_tag sport_athlete_alerts_path, class: "form-horizontal", method: 'get' do %>
 			<div class="row">
-			    <div class="span2">
+			    <div class="col-xs-2">
 					<%= select_tag "alerttype", "<option>Bio</option><option>Blog</option><option>Photo</option><option>Video</option>option>Video</option>
 												 <option>Stats</option>".html_safe,
 									include_blank: true %>
 				</div>
-		    	<div class="span1 offset1">
-		    		<%= submit_tag  "Sort", class: "btn btn-medium btn-primary", name: nil %>
+		    	<div class="col-xs-1 col-xs-offset-1">
+		    		<%= submit_tag  "Sort", class: "btn btn-sm btn-primary", name: nil %>
 		    	</div>
-		    	<div class="span4 offset1">
+		    	<div class="col-xs-4 col-xs-offset-1">
 		    		<% if @list == "Blog" %>
 						<%= link_to "Clear All Blog Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, alerttype: 'Blog'), 
-							  								class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
+							  								class: "btn btn-sm btn-danger", data: { confirm: "You sure?" } %>
 					<% elsif @list == "Photo" %>
 						<%= link_to "Clear All Photo Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, alerttype: 'Photo'), 
-							  								class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
+							  								class: "btn btn-sm btn-danger", data: { confirm: "You sure?" } %>
 					<% elsif @list == "Video" %>
 						<%= link_to "Clear All Photo Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, alerttype: 'Video'), 
-							  								class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
+							  								class: "btn btn-sm btn-danger", data: { confirm: "You sure?" } %>
 					<% elsif @list == "Stats" %>
 						<%= link_to "Clear All Stat Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, alerttype: 'Stats'), 
-							  								class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
+							  								class: "btn btn-sm btn-danger", data: { confirm: "You sure?" } %>
 					<% elsif @list == "Bio" %>
 						<%= link_to "Clear All Bio Alerts", clearall_sport_athlete_alerts_path(@sport, @athlete, alerttype: 'Bio'), 
-							  								class: "btn btn-medium btn-danger", data: { confirm: "You sure?" } %>
+							  								class: "btn btn-sm btn-danger", data: { confirm: "You sure?" } %>
 					<% else %>
 						<%= link_to "Clear All", clearall_sport_athlete_alerts_path(@sport, @athlete),
-												class: "btn btn-medium btn-danger", data: { confirm: "You sure? All Alerts will be cleared!" } %>
+												class: "btn btn-sm btn-danger", data: { confirm: "You sure? All Alerts will be cleared!" } %>
 					<% end %>
 		    	</div>
 			</div>
@@ -54,7 +54,7 @@
 </div>
 <p>
 <div class="row">
-  <div class="span10">
+  <div class="col-xs-10">
   	<% if @alerts.blank? %>
   		<h4>No Alerts for athlete: <%= @athlete.name %></h4>
   	<% else %>
@@ -73,7 +73,7 @@
 			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.photos.find(a.photo_id).displayname, sport_photo_path(@sport, a.photo_id) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+			  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 			  		</tbody>
 			  	</table>
 			<% elsif !a.videoclip.blank? %>
@@ -90,7 +90,7 @@
 			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.videoclips.find(a.videoclip_id).displayname, sport_videoclip_path(@sport, a.videoclip_id) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-			  												class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+			  												class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 			  		</tbody>
 			  	</table>
 			<% elsif !a.blog.blank? %>
@@ -107,7 +107,7 @@
 			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.blogs.find(a.blog_id).title, sport_blog_path(@sport, a.blog_id) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+			  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 			  		</tbody>
 			  	</table>
 			<% elsif @sport.name == "Football" and !a.stat_football.nil? %>
@@ -125,7 +125,7 @@
 				  			<td><%= link_to a.message, sport_athlete_football_defense_path(@sport, @athlete, id: a.football_defense_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
 				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Passing" %>
 				  		<tbody>
@@ -133,7 +133,7 @@
 				  			<td><%= link_to a.message, sport_athlete_football_passing_path(@sport, @athlete, id: a.football_passing_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
 				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Receiving" %>
 				  		<tbody>
@@ -142,7 +142,7 @@
 				  									id: a.football_receiving_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
 				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Rushing" %>
 				  		<tbody>
@@ -151,7 +151,7 @@
 				  										id: a.football_rushing_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
 				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Kicker" %>
 				  		<tbody>
@@ -160,7 +160,7 @@
 				  										id: a.football_kicker_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
 				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Returner" %>
 				  		<tbody>
@@ -169,7 +169,7 @@
 				  										id: a.football_returner_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
 				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Place Kicker" %>
 				  		<tbody>
@@ -178,7 +178,7 @@
 				  										id: a.football_place_kicker_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
 				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Punter" %>
 				  		<tbody>
@@ -187,7 +187,7 @@
 				  										id: a.football_punter_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
 				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-				  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% end %>
 				</table>
@@ -205,7 +205,7 @@
 			  			<td><%= link_to a.message, sport_athlete_path(@sport, @athlete) %></td>
 			  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
 			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-			  							class: "btn btn-mini btn-warning", data: { confirm: "You sure?" } %></td>
+			  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 			  		</tbody>
 			  	</table>
 			<% end %>
@@ -214,7 +214,7 @@
   </div>
 </div>
 <div class="row">
-	<div class="span6">
+	<div class="col-xs-6">
 		<h4><em><%= link_to "Back to " + current_site.sitename + " " + @sport.sport_name, @sport %></em></h4>
 	</div>
 </div>

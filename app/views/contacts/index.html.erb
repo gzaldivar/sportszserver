@@ -1,7 +1,7 @@
 <% if current_site? %>
 	<% provide(:title, current_site.sitename + " - Contact") %>
 	<div class="row">
-		<div class="span10 offset1">
+		<div class="col-xs-10 col-xs-offset-1">
 			<h3><%= current_site.sitename + " Contact Page" %></h3>
 			<p>
 			<% if @contacts.empty? %>
@@ -12,8 +12,8 @@
 			<p>
 			<% if isAdmin? %>
 				<div class="row">
-					<div class="span2 offset3">
-						<%= link_to "Add Contact", new_sport_contact_path(current_site), class: "btn btn-medium btn-primary" %>
+					<div class="col-xs-2 col-xs-offset-3">
+						<%= link_to "Add Contact", new_sport_contact_path(current_site), class: "btn btn-sm btn-primary" %>
 					</div>
 				</div>
 			<% end %>
@@ -21,14 +21,14 @@
 	</div>
 	<p>
 	<div class="row">
-		<div class="span10 offset1">
+		<div class="col-xs-10 col-xs-offset-1">
 			If you are having trouble logging in, please send an email to <strong><%= current_site.contactemail %></strong>
 		</div>
 	</div>
 <% else %>
 	<% provide(:title, "Contact Eazesportz.com") %>
 	<div class="row">
-		<div class="span8 offset1" id="backcolor">
+		<div class="col-xs-8 col-xs-offset-1" id="backcolor">
 			<h4>Contact Eazesportz. Email Us below at:</h4>
 			<p>
 			<em>info@eazesportz.com</em>

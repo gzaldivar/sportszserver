@@ -1,15 +1,15 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
 	</div>
-	<div class="span6">
+	<div class="col-xs-6">
 		<h4>Punter stats for <%= link_to(@athlete.full_name, sport_athlete_path(@sport, @athlete)) %></h4>
 	</div>
 </div>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-10">
 		<table class="table table-bordered">
 			<%= render "stat_header", name: "Game" %>
 			<% @stats.each do |s| %>

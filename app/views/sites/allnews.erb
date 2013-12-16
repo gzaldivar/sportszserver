@@ -1,7 +1,7 @@
 <% provide(:title, current_site.sitename + " - News Item") %>
 <p>
 <div class="row">
-	<div class="span10 offset1">
+	<div class="col-xs-10 col-xs-offset-1">
 		<h4>All Site News:</h4>
 	  <%= render 'newsfeeds/newsfeed', feed: @newsfeed %>
 	</div>

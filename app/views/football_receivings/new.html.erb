@@ -1,16 +1,16 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span2">
+	<div class="col-xs-2">
 		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
 	</div>
-	<div class="span8">
+	<div class="col-xs-8">
 		<h4>Enter new receiving statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for <%= @game.game_name %></h4>
 	</div>
 </div>
 <p>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-10">
 		<h5><font color="red">Entering totals here will not be linked to QB stats. They will also not be linked to automatic game log scoring. Use this form only if you do not want to provide that data for your users.</font></h5>
 			<%= render 'form' %>
 	</div>

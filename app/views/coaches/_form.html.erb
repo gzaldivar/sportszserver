@@ -1,23 +1,24 @@
 <div class="row">
-	<div class="span12 offset1">
-		<%= simple_form_for [@sport, @coach] do |f| %>
+	<div class="col-xs-11">
+		<%= simple_form_for [@sport, @coach], 
+							:defaults => { :input_html => { :class => "form-control" } } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 			<div class="row">
-				<div class="span2">
+				<div class="col-xs-2">
 					<%= f.input	:lastname,	label:	"Last name" %>
 				</div>
-				<div class="span2 offset1">
+				<div class="col-xs-2 col-xs-offset-1">
 					<%= f.input :firstname,	label:	"First name" %>
 				</div>
-				<div class="span2 offset1">
+				<div class="col-xs-2 col-xs-offset-1">
 					<%= f.input	:middlename,	label:	"Middle name", required: false %>
 				</div>
 			</div>
 			<div class="row">
-				<div class="span2">
+				<div class="col-xs-2">
 					<%= f.input :speciality, 	label:	"Coaching Responsibility" %>
 				</div>
-				<div class="span4 offset1">
+				<div class="col-xs-4 col-xs-offset-1">
 					<%= f.input	:years_on_staff, label:  "Years on staff (e.g. 4,5, etc.)" %>
 				</div>
 		    </div>
@@ -29,14 +30,14 @@
 	          </div>
 	        </div>
 		    <div class="row">
-				<div class="span8">
+				<div class="col-xs-8">
 					<%= f.input	:bio,	as: :text, hint:	"Some info about the coach", required: false, 
 								input_html: { style: 'width: 800px;height: 100px' } %>
 				</div>
 			</div>
 			<p>
 			<div class="row">
-		        <div class="span2">
+		        <div class="col-xs-2">
 					<% if @coach.team_id.nil? %>
 						Team: Unassigned
 						<!--%= select("coachteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true } ) %-->
@@ -49,8 +50,8 @@
 		        </div>
 			</div>
 			<div class="row">
-				<div class="span4 offset4">
-					<%= f.button :submit, 'Submit', class:	"btn btn-medium btn-primary", id: "submitbtn" %>
+				<div class="col-xs-4 col-xs-offset-4">
+					<%= f.button :submit, 'Submit', class:	"btn btn-sm btn-primary", id: "submitbtn" %>
 				</div>
 			</div>
 		<% end %>	

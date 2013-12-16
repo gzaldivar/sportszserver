@@ -1,36 +1,32 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">
-	<div class="span2">
+	<div class="col-xs-2">
 		<% if @athlete.pic? %> 
 			<%= image_tag @athlete.pic.url(:thumb) %>
 		<% else %>
 			<%= image_tag 'Photo_Not_Available.jpg' %>
 		<% end %>
 	</div>
-	<div class="span4">
+	<div class="col-xs-4">
 		<em><h4>Display stats for: <%= link_to @athlete.full_name, sport_athlete_path(@sport, @athlete) %></h4></em>
 	</div>
-	<div class="span2">
+	<div class="col-xs-4">
 		<%= form_tag selectedstat_sport_athlete_path(sport_id: @sport, athlete_id: @athlete), class: "form-horizontal", method: 'put' do %>
 			<%= render 'shared/error_messages', object: @athlete %>
-			<div class="row">
-				<div class="span2 offset1">
 		            <%= label_tag "Select Stats: " %>
-		            <%= select_tag "selectedstat", options_for_select(@statlist) %>
-				</div>
-			</div>
+		            <%= select_tag "selectedstat", options_for_select(@statlist), class: 'form-control' %>
 			<p>
 			<div class="row">
-				<div class="span1 offset2">
-					<%= submit_tag 'Submit', class:	"btn btn-medium btn-primary" %>
+				<div class="col-xs-1 col-xs-offset-2">
+					<%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 				</div>
 			</div>
 		<% end %>
 	</div>
 </div>
 <div class="row">
-	<div class="span10">
+	<div class="col-xs-11">
 		<h5>Passing</h5>
 		<table class="table table-bordered">
 		  	<%= render 'football_passings/stat_header', name: "Player" %>

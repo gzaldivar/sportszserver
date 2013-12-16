@@ -139,7 +139,7 @@
                           </a>
                         </li>
                         <li id="fatt-menu" class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Event Calendar<b class="caret"></b></a>
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
                             <ul class="dropdown-menu">
                               <% @sport.teams.each do |t| %>
                                 <li><%= link_to (t.title + " " + t.mascot), sport_events_path(@sport, team_id: t) %></li>

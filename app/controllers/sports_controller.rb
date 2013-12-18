@@ -1,7 +1,8 @@
 class SportsController < ApplicationController
   before_filter :authenticate_user!,    only: [:new, :create, :edit, :update, :destroy]
   before_filter :site_owner?,           only: [:edit, :update, :destroy]
-  before_filter :correct_sport,         only: [:show, :edit, :update, :destroy, :sport_user_alerts, :updatelogo]
+  before_filter :correct_sport,         only: [:show, :edit, :update, :destroy, :sport_user_alerts, :updatelogo, :displaynews, 
+                                                :selectteam, :sortgamenews, :sortplayernews, :allnews]
    
   def new
     @sport = Sport.new
@@ -63,9 +64,9 @@ class SportsController < ApplicationController
         format.json
       end
     else
-      @newsfeed = @sport.newsfeeds.limit(10).desc(:updated_at)
+      @followed = []      
       @athletes = @sport.athletes
-      @followed = []
+
       if signed_in?
         cnt = 0
         @athletes.each do |a|
@@ -75,6 +76,32 @@ class SportsController < ApplicationController
           end
         end
       end
+
+#      @followed = @sport.athletes.where(:fans.in => current_user.id.to_s)
+
+      if params[:player_id]
+        @newsfeeds = @sport.newsfeeds.where(athlete_id: params[:player_id].to_s).desc(:updated_at).paginate(:per_page => 10)
+      elsif params[:gameschedule_id]
+        @newsfeeds = @sport.newsfeeds.where(gameschedule_id: params[:game_id].to_s).desc(:updated_at).paginate(:per_page => 10)
+      else
+        @newsfeeds = @sport.newsfeeds.desc(:updated_at).paginate(:per_page => 10)
+      end
+
+      if @newsfeeds.count > 0
+        @thenews = @newsfeeds[0]
+        puts @newsfeeds.count
+     else
+        @thenews = Newsfeed.new(sport_id: @sport.id)
+        @thenews.title = "No news for " + @sport.sitename
+      end
+
+      if current_team?
+        @schedules = @sport.teams.find(current_team.id).gameschedules.asc(:gamedate).paginate(per_page: 10)
+        @players = @sport.athletes.where(team_id: current_team.id).asc(:number).paginate(per_page: 10)
+      else
+        @schedules = nil
+        @players = nil
+      end
       
       respond_to do |format|
         format.html
@@ -83,6 +110,33 @@ class SportsController < ApplicationController
     end
   end
   
+  def displaynews
+    @thenews = @sport.newsfeeds.find(params[:newsitem_id])
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def allnews
+    @newsfeeds = @sport.newsfeeds.desc(:updated_at).paginate(:per_page => 10)
+    respond_to do |format|
+      format.js
+    end
+  end
+
+  def sortgamenews
+      @newsfeeds = @sport.newsfeeds.where(gameschedule_id: params[:game_id].to_s).desc(:updated_at).paginate(:per_page => 10)
+   end
+
+  def sortplayernews
+        @newsfeeds = @sport.newsfeeds.where(athlete_id: params[:player_id].to_s).desc(:updated_at).paginate(:per_page => 10)
+  end
+
+  def selectteam
+    set_current_team(@sport.teams.find(params[:team_id]))
+    redirect_to sport_path
+  end
+
   def index
     if !params[:sport].nil? and !params[:sport].blank?
       thesport = params[:sport].to_s

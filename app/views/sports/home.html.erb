@@ -36,78 +36,74 @@
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-2">
+		<div class="col-xs-3">
 			<h5><em><p class="text-info">iPad Football</p></em></h5>
 		</div>
-		<div class="col-xs-1">
+		<div class="col-xs-2">
 			<h6><em><p class="text-info">Get the app!</p></em></h6>
 		</div>
-		<div class="col-xs-2">
+		<div class="col-xs-3 col-xs-offset-1">
 			<h5><em><p class="text-info">iPad Basketball</p></em></h5>
 		</div>
-		<div class="col-xs-1">
-			<h6><em><p class="text-info">Get the app!</p></em></h6>
-		</div>
 		<div class="col-xs-2">
-			<h5><em><p class="text-info">iPad Soccer</p></em></h5>
-		</div>
-		<div class="col-xs-1">
 			<h6><em><p class="text-info">Get the app!</p></em></h6>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-2">
-			<%= link_to (image_tag "FootballGameStats.png", height: '300', width: '200'), eazefootball_path  %>
+		<div class="col-xs-3">
+			<%= link_to (image_tag "FootballGameStats.png", class: 'img-responsive'), eazefootball_path  %>
 		</div>
-		<div class="col-xs-1">
+		<div class="col-xs-2">
 			<div class="row">
 				<div class="col-xs-1">
-					<%= link_to (image_tag "Football-iPad-50.png", :height => '50', :width => '50'),
-								 "https://itunes.apple.com/us/app/eazesportz-football-management/id703243944?mt=8" %>
+					<%= link_to (image_tag "Football-iPad-50.png", class: 'img-responsive'),
+								"https://itunes.apple.com/us/app/eazesportz-football-management/id703243944?mt=8" %>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-2">
-					<h5>No iPad?</h5>
-					<p>
-					<h6><%= link_to "Use the web ....", websiteinfo_path %></h6>
-				</div>
+				<h5>No iPad?</h5>
+				<p>
+				<h6><%= link_to "Use the web ....", websiteinfo_path %></h6>
 			</div>
 		</div>
-		<div class="col-xs-2">
-			<%= link_to (image_tag "BasketballGameStats.png", height: '300', width: '200'), eazebasketball_path %>
+		<div class="col-xs-3 col-xs-offset-1">
+			<%= link_to (image_tag "BasketballGameStats.png", class: 'img-responsive'), eazebasketball_path %>
 		</div>
-		<div class="col-xs-1">
+		<div class="col-xs-2">
 			<div class="row">
 				<div class="col-xs-1">
-					<%= link_to (image_tag "basketball-icon.jpg", :height => '50', :width => '50'),
+					<%= link_to (image_tag "Basketball-Icon-Small-50.png", class: 'img-responsive'),
 											"https://itunes.apple.com/us/app/eazesportz-basketball-console/id717200419?mt=8" %>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-2">
-					<h5>No iPad?</h5>
-					<p>
-					<h6><%= link_to "Use the web ....", webbballinfo_path %></h6>
-				</div>
+				<h5>No iPad?</h5>
+				<p>
+				<h6><%= link_to "Use the web ....", webbballinfo_path %></h6>
 			</div>
 		</div>
-		<div class="col-xs-2">
-			<%= link_to (image_tag "SoccerLiveStats.png", height: '300', width: '200'), "#" %>
+	</div>
+	<div class="row">
+		<div class="col-xs-3">
+			<h5><em><p class="text-info">iPad Soccer</p></em></h5>
 		</div>
-		<div class="col-xs-1">
+		<div class="col-xs-2">
+			<h6><em><p class="text-info">Get the app!</p></em></h6>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-3">
+			<%= link_to (image_tag "SoccerLiveStats.png", class: 'img-responsive'), "#" %>
+		</div>
+		<div class="col-xs-2">
 			<div class="row">
 				<div class="col-xs-1">
-					<%= link_to (image_tag "Soccer_icon.png", :height => '50', :width => '50'), 
+					<%= link_to (image_tag "Soccer-Icon-Small-50.png", class: 'img-responsive'), 
 											"https://itunes.apple.com/us/app/eazesportz-soccer/id748838917?mt=8" %>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-2">
-					<h5>No iPad?</h5>
-					<p>
-					<h6><!--%= link_to "Use the web ....", webbballinfo_path %-->Use the web ....</h6>
-				</div>
+				<h5>No iPad?</h5>
 			</div>
 		</div>
 	</div>

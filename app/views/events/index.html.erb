@@ -2,7 +2,7 @@
 <p>
 <% if isAdmin? %>
 	<div class="row">
-		<div class="col-xs-2 col-xs-offset-2">
+		<div class="col-xs-2 col-xs-offset-3">
 			<% if @team.nil? %>
 				<%= link_to "New Event", new_sport_event_path(@sport), class: "btn btn-sm btn-primary" %>
 			<% else %>

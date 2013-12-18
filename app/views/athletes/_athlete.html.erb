@@ -1,9 +1,9 @@
 	<tbody>
 		<tr>
       <% if athlete.pic.blank? %>
-        <td><%= link_to image_tag('Photo_Not_Available.jpg'), [@sport, athlete] %></td>
+        <td><%= link_to image_tag('Photo_Not_Available.jpg', class: 'img-responsive'), [@sport, athlete] %></td>
       <% else %>
-        <td><%= link_to image_tag(athlete.pic.url(:thumb)), [@sport, athlete] %></td>
+        <td><%= link_to image_tag(athlete.pic.url(:thumb), class: 'img-responsive'), [@sport, athlete] %></td>
       <% end %>
 			<td><%= athlete.number %></td>
 			<td><%= link_to athlete.lastname, [@sport, athlete] %></td>

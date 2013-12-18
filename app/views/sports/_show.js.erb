@@ -1,0 +1,39 @@
+<script>
+  $(document).ready(function() {
+    $('.all_news').click(function() {
+      $.ajax({
+        url: "<%= allnews_sport_path %>",
+        dataType: "script"
+      });
+    });
+   $('.select_newsitem').click(function() {
+      $.ajax({
+        url: "<%= displaynews_sport_path %>",
+        data: {
+          newsitem_id : $(this).data('id')
+        },
+        dataType: "script"
+      });
+    });
+    $('.sort_news_schedules').click(function() {
+      $('.modal').modal('hide');
+      $.ajax({
+        url: "<%= sortgamenews_sport_path %>",
+        data: {
+          game_id : $(this).data('id')
+        },
+        dataType: "script"
+      });
+    });
+    $('.sort_news_players').click(function() {
+      $('.modal').modal('hide');
+      $.ajax({
+        url: "<%= sortplayernews_sport_path %>",
+        data: {
+          player_id : $(this).data('id')
+        },
+        dataType: "script"
+      });
+    });
+  });
+</script>

@@ -51,4 +51,25 @@ module TeamsHelper
 		end
 	end
 
+	def set_current_team(team)
+		session[:current_team] = team.id
+		self.current_team = team
+	end
+
+	def current_team=(team)
+		@current_team = team
+	end
+
+	def current_team
+		if !session[:current_team].nil?
+			return  @current_team ||= current_site.teams.find(session[:current_team])
+		else
+		 	return nil
+		end
+	end
+  
+	def current_team?
+		!current_team.nil?
+	end
+
 end

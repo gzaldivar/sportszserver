@@ -39,6 +39,7 @@ gem 'simple_form'
 
 gem 'will_paginate'
 gem 'bootstrap-will_paginate'
+gem "will_paginate_mongoid"
 gem 'devise'
 gem 'area'
 # gem 'mongoid_paperclip_queue'
@@ -57,7 +58,8 @@ group :assets do
   # gem 'therubyracer', :platform => :ruby
 end
 
-gem 'jquery-rails', '2.1.4'
+# gem 'jquery-rails', '2.1.4'
+gem 'jquery-rails', '~> 2.3.0'
 gem 'jquery-fileupload-rails'
 gem 's3_direct_upload'
 gem "mediaelement_rails"

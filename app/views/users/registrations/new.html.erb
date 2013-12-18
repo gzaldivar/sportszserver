@@ -1,4 +1,5 @@
 <% provide(:title, "New User") %>
+<p>
 <% if !current_site? %>
   <div class="row">
     <div class="col-xs-12">
@@ -7,10 +8,10 @@
   </div>
   <div class="row">
     <div class="col-xs-4">
-      <%= image_tag "FootballGameStats.png", height: '400', width: '300' %>
+      <%= image_tag "FootballGameStats.png", class: 'img-responsive' %>
     </div>
     <div class="col-xs-4">
-      <%= image_tag "BasketballGameStats.png", height: '400', width: '300' %>
+      <%= image_tag "BasketballGameStats.png", class: 'img-responsive' %>
     </div>
   </div>
   <div class="row">
@@ -18,33 +19,37 @@
       <h4><p class="text-info">When you click submit below we will send you an email to email address you entered when you create your login. You can only activate your account by clicking on the link that is contained in the email.</p></h4>
     </div>
   </div>
+<% else %>
+  <div class="row">
+    <div class="col-xs-8 col-xs-offset-2">
+      <h2><p class="text-info">Welcome to <%= current_site.sitename %></p></h2>
+    </div>
+  </div>
 <% end %>
+<p>
 <div class="row">
-  <div class="col-xs-4 col-xs-offset-2"> 
-    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
-      <%= f.error_notification %>
+  <div class="col-xs-6 col-xs-offset-2"> 
+    <%= simple_form_for(resource, :as => resource_name, :url => registration_path(resource_name), 
+              :defaults => { :wrapper_html => {:class => 'form-group'}, :input_html => { :class => 'form-control' } } ) do |f| %>
+        <%= f.error_notification %>
 
-      <div class="form-inputs">
-        <%= f.input :name, required: true %>
+        <%= f.input :name, required: true, label: "Username" %>
         <%= f.input :email, :required => true, :autofocus => true %>
         <%= f.input :password, :required => true %>
         <%= f.input :password_confirmation, :required => true %>
-      </div>
-
-      <div class="form-actions">
-        <%= f.button :submit, "Sign up" %>
-      </div>
+        <%= f.button :submit, "Sign up", class: "btn btn-primary btn-md" %>
     <% end %>
+    <p>
     <%= render "devise/shared/links" %>
   </div>
 </div>
-  <div class="row">
-    <div class="col-xs-12">
-      <h4><class="text-info">REMEMBER: Look for an email to activate your account. You can only activate your account by clicking on the link that is contained in the email.</p></h4>
-    </div>
+<div class="row">
+  <div class="col-xs-12">
+    <h5><class="text-info">REMEMBER: Look for an email to activate your account. You can only activate your account by clicking on the link that is contained in the email.</p></h5>
   </div>
+</div>
  <div class="row">
     <div class="col-xs-12">
-      <h4><em><class="text-warning">If you are trying to sign up for another Eazesportz site, sign in on that home page and you will be regiestered for that site.</p></em></h4>
+      <h5><em><class="text-warning">If you are trying to sign up for another Eazesportz site, sign in on that home page and you will be regiestered for that site.</p></em></h5>
     </div>
   </div>

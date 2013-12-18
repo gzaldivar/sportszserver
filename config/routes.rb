@@ -172,11 +172,8 @@ Sportzserver::Application.routes.draw do
     end
 
     member do
-      get :sport_user_alerts
-      get  :updateabout
-      get  :updatecontact
-      post :uploadpage
-      post :uploadcontact
+      get :sport_user_alerts, :displaynews, :updateabout, :updatecontact, :selectteam, :sortplayernews, :sortgamenews, :allnews
+      post :uploadpage, :uploadcontact
       put :updatelogo
     end
 
@@ -219,11 +216,6 @@ Sportzserver::Application.routes.draw do
   match '/webbballinfo', to: 'sports#webbballinfo'
   match '/webbballinfo', to: 'sports#websiteinfo'
   match '/publisher', to: 'sports#publisher'
-
-  match '/newkicker', to: 'football_kickers#newkicker'
-  match '/newpunter', to: 'football_kickers#newpunter'
-  match '/newkoreturn', to: 'football_returners#newkoreturn'
-  match '/newpuntreturn', to: 'football_returns#newpuntreturn'
    
   authenticate :user, lambda {|u| u.admin == true} do
     mount Resque::Server, :at => "/resque"

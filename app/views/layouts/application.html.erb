@@ -17,15 +17,16 @@
   <div class="row">
   </div>
   <p>
+<p>
   <div class="row">
     <div class="col-xs-11 col-xs-offset-1">
       <% if !@sport.nil? && !@sport.sport_banner.blank? %>
           <div class="row">
             <div class="col-xs-4">
-              <h3><p class="text-success"><%= @sport.sitename %></p></h3>
+              <h3><p class="text-info"><%= link_to @sport.sitename, sport_path(@sport) %></p></h3>
             </div>
             <div class="col-xs-7">
-              <%= image_tag @sport.sport_banner.url(:large), width: '600', height: '150' %>
+              <%= image_tag @sport.sport_banner.url(:medium), class: 'img-responsive' %>
             </div>
           </div>
           <p>
@@ -34,136 +35,52 @@
           <p>
           <div class="row">
             <div class="col-xs-11">
-                <div class="navbar navbar-inverse">
-                  <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse">
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                      <span class="icon-bar"></span>
-                    </button>
-                  </div>
-                  <nav class="collapse navbar-collapse" role="navigation">
-                    <ul class="nav navbar-nav">
-                      <% if @sport.nil? %>
-                        <li class="disabled"><%= link_to "Schedule", "#" %></li>
-                        <li class="disabled"><%= link_to "Standings", "#" %></li>                 
-                        <li class="disabled"><%= link_to "Rosters", "#" %></li>
-                        <li class="disabled"><%= link_to "Blog", "#" %></li>
-                        <li class="disabled"><%= link_to "Photos", "#" %></li>
-                        <li class="disabled"><a href="#">Video Clips</a></li>
-                        <li class="disabled"><a href="#">More</a></li>
-                      <% elsif !@sport.teams.nil? and @sport.teams.count == 0 %>
-                        <li><%= link_to "Schedule", "#" %></li>
-                        <li class="disabled"><%= link_to "Standings", "#" %></li>                 
-                        <li><%= link_to "Rosters", "#" %></li>
-                        <li><%= link_to "Blog", "#" %></li>
-                        <li><%= link_to "Photos", "#"%></li>
-                        <li><a href="#">Video Clips</a></li>
-                        <li><a href="#">More</a></li>
-                      <% else %>
-                        <li id="fat-menu" class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          Schedule <b class="caret"></b>
-                          </a>
-                          <ul class="dropdown-menu">
-                            <% @sport.teams.each do |t| %>
-                              <li><%= link_to (t.title + " " + t.mascot), sport_team_gameschedules_path(@sport, t) %></li>
-                              <li class="divider"></li>
-                            <% end %> 
-                          </ul>
-                        </li>
-                        <li id="fat-menu" class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          Standings <b class="caret"></b>
-                          </a>
-                          <ul class="dropdown-menu">
-                            <% @sport.teams.each do |t| %>
-                              <li><%= link_to (t.title + " " + t.mascot), sport_team_standings_path(@sport, t) %></li>
-                              <li class="divider"></li>
-                            <% end %> 
-                          </ul>
-                        </li>
-                        <li id="fat-menu" class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          Roster <b class="caret"></b>
-                          </a>
-                          <ul class="dropdown-menu">
-                            <% @sport.teams.each do |t| %>
-                              <li><%= link_to (t.title + " " + t.mascot), sport_athletes_path(@sport, team_id: t) %></li>
-                              <li class="divider"></li>
-                            <% end %> 
-                          </ul>
-                        </li>
-                        <li id="fat-menu" class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          Blog <b class="caret"></b>
-                          </a>
-                          <ul class="dropdown-menu">
-                          <% @sport.teams.each do |t| %>
-                            <li><%= link_to (t.title + " " + t.mascot), sport_blogs_path(@sport, team_id: t) %></li>
-                            <li class="divider"></li>
-                          <% end %>
-                          <li><%= link_to "All", sport_blogs_path(@sport) %></li>
-                          </ul>
-                        </li>
-                        <li id="fat-menu" class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                          Photos<b class="caret"></b>
-                          </a>
-                          <ul class="dropdown-menu">
-                            <% @sport.teams.each do |t| %>
-                              <li><%= link_to (t.title + " " + t.mascot), sport_photos_path(@sport, team_id: t)%></li>
-                              <li class="divider"></li>
-                            <% end %> 
-                            <li><%= link_to "Search", sport_photos_path(@sport) %></li>
-                          </ul>
-                        </li>
-                        <li id="fat-menu" class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Video Clips<b class="caret"></b></a>
-                          <ul class="dropdown-menu">
-                            <% @sport.teams.each do |t| %>
-                              <li><%= link_to (t.title + " " + t.mascot), sport_videoclips_path(@sport, team_id: t)%></li>
-                              <li class="divider"></li>
-                            <% end %> 
-                            <li><%= link_to "Search", sport_videoclips_path(@sport) %></li>
-                          </ul>
-                        </li>
-                        <li id="fat-menu" class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Coaches<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                              <% @sport.teams.each do |t| %>
-                                <li><%= link_to (t.title + " " + t.mascot), sport_coaches_path(@sport, team_id: t)%></li>
-                                <li class="divider"></li>
-                              <% end %> 
-                            </ul>
-                          </a>
-                        </li>
-                        <li id="fatt-menu" class="dropdown">
-                          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Events<b class="caret"></b></a>
-                            <ul class="dropdown-menu">
-                              <% @sport.teams.each do |t| %>
-                                <li><%= link_to (t.title + " " + t.mascot), sport_events_path(@sport, team_id: t) %></li>
-                                <li class="divider"></li>
-                              <% end %>
-                              <li><%= link_to "All", sport_events_path(@sport) %></li>
-                            </ul>
-                          </a>
-                        </li>
-                        <% end %>
+              <ul class="nav nav-pills" style="margin-bottom: 15px;">
+                <% if @sport.nil? %>
+                  <li class="disabled"><%= link_to "Team", "#" %></li>
+                <% elsif !current_team? %>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <% @sport.teams.each do |t| %>
+                        <li><%= link_to (t.title + " " + t.mascot), selectteam_sport_path(@sport, team_id: t) %></li>
+                        <li class="divider"></li>
+                      <% end %> 
                     </ul>
-                  </nav>
-                </div>
-              </div>
+                  </li>
+                <% else %>
+                  <li class="dropdown">
+                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams<span class="caret"></span></a>
+                    <ul class="dropdown-menu">
+                      <% @sport.teams.each do |t| %>
+                        <li><%= link_to (t.title + " " + t.mascot), selectteam_sport_path(@sport, team_id: t) %></li>
+                        <li class="divider"></li>
+                      <% end %> 
+                    </ul>
+                  </li>
+                  <li><%= link_to "Schedule", sport_team_gameschedules_path(@sport, current_team) %></li> 
+                  <li><%= link_to "Standings", sport_team_standings_path(@sport, current_team) %></li>
+                  <li><%= link_to "Roster", sport_athletes_path(@sport, team_id: current_team.id) %></li>
+                  <li><%= link_to "Blog", sport_blogs_path(@sport, team_id: current_team.id) %></li>
+                  <li><%= link_to "Photos", sport_photos_path(@sport, team_id: current_team.id)%></li>
+                  <li><%= link_to "Videos", sport_videoclips_path(@sport, team_id: current_team.id)%></li>
+                  <li><%= link_to "Coaches", sport_coaches_path(@sport, team_id: current_team.id)%></li>
+                  <li><%= link_to "Events", sport_events_path(@sport, team_id: current_team.id) %></li>
+                <% end %>
+              </ul>
             </div>
-          <!--div id="banner" style="background-image: url(<%= @sport.sport_banner.url(:large) %>);">    
-          </div-->
-      <% elsif current_site? and !current_site.sport_banner.blank? %>
-          <div id="banner" style="background-image: url(<%= current_site.sport_banner.url(:large) %>);">
           </div>
+      <% elsif current_site? and !current_site.sport_banner.blank? %>
+        <div class="row">
+          <div class="col-xs-4">
+            <h3><p class="text-success"><%= current_site.sitename %></p></h3>
+          </div>
+          <div class="col-xs-7">
+            <%= image_tag current_site.sport_banner.url(:large), class: 'img-responsive' %>
+          </div>
+        </div>
       <% elsif current_site? %>
-            <h1><%= current_site.sitename %></h1>
-    	<!--% else %>
-    		<div id="homebanner" style="background-image: url(<%= image_path 'home.jpg' %>);"></div-->
+        <h1><%= current_site.sitename %></h1>
       <% end %>
 
   		<% flash.each do |key, value| %>

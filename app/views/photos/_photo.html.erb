@@ -30,11 +30,11 @@
 			<div class="row">
 				<div class="col-xs-2">
 				    <% if !photo.processing && !photo.thumbnail_url.nil? and !photo.pending %>
-				      <td><%= link_to image_tag(photo.thumbnail_url, :height => '100', :width => '100'), sport_photo_path(@sport, photo) %>
+				      <td><%= link_to image_tag(photo.thumbnail_url, class: 'img-responsive'), sport_photo_path(@sport, photo) %>
 					<% elsif !photo.original_url.nil? and !photo.pending %>
-					  <td><%= link_to image_tag(photo.original_url, :height => '100', :width => '100'), sport_photo_path(@sport, photo) %>
+					  <td><%= link_to image_tag(photo.original_url, class: 'img-responsive'), sport_photo_path(@sport, photo) %>
 				    <% else %>
-				      <td><%= image_tag('Photo_Not_Available.jpg', :height => '100', :width => '100') %></td>
+				      <td><%= image_tag('Photo_Not_Available.jpg', class: 'img-responsive') %></td>
 				    <% end %>
 				</div>
 			</div>

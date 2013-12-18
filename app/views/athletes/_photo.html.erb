@@ -1,22 +1,22 @@
 <div class="col-xs-4">
   <% if athlete.processing %>
-    <h4><em><font color="red">Processing Replacement Photo ...</font></em></h4>
+    <h4><em><p class="text-warning">Processing Replacement Photo ...</p></em></h4>
   <% end %>
   <h4>Change Athlete Image:</h4>
 	<% if athlete.pic? %> 
-		<%= image_tag athlete.pic.url(:medium) %>
+		<%= image_tag athlete.pic.url(:medium), class: 'img-responsive' %>
 	<% else %>
-		<%= image_tag 'Photo_Not_Available.jpg' %>
+		<%= image_tag 'Photo_Not_Available.jpg', class: 'img-responsive' %>
 	<% end %>
   <%= s3_uploader_form callback_url: createathletephoto_sport_athletes_path, callback_param: "athlete[image_url]", 
              key: "uploads/athletephotos/#{@athlete.id}/${filename}", id:  "myS3Uploader" do %>
-      <%= file_field_tag :file %>
+      <%= file_field_tag :file, class: 'form-control' %>
   <% end %>
 
   <script id="template-upload" type="text/x-tmpl">
     <div id="file-{%=o.unique_id%}" class="upload">
       {%=o.name%}
-      <div class="progress"><div class="bar" style="width: 0%"></div></div>
+      <div class="progress"><div class="bar" style="width: 0%"></div>
     </div>
   </script>    
 </div>

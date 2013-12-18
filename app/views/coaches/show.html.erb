@@ -8,9 +8,9 @@
       <% end %>
       <h4>Change Coach Image:</h4>
       <% if @coach.coachpic.file? %> 
-        <%= image_tag @coach.coachpic.url(:medium) %>
+        <%= image_tag @coach.coachpic.url(:medium), class: 'img-responsive' %>
       <% else %>
-        <%= image_tag 'Photo_Not_Available.jpg' %>
+        <%= image_tag 'Photo_Not_Available.jpg', class: 'img-responsive' %>
       <% end %>
       <%= s3_uploader_form callback_url: createcoachphoto_sport_coaches_path, callback_param: "coach[image_url]", 
                  key: "uploads/coachesphotos/#{@coach.id}/${filename}", id:  "myS3Uploader" do %>

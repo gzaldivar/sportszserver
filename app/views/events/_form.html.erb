@@ -1,6 +1,7 @@
 <div class="row">
 	<div class="col-xs-11">
-		<%= simple_form_for [@sport, @event], :defaults => { :input_html => { :class => "form-control" } } do |f| %>
+		<%= simple_form_for [@sport, @event], 
+                            :defaults => { :wrapper_html => {:class => 'form-group'}, :input_html => { :class => 'form-control' } } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
             <div class="row">
                 <div class="col-xs-2">
@@ -8,7 +9,9 @@
                                 :value => @event.try(:start_time).try(:strftime,'%m/%d/%Y') } %>
                     <%= f.input :start_time, :as => :hidden, :input_html => { :id => 'recorded-at-alt'} %>
                 </div>
-                 <div class="col-xs-2 col-xs-offset-2">
+            </div>
+            <div class="row">
+                 <div class="col-xs-2">
                     <%= f.input :string_date, as: :string, label: "End", input_html: { class: 'enddatepicker', 
                                 :value => @event.try(:end_time).try(:strftime,'%m/%d/%Y') } %>
                     <%= f.input :end_time, :as => :hidden, :input_html => { :id => 'recorded-at-alt-end'} %>

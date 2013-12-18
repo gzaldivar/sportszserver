@@ -22,9 +22,9 @@
 				<% @gamerecords.each do |g| %>
 					<tr>
 						<% if g.oppimageurl %>
-							<td><%= image_tag(g.oppimageurl) %><%= g.teamname + " " + g.mascot %></td>
+							<td><%= image_tag(g.oppimageurl, class: 'img-responsive') %><%= g.teamname + " " + g.mascot %></td>
 						<% else %>
-							<td><%= image_tag("photo_not_available.png") %><%= g.teamname + " " + g.mascot %></td>
+							<td><%= image_tag("photo_not_available.png", class: 'img-responsive') %><%= g.teamname + " " + g.mascot %></td>
 						<% end %>
 
 						<td><%= g.leaguewins %></td>

@@ -20,7 +20,7 @@
         <td><% if c.coachpic.blank? %>
               <%= link_to image_tag('Tiny_Photo_Not_Available.png'), [@sport, c] %>
             <% else %>
-              <%= link_to image_tag(c.coachpic.url(:thumb)), [@sport, c] %>
+              <%= link_to image_tag(c.coachpic.url(:thumb), class: 'img-responsive'), [@sport, c] %>
             <% end %>
 				<td><%= link_to c.lastname, [@sport, c] %></td>
 				<td><%= link_to c.firstname, [@sport, c] %></td>

@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
         end
 
         sport_path(resource.default_site)
-     else
+      else
         root_path
       end
     end

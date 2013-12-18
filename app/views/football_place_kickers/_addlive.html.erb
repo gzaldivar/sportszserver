@@ -3,11 +3,11 @@
 <div class="row">
 	<div class="col-xs-2">
         <%= label_tag "Quarter: " %>
-		<%= select_tag "quarter", options_for_select(quarters) %>
+		<%= select_tag "quarter", options_for_select(quarters), class: 'form-control' %>
 	</div>
 	<div class="col-xs-6 col-xs-offset-1">
         <%= label_tag "Game Time (Needed for scoring summary. Optional for Kickoff and Punts): " %>
-        <%= text_field_tag "time", '00:00' %>
+        <%= text_field_tag "time", '00:00', class: 'form-control' %>
 	</div>
 </div>
 <p>
@@ -19,7 +19,7 @@
 	</div>
 	<div class="col-xs-1 col-xs-offset-1">
         <%= label_tag "Distance: " %>
-        <%= text_field_tag 'fglong', '0' %>
+        <%= text_field_tag 'fglong', '0', class: 'form-control' %>
 	</div>
 </div>
 <h4>Field Goals Missed or Blocked</h4>

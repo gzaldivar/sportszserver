@@ -15,12 +15,12 @@
 	<div class="col-xs-12">
 		<h4>News item for sport <%= @sport.sport_name %></h4>
 		<%= simple_form_for [@sport, @newsfeed], 
-              :defaults => { :input_html => { :class => "form-control" } } do |f| %>
+              :defaults => { :wrapper_html => {:class => 'form-group'}, :input_html => { :class => 'form-control' } } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
-			<div class="row">
-		        <div class="col-xs-6">
+        <div class="row">
+		      <div class="col-xs-6">
 		          <%= f.input :title, hint: "Enter title text for news" %>
-		        </div>
+		      </div>
 	        <div class="col-xs-5">
 	          <%= f.input :external_url,  label: "External URL:", required: false, hint: "Enter Url of external site if news item has more details on another site" %>
 	        </div>
@@ -31,59 +31,49 @@
   				</div>
 				  <div class="col-xs-4">
     		    <div class="row">
-      			 <div class="col-xs-4">
         			<% if @team %>
         				<h3><em>News item is for team <%= @team %></em></h3>
               <% end %>
 			    	  <%= f.input	:team, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Team", hint: "Team News ...", 
                           input_html: { id: "select_team" } %>
       			</div>
-    		  </div>
-          <div class="row">
-            <div class="col-xs-4">
+            <div class="row">
                 <% if @schedule %>
                   <h3><em>News item is for schedule <%= @schedule %></em></h3>
                 <% end %>
                 <%= f.input :gameschedule, collection: @schedules.collect{ |t| [t.game_name, t.id] }, label: "Game", hint: "Game News ...", 
                             input_html: { id: "gameschedules_select"} %>
             </div>
-        </div>
-    		<div class="row">
-      			<div class="col-xs-4">
+    		    <div class="row">
         			<% if @athlete %>
         				<h3><em>News item is for team <%= @athlete %></em></h3>
               <% end %>
 			    	  <%= f.input	:athlete, collection: @athletes.collect{ |t| [t.name, t.id] }, label: "Athlete", hint: "Athlete News ...", 
                           input_html: { id: "athletes_select"} %>
-      			</div>
-    		</div>
-    		<div class="row">
-      			<div class="col-xs-4">
+    		    </div>
+    		    <div class="row">
         			<% if @coach %>
         				<h3><em>News item is for team <%= @coach %></em></h3>
         			<% end %>
               <%= f.input :coach, collection: @coaches.collect{ |t| [t.full_name, t.id] }, label: "Coach", hint: "Coach News ...", 
                           input_html: { id: "coaches_select"} %>
-     			</div>
-    		</div>
-      	<div class="row">
-        		<div class="col-xs-4">
+    		    </div>
+            <div class="row">
           		<h5>Global site news?</h5>
         		</div>
-        	<div class="col-xs-1">
-           	<%= f.check_box :allsports %>
-        	</div><p>
-      		<div class="col-xs-4">
-        		<em>Hint: Checking this box will make this news item available across the entire site.</em>
-      		</div>
-      	</div><p>
-			</div>
-  		</div>
-      <div class="row">
-  			<div class="col-xs-1 col-xs-offset-4">
-  				<%= f.button :submit, "Submit", class: "btn btn-sm btn-primary" %>
-  			</div>
-      </div>
+            <div class="row">
+            	<%= f.check_box :allsports %>
+            </div><p>
+      		  <div class="row">
+        		  <em>Hint: Checking this box will make this news item available across the entire site.</em>
+      		  </div>
+          </div><p>
+        </div>
+        <div class="row">
+    			<div class="col-xs-1 col-xs-offset-4">
+    				<%= f.button :submit, "Submit", class: "btn btn-sm btn-primary" %>
+    			</div>
+        </div>
 		<% end %>	
 	</div>	
 </div>

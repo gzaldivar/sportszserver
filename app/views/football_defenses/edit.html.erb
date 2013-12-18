@@ -10,15 +10,18 @@
 </div>
 <p>
 <div class="row">
-	<div class="col-xs-10">
-		<% if @live.nil? %>
-			<%= form_tag edit_sport_athlete_football_defense_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
+	<% if @live.nil? %>
+		<div class="col-xs-3">
+			<%= form_tag edit_sport_athlete_football_defense_path(@sport, @athlete), class: "form-inline", method: 'get' do %>
 				<%= hidden_field_tag "gameschedule_id", value=@gameschedule.id %>
-				<%= select_tag "livestats", options_for_select(["Play by Play", "Adjust", "Totals"]) %>
+				<%= select_tag "livestats", options_for_select(["Play by Play", "Adjust", "Totals"]), class: 'form-control' %>
 				<%= submit_tag "Submit", class: "btn btn-sm btn-primary", name: nil %>
 		    <% end %>
-		<% else %>
-			<%= simple_form_for [@sport, @athlete, @defense],  html: { multipart: true } do |f| %>
+		</div>
+	<% else %>
+		<div class="col-xs-10">
+			<%= simple_form_for [@sport, @athlete, @defense], 
+							:defaults => { :wrapper_html => {:class => 'form-group'}, :input_html => { :class => 'form-control' } } do |f| %>
 				<%= render 'shared/error_messages', object: f.object %>
 				<% if @live == "Play by Play" %>
 					<h5>Entering Stats play by play<h5>
@@ -30,6 +33,6 @@
 					<%= render 'form', f: f %>
 				<% end %>
 			<% end %>
-		<% end %>
-	</div>
+		</div>
+	<% end %>
 </div>

@@ -46,7 +46,7 @@
           <div class="row">
             <div class="col-xs-11">
               <ul class="nav nav-pills" style="margin-bottom: 15px;">
-                <% if !@sport.nil? and current_team? %>
+                <% if current_site? or !@sport.nil? %>
                   <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams<span class="caret"></span></a>
                     <ul class="dropdown-menu">
@@ -56,7 +56,9 @@
                       <% end %> 
                     </ul>
                   </li>
-                  <li><%= link_to "Blog", sport_blogs_path(current_site, team_id: current_team.id) %></li>
+                  <% if current_team? and user_signed_in? %>
+                    <li><%= link_to "Blog", sport_blogs_path(current_site, team_id: current_team.id) %></li>
+                  <% end %>
                 <% end %>
               </ul>
             </div>

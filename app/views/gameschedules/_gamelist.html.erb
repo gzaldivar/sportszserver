@@ -12,7 +12,6 @@
         <th>W/L</th>
     </thead>
     <% if !gameschedules.nil? %>
-        <%= will_paginate gameschedules %>
         <% gameschedules.each do |g| %>
            <tbody>
                 <tr>
@@ -22,6 +21,7 @@
                     <td><%= footballhomescore(@sport, g) > g.opponentscore ? "W" : footballhomescore(@sport, g) == g.opponentscore ? "T" : "L" %></td>
                 </tr>
             </tbody>
+            <%= will_paginate gameschedules %>
         <% end %>
     <% else %>
         </tbody>

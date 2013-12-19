@@ -1,13 +1,13 @@
 <% provide(:title, current_site.sitename + " - News Item") %>
 <p>
-	<% item=[]
-	  if !@newsfeed.kind_of?(Array) 
-	    item[0] = @newsfeed  
-	  else
-	    item = @newsfeed 
-	  end %>
 <div class ="row">
-	<div class="col-xs-11 col-xs-offset-1">
-  		<%= render 'newsfeed', feed: item %>
+	<div class="col-xs-11">
+  		<%= render @newsfeed %>
 	</div>
+	<div class="col-xs-4 col-xs-offset-4">
+		<%= link_to "Edit", edit_sport_newsfeed_path(@sport, @newsfeed), class: "btn btn-sm btn-primary" %>
+		<%= link_to "Delete", sport_newsfeed_path(@sport, @newsfeed), method: :delete, class: "btn btn-sm btn-danger", 
+							data: { confirm: "You sure?" } %>
+	</div>
+
 </div>

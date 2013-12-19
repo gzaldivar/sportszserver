@@ -39,8 +39,13 @@
       <% if user_signed_in? and !@followed.nil? and @followed.any? %>
         <div class="row">
             <ul class="nav nav-pills">
-                <li class="disabled"><a href="#" data-toggle="tab">Following Players</a></li>
+              <% if !@followed.nil? and @followed.any? %>
+                <li><a href="#" data-toggle="tab">Following</a></li>
+              <% else %>
+                <li class="disabled"><a href="#" data-toggle="tab">Following</a></li>
+              <% end %>
                 <li><%= link_to "Roster", sport_athletes_path(@sport, team_id: current_team) %></li>
+                <!--li><%= link_to "Featured", sport_athletes_path(@sport, team_id: current_team) %></li-->
             </ul>
         </div>
         <%= render 'athletes/playerlist', players: @followed %>
@@ -119,6 +124,7 @@
                     <tr>
                       <td><%= link_to s.game_name, '#', :class => 'sort_news_schedules', :data => {:id => s.id.to_s} %></td>
                     </tr>
+                    <%= will_paginate @schedules %>
                   <% end %>
                 <% end %>
               </tbody>
@@ -136,6 +142,7 @@
                     <tr>
                       <td><%= link_to p.number.to_s + " " + p.logname, '#', :class => 'sort_news_players', :data => {:id => p.id.to_s} %></td>
                     </tr>
+                    <%= will_paginate @players %>
                   <% end %>
                 <% end %>
               </tbody>

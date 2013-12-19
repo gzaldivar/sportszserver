@@ -22,7 +22,8 @@
   <div class="col-xs-4">
       <ul class="nav nav-pills">
           <li><a href="#game-responsive" data-toggle="modal">Sort News</a></li>
-          <li><%= link_to "All", '#', :class => 'all_news' %></li>
+          <li><%= link_to "Team News", '#', :class => 'all_news' %></li>
+          <li><%= link_to "All", sport_newsfeeds_path(@sport) %></li>
        </ul>
       <div class="newsfeed table-responsive" id="thefeed">
         <%= render 'newsfeeds/newslist', newsfeeds: @newsfeeds %>
@@ -37,49 +38,26 @@
     </div>
     <div class="col-xs-5 col-xs-offset-1">
       <ul class="nav nav-pills">
-        <li><a href="#" data-toggle="tab">Featured</a></li>
-        <li><%= link_to  "Roster", sport_athletes_path(@sport) %></li>
         <% if !@followed.nil? and @followed.any? %>
-          <li><a href="#" data-toggle="tab">Following</a></li>
+          <li><%= link_to "Following", "#", :class => 'following_players' %></li>
         <% end %>
+        <li><%= link_to "Featured", "#", :class => 'featured_players' %></li>
+        <li><%= link_to  "Roster", sport_athletes_path(@sport) %></li>
       </ul>
-      <% if user_signed_in? and !@followed.nil? and @followed.any? %>
-          <%= render 'athletes/playerlist', players: @followed %>
-      <% elsif !@featured.nil? and @featured.any? %>
-        <%= render 'athletes/playerlist', players: @featured %>
-      <% else %>
-        <%= render 'athletes/playerlist', players: @players %>
-      <% end %>
+      <div id="playerlist">
+        <% if user_signed_in? and !@followed.nil? and @followed.any? %>
+            <%= render 'athletes/playerlist', players: @followed, list: "Following" %>
+        <% elsif !@featured.nil? and @featured.any? %>
+          <%= render 'athletes/playerlist', players: @featured, list: "Featured" %>
+        <!--% else %-->
+          <!--%= render 'athletes/playerlist', players: @players, list: "Roster" %-->
+        <% end %>
+      </div>
     </div>
   </div>
 <% end %>
 <p>
-<div class="row">
-  <div class="col-xs-11">        
-    <div class="panel panel-primary">
-      <div class="panel-heading">
-          <h4 class="panel-title"><%= @sport.sitename %> Sponsors</h4>
-       </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-    <% if !(@sponsor = sponsorad(@sport)).nil? %>
-        <div class="col-xs-3 col-xs-offset-1">
-            <%= image_tag @sponsor.sponsorpic.url(:medium), class: 'img-responsive' %></td>
-        </div>
-     <% end %>
-    <% if !(@sponsor = sponsorad(@sport)).nil? %>
-        <div class="col-xs-3">
-            <%= image_tag @sponsor.sponsorpic.url(:medium), class: 'img-responsive' %></td>
-        </div>
-     <% end %>
-    <% if !(@sponsor = sponsorad(@sport)).nil? %>
-        <div class="col-xs-3">
-            <%= image_tag @sponsor.sponsorpic.url(:medium), class: 'img-responsive' %></td>
-        </div>
-     <% end %>
-</div>
+<%= render 'layouts/sponsor' %>
 <p>
 <% if site_owner? %>
   <div class="row">
@@ -168,4 +146,3 @@
     </div>
   </div>
 </div>
-

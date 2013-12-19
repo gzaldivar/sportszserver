@@ -25,6 +25,8 @@ class Sport
   field :about_filename,    type: String
   field :about_filetype,    type: String
 
+  field :aboutsport, type: String
+
   field :help_file_name,    type: String
 
   field :contactemail,      type: String
@@ -48,7 +50,9 @@ class Sport
 
   field :logoprocessing, type: Boolean, default: false
 
-  search_in :sitename, :mascot, :state, :zip, :city, :name, :sportname
+  field :featuredplayers, type: Array
+
+  search_in :sitename, :mascot, :state, :zip, :city, :name, :sportname, :featuredplayers
 
 #  belongs_to :site
   belongs_to :user

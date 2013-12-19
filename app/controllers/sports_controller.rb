@@ -2,7 +2,8 @@ class SportsController < ApplicationController
   before_filter :authenticate_user!,    only: [:new, :create, :edit, :update, :destroy]
   before_filter :site_owner?,           only: [:edit, :update, :destroy]
   before_filter :correct_sport,         only: [:show, :edit, :update, :destroy, :sport_user_alerts, :updatelogo, :displaynews, 
-                                                :selectteam, :sortgamenews, :sortplayernews, :allnews]
+                                                :selectteam, :sortgamenews, :sortplayernews, :allnews, :featuredplayers, :selectfeaturedplayers,
+                                                :showfeaturedplayers, :showfollowedplayers, :updateabout, :uploadabout, :clearabout]
    
   def new
     @sport = Sport.new
@@ -87,6 +88,7 @@ class SportsController < ApplicationController
       if current_team?
         @schedules = @sport.teams.find(current_team.id).gameschedules.asc(:gamedate)
         @players = @sport.athletes.where(team_id: current_team.id).asc(:number)
+        @featured = @sport.athletes.where(team_id: current_team.id, :id.in => @sport.featuredplayers).asc(:number)
       else
         @schedules = nil
         @players = nil
@@ -130,6 +132,35 @@ class SportsController < ApplicationController
   def selectteam
     set_current_team(@sport.teams.find(params[:team_id]))
     redirect_to sport_path
+  end
+
+  def selectfeaturedplayers
+    @players = @sport.athletes.where(team_id: current_team.id).asc(:number)
+  end
+
+  def featuredplayers
+    if !params[:player_ids].nil?
+        @sport.featuredplayers = Array.new
+
+        params[:player_ids].each do |values|
+          @sport.featuredplayers << values
+        end
+
+        @sport.save!
+    end
+
+    respond_to do |format|
+      format.html { redirect_to sport_path(@sport), notice: "Featured players added!" }
+      format.json { render status: 200, json: { success: "success" } }
+    end
+  end
+
+  def showfeaturedplayers
+    @featured = @sport.athletes.where(team_id: current_team.id, :id.in => @sport.featuredplayers).asc(:number)
+  end
+
+  def showfollowedplayers
+    @followed = @sport.athletes.where(fans: current_user.id).asc(:number)
   end
 
   def index
@@ -230,8 +261,17 @@ class SportsController < ApplicationController
   end
 
   def updateabout
-    @page = "About"
-    render 'sitepages'
+  end
+
+  def uploadabout
+    @sport.update_attributes!(params[:sport])
+    redirect_to about_sports_path(@sport)
+  end
+
+  def clearabout
+    @sport.aboutsport = nil
+    @sport.save!
+    redirect_to about_sports_path(@sport)
   end
 
   def uploadpage

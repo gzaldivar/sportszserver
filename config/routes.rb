@@ -84,15 +84,6 @@ Sportzserver::Application.routes.draw do
         end
       end
  
-#      resources :football_stats, only: [:create, :edit, :update, :destroy] do
-#        collection do
-#          get :passing, :rushing, :receiving, :defense, :specialteams, :showdata
-#        end
-
-#        member do
-#          get :newstat, :getrushing, :getpassing, :getreceiving, :getdefense, :getkicker, :getreturner
-#        end
-
       resources :football_passings
 
       resources :football_rushings
@@ -109,8 +100,6 @@ Sportzserver::Application.routes.draw do
 
       resources :football_punters
 
-#      end
- 
       resources :basketball_stats, only: [:create, :show, :update, :index, :destroy, :edit] do
         collection do
           get   :newstat
@@ -168,33 +157,18 @@ Sportzserver::Application.routes.draw do
 
     collection do
       get :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo, :ipadexample_path, :approve, :eazefootball, :eazebasketball,
-          :infobasketball, :webbballinfo, :iphone_basketballinfo
+          :infobasketball, :webbballinfo, :iphone_basketballinfo, :about
     end
 
     member do
-      get :sport_user_alerts, :displaynews, :updateabout, :updatecontact, :selectteam, :sortplayernews, :sortgamenews, :allnews
+      get :sport_user_alerts, :displaynews, :updatecontact, :selectteam, :sortplayernews, :sortgamenews, :allnews, 
+          :selectfeaturedplayers, :showfeaturedplayers, :showfollowedplayers, :updateabout, :clearabout
       post :uploadpage, :uploadcontact
-      put :updatelogo
+      put :updatelogo, :featuredplayers, :uploadabout
     end
 
   end
-  
-#  resources :sites do
-#    resources :contacts
-
-#    member do
-#      get  :updateabout
-#      get  :updatecontact
-#      post :uploadpage
-#      post :uploadcontact
-#    end
     
-#    collection do
-#      get  :male, :female, :mobileinfo, :allnews, :pricing
-#    end
-
-#  end
-  
   root to: 'sports#home'
 
   match '/home',    to: 'sports#home'

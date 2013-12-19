@@ -2,7 +2,7 @@
 <p>
 <div class="row">
 	<div class="col-xs-12">
-		<% if !current_site? or current_site.about_filename_url.nil? %>
+		<% if !current_site? %>
 			<h1>About EazeSportz</h1>
 			<p>
 			<div class="row">
@@ -13,6 +13,7 @@
 		      		<%= image_tag "BasketballGameStats.png", class: 'img-responsive' %>
 		    	</div>
 		    </div>
+		    <p>
 			<div class="row">
 				<div class="col-xs-10">
 					Eazesportz specializes in providing mobile solutions to 
@@ -38,6 +39,8 @@
 				<div class="col-xs-8">
 					<h5>Rails provide an excellent platform for building a highly scalable cloud platform that can support millions of users while supporting high peak volumes. But we especially love Rails for its excellent mobile support! Rails allows us to provide our users with web support in addition to making it easier for us to integrate our mobile applictions.</h5>
 					<p>
+					<h5>Our web site is optimized for mobile devices and is built using Bootstrap. Nobody likes web sites you can't read on tablets and mobile devices!</h5>
+					<p>
 					<h5>In the future, our product will provide support for additional connected devices in addition to live video support to help you reach a wider fan base.</h5>
 				</div>
 			</div>
@@ -47,13 +50,30 @@
 				<h4>You will be required to enter a jpg. If you do not want to enter a new about page the text above will be displayed.</h4>
 			<% end %>
 		<% else %>
-			<h1>About <%= current_site.sitename %></h1>
-				<%= image_tag current_site.about_filename_url %><p>
-				<div class="row">
-					<div class="col-xs-2 col-xs-offset-2">
-						<%= link_to "Update Page", updateabout_sport_path(current_site), class: "btn btn-sm btn-primary" %>
-					</div>
+			<div class="row">
+				<div class="col-xs-6 col-xs-offset-3">
+					<h2>About <%= current_site.sitename %></h2>
 				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-11">
+					<p>
+					<% if !current_site.aboutsport.nil? %>
+						<%= simple_format(current_site.aboutsport) %>
+					<% else %>
+						There is no about information entered for your site. Click below to enter some text describing your site.
+					<% end %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-4">
+					<%= link_to "Update Page", updateabout_sport_path(current_site), class: "btn btn-sm btn-primary" %>
+					<%= link_to "Clear Page", clearabout_sport_path(current_site), class: "btn btn-sm btn-danger",
+											 data: { confirm: "You sure? Your page will be deleted." }  %>
+				</div>
+			</div>
+			<p>
+			<%= render 'layouts/sponsor' %>
 			<p>
 		<% end %>
 	</div>

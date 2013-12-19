@@ -20,23 +20,23 @@
 <p>
   <div class="row">
     <div class="col-xs-11 col-xs-offset-1">
-      <% if !@sport.nil? && !@sport.sport_banner.blank? %>
+      <% if current_site? && current_site.sport_banner? %>
           <div class="row">
             <div class="col-xs-4">
               <div class="row">
-                <h3><p class="text-info"><%= link_to @sport.sitename, sport_path(@sport) %></p></h3>
+                <h3><p class="text-info"><%= link_to current_site.sitename, sport_path(current_site) %></p></h3>
               </div>
               <p>
               <div class="row">
-                <% if @sport.sport_logo? %>
-                  <%= image_tag @sport.sport_logo.url(:thumb), class: 'img-responsive' %>
+                <% if current_site.sport_logo? %>
+                  <%= image_tag current_site.sport_logo.url(:thumb), class: 'img-responsive' %>
                 <% else %>
                   <%= image_tag 'Photo_Not_Available.jpg' %>
                 <% end %>
               </div>
             </div>
             <div class="col-xs-7">
-              <%= image_tag @sport.sport_banner.url(:large), { class: 'img-responsive', height: '300', width: '750' } %>
+              <%= image_tag current_site.sport_banner.url(:large), { class: 'img-responsive', height: '300', width: '750' } %>
             </div>
           </div>
           <p>
@@ -46,42 +46,21 @@
           <div class="row">
             <div class="col-xs-11">
               <ul class="nav nav-pills" style="margin-bottom: 15px;">
-                <% if @sport.nil? %>
-                  <li class="disabled"><%= link_to "Team", "#" %></li>
-                <% elsif !current_team? %>
+                <% if !@sport.nil? and current_team? %>
                   <li class="dropdown">
                     <a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams<span class="caret"></span></a>
                     <ul class="dropdown-menu">
-                      <% @sport.teams.each do |t| %>
-                        <li><%= link_to (t.title + " " + t.mascot), selectteam_sport_path(@sport, team_id: t) %></li>
+                      <% current_site.teams.each do |t| %>
+                        <li><%= link_to (t.title + " " + t.mascot), selectteam_sport_path(current_site, team_id: t) %></li>
                         <li class="divider"></li>
                       <% end %> 
                     </ul>
                   </li>
-                <% else %>
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <% @sport.teams.each do |t| %>
-                        <li><%= link_to (t.title + " " + t.mascot), selectteam_sport_path(@sport, team_id: t) %></li>
-                        <li class="divider"></li>
-                      <% end %> 
-                    </ul>
-                  </li>
-                  <li><%= link_to "Blog", sport_blogs_path(@sport, team_id: current_team.id) %></li>
+                  <li><%= link_to "Blog", sport_blogs_path(current_site, team_id: current_team.id) %></li>
                 <% end %>
               </ul>
             </div>
           </div>
-      <% elsif current_site? and !current_site.sport_banner.blank? %>
-        <div class="row">
-          <div class="col-xs-4">
-            <h3><p class="text-success"><%= current_site.sitename %></p></h3>
-          </div>
-          <div class="col-xs-7">
-            <%= image_tag current_site.sport_banner.url(:large), class: 'img-responsive' %>
-          </div>
-        </div>
       <% elsif current_site? %>
         <h1><%= current_site.sitename %></h1>
       <% end %>

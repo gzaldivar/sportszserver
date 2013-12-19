@@ -1,0 +1,17 @@
+<% provide(:title, current_site.sitename + " - Upload About Page") %>
+<p>
+<%= simple_form_for current_site, url: uploadabout_sport_path(current_site), 
+							:defaults => { :wrapper_html => {:class => 'form-group'}, 
+							:input_html => { method: :put, :class => 'form-control' } } do |f| %>
+	<div class="row">
+		<div class="col-xs-10">
+			<%= f.input :aboutsport, as: :text, label: "About Sport", hint: "Enter some information about your program" %>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-1 col-xs-offset-4">
+			<%= f.submit "Submit", class: "btn btn-sm btn-primary" %>
+		</div>
+	</div>
+<% end %>
+

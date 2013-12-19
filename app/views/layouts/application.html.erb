@@ -23,10 +23,20 @@
       <% if !@sport.nil? && !@sport.sport_banner.blank? %>
           <div class="row">
             <div class="col-xs-4">
-              <h3><p class="text-info"><%= link_to @sport.sitename, sport_path(@sport) %></p></h3>
+              <div class="row">
+                <h3><p class="text-info"><%= link_to @sport.sitename, sport_path(@sport) %></p></h3>
+              </div>
+              <p>
+              <div class="row">
+                <% if @sport.sport_logo? %>
+                  <%= image_tag @sport.sport_logo.url(:thumb), class: 'img-responsive' %>
+                <% else %>
+                  <%= image_tag 'Photo_Not_Available.jpg' %>
+                <% end %>
+              </div>
             </div>
             <div class="col-xs-7">
-              <%= image_tag @sport.sport_banner.url(:medium), class: 'img-responsive' %>
+              <%= image_tag @sport.sport_banner.url(:large), { class: 'img-responsive', height: '300', width: '750' } %>
             </div>
           </div>
           <p>
@@ -58,14 +68,7 @@
                       <% end %> 
                     </ul>
                   </li>
-                  <li><%= link_to "Schedule", sport_team_gameschedules_path(@sport, current_team) %></li> 
-                  <li><%= link_to "Standings", sport_team_standings_path(@sport, current_team) %></li>
-                  <li><%= link_to "Roster", sport_athletes_path(@sport, team_id: current_team.id) %></li>
                   <li><%= link_to "Blog", sport_blogs_path(@sport, team_id: current_team.id) %></li>
-                  <li><%= link_to "Photos", sport_photos_path(@sport, team_id: current_team.id)%></li>
-                  <li><%= link_to "Videos", sport_videoclips_path(@sport, team_id: current_team.id)%></li>
-                  <li><%= link_to "Coaches", sport_coaches_path(@sport, team_id: current_team.id)%></li>
-                  <li><%= link_to "Events", sport_events_path(@sport, team_id: current_team.id) %></li>
                 <% end %>
               </ul>
             </div>

@@ -1,22 +1,22 @@
-    <table class="table table-striped table-bordered table-hover">
-        <thead>
-            <tr>Select news item for details</tr>
-        </thead>
-        <% if !newsfeeds.nil? %>
-            <%= will_paginate newsfeeds %>
-            <% newsfeeds.each do |n| %>
-               <tbody>
-                    <tr>
-                        <td><%= link_to n.title, '#', :class => 'select_newsitem', :data => {:id => n.id.to_s}  %></td>
-                    </tr>
-                </tbody>
-            <% end %>
-        <% else %>
-            </tbody>
-                <tr><td>No News!</td></tr>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <tr>Select news item for details</tr>
+    </thead>
+    <% if !newsfeeds.nil? %>
+        <%= will_paginate newsfeeds %>
+        <% newsfeeds.each do |n| %>
+           <tbody>
+                <tr>
+                    <td><%= link_to n.title, '#', :class => 'select_newsitem', :data => {:id => n.id.to_s}  %></td>
+                </tr>
             </tbody>
         <% end %>
-    </table>
+    <% else %>
+        </tbody>
+            <tr><td>No News!</td></tr>
+        </tbody>
+    <% end %>
+</table>
 <% if site_owner? %>
     <%= link_to "Add News Item", new_sport_newsfeed_path(@sport), class: "btn btn-xs btn-primary" %>
 <% end %>

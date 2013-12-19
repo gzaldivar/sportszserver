@@ -1,0 +1,24 @@
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <th>No.</th>
+        <th>Name</th>
+    </thead>
+    <% if !players.nil? %>
+        <%= will_paginate players %>
+        <% players.each do |p| %>
+           <tbody>
+                <tr>
+                    <td><%= link_to p.number.to_s, sport_athlete_path(@sport, p) %></td>
+                    <td><%= link_to p.logname, sport_athlete_path(@sport, p) %></td>
+                </tr>
+            </tbody>
+        <% end %>
+    <% else %>
+        </tbody>
+            <tr><td>No Players!</td></tr>
+        </tbody>
+    <% end %>
+</table>
+<% if site_owner? %>
+    <%= link_to "Add Player", new_sport_athlete_path(@sport, team_id: current_team.id), class: "btn btn-xs btn-primary" %>
+<% end %>

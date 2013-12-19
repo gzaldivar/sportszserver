@@ -64,20 +64,9 @@ class SportsController < ApplicationController
         format.json
       end
     else
-      @followed = []      
-      @athletes = @sport.athletes
-
-      if signed_in?
-        cnt = 0
-        @athletes.each do |a|
-          if a.fans.include?(current_user.id)
-            @followed[cnt] = a
-            cnt+=1
-          end
-        end
+      if user_signed_in?
+        @followed = @sport.athletes.where(fans: current_user.id).asc(:number).paginate(per_page: 10)
       end
-
-#      @followed = @sport.athletes.where(:fans.in => current_user.id.to_s)
 
       if params[:player_id]
         @newsfeeds = @sport.newsfeeds.where(athlete_id: params[:player_id].to_s).desc(:updated_at).paginate(:per_page => 10)
@@ -101,6 +90,12 @@ class SportsController < ApplicationController
       else
         @schedules = nil
         @players = nil
+      end
+
+      if params[:photo_mode] == "photos"
+        @photomode = "photos"
+      else
+        @photomode = "news"
       end
       
       respond_to do |format|

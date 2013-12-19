@@ -27,7 +27,7 @@
 	  					class: "btn btn-sm btn-warning" %>
 	  			<%= link_to "Delete", [@sport, @team, @gameschedule],  method:	:delete, class: "btn btn-sm btn-danger",
 	  			 		data: { confirm: "You sure?" } %>
-				<%= link_to "Add", new_sport_team_gameschedule_path(@sport, @team), class: "btn btn-primary" %>	
+				<%= link_to "Add", new_sport_team_gameschedule_path(@sport, @team), class: "btn btn-sm btn-primary" %>	
 			</div>
 		<% end %>	  	
 	  	<p>

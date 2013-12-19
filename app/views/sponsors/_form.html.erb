@@ -54,10 +54,11 @@
 				<div class="col-xs-4">
 					<%= f.input	:contactemail,	label:	"Email:", input_html: { style: 'width: 450px' } %>
 				</div>
-				<div class="col-xs-3 col-xs-offset-1">
+				<div class="col-xs-3 col-xs-offset-2">
 					<%= f.input :priority, as: :radio_buttons, label: "Sponsorship Priority:", hint: "Select if you want your sponorship ads to take prioirty over ads displayed from an ad server on your mobile app", :selected => (@sponsor.priority? ? true : false) %>
 				</div>
 			</div>
+			<p>
 			<div class="row">
 				<div class="col-xs-3">
 					<h4>Current sponser ad image</h4>

@@ -1,0 +1,34 @@
+<div class="row">
+    <ul class="nav nav-pills">
+        <li><%= link_to current_team.mascot + "  Game Schedule", sport_team_gameschedules_path(@sport, current_team) %></li>
+        <li><%= link_to "Standings", sport_team_standings_path(@sport, current_team) %></li>
+    </ul>
+</div>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <th>Date</th>
+        <th>Opponent</th>
+        <th>Score</th>
+        <th>W/L</th>
+    </thead>
+    <% if !gameschedules.nil? %>
+        <%= will_paginate gameschedules %>
+        <% gameschedules.each do |g| %>
+           <tbody>
+                <tr>
+                    <td><%= g.gamedate.strftime("%m/%d") %></td>
+                    <td><%= link_to g.opponent_mascot , sport_team_gameschedule_path(@sport, current_team, g) %></td>
+                    <td><%= footballhomescore(@sport, g).to_s + "-" + g.opponentscore.to_s %></td>
+                    <td><%= footballhomescore(@sport, g) > g.opponentscore ? "W" : footballhomescore(@sport, g) == g.opponentscore ? "T" : "L" %></td>
+                </tr>
+            </tbody>
+        <% end %>
+    <% else %>
+        </tbody>
+            <tr><td>No Schedule!</td></tr>
+        </tbody>
+    <% end %>
+</table>
+<% if site_owner? %>
+    <%= link_to "Add Game", new_sport_team_gameschedule_path(@sport, current_team), class: "btn btn-xs btn-primary" %>
+<% end %>

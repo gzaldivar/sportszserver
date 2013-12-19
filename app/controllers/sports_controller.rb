@@ -65,15 +65,15 @@ class SportsController < ApplicationController
       end
     else
       if user_signed_in?
-        @followed = @sport.athletes.where(fans: current_user.id).asc(:number).paginate(per_page: 10)
+        @followed = @sport.athletes.where(fans: current_user.id).asc(:number)
       end
 
       if params[:player_id]
-        @newsfeeds = @sport.newsfeeds.where(athlete_id: params[:player_id].to_s).desc(:updated_at).paginate(:per_page => 10)
+        @newsfeeds = @sport.newsfeeds.where(athlete_id: params[:player_id].to_s).desc(:updated_at).paginate(per_page: 10)
       elsif params[:gameschedule_id]
-        @newsfeeds = @sport.newsfeeds.where(gameschedule_id: params[:game_id].to_s).desc(:updated_at).paginate(:per_page => 10)
+        @newsfeeds = @sport.newsfeeds.where(gameschedule_id: params[:game_id].to_s).desc(:updated_at).paginate(per_page: 10)
       else
-        @newsfeeds = @sport.newsfeeds.desc(:updated_at).paginate(:per_page => 10)
+        @newsfeeds = @sport.newsfeeds.desc(:updated_at).paginate(per_page: 10)
       end
 
       if @newsfeeds.count > 0
@@ -85,8 +85,8 @@ class SportsController < ApplicationController
       end
 
       if current_team?
-        @schedules = @sport.teams.find(current_team.id).gameschedules.asc(:gamedate).paginate(per_page: 10)
-        @players = @sport.athletes.where(team_id: current_team.id).asc(:number).paginate(per_page: 10)
+        @schedules = @sport.teams.find(current_team.id).gameschedules.asc(:gamedate)
+        @players = @sport.athletes.where(team_id: current_team.id).asc(:number)
       else
         @schedules = nil
         @players = nil

@@ -36,25 +36,19 @@
       <%= render 'gameschedules/gamelist', gameschedules: @schedules %>
     </div>
     <div class="col-xs-5 col-xs-offset-1">
+      <ul class="nav nav-pills">
+        <li><a href="#" data-toggle="tab">Featured</a></li>
+        <li><%= link_to  "Roster", sport_athletes_path(@sport) %></li>
+        <% if !@followed.nil? and @followed.any? %>
+          <li><a href="#" data-toggle="tab">Following</a></li>
+        <% end %>
+      </ul>
       <% if user_signed_in? and !@followed.nil? and @followed.any? %>
-        <div class="row">
-            <ul class="nav nav-pills">
-              <% if !@followed.nil? and @followed.any? %>
-                <li><a href="#" data-toggle="tab">Following</a></li>
-              <% else %>
-                <li class="disabled"><a href="#" data-toggle="tab">Following</a></li>
-              <% end %>
-                <li><%= link_to "Roster", sport_athletes_path(@sport, team_id: current_team) %></li>
-                <!--li><%= link_to "Featured", sport_athletes_path(@sport, team_id: current_team) %></li-->
-            </ul>
-        </div>
-        <%= render 'athletes/playerlist', players: @followed %>
+          <%= render 'athletes/playerlist', players: @followed %>
       <% elsif !@featured.nil? and @featured.any? %>
-        <p class="text-info">Featured Players</p>
         <%= render 'athletes/playerlist', players: @featured %>
       <% else %>
-        <p class="text-info"><%= current_team.mascot %> Roster</p>
-        <% render 'athletes/playerlist', players: @players %>
+        <%= render 'athletes/playerlist', players: @players %>
       <% end %>
     </div>
   </div>
@@ -119,13 +113,11 @@
               </thead>
               <tbody>
                 <% if !@schedules.nil? %>
-                  <% will_paginate @schedules %>
                   <% @schedules.each do |s| %>
                     <tr>
                       <td><%= link_to s.game_name, '#', :class => 'sort_news_schedules', :data => {:id => s.id.to_s} %></td>
                     </tr>
                   <% end %>
-                  <%= will_paginate @schedules %>
                 <% end %>
               </tbody>
             </table>
@@ -137,13 +129,11 @@
               </thead>
               <tbody>
                 <% if !@players.nil? %>
-                  <% will_paginate @players %>
                   <% @players.each do |p| %>
                     <tr>
                       <td><%= link_to p.number.to_s + " " + p.logname, '#', :class => 'sort_news_players', :data => {:id => p.id.to_s} %></td>
                     </tr>
                   <% end %>
-                  <%= will_paginate @players %>
                 <% end %>
               </tbody>
             </table>

@@ -4,7 +4,6 @@
         <th>Name</th>
     </thead>
     <% if !players.nil? %>
-        <%= will_paginate players %>
         <% players.each do |p| %>
            <tbody>
                 <tr>
@@ -13,7 +12,6 @@
                 </tr>
             </tbody>
         <% end %>
-        <%= will_paginate @players %>
     <% else %>
         </tbody>
             <tr><td>No Players!</td></tr>

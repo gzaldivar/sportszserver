@@ -20,8 +20,8 @@
 			<% end %>
 			<!--%= f.input :defpos, collection: defense_football_positions, include_blank: true, label: "Defense Position:" %-->
 		</div>
-		<div class="col-xs-4 col-xs-offset-1">
-			<div class="input string required"><label class="string required" for="athlete_special_teamspos">Special Teams Position:</label>					
+		<div class="col-xs-2 col-xs-offset-1">
+			<div class="input string required"><label class="string required" for="athlete_special_teamspos">Special Teams:</label>					
 			</div>			
 			<% if @position.any? and !@position[2].nil? %>
 				<%= select_tag "special_teamspos", options_for_select(specialteams_football_positions, @position[2]), include_blank: true, class: 'form-control' %>

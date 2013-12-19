@@ -3,7 +3,6 @@
         <th>News for <%= @sport.sitename %></th>
     </thead>
     <% if !newsfeeds.nil? %>
-        <%= will_paginate newsfeeds %>
         <% newsfeeds.each do |n| %>
            <tbody>
                 <tr>
@@ -11,6 +10,7 @@
                 </tr>
             </tbody>
         <% end %>
+        <%= will_paginate newsfeeds %>
     <% else %>
         </tbody>
             <tr><td>No News!</td></tr>

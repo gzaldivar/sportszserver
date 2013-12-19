@@ -124,8 +124,8 @@
                     <tr>
                       <td><%= link_to s.game_name, '#', :class => 'sort_news_schedules', :data => {:id => s.id.to_s} %></td>
                     </tr>
-                    <%= will_paginate @schedules %>
                   <% end %>
+                  <%= will_paginate @schedules %>
                 <% end %>
               </tbody>
             </table>
@@ -142,8 +142,8 @@
                     <tr>
                       <td><%= link_to p.number.to_s + " " + p.logname, '#', :class => 'sort_news_players', :data => {:id => p.id.to_s} %></td>
                     </tr>
-                    <%= will_paginate @players %>
                   <% end %>
+                  <%= will_paginate @players %>
                 <% end %>
               </tbody>
             </table>

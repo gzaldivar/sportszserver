@@ -21,8 +21,8 @@
                     <td><%= footballhomescore(@sport, g) > g.opponentscore ? "W" : footballhomescore(@sport, g) == g.opponentscore ? "T" : "L" %></td>
                 </tr>
             </tbody>
-            <%= will_paginate gameschedules %>
         <% end %>
+        <%= will_paginate gameschedules %>
     <% else %>
         </tbody>
             <tr><td>No Schedule!</td></tr>

@@ -12,8 +12,8 @@
                     <td><%= link_to p.logname, sport_athlete_path(@sport, p) %></td>
                 </tr>
             </tbody>
-            <%= will_paginate @players %>
         <% end %>
+        <%= will_paginate @players %>
     <% else %>
         </tbody>
             <tr><td>No Players!</td></tr>

@@ -24,6 +24,17 @@
 	        </ul>
 	        <ul class="nav navbar-right navbar-nav">
 				<% if signed_in? and site_owner? %>
+					<% if current_team? %>
+						<li id="fat-menu" class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">More ...<b class="caret"></b></a>
+				    			<ul class="dropdown-menu">
+				        			<li><%= link_to "Coaches", sport_coaches_path(@sport, team_id: current_team.id) %></li>
+									<li class="divider"></li>
+									<li><%= link_to "Events", sport_events_path(@sport, team_id: current_team.id) %></li>
+				    			</ul>
+							</a>
+						</li>
+					<% end %>
 					<li id="fat-menu" class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools<b class="caret"></b></a>
 			    			<ul class="dropdown-menu">
@@ -37,17 +48,6 @@
 			    			</ul>
 						</a>
 					</li>
-					<% if current_team? %>
-						<li id="fat-menu" class="dropdown">
-							<a href="#" class="dropdown-toggle" data-toggle="dropdown">More ...<b class="caret"></b></a>
-				    			<ul class="dropdown-menu">
-				        			<li><%= link_to "Coaches", sport_coaches_path(@sport, team_id: current_team.id) %></li>
-									<li class="divider"></li>
-									<li><%= link_to "Events", sport_events_path(@sport, team_id: current_team.id) %></li>
-				    			</ul>
-							</a>
-						</li>
-					<% end %>
 					<li id="fat-menu" class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 				            <% if user_signed_in? %>

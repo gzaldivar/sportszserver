@@ -1,6 +1,6 @@
 <table class="table table-striped table-bordered table-hover">
     <thead>
-        <tr>Select news item for details</tr>
+        <th>News for <%= @sport.sitename %></th>
     </thead>
     <% if !newsfeeds.nil? %>
         <%= will_paginate newsfeeds %>

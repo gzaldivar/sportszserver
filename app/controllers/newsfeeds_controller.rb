@@ -88,14 +88,14 @@ class NewsfeedsController < ApplicationController
   
   def destroy
     begin
-      @newsfeed.delete
+      @newsfeed.destroy
       respond_to do |format|
-        format.html { redirect_to :back, notice: "News item delete successful!" }
+        format.html { redirect_to sport_path(@sport), notice: "News item delete successful!" }
         format.json { render json: { success: "success", request: @sport } }
       end
     rescue Exception => e
       respond_to do |format|
-        format.html { redirect_to :back, alert: "Error deleting news item" }
+        format.html { redirect_to sport_path(@sport), alert: "Error deleting news item" }
         format.json { render status: 404, json: { error: e.message, request: @sport } }
       end
     end

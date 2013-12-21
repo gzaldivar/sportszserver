@@ -1,17 +1,22 @@
 <div class="row">
 	<div class="col-xs-1">
-		<%= f.input :currentperiod, label: "Period", collection: 1..4, input_html: { style: "width: 50px" } %>
+		<%= f.label "Period" %>
+		<%= f.select :currentperiod, [1..4], {}, class: 'form-control' %>
 	</div>
 	<div class="col-xs-2 col-xs-offset-1">
-		<%= f.input :bballpossessionarrow, label: "Possession Arrow:", collection: [ @team.team_name, @gameschedule.opponent ] %>
+		<%= f.label "Possession Arrow" %>
+		<%= f.select :bballpossessionarrow, [ @team.team_name, @gameschedule.opponent ], {}, class: 'form-control' %>
 	</div>
 </div>
+<p>
 <div class="row">
-	<div class="col-xs-2">
-		<%= f.input :hometimeouts, label: "Home Time Outs", input_html: { style: "width: 50px" } %>
+	<div class="col-xs-1">
+		<%= f.label "Home Time Outs" %>
+		<%= f.text_field :hometimeouts, class: 'form-control' %>
 	</div>
-	<div class="col-xs-2 col-xs-offset-1">
-		<%= f.input :opponenttimeouts, label: "Vistor Time Outs", input_html: { style: "width: 50px" } %>
+	<div class="col-xs-1 col-xs-offset-1">
+		<%= f.label "Visitor Time Outs" %>
+		<%= f.text_field :opponenttimeouts, class: 'form-control' %>
 	</div>
 </div>
 
@@ -35,8 +40,9 @@
 		<!--%= f.input :homefouls, label: "Fouls", input_html: { style: "width: 50px" } %-->
 		<font color="red">Home fouls are computed from stats:</font> <h4><%= @gameschedule.homefouls %></h4>
 	</div>
-	<div class="col-xs-2">
-		<%= f.input :homebonus, as: :radio_buttons, label: "Bonus" %>
+	<div class="col-xs-1">
+		<%= f.label "Bonus" %>
+		<%= f.radio_button :homebonus, class: 'form-control' %>
 	</div>
 </div>
 <div class="row">
@@ -48,13 +54,16 @@ Opponent data is not comupted automatically since only your team roster is avail
 below as needed so your fans can keep track of the action.
 <p>
 <div class="row">
-	<div class="col-xs-3">
-		<%= f.input :opponentscore, label: "Opponenet Score", input_html: { style: "width: 50px" } %>
+	<div class="col-xs-1">
+		<%= f.label "Score" %>
+		<%= f.text_field :opponentscore, class: 'form-control' %>
 	</div>
-	<div class="col-xs-3">
-		<%= f.input :opponentfouls, label: "Fouls", input_html: { style: "width: 50px" } %>
+	<div class="col-xs-1 col-xs-offset-1">
+		<%= f.label "Fouls" %>
+		<%= f.text_field :opponentfouls, class: 'form-control' %>
 	</div>
-	<div class="col-xs-2">
-		<%= f.input :visitorbonus, as: :radio_buttons, label: "Bonus" %>
+	<div class="col-xs-1 col-xs-offset-1">
+		<%= f.label "Bonus" %>
+		<%= f.radio_button :visitorbonus, class: 'form-control' %>
 	</div>
 </div>

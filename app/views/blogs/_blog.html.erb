@@ -10,11 +10,11 @@
                 </div>
             </div><p>
             <div class="row">
-                <div class="col-xs-2">
+                <div class="col-xs-1">
                   <% if user.avatartinyurl.nil? %>
-                    <%= link_to image_tag("Tiny_Photo_Not_Available.png"), user_path(user) %>
+                    <%= link_to image_tag("Tiny_Photo_Not_Available.png", class: 'img-responsive'), user_path(user) %>
                   <% else %>
-                    <%= link_to image_tag(user.avatartinyurl, size: "50x50"), user_path(user) %>
+                    <%= link_to image_tag(user.avatartinyurl, class: 'img-responsive'), user_path(user) %>
                   <% end %>
                 </div>
                 <div class="col-xs-9">
@@ -61,7 +61,7 @@
         <div class="row">
           <div class="col-xs-4 col-xs-offset-2">
       			<% if isAdmin? or (user_signed_in? and (current_user.id == user.id)) %>
-      				<%= link_to "Edit", edit_sport_blog_path(b.sport, b),  class: "btn btn-xs btn-warning" %>
+      				<%= link_to "Edit", edit_sport_blog_path(b.sport, b, team_id: @team.id),  class: "btn btn-xs btn-warning" %>
       				<%= link_to "Delete", sport_blog_path(b.sport, b),  method:	:delete,  class: "btn btn-xs btn-danger", data: { confirm: "You sure?" } %>
       			<% end %>
           </div>

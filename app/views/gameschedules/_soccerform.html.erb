@@ -3,6 +3,7 @@
 		<h5><font color="red">Home corner kicks and shots on goal are automatically computed from stats</font></h5>
 	</div>
 </div>
+<p>
 <div class="row">
 	<div class="col-xs-2">
 		<%= label_tag "Home Shots on Goal:" %>
@@ -17,14 +18,18 @@
 		<%= @soccerhomeck %>
 	</div>
 </div>
+<p>
 <div class="row">
 	<div class="col-xs-2 ">
-		<%= f.input :socceroppsog, label: "Opponent Shots on Goal", input_html: { style: "width: 50px" } %>
+		<%= f.label "Opponent Shots on Goal" %>
+		<%= f.text_field :socceroppsog, class: 'form-control' %>
 	</div>
 	<div class="col-xs-2">
-		<%= f.input :socceroppck, label: "Opponent Corner Kicks:", input_html: { style: "width: 50px" } %>
+		<%= f.label "Opponent Corner Kicks" %>
+		<%= f.text_field :socceroppck, class: 'form-control' %>
 	</div>
 	<div class="col-xs-2 ">
-		<%= f.input :socceroppsaves, label: "Opponent Saves", input_html: { style: "width: 50px" } %>
+		<%= f.label "Opponent Saves" %>
+		<%= f.text_field :socceroppsaves, class: 'form-control' %>
 	</div>
 </div>

@@ -1,33 +1,31 @@
 <div class="row">
 	<div class="col-xs-1">
-		<%= f.input :ballon, label: "Ball On:", input_html: { style: "width: 50px" } %>
+		<%= f.label "Ball On" %>
+		<%= f.text_field :ballon, class: 'form-control' %>
 	</div>
-	<div class="col-xs-2 col-xs-offset-1">
-		<%= f.input :our, label: "Ball Position", collection: [ @team.team_name, @gameschedule.opponent ] %>
-	</div>
-</div>
-<div class="row">
 	<div class="col-xs-1">
-		<%= f.input :down, collection: 1..4, input_html: { style: "width: 50px" } %>
+		<%= f.label "Down" %>
+		<%= f.select :down, (1..4), {}, class: 'form-control' %>
 	</div>
-	<div class="col-xs-1 col-xs-offset-1">
-		<%= f.input :togo, label: "To Go", input_html: { style: "width: 50px" } %>
+	<div class="col-xs-1">
+		<%= f.label "To Go" %>
+		<%= f.text_field :togo, class: 'form-control' %>
 	</div>
-</div>
-<div class="row">
+	<div class="col-xs-1">
+		<%= f.label "Penalties" %>
+		<%= f.text_field :penalty, class: 'form-control' %>
+	</div>
 	<div class="col-xs-2">
-		<%= f.input :penalty, label: "Number of Penalties:", input_html: { style: "width: 50px" } %>
-	</div>
-	<div class="col-xs-2">
-		<%= f.input :penaltyyards, label: "Penalty Yards:", input_html: { style: "width: 50px" } %>
+		<%= f.label "Penalty Yards" %>
+		<%= f.text_field :penaltyyards, class: 'form-control', html: { style: "width 50px" } %>
 	</div>
 </div>
 
 <p>
-<h5>Enter Game Score:</h5>
-<p>
+<h5>Enter Game Score:<p>
+<p class="text-danger">
 	Game score data for home team below is automatically generated via the entry of stats for athletes. Changing the data below can result in statistical data being out of sync with the athlete stats. Use with caution!
-<p>
+</p></h5>
 
 <%= render "quarters_form", f: f %>
 <p>

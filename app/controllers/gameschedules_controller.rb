@@ -33,15 +33,23 @@ class GameschedulesController < ApplicationController
   def create
     begin
       schedule = @team.gameschedules.build(params[:gameschedule])
-      schedule.starttime = DateTime.civil(schedule.gamedate.year, schedule.gamedate.month, 
-                                          schedule.gamedate.day, 
-                                          params[:gameschedule][:"starttime(4i)"].to_i,
-                                          params[:gameschedule][:"starttime(5i)"].to_i)
-      schedule.livegametime = DateTime.civil(schedule.gamedate.year, schedule.gamedate.month, 
-                                          schedule.gamedate.day, 
-                                          params[:gameschedule][:"livegametime(4i)"].to_i,
-                                          params[:gameschedule][:"livegametime(5i)"].to_i)
+      datetime = DateTime.iso8601(params[:gameschedule][:gamedate])
 
+      if params[:starthour]
+        if params[:ampm] == "PM" and params[:stathour].to_i != 12
+          params[:starthour] = (params[:starthour].to_i + 12).to_s
+        end
+        schedule.starttime = datetime.change({:hour => hour , :min => params[:startminutes].to_i , :sec => 0 })
+      else
+        schedule.starttime = DateTime.civil(datetime.year, datetime.month, datetime.day, params[:gameschedule][:"starttime(4i)"].to_i,
+                                            params[:gameschedule][:"starttime(5i)"].to_i)
+      end
+
+#      schedule.livegametime = DateTime.civil(schedule.gamedate.year, schedule.gamedate.month, schedule.gamedate.day, 
+#                              params[:gameschedule][:"livegametime(4i)"].to_i,params[:gameschedule][:"livegametime(5i)"].to_i)
+
+      schedule.current_game_time = params[:gameminutes].to_s + ":" + params[:gameseconds].to_s
+      
       schedule.save!
 
       respond_to do |format|
@@ -104,27 +112,6 @@ class GameschedulesController < ApplicationController
         @punterstats = punterstats.stats
         @puntertotals = punterstats.puntertotals
 
-  #      @firstdowns = totalfirstdowns(@sport, @gameschedule)
-  #      @homescore = footballhomescore(@sport, @gameschedule)
-
-#        @stats = AthleteFootballStatsTotal.new
-#        @stats.passing_totals(@gameschedule)
-#        @ath_totals = @gameschedule.football_stats
-#        @stats.rushing_totals(@gameschedule)
-#        @stats.receiving_totals(@gameschedule)
-#        @stats.defense_totals(@gameschedule)
-#        @stats.specialteams_totals(@gameschedule)
-#        @gameschedule.firstdowns = 0
-#        @gameschedule.football_stats.each do |f|
-#          if !f.football_passings.nil?
-#            @gameschedule.firstdowns = @gameschedule.firstdowns + f.football_passings.firstdowns
-#          end
-#        end
-#        @gameschedule.football_stats.each do |f|
-#          if !f.football_rushings.nil?
-#            @gameschedule.firstdowns = @gameschedule.firstdowns + f.football_rushings.firstdowns
-#          end
-#        end
       elsif @sport.name == "Basketball"
         @stats = @gameschedule.basketball_stats
         totals = StatTotal.new(@sport, @gameschedule)
@@ -162,7 +149,7 @@ class GameschedulesController < ApplicationController
           end
         end
       end
- 
+
       respond_to do |format|
         format.html
         format.json
@@ -200,10 +187,24 @@ class GameschedulesController < ApplicationController
   def update
     begin
       datetime = DateTime.iso8601(params[:gameschedule][:gamedate])
-      @gameschedule.starttime = DateTime.civil(datetime.year, datetime.month, datetime.day, params[:gameschedule][:"starttime(4i)"].to_i,
-                                               params[:gameschedule][:"starttime(5i)"].to_i)
-      @gameschedule.livegametime = DateTime.civil(datetime.year, datetime.month, datetime.day, params[:gameschedule][:"livegametime(4i)"].to_i,
-                                                  params[:gameschedule][:"livegametime(5i)"].to_i)
+      if params[:starthour]
+        if params[:ampm] == "PM" and params[:stathour].to_i != 12
+          hour = (params[:starthour].to_i + 12)
+        else
+          hour = params[:starthour].to_i
+        end
+  #       time = Time.zone.local(datetime.year, datetime.month, datetime.day, hour, params[:startminutes].to_i)
+        @gameschedule.starttime = datetime.change({:hour => hour , :min => params[:startminutes].to_i , :sec => 0 })
+      else
+        @gameschedule.starttime = DateTime.civil(datetime.year, datetime.month, datetime.day, params[:gameschedule][:"starttime(4i)"].to_i,
+                                                params[:gameschedule][:"starttime(5i)"].to_i)
+      end
+      
+#      @gameschedule.livegametime = DateTime.civil(datetime.year, datetime.month, datetime.day, params[:gameschedule][:"livegametime(4i)"].to_i,
+#                                                  params[:gameschedule][:"livegametime(5i)"].to_i)
+
+      @gameschedule.current_game_time = params[:gameminutes].to_s + ":" + params[:gameseconds].to_s
+
       @gameschedule.update_attributes!(params[:gameschedule])
       respond_to do |format|
           format.html { redirect_to [@sport, @team, @gameschedule] }

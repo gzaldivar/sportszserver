@@ -1,3 +1,68 @@
+<div class="row">
+	<div class="col-xs-11">
+		<%= form_for [@sport, @blog], :input_html => { :class => 'form-horizontal' } do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+      <%= f.hidden_field :user_id, value: current_user.id %>
+      <%= f.hidden_field :team_id, value: @team.id %>
+          <div class="row">
+		        <div class="col-xs-6">
+              <%= f.label :enter_blog_title, "Enter Blog Title" %>
+              <% if @oldblog.nil? %>
+		            <%= f.text_field :title, class: 'form-control' %>
+              <% else %>
+                <%= f.text_field :title, value: "RE: " + @oldblog.title, class: 'form-control' %>
+              <% end %>
+		        </div>
+	        	<div class="col-xs-4 col-xs-offset-1">
+                <%= f.label :external_url, "External URL:" %>
+	          		<%= f.text_field :external_url, class: 'form-control' %>
+                Enter Url of external site if blog item points to another site
+	        	</div>
+    		  </div>
+  		    <div class="row">
+    				  <div class="col-xs-6">
+                <%= f.label :enter_blog_entry, "Enter Blog Entry:" %>
+                <%= f.text_area :entry, class: 'form-control' %>
+    				  </div>
+              <p>
+  				    <div class="col-xs-4 col-xs-offset-1">
+                <div class="row">
+                    <h5>Blog for team: <%= @team.team_name %></h5>
+                </div>
+                <div class="row">
+                    <%= f.label :game %>
+                    <%= f.select :gameschedule_id, options_for_select(@gameschedules.collect{ |t| [t.game_name, t.id] }, @blog.gameschedule_id), {},
+                                   { id: "select_game", class: 'form-control' } %>
+                </div>
+                <% if @sport.name == "Football" %>
+                  <div class="row">
+                      <%= f.label :play %>
+                      <%= f.select :gamelog_id, options_for_select(@gamelogs.collect{ |t| [t.logentrytext, t.id] }, @blog.gamelog_id), {}, 
+                                  { id: "gamelogs_select", class: 'form-control' } %>
+                  </div>
+                <% end %>
+             		<div class="row">
+                    <%= f.label :player %>
+                    <%= f.select :athlete_id, options_for_select(@athletes.collect{ |t| [t.full_name, t.id] }, @blog.athlete_id), {},
+                                    { id: "athletes_select", class: 'form-control' } %>
+            		</div>
+            		<div class="row">
+                    <%= f.label :coach %>
+                    <%= f.select :coach_id, options_for_select(@coaches.collect{ |t| [t.full_name, t.id] }, @blog.coach_id), {},
+                                      { id: "coaches_select", class: 'form-control' } %>
+            		</div>
+	               <p>
+	            </div>
+	            <p>
+          </div>
+          <div class="row">
+      			<div class="col-xs-1 col-xs-offset-5">
+      				<%= f.button :submit, class: "btn btn-sm btn-primary" %>
+      			</div>
+          </div>
+		<% end %>	
+	</div>	
+</div>
 <script>
   $(document).ready(function() {
     $('#select_team').change(function() {
@@ -22,61 +87,3 @@
     });
   });
 </script>
-<div class="row">
-	<div class="col-xs-11">
-		<%= simple_form_for [@sport, @blog], 
-              :defaults => { :wrapper_html => {:class => 'form-group'}, :input_html => { :class => 'form-control' } } do |f| %>
-			<%= render 'shared/error_messages', object: f.object %>
-      <%= f.input :user_id, as: :hidden, :input_html => { value: current_user.id } %>
-      <%= f.input :team_id, as: :hidden, :input_html => { value: @team.id } %>
-          <div class="row">
-		        <div class="col-xs-6">
-              <% if @oldblog.nil? %>
-		            <%= f.input :title, hint: "Enter Blog Title" %>
-              <% else %>
-                <%= f.input :title, hint: "Enter Blog Title", value: "RE: " + @oldblog.title %>
-              <% end %>
-		        </div>
-	        	<div class="col-xs-4 col-xs-offset-1">
-	          		<%= f.input :external_url,  label: "External URL:", required: false, hint: "Enter Url of external site if blog item points to another site" %>
-	        	</div>
-    		  </div>
-  		    <div class="row">
-    				  <div class="col-xs-6">
-    					   <%= f.input	:entry, as: :text, hint:	"Enter Blog Entry:" %>
-    				  </div>
-              <p>
-  				    <div class="col-xs-4 col-xs-offset-1">
-                <div class="row">
-                    <h5>Blog for team: <%= @team.team_name %></h5>
-                </div>
-                <div class="row">
-                    <%= f.input	:gameschedule_id, collection: @gameschedules.collect{ |t| [t.game_name, t.id] }, label: "Game", 
-                                hint: "Blog for Game .....", input_html: { id: "select_game"} %>
-                </div>
-                <% if @sport.name == "Football" %>
-                  <div class="row">
-                      <%= f.input :gamelog_id, collection: @gamelogs.collect{ |t| [t.logentrytext, t.id] }, label: "Play", 
-                                  hint: "Blog for Play .....", input_html: { id: "gamelogs_select"} %>
-                  </div>
-                <% end %>
-             		<div class="row">
-                    <%= f.input :athlete_id, collection: @athletes.collect{ |t| [t.full_name, t.id] }, label: "Athlete", hint: "Blog for Athlete ...",
-                                    input_html: { id: "athletes_select"} %>
-            		</div>
-            		<div class="row">
-                    <%= f.input :coach_id, collection: @coaches.collect{ |t| [t.full_name, t.id] }, label: "Coach", hint: "Blog for Coach ...",
-                                      input_html: { id: "coaches_select"} %>
-            		</div>
-	               <p>
-	            </div>
-	            <p>
-          </div>
-          <div class="row">
-      			<div class="col-xs-1 col-xs-offset-5">
-      				<%= f.button :submit, "Submit", class: "btn btn-sm btn-primary" %>
-      			</div>
-          </div>
-		<% end %>	
-	</div>	
-</div>

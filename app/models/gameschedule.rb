@@ -138,10 +138,6 @@ class Gameschedule
     opponent + " " + opponent_mascot
   end
 
-  def start_time
-    starttime
-  end
-
   def set_live_game_time
     self.livegametime = Date.today.midnight
   end

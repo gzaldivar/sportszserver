@@ -21,12 +21,12 @@
 </script>
 <div class="row">
   <div class="col-xs-10 col-xs-offset-1">
-    <%= simple_form_for [@sport, @videoclip], 
-							:defaults => { :input_html => { :class => "form-control" } }  do |f| %>
+    <%= form_for [@sport, @videoclip], :input_html => { :class => "form-horizontal" }  do |f| %>
 		<%= render 'shared/error_messages', object: f.object %>
 	      <div class="row">
 	        <div class="col-xs-4">
-				<%= f.input :teamid, collection:	@teams.collect{ |t| [t.team_name, t.id] }, label: "Tag video for team", input_html: {id: "select_team"}  %>
+	        	<%= f.label "Tag video for team" %>
+				<%= f.select :teamid, @teams.collect{ |t| [t.team_name, t.id] }, {}, {id: "select_team", class: 'form-control' }  %>
 	        </div>
 	        <div class="col-xs-6">
 		        Current athletes tagged:&nbsp
@@ -42,7 +42,9 @@
 			<br/>
 		 <div class="row">
 				<div class="col-xs-4">
-					<%= f.input :gameschedule_id, collection: @gameschedules.collect{ |t| [t.game_name, t.id] }, label: "Tag game", prompt: "Tag Game", input_html: { id: "gameschedules_select"} %>
+					<%= f.label "Tag game" %>
+					<%= f.select :gameschedule_id, @gameschedules.collect{ |t| [t.game_name, t.id] }, {}, 
+								{ id: "gameschedules_select", class: 'form-control' } %>
 				</div><p>
 	        <div class="col-xs-4">
 	          Tag athletes:&nbsp<br/>
@@ -56,10 +58,9 @@
 			        <div class="col-xs-4">
 					    <h5>Play Tagging:</h5>
 		   				 <% if !@gamelogs.empty? %>
-			    		<!--%= collection_select(:play, :id, @gamelogs, :id, :logentrytext, prompt:  "Tag Play", include_blank: true, 
-			    							  input_html: { id: "gamelogs_select"} ) %-->
-				    		<%= f.input :gamelog_id, collection: @gamelogs.collect{ |t| [t.logentrytext, t.id] }, label:  "Tag Play", include_blank: true,
-				    			input_html: { id: "gamelogs_select" } %>
+		   				 	<%= f.label :tag_play, "Tag Play" %>
+				    		<%= f.select :gamelog_id, @gamelogs.collect{ |t| [t.logentrytext, t.id] }, { include_blank: true },
+				    					{ id: "gamelogs_select", class: 'form-control' } %>
 						<% else %>
 							No game tagged. Tag game before tagging play!
 						<% end %>
@@ -69,15 +70,20 @@
 	      <p>
 	      <div class="row">
 			<div class="col-xs-4">
-				<%= f.input	:displayname,	label:	"videoclip Name" %>
+				<%= f.label "Name" %>
+				<%= f.text_field :displayname, class: 'form-control' %>
         	</div>
-				<div class="col-xs-6">
-					<%= f.input	:description,	as: :text, label:	"Video Clip Description" %>
-				</div>
+        </div>
+        <p>
+        <div class="row">
+			<div class="col-xs-12">
+				<%= f.label "Description" %>
+				<%= f.text_area :description, class: "form-control" %>
+			</div>
 			</div><br/>
 			<div class="row">
 				<div class="col-xs-1 col-xs-offset-3">
-					<%= f.button :submit, 'Update', class:	"btn btn-sm btn-primary" %>
+					<%= f.submit :submit, class:	"btn btn-sm btn-primary" %>
 			</div>
         	<% if isAdmin? || (user_signed_in? && (current_user.id == @videoclip.owner)) %>
 	          <div class="row">
@@ -88,7 +94,8 @@
         	<% end %>
 			</div>
 		<% end %>	
-	</div>	
+	</div>
+	<p>
     <div class="row">
     	<div class="col-xs-10 col-xs-offset-1">
 			Untag athlete:

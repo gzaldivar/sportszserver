@@ -1,22 +1,26 @@
 <div class="row">
 	<div class="col-xs-11">
-		<%= simple_form_for [@sport, @athlete], 
-							:defaults => { :wrapper_html => {:class => 'form-group'}, :input_html => { :class => 'form-control' } } do |f| %>
+		<%= form_for [@sport, @athlete], :input_html => { :class => 'form-horizontal' } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 			<div class="row">
 				<div class="col-xs-1">
-					<%= f.input :number,	label:	"Num" %>
+					<%= f.label "Number" %>
+					<%= f.text_field :number, class: 'form-control' %>
 				</div>
 				<div class="col-xs-3 col-xs-offset-1">
-					<%= f.input	:lastname,	label:	"Last name" %>
+					<%= f.label :last_name, "Last Name" %>
+					<%= f.text_field :lastname, class: 'form-control' %>
 				</div>
 				<div class="col-xs-4 col-xs-offset-1">
-					<%= f.input :firstname,	label:	"First name" %>
+					<%= f.label :firstname, "First Name" %>
+					<%= f.text_field :firstname, class: 'form-control' %>
 				</div>
 			</div>
+			<p>
 			<div class="row">
 				<div class="col-xs-3">
-					<%= f.input	:middlename, required: false,	label:	"Middle name" %>
+					<%= f.label :middle_name, "Middle Name" %>
+					<%= f.text_field :middlename, class: 'form-control' %>
 				</div>
 				<div class="col-xs-2">
 					<div class="input string required"><label class="string required" for="athlete_feet"><abbr title="required">*</abbr> Height Feet:</label>					
@@ -38,21 +42,26 @@
 					<!--%= f.input	:height %-->	
 				</div>
 			</div>
+			<p>
 			<div class="row">
 				<%= render 'position', f: f %>
 			</div>
 			<p>
 			<div class="row">
 				<div class="col-xs-2">
-					<%= f.input	:weight %>
+					<%= f.label "Weight" %>
+					<%= f.text_field :weight, class: 'form-control' %>
 				</div>
 				<div class="col-xs-2 col-xs-offset-1">
-					<%= f.input	:year,	label: "Grade/Age/Class", hint:	"Grade: 10, 11, Age: 7, 8 , Class: Jr., Sr., etc." %>
+					<%= f.label "Grade/Age/Class" %>
+					<%= f.text_field :year, class: 'form-control' %>
 				</div>
 				<div class="col-xs-2 col-xs-offset-1">
-					<%= f.input	:season %>
+					<%= f.label "Season" %>
+					<%= f.text_field	:season, class: 'form-control' %>
 				</div>
 			</div>
+			<p>
 	        <div id="loading">
 	          <div id="loadingcontent">
 	              <p id="loadingspinner">
@@ -60,31 +69,33 @@
 	              </p>
 	          </div>
 	        </div>
+	        <p>
 			<div class="row">
 				<div class="col-xs-12">
-					<%= f.input	:bio,	as: :text, required: false, hint:	"Some info about the athlete" %>
+					<%= f.text_area	:bio, class: 'form-control' %>
 				</div>
 			</div>
 			<p>
 			<div class="row">
 				<div class="col-xs-4">
 	        		<% if !@sport.teams.empty? %>
-							<!--label class="string required" for="athteam_team"></abbr>Assign to Team:</label-->
-							<h5>Assigned Team: 
-							<% if @athlete.team_id.nil?  %>
-								Unassigned
-								<!--%= select("", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true } ) %-->
-							<% else %>
-								<%= @sport.teams.find(@athlete.team_id).team_name %>
-	            				<!--%= select("athteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, selected: @sport.teams.find(@athlete.team).id ) %-->
-							<% end %></h5>
-							<%= f.input :team_id, collection: @sport.teams.collect{ |t| [t.team_name, t.id] }, label: "Change Team:",
-										input_html: { include_blank: true } %>
+						<!--label class="string required" for="athteam_team"></abbr>Assign to Team:</label-->
+						<h5>Assigned Team: 
+						<% if @athlete.team_id.nil?  %>
+							Unassigned
+							<!--%= select("", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true } ) %-->
+						<% else %>
+							<%= @sport.teams.find(@athlete.team_id).team_name %>
+            				<!--%= select("athteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, selected: @sport.teams.find(@athlete.team).id ) %-->
+						<% end %></h5>
+						<%= f.label :change_team, "Change Team" %>
+						<%= f.select :team_id, @sport.teams.collect{ |t| [t.team_name, t.id] }, include_blank: true, 
+												class: 'form-control'  %>
 	        		<% end %>
 				</div>
 			</div>
 			<div class="col-xs-2 col-xs-offset-5">
-				<%= f.button :submit, 'Submit', class:	"btn btn-sm btn-primary", id: "submitbtn" %>
+				<%= f.submit :submit, class: "btn btn-sm btn-primary", id: "submitbtn" %>
 			</div>
 		<% end %>
 		<div class="row">

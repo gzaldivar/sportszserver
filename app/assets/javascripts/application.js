@@ -16,5 +16,7 @@
 //= require bootstrap
 //= require s3_direct_upload
 //= require mediaelement_rails
+//= require bootstrap-timepicker
 //= require browser_timezone_rails/application.js
+//= require moment
 //= require_tree .

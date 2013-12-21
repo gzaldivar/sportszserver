@@ -42,6 +42,9 @@ gem 'bootstrap-will_paginate'
 gem "will_paginate_mongoid"
 gem 'devise'
 gem 'area'
+# gem 'timezone'
+# gem 'geocoder'
+
 # gem 'mongoid_paperclip_queue'
 # gem "mongoid_paperclip_queue", :path => "/Users/dirctdt/Development/rails/mongoid_paperclip_queue-master"
 gem 'mongoid-paperclip', :require => "mongoid_paperclip"
@@ -63,6 +66,8 @@ gem 'jquery-rails', '~> 2.3.0'
 gem 'jquery-fileupload-rails'
 gem 's3_direct_upload'
 gem "mediaelement_rails"
+gem 'momentjs-rails'
+gem 'bootstrap-timepicker-rails'
 # gem 'videojs_rails'
 
 group :test do

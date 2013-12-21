@@ -1,10 +1,9 @@
 <div class="row">
 	<div class="col-xs-12">
-		<%= simple_form_for [@sport, @team, @gameschedule], 
-							:defaults => { :wrapper_html => {:class => 'form-group'}, :input_html => { :class => 'form-control' } } do |f| %>
+		<%= form_for [@sport, @team, @gameschedule], :input_html => { :class => 'form-horizontal' } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 			<div class="row">
-				<div class="col-xs-4">
+				<div class="col-xs-6">
 					<h4>
 						<% if @gameschedule.nil? %>
 							<%= link_to "Search for Eazesportz Opponent?", findsport_sport_team_gameschedules_path(sport: @sport.name) %>
@@ -23,14 +22,15 @@
 				</div>
 				<div class="row">
 					<div class="col-xs-5">
-						<%= f.input	:opponent, label: "Opponent Name" %>
+						<%= f.text_field :opponent, placeholder: 'Opponent', class: 'form-control' %>
 					</div>
 					<div class="col-xs-5">
-						<%= f.input	:opponent_mascot, label: "Opponent Mascot" %>
+						<%= f.text_field :opponent_mascot, placeholder: 'Opponent Mascot', class: 'form-control' %>
 					</div>
 				</div>
+				<p>
 				<div class="row">
-					<div class="col-xs-6">
+					<div class="col-xs-8">
 						We encourage you to upload an image for your opponent if you have one. Looks good on the mobile app.<p>
 						<% if !@gameschedule.opponentpic.blank? %>
 							<h5>Current opponent image</h5>
@@ -38,29 +38,30 @@
 			          	<% else %>
 			            	<%= image_tag "photo_not_available.png" %>
 						<%end %>
-						<%= f.input	:opponentpic,	label: "Opponent image:", hint: "Change image" %>
+						<%= f.label 'Opponent Logo' %>
+						<%= f.file_field :opponentpic, class: 'form-control' %>
 					</div>
 				</div>
 			<% else %>
-				<%= f.input :opponent_sport_id, as: :hidden, input_html: { value: @opposingsport.id.to_s } %>
-				<%= f.input :opponent_team_id, as: :hidden, input_html: { value: @opposingteam.id.to_s } %>
+				<%= f.hidden_field :opponent_sport_id, value: @opposingsport.id.to_s %>
+				<%= f.hidden_field :opponent_team_id, value: @opposingteam.id.to_s %>
 
 				<% if @opposingteam.team_logo? %>
-					<%= f.input :opponentpic, as: :hidden, input_html: { value: @opposingteam.team_logo } %>
+					<%= f.hidden_field :opponentpic, value: @opposingteam.team_logo %>
 				<% elsif @opposingsport.sport_logo? %>
-					<%= f.input :opponentpic, as: :hidden, input_html: { value: @opposingsport.sport_logo } %>
+					<%= f.hidden_field :opponentpic, value: @opposingsport.sport_logo %>
 				<% end %>
 
 				<h3>Selected Eazesportz Opposing Team</h3>
 				<div class="row">
 					<div class="col-xs-5">
-						<%= f.input	:opponent, input_html: { value: @opposingteam.title } %>
+						<%= f.text_field :opponent, value: @opposingteam.title , class: 'form-control'%>
 					</div>
 					<div class="col-xs-5">
 						<% if @opposingteam.mascot.nil? %>
-							<%= f.input :opponent_mascot, label: "Opponent Mascot", input_html: { value: @opposingsport.mascot } %>
+							<%= f.text_field :opponent_mascot, value: @opposingsport.mascot, class: 'form-control' %>
 						<% else %>
-							<%= f.input	:opponent_mascot, label: "Opponent Mascot", input_html: { value: @opposingteam.mascot } %>
+							<%= f.text_field :opponent_mascot, value: @opposingteam.mascot , class: 'form-control'%>
 						<% end %>
 					</div>
 				</div>
@@ -80,42 +81,52 @@
 			<% end %>
 			<p>
 			<div class="row">
-				<div class="col-xs-3">
-					<%= f.input :startdate, label: "* Start Date", as: :string, input_html: { class: 'datepicker', 
-											:value => @gameschedule.try(:gamedate).try(:strftime,'%m/%d/%Y') } %>
-					<%= f.input :gamedate, :as => :hidden, :input_html => { :id => 'recorded-at-alt'} %>
-					<!--%= f.input :gamedate,  as: :date, start_year: Date.today.year, start_month: Date.today, 
-					 			ignore_time: true %-->
+				<div class="col-xs-2">
+					<%= f.label "Game Date" %>
+					<%= f.text_field :startdate, as: :string,  class: 'datepicker form-control', 
+											:value => @gameschedule.try(:gamedate).try(:strftime,'%m/%d/%Y')  %>
+					<%= f.hidden_field :gamedate, :id => 'recorded-at-alt' %>
 				</div>
-				<div class="col-xs-1 col-xs-offset-1">
-					<%= f.input :league, as: :radio_buttons, label: "League Game?" %>
+				<div class="col-xs-2">
+					<h4>Game Time:</h4>
 				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-					<%= f.input :homeaway, label: "Home Game?" , collection: [ "Home", "Away" ] %>
+				<div class="col-xs-1" %>
+					<%= label_tag "Hour" %><label id='game_start_hour'></label>		
+					<%= select_tag "starthour", options_for_select((01 .. 12), include_blank: false), class: 'form-control' %>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-11">
-					<%= f.input	:starttime, label: "Game Start Time:", as: :time, ignore_date: true, input_html: { style: "width: 50px" } %>
+				<div class="col-xs-1" %>
+					<%= label_tag "Minute" %>
+					<%= select_tag "startminutes", options_for_select((00 .. 59), include_blank: false), class: 'form-control' %>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-12">
-					<h3>Game Location</h3>
+				<div class="col-xs-1" %>
+					<%= label_tag :ampm, "AMPM" %>
+					<!--%= select_tag "ampm", options_for_select(['AM', 'PM'], @gameschedule.starttime.strftime("%p") == "AM" ? "AM" : "PM" ), class: 'form-control' %-->
+					<%= select_tag "ampm", options_for_select(['AM', 'PM'], include_blank: false), class: 'form-control' %>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-5">
-					<%= f.input :location %>
+				<div class="col-xs-2">
+					<%= f.label "League Game" %>
+					<%= f.check_box :league %>
 				</div>
-				<div class="col-xs-5">
-					<%= f.input	:event, hint:	"Senior day, Homecoming, etc.", required: false %>	
+				<div class="col-xs-2">
+					<%= f.label :home_game, "Home Game?" %>
+					<%= f.select :homeaway, [ "Home", "Away" ], {}, class: 'form-control' %>
 				</div>
 			</div>
 			<p>
 			<div class="row">
-				<div class="col-xs-2">
-					<%= f.input :final, as: :boolean, label: "Mark game as final" %>
+				<div class="col-xs-6">
+					<%= f.label "Game Location" %>
+					<%= f.text_field :location, class: 'form-control' %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-6">
+					<%= f.label  "Event" %>
+					<%= f.text_field :event, placeholder: "Senior day, Homecoming, etc.", class: 'form-control' %>	
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= f.label "Mark game as final" %>
+					<%= f.check_box :final %>
 				</div>
 			</div>
 			<p>
@@ -128,22 +139,42 @@
 				<p>
 				<div class="row">
 					<div class="col-xs-11">
-						<%= f.input :lastplay, label: "Last Play:" %>
+						<%= f.label "Last Play:" %>
+						<%= f.text_field :lastplay, class: 'form-control'  %>
 					</div>
 				</div>
 				<p>
 				<% if @sport.sportname == "Football" or @sport.name == "Basketball" %>
 					<div class="row">
-						<div class="col-xs-4">
-							<%= f.input :livegametime, label: "Live Game Time:", as: :time, ignore_date: true, 
-										input_html: { style: "width: 50px" } %>
-							<!--%= f.input :current_game_time, label: "Game Time", input_html: { style: "width: 50px" } %-->
-						</div>
-						<div class="col-xs-1 col-xs-offset-1">
-							<%= f.input :possession, collection: ["Home", "Opponent"], input_html: { style: "width: 80px" }  %>
+						<div class="col-xs-2">
+							<!--%= f.input :livegametime, label: "Live Game Time:", as: :time, ignore_date: true, 
+										input_html: { style: "width: 50px" } %-->
+							<h4>Live Game Time</h4>
+							<!--%= f.text_field :current_game_time, class: 'form-control' %-->
 						</div>
 					</div>
+					<div class="row">
+						<div class="col-xs-1">
+							<%= label_tag "Minutes" %>
+							<%= select_tag "gameminutes", options_for_select((00 .. 20), @gameschedule.current_game_time.split(':')[0]), 
+											class: 'form-control' %>
+						</div>
+						<div class="col-xs-1">
+							<%= label_tag "Seconds" %>
+							<%= select_tag "gameseconds", options_for_select((00 .. 59), @gameschedule.current_game_time.split(':')[1]), 
+											class: 'form-control' %>
+						</div>
+					</div>
+					<p>
+					<div class="row">
+						<div class="col-xs-2">
+							<%= f.label "Possession" %>
+							<%= f.select :possession, [current_team.mascot, @gameschedule.opponent_mascot], {}, class: 'form-control' %>
+						</div>
+					</div>
+					<p>
 				<% end %>
+				<p>
 				<% if @sport.sportname == "Football" %>
 					<%= render 'footballform', f: f %>
 				<% elsif @sport.sportname == "Basketball" %>
@@ -154,8 +185,31 @@
 			<% end %>
 			<p>
 			<div class="col-xs-1 col-xs-offset-5">
-				<%= f.button :submit, "Submit", class: "btn btn-sm btn-primary" %>
+				<%= f.submit :submit, class: "btn btn-sm btn-primary" %>
 			</div>
 		<% end %>	
 	</div>	
 </div>
+<script>
+	$('#starthour').find('option').each(function() {
+		var $this = $(this);
+		if ($this.text() == moment('<%= @gameschedule.starttime.to_s %>').utc().format("h")) {
+			$this.attr('selected','selected');
+			return false;
+		}
+	});
+	$('#startminutes').find('option').each(function() {
+		var $this = $(this);
+		if ($this.text() == moment('<%= @gameschedule.starttime.to_s %>').utc().format("m")) {
+			$this.attr('selected','selected');
+			return false;
+		}
+	});
+	$('#ampm').find('option').each(function() {
+		var $this = $(this);
+		if ($this.text() == moment('<%= @gameschedule.starttime.to_s %>').utc().format("A")) {
+			$this.attr('selected','selected');
+			return false;
+		}
+	});
+</script>

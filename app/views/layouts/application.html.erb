@@ -43,26 +43,6 @@
           <div class="row">
           </div>
           <p>
-          <div class="row">
-            <div class="col-xs-11">
-              <ul class="nav nav-pills" style="margin-bottom: 15px;">
-                <% if current_site? or !@sport.nil? %>
-                  <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams<span class="caret"></span></a>
-                    <ul class="dropdown-menu">
-                      <% current_site.teams.each do |t| %>
-                        <li><%= link_to (t.title + " " + t.mascot), selectteam_sport_path(current_site, team_id: t) %></li>
-                        <li class="divider"></li>
-                      <% end %> 
-                    </ul>
-                  </li>
-                  <% if current_team? and user_signed_in? %>
-                    <li><%= link_to "Blog", sport_blogs_path(current_site, team_id: current_team.id) %></li>
-                  <% end %>
-                <% end %>
-              </ul>
-            </div>
-          </div>
       <% elsif current_site? %>
         <h1><%= current_site.sitename %></h1>
       <% end %>

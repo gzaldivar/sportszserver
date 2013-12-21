@@ -2,17 +2,12 @@
 <p>
 <div class="row">
   	<div class="col-xs-11">
-		  <h4>
-       		Date: <%= @gameschedule.gamedate.strftime("%m/%d/%Y") %>
+		  <h4>Date: <%= @gameschedule.gamedate.strftime("%m/%d/%Y") %></h4>
        		<p>
-     		<%= @team.title + " " + @team.mascot %>
-     		vs.
-      		<%= @gameschedule.opponent %> at 
-      		<em><%= @gameschedule.location %></em>
+     	<h4><%= @team.title + " " + @team.mascot %> vs. <%= @gameschedule.opponent %> at <em><%= @gameschedule.location %></em></h4>
       		<p>
-      		Game time: <%= @gameschedule.starttime.strftime("%H:%M%P") %>
-      		<%= @gameschedule.event %>
-  		</h4>
+      <h4>Game time: <label id='game_start_time'></label></h4>
+      <h4><%= @gameschedule.event %></h4>
   		<% if @sport.sportname == "Basketball" %>
   			<%= render 'show_basketball' %>
   		<% elsif @sport.sportname == "Football" %>
@@ -33,3 +28,6 @@
 	  	<p>
 	</div>
 </div>
+<script>
+  $('#game_start_time').html(moment('<%= @gameschedule.starttime.to_s %>').utc().format("hh:mm A"));
+</script>

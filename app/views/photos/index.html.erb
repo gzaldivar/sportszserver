@@ -18,32 +18,26 @@
 	    <%= form_tag sport_photos_path, class: "form-horizontal", method: 'get' do %>
 	    	<%= hidden_field_tag :team_id, @team.id %>
 		    <div class="row">
-		        <!--div class="col-xs-2">
-		          	<%= label_tag "Team: " %>
-		      		<%= select(:team, :id, @sport.teams.collect{ |t| [t.team_name, t.id] }, include_blank: true ) %>
-		        </div-->
-					<div class="col-xs-2">
-			          	<%= label_tag "Game: " %>
-			      		<%= collection_select(:game, :id, @gameschedules, :id, :game_name, { include_blank: true }, 
-			      						{ id: "select_game", class: 'form-control' } ) %>
-					</div>
-					<div class="col-xs-4 col-xs-offset-1">
-			          	<%= label_tag "Play: " %>
-			      		<%= collection_select(:gamelog, :id, @gamelogs, :id, :logentrytext, { include_blank: true }, 
-			      						{ id: "gamelogs_select", class: 'form-control' } ) %>
-					</div>
-			</div>
-			<div class="row">
-		        <div class="col-xs-2">
-		          	<%= label_tag "Player Number: " %>
+				<div class="col-xs-4">
+		          	<%= label_tag "Game: " %>
+		      		<%= collection_select(:game, :id, @gameschedules, :id, :game_name, { include_blank: true }, 
+		      						{ id: "select_game", class: 'form-control' } ) %>
+				</div>
+				<div class="col-xs-4">
+		          	<%= label_tag "Play: " %>
+		      		<%= collection_select(:gamelog, :id, @gamelogs, :id, :logentrytext, { include_blank: true }, 
+		      						{ id: "gamelogs_select", class: 'form-control' } ) %>
+				</div>
+		        <div class="col-xs-1">
+		          	<%= label_tag "Number: " %>
 		      		<%= select(:number, :id, @sport.athletes.collect{ |t| [t.number, t.id] }, { include_blank: true },  class: 'form-control'  ) %>
 		        </div>
-		        <div class="col-xs-2 col-xs-offset-1">
+			</div>
+			<div class="row">
+		        <div class="col-xs-4">
 		          	<%= label_tag "Player Name: " %>
 		      		<%= select(:athlete, :id, @sport.athletes.collect{ |t| [t.name, t.id] }, { include_blank: true },  class: 'form-control'  ) %>
 		        </div>
-			</div>
-			<div class = "row">
 				<% if user_signed_in? %>
 					<div class="col-xs-2">
 			          	<%= label_tag "My Photos: " %>

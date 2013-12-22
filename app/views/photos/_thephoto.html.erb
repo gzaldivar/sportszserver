@@ -1,6 +1,8 @@
 <div class="well">
 	<div class="row">
-		<p class="text-info"><%= link_to photo.displayname, sport_photo_path(@sport, photo) %></p>
+		<% if Photo.find(photo.id).nil? %>
+			<p class="text-info"><%= link_to photo.displayname, sport_photo_path(@sport, photo) %></p>
+		<% end %>
 	</div>
 	<div class="row">
 		<% if !photo.large_url.nil? %>

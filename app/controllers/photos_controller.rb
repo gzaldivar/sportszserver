@@ -13,11 +13,11 @@ class PhotosController < ApplicationController
 
   def photoshome
     if !current_team.featuredphotos.nil?
-      @featuredlists = @sport.photos.where(team_id: current_team.id.to_s, 
+      @featuredlists = @sport.photos.where(teamid: current_team.id.to_s, 
                                           :id.in => current_team.featuredphotos).desc(:updated_at).paginate(per_page: 10)
       @thephoto = @featuredlists[0]
     else
-      @photolists = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
+      @photolists = @sport.photos.where(teamid: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
       if @photolists.any?
         @thephoto = @photolists[0]
       else
@@ -28,7 +28,7 @@ class PhotosController < ApplicationController
 
   def showfeaturedphotos
     if !current_team.featuredphotos.nil?
-      @featuredlists = @sport.photos.where(team_id: current_team.id.to_s, 
+      @featuredlists = @sport.photos.where(teamid: current_team.id.to_s, 
                                           :id.in => current_team.featuredphotos).desc(:updated_at).paginate(per_page: 10)
     else
       @featuredlists = nil
@@ -39,22 +39,40 @@ class PhotosController < ApplicationController
   end
 
   def latest
-    @photolists = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
+    @photolists = @sport.photos.where(teamid: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
     respond_to do |format|
       format.js
     end
   end
 
   def displayphoto
-    @photo = @sport.photos.find(params[:photo_id]).paginate
+    @photo = @sport.photos.find(params[:photo_id])
   end
 
   def featuredphoto
-    @photos = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).paginate
+    @photos = @sport.photos.where(teamid: current_team.id.to_s).desc(:updated_at).paginate
     puts @photos.count
   end
 
   def updatefeaturedphotos
+    if !params[:photo_ids].nil?
+        current_team.featuredphotos = Array.new
+
+        params[:photo_ids].each do |values|
+          current_team.featuredphotos << values
+        end
+
+        if current_team.featuredphotos.count == 0
+          current_team.featuredphotos = nil
+        end
+        
+      current_team.save!
+    end
+
+    respond_to do |format|
+      format.html { redirect_to photoshome_sport_photos_path(@sport), notice: "Featured photos added!" }
+      format.json { render status: 200, json: { success: "success" } }
+    end
   end
 
   def index

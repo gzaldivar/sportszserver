@@ -13,7 +13,6 @@ class Sport
   field :has_stats, type: Boolean, default: false
   field :year, type: String
   field :season, type: String
-#  field :sex, type: String
   field :mascot, type: String
   field :sitename, type: String
 
@@ -49,8 +48,6 @@ class Sport
   field :newsfeed_interval, type: Integer, default: 3600  # Time interval to check for news feeds
 
   field :logoprocessing, type: Boolean, default: false
-
-  field :featuredplayers, type: Array
 
   search_in :sitename, :mascot, :state, :zip, :city, :name, :sportname, :featuredplayers
 

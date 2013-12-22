@@ -10,6 +10,9 @@ class Team
   field :title, type: String
   field :mascot, type: String
 
+  field :featuredplayers, type: Array
+  field :featuredphotos, type: Array
+
   field :fb_pass_players, type: Array    # List of players user has for stat console
   field :fb_rush_players, type: Array    # List of players user has for stat console
   field :fb_rec_players, type: Array    # List of players user has for stat console

@@ -29,7 +29,7 @@
               <p>
               <div class="row">
                 <% if current_site.sport_logo? %>
-                  <%= image_tag current_site.sport_logo.url(:thumb), class: 'img-responsive' %>
+                  <%= link_to (image_tag current_site.sport_logo.url(:thumb), class: 'img-responsive'), sport_path(current_site) %>
                 <% else %>
                   <%= image_tag 'Photo_Not_Available.jpg' %>
                 <% end %>

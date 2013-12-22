@@ -37,7 +37,8 @@
         				<h3><em>News for <%= current_team.mascot %></em></h3>
               <% end %>
               <%= f.label "Team" %>
-			    	  <%= f.select :team, @teams.collect{ |t| [t.team_name, t.id] }, {}, { id: "select_team", class: 'form-control' } %>
+			    	  <%= f.select :team_id, options_for_select(@teams.collect{ |t| [t.team_name, t.id] }, @newsfeed.team_id), { include_blank: true }, 
+                          { id: "select_team", class: 'form-control' } %>
       			</div>
             <p>
             <div class="row">
@@ -45,7 +46,7 @@
                   <h3><em>News for schedule <%= @schedule %></em></h3>
                 <% end %>
                 <%= f.label :game_schedule, "Game Schedule" %>
-                <%= f.select :gameschedule, @schedules.collect{ |t| [t.game_name, t.id] }, {}, 
+                <%= f.select :gameschedule_id, options_for_select(@schedules.collect{ |t| [t.game_name, t.id] },@newsfeed.gameschedule_id), {}, 
                             { id: "gameschedules_select", class: 'form-control'} %>
             </div>
             <p>
@@ -54,7 +55,8 @@
         				<h3><em>News for <%= @athlete %></em></h3>
               <% end %>
               <%= f.label :athlete %>
-			    	  <%= f.select	:athlete, @athletes.collect{ |t| [t.name, t.id] }, {}, { id: "athletes_select", class: 'form-control' } %>
+			    	  <%= f.select	:athlete_id, options_for_select(@athletes.collect{ |t| [t.full_name, t.id] }, @newsfeed.athlete_id), {
+                             include_blank: true }, { id: "athletes_select", class: 'form-control' } %>
     		    </div>
             <p>
     		    <div class="row">
@@ -62,7 +64,8 @@
         				<h3><em>News for <%= @coach %></em></h3>
         			<% end %>
               <%= f.label :coach %>
-              <%= f.select :coach, @coaches.collect{ |t| [t.full_name, t.id] }, {}, { id: "coaches_select", class: 'form-control' } %>
+              <%= f.select :coach_id, options_for_select(@coaches.collect{ |t| [t.full_name, t.id] }, @newsfeed.coach_id), { include_blank: true }, 
+                          { id: "coaches_select", class: 'form-control' } %>
     		    </div>
             <p>
             <div class="row">
@@ -70,10 +73,13 @@
         		</div>
             <p>
             <div class="row">
-            	<%= f.check_box :allsports, class: 'form-control' %>
+              <div class="col-xs-12">
+                <%= f.label "Program News" %>
+              	<%= f.check_box :allsports %>
+              </div>
             </div><p>
       		  <div class="row">
-        		  <em>Hint: Checking this box will make this news item available across the entire site.</em>
+              <p class="text-info">Program news is displayed when users first visit the site. Once a team is selected, news for a particular team will be displayed. Use program news as welcome messages, global site messages, etc. Make sure your welcome news has no team tags.</p>
       		  </div>
           </div><p>
         </div>

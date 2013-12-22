@@ -69,29 +69,25 @@ class SportsController < ApplicationController
         @followed = @sport.athletes.where(fans: current_user.id).asc(:number)
       end
 
-      if params[:player_id]
-        @newsfeeds = @sport.newsfeeds.where(athlete_id: params[:player_id].to_s).desc(:updated_at).paginate(per_page: 10)
-      elsif params[:gameschedule_id]
-        @newsfeeds = @sport.newsfeeds.where(gameschedule_id: params[:game_id].to_s).desc(:updated_at).paginate(per_page: 10)
+      if current_team?
+        @schedules = @sport.teams.find(current_team.id).gameschedules.asc(:gamedate)
+        @players = @sport.athletes.where(team_id: current_team.id).asc(:number)
+        @newsfeeds = @sport.newsfeeds.where(team_id: current_team.id).desc(:updated_at).paginate(per_page: 10)
+
+        if current_team.featuredplayers.nil?
+          @featured = nil
+        else
+          @featured = @sport.athletes.where(team_id: current_team.id, :id.in => current_team.featuredplayers).asc(:number)
+        end
       else
-        @newsfeeds = @sport.newsfeeds.desc(:updated_at).paginate(per_page: 10)
+        @schedules = nil
+        @players = nil
+        @newsfeeds = @sport.newsfeeds.where(allsports: true).desc(:updated_at).paginate(per_page: 10)
       end
 
       if @newsfeeds.count > 0
         @thenews = @newsfeeds[0]
         puts @newsfeeds.count
-     else
-        @thenews = Newsfeed.new(sport_id: @sport.id)
-        @thenews.title = "No news for " + @sport.sitename
-      end
-
-      if current_team?
-        @schedules = @sport.teams.find(current_team.id).gameschedules.asc(:gamedate)
-        @players = @sport.athletes.where(team_id: current_team.id).asc(:number)
-        @featured = @sport.athletes.where(team_id: current_team.id, :id.in => @sport.featuredplayers).asc(:number)
-      else
-        @schedules = nil
-        @players = nil
       end
 
       if params[:photo_mode] == "photos"
@@ -140,13 +136,17 @@ class SportsController < ApplicationController
 
   def featuredplayers
     if !params[:player_ids].nil?
-        @sport.featuredplayers = Array.new
+        current_team.featuredplayers = Array.new
 
         params[:player_ids].each do |values|
-          @sport.featuredplayers << values
+          current_team.featuredplayers << values
         end
 
-        @sport.save!
+        if current_team.featuredplayers.count == 0
+          current_team.featuredplayers = nil
+        end
+        
+      current_team.save!
     end
 
     respond_to do |format|
@@ -156,7 +156,11 @@ class SportsController < ApplicationController
   end
 
   def showfeaturedplayers
-    @featured = @sport.athletes.where(team_id: current_team.id, :id.in => @sport.featuredplayers).asc(:number)
+    if current_team.featuredplayers.nil?
+      @featured = nil
+    else
+      @featured = @sport.athletes.where(team_id: current_team.id, :id.in => current_team.featuredplayers).asc(:number)
+    end
   end
 
   def showfollowedplayers

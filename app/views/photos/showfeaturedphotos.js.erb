@@ -1,0 +1,5 @@
+<% if !@featuredlists.nil? %>
+	$("#photoslist").html("<%= j render 'photoslist', photolist: @featuredlists %>");
+<% else %>
+	$("#nophotos-responsive").modal('show');
+<% end %>

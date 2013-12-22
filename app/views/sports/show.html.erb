@@ -15,21 +15,21 @@
             <% end %> 
           </ul>
         </li>
+        <li><%= link_to "News", sport_path(@sport, photo_mode: "news") %></li>
         <% if current_team? and user_signed_in? %>
           <li><%= link_to "Blog", sport_blogs_path(current_site, team_id: current_team.id) %></li>
-        <% end %>
-        <li><%= link_to "News", sport_path(@sport, photo_mode: "news") %></li>
-        <% if current_team? and @photomode == "photos" and current_team? %>
-          <li><%= link_to "Photos", sport_photos_path(@sport, team_id: current_team.id) %></li>
-          <li><%= link_to "Videos", sport_videoclips_path(@sport, team_id: current_team.id) %></li>
-        <% else %>
-          <li><%= link_to "Latest Photo's", sport_path(@sport, photo_mode: "photos") %></li>
-          <!--li><a href="#photo-responsive" data-toggle="modal">Latest Photo's</a></-->
+          <li><%= link_to "Media", photoshome_sport_photos_path(@sport) %></li>
         <% end %>
       </ul>
-      <div id="thenews">
-          <%= render 'newsfeeds/newsfeed', newsfeed: @thenews %>
-      </div>
+        <div id="thenews">
+          <% if !@thenews.nil? %>
+            <%= render 'newsfeeds/newsfeed', newsfeed: @thenews %>
+          <% else %>
+            <div class="well">
+              No News!
+            </div>
+          <% end %>
+        </div>
   </div>
   <div class="col-xs-4">
       <ul class="nav nav-pills">
@@ -138,16 +138,16 @@
 </div>
 <div class-"row">
   <div class="col-xs-4">
-    <div id="photo-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
+    <div id="noplayers-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">Select Game</h4>
+        <h4 class="modal-title">No Players</h4>
       </div>
       <div class="modal-body">
         <div class="row">
           <div class="col-md-4">
             <div class="well">
-              <p class="text-info">Coming Soon!</p>
+              <p class="text-info">No players have been added to the list to display!</p>
             </div>
           </div>
         </div>

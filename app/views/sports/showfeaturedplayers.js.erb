@@ -1,1 +1,5 @@
-$("#playerlist").html("<%= j render 'athletes/playerlist', players: @featured, list: 'Featured' %>");
+<% if !@featured.nil? %>
+	$("#playerlist").html("<%= j render 'athletes/playerlist', players: @featured, list: 'Featured' %>");
+<% else %>
+	$("#noplayers-responsive").modal('show');
+<% end %>

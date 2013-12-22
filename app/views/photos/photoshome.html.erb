@@ -1,0 +1,64 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Photos") %>
+<p>
+<div class="row">
+	<div class="col-xs-8">
+      	<ul class="nav nav-pills">
+			<li><%= link_to "Photos", sport_photos_path(@sport, team_id: current_team.id) %></li>
+			<li><%= link_to "Videos", sport_videoclips_path(@sport, team_id: current_team.id) %></li>
+		</ul>
+		<div id="displaythephoto">
+			<%= render 'thephoto', photo: @thephoto %>
+		</div>
+	</div>
+	<div class="col-xs-3">
+      	<ul class="nav nav-pills">
+			<li><%= link_to "Featured", '#', :class => 'featured_photos' %></li>
+			<li><%= link_to "Latest", '#', :class => 'latest_photos' %></li>
+			<li><%= link_to "All", sport_photos_path(@sport, team_id: current_team.id) %></li>
+		</ul>
+		<div class="row">
+			<div id="photoslist">
+				<% if @featuredlists.nil? %>
+					<%= render 'photoslist', photolist: @photolists, featured: "Players" %>
+				<% else %>
+					<%= render 'photoslist', photolist: @featuredlists, featured: "Featured" %>
+				<% end %>
+			</div>
+		</div>
+		<div class="row">
+			<%= link_to "Featured Photos", featuredphoto_sport_photos_path(@sport), class: "btn btn-xs btn-primary" %>
+		</div>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-3 col-xs-offset-4">
+		<% if !current_team.nil? and user_signed_in? and (user_pics_ok? or site_owner?) %>
+			<%= link_to "Add Team Photo", newteam_sport_photo_path(@sport, current_team), class: "btn btn-sm btn-primary" %>
+		<% end %>
+	</div>
+</div>
+<p>
+<%= render 'layouts/sponsor' %>
+<div class-"row">
+  <div class="col-xs-4">
+    <div id="nophotos-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">No Photos</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="well">
+              <p class="text-info">No photos have been added to display!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

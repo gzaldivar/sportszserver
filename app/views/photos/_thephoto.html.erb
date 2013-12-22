@@ -1,0 +1,42 @@
+<div class="well">
+	<div class="row">
+		<p class="text-info"><%= link_to photo.displayname, sport_photo_path(@sport, photo) %></p>
+	</div>
+	<div class="row">
+		<% if !photo.large_url.nil? %>
+			<%= link_to image_tag(photo.large_url, class: 'img-responsive'), sport_photo_path(@sport, photo) %>
+		<% end %>
+	</div>
+	<div class="row">
+		<div class="col-xs-1">
+			<% if !photo.large_url.nil? %>
+				Tags:
+			<% end %>
+		</div>
+		<div class="col-xs-2">
+			<% if photo.gameschedule_id %>
+				<%= link_to Gameschedule.find(photo.gameschedule_id).game_name %>
+			<% end %>
+		</div>
+		<div class="col-xs-9">
+			<% if !photo.players.nil? %>
+				<% photo.players.each do |p| %>
+					<%= Athlete.find(p.id).logname %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+</div>
+<script>
+  $(document).ready(function() {
+    $('.select_photo').click(function() {
+      $.ajax({
+        url: "<%= displayphoto_sport_photos_path %>",
+        data: {
+          photo_id : $(this).data('id')
+        },
+        dataType: "script"
+      });
+    });
+   });
+</script>

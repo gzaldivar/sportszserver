@@ -43,7 +43,7 @@ class NewsfeedsController < ApplicationController
     elsif !params[:teamname].nil? and !params[:teamname].blank?
       @newsfeeds = @sport.newsfeeds.where(team: params[:teamname].to_s).limit(20).desc(:updated_at).paginate
     elsif !params[:coachname].nil? and !params[:coachname].blank?
-      @newsfeeds = @sport.newsfeeds.where(coach: params[:coachname].to_s).limit(20).desc(:updated_at)    .paginate  
+      @newsfeeds = @sport.newsfeeds.where(coach: params[:coachname].to_s).limit(20).desc(:updated_at).paginate  
     else
       @newsfeeds = @sport.newsfeeds.limit(40).desc(:updated_at).paginate
     end
@@ -61,9 +61,9 @@ class NewsfeedsController < ApplicationController
   def edit
     @teams = @sport.teams
     if !@newsfeed.team.nil? and !@newsfeed.team.blank?
-      @athletes = @sport.athletes.where(team: @newsfeed.team).entries
-      @coaches = @sport.coaches.where(team: @newsfeed.team).entries
-      @schedules = @sport.teams.find(@newsfeed.team).gameschedules.asc(:gamedate).entries
+      @athletes = @sport.athletes.where(team_id: @newsfeed.team_id).entries
+      @coaches = @sport.coaches.where(team_id: @newsfeed.team_id).entries
+      @schedules = @sport.teams.find(@newsfeed.team_id).gameschedules.asc(:gamedate).entries
     else
       @athletes = @sport.athletes
       @coaches = @sport.coaches
@@ -72,18 +72,18 @@ class NewsfeedsController < ApplicationController
   end
   
   def update
-    begin
+#    begin
       @newsfeed.update_attributes!(params[:newsfeed])
       respond_to do |format|
         format.html { redirect_to [@sport, @newsfeed], notice: "Update sucessful!" }
         format.json { render json: { newsfeed: @newsfeed } }
       end
-    rescue Exception => e
-      respond_to do |format|
-        format.html { redirect_to :back, alert: "Error updating news feed item." }
-        format.json { render status: 404, json: { error: e.message, request: @sport } }
-      end
-    end
+#    rescue Exception => e
+#      respond_to do |format|
+#        format.html { redirect_to :back, alert: "Error updating news feed item." }
+#        format.json { render status: 404, json: { error: e.message, request: @sport } }
+#      end
+#    end
   end
   
   def destroy

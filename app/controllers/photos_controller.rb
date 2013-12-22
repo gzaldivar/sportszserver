@@ -13,10 +13,11 @@ class PhotosController < ApplicationController
 
   def photoshome
     if !current_team.featuredphotos.nil?
-      @featuredlists = @sport.photos.where(team_id: current_team.id, :id.in => current_team.featuredphotos).desc(:updated_at)
+      @featuredlists = @sport.photos.where(team_id: current_team.id.to_s, 
+                                          :id.in => current_team.featuredphotos).desc(:updated_at).paginate(per_page: 10)
       @thephoto = @featuredlists[0]
     else
-      @photolists = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).limit(10)
+      @photolists = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
       if @photolists.any?
         @thephoto = @photolists[0]
       else
@@ -27,7 +28,8 @@ class PhotosController < ApplicationController
 
   def showfeaturedphotos
     if !current_team.featuredphotos.nil?
-      @featuredlists = @sport.photos.where(team_id: current_team.id, :id.in => current_team.featuredphotos).desc(:updated_at)
+      @featuredlists = @sport.photos.where(team_id: current_team.id.to_s, 
+                                          :id.in => current_team.featuredphotos).desc(:updated_at).paginate(per_page: 10)
     else
       @featuredlists = nil
     end
@@ -37,18 +39,22 @@ class PhotosController < ApplicationController
   end
 
   def latest
-    @photolists = @sport.photos.where(team_id: current_team.id).desc(:updated_at).limit(10)
+    @photolists = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
     respond_to do |format|
       format.js
     end
   end
 
   def displayphoto
-    @photo = @sport.photos.find(params[:photo_id])
+    @photo = @sport.photos.find(params[:photo_id]).paginate
   end
 
   def featuredphoto
-    @photos = @sport.photos.where(team_id: current_team.id).desc(:updated_at).paginate
+    @photos = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).paginate
+    puts @photos.count
+  end
+
+  def updatefeaturedphotos
   end
 
   def index

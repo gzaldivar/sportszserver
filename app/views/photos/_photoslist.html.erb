@@ -1,5 +1,9 @@
 <table class="table table-striped table-bordered table-hover">
     <thead>
+      <% if photoselect == true %>
+        <th>Select</th>
+        <th>Photo</th>
+      <% end %>
     	<th>
         <% if featured == "Featured" %>
           Featured Photo
@@ -9,12 +13,17 @@
         </th>
     </thead>
     <tbody>
-	    <% if !photolist.nil? %>
-	        <% photolist.each do |p| %>
+	    <% if photolist.any? %>
+	     <% photolist.each do |p| %>
 		    	<tr>
+            <% if photoselect == true %>
+              <td><%= check_box_tag "photo_ids[]", p.id %></td>
+              <td><%= image_tag p.thumbnail_url, { class: 'img-responsive', height: '100px', width: '100px' } %></td>
+            <% end %>
 		    		<td><%= link_to p.displayname, '#', :class => 'select_photo', :data => {:id => p.id.to_s} %></td>
 		    	</tr>
 		    <% end %>
+        <%= will_paginate photolist %>
 		  <% end %>
     </tbody>
 </table>

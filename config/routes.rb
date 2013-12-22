@@ -138,7 +138,7 @@ Sportzserver::Application.routes.draw do
       end
 
       collection do
-        post :untagathlete, :createmobile
+        post :untagathlete, :createmobile, :updatefeaturedphotos
         get :updategameschedule, :clear_error, :updategamelogs, :photoshome, :featuredphoto, :showfeaturedphotos, :displayphoto, :latest
       end
     end

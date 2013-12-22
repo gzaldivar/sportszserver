@@ -19,9 +19,9 @@
 		<div class="row">
 			<div id="photoslist">
 				<% if @featuredlists.nil? %>
-					<%= render 'photoslist', photolist: @photolists, featured: "Players" %>
+					<%= render 'photoslist', photolist: @photolists, featured: "Photos", photoselect: false %>
 				<% else %>
-					<%= render 'photoslist', photolist: @featuredlists, featured: "Featured" %>
+					<%= render 'photoslist', photolist: @featuredlists, featured: "Featured", photoselect: false %>
 				<% end %>
 			</div>
 		</div>

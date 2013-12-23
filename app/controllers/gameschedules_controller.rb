@@ -3,7 +3,9 @@ class GameschedulesController < ApplicationController
 
 	before_filter	:authenticate_user!,   only: [:destroy, :new, :edit, :update, :create, :show]
   before_filter :get_sport
-  before_filter :get_schedule,        only: [:show, :edit, :update, :destroy, :updatelogo]
+  before_filter :get_schedule,        only: [:show, :edit, :update, :destroy, :updatelogo, :passinggamestats, :allfootballgamestats,
+                                              :rushinggamestats, :receivinggamestats, :defensegamestats, :kickergamestats, :returnergamestats, 
+                                              :footballboxscore,:footballscoreboard]
   before_filter only: [:destroy, :update, :create, :edit, :new, :createlogo, :updatelogo] do |controller| 
     controller.team_manager?(@gameschedule, @team)
   end
@@ -76,41 +78,12 @@ class GameschedulesController < ApplicationController
 
       if @sport.name == "Football"
         @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
-#        @gamelog = @gameschedule.gamelogs.build
 
-        passstats = Passingstats.new(@sport, @gameschedule)
-        @passingstats = passstats.stats
-        @passingtotals = passstats.passingtotals
-
-        rushingstats = Rushingstats.new(@sport, @gameschedule)
-        @rushingstats = rushingstats.stats
-        @rushingtotals = rushingstats.rushingtotals
-
-        @firstdowns = passstats.gamefirstdowns + rushingstats.gamefirstdowns
-
-        receivingstats = Receivingstats.new(@sport, @gameschedule)
-        @receivingstats = receivingstats.stats
-        @receivingtotals = receivingstats.receivingtotals
-
-        defense = Defensestats.new(@sport, @gameschedule)
-        @defensivestats = defense.stats
-        @defensivetotals = defense.defensetotals
-
-        placekicker = Placekickerstats.new(@sport, @gameschedule)
-        @placekickerstats = placekicker.stats
-        @placekickertotals = placekicker.placekickertotals
-
-        returnerstats = Returnerstats.new(@sport, @gameschedule)
-        @returnerstats = returnerstats.stats
-        @returnertotals = returnerstats.returnertotals
-
-        kickoffstats = Kickerstats.new(@sport, @gameschedule)
-        @kickoffstats = kickoffstats.stats
-        @kickofftotals = kickoffstats.kickertotals
-
-        punterstats = Punterstats.new(@sport, @gameschedule)
-        @punterstats = punterstats.stats
-        @puntertotals = punterstats.puntertotals
+        @footballhomescore = footballhomescore(@sport, @gameschedule)
+        @footballtotalyards = footballtotalyards(@sport, @gameschedule)
+        @rushingtotalyards = FootballStatistics.rushingyardtotals
+        @passingtotalyards = FootballStatistics.passingyardtotals
+        @turnovers = FootballStatistics.turnovers
 
       elsif @sport.name == "Basketball"
         @stats = @gameschedule.basketball_stats
@@ -225,26 +198,10 @@ class GameschedulesController < ApplicationController
         @gameschedules[cnt] = s
 
         if @sport.sportname == "Football"
-#          @gameschedules[cnt].firstdowns = 0
-
-#          s.football_stats.each do |f|
-#            if !f.football_passings.nil?
-#               @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_passings.firstdowns
-#            end
- #         end
-
-#          s.football_stats.each do |f|
-#            if !f.football_rushings.nil?
-#              @gameschedules[cnt].firstdowns = @gameschedules[cnt].firstdowns + f.football_rushings.firstdowns
-#            end
-#          end
         elsif @sport.name == "Basketball"
           totals = StatTotal.new(@sport, @gameschedules[cnt])          
-#          @gameschedules[cnt].homescore = totals.basketball_home_totals
-#          @gameschedules[cnt].homefouls = totals.fouls
         elsif @sport.name == "Soccer" 
           totals = StatTotal.new(@sport, @gameschedules[cnt])
-  #        @gameschedules[cnt].homescore = totals.soccer_home_score
         end        
       end
       
@@ -333,6 +290,92 @@ class GameschedulesController < ApplicationController
             format.json { render status: 404, json: { error: e.message } }
         end
       end
+  end
+
+  def passinggamestats
+        passstats = Passingstats.new(@sport, @gameschedule)
+        @passingstats = passstats.stats
+        @passingtotals = passstats.passingtotals
+  end
+
+  def rushinggamestats
+    rushingstats = Rushingstats.new(@sport, @gameschedule)
+    @rushingstats = rushingstats.stats
+    @rushingtotals = rushingstats.rushingtotals
+  end
+
+  def receivinggamestats
+    receivingstats = Receivingstats.new(@sport, @gameschedule)
+    @receivingstats = receivingstats.stats
+    @receivingtotals = receivingstats.receivingtotals
+  end
+
+  def defensegamestats
+    defense = Defensestats.new(@sport, @gameschedule)
+    @defensivestats = defense.stats
+    @defensivetotals = defense.defensetotals
+  end
+
+  def kickergamestats
+    placekicker = Placekickerstats.new(@sport, @gameschedule)
+    @placekickerstats = placekicker.stats
+    @placekickertotals = placekicker.placekickertotals
+
+    punterstats = Punterstats.new(@sport, @gameschedule)
+    @punterstats = punterstats.stats
+    @puntertotals = punterstats.puntertotals
+  end
+
+  def returnergamestats
+    returnerstats = Returnerstats.new(@sport, @gameschedule)
+    @returnerstats = returnerstats.stats
+    @returnertotals = returnerstats.returnertotals
+  end
+
+  def footballboxscore
+    if @gameschedule.opponent_team_id?
+      @opposingsport = Sport.find(@gameschedule.opponent_sport_id)
+      @opposingteam = @opposingsport.teams.find(@gameschedule.opponent_team_id)
+    end
+  end
+
+  def footballscoreboard
+  end
+
+  def allfootballgamestats
+    passstats = Passingstats.new(@sport, @gameschedule)
+    @passingstats = passstats.stats
+    @passingtotals = passstats.passingtotals
+
+    rushingstats = Rushingstats.new(@sport, @gameschedule)
+    @rushingstats = rushingstats.stats
+    @rushingtotals = rushingstats.rushingtotals
+
+    @firstdowns = passstats.gamefirstdowns + rushingstats.gamefirstdowns
+
+    receivingstats = Receivingstats.new(@sport, @gameschedule)
+    @receivingstats = receivingstats.stats
+    @receivingtotals = receivingstats.receivingtotals
+
+    defense = Defensestats.new(@sport, @gameschedule)
+    @defensivestats = defense.stats
+    @defensivetotals = defense.defensetotals
+
+    placekicker = Placekickerstats.new(@sport, @gameschedule)
+    @placekickerstats = placekicker.stats
+    @placekickertotals = placekicker.placekickertotals
+
+    returnerstats = Returnerstats.new(@sport, @gameschedule)
+    @returnerstats = returnerstats.stats
+    @returnertotals = returnerstats.returnertotals
+
+    kickoffstats = Kickerstats.new(@sport, @gameschedule)
+    @kickoffstats = kickoffstats.stats
+    @kickofftotals = kickoffstats.kickertotals
+
+    punterstats = Punterstats.new(@sport, @gameschedule)
+    @punterstats = punterstats.stats
+    @puntertotals = punterstats.puntertotals
   end
 
   private

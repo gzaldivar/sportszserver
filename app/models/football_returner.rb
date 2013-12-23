@@ -27,4 +27,19 @@ class FootballReturner
 	validates_numericality_of :kolong, greater_than_or_equal_to: 0
 	validates_numericality_of :koyards, greater_than_or_equal_to: 0
 
+	def puntreturnaverage
+		if punt_return > 0
+			return Float(punt_returnyards/punt_returns)
+		else
+			return 0.0
+		end
+	end
+
+	def kickoffreturnaverage
+		if koreturns > 0
+			return Float(koyards/koreturns)
+		else
+			return 0.0
+		end
+	end
 end

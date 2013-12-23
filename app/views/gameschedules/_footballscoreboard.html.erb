@@ -1,0 +1,103 @@
+<ul class="nav nav-pills">
+	<li><%= link_to "Box Score", "#", :class => 'football_boxscore' %></li>
+</ul>
+<div class="well">
+	<div class="row">
+		<div class="col-xs-4">
+			<div class="row">
+				<div class="col-xs-3">
+					<%= image_tag get_team_logo(@sport, current_team), { class: 'image-responsive', height: '50px', width: '50px' } %>
+				</div>
+				<% if @gameschedule.possession == current_team.mascot %>
+					<div class="col-xs-6 col-xs-offset-1">
+						<p class="text-warning text-center"><%= current_team.mascot %></p>
+					</div>
+					<div class="col-xs-1">
+						<%= image_tag 'footballpossessionimage.png' %>
+					</div>
+				<% else %>
+					<div class="col-xs-7 col-xs-offset-1">
+						<p class="text-warning text-center"><%= current_team.mascot %></p>
+					</div>
+				<% end %>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<h1><p class="text-warning text-center"><%= @footballhomescore.to_s %></p></h1>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-4">
+			<div class="row">
+				<div class="col-xs-12">
+					<h1><p class="text-warning text-center"><%= @gameschedule.current_game_time %></p></h1>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<h2 class="text-warning text-center"><%= @gameschedule.currentperiod %></h2>
+					<h4 class="text-warning text-center">QTR</h4>
+				</div>
+			</div>
+		</div>
+		<div class="col-xs-4">
+			<div class="row">
+				<% if @gameschedule.possession == @gameschedule.opponent_mascot %>
+					<div class="col-xs-1">
+						<%= image_tag 'footballpossessionimage.png' %>
+					</div>
+					<div class="col-xs-6">
+						<p class="text-warning text-center"><%= @gameschedule.opponent_mascot %></p>
+					</div>
+				<% else %>
+					<div class="col-xs-7">
+						<p class="text-warning text-center"><%= @gameschedule.opponent_mascot %></p>
+					</div>
+				<% end %>
+				<div class="col-xs-3">
+					<%= image_tag opponentimage(@gameschedule), { class: 'image-responsive', height: '50px', width: '50px' } %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<h1><p class="text-warning text-center"><%= @gameschedule.opponentq1 + @gameschedule.opponentq2 + 
+																@gameschedule.opponentq3 + @gameschedule.opponentq4  %></p></h1>
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-2">
+			<h4 class="text-warning text-center"><%= @gameschedule.hometimeouts %></h4>
+		</div>
+		<div class="col-xs-2 col-xs-offset-1">
+			<h5 class="text-warning text-center">Ball On</h5>
+		</div>
+		<div class="col-xs-2">
+			<h5 class="text-warning text-center">Down</h5>
+		</div>
+		<div class="col-xs-2">
+			<h5 class="text-warning text-center">To Go</h5>
+		</div>
+		<div class="col-xs-2 col-xs-offset-1">
+			<h4 class="text-warning text-center"><%= @gameschedule.opponenttimeouts %></h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-2">
+			<h4 class="text-warning text-center">T.O.L.</h4>
+		</div>
+		<div class="col-xs-2 col-xs-offset-1">
+			<h5 class="text-warning text-center"><%= @gameschedule.ballon %></h5>
+		</div>
+		<div class="col-xs-2 text-center">
+			<h5 class="text-warning"><%= @gameschedule.down %></h5>
+		</div>
+		<div class="col-xs-2">
+			<h5 class="text-warning text-center"><%= @gameschedule.togo %></h5>
+		</div>
+		<div class="col-xs-2 col-xs-offset-1">
+			<h4 class="text-warning text-center">T.O.L.</h4>
+		</div>
+	</div>
+</div>

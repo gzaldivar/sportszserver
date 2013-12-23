@@ -37,8 +37,8 @@ $('video,audio').mediaelementplayer({
       <tbody>
         <tr>
           <td><%= @videoclip.displayname %></td>
-    		  <% if !@videoclip.teamid.nil? %>
-            <td><%= @sport.teams.find(@videoclip.teamid).team_name %></td>
+    		  <% if !@videoclip.team_id.nil? %>
+            <td><%= @sport.teams.find(@videoclip.team_id).team_name %></td>
     			<% else %>
     				<td></td>
     			<% end %>
@@ -52,12 +52,12 @@ $('video,audio').mediaelementplayer({
             	<td></td>
           <% end %>
     		  <% if !@videoclip.gameschedule.nil? and !@videoclip.gameschedule.blank? %>
-              		<td><%= @sport.teams.find(@videoclip.teamid).gameschedules.find(@videoclip.gameschedule).game_name %></td>
+              		<td><%= @sport.teams.find(@videoclip.team_id).gameschedules.find(@videoclip.gameschedule).game_name %></td>
     		  <% else %>
     				<td></td>
     		  <% end %>
           <% if @sport.name == "Football" and !@videoclip.gamelog.nil? and !@videoclip.gamelog.blank? %>
-                  <td><%= @sport.teams.find(@videoclip.teamid).gameschedules.find(@videoclip.gameschedule).gamelogs.find(@videoclip.gamelog).logentrytext %></td>
+                  <td><%= @sport.teams.find(@videoclip.team_id).gameschedules.find(@videoclip.gameschedule).gamelogs.find(@videoclip.gamelog).logentrytext %></td>
           <% else %>
             <td></td>
           <% end %>

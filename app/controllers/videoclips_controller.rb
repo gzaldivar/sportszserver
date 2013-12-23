@@ -16,7 +16,7 @@ class VideoclipsController < ApplicationController
       time = time.to_time.yesterday.to_date.iso8601
       @videoclips = []
       
-      @sport.videoclips.where(teamid: @athlete.team_id, :players.in =>  [@athlete.id.to_s], :updated_at.gt => time, 
+      @sport.videoclips.where(team_id: @athlete.team_id, :players.in =>  [@athlete.id.to_s], :updated_at.gt => time, 
                               owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
         @videoclips[cnt] = q
       end
@@ -42,7 +42,7 @@ class VideoclipsController < ApplicationController
       time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
       time = time.to_time.yesterday.to_date.iso8601
       @videoclips = []    
-      @sport.videoclips.where(teamid: @team.id, :updated_at.gt => time, owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
+      @sport.videoclips.where(team_id: @team.id, :updated_at.gt => time, owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
         @videoclips[cnt] = q
       end
       
@@ -69,7 +69,7 @@ class VideoclipsController < ApplicationController
       time = time.to_time.yesterday.to_date.iso8601
       @videoclips = []
       
-      @sport.videoclips.where(teamid: team.id, gameschedule: @gameschedule.id.to_s, :updated_at.gt => time, 
+      @sport.videoclips.where(team_id: team.id, gameschedule: @gameschedule.id.to_s, :updated_at.gt => time, 
                               owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
         @videoclips[cnt] = q
       end
@@ -98,7 +98,7 @@ class VideoclipsController < ApplicationController
       @videoclip.filetype = params[:filetype]
       @videoclip.video_url = params[:url]
     
-      if params[:teamid].nil? || params[:teamid].blank?
+      if params[:team_id].nil? || params[:team_id].blank?
         path = @videoclip.filepath.split('/')
         path = CGI.unescape(path[2])
         @videoclip.filepath = path
@@ -162,11 +162,11 @@ class VideoclipsController < ApplicationController
         data = data[data.length-2]
         tags = data.split('_')
         
-        if params[:teamid].nil? || params[:teamid].blank?
+        if params[:team_id].nil? || params[:team_id].blank?
           tags.each_with_index do |t, cnt|
             case t
             when "t"
-              @videoclip.teamid = tags[cnt+=1]
+              @videoclip.team_id = tags[cnt+=1]
             when "s"
               @videoclip.sport = tags[cnt+=1]
             when "a"
@@ -180,7 +180,7 @@ class VideoclipsController < ApplicationController
           if !params[:gameschedule_id].nil? and !params[:gameschedule_id].blank?
             @videoclip.gameschedule_id = params[:gameschedule_id]
           end
-          @videoclip.teamid = params[:teamid]
+          @videoclip.team_id = params[:team_id]
         end
                 
         if @sport.review_media?
@@ -328,8 +328,8 @@ class VideoclipsController < ApplicationController
     @videoclips = []
     @athletes = []
 
-    if params[:team_id]
-      @team = @sport.teams.find(params[:team_id])
+    if params[:team_id] or current_team
+      @team = params[:team_id] ? @sport.teams.find(params[:team_id]) : @sport.teams.find(current_team.id)
       @gameschedules = @team.gameschedules
     end
 
@@ -342,33 +342,33 @@ class VideoclipsController < ApplicationController
     if !params[:number].nil? && !params[:number][:id].blank? && !params[:game].nil? && !params[:game][:id].blank? && 
        !params[:gamelog].nil? && !params[:gamelog][:id].blank? && !params[:athlete].nil? && !params[:athlete][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
                                  :players.in => [params[:number][:id].to_s], gamelog: params[:gamelog][:id].to_s,
                                  :players.in => [params[:athlete][:id].to_s]).desc(:updated_at)
 
     elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:gamelog].nil? && !params[:gamelog][:id].blank? && 
           !params[:number].nil? && !params[:number][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
                                  :players.in => [params[:number][:id].to_s], gamelog: params[:gamelog][:id].to_s).desc(:updated_at)
 
     elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:gamelog].nil? && !params[:gamelog][:id].blank? and 
           !params[:athlete].nil? && !params[:athlete][:id].blank? 
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
                                  :players.in => [params[:athlete][:id].to_s], gamelog: params[:gamelog][:id].to_s).desc(:updated_at)
 
     elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:number].nil? && !params[:number][:id].blank? and 
           !params[:athlete].nil? && !params[:athlete][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
                                  :players.in => [params[:athlete][:id].to_s], 
                                  :players.in => [params[:number][:id].to_s]).desc(:updated_at)
  
     elsif !params[:gamelog].nil? && !params[:gamelog][:id].blank? && !params[:number].nil? && !params[:number][:id].blank? and 
           !params[:athlete].nil? && !params[:athlete][:id].blank? 
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
                                  :players.in => [params[:athlete][:id].to_s], 
                                  :players.in => [params[:number][:id].to_s])
       gamelog = Gamelog.find(params[:gamelog][:id].to_s).desc(:updated_at)
@@ -376,52 +376,52 @@ class VideoclipsController < ApplicationController
 
     elsif !params[:game].nil? and !params[:game][:id].blank? and !params[:gamelog].nil? and !params[:gamelog][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, gameschedule_id: params[:game][:id].to_s, gamelog_id: params[:gamelog][:id].to_s).desc(:updated_at)
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, gameschedule_id: params[:game][:id].to_s, gamelog_id: params[:gamelog][:id].to_s).desc(:updated_at)
 
     elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:number].nil? && !params[:number][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
                                  :players.in => [params[:number][:id].to_s]).desc(:updated_at)
 
     elsif !params[:game].nil? and !params[:game][:id].blank? and !params[:athlete].nil? and !params[:athlete][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, gameschedule_id: params[:game][:id].to_s, 
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, gameschedule_id: params[:game][:id].to_s, 
                                   :players.in => [params[:athlete][:id].to_s]).desc(:updated_at)
 
     elsif !params[:gamelog].nil? and !params[:gamelog][:id].blank? and !params[:number].nil? && !params[:number][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
                                   :players.in => [params[:number][:id].to_s]).desc(:updated_at)
         
     elsif !params[:gamelog].nil? and !params[:gamelog][:id].blank? and !params[:athlete].nil? && !params[:athlete][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
                                   :players.in => [params[:athlete][:id].to_s]).desc(:updated_at)
         
     elsif !params[:athlete].nil? and !params[:athlete][:id].blank? and !params[:number].nil? && !params[:number][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, :players.in => [params[:athlete][:id].to_s], 
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, :players.in => [params[:athlete][:id].to_s], 
                                   :players.in => [params[:number][:id].to_s]).desc(:updated_at)
         
     elsif !params[:game].nil? and !params[:game][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, gameschedule_id: params[:game][:id].to_s).desc(:updated_at)
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, gameschedule_id: params[:game][:id].to_s).desc(:updated_at)
 
     elsif !params[:gamelog].nil? and !params[:gamelog][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s).desc(:updated_at)
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s).desc(:updated_at)
 
     elsif !params[:number].nil? && !params[:number][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, :players.in => [params[:number][:id].to_s]).desc(:updated_at)
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, :players.in => [params[:number][:id].to_s]).desc(:updated_at)
 
     elsif !params[:athlete].nil? && !params[:athlete][:id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s, :players.in => [params[:athlete][:id].to_s]).desc(:updated_at)
+      clips = @sport.videoclips.where(team_id: @team.id.to_s, :players.in => [params[:athlete][:id].to_s]).desc(:updated_at)
 
     elsif !params[:team_id].nil? and !params[:team_id].blank?
 
-      clips = @sport.videoclips.where(teamid: @team.id.to_s).desc(:updated_at)
+      clips = @sport.videoclips.where(team_id: @team.id.to_s).desc(:updated_at)
 
     else
       clips = []
@@ -463,10 +463,10 @@ class VideoclipsController < ApplicationController
   
   def edit
     @athletes = []
-    if @videoclip.teamid.nil?
+    if @videoclip.team_id.nil?
       ath = @sport.athletes
     else
-      ath = @sport.athletes.where(team: @videoclip.teamid)
+      ath = @sport.athletes.where(team: @videoclip.team_id)
     end
     ath.each_with_index do |a, cnt|
       @athletes[cnt] = a

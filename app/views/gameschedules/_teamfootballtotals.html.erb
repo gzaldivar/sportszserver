@@ -1,0 +1,32 @@
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+    	<th>Team Stats</th>
+    	<th class="text-center">Stat</th>
+    </thead>
+    <tbody>
+    	<tr>
+	    	<td>First Downs</td>
+	    	<td class="text-success text-center"><%= totalfirstdowns(@sport, @gameschedule) %></td>
+	    </tr>
+    	<tr>
+	    	<td>Total Yards</td>
+	    	<td class="text-success text-center"><%= @footballtotalyards %></td>
+	    </tr>
+    	<tr>
+	    	<td>Passing Yards</td>
+	    	<td class="text-success text-center"><%= @passingtotalyards %></td>
+	    </tr>
+    	<tr>
+	    	<td>Rushing Yards</td>
+	    	<td class="text-success text-center"><%= @rushingtotalyards %></td>
+	    </tr>
+    	<tr>
+	    	<td>Penalties</td>
+	    	<td class="text-success text-center"><%= @gameschedule.penalty %>/<%= @gameschedule.penaltyyards %></td>
+	    </tr>
+    	<tr>
+	    	<td>Turnovers</td>
+	    	<td class="text-success text-center"><%= @turnovers %></td>
+	    </tr>
+    </tbody>
+</table>

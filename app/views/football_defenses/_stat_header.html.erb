@@ -7,17 +7,17 @@
 			Player
 		<% end %>
 	</th>
-	<th>Tackles</th>
-	<th>Assists</th>
-	<th>Sacks</th>
-	<th>Interceptions</th>
-	<th>Passes Defended</th>
-	<th>Return Yards</th>
-	<th>Return Long</th>
-	<th>Defensive TD</th>
-	<th>Fumbles Recoveredd</th>
-	<th>Safeties</th>
-	<% if isAdmin? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
+	<th>SOLO</th>
+	<th>AST</th>
+	<th>SACK</th>
+	<th>INT</th>
+	<th>PD</th>
+	<th>RET YDS</th>
+	<th>RET LNG</th>
+	<th>TD</th>
+	<th>FUMB REC</th>
+	<th>S</th>
+	<% if site_owner? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
 		<th>Edit</th>
 	<% end %>
 </thead>

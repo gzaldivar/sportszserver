@@ -7,10 +7,10 @@
 			Player
 		<% end %>
 	</th>
-	<th>Kickoff Attempts</th>
-	<th>Touchbacks</th>
-	<th>Kickoff Return Yards</th>
-	<% if isAdmin? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
+	<th>ATT</th>
+	<th>TOUCHBK</th>
+	<th>RET YDS</th>
+	<% if site_owner? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
 		<th>Edit</th>
 	<% end %>
 </thead>

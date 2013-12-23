@@ -1,28 +1,60 @@
 <h4>Scoring Summary</h4>
-<table class="table table-bordered">
+<div class="row">
+	<div class="col-xs-11">
+		<div id="scoreboard_boxscore">
+			<%= render 'footballscoreboard' %>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-5">
+      	<ul class="nav nav-pills">
+          	<li><%= link_to "Team", '#', :class => 'team_gametotals' %></li>
+          	<li><%= link_to "Offense", '#', :class => 'passing_stats' %></li>
+          	<li><%= link_to "Defense", '#', :class => 'defense_gametotals' %></li>
+          	<li><%= link_to "Kick", '#', :class => 'kicker_gametotals' %></li>
+          	<li><%= link_to "Return", '#', :class => 'returner_gametotals' %></li>
+       	</ul>
+       	<div id="stattotals">
+       		<%= render 'teamfootballtotals' %>
+       	</div>
+       	<%= link_to "All Game Stats", allfootballgamestats_sport_team_gameschedule_path(@sport, current_team, @gameschedule), 
+       				class: "btn btn-sm btn-primary" %>
+	</div>
+	<div class="col-xs-6">
+		<table class="table table-bordered">
+			<thead>
+				<th>Game Log</th>
+				<% if site_owner? or sTeamManager?(@gameschedule) %>
+					<th>Edit</th>
+					<th>Delete</th>
+				<% end %>
+			</thead>
+			<tbody>
+				<% @gamelogs.each do |g| %>
+					<tr>
+						<td><%= g.logentrytext %></td>
+					 	<% if site_owner? or isTeamManager?(@gameschedule) %>
+					 		<td><%= link_to "Edit", edit_sport_team_gameschedule_gamelog_path(@sport, @team, @gameschedule, g), 
+					 					class: "btn btn-xs btn-warning" %></td>
+					 		<td><%= link_to "Delete", [@sport, @team, @gameschedule, g], method: :delete,
+					 					class: "btn btn-xs btn-danger", data: { confirm: "You sure?" } %></td>
+					 	<% end %>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<% if site_owner? or isTeamManager?(@gameschedule) %>
+			<em>Score entries are added automatically when you add scoring stats and automatically computed.</em>
+			<h5 class="text-danger">Be careful editing game log data manually. If you create or update a log entry your stats can get out of sync. If you want to edit an existing log entry, it is much better to delete the entry and update the stats for the players involved in the score. The system will automatically generate a new log.</h5>
+			<!--%= link_to "New Gamelog", new_sport_team_gameschedule_gamelog_path(@sport, @team, @gameschedule), 
+		  					class: "btn btn-sm btn-primary" %-->
+				<br>
+		<% end %>
+	</div>
+</div>
 <p>
-<%= render "quarters" %>
-</table>
-<% if !@gameschedule.current_game_time.nil? %>
-	<h4>Real Time Game Summary:</h4>
-	<table class="table table-bordered">
-		<thead>
-			<th>Quarter</th>
-			<th>Game Time</th>
-			<th>Possession</th>
-			<th>Down</th>
-			<th>To go</th>
-			<th>Ball On</th>
-		</thead>
-		<tbody>
-			<td><%= @gameschedule.currentperiod %></td>
-			<td><%= @gameschedule.current_game_time %></td>
-			<td><%= @gameschedule.possession %></td>
-			<td><%= @gameschedule.down %></td>
-			<td><%= @gameschedule.togo %></td>
-			<td><%= @gameschedule.our + " " + @gameschedule.ballon.to_s %></td>
-		</tbody>
-	</table>
+<% if !@gameschedule.lastplay.nil? %>
 	<table class="table table-bordered">
 		<thead>
 			<th>Last Play:</th>
@@ -31,177 +63,4 @@
 			<td><<%= @gameschedule.lastplay %>/td>
 		</tbody>
 	</table>
-	<h4>First Down/Penalties</h4>
-	<table class="table table-bordered">
-		<thead>
-			<th>First Downs</th>
-			<th>Penalties</th>
-			<th>Penalty Yards</th>
-		</thead>
-		<tbody>
-			<td><%= totalfirstdowns(@sport, @gameschedule) %></td>
-			<td><%= @gameschedule.penalty %></td>
-			<td><%= @gameschedule.penaltyyards %></td>
-		</tbody>
-	</table>
 <% end %>
-<h4><em>Game Log</em></h4>
-<p>
-<% @gamelogs.each do |g| %>
-	<div class="row">
-		<div class="col-xs-8">
-		 	<%= g.logentrytext %>
-		 	<% if isAdmin? or isTeamManager?(@gameschedule) %>
-		 		<%= link_to "Edit", edit_sport_team_gameschedule_gamelog_path(@sport, @team, @gameschedule, g), class: "btn btn-xs btn-warning" %>
-		 		<%= link_to "Delete", [@sport, @team, @gameschedule, g], method: :delete,
-		 					class: "btn btn-xs btn-danger", data: { confirm: "You sure?" } %>
-		 	<% end %>
-		 </div>
-	</div>
-<% end %>
-<% if isAdmin? or isTeamManager?(@gameschedule) %>
-  	Enter score entry. Scoring entries will be ordered first to last by time.</h6><br/>
-		<em>Score entries are added automatically when you add scoring stats and automatically computed . You can override the and edit the entries below.</em>
-		<h5>Be careful entering game log data manually. If you create or update a log entry your stats can get out of sync. If you want to edit an existing log entry, it is much better to delete the entry and update the stats for the players involved in the score. The system will automatically generate a new log. If you want to enter a new log entry, you should update the stats for the players involved and let the system generate the log entry.</h5>
-		<%= link_to "New Gamelog", new_sport_team_gameschedule_gamelog_path(@sport, @team, @gameschedule), 
-	  					class: "btn btn-sm btn-warning" %>
-		<!--%= render "gamelogs/gamelog_form" %-->
-		<br>
-<% end %>
-  	<p>
-  	<h4><em>Game Statistics - Enter initial stats via roster.</em></h4>
-  	<p>
-
-  	<h5>Passing</h5>
-	<table class="table table-bordered">
-	  	<%= render 'football_passings/stat_header', name: "Player" %>
-
-	  	<% @passingstats.each do |p| %>
-	  		<% if p.attempts > 0 %>
-		  		<% @player =  Athlete.find(p.athlete_id) %>
-				<%= render 'football_passings/stat_body', stat: p, player: @player, name: @player %>
-			<% end %>
-		<% end %>
-		<%= render 'football_passings/stat_body', stat: @passingtotals, player: @passingtotals, name: "Totals" %>
-	</table>
-
-  	<p>
-
-  	<h5>Rushing</h5>
-	<table class="table table-bordered">
-	  	<%= render 'football_rushings/stat_header', name: "Player" %>
-
-	  	<% @rushingstats.each do |p| %>
-		  	<% if p.attempts > 0 %>
-		  		<% @player =  Athlete.find(p.athlete_id) %>
-				<%= render 'football_rushings/stat_body', stat: p, player: @player, name: @player %>
-			<% end %>
-		<% end %>
-		<%= render 'football_rushings/stat_body', stat: @rushingtotals, player: @rushingtotals, name: "Totals" %>
-	</table>
-
-  	<p>
-
-  	<h5>Receiving</h5>
-	<table class="table table-bordered">
-	  	<%= render "football_receivings/stat_header", name: "Player" %>
-
-	  	<% @receivingstats.each do |p| %>
-	  		<% if p.receptions > 0 %>
-		  		<% @player =  Athlete.find(p.athlete_id) %>
-				<%= render 'football_receivings/stat_body', stat: p, player: @player, name: @player %>
-			<% end %>
-		<% end %>
-		<%= render 'football_receivings/stat_body', stat: @receivingtotals, player: @receivingtotals, name: "Totals" %>
-	</table>
-
-  	<h5>Defense</h5>
-	<table class="table table-bordered">
-	  	<%= render "football_defenses/stat_header", name: "Player" %>
-
-	  	<% @defensivestats.each do |p| %>
-	  		<% if p.tackles > 0 or p.assists > 0 or p.pass_defended > 0 or p.sacks > 0 or p.interceptions > 0 or p.fumbles_recovered > 0 or 
-	  			p.safety > 0 %>
-		  		<% @player =  Athlete.find(p.athlete_id) %>
-				<%= render 'football_defenses/stat_body', stat: p, player: @player, name: @player %>
-			<% end %>
-		<% end %>
-		<%= render 'football_defenses/stat_body', stat: @defensivetotals, player: @defensivetotals, name: "Totals" %>
-	</table>
-
-  	<h5>Place Kicker Stats</h5>
-	<table class="table table-bordered">
-	  	<%= render "football_place_kickers/fieldgoal_header", name: "Player" %>
-
-	  	<% @placekickerstats.each do |p| %>
-		  	<% if p.fgattempts > 0 %>
-		  		<% @player =  Athlete.find(p.athlete_id) %>
-				<%= render 'football_place_kickers/fieldgoal_body', stat: p, player: @player, name: @player %>
-			<% end %>
-		<% end %>
-		<%= render 'football_place_kickers/fieldgoal_body', stat: @placekickertotals, player: @placekickertotals, name: "Totals" %>
-	</table>
-
-	<table class="table table-bordered">
-	   	<%= render "football_place_kickers/extrapoint_header", name: "Player" %>
-
-	  	<% @placekickerstats.each do |p| %>
-	  		<% if p.xpattempts > 0 %>
-		  		<% @player =  Athlete.find(p.athlete_id) %>
-				<%= render 'football_place_kickers/extrapoint_body', stat: p, player: @player, name: @player %>
-			<% end %>
-		<% end %>
-		<%= render 'football_place_kickers/extrapoint_body', stat: @placekickertotals, player: @placekickertotals, name: "Totals" %>
-	</table>
-
-  	<h5>Punt Returns</h5>
-	<table class="table table-bordered">
-	  	<%= render "football_returners/puntreturn_header", name: "Player" %>
-
-	  	<% @returnerstats.each do |p| %>
-	  		<% if p.punt_return > 0 %>
-		  		<% @player =  Athlete.find(p.athlete_id) %>
-				<%= render 'football_returners/puntreturn_body', stat: p, player: @player, name: @player %>
-			<% end %>
-		<% end %>
-		<%= render 'football_returners/puntreturn_body', stat: @returnertotals, player: @returnertotals, name: "Totals" %>
-	</table>
-
-  	<h5>Kickoff Returns</h5>
-	<table class="table table-bordered">
-	  	<%= render "football_returners/koreturn_header", name: "Player" %>
-
-	  	<% @returnerstats.each do |p| %>
-	  		<% if p.koreturns > 0 %>
-		  		<% @player =  Athlete.find(p.athlete_id) %>
-				<%= render 'football_returners/koreturn_body', stat: p, player: @player, name: @player %>
-			<% end %>
-		<% end %>
-		<%= render 'football_returners/koreturn_body', stat: @returnertotals, player: @returnertotals, name: "Totals" %>
-	</table>
-
-  	<h5>Kickoffs</h5>
-	<table class="table table-bordered">
-	  	<%= render "football_kickers/stat_header", name: "Player" %>
-
-	  	<% @kickoffstats.each do |p| %>
-	  		<% if p.koattempts > 0 %>
-		  		<% @player =  Athlete.find(p.athlete_id) %>
-				<%= render 'football_kickers/stat_body', stat: p, player: @player, name: @player %>
-			<% end %>
-		<% end %>
-		<%= render 'football_kickers/stat_body', stat: @kickofftotals, player: @kickofftotals, name: "Totals" %>
-	</table>
-
-  	<h5>Punters</h5>
-	<table class="table table-bordered">
-	  	<%= render "football_punters/stat_header", name: "Player" %>
-
-	  	<% @punterstats.each do |p| %>
-	  		<% if p.punts > 0 %>
-		  		<% @player =  Athlete.find(p.athlete_id) %>
-				<%= render 'football_punters/stat_body', stat: p, player: @player, name: @player %>
-			<% end %>
-		<% end %>
-		<%= render 'football_punters/stat_body', stat: @puntertotals, player: @puntertotals, name: "Totals" %>
-	</table>

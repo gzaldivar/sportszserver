@@ -1,25 +1,34 @@
-<%= simple_form_for [@sport, @team, @gameschedule, @gamelog] do |f| %>
+<%= form_for [@sport, @team, @gameschedule, @gamelog], :input_html => { :class => 'form-horizontal' } do |f| %>
 	<%= render 'shared/error_messages', object: f.object %>
 	<div class="row">
-		<div class="col-xs-6">
+		<div class="col-xs-8 col-xs-offset-2">
+			<h4 class="text-info"><%= @gamelog.logentrytext %></h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-4 col-xs-offset-2">
 			<% if @sport.name == "Football" %>
-				<%= f.input :period, collection: quarters, hint: "Enter quarter, half, inning, etc." %>
-				<%= f.input :score, collection: football_score, hint: "TD, FG, XP" %>
-				<%= f.input :yards %>
-				<%= f.input :player, collection: @players.collect{ |t| [t.full_name, t.id] }, hint: "QB, RB, etc." %>
-				<%= f.input :assist, collection: @players.collect{ |t| [t.full_name, t.id] }, hint: "Enter another player. Ex: Reciever" %>
+				<%= f.label :period %>
+				<%= f.select :period, quarters, {}, class: 'form-control' %>
+				<%= f.label :score %>
+				<%= f.select :score, football_score, {}, class: 'form-control' %>
+				<%= f.label :yards %>
+				<%= f.text_field :yards, class: 'form-control' %>
+				<%= f.label :receiver, "Receiver" %>
+				<%= f.select :assist, @players.collect{ |t| [t.full_name, t.id] }, {}, class: 'form-control' %>
 			<% elsif @sport.name == "Basketball" %>
-				<%= f.input :period, collection: halfs, hint: "Enter quarter, half, inning, etc." %>
+				<%= f.select :period, halfs, {}, class: 'form-control' %>
 			<% end %>
 			<p>
-			<%= f.input :time, hint: "Time on clock if there is one for logged event" %>
+			<%= f.label :time_of_score, "Time of Score" %>
+			<%= f.text_field :time, class: 'form-control' %>
 			<p>
-			<%= f.input :logentry, required: true, label: "Game Log Entry", input_html: {size: 60, style: 'width: 750px'}, 
-						hint: "Ex. yard pass to. The rest of the game log will be automatically generated." %>
+			Ex. yard pass to. The rest of the game log will be automatically generated.
+			<%= f.text_field :logentry, class: 'form-control' %>
 		</div>
 	</div>
 	<p>
 	<div class="col-xs-2 col-xs-offset-3">
-		<%= f.button :submit, 'Submit', class:	"btn btn-sm btn-primary" %>
+		<%= f.submit :submit, class: "btn btn-sm btn-primary" %>
 	</div>
 <% end %>

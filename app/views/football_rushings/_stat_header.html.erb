@@ -7,15 +7,15 @@
 			Player
 		<% end %>
 	</th>
-	<th>Rushing Attempts</th>
-	<th>Rushing Yards</th>
-	<th>Average</th>
-	<th>Rushing TD</th>
-	<th>First Downs</th>
-	<th>Fumbles</th>
-	<th>Fumbles Lost</th>
-	<th>Two Point Conv</th>
-	<% if isAdmin? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
+	<th>ATT</th>
+	<th>YDS</th>
+	<th>AVG</th>
+	<th>TD</th>
+	<th>FD</th>
+	<th>FUMB</th>
+	<th>FUMB LST</th>
+	<th>2PT</th>
+	<% if site_owner? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
 		<th>Edit</th>
 	<% end %>
 </thead>

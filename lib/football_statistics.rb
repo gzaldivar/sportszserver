@@ -1,5 +1,7 @@
 module FootballStatistics
 
+	mattr_accessor :rushingyardtotals, :passingyardtotals, :receivingyardtotals, :turnovers
+
 	def footballhomescore(sport, game)
 		score = 0
 
@@ -55,6 +57,39 @@ module FootballStatistics
 		end
 
 		return firstdowns
+	end
+
+	def footballtotalyards(sport, game)
+		totalyards = 0
+		@@passingyardtotals = 0
+		@@rushingyardtotals = 0
+		@@receivingyardtotals = 0
+		@@turnovers = 0
+
+		sport.athletes.where(team_id: game.team_id).each do |p|
+			passstat = p.football_passings.find_by(gameschedule_id: game.id)
+			rushstat = p.football_rushings.find_by(gameschedule_id: game.id)
+			recstat = p.football_rushings.find_by(gameschedule_id: game.id)
+
+			if !passstat.nil?
+				totalyards += passstat.yards
+				@@passingyardtotals += passstat.yards
+				@@turnovers += passstat.interceptions
+			end
+
+			if !rushstat.nil?
+				totalyards += rushstat.yards
+				@@rushingyardtotals += rushstat.yards
+				@@turnovers += rushstat.fumbles_lost
+			end
+
+			if !recstat.nil?
+				@@receivingyardtotals += recstat.yards
+				@@turnovers += recstat.fumbles_lost
+			end
+		end
+
+		return totalyards
 	end
 
 	class Passingstats

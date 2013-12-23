@@ -1,0 +1,62 @@
+<div class="row">
+    <div class='col-xs-12'>
+        <h5>Punt Returns</h5>
+    </div>
+</div>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+    	<th>Name</th>
+    	<th>NUM</th>
+    	<th>AVG</th>
+    	<th>TD</th>
+    </thead>
+    <tbody>
+    	<% returnerstats.each do |p| %>
+    		<% if isPuntReturner?(p) %>
+		    	<tr>
+		    		<td><%= link_to Athlete.find(p.athlete_id).logname, sport_athlete_path(@sport, p.athlete_id) %></td>
+		    		<td><%= p.punt_return %></td>
+		    		<td><%= number_with_precision(p.puntreturnaverage, precision: 2) %></td>
+		    		<td><%= p.punt_returntd %></td>
+		    	</tr>
+		    <% end %>
+    	<% end %>
+    	<tr>
+            <td>Totals</td>
+            <td><%= returnertotals.punt_return %></td>
+            <td><%= number_with_precision(returnertotals.puntreturnaverage, precision: 2) %></td>
+            <td><%= returnertotals.punt_returntd %></td>
+    	</tr>
+    </tbody>
+</table>
+<div class="row">
+    <div class='col-xs-12'>
+        <h5>Kickoff Returns</h5>
+    </div>
+</div>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <th>Name</th>
+        <th>NUM</th>
+        <th>AVG</th>
+        <th>TD</th>
+    </thead>
+    <tbody>
+        <% returnerstats.each do |p| %>
+            <% if isKOReturner?(p) %>
+                <tr>
+                    <td><%= link_to Athlete.find(p.athlete_id).logname, sport_athlete_path(@sport, p.athlete_id) %></td>
+                    <td><%= p.koreturns %></td>
+                    <td><%= number_with_precision(p.kickoffreturnaverage, precision: 2) %></td>
+                    <td><%= p.kotd %></td>
+                </tr>
+            <% end %>
+        <% end %>
+        <tr>
+            <td>Totals</td>
+            <td><%= returnertotals.koreturns %></td>
+            <td><%= number_with_precision(returnertotals.kickoffreturnaverage, precision: 2) %></td>
+            <td><%= returnertotals.kotd %></td>
+        </tr>
+    </tbody>
+</table>

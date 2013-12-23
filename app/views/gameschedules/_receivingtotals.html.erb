@@ -1,0 +1,37 @@
+<ul class="nav nav-pills">
+    <li><%= link_to "Passing", "#", :class => 'passing_stats' %></li>
+    <li><%= link_to "Rushing", "#", :class => 'rushing_stats' %></li>
+    <li><%= link_to "Receiving", "#", :class => 'receiving_stats' %></li>
+</ul>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+    	<th>Name</th>
+    	<th>REC</th>
+    	<th>YDS</th>
+    	<th>AVG</th>
+    	<th>LNG</th>
+    	<th>TD</th>
+    </thead>
+    <tbody>
+    	<% recstats.each do |p| %>
+    		<% if isReceiver?(p) %>
+		    	<tr>
+		    		<td><%= link_to Athlete.find(p.athlete_id).logname, sport_athlete_path(@sport, p.athlete_id) %></td>
+		    		<td><%= p.receptions %></td>
+		    		<td><%= p.yards %></td>
+		    		<td><%= number_with_precision(p.comp_average, precision: 2) %></td>
+		    		<td><%= p.longest %></td>
+		    		<td><%= p.td %></td>
+		    	</tr>
+		    <% end %>
+    	<% end %>
+    	<tr>
+    		<td>Totals</td>
+            <td><%= receivingtotals.receptions %></td>
+            <td><%= receivingtotals.yards %></td>
+            <td><%= number_with_precision(receivingtotals.comp_average, precision: 2) %></td>
+            <td><%= receivingtotals.longest %></td>
+            <td><%= receivingtotals.td %></td>
+    	</tr>
+    </tbody>
+</table>

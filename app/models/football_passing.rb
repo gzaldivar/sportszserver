@@ -38,4 +38,12 @@ class FootballPassing
     end
   end
 
+  def compaverage
+    if self.completions > 0
+      self.yards/self.completions
+    else
+      0.0
+    end
+  end
+
 end

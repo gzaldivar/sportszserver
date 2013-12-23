@@ -7,11 +7,11 @@
 			Player
 		<% end %>
 	</th>
-	<th>Extra Point Attempts</th>
-	<th>Extra Points Made</th>
-	<th>Missed</th>
-	<th>Blocked</th>
-	<% if isAdmin? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
+	<th>XPA</th>
+	<th>XPM</th>
+	<th>MISS</th>
+	<th>BLK</th>
+	<% if site_owner? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
 		<th>Edit</th>
 	<% end %>
 </thead>

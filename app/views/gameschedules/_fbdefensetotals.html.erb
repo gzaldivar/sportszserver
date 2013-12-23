@@ -1,0 +1,32 @@
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+    	<th>Name</th>
+    	<th>SOLO</th>
+    	<th>AST</th>
+    	<th>SACK</th>
+    	<th>INT</th>
+    	<th>TD</th>
+    </thead>
+    <tbody>
+    	<% defstats.each do |p| %>
+    		<% if isDefense?(p) %>
+		    	<tr>
+		    		<td><%= link_to Athlete.find(p.athlete_id).logname, sport_athlete_path(@sport, p.athlete_id) %></td>
+		    		<td><%= p.tackles %></td>
+		    		<td><%= p.assists %></td>
+		    		<td><%= p.sacks %></td>
+		    		<td><%= p.interceptions %></td>
+		    		<td><%= p.int_td %></td>
+		    	</tr>
+		    <% end %>
+    	<% end %>
+    	<tr>
+    		<td>Totals</td>
+            <td><%= defensetotals.tackles %></td>
+            <td><%= defensetotals.assists %></td>
+            <td><%= defensetotals.sacks %></td>
+            <td><%= defensetotals.interceptions %></td>
+            <td><%= defensetotals.int_td %></td>
+    	</tr>
+    </tbody>
+</table>

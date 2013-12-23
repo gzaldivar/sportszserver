@@ -9,6 +9,7 @@
 	<td><%= stat.attempts %></td>
 	<td><%= stat.completions %></td>
 	<td><%= number_with_precision(stat.comp_percentage, precision: 2) %></td>
+	<td><%= number_with_precision(stat.compaverage, precision: 2) %></td>
 	<td><%= stat.yards %></td>
 	<td><%= stat.td %></td>
 	<td><%= stat.firstdowns %></td>
@@ -16,7 +17,7 @@
 	<td><%= stat.sacks %></td>
 	<td><%= stat.yards_lost %></td>
 	<td><%= stat.twopointconv %></td>
-	<% if FootballPassing.find(stat.id).nil? and isAdmin? or isTeamManager?(player) and name != "Totals" %>
+	<% if FootballPassing.find(stat.id).nil? and site_owner? or isTeamManager?(player) and name != "Totals" %>
 		<td><%= link_to "Edit", new_sport_athlete_football_passing_path(@sport, player, gameschedule_id: stat.gameschedule_id), class: "btn btn-xs btn-primary"%></td>
 	<% elsif name != "Totals" %>
 		<td><%= link_to "Edit", edit_sport_athlete_football_passing_path(@sport, player, stat), class: "btn btn-xs btn-primary"%></td>

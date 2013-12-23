@@ -16,7 +16,7 @@
 	<td><%= stat.int_td %></td>
 	<td><%= stat.fumbles_recovered %></td>
 	<td><%= stat.safety %></td>
-	<% if FootballDefense.find(stat.id).nil? and isAdmin? or isTeamManager?(player) and name != "Totals" %>
+	<% if FootballDefense.find(stat.id).nil? and site_owner? or isTeamManager?(player) and name != "Totals" %>
 		<td><%= link_to "Edit", new_sport_athlete_football_defense_path(@sport, player, gameschedule_id: stat.gameschedule_id), 
 				class: "btn btn-xs btn-primary"%></td>
 	<% elsif name != "Totals" %>

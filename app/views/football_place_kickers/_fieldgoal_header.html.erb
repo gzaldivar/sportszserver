@@ -7,11 +7,11 @@
 				Player
 			<% end %>
 		</th>
-		<th>FG Attempts</th>
-		<th>FG Made</th>
-		<th>FG Blocked</th>
-		<th>FG Long</th>
-		<% if isAdmin? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
+		<th>FGA</th>
+		<th>FGM</th>
+		<th>BLKD</th>
+		<th>FG LNG</th>
+		<% if site_owner? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
 			<th>Edit</th>
 		<% end %>
 	</thead>

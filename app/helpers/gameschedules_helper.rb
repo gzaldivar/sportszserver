@@ -44,4 +44,15 @@ module GameschedulesHelper
 		return score
 	end
 
+	def opponentimage(game)
+		if game.opponent_team_id
+			sport = Sport.find(game.opponent_sport_id)
+			get_team_logo(sport, sport.teams.find(game.opponent_team_id))
+		elsif game.opponentpic?
+			game.opponentpic.url(:tiny)
+		else
+			"photo_not_available.png"
+		end
+	end
+
 end

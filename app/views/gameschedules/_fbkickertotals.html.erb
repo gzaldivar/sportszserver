@@ -1,0 +1,62 @@
+<div class="row">
+    <div class='col-xs-12'>
+        <h5>Kicking</h5>
+    </div>
+</div>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+    	<th>Name</th>
+    	<th>FG</th>
+    	<th>XP</th>
+    	<th>PTS</th>
+    </thead>
+    <tbody>
+    	<% kickerstats.each do |p| %>
+    		<% if isPlaceKicker?(p) %>
+		    	<tr>
+		    		<td><%= link_to Athlete.find(p.athlete_id).logname, sport_athlete_path(@sport, p.athlete_id) %></td>
+		    		<td><%= p.fgmade %></td>
+		    		<td><%= p.xpmade %></td>
+		    		<td><%= (p.xpmade * 3) + p.xpmade %></td>
+		    	</tr>
+		    <% end %>
+    	<% end %>
+    	<tr>
+            <td>Totals</td>
+            <td><%= kickertotals.fgmade %></td>
+            <td><%= kickertotals.xpmade %></td>
+            <td><%= (kickertotals.xpmade * 3) + kickertotals.xpmade %></td>
+    	</tr>
+    </tbody>
+</table>
+<div class="row">
+    <div class='col-xs-12'>
+        <h5>Punts</h5>
+    </div>
+</div>
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+        <th>Name</th>
+        <th>TOT</th>
+        <th>YDS</th>
+        <th>AVG</th>
+    </thead>
+    <tbody>
+        <% punterstats.each do |p| %>
+            <% if isPunter?(p) %>
+                <tr>
+                    <td><%= link_to Athlete.find(p.athlete_id).logname, sport_athlete_path(@sport, p.athlete_id) %></td>
+                    <td><%= p.punts %></td>
+                    <td><%= p.punts_yards %></td>
+                    <td><%= number_with_precision(p.puntsaverage, precision: 2) %></td>
+                </tr>
+            <% end %>
+        <% end %>
+        <tr>
+            <td>Totals</td>
+            <td><%= puntertotals.punts %></td>
+            <td><%= puntertotals.punts_yards %></td>
+            <td><%= number_with_precision(puntertotals.puntsaverage, precision: 2) %></td>
+        </tr>
+    </tbody>
+</table>

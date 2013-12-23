@@ -7,17 +7,18 @@
 			Player
 		<% end %>
 	</th>
-	<th>Passing Attempts</th>
-	<th>Passing Completions</th>
-	<th>Completion Percentage</th>
-	<th>Passing Yards</th>
-	<th>Passing TD</th>
-	<th>First Downs</th>
-	<th>Interceptions</th>
-	<th>Sacks</th>
-	<th>Yards Lost</th>
-	<th>Two Point Conv</th>
-	<% if isAdmin? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
+	<th>ATT</th>
+	<th>CMP</th>
+	<th>PCT</th>
+	<th>AVG</th>
+	<th>YDS</th>
+	<th>TD</th>
+	<th>FD</th>
+	<th>INT</th>
+	<th>SACK</th>
+	<th>YDS LST</th>
+	<th>2PT</th>
+	<% if site_owner? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
 		<th>Edit</th>
 	<% end %>
 </thead>

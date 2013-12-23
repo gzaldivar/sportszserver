@@ -7,11 +7,11 @@
 			Player
 		<% end %>
 	</th>
-	<th>Punts</th>
-	<th>Punts Blocked</th>
-	<th>Punts Yards</th>
-	<th>Punts Long</th>
-	<% if isAdmin? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
+	<th>PUNTS</th>
+	<th>BLKD</th>
+	<th>YDS</th>
+	<th>LONG</th>
+	<% if site_owner? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
 		<th>Edit</th>
 	<% end %>
 </thead>

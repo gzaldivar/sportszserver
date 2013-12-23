@@ -1,38 +1,36 @@
-<thead>
-	<th>Team</th>
-	<th>Q1</th>
-	<th>Q2</th>
-	<th>Q3</th>
-	<th>Q4</th>
-	<% if @gameschedule.final %>
-		<th>Final</th>
-	<% else %>
-		<th>Score</th>
-	<% end %>
-</thead>
-<tbody>
-	<tr>
-		<td><%= image_tag(get_team_logo(@sport, @team)) %><%=  @team.team_name %></td>
-		<td><%= @gameschedule.homeq1 %></td>
-		<td><%= @gameschedule.homeq2 %></td>
-		<td><%= @gameschedule.homeq3 %></td>
-		<td><%= @gameschedule.homeq4 %></td>
-		<td><%= @gameschedule.homeq1 + @gameschedule.homeq2 + @gameschedule.homeq3 + @gameschedule.homeq4 %></td>
-	</tr>
-	<tr>
-		<td>
-			<% if @opposingteam %>
-				<%= image_tag get_team_logo(@opposingsport, @opposingteam) %><%= @gameschedule.opponent_name %>
-			<% elsif @gameschedule.opponentpic? %>
-				<%= image_tag @gameschedule.opponentpic.url(:tiny) %>
-			<% else %>
-				<%= @gameschedule.opponent_name %>
-			<% end %>
-		</td>
-		<td><%= @gameschedule.opponentq1 %></td>
-		<td><%= @gameschedule.opponentq2 %></td>
-		<td><%= @gameschedule.opponentq3 %></td>
-		<td><%= @gameschedule.opponentq4 %></td>
-		<td><%= @gameschedule.opponentq1 + @gameschedule.opponentq2 + @gameschedule.opponentq3 + @gameschedule.opponentq4 %></td>
-	</tr>
-</tbody>
+<ul class="nav nav-pills">
+	<li><%= link_to "Scoreboard", "#", :class => 'football_scoreboard' %></li>
+</ul>
+<table class="table table-striped table-bordered table-hover">
+	<thead>
+		<th>Team</th>
+		<th>Q1</th>
+		<th>Q2</th>
+		<th>Q3</th>
+		<th>Q4</th>
+		<% if @gameschedule.final %>
+			<th>Final</th>
+		<% else %>
+			<th>Score</th>
+		<% end %>
+	</thead>
+	<tbody>
+		<tr>
+			<td><%= image_tag get_team_logo(@sport, @team), { class: 'image-responsive', height: '50px', width: '50px' } %><%=  @team.team_name %></td>
+			<td><%= @gameschedule.homeq1 %></td>
+			<td><%= @gameschedule.homeq2 %></td>
+			<td><%= @gameschedule.homeq3 %></td>
+			<td><%= @gameschedule.homeq4 %></td>
+			<td><%= @gameschedule.homeq1 + @gameschedule.homeq2 + @gameschedule.homeq3 + @gameschedule.homeq4 %></td>
+		</tr>
+		<tr>
+			<td><%= image_tag opponentimage(@gameschedule), { class: 'image-responsive', height: '50px', width: '50px' } %>
+				<%= @gameschedule.opponent_mascot %></td>
+			<td><%= @gameschedule.opponentq1 %></td>
+			<td><%= @gameschedule.opponentq2 %></td>
+			<td><%= @gameschedule.opponentq3 %></td>
+			<td><%= @gameschedule.opponentq4 %></td>
+			<td><%= @gameschedule.opponentq1 + @gameschedule.opponentq2 + @gameschedule.opponentq3 + @gameschedule.opponentq4 %></td>
+		</tr>
+	</tbody>
+</tbody

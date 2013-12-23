@@ -1,0 +1,52 @@
+<script>
+  $(document).ready(function() {
+    $('.passing_stats').click(function() {
+      $.ajax({
+        url: "<%= passinggamestats_sport_team_gameschedule_path %>",
+        dataType: "script"
+      });
+    });
+    $('.rushing_stats').click(function() {
+      $.ajax({
+        url: "<%= rushinggamestats_sport_team_gameschedule_path %>",
+        dataType: "script"
+      });
+    });
+    $('.receiving_stats').click(function() {
+      $.ajax({
+        url: "<%= receivinggamestats_sport_team_gameschedule_path %>",
+        dataType: "script"
+      });
+    });
+    $('.defense_gametotals').click(function() {
+      $.ajax({
+        url: "<%= defensegamestats_sport_team_gameschedule_path %>",
+        dataType: "script"
+      });
+    });
+    $('.kicker_gametotals').click(function() {
+      $.ajax({
+        url: "<%= kickergamestats_sport_team_gameschedule_path %>",
+        dataType: "script"
+      });
+    });
+    $('.returner_gametotals').click(function() {
+      $.ajax({
+        url: "<%= returnergamestats_sport_team_gameschedule_path %>",
+        dataType: "script"
+      });
+    });
+    $('.football_boxscore').click(function() {
+      $.ajax({
+        url: "<%= footballboxscore_sport_team_gameschedule_path %>",
+        dataType: "script"
+      });
+    });
+    $('.football_scoreboard').click(function() {
+      $.ajax({
+        url: "<%= footballscoreboard_sport_team_gameschedule_path %>",
+        dataType: "script"
+      });
+    });
+   });
+</script>

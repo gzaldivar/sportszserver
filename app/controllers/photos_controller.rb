@@ -80,8 +80,8 @@ class PhotosController < ApplicationController
     @photos = []
     @athletes = []
 
-    if params[:team_id]
-      @team = @sport.teams.find(params[:team_id])
+    if params[:team_id] or current_team
+      @team = params[:team_id] ? @sport.teams.find(params[:team_id]) : @sport.teams.find(current_team.id)
       @gameschedules = @team.gameschedules
     end
 
@@ -370,7 +370,7 @@ class PhotosController < ApplicationController
   end
   
   def updategameschedule
-    team = @sport.teams.find(params[:team_id])
+    team = @sport.teams.find(params[:teamid])
     @gameschedules = team.gameschedules
     @athletes = @sport.athletes.where(team_id: team.id.to_s)
     if !params[:gameschedule_id].nil? and !params[:gameschedule_id].blank?

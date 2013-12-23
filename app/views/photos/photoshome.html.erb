@@ -1,9 +1,11 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + " - Photos") %>
+<div id="photoscripts">
+    <%= render 'photoshome.js' %>
+</div>
 <p>
 <div class="row">
 	<div class="col-xs-8">
       	<ul class="nav nav-pills">
-			<li><%= link_to "Photos", sport_photos_path(@sport, team_id: current_team.id) %></li>
 			<li><%= link_to "Videos", sport_videoclips_path(@sport, team_id: current_team.id) %></li>
 		</ul>
 		<div id="displaythephoto">

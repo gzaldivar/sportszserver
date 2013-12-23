@@ -48,13 +48,13 @@
           <% else %>
             	<td></td>
           <% end %>
-    		  <% if !@photo.gameschedule.nil? and !@photo.gameschedule.blank? %>
-              		<td><%= @sport.teams.find(@photo.team_id).gameschedules.find(@photo.gameschedule).game_name %></td>
+    		  <% if !@photo.gameschedule_id.nil? %>
+              		<td><%= @sport.teams.find(@photo.team_id).gameschedules.find(@photo.gameschedule_id).game_name %></td>
     		  <% else %>
     				<td></td>
     		  <% end %>
-          <% if @sport.name == "Football" and !@photo.gamelog.nil? and !@photo.gamelog.blank? %>
-                  <td><%= @sport.teams.find(@photo.team_id).gameschedules.find(@photo.gameschedule).gamelogs.find(@photo.gamelog).logentrytext %></td>
+          <% if @sport.name == "Football" and !@photo.gamelog_id.nil?  %>
+                  <td><%= @sport.teams.find(@photo.team_id).gameschedules.find(@photo.gameschedule_id).gamelogs.find(@photo.gamelog_id).logentrytext %></td>
           <% else %>
             <td></td>
           <% end %>

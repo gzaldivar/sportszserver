@@ -29,21 +29,3 @@
 		  <% end %>
     </tbody>
 </table>
-<script>
-  $(document).ready(function() {
-    $('.featured_photos').click(function() {
-      $('.modal').modal('hide');
-      $.ajax({
-        url: "<%= showfeaturedphotos_sport_photos_path %>",
-        dataType: "script"
-      });
-    });
-    $('.latest_photos').click(function() {
-      $('.modal').modal('hide');
-      $.ajax({
-        url: "<%= latest_sport_photos_path %>",
-        dataType: "script"
-      });
-    });
-   });
-</script>

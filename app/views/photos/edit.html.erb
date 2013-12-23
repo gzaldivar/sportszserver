@@ -43,7 +43,7 @@
 		 <div class="row">
 			<div class="col-xs-4">
 				<%= f.label :tag_game, "Tag Game" %>
-				<%= f.select :gameschedule_id, @gameschedules.collect{ |t| [t.game_name, t.id] }, {},
+				<%= f.select :gameschedule_id, @gameschedules.collect{ |t| [t.game_name, t.id] }, { include_blank: true },
 							 { id: "gameschedules_select", class: 'form-control' }  %>
 			</div><p>
 	        <div class="col-xs-4 col-xs-offset-1">

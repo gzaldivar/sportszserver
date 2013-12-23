@@ -1,9 +1,7 @@
-<div class="row">
-    <ul class="nav nav-pills">
-        <li><%= link_to current_team.mascot + "  Game Schedule", sport_team_gameschedules_path(@sport, current_team) %></li>
-        <li><%= link_to "Standings", sport_team_standings_path(@sport, current_team) %></li>
-    </ul>
-</div>
+<ul class="nav nav-pills">
+    <li><%= link_to current_team.mascot + "  Game Schedule", sport_team_gameschedules_path(@sport, current_team) %></li>
+    <li><%= link_to "Standings", sport_team_standings_path(@sport, current_team) %></li>
+</ul>
 <table class="table table-striped table-bordered table-hover">
     <thead>
         <th>Date</th>

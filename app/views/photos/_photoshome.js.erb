@@ -1,0 +1,27 @@
+<script>
+  $(document).ready(function() {
+    $('.featured_photos').click(function() {
+      $('.modal').modal('hide');
+      $.ajax({
+        url: "<%= showfeaturedphotos_sport_photos_path %>",
+        dataType: "script"
+      });
+    });
+    $('.latest_photos').click(function() {
+      $('.modal').modal('hide');
+      $.ajax({
+        url: "<%= latest_sport_photos_path %>",
+        dataType: "script"
+      });
+    });
+    $('.select_photo').click(function() {
+      $.ajax({
+        url: "<%= displayphoto_sport_photos_path %>",
+        data: {
+          photo_id : $(this).data('id')
+        },
+        dataType: "script"
+      });
+    });
+   });
+</script>

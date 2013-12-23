@@ -15,30 +15,17 @@
 				Tags:
 			<% end %>
 		</div>
-		<div class="col-xs-2">
+		<div class="col-xs-6">
 			<% if photo.gameschedule_id %>
 				<%= link_to Gameschedule.find(photo.gameschedule_id).game_name %>
 			<% end %>
 		</div>
-		<div class="col-xs-9">
+		<div class="col-xs-4">
 			<% if !photo.players.nil? %>
 				<% photo.players.each do |p| %>
-					<%= Athlete.find(p.id).logname %>
+					<%= Athlete.find(p).logname %>
 				<% end %>
 			<% end %>
 		</div>
 	</div>
 </div>
-<script>
-  $(document).ready(function() {
-    $('.select_photo').click(function() {
-      $.ajax({
-        url: "<%= displayphoto_sport_photos_path %>",
-        data: {
-          photo_id : $(this).data('id')
-        },
-        dataType: "script"
-      });
-    });
-   });
-</script>

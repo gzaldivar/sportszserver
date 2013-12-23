@@ -2,6 +2,10 @@
 <p>
 <div class="row">
 	<div class="col-xs-8">
+	    <ul class="nav nav-pills">
+	      <li><%= link_to "Photos Home", photoshome_sport_photos_path(@sport, team_id: current_team.id) %></li>
+	    </ul>
+	    <p>
 		<%= image_tag @photo.large_url %>
   </div>
 </div>

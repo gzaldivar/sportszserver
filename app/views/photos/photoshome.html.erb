@@ -16,20 +16,16 @@
       	<ul class="nav nav-pills">
 			<li><%= link_to "Featured", '#', :class => 'featured_photos' %></li>
 			<li><%= link_to "Latest", '#', :class => 'latest_photos' %></li>
-			<li><%= link_to "All", sport_photos_path(@sport, team_id: current_team.id) %></li>
+			<li><%= link_to "Search", sport_photos_path(@sport, team_id: current_team.id) %></li>
 		</ul>
-		<div class="row">
-			<div id="photoslist">
-				<% if @featuredlists.nil? %>
-					<%= render 'photoslist', photolist: @photolists, featured: "Photos", photoselect: false %>
-				<% else %>
-					<%= render 'photoslist', photolist: @featuredlists, featured: "Featured", photoselect: false %>
-				<% end %>
-			</div>
+		<div id="photoslist">
+			<% if @featuredlists.nil? %>
+				<%= render 'photoslist', photolist: @photolists, featured: "Latest Photos", photoselect: false %>
+			<% else %>
+				<%= render 'photoslist', photolist: @featuredlists, featured: "Featured", photoselect: false %>
+			<% end %>
 		</div>
-		<div class="row">
-			<%= link_to "Featured Photos", featuredphoto_sport_photos_path(@sport), class: "btn btn-xs btn-primary" %>
-		</div>
+		<%= link_to "Featured Photos", featuredphoto_sport_photos_path(@sport), class: "btn btn-xs btn-primary" %>
 	</div>
 </div>
 <p>

@@ -1,4 +1,4 @@
-<% if isTeamManager?(photo.teamid) %>
+<% if isTeamManager?(photo.team_id) %>
 	<div class="row">
 		<div class="col-xs-6 col-xs-offset-2">
 			As a team manager you click approve below to make the photos available to users. If you do not want to approve a photo, click on the photo to delete it.
@@ -44,8 +44,8 @@
 		    <% else %>
 		    	<td><%= photo.displayname %></td>
 		    <% end %>
-		  	<% if !photo.teamid.nil? %>
-		  		<td><%= @sport.teams.find(photo.teamid).team_name %></td>
+		  	<% if !photo.team_id.nil? %>
+		  		<td><%= @sport.teams.find(photo.team_id).team_name %></td>
 			<% else %>
 				<td></td>
 			<% end %>
@@ -59,12 +59,12 @@
 		    	<td></td> 
 		    <% end %>
 			<% if !photo.gameschedule.nil? and !photo.gameschedule.blank? %>
-		    	<td><%= @sport.teams.find(photo.teamid).gameschedules.find(photo.gameschedule).game_name %></td>
+		    	<td><%= @sport.teams.find(photo.team_id).gameschedules.find(photo.gameschedule).game_name %></td>
 			<% else %>
 				<td></td>
 			<% end %>
 			<% if @sport.name == "Football" and !photo.gamelog.nil? and !photo.gamelog.blank? %>
-				<td><%= @sport.teams.find(photo.teamid).gameschedules.find(photo.gameschedule).gamelogs.find(photo.gamelog).logentrytext %></td>
+				<td><%= @sport.teams.find(photo.team_id).gameschedules.find(photo.gameschedule).gamelogs.find(photo.gamelog).logentrytext %></td>
 			<% else %>
 				<td></td>
 			<% end %>
@@ -74,7 +74,7 @@
 		      <td>Complete</td>
 		    <% end %>
 		    <% if @sport.review_media? %>
-			    <% if @photo.pending and user_signed_in? and isTeamManager?(@photo.teamid) %>
+			    <% if @photo.pending and user_signed_in? and isTeamManager?(@photo.team_id) %>
 			    	<td><%= link_to "Approve?", approval_sport_photo_path(@sport, @photo), class: "btn btn-xs btn-primary" %></td>
 			    <% else %>
 			    	<td><%= @photo.pending %></td>

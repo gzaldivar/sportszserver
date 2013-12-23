@@ -32,6 +32,7 @@ class Photo
   belongs_to :gameschedule
   belongs_to :user
   belongs_to :gamelog
+  belongs_to :team
   has_many :alerts, dependent: :destroy
   
   validates_presence_of :filename

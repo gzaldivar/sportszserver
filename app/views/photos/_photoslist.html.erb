@@ -23,7 +23,9 @@
 		    		<td><%= link_to p.displayname, '#', :class => 'select_photo', :data => {:id => p.id.to_s} %></td>
 		    	</tr>
 		    <% end %>
-        <%= will_paginate photolist %>
+        <% if photoselect == true %>
+          <%= will_paginate photolist %>
+        <% end %>
 		  <% end %>
     </tbody>
 </table>

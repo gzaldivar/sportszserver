@@ -46,6 +46,7 @@ class Team
   has_many :events, dependent: :destroy
   has_many :blogs, dependent: :destroy
   has_many :newsfeeds, dependent: :destroy
+  has_many :photos, dependent: :destroy
     
   def team_name
     title + " " + mascot

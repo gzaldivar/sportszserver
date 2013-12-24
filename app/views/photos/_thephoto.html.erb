@@ -17,13 +17,13 @@
 		</div>
 		<div class="col-xs-6">
 			<% if photo.gameschedule_id %>
-				<%= link_to Gameschedule.find(photo.gameschedule_id).game_name %>
+				<%= link_to Gameschedule.find(photo.gameschedule_id).game_name, sport_team_gameschedule_path(@sport, current_team) %>
 			<% end %>
 		</div>
 		<div class="col-xs-4">
 			<% if !photo.players.nil? %>
 				<% photo.players.each do |p| %>
-					<%= Athlete.find(p).logname %>
+					<%= link_to Athlete.find(p).logname, sport_athlete_path(@sport, id: p) %>
 				<% end %>
 			<% end %>
 		</div>

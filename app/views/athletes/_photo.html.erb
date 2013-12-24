@@ -1,22 +1,36 @@
 <div class="col-xs-4">
-  <% if athlete.processing %>
-    <h4><em><p class="text-warning">Processing Replacement Photo ...</p></em></h4>
-  <% end %>
-  <h4>Change Athlete Image:</h4>
-	<% if athlete.pic? %> 
-		<%= image_tag athlete.pic.url(:medium), class: 'img-responsive' %>
-	<% else %>
-		<%= image_tag 'Photo_Not_Available.jpg', class: 'img-responsive' %>
-	<% end %>
-  <%= s3_uploader_form callback_url: createathletephoto_sport_athletes_path, callback_param: "athlete[image_url]", 
-             key: "uploads/athletephotos/#{@athlete.id}/${filename}", id:  "myS3Uploader" do %>
-      <%= file_field_tag :file, class: 'form-control' %>
-  <% end %>
-
-  <script id="template-upload" type="text/x-tmpl">
-    <div id="file-{%=o.unique_id%}" class="upload">
-      {%=o.name%}
-      <div class="progress"><div class="bar" style="width: 0%"></div>
-    </div>
-  </script>    
+    <% if signed_in? %>
+      <ul class="nav nav-pills">
+        <% if !@athlete.fans.empty? and @athlete.fans.include?(current_user.id) %>
+          <li><%= link_to "Stop Following", unfollow_sport_athlete_path(@sport, @athlete) %></li>
+        <% else %>
+          <li><%= link_to "Follow", follow_sport_athlete_path(@sport, @athlete) %></li>
+        <% end %>
+        <% if hasAlerts?(@athlete, current_user) %>
+          <li><%= link_to "Alerts", sport_athlete_alerts_path(@sport, @athlete) %></li>
+        <% end %>
+      </ul>
+    <% end %>
+    <p>
+    <% if athlete.processing %>
+      <h4><em><p class="text-warning">Processing Replacement Photo ...</p></em></h4>
+    <% end %>
+    <p>
+  	<% if athlete.pic? %> 
+  		<%= image_tag athlete.pic.url(:medium), class: 'img-responsive' %>
+  	<% else %>
+  		<%= image_tag 'Photo_Not_Available.jpg', class: 'img-responsive' %>
+  	<% end %>
+    <% if site_owner? %>
+      <%= s3_uploader_form callback_url: createathletephoto_sport_athletes_path, callback_param: "athlete[image_url]", 
+                 key: "uploads/athletephotos/#{@athlete.id}/${filename}", id:  "myS3Uploader" do %>
+          <%= file_field_tag :file, class: 'form-control' %>
+      <% end %>
+    <% end %>
 </div>
+<script id="template-upload" type="text/x-tmpl">
+  <div id="file-{%=o.unique_id%}" class="upload">
+    {%=o.name%}
+    <div class="progress"><div class="bar" style="width: 0%"></div>
+  </div>
+</script> 

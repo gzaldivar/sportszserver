@@ -53,7 +53,7 @@ Sportzserver::Application.routes.draw do
 
         member do
           get   :passinggamestats, :rushinggamestats, :allfootballgamestats, :receivinggamestats, :defensegamestats, :kickergamestats, :returnergamestats,
-                :footballboxscore, :footballscoreboard
+                :footballboxscore, :footballscoreboard, :footballteamgametotals
           put   :updatelogo
         end
 

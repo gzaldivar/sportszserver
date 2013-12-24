@@ -48,5 +48,11 @@
         dataType: "script"
       });
     });
+    $('.team_gametotals').click(function() {
+      $.ajax({
+        url: "<%= footballteamgametotals_sport_team_gameschedule_path %>",
+        dataType: "script"
+      });
+    });
    });
 </script>

@@ -4,7 +4,6 @@
 		<table class="table table-hover">
 			<thead> 
 				<tr>
-					<th>Team</th>
 					<th>Game</th>
 					<th>Date</th>
 					<th>Home/Away</th>
@@ -25,7 +24,6 @@
 	        <% @gameschedules.each_with_index do |g, count| %>
 	          	<tbody>
 		          	<tr>
-		          		<td><%= link_to (@team.title + " " + @team.mascot), [@sport, @team, g] %></td>
 		          		<td><%= link_to (count += 1), [@sport, @team, g] %></td>
 		          		<td><%= g.gamedate.strftime("%m/%d/%Y") %></td>
 		          		<td><%= g.homeaway %></td>
@@ -34,7 +32,7 @@
 		          			<% else %>
 		          				<%= g.opponent_name %>
 		          			<% end %>
-		          		<td><%= g.starttime.strftime("%I:%M%p") %></td>
+		          		<td id="game_start_time"><!--%= g.starttime.strftime("%I:%M%p") %--></td>
 		          		<td><%= g.location %></td>
 		          		<td><%= g.event %></td>
 
@@ -66,7 +64,7 @@
 <div class="row">
   <div class="center">
 		<div class="col-xs-1 col-xs-offset-5">
-			<% if isAdmin? or isTeamManager?(@gameschedules.first) %>
+			<% if site_owner? or isTeamManager?(@gameschedules.first) %>
 				<%= link_to "Add", new_sport_team_gameschedule_path(@sport, @team), class: "btn btn-primary" %>	
 			<% end %>
 		</div>
@@ -75,4 +73,7 @@
 <div class="row">
 	<%= render 'layouts/sponsor' %>
 </div>
+<script>
+  $('#game_start_time').html(moment('<%= g.starttime.to_s %>').utc().format("hh:mm A"));
+</script>
 

@@ -5,7 +5,7 @@ class GameschedulesController < ApplicationController
   before_filter :get_sport
   before_filter :get_schedule,        only: [:show, :edit, :update, :destroy, :updatelogo, :passinggamestats, :allfootballgamestats,
                                               :rushinggamestats, :receivinggamestats, :defensegamestats, :kickergamestats, :returnergamestats, 
-                                              :footballboxscore,:footballscoreboard]
+                                              :footballboxscore,:footballscoreboard, :footballteamgametotals]
   before_filter only: [:destroy, :update, :create, :edit, :new, :createlogo, :updatelogo] do |controller| 
     controller.team_manager?(@gameschedule, @team)
   end
@@ -340,6 +340,14 @@ class GameschedulesController < ApplicationController
   end
 
   def footballscoreboard
+  end
+
+  def footballteamgametotals
+        @footballhomescore = footballhomescore(@sport, @gameschedule)
+        @footballtotalyards = footballtotalyards(@sport, @gameschedule)
+        @rushingtotalyards = FootballStatistics.rushingyardtotals
+        @passingtotalyards = FootballStatistics.passingyardtotals
+        @turnovers = FootballStatistics.turnovers
   end
 
   def allfootballgamestats

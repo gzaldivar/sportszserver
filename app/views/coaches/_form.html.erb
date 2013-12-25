@@ -1,25 +1,29 @@
 <div class="row">
 	<div class="col-xs-11">
-		<%= simple_form_for [@sport, @coach], 
-							:defaults => { :wrapper_html => {:class => 'form-group'}, :input_html => { :class => 'form-control' } } do |f| %>
+		<%= form_for [@sport, @coach], :input_html => { :class => 'form-horizontal' } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 			<div class="row">
 				<div class="col-xs-2">
-					<%= f.input	:lastname,	label:	"Last name" %>
+					<%= f.label :last_name, "Last Name" %>
+					<%= f.text_field :lastname, class: 'form-control' %>
 				</div>
 				<div class="col-xs-2 col-xs-offset-1">
-					<%= f.input :firstname,	label:	"First name" %>
+					<%= f.label :first_name, "First Name" %>
+					<%= f.text_field :firstname, class: 'form-control' %>
 				</div>
 				<div class="col-xs-2 col-xs-offset-1">
-					<%= f.input	:middlename,	label:	"Middle name", required: false %>
+					<%= f.label :middle_name, "Middle name" %>
+					<%= f.text_field :middlename, class: 'form-control' %>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-2">
-					<%= f.input :speciality, 	label:	"Coaching Responsibility" %>
+				<div class="col-xs-4">
+					<%= f.label "Coordinator, coach,, etc." %>
+					<%= f.text_field :speciality, class: 'form-control' %>
 				</div>
 				<div class="col-xs-4 col-xs-offset-1">
-					<%= f.input	:years_on_staff, label:  "Years on staff (e.g. 4,5, etc.)" %>
+					<%=f.label :years_on_staff,  "Years on staff" %>
+					<%= f.text_field :years_on_staff, class: 'form-control' %>
 				</div>
 		    </div>
 	        <div id="loading">
@@ -30,9 +34,9 @@
 	          </div>
 	        </div>
 		    <div class="row">
-				<div class="col-xs-8">
-					<%= f.input	:bio,	as: :text, hint:	"Some info about the coach", required: false, 
-								input_html: { style: 'width: 800px;height: 100px' } %>
+				<div class="col-xs-9">
+					<%= f.label "Some info about the coach" %>
+					<%= f.text_area	:bio, class: 'form-control' %>
 				</div>
 			</div>
 			<p>
@@ -46,12 +50,12 @@
 						<!--%= @sport.teams.find(@coach.team).team_name %-->
         				<!--%= select("coachteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, selected: @sport.teams.find(@coach.team).id ) %-->
 					<% end %>
-					<%= f.input :team_id, collection: @sport.teams.collect{ |t| [t.team_name, t.id] }, input_html: { include_blank: true } %>
+					<%= f.select :team_id, @sport.teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true }, class: 'form-control' %>
 		        </div>
 			</div>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-4">
-					<%= f.button :submit, 'Submit', class:	"btn btn-sm btn-primary", id: "submitbtn" %>
+					<%= f.submit 'Submit', class: "btn btn-sm btn-primary", id: "submitbtn" %>
 				</div>
 			</div>
 		<% end %>	

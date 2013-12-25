@@ -48,7 +48,7 @@ class Gameschedule
   field :penalty, type: Integer, default: 0
   field :penaltyyards, type: Integer, default: 0
   field :livegametime, type: DateTime
-  field :current_game_time, type: String. default: "15:00"
+  field :current_game_time, type: String, default: "15:00"
   field :own, type: Boolean, default: true
   field :our, type: String, default: ""
   field :ballon, type: Integer, default: 0

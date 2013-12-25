@@ -15,7 +15,7 @@
                 <tr>
                     <td><%= g.gamedate.strftime("%m/%d") %></td>
                     <% if g.homeaway == "Away" %>
-                        <td><%= link_to g.league ? "@" + g.opponent_mascot + "*" : g.opponent_mascot, sport_team_gameschedule_path(@sport, current_team, g) %></td>
+                        <td><%= link_to g.league ? "@" + g.opponent_mascot + "*" : "@" + g.opponent_mascot, sport_team_gameschedule_path(@sport, current_team, g) %></td>
                     <% else %>
                         <td><%= link_to g.league ? g.opponent_mascot + "*" : g.opponent_mascot, sport_team_gameschedule_path(@sport, current_team, g) %></td>
                     <% end %>

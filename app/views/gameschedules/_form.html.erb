@@ -68,14 +68,7 @@
 				<p>
 				<div class="row">
 					<div class="col-xs-4">
-						<% if @opposingteam.team_logo? %>
-							<%= image_tag @opposingteam.team_logo.url(:thumb) %>
-						<% elsif @opposingsport.sport_logo? %>
-							<%= image_tag @opposingsport.sport_logo.url(:thumb) %>
-			          	<% else %>
-			          		<h5>Opposing team has no logo uploaded.</h5>
-			            	<%= image_tag "photo_not_available.png" %>
-						<%end %>
+						<%= image_tag opponentimage(@gameschedule) %>
 					</div>
 				</div>
 			<% end %>

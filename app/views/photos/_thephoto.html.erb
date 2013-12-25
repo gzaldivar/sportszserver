@@ -17,7 +17,8 @@
 		</div>
 		<div class="col-xs-6">
 			<% if photo.gameschedule_id %>
-				<%= link_to Gameschedule.find(photo.gameschedule_id).game_name, sport_team_gameschedule_path(@sport, current_team) %>
+				<%= link_to Gameschedule.find(photo.gameschedule_id).game_name, sport_team_gameschedule_path(@sport, current_team, 
+							id: photo.gameschedule_id) %>
 			<% end %>
 		</div>
 		<div class="col-xs-4">

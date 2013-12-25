@@ -32,12 +32,9 @@
 				<div class="row">
 					<div class="col-xs-8">
 						We encourage you to upload an image for your opponent if you have one. Looks good on the mobile app.<p>
-						<% if !@gameschedule.opponentpic.blank? %>
-							<h5>Current opponent image</h5>
-							<%= image_tag @gameschedule.opponentpic.url(:thumb) %>
-			          	<% else %>
-			            	<%= image_tag "photo_not_available.png" %>
-						<%end %>
+						<h5>Current opponent image</h5>
+						<%= image_tag opponentimage(@gameschedule) %>
+						<p>
 						<%= f.label 'Opponent Logo' %>
 						<%= f.file_field :opponentpic, class: 'form-control' %>
 					</div>

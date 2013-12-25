@@ -1,5 +1,5 @@
 <ul class="nav nav-pills">
-    <li><%= link_to current_team.mascot + "  Game Schedule", sport_team_gameschedules_path(@sport, current_team) %></li>
+    <!--li><%= link_to current_team.mascot + "  Game Schedule", sport_team_gameschedules_path(@sport, current_team) %></li-->
     <li><%= link_to "Standings", sport_team_standings_path(@sport, current_team) %></li>
 </ul>
 <table class="table table-striped table-bordered table-hover">
@@ -10,22 +10,27 @@
         <th>W/L</th>
     </thead>
     <% if !gameschedules.nil? %>
-        <% gameschedules.each do |g| %>
-           <tbody>
+        <tbody>
+            <% gameschedules.each do |g| %>
                 <tr>
                     <td><%= g.gamedate.strftime("%m/%d") %></td>
-                    <td><%= link_to g.opponent_mascot , sport_team_gameschedule_path(@sport, current_team, g) %></td>
+                    <% if g.homeaway == "Away" %>
+                        <td><%= link_to g.league ? "@" + g.opponent_mascot + "*" : g.opponent_mascot, sport_team_gameschedule_path(@sport, current_team, g) %></td>
+                    <% else %>
+                        <td><%= link_to g.league ? g.opponent_mascot + "*" : g.opponent_mascot, sport_team_gameschedule_path(@sport, current_team, g) %></td>
+                    <% end %>
                     <td><%= footballhomescore(@sport, g).to_s + "-" + g.opponentscore.to_s %></td>
                     <td><%= footballhomescore(@sport, g) > g.opponentscore ? "W" : footballhomescore(@sport, g) == g.opponentscore ? "T" : "L" %></td>
                 </tr>
-            </tbody>
-        <% end %>
+            <% end %>
+        </tbody>
     <% else %>
         </tbody>
             <tr><td>No Schedule!</td></tr>
         </tbody>
     <% end %>
 </table>
+<p class="text-info">* Denotes league game</p>
 <% if site_owner? %>
     <%= link_to "Add Game", new_sport_team_gameschedule_path(@sport, current_team), class: "btn btn-xs btn-primary" %>
 <% end %>

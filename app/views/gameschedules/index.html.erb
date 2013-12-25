@@ -1,4 +1,17 @@
 <% provide(:title, current_site.sitename + " " + @sport.sportname + " - Game Schedule") %>
+<script>
+	function foo(poo) {
+		var m = moment(poo).utc().format('hh:mm A')
+		var x = document.getElementById("poopoo");
+		x.innerHTML=m;
+	}
+	$('#gamestarttime').ready(function() {
+		var $this = $(this);
+		var m = moment($this.text()).utc().format("hh:mm A"));
+		var x = document.getElementById("poopoo");
+		x.innerHTML=m;		
+	});
+</script>
 <div class="row">
   <div class="col-xs-11">
 		<table class="table table-hover">
@@ -12,7 +25,7 @@
 					<th>Location</th>
 					<th>Event</th>
 					<th>Score</th>
-					<th>Details</th>
+					<th>Summary</th>
 					<% if user_signed_in? and user_pics_ok? %>
 						<th>Photos</th>
 					<% end %>
@@ -28,11 +41,11 @@
 		          		<td><%= g.gamedate.strftime("%m/%d/%Y") %></td>
 		          		<td><%= g.homeaway %></td>
 		          		<td><% if g.league? %>
-		          				<%= g.opponent_name + " *" %>
+		          				<%= "* " + g.opponent_name %>
 		          			<% else %>
 		          				<%= g.opponent_name %>
 		          			<% end %>
-		          		<td id="game_start_time"><!--%= g.starttime.strftime("%I:%M%p") %--></td>
+		          		<td><%= div_for(g, class: "gamestarttime") do %><%= g.starttime %><% end %><!--%= g.starttime.strftime("%I:%M%p") %--></td>
 		          		<td><%= g.location %></td>
 		          		<td><%= g.event %></td>
 
@@ -47,7 +60,7 @@
 		          		   end %>
 
 		          		<td><%= result + footballhomescore(@sport, g).to_s + "-" + g.opponentscore.to_s %></td>
-		          		<td><%= link_to "Details", sport_team_gameschedule_path(@sport, @team, g), class: "btn btn-xs btn-primary" %></td>
+		          		<td><%= link_to "Summary", sport_team_gameschedule_path(@sport, @team, g), class: "btn btn-xs btn-primary" %></td>
 						<% if user_signed_in? and user_pics_ok? %>
 							<td><%= link_to "Photo", newschedule_sport_photo_path(@sport, g), class: "btn btn-xs btn-primary" %></td>
 						<% end %>
@@ -73,7 +86,3 @@
 <div class="row">
 	<%= render 'layouts/sponsor' %>
 </div>
-<script>
-  $('#game_start_time').html(moment('<%= g.starttime.to_s %>').utc().format("hh:mm A"));
-</script>
-

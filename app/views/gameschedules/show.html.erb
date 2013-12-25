@@ -13,6 +13,11 @@
      			<h4><p class="text-info"><%= @team.title + " " + @team.mascot %> vs. <%= @gameschedule.opponent_name %> at <%= @gameschedule.location %></P</h4>
      		</div>
       	</div>
+      	<div class="row">
+      		<div class="col-xs-11">
+      			<p class="text-success">All times are in current local time.</p>
+      		</div>
+      	</div>
       	<% if @gameschedule.event %>
 	      	<div class="row">
 	      		<div class="col-xs-1">

@@ -168,7 +168,7 @@ class GameschedulesController < ApplicationController
         end
   #       time = Time.zone.local(datetime.year, datetime.month, datetime.day, hour, params[:startminutes].to_i)
         @gameschedule.starttime = datetime.change({:hour => hour , :min => params[:startminutes].to_i , :sec => 0 })
-      else
+      elsif params[:gameschedule][:"starttime(4i)"] and params[:gameschedule][:"starttime(5i)"]
         @gameschedule.starttime = DateTime.civil(datetime.year, datetime.month, datetime.day, params[:gameschedule][:"starttime(4i)"].to_i,
                                                 params[:gameschedule][:"starttime(5i)"].to_i)
       end
@@ -176,7 +176,9 @@ class GameschedulesController < ApplicationController
 #      @gameschedule.livegametime = DateTime.civil(datetime.year, datetime.month, datetime.day, params[:gameschedule][:"livegametime(4i)"].to_i,
 #                                                  params[:gameschedule][:"livegametime(5i)"].to_i)
 
-      @gameschedule.current_game_time = params[:gameminutes].to_s + ":" + params[:gameseconds].to_s
+      if params[:gameminutes]
+        @gameschedule.current_game_time = params[:gameminutes].to_s + ":" + params[:gameseconds].to_s
+      end
 
       @gameschedule.update_attributes!(params[:gameschedule])
       respond_to do |format|

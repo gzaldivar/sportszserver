@@ -1,0 +1,6 @@
+<% if !@featuredlists.nil? %>
+	$("#videoslist").html("<%= j render 'videoslist', videolist: @featuredlists, featured: 'Featured', videoselect: false %>");
+	$("#videoscripts").html("<%= j render 'videoclipshome.js' %>");
+<% else %>
+	$("#novideos-responsive").modal('show');
+<% end %>

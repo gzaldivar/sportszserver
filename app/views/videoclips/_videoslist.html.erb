@@ -1,0 +1,31 @@
+<table class="table table-striped table-bordered table-hover">
+    <thead>
+      <% if videoselect == true %>
+        <th>Select</th>
+        <th>Video</th>
+      <% end %>
+    	<th>
+        <% if featured == "Featured" %>
+          Featured Video
+        <% else %>
+          <%= featured %>
+        <% end %>
+        </th>
+    </thead>
+    <tbody>
+	    <% if videolist.any? %>
+	     <% videolist.each do |v| %>
+		    	<tr>
+            <% if videoselect == true %>
+              <td><%= check_box_tag "video_ids[]", v.id %></td>
+              <td><%= image_tag v.poster_url, { class: 'img-responsive', height: '200px', width: '300px' } %></td>
+            <% end %>
+		    		<td><%= link_to v.displayname, '#', :class => 'select_video', :data => {:id => v.id.to_s} %></td>
+		    	</tr>
+		    <% end %>
+        <% if videoselect == true %>
+          <%= will_paginate videolist %>
+        <% end %>
+		  <% end %>
+    </tbody>
+</table>

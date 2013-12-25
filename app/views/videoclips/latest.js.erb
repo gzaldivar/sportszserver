@@ -1,0 +1,6 @@
+<% if !@videolists.nil? %>
+	$("#videoslist").html("<%= j render 'videoslist', videolist: @videolists, featured: 'Latest Videos', videoselect: false %>");
+	$("#videoscripts").html("<%= j render 'videoclipshome.js' %>");
+<% else %>
+	$("#novideos-responsive").modal('show');
+<% end %>

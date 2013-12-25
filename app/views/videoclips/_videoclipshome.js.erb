@@ -1,0 +1,27 @@
+<script>
+  $(document).ready(function() {
+    $('.featured_videos').click(function() {
+      $('.modal').modal('hide');
+      $.ajax({
+        url: "<%= showfeaturedvideos_sport_videoclips_path %>",
+        dataType: "script"
+      });
+    });
+    $('.latest_videos').click(function() {
+      $('.modal').modal('hide');
+      $.ajax({
+        url: "<%= latest_sport_videoclips_path %>",
+        dataType: "script"
+      });
+    });
+    $('.select_video').click(function() {
+      $.ajax({
+        url: "<%= displayvideo_sport_videoclips_path %>",
+        data: {
+          videoclip_id : $(this).data('id')
+        },
+        dataType: "script"
+      });
+    });
+  });
+</script>

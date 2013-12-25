@@ -1,0 +1,62 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Video Clips") %>
+<div id="videoscripts">
+    <%= render 'videoclipshome.js' %>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-8">
+      	<ul class="nav nav-pills">
+			<li><%= link_to "Photos", photoshome_sport_photos_path(@sport, team_id: current_team.id) %></li>
+		</ul>
+		<div id="displaythevideo">
+			<%= render 'thevideo', video: @thevideo %>
+		</div>
+	</div>
+	<div class="col-xs-3">
+      	<ul class="nav nav-pills">
+			<li><%= link_to "Featured", '#', :class => 'featured_videos' %></li>
+			<li><%= link_to "Latest", '#', :class => 'latest_videos' %></li>
+			<li><%= link_to "Search", sport_videoclips_path(@sport, team_id: current_team.id) %></li>
+		</ul>
+		<div id="videoslist">
+			<% if @featuredlists.nil? %>
+				<%= render 'videoslist', videolist: @videolists, featured: "Latest Videos", videoselect: false %>
+			<% else %>
+				<%= render 'videoslist', videolist: @featuredlists, featured: "Featured", videoselect: false %>
+			<% end %>
+		</div>
+		<%= link_to "Featured Videos", featuredvideo_sport_videoclips_path(@sport), class: "btn btn-xs btn-primary" %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-3 col-xs-offset-4">
+		<% if !current_team.nil? and user_signed_in? and (user_pics_ok? or site_owner?) %>
+			<%= link_to "Add Team Photo", newteam_sport_videoclip_path(@sport, current_team), class: "btn btn-sm btn-primary" %>
+		<% end %>
+	</div>
+</div>
+<p>
+<%= render 'layouts/sponsor' %>
+<div class-"row">
+  <div class="col-xs-4">
+    <div id="novideos-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">No Videos</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="well">
+              <p class="text-info">No videos have been added to list to display!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

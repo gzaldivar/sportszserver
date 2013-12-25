@@ -1,0 +1,32 @@
+<div class="well">
+	<div class="row">
+		<% if !Videoclip.find(video.id).nil? %>
+			<p class="text-info"><%= link_to video.displayname, sport_videoclip_path(@sport, video) %></p>
+		<% end %>
+	</div>
+	<div class="row">
+		<% if !video.poster_url.nil? %>
+			<%= link_to image_tag(video.poster_url, class: 'img-responsive'), sport_videoclip_path(@sport, video) %>
+		<% end %>
+	</div>
+	<div class="row">
+		<div class="col-xs-1">
+			<% if !video.poster_url.nil? %>
+				Tags:
+			<% end %>
+		</div>
+		<div class="col-xs-6">
+			<% if video.gameschedule_id %>
+				<%= link_to Gameschedule.find(video.gameschedule_id).game_name, sport_team_gameschedule_path(@sport, current_team, 
+							id: video.gameschedule_id) %>
+			<% end %>
+		</div>
+		<div class="col-xs-4">
+			<% if !video.players.nil? %>
+				<% video.players.each do |p| %>
+					<%= link_to Athlete.find(p).logname, sport_athlete_path(@sport, id: p) %>
+				<% end %>
+			<% end %>
+		</div>
+	</div>
+</div>

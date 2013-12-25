@@ -152,8 +152,8 @@ Sportzserver::Application.routes.draw do
       end
 
       collection do
-        post :untagathlete, :createmobile
-        get :updategameschedule, :updategamelogs
+        post :untagathlete, :createmobile, :updatefeaturedvideos
+        get :updategameschedule, :updategamelogs, :videoclipshome, :showfeaturedvideos, :latest, :displayvideo, :featuredvideo
       end
     end
 

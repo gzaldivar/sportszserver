@@ -1,0 +1,40 @@
+<% provide(:title, current_site.sitename + ' - Featured Video Clips') %>
+<p>
+<div class="row">
+	<div class="col-xs-6 col-xs-offset-2">
+		<h4>Add or Remove Video Clips - Featured Videos</h4>
+	</div>
+</div>
+<% if @videoclips.nil? or @videoclips.empty? %>
+	<label id='#novideos-responsive'></labal>
+<% else %>
+	<%= form_tag updatefeaturedvideos_sport_videoclips_path(@sport), method: :post, class: 'form-horizontal'  do %>
+		<div class="row">
+			<div class="col-xs-6 col-xs-offset-2">
+				<%= render 'videoslist', videolist: @videoclips, featured: "Videos", videoselect: true %>
+			</div>
+		</div>
+        <div class="row">
+			<div class="col-xs-2 col-xs-offset-4">
+				<%= submit_tag "Add Video", class: 'btn btn-md btn-primary' %>
+			</div>
+        </div>
+	<% end %>
+<% end %>
+<div class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				<h4 class="modal-title">Notice</h4>
+			</div>
+			<div class="modal-body">
+				<p>No video clips to display!</p>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+				<button type="button" class="btn btn-primary">Save changes</button>
+			</div>
+		</div>
+	</div><!-- /.modal-content -->
+</div><!-- /.modal -->

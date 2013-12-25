@@ -96,85 +96,85 @@ class PhotosController < ApplicationController
 
       @photos = @sport.photos.where(team_id: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
                                  :players.in => [params[:number][:id].to_s], gamelog: params[:gamelog][:id].to_s,
-                                 :players.in => [params[:athlete][:id].to_s]).desc(:updated_at).paginate
+                                 :players.in => [params[:athlete][:id].to_s]).desc(:updated_at).paginate(:page=>params[:page])
 
     elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:gamelog].nil? && !params[:gamelog][:id].blank? && 
           !params[:number].nil? && !params[:number][:id].blank?
 
       @photos = @sport.photos.where(team_id: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
-                                 :players.in => [params[:number][:id].to_s], gamelog: params[:gamelog][:id].to_s).desc(:updated_at).paginate
+                                 :players.in => [params[:number][:id].to_s], gamelog: params[:gamelog][:id].to_s).desc(:updated_at).paginate(:page=>params[:page])
 
     elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:gamelog].nil? && !params[:gamelog][:id].blank? and 
           !params[:athlete].nil? && !params[:athlete][:id].blank? 
 
       @photos = @sport.photos.where(team_id: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
-                                 :players.in => [params[:athlete][:id].to_s], gamelog: params[:gamelog][:id].to_s).desc(:updated_at).paginate
+                                 :players.in => [params[:athlete][:id].to_s], gamelog: params[:gamelog][:id].to_s).desc(:updated_at).paginate(:page=>params[:page])
 
     elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:number].nil? && !params[:number][:id].blank? and 
           !params[:athlete].nil? && !params[:athlete][:id].blank?
 
       @photos = @sport.photos.where(team_id: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
                                  :players.in => [params[:athlete][:id].to_s], 
-                                 :players.in => [params[:number][:id].to_s]).desc(:updated_at).paginate
+                                 :players.in => [params[:number][:id].to_s]).desc(:updated_at).paginate(:page=>params[:page])
  
     elsif !params[:gamelog].nil? && !params[:gamelog][:id].blank? && !params[:number].nil? && !params[:number][:id].blank? and 
           !params[:athlete].nil? && !params[:athlete][:id].blank? 
 
       @photos = @sport.photos.where(team_id: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
                                  :players.in => [params[:athlete][:id].to_s], 
-                                 :players.in => [params[:number][:id].to_s]).desc(:updated_at).paginate
+                                 :players.in => [params[:number][:id].to_s]).desc(:updated_at).paginate(:page=>params[:page])
       gamelog = Gamelog.find(params[:gamelog][:id].to_s)
       @gamelogs = @team.gameschedules.find(gamelog.gameschedule_id.to_s).gamelogs
 
     elsif !params[:game].nil? and !params[:game][:id].blank? and !params[:gamelog].nil? and !params[:gamelog][:id].blank?
 
       @photos = @sport.photos.where(team_id: @team.id.to_s, gameschedule_id: params[:game][:id].to_s, 
-                  gamelog_id: params[:gamelog][:id].to_s).desc(:updated_at).paginate
+                  gamelog_id: params[:gamelog][:id].to_s).desc(:updated_at).paginate(:page=>params[:page])
 
     elsif !params[:game].nil? && !params[:game][:id].blank? && !params[:number].nil? && !params[:number][:id].blank?
 
       @photos = @sport.photos.where(team_id: @team.id.to_s, gameschedule: params[:game][:id].to_s, 
-                                 :players.in => [params[:number][:id].to_s]).desc(:updated_at).paginate
+                                 :players.in => [params[:number][:id].to_s]).desc(:updated_at).paginate(:page=>params[:page])
 
     elsif !params[:game].nil? and !params[:game][:id].blank? and !params[:athlete].nil? and !params[:athlete][:id].blank?
 
       @photos = @sport.photos.where(team_id: @team.id.to_s, gameschedule_id: params[:game][:id].to_s, 
-                                  :players.in => [params[:athlete][:id].to_s]).desc(:updated_at).paginate
+                                  :players.in => [params[:athlete][:id].to_s]).desc(:updated_at).paginate(:page=>params[:page])
 
     elsif !params[:gamelog].nil? and !params[:gamelog][:id].blank? and !params[:number].nil? && !params[:number][:id].blank?
 
       @photos = @sport.photos.where(team_id: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
-                                  :players.in => [params[:number][:id].to_s]).desc(:updated_at).paginate
+                                  :players.in => [params[:number][:id].to_s]).desc(:updated_at).paginate(:page=>params[:page])
         
     elsif !params[:gamelog].nil? and !params[:gamelog][:id].blank? and !params[:athlete].nil? && !params[:athlete][:id].blank?
 
       @photos = @sport.photos.where(team_id: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s, 
-                                  :players.in => [params[:athlete][:id].to_s]).desc(:updated_at).paginate
+                                  :players.in => [params[:athlete][:id].to_s]).desc(:updated_at).paginate(:page=>params[:page])
         
     elsif !params[:athlete].nil? and !params[:athlete][:id].blank? and !params[:number].nil? && !params[:number][:id].blank?
 
       @photos = @sport.photos.where(team_id: @team.id.to_s, :players.in => [params[:athlete][:id].to_s], 
-                                  :players.in => [params[:number][:id].to_s]).desc(:updated_at).paginate
+                                  :players.in => [params[:number][:id].to_s]).desc(:updated_at).paginate(:page=>params[:page])
         
     elsif !params[:game].nil? and !params[:game][:id].blank?
 
-      @photos = @sport.photos.where(team_id: @team.id.to_s, gameschedule_id: params[:game][:id].to_s).desc(:updated_at).paginate
+      @photos = @sport.photos.where(team_id: @team.id.to_s, gameschedule_id: params[:game][:id].to_s).desc(:updated_at).paginate(:page=>params[:page])
 
     elsif !params[:gamelog].nil? and !params[:gamelog][:id].blank?
 
-      @photos = @sport.photos.where(team_id: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s).desc(:updated_at).paginate
+      @photos = @sport.photos.where(team_id: @team.id.to_s, gamelog_id: params[:gamelog][:id].to_s).desc(:updated_at).paginate(:page=>params[:page])
 
     elsif !params[:number].nil? && !params[:number][:id].blank?
 
-      @photos = @sport.photos.where(team_id: @team.id.to_s, :players.in => [params[:number][:id].to_s]).desc(:updated_at).paginate
+      @photos = @sport.photos.where(team_id: @team.id.to_s, :players.in => [params[:number][:id].to_s]).desc(:updated_at).paginate(:page=>params[:page])
 
     elsif !params[:athlete].nil? && !params[:athlete][:id].blank?
 
-      @photos = @sport.photos.where(team_id: @team.id.to_s, :players.in => [params[:athlete][:id].to_s]).desc(:updated_at).paginate
+      @photos = @sport.photos.where(team_id: @team.id.to_s, :players.in => [params[:athlete][:id].to_s]).desc(:updated_at).paginate(:page=>params[:page])
 
     elsif !params[:team_id].nil? and !params[:team_id].blank?
 
-      @photos = @sport.photos.where(team_id: @team.id.to_s).desc(:updated_at).paginate
+      @photos = @sport.photos.where(team_id: @team.id.to_s).desc(:updated_at).paginate(:page=>params[:page])
 
     else
       @photos = []

@@ -50,7 +50,7 @@
                                                 :include_blank => true, class: 'form-control' %>
             								</div>
             								<div class="col-xs-4">
-            								  	<%= label_tag "Filter Blog by Coach" %>"
+            								  	<%= label_tag "Filter Blog by Coach" %>
             									  	<%= select_tag "coach_id", options_from_collection_for_select(@coaches, "id", "full_name"),
             								  					:include_blank => true, class: 'form-control' %>
             								</div>
@@ -80,7 +80,7 @@
                             </div>
                           </div>
 	                        <div class="row">
-	                        	<div class="col-xs-1 col-xs-offset-5">
+	                        	<div class="col-xs-1 col-xs-offset-4">
                             		<%= submit_tag 'Submit', class: "btn btn-sm btn-primary" %>
                           		</div>
                           	</div>

@@ -15,50 +15,6 @@
 <p> 
 <div class="row">
 	<div class="col-xs-11">
-	    <%= form_tag sport_photos_path, class: "form-horizontal", method: 'get' do %>
-	    	<%= hidden_field_tag :team_id, @team.id %>
-		    <div class="row">
-				<div class="col-xs-4">
-		          	<%= label_tag "Game: " %>
-		      		<%= collection_select(:game, :id, @gameschedules, :id, :game_name, { include_blank: true }, 
-		      						{ id: "select_game", class: 'form-control' } ) %>
-				</div>
-				<div class="col-xs-4">
-		          	<%= label_tag "Play: " %>
-		      		<%= collection_select(:gamelog, :id, @gamelogs, :id, :logentrytext, { include_blank: true }, 
-		      						{ id: "gamelogs_select", class: 'form-control' } ) %>
-				</div>
-		        <div class="col-xs-1">
-		          	<%= label_tag "Number: " %>
-		      		<%= select(:number, :id, @sport.athletes.collect{ |t| [t.number, t.id] }, { include_blank: true },  class: 'form-control'  ) %>
-		        </div>
-			</div>
-			<div class="row">
-		        <div class="col-xs-4">
-		          	<%= label_tag "Player Name: " %>
-		      		<%= select(:athlete, :id, @sport.athletes.collect{ |t| [t.name, t.id] }, { include_blank: true },  class: 'form-control'  ) %>
-		        </div>
-				<% if user_signed_in? %>
-					<div class="col-xs-2">
-			          	<%= label_tag "My Photos: " %>
-			      		<%= check_box_tag "username", '1' %>
-					</div>
-				<% end %>
-		    </div>
-			<br/>
-		    <div class="row">
-		        <div class="col-xs-1 col-xs-offset-3">
-		          <%= submit_tag  "Search", class: "btn btn-sm btn-primary", name: nil %>
-		        </div>
-				<div class="col-xs-2 col-xs-offset-1">
-					<% if !@team.nil? and user_signed_in? and (user_pics_ok? or isAdmin?) %>
-						<%= link_to "Add Team Photo", newteam_sport_photo_path(@sport, @team), class: "btn btn-sm btn-primary" %>
-					<% elsif !@athlete.nil? %>
-						<%= link_to "Add Athlete Photo", newathlete_sport_photo_path(@sport, @athlete), class: "btn btn-sm btn-primary" %>
-					<% end %>
-				</div>
-		    </div>
-	    <% end %>
 		<%= render @photos %>
 		<%= will_paginate @photos %>
   	</div>

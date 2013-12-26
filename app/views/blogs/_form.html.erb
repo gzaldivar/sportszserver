@@ -31,25 +31,25 @@
                 </div>
                 <div class="row">
                     <%= f.label :game %>
-                    <%= f.select :gameschedule_id, options_for_select(@gameschedules.collect{ |t| [t.game_name, t.id] }, @blog.gameschedule_id), {},
-                                   { id: "select_game", class: 'form-control' } %>
+                    <%= f.select :gameschedule_id, options_for_select(@gameschedules.collect{ |t| [t.game_name, t.id] }, @blog.gameschedule_id), 
+                                  { include_blank: true }, { id: "select_game", class: 'form-control' } %>
                 </div>
                 <% if @sport.name == "Football" %>
                   <div class="row">
                       <%= f.label :play %>
-                      <%= f.select :gamelog_id, options_for_select(@gamelogs.collect{ |t| [t.logentrytext, t.id] }, @blog.gamelog_id), {}, 
-                                  { id: "gamelogs_select", class: 'form-control' } %>
+                      <%= f.select :gamelog_id, options_for_select(@gamelogs.collect{ |t| [t.logentrytext, t.id] }, @blog.gamelog_id), 
+                                  { include_blank: true }, { id: "gamelogs_select", class: 'form-control' } %>
                   </div>
                 <% end %>
              		<div class="row">
                     <%= f.label :player %>
-                    <%= f.select :athlete_id, options_for_select(@athletes.collect{ |t| [t.full_name, t.id] }, @blog.athlete_id), {},
-                                    { id: "athletes_select", class: 'form-control' } %>
+                    <%= f.select :athlete_id, options_for_select(@athletes.collect{ |t| [t.full_name, t.id] }, @blog.athlete_id), 
+                                  { include_blank: true }, { id: "athletes_select", class: 'form-control' } %>
             		</div>
             		<div class="row">
                     <%= f.label :coach %>
-                    <%= f.select :coach_id, options_for_select(@coaches.collect{ |t| [t.full_name, t.id] }, @blog.coach_id), {},
-                                      { id: "coaches_select", class: 'form-control' } %>
+                    <%= f.select :coach_id, options_for_select(@coaches.collect{ |t| [t.full_name, t.id] }, @blog.coach_id), 
+                                  { include_blank: true }, { id: "coaches_select", class: 'form-control' } %>
             		</div>
 	               <p>
 	            </div>

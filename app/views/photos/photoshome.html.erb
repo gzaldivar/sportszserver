@@ -16,7 +16,7 @@
       	<ul class="nav nav-pills">
 			<li><%= link_to "Featured", '#', :class => 'featured_photos' %></li>
 			<li><%= link_to "Latest", '#', :class => 'latest_photos' %></li>
-			<li><%= link_to "Search", sport_photos_path(@sport, team_id: current_team.id) %></li>
+        	<li><a href="#searchphotos-responsive" data-toggle="modal">Search</a></li>
 		</ul>
 		<div id="photoslist">
 			<% if @featuredlists.nil? %>
@@ -60,3 +60,74 @@
     </div>
   </div>
 </div>
+<div class-"row">
+  <div class="col-xs-8">
+    <div id="searchphotos-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Search Blogs</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-11">
+            <div class="well">
+              <div class="row">
+                <div class="col-xs-11">
+				    <%= form_tag sport_photos_path, class: "form-horizontal", method: 'get' do %>
+				    	<%= hidden_field_tag :team_id, current_team.id %>
+					    <div class="row">
+					        <div class="col-xs-4">
+					          	<%= label_tag "Player Name: " %>
+					      		<%= select_tag "athlete_id", options_from_collection_for_select(@athletes, "id", "full_name"), 
+					      						include_blank: true, class: 'form-control' %>
+					        </div>
+					        <!--div class="col-xs-2">
+					          	<%= label_tag "Number: " %>
+					      		<%= select(:athlete_id, :id, @athletes.collect{ |t| [t.number, t.id] }, { include_blank: true },  
+					      					class: 'form-control'  ) %>
+					        </div-->
+							<% if user_signed_in? %>
+								<div class="col-xs-2">
+						          	<%= label_tag "My Photos: " %>
+						      		<%= check_box_tag "username", '1' %>
+								</div>
+							<% end %>
+							<div class="col-xs-2">
+					          	<%= label_tag "#{current_team.mascot} photos" %>
+					      		<%= check_box_tag "all", '1' %>
+							</div>
+						</div>
+						<div class="row">
+							<div class="col-xs-4">
+					          	<%= label_tag "Game: " %>
+					      		<%= select_tag "gameschedule_id", options_from_collection_for_select(@gameschedules, "id", "game_name"), 
+					      						include_blank: true, id: "select_game", class: 'form-control' %>
+							</div>
+							<% if @sport.name == "Football" %>
+								<div class="col-xs-4">
+						          	<%= label_tag "Play: " %>
+						      		<%= select_tag "gamelog_id", options_from_collection_for_select(@gamelogs, "id", "logentrytext"),
+						      						include_blank: true, id: "gamelogs_select", class: 'form-control' %>
+								</div>
+							<% end %>
+					    </div>
+						<br/>
+					    <div class="row">
+					        <div class="col-xs-1 col-xs-offset-3">
+					          <%= submit_tag  "Search", class: "btn btn-sm btn-primary", name: nil %>
+					        </div>
+					    </div>
+				    <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+

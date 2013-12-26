@@ -7,14 +7,16 @@
 		      	<div class="col-xs-4">
 		  			<%= form_tag sport_newsfeeds_path(@sport), method: :get, class: "form-inline" do %>
 		        		<h5>Filter by Player:</h5>
-		        		<%= select_tag "player", options_from_collection_for_select(@athletes, "id", "full_name"), :include_blank => true,  class: 'form-control' %>
+		        		<%= select_tag "player", options_from_collection_for_select(@athletes, "id", "full_name"), :include_blank => true,  
+		        						class: 'form-control' %>
 		        		<%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 		  			<% end %>
 		      	</div>
 		      	<div class="col-xs-3">
 		  			<%= form_tag sport_newsfeeds_path(@sport), method: :get, class: "form-inline" do %>
 			        	<h5>Filter by Coach:</h5>
-			        	<%= select_tag "coachname", options_from_collection_for_select(@coaches, "id", "full_name"), :include_blank => true,  class: 'form-control' %>
+			        	<%= select_tag "coachname", options_from_collection_for_select(@coaches, "id", "full_name"), :include_blank => true, 
+			        					class: 'form-control' %>
 			        	<%= submit_tag 'Submit', class:	"btn btn-sm btn-primary" %>
 			  		<% end %>
 			     </div>

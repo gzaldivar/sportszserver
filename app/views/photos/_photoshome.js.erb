@@ -23,5 +23,14 @@
         dataType: "script"
       });
     });
-   });
+    $('#select_game').change(function() {
+      $.ajax({
+        url: "<%= updategamelogs_sport_photos_path %>",
+        data: {
+          gameid : $('#select_game').val()
+        },
+        dataType: "script"
+      });
+    });
+  });
 </script>

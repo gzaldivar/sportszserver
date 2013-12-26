@@ -1,0 +1,83 @@
+<div class-"row">
+  <div class="col-xs-8">
+    <div id="noplayers-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Search Blogs</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-xs-11">
+            <div class="well">
+              <div class="row">
+                <div class="col-xs-11">
+                  <% if @blogs.any? %>
+                      <div class="row">
+                          <div class="col-xs-2 col-xs-offset-1">
+                          <%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
+                              <h5>Filter Blog by Athlete:</h5>
+                              <%= hidden_field_tag 'team_id', @team.id.to_s %>
+                              <%= select_tag "player", options_from_collection_for_select(@athletes, "id", "full_name"), :include_blank => true,
+                                          class: 'form-control' %>
+                              <%= submit_tag 'Submit', class: "btn btn-sm btn-primary" %>
+                          <% end %>
+                          </div>
+                          <div class="col-xs-2 col-xs-offset-1">
+                          <%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
+                              <h5>Filter Blog by Coach:</h5>
+                              <%= hidden_field_tag 'team_id', @team.id.to_s %>
+                              <%= select_tag "coachname", options_from_collection_for_select(@coaches, "id", "full_name"), :include_blank => true,
+                                      class: 'form-control' %>
+                              <%= submit_tag 'Submit', class: "btn btn-sm btn-primary" %>
+                          <% end %>
+                         </div>
+                     </div>
+                     <div class="row">
+                          <div class="col-xs-2 col-xs-offset-1">
+                          <%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
+                              <h5>Filter Blog by Team:</h5>
+                              <%= hidden_field_tag 'team_id', @team.id.to_s %>
+                              <%= select_tag "teamname", options_from_collection_for_select(@sport.teams, "id", "team_name"), :include_blank => true,
+                                      class: 'form-control' %>
+                              <%= submit_tag 'Submit', class: "btn btn-sm btn-primary" %>
+                          <% end %>
+                          </div>
+                          <% if !@gameschedules.nil? %>
+                            <div class="col-xs-2 col-xs-offset-1">
+                            <%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
+                                <h5>Filter Blog by Game:</h5>
+                                <%= hidden_field_tag 'team_id', @team.id.to_s %>
+                                <%= select_tag "gamename", options_from_collection_for_select(@gameschedules, "id", "game_name"), :include_blank => true, 
+                                        id: "select_game", class: 'form-control' %>
+                                <%= submit_tag 'Submit', class: "btn btn-sm btn-primary" %>
+                            <% end %>
+                            </div>
+                            <% if @sport == "Football" %>
+                              <div class="col-xs-2 col-xs-offset-1">
+                              <%= form_tag sport_blogs_path(@sport), method: :get, class: "form-horizontal" do %>
+                                  <h5>Filter Blog by Game:</h5>
+                                  <%= hidden_field_tag 'team_id', @team.id.to_s %>
+                                  <%= select_tag "gamelog", options_from_collection_for_select(@gamelogs, "id", "logentrytext"), :include_blank => true, 
+                                         id: "gamelogs_select", class: 'form-control' %>
+                                  <%= submit_tag 'Submit', class: "btn btn-sm btn-primary" %>
+                              <% end %>
+                              </div>
+                            <% end %>
+                        <% end %>
+                      </div>
+                      <p>
+                  <% else %>
+                    <h4>There are no blog items for the entered search criteria.</h4><p>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

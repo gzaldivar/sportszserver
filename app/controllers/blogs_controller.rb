@@ -75,8 +75,32 @@ class BlogsController < ApplicationController
         @team = @sport.teams.find(params[:team_id])
       end
 
+      if params[:all].to_i == 0 and (params[:updated_at].nil? or params[:updated_at].blank?) and 
+        (!params[:athlete_id].blank? or !params[:coach_id].blank? or !params[:user_id].blank? or 
+         !params[:gameschedule_id].blank? or !params[:gamelog_id].blank?)
+=begin
+        if !params[:athlete_id].blank? and !params[:coach_id].blank? and !params[:gameschedule_id].blank? and !params[:gamelog_id].blank?
+          @blogs = @sport.blogs.where(team_id: @team.id).and(athlete_id: params[:athlete_id]).and(coach_id: params[:coach_id]).
+                    and(gameschedule_id: params[:gameschedule_id]).and(gamelog_id: params[:gamelog_id]).desc(:updated_at).
+                    paginate(per_page: 10, :page=>params[:page])
+      elsif !params[:athlete_id].blank? and !params[:coach_id].blank? and !params[:gameschedule_id].blank?
+      elsif !params[:athlete_id].blank? and !params[:coach_id].blank?
+=end
+        @blogs = @sport.blogs.any_of({athlete_id: params[:athlete_id]}, {coach_id: params[:coach_id]}, {user_id: params[:user_id]},
+                                      {gameschedule: params[:gameschedule_id]}, 
+                                      {gamelog: params[:gamelog_id]}).limit(20).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+
+      elsif params[:all].to_i == 0 and !params[:updated_at].nil? or !params[:updated_at].blank?
+        @blogs = @sport.blogs.any_of({athlete_id: params[:athlete_id]}, {coach_id: params[:coach_id]}, {user_id: params[:user_id]},
+                                      {gameschedule: params[:gameschedule_id]}, 
+                {gamelog: params[:gamelog_id]}).where(:updated_at.lt => params[:updated_at].to_s.to_datetime).limit(20).desc(:updated_at)
+      else
+        @blogs = @sport.blogs.where(team_id: @team.id).paginate(per_page: 20, page: params[:page])
+      end
+=begin
       if !params[:athlete].nil? and !params[:athlete][:id].blank? and !params[:updated_at].nil? and !params[:updated_at].blank?
-        @blogs = @sport.blogs.where(athlete: params[:athlete][:id].to_s, :updated_at.lt => params[:updated_at].to_s.to_datetime).limit(20).desc(:updated_at)        
+        @blogs = @sport.blogs.where(athlete: params[:athlete][:id].to_s, 
+                              :updated_at.lt => params[:updated_at].to_s.to_datetime).limit(20).desc(:updated_at)        
       elsif !params[:athlete].nil? and !params[:athlete][:id].blank?
         @blogs = @sport.blogs.where(athlete: params[:athlete][:id].to_s).limit(20).desc(:updated_at)
       elsif !params[:coach].nil? and !params[:coach][:id].blank? and !params[:updated_at].nil? and !params[:updated_at].blank?
@@ -104,7 +128,9 @@ class BlogsController < ApplicationController
       else
         @blogs = @sport.blogs.limit(40).desc(:updated_at)
       end
-      
+=end
+puts "Blogs="
+puts @blogs.nil?
       if @team.nil?
         @coaches = @sport.coaches
         @athletes = @sport.athletes

@@ -14,6 +14,8 @@ class FootballPassing
   field :comp_percentage, type: Float, default: Float(0)
   field :twopointconv, type: Integer, default: 0
   field :firstdowns, type: Integer, default: 0
+
+  field :gameqb, type: Boolean      # set if player is non qb but has qb stats
     
   belongs_to :athlete
   belongs_to :gameschedule
@@ -22,7 +24,7 @@ class FootballPassing
    
   validates_numericality_of :attempts, greater_than_or_equal_to: 0
   validates_numericality_of :completions, greater_than_or_equal_to: 0
-  validates_numericality_of :yards, greater_than_or_equal_to: 0
+  validates_numericality_of :yards
   validates_numericality_of :td, greater_than_or_equal_to: 0
   validates_numericality_of :interceptions, greater_than_or_equal_to: 0
   validates_numericality_of :sacks, greater_than_or_equal_to: 0

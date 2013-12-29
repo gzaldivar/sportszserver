@@ -66,7 +66,7 @@ module FootballStatistics
 		@@receivingyardtotals = 0
 		@@turnovers = 0
 
-		sport.athletes.where(team_id: game.team_id).each do |p|
+		sport.athletes.where(team_id: game.team_id).asc(:number).each do |p|
 			passstat = p.football_passings.find_by(gameschedule_id: game.id)
 			rushstat = p.football_rushings.find_by(gameschedule_id: game.id)
 			recstat = p.football_rushings.find_by(gameschedule_id: game.id)
@@ -101,7 +101,7 @@ module FootballStatistics
 			thestats = anobject.football_passings
 
 			if anobject.kind_of?(Athlete)
-				games = sport.teams.find(anobject.team_id).gameschedules
+				games = sport.teams.find(anobject.team_id).gameschedules.asc(:gamedate)
 
 				@stats = []
 
@@ -118,7 +118,7 @@ module FootballStatistics
 					end
 				end
 			else
-				players = sport.athletes.where(team_id: anobject.team_id)
+				players = sport.athletes.where(team_id: anobject.team_id).asc(:number)
 
 				@stats = []
 
@@ -192,7 +192,7 @@ module FootballStatistics
 			thestats = anobject.football_rushings
 
 			if anobject.kind_of?(Athlete)
-				games = sport.teams.find(anobject.team_id).gameschedules
+				games = sport.teams.find(anobject.team_id).gameschedules.asc(:gamedate)
 
 				@stats = []
 
@@ -209,7 +209,7 @@ module FootballStatistics
 					end
 				end
 			else
-				players = sport.athletes.where(team_id: anobject.team_id)
+				players = sport.athletes.where(team_id: anobject.team_id).asc(:number)
 
 				@stats = []
 
@@ -284,7 +284,7 @@ module FootballStatistics
 			thestats = anobject.football_receivings
 
 			if anobject.kind_of?(Athlete)
-				games = sport.teams.find(anobject.team_id).gameschedules
+				games = sport.teams.find(anobject.team_id).gameschedules.asc(:gamedate)
 
 				@stats = []
 
@@ -301,7 +301,7 @@ module FootballStatistics
 					end
 				end
 			else
-				players = sport.athletes.where(team_id: anobject.team_id)
+				players = sport.athletes.where(team_id: anobject.team_id).asc(:number)
 
 				@stats = []
 
@@ -359,7 +359,7 @@ module FootballStatistics
 			thestats = anobject.football_defenses
 
 			if anobject.kind_of?(Athlete)
-				games = sport.teams.find(anobject.team_id).gameschedules
+				games = sport.teams.find(anobject.team_id).gameschedules.asc(:gamedate)
 
 				@stats = []
 
@@ -376,7 +376,7 @@ module FootballStatistics
 					end
 				end
 			else
-				players = sport.athletes.where(team_id: anobject.team_id)
+				players = sport.athletes.where(team_id: anobject.team_id).asc(:number)
 
 				@stats = []
 
@@ -431,7 +431,7 @@ module FootballStatistics
 			thestats = anobject.football_place_kickers
 
 			if anobject.kind_of?(Athlete)
-				games = sport.teams.find(anobject.team_id).gameschedules
+				games = sport.teams.find(anobject.team_id).gameschedules.asc(:gamedate)
 
 				@stats = []
 
@@ -448,7 +448,7 @@ module FootballStatistics
 					end
 				end
 			else
-				players = sport.athletes.where(team_id: anobject.team_id)
+				players = sport.athletes.where(team_id: anobject.team_id).asc(:number)
 
 				@stats = []
 
@@ -501,7 +501,7 @@ module FootballStatistics
 			thestats = anobject.football_returners
 
 			if anobject.kind_of?(Athlete)
-				games = sport.teams.find(anobject.team_id).gameschedules
+				games = sport.teams.find(anobject.team_id).gameschedules.asc(:gamedate)
 
 				@stats = []
 
@@ -518,7 +518,7 @@ module FootballStatistics
 					end
 				end
 			else
-				players = sport.athletes.where(team_id: anobject.team_id)
+				players = sport.athletes.where(team_id: anobject.team_id).asc(:number)
 
 				@stats = []
 
@@ -574,7 +574,7 @@ module FootballStatistics
 			thestats = anobject.football_punters
 
 			if anobject.kind_of?(Athlete)
-				games = sport.teams.find(anobject.team_id).gameschedules
+				games = sport.teams.find(anobject.team_id).gameschedules.asc(:gamedate)
 
 				@stats = []
 
@@ -591,7 +591,7 @@ module FootballStatistics
 					end
 				end
 			else
-				players = sport.athletes.where(team_id: anobject.team_id)
+				players = sport.athletes.where(team_id: anobject.team_id).asc(:number)
 
 				@stats = []
 
@@ -639,7 +639,7 @@ module FootballStatistics
 			thestats = anobject.football_kickers
 
 			if anobject.kind_of?(Athlete)
-				games = sport.teams.find(anobject.team_id).gameschedules
+				games = sport.teams.find(anobject.team_id).gameschedules.asc(:gamedate)
 
 				@stats = []
 
@@ -656,7 +656,7 @@ module FootballStatistics
 					end
 				end
 			else
-				players = sport.athletes.where(team_id: anobject.team_id)
+				players = sport.athletes.where(team_id: anobject.team_id).asc(:number)
 
 				@stats = []
 

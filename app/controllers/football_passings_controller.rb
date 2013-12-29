@@ -3,20 +3,9 @@ class FootballPassingsController < ApplicationController
 
 	before_filter	:authenticate_user!
   	before_filter 	:get_sport_athlete_stat
-  	before_filter	:correct_stat,			only: [:show, :edit, :update, :destroy]
-	before_filter only: [:destroy, :update, :create, :edit] do |controller| 
+  	before_filter	:correct_stat,			only: [:update, :destroy]
+	before_filter only: [:destroy, :update, :create] do |controller| 
 	    controller.team_manager?(@athlete, nil)
-	end
-
-	def new
-		@fbpassing = FootballPassing.new(gameschedule_id: params[:gameschedule_id])
-		@game = @sport.teams.find(@athlete.team_id).gameschedules.find(params[:gameschedule_id])
-
-		if params[:livestats] == "Play by Play"
-			@live = "Play by Play"
-		elsif params[:livestats] == "Totals"
-			@live = "Totals"
-		end
 	end
 
 	def create
@@ -37,9 +26,10 @@ class FootballPassingsController < ApplicationController
 			end
 
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, stats], notice: 'Stat created for ' + @athlete.full_name }
+		        format.html { redirect_to allfootballgamestats_sport_team_gameschedule_path(sport_id: @sport.id, team_id: game.team_id, 
+		        								id: game.id), notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { passing: stats } }
-		     end			
+		    end			
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error creating football passing stats " + e.message }
@@ -49,17 +39,12 @@ class FootballPassingsController < ApplicationController
 	end
 
 	def show
-	end
-
-
-	def edit
-		if params[:livestats] == "Play by Play"
-			@live = "Play by Play"
-		elsif params[:livestats] == "Adjust"
-			@live = "Adjust"
-		elsif params[:livestats] == "Totals"
-			@live = "Totals"
+		if params[:stat_id]
+			@fbpassing = FootballPassing.find(params[:stat_id])
+		else
+			@fbpassing = FootballPassing.new(athlete_id: @athlete.id, gameschedule_id: params[:gameschedule_id])
 		end
+			@gameschedule = Gameschedule.find(@fbpassing.gameschedule_id)
 	end
 
 	def update		
@@ -79,7 +64,10 @@ class FootballPassingsController < ApplicationController
 			end
 
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, @fbpassing], notice: 'Stat updated for ' + @athlete.full_name }
+		        format.html { redirect_to allfootballgamestats_sport_team_gameschedule_path(sport_id: @sport.id, 
+		        							team_id: @gameschedule.team_id, id: @gameschedule.id), 
+		        							notice: 'Stat updated for ' + @athlete.full_name }
+
 		        format.json { render json: { passing: @fbpassing } }
 		     end			
 		rescue Exception => e
@@ -99,31 +87,6 @@ class FootballPassingsController < ApplicationController
 		fbstats = Passingstats.new(@sport, @athlete)
 		@stats = fbstats.stats
 		@totals = fbstats.passingtotals
-#		@games = @sport.teams.find(@athlete.team_id).gameschedules
-
-#		@thestats = @athlete.football_passings
-#		@stats = []
-
-#		@games.each do |g|
-#			found = false
-#			@thestats.each do |s|
-#				if s.gameschedule_id == g.id
-#					@stats << s
-#					found = true
-#				end
-#			end
-#			if !found
-#				@stats << FootballPassing.new(gameschedule_id: g.id)
-#			end
-#		end
-	end
-
-	def adjust
-		
-	end
-
-	def saveadjustment
-		
 	end
 
 	private
@@ -135,7 +98,7 @@ class FootballPassingsController < ApplicationController
 
 		def correct_stat
 			@fbpassing = @athlete.football_passings.find(params[:id])
-			@gameschedule = @sport.teams.find(@athlete.team_id).gameschedules.find(@fbpassing.gameschedule_id)
+			@gameschedule = Gameschedule.find(@fbpassing.gameschedule_id)
 		end
 
 		def livestats(stats, athlete, params, gameschedule)
@@ -164,7 +127,7 @@ class FootballPassingsController < ApplicationController
 				if !params[:receiver].nil? and !params[:receiver].blank?
 					player = @sport.athletes.find(params[:receiver])
 
-					if player.football_receivings.empty?
+					if player.football_receivings.find_by(gameschedule_id: gameschedule.id).nil?
 						receiver = player.football_receivings.new(receptions: 1, yards: params[:yards].to_i, longest: params[:yards].to_i,
 																  gameschedule_id: gameschedule.id)
 					else

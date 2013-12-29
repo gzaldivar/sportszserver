@@ -5,22 +5,22 @@
 		<h4>Add or Remove Photos - Featured Photos</h4>
 	</div>
 </div>
-		<% if @photos.nil? or @photos.empty? %>
-			<label id='#nophotos-responsive'></labal>
-		<% else %>
-			<%= form_tag updatefeaturedphotos_sport_photos_path(@sport), method: :post, class: 'form-horizontal'  do %>
-				<div class="row">
-					<div class="col-xs-6 col-xs-offset-2">
-						<%= render 'photoslist', photolist: @photos, featured: "Photos", photoselect: true %>
-					</div>
-				</div>
-	            <div class="row">
-					<div class="col-xs-2 col-xs-offset-4">
-						<%= submit_tag "Add Photo", class: 'btn btn-md btn-primary' %>
-					</div>
-	            </div>
-			<% end %>
-		<% end %>
+<% if @photos.nil? or @photos.empty? %>
+	<label id='#nophotos-responsive'></label>
+<% else %>
+	<%= form_tag updatefeaturedphotos_sport_photos_path(@sport), method: :post, class: 'form-horizontal'  do %>
+		<div class="row">
+			<div class="col-xs-6 col-xs-offset-2">
+				<%= render 'photoslist', photolist: @photos, featured: "Photos", photoselect: true %>
+			</div>
+		</div>
+        <div class="row">
+			<div class="col-xs-2 col-xs-offset-4">
+				<%= submit_tag "Add Photo", class: 'btn btn-md btn-primary' %>
+			</div>
+        </div>
+	<% end %>
+<% end %>
 <div class="modal fade">
 	<div class="modal-dialog">
 		<div class="modal-content">

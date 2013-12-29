@@ -1,5 +1,12 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
+<script>
+  	$(document).ready(function() {
+	    $(window).load(function() {
+		   $('#livepassing-responsive').modal('show')
+		});
+	});	
+</script>
 <div class="row">
 	<div class="col-xs-2">
 		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
@@ -7,22 +14,54 @@
 	<div class="col-xs-6">
 		<h4>Passing game statistics for <%= link_to(@athlete.full_name, sport_athlete_path(@sport, @athlete)) %></h4>
 	</div>
+	<div class="col-xs-1 col-xs-offset-2">
+        <button href="#livepassing-responsive" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-primary">Update</button>
+	</div>
 </div>
 <p>
 <div class="row">
-	<div class="col-xs-10">
-		<table class="table table-bordered">
-			<em><%= render "stat_header", name: "Game" %></em>
-			<%= render "stat_body", stat: @fbpassing, player: @athlete, name: @gameschedule %>
+	<div class="col-xs-11">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>ATT</th>
+				<th>CMP</th>
+				<th>PCT</th>
+				<th>AVG</th>
+				<th>YDS</th>
+			</thead>
+			<tbody>
+				<td><%= @fbpassing.attempts %></td>
+				<td><%= @fbpassing.completions %></td>
+				<td><%= number_with_precision(@fbpassing.comp_percentage, precision: 2) %></td>
+				<td><%= number_with_precision(@fbpassing.compaverage, precision: 2) %></td>
+				<td><%= @fbpassing.yards %></td>
+			</tbody>
 		</table>
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-2 col-xs-offset-4">
-		<%= link_to "Totals", sport_athlete_football_passings_path(@sport, @athlete, gameschedule_id: @fbpassing.gameschedule_id), 
-			class: "btn btn-sm btn-primary"%>
+	<div class="col-xs-11">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>TD</th>
+				<th>FD</th>
+				<th>INT</th>
+				<th>SACK</th>
+				<th>YDS LST</th>
+				<th>2PT</th>
+			</thead>
+			<tbody>
+				<td><%= @fbpassing.td %></td>
+				<td><%= @fbpassing.firstdowns %></td>
+				<td><%= @fbpassing.interceptions %></td>
+				<td><%= @fbpassing.sacks %></td>
+				<td><%= @fbpassing.yards_lost %></td>
+				<td><%= @fbpassing.twopointconv %></td>
+			</tbody>
+		</table>
 	</div>
 </div>
 <div class="row">
 	<%= render "layouts/sponsor" %>
 </div>
+<%= render 'football_passings/livepassingmodal', stat: @fbpassing, player: @athlete %>

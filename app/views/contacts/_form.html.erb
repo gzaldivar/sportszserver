@@ -3,13 +3,20 @@
   		<div class="col-xs-6 col-xs-offset-3">
         <h3>Create new contact:</h3>
         <p>
-  			<%= simple_form_for [@sport, @contact] do |f| %>
-  				<%= f.input :title,	hint: "Title for contact. ex: Head Coach, Athletic Director, League President, etc." %>
-  				<%= f.input :name, 	hint: "Enter the name of the contact. Can be anything you like." %>
-  				<%= f.input :phone, required: false %>
-  				<%= f.input :mobile, required: false %>
-  				<%= f.input :fax, required: false %>
-  				<%= f.input :email %>
+  			<%= form_for [@sport, @contact], :input_html => { :class => 'form-horizontal' } do |f| %>
+          <%= f.label  "Title for contact" %>
+  				<%= f.text_field :title, class: 'form-control' %>
+          <%= f.label :name %>
+  				<%= f.text_field :name, class: 'form-control' %>
+          <%= f.label :phone %>
+  				<%= f.text_field :phone, class: 'form-control'%>
+          <%= f.label :mobile %>
+  				<%= f.text_field :mobile, class: 'form-control' %>
+          <%= f.label :fax %>
+  				<%= f.text_field :fax, class: 'form-control' %>
+          <%= f.label :email %>
+  				<%= f.text_field :email, class: 'form-control' %>
+          <p>
   				<%= f.submit "Submit", class: "btn btn-sm btn-primary" %>
   			<% end %>
   		</div>

@@ -1,0 +1,265 @@
+<div class-"row">
+  <div class="col-xs-8">
+    <div id="liverushing-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Live Passing Score</h4>
+      </div>
+      <div class="modal-body">
+        <div class="well">
+          <div class="row">
+            <div class="col-xs-2">
+              <%= link_to image_tag(player.pic.url(:thumb)), sport_athlete_path(@sport, player) %>
+            </div>
+            <div class="col-xs-6">
+              <h4>Update Live Rushing Stats for <%= link_to(player.full_name, sport_athlete_path(@sport, player)) %></h4>
+            </div>
+          </div>
+          <p>
+          <div class="row">
+            <div class="col-xs-8">
+              <div class="row">
+                <div class="col-xs-2">
+                    <a href="#liverushingattempt-responsive" data-dismiss="modal" 
+                            data-toggle="modal" class="btn btn-md btn-primary">Rushing Attempt</a>
+                </div>
+                <div class="col-xs-2 col-xs-offset-1">
+                    <button href="#liverushingscore-responsive" data-dismiss="modal"
+                            data-toggle="modal" class="btn btn-md btn-primary">Rushing Score</button>
+                </div>
+              </div>
+              <p>
+              <div class="row">
+                <div class="col-xs-8">
+                  <h5>Use the button below to enter Stat Totals. Score logs WILL NOT be automatically generated.</h5>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-xs-2">
+                    <button href="#totalrushing-responsive" data-dismiss="modal"
+                            data-toggle="modal" class="btn btn-md btn-primary">Total Stats</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-xs-1">
+          <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class-"row">
+  <div class="col-xs-8">
+    <div id="liverushingscore-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Live Stats</h4>
+      </div>
+      <div class="modal-body">
+        <div class="well">
+          <div class="row">
+            <div class="col-xs-2">
+              <%= link_to image_tag(player.pic.url(:thumb)), sport_athlete_path(@sport, player) %>
+            </div>
+            <div class="col-xs-6">
+              <h4>Update Live Rushing Scoring stat for <%= link_to(player.full_name, sport_athlete_path(@sport, player)) %></h4>
+            </div>
+          </div>
+          <p>
+          <div class="row">
+            <div class="col-xs-11">
+              <%= form_for [@sport, player, stat], :input_html => { :class => 'form-horizontal' } do |f| %>
+                <%= hidden_field_tag "livestats", value="Live" %>
+                <%= hidden_field_tag "gameschedule_id", value=@gameschedule.id %>
+                <div class="row">
+                  <div class="col-xs-2">
+                        <%= label_tag "Quarter:" %>
+                    <%= select_tag "quarter", options_for_select(quarters), class: 'form-control' %>
+                  </div>
+                  <div class="col-xs-2 col-xs-offset-1">
+                        <%= label_tag "Game Time" %>
+                        <%= text_field_tag "time", '00:00', class: 'form-control' %>
+                  </div>
+                  <div class="col-xs-2 col-xs-offset-1">
+                        <%= label_tag "Yards: " %>
+                        <%= text_field_tag "yards", '0', class: 'form-control' %>
+                  </div>
+                </div>
+                <p>
+                <div class="row">
+                  <div class="col-xs-2">
+                    <%= label_tag "Touchdown: " %>
+                    <%= check_box_tag 'td', '1' %>
+                  </div>
+                  <div class="col-xs-3 col-xs-offset-2">
+                        <%= label_tag "Two point conversion: " %>
+                        <%= check_box_tag 'two', '1' %>
+                  </div>
+                </div>
+                <p>
+                <div class="row">
+                  <div class="col-xs-2 col-xs-offset-3">
+                    <%= submit_tag 'Submit', class: "btn btn-md btn-primary" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-xs-1">
+          <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class-"row">
+  <div class="col-xs-8">
+    <div id="liverushingattempt-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Live Rushing Stats</h4>
+      </div>
+      <div class="modal-body">
+        <div class="well">
+          <div class="row">
+            <div class="col-xs-2">
+              <%= link_to image_tag(player.pic.url(:thumb)), sport_athlete_path(@sport, player) %>
+            </div>
+            <div class="col-xs-6">
+              <h4>Update Live Rushing Stats for <%= link_to(player.full_name, sport_athlete_path(@sport, player)) %></h4>
+            </div>
+          </div>
+          <p>
+          <div class="row">
+            <div class="col-xs-8">
+              <%= form_for [@sport, player, stat], :input_html => { :class => 'form-horizontal' } do |f| %>
+                <%= hidden_field_tag "livestats", value="Live" %>
+                <%= hidden_field_tag "gameschedule_id", value=@gameschedule.id %>
+                <div class="row">
+                  <div class="col-xs-2">
+                    <%= label_tag "Yards: " %>
+                    <%= text_field_tag "yards", '0', class: 'form-control' %>
+                  </div>
+                  <div class="col-xs-2 col-xs-offset-1">
+                    <%= label_tag "First down: " %>
+                    <%= check_box_tag 'fd', '1' %>
+                  </div>
+                </div>
+                <p>
+                <div class="row">
+                  <div class="col-xs-2">
+                    <%= label_tag "Fumble: " %>
+                    <%= text_field_tag "fumble", '0', class: 'form-control' %>
+                  </div>
+                  <div class="col-xs-2 col-xs-offset-1">
+                    <%= label_tag "Lost: " %>
+                    <%= text_field_tag "fumble_lost", '0', class: 'form-control' %>
+                  </div>
+                </div>
+                <p>
+                <div class="row">
+                  <div class="col-xs-3 col-xs-offset-1">
+                    <%= submit_tag 'Submit', class: "btn btn-md btn-primary" %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-xs-1">
+          <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class-"row">
+  <div class="col-xs-8">
+    <div id="totalrushing-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+        <h4 class="modal-title">Live Stats</h4>
+      </div>
+      <div class="modal-body">
+        <div class="well">
+          <div class="row">
+            <div class="col-xs-2">
+              <%= link_to image_tag(player.pic.url(:thumb)), sport_athlete_path(@sport, player) %>
+            </div>
+            <div class="col-xs-9">
+              <h4>Update Live Stats for <%= link_to(player.full_name, sport_athlete_path(@sport, player)) %></h4>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-xs-11">
+              <%= form_for [@sport, player, stat], :input_html => { :class => 'form-horizontal' } do |f| %>
+                  <%= render 'shared/error_messages', object: f.object %>
+                  <div class="row">
+                    <div class="col-xs-10">
+                      <h5 class="text-danger">You can edit stat totals here. If you want to update TD or 2PT conversion fields, you should delete the scoring entry. Stats will automatically be updated. It will also negatively affect generation of automatic game log scoring if you edit the TD or two point conversion fields.</h5>
+                    </div>
+                  </div>
+                  <%= f.hidden_field :livestats, value: "Totals" %>
+                  <%= f.hidden_field :gameschedule_id, value: @gameschedule.id %>
+                  <div class="row">
+                    <div class="col-xs-1">
+                      <%= f.label :attempts %>
+                      <%= f.text_field :attempts, class: 'form-control' %>
+                    </div>
+                    <div class="col-xs-1 col-xs-offset-1">
+                      <%= f.label :yards %>
+                      <%= f.text_field :yards, class: 'form-control' %>
+                    </div>
+                    <div class="col-xs-1 col-xs-offset-1">
+                      <%= f.label :first_downs, "First Downs" %>
+                      <%= f.text_field :firstdowns, class: 'form-control' %>
+                    </div>
+                  </div>
+                  <div class="row">
+                  </div>
+                  <div class="row">
+                    <div class="col-xs-1">
+                      <%= f.label :fumbles %>
+                      <%= f.text_field :fumbles, class: 'form-control' %>
+                    </div>
+                    <div class="col-xs-1 col-xs-offset-1">
+                      <%= f.label :lost %>
+                      <%= f.text_field :fumbles_lost, class: 'form-control' %>
+                    </div>
+                    <div class="col-xs-1 col-xs-offset-1 text-danger">
+                      <%= f.label "Touchdowns" %>
+                      <%= f.text_field :td, class: 'form-control' %>
+                    </div>
+                    <div class="col-xs-1 col-xs-offset-1 text-danger">
+                      <%= f.label "2PT" %>
+                      <%= f.text_field :twopointconv, class: 'form-control' %>
+                    </div>
+                  </div>
+                  <p>
+                  <div class="row">
+                    <div class="col-xs-2 col-xs-offset-2">
+                      <%= f.submit "Submit", class:  "btn btn-md btn-primary" %>
+                    </div>
+                  </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="col-xs-1">
+          <button type="button" data-dismiss="modal" class="btn btn-default">Cancel</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

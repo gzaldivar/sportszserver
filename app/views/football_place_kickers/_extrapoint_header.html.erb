@@ -11,7 +11,7 @@
 	<th>XPM</th>
 	<th>MISS</th>
 	<th>BLK</th>
-	<% if site_owner? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
+	<% if site_owner? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) and name == "Player" %>
 		<th>Edit</th>
 	<% end %>
 </thead>

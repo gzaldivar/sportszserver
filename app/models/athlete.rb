@@ -81,6 +81,10 @@ class Athlete
       firstname[0] + ". " + lastname
     end
 
+    def numlogname
+      number.to_s + " - " + logname
+    end
+
     private
 
       def send_alerts

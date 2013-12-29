@@ -1,0 +1,48 @@
+<% provide(:title, current_site.sitename + " " + @sport.sportname + " - Defensive Statistics") %>
+<script>
+  $(document).ready(function() {
+    $('.select_player').click(function() {
+      $('.modal').modal('hide');
+      $.ajax({
+        url: "<%= addfootballdef_sport_team_gameschedule_path %>",
+        data: {
+          id : $(this).data('id')
+        },
+        dataType: "script"
+      });
+    });
+  });
+</script>
+<div class="row">
+	<div class="col-xs-11">
+		<h4><em>Game Statistics vs. <%= @gameschedule.opponent_mascot %></em></h4>
+		<p>
+		<ul class="nav nav-pills">
+        	<li><%= link_to "Offense", allfootballgamestats_sport_team_gameschedule_path(@sport, @team, @gameschedule) %></li>
+        	<li class="disabled"><%= link_to "Defense", footballdefensestats_sport_team_gameschedule_path(@sport, @team, @gameschedule) %></li>
+        	<li><%= link_to "Special Teams", footballspecialteamstats_sport_team_gameschedule_path(@sport, @team, @gameschedule) %></li>
+		</ul>
+	</div>
+</div>
+<div class="row">
+  <div class="col-xs-11">
+    <h5>Defense</h5>
+		<table class="table table-striped table-bordered table-hover">
+		  	<%= render "football_defenses/stat_header", name: "Player" %>
+
+		  	<% @defensivestats.each do |p| %>
+			  	<% @player =  Athlete.find(p.athlete_id) %>
+		  		<% if isDefense?(p) or isFBDEF?(@player) %>
+					<%= render 'football_defenses/stat_body', stat: p, name: "Player" %>
+				<% end %>
+			<% end %>
+			<%= render 'football_defenses/stat_body', stat: @defensivetotals, name: "Totals"  %>
+		</table>
+  	</div>
+</div>
+<div class="row">
+  	<div class="col-xs-1">
+    	<button href="#playerselect-responsive" data-toggle="modal" class="btn btn-sm btn-info">Add Defender</button>
+  	</div>
+</div>
+<%= render 'layouts/playerselectmodal', modalname: "playerselect-responsive", callbackscript: 'select_player' %>

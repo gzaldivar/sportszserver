@@ -20,7 +20,7 @@ class FootballRushing
   has_many :gamelogs, dependent: :destroy
   
   validates_numericality_of :attempts, greater_than_or_equal_to: 0
-  validates_numericality_of :yards, greater_than_or_equal_to: 0
+  validates_numericality_of :yards
   validates_numericality_of :longest, greater_than_or_equal_to: 0
   validates_numericality_of :td, greater_than_or_equal_to: 0
   validates_numericality_of :fumbles, greater_than_or_equal_to: 0

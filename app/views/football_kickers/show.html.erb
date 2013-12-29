@@ -1,22 +1,41 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
+<script>
+  	$(document).ready(function() {
+	    $(window).load(function() {
+		   $('#kicker-responsive').modal('show')
+		});
+	});	
+</script>
 <div class="row">
-	<div class="col-xs-10">
-		<p>
-		<h4>Kicker statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for <%= @gameschedule.game_name %></h4>
-		<p>
-		<table class="table table-bordered">
-			<%= render 'stat_header', name: "Game" %>
-			<%= render 'stat_body', stat: @kicker, player: @athlete, name: @gameschedule %>
-		</table>
+	<div class="col-xs-2">
+		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+	</div>
+	<div class="col-xs-6">
+		<h4>Kicker game statistics for <%= link_to(@athlete.full_name, sport_athlete_path(@sport, @athlete)) %></h4>
+	</div>
+	<div class="col-xs-1 col-xs-offset-2">
+        <button href="#kicker-responsive" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-primary">Update</button>
 	</div>
 </div>
+<p>
 <div class="row">
-	<div class="col-xs-2 col-xs-offset-4">
-		<%= link_to "Totals", sport_athlete_football_kickers_path(@sport, @athlete, gameschedule_id: @kicker.gameschedule_id), 
-			class: "btn btn-sm btn-primary"%>
+	<div class="col-xs-11">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>ATT</th>
+				<th>TOUCHBK</th>
+				<th>RET YDS</th>
+			</thead>
+			<tbody>
+				<td><%= @kicker.koattempts %></td>
+				<td><%= @kicker.kotouchbacks %></td>
+				<td><%= @kicker.koreturned %></td>
+			</tbody>
+		</table>
 	</div>
 </div>
 <div class="row">
 	<%= render "layouts/sponsor" %>
 </div>
+<%= render 'kickermodal', stat: @kicker, player: @athlete %>

@@ -32,34 +32,33 @@
 		isKOReturner?(@returnertotals) or isKicker?(@kickofftotals) %>
 	<div class="row">
 		<div class="col-xs-11">
-			<% if isPasser?(@passingtotals) %>
+			<% if isPasser?(@passingtotals) or isQB?(@athlete) %>
 					<h5>Passing</h5>
-					<table class="table table-bordered">
-					  	<%= render 'football_passings/stat_header', name: "Player" %>
+					<table class="table table-striped table-bordered table-hover">
+					  	<%= render 'football_passings/stat_header', name: "Game" %>
 
 					  	<% @passingstats.each do |p| %>
-					  		<% if isPasser?(p) %>
-								<%= render 'football_passings/stat_body', stat: p, player: @athlete, name: @player %>
+					  		<% if isPasser?(p) or isQB?(@athlete) %>
+								<%= render 'football_passings/stat_body', stat: p, name: "Game" %>
 							<% end %>
 						<% end %>
-						<%= render 'football_passings/stat_body', stat: @passingtotals, player: Athlete.find(@passingtotals.athlete_id), 
-									name: "Totals" %>
+						<%= render 'football_passings/stat_body', stat: @passingtotals, name: "Totals" %>
 					</table>
 
 				  	<p>
 			<% end %>
 
-			<% if isRusher?(@rushingtotals) %>
+			<% if isRusher?(@rushingtotals) or isRB?(@athlete) %>
 			  	<h5>Rushing</h5>
-				<table class="table table-bordered">
-				  	<%= render 'football_rushings/stat_header', name: "Player" %>
+				<table class="table table-striped table-bordered table-hover">
+				  	<%= render 'football_rushings/stat_header', name: "Game" %>
 
 				  	<% @rushingstats.each do |p| %>
-					  	<% if p.attempts > 0 %>
-							<%= render 'football_rushings/stat_body', stat: p, player: @athlete, name: @player %>
+					  	<% if isRusher?(p) or isRB?(@athlete) %>
+							<%= render 'football_rushings/stat_body', stat: p, name: "Game" %>
 						<% end %>
 					<% end %>
-					<%= render 'football_rushings/stat_body', stat: @rushingtotals, player: Athlete.find(@rushingtotals.athlete_id), name: "Totals" %>
+					<%= render 'football_rushings/stat_body', stat: @rushingtotals, name: "Totals" %>
 				</table>
 
 			  	<p>
@@ -67,117 +66,116 @@
 
 			<% if isReceiver?(@receivingtotals) %>
 			  	<h5>Receiving</h5>
-				<table class="table table-bordered">
-				  	<%= render "football_receivings/stat_header", name: "Player" %>
+				<table class="table table-striped table-bordered table-hover">
+				  	<%= render "football_receivings/stat_header", name: "Game" %>
 
 				  	<% @receivingstats.each do |p| %>
-				  		<% if p.receptions > 0 %>
-							<%= render 'football_receivings/stat_body', stat: p, player: @athlete, name: @player %>
+				  		<% if isReceiver?(p) or isFBRec?(@athlete) %>
+							<%= render 'football_receivings/stat_body', stat: p, ame: "Game" %>
 						<% end %>
 					<% end %>
-					<%= render 'football_receivings/stat_body', stat: @receivingtotals, player: Athlete.find(@receivingtotals.athlete_id), name: "Totals" %>
+					<%= render 'football_receivings/stat_body', stat: @receivingtotals, name: "Totals" %>
 				</table>
 				<p>
 			<% end %>
 
 			<% if isDefense?(@defensivetotals) %>
 			  	<h5>Defense</h5>
-				<table class="table table-bordered">
-				  	<%= render "football_defenses/stat_header", name: "Player" %>
+				<table class="table table-striped table-bordered table-hover">
+				  	<%= render "football_defenses/stat_header", name: "Game" %>
 
 				  	<% @defensivestats.each do |p| %>
-				  		<% if p.tackles > 0 or p.assists > 0 or p.pass_defended > 0 or p.sacks > 0 or p.interceptions > 0 or p.fumbles_recovered > 0 or 
-				  			p.safety > 0 %>
-							<%= render 'football_defenses/stat_body', stat: p, player: @athlete, name: @player %>
+				  		<% if isDefense?(p) or isFBDEF?(@athlete) %>
+							<%= render 'football_defenses/stat_body', stat: p, name: "Game" %>
 						<% end %>
 					<% end %>
-					<%= render 'football_defenses/stat_body', stat: @defensivetotals, player: Athlete.find(@defensivetotals.athlete_id), name: "Totals" %>
+					<%= render 'football_defenses/stat_body', stat: @defensivetotals, name: "Totals" %>
 				</table>
 				<p>
 			<% end %>
 
 			<% if isPlaceKicker?(@placekickertotals) %>
 			  	<h5>Place Kicker Stats</h5>
-				<table class="table table-bordered">
-				  	<%= render "football_place_kickers/fieldgoal_header", name: "Player" %>
+				<table class="table table-striped table-bordered table-hover">
+				  	<%= render "football_place_kickers/fieldgoal_header", name: "Game" %>
 
 				  	<% @placekickerstats.each do |p| %>
-					  	<% if p.fgattempts > 0 %>
-							<%= render 'football_place_kickers/fieldgoal_body', stat: p, player: @athlete, name: @player %>
+					  	<% if isPlaceKicker?(p) or FBPlaceKicker?(@athlete) %>
+							<%= render 'football_place_kickers/fieldgoal_body', stat: p, name: "Game" %>
 						<% end %>
 					<% end %>
-					<%= render 'football_place_kickers/fieldgoal_body', stat: @placekickertotals, player: Athlete.find(@placekickertotals.athlete_id), name: "Totals" %>
+					<%= render 'football_place_kickers/fieldgoal_body', stat: @placekickertotals, name: "Totals" %>
 				</table>
 
-				<table class="table table-bordered">
-				   	<%= render "football_place_kickers/extrapoint_header", name: "Player" %>
+				<table class="table table-striped table-bordered table-hover">
+				   	<%= render "football_place_kickers/extrapoint_header", name: "Game" %>
 
 				  	<% @placekickerstats.each do |p| %>
-				  		<% if p.xpattempts > 0 %>
-							<%= render 'football_place_kickers/extrapoint_body', stat: p, player: @athlete, name: @player %>
+				  		<% if isPlaceKicker?(p) or FBPlaceKicker?(@athlete) %>
+							<%= render 'football_place_kickers/extrapoint_body', stat: p, name: "Game" %>
 						<% end %>
 					<% end %>
-					<%= render 'football_place_kickers/extrapoint_body', stat: @placekickertotals, player: Athlete.find(@placekickertotals.athlete_id), name: "Totals" %>
+					<%= render 'football_place_kickers/extrapoint_body', stat: @placekickertotals, name: "Totals" %>
 				</table>
 				<p>
 			<% end %>
 
 			<% if isPuntReturner?(@returnertotals) %>
 			  	<h5>Punt Returns</h5>
-				<table class="table table-bordered">
-				  	<%= render "football_returners/puntreturn_header", name: "Player" %>
+				<table class="table table-striped table-bordered table-hover">
+				  	<%= render "football_returners/puntreturn_header", name: "Game" %>
 
 				  	<% @returnerstats.each do |p| %>
-				  		<% if p.punt_return > 0 %>
-							<%= render 'football_returners/puntreturn_body', stat: p, player: @athlete, name: @player %>
+				  		<% if isPuntReturner?(p) or FBPuntReturner?(@athlete) %>
+							<%= render 'football_returners/puntreturn_body', stat: p, name: "Game" %>
 						<% end %>
 					<% end %>
-					<%= render 'football_returners/puntreturn_body', stat: @returnertotals, player: Athlete.find(@returnertotals.athlete_id), name: "Totals" %>
+					<%= render 'football_returners/puntreturn_body', stat: @returnertotals, name: "Totals" %>
 				</table>
 				<p>
 			<% end %>
 
 			<% if isKOReturner?(@returnertotals) %>
 			  	<h5>Kickoff Returns</h5>
-				<table class="table table-bordered">
-				  	<%= render "football_returners/koreturn_header", name: "Player" %>
+				<table class="table table-striped table-bordered table-hover">
+				  	<%= render "football_returners/koreturn_header", name: "Game" %>
 
 				  	<% @returnerstats.each do |p| %>
-				  		<% if p.koreturns > 0 %>
-							<%= render 'football_returners/koreturn_body', stat: p, player: @athlete, name: @player %>
+				  		<% if isKOReturner?(p) or FBKickReturner?(@athlete) %>
+							<%= render 'football_returners/koreturn_body', stat: p, name: "Game" %>
 						<% end %>
 					<% end %>
-					<%= render 'football_returners/koreturn_body', stat: @returnertotals, player: Athlete.find(@returnertotals.athlete_id), name: "Totals" %>
+					<%= render 'football_returners/koreturn_body', stat: @returnertotals, name: "Totals" %>
 				</table>
 				<p>
 			<% end %>
 
 			<% if isKicker?(@kickofftotals) %>
 			  	<h5>Kickoffs</h5>
-				<table class="table table-bordered">
-				  	<%= render "football_kickers/stat_header", name: "Player" %>
+				<table class="table table-striped table-bordered table-hover">
+				  	<%= render "football_kickers/stat_header", name: "Game" %>
 
 				  	<% @kickoffstats.each do |p| %>
-				  		<% if p.koattempts > 0 %>
-							<%= render 'football_kickers/stat_body', stat: p, player: @athlete, name: @player %>
+				  		<% if isKicker?(p) or FBKicker?(@athlete) %>
+							<%= render 'football_kickers/stat_body', stat: p, name: "Game" %>
 						<% end %>
 					<% end %>
-					<%= render 'football_kickers/stat_body', stat: @kickofftotals, player: Athlete.find(@kickofftotals.athlete_id), name: "Totals" %>
+					<%= render 'football_kickers/stat_body', stat: @kickofftotals, name: "Totals" %>
 				</table>
 				<p>
 			<% end %>
 
 			<% if isPunter?(@puntertotals) %>
 			  	<h5>Punters</h5>
-				<table class="table table-bordered">
-				  	<%= render "football_punters/stat_header", name: "Player" %>
+				<table class="table table-striped table-bordered table-hover">
+				  	<%= render "football_punters/stat_header", name: "Game" %>
 
 				  	<% @punterstats.each do |p| %>
-				  		<% if p.punts > 0 %>
-							<%= render 'football_punters/stat_body', stat: p, player: @athlete, name: @player %>
+				  		<% if isPunter?(p) or FBPunter?(@athlete) %>
+							<%= render 'football_punters/stat_body', name: "Game" %>
 						<% end %>
 					<% end %>
-					<%= render 'football_punters/stat_body', stat: @puntertotals, player: Athlete.find(@puntertotals.athlete_id), name: "Totals" %>
+					<%= render 'football_punters/stat_body', stat: @puntertotals, name: "Totals" %>
 				</table>
 			<% end %>
 		</div>

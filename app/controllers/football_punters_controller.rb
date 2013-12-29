@@ -3,7 +3,7 @@ class FootballPuntersController < ApplicationController
 
 	before_filter	:authenticate_user!
   	before_filter 	:get_sport_athlete_stat
-  	before_filter	:correct_stat,			only: [:show, :edit, :update, :destroy]
+  	before_filter	:correct_stat,			only: [:update, :destroy]
 	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
 	    controller.team_manager?(@athlete, nil)
 	end
@@ -30,18 +30,15 @@ class FootballPuntersController < ApplicationController
 			end
 
 			if live == "Totals"
-				returner = @athlete.football_punters.create!(params[:football_punter])
-
-				if current_user.stat_alert?
-					send_alert(@athlete, "Punter stat alert for ", punter, game)
-				end
+				punter = @athlete.football_punters.create!(params[:football_punter])
 			else
 				punter = @athlete.football_punters.new(gameschedule_id: game.id.to_s)
 				livestats(punter, params)
 			end
 
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, punter], notice: 'Stat created for ' + @athlete.full_name }
+		        format.html { redirect_to footballspecialteamstats_sport_team_gameschedule_path(sport_id: @sport.id, team_id: game.team_id, 
+		        								id: game.id), notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { punter: punter } }
 		     end			
 		rescue Exception => e
@@ -53,16 +50,12 @@ class FootballPuntersController < ApplicationController
   	end
 
   	def show
-  	end
-
-  	def edit
-		if params[:livestats] == "Play by Play"
-			@live = "Play by Play"
-		elsif params[:livestats] == "Adjust"
-			@live = "Adjust"
-		elsif params[:livestats] == "Totals"
-			@live = "Totals"
+		if params[:stat_id]
+			@punter = FootballPunter.find(params[:stat_id])
+		else
+			@punter = FootballPunter.new(athlete_id: @athlete.id, gameschedule_id: params[:gameschedule_id])
 		end
+		@gameschedule = Gameschedule.find(@punter.gameschedule_id)
   	end
 
   	def update
@@ -74,11 +67,7 @@ class FootballPuntersController < ApplicationController
 			end
 
 			if live == "Totals"
-				returner = @athlete.update_attributes!(params[:football_punter])
-
-				if current_user.stat_alert?
-					send_alert(@athlete, "Punter stat alert for ", @punter, @gameschedule)
-				end
+				@punter.update_attributes!(params[:football_punter])
 			elsif live == "Adjust"
 				adjust(@punter, params)
 			else
@@ -86,7 +75,8 @@ class FootballPuntersController < ApplicationController
 			end
 
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, @punter], notice: 'Stat created for ' + @athlete.full_name }
+		        format.html { redirect_to footballspecialteamstats_sport_team_gameschedule_path(sport_id: @sport.id, team_id: @gameschedule.team_id, 
+		        								id: @gameschedule.id), notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { punter: @punter } }
 		     end			
 		rescue Exception => e

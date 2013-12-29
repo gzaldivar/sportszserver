@@ -3,7 +3,7 @@ class FootballReturnersController < ApplicationController
 
 	before_filter	:authenticate_user!
   	before_filter 	:get_sport_athlete_stat
-  	before_filter	:correct_stat,			only: [:show, :edit, :update, :destroy]
+  	before_filter	:correct_stat,			only: [:update, :destroy]
 	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
 	    controller.team_manager?(@athlete, nil)
 	end
@@ -32,20 +32,14 @@ class FootballReturnersController < ApplicationController
 			if live == "Totals"
 				returner = @athlete.football_returners.create!(params[:football_returner])
 
-				if current_user.score_alert? and params[:football_returner][:kotd].to_i > 0
-					send_alert(@athlete, "Kickoff Return TD score alert for ", returner, game)
-				elsif current_user.score_alert? and params[:football_returner][:punt_returntd].to_i > 0
-					send_alert(@athlete, "Punt Return TD score alert for ", returner, game)
-				elsif current_user.stat_alert?
-					send_alert(@athlete, "Return stat alert for ", returner, game)
-				end
 			else
 				returner = @athlete.football_returners.new(gameschedule_id: game.id.to_s)
 				livestats(returner, @athlete, params, game)
 			end
 
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, returner], notice: 'Stat created for ' + @athlete.full_name }
+		        format.html { redirect_to footballspecialteamstats_sport_team_gameschedule_path(sport_id: @sport.id, team_id: game.team_id, 
+		        								id: game.id), notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { returner: returner } }
 		     end			
 		rescue Exception => e
@@ -57,22 +51,18 @@ class FootballReturnersController < ApplicationController
 	end
 
 	def show
+		if params[:stat_id]
+			@returner = FootballReturner.find(params[:stat_id])
+		else
+			@returner = FootballReturner.new(athlete_id: @athlete.id, gameschedule_id: params[:gameschedule_id])
+		end
+		@gameschedule = Gameschedule.find(@returner.gameschedule_id)
 	end
 
 	def index
 		fbstats = Returnerstats.new(@sport, @athlete)
 		@stats = fbstats.stats
 		@totals = fbstats.returnertotals
-	end
-
-	def edit
-		if params[:livestats] == "Play by Play"
-			@live = "Play by Play"
-		elsif params[:livestats] == "Adjust"
-			@live = "Adjust"
-		elsif params[:livestats] == "Totals"
-			@live = "Totals"
-		end
 	end
 
 	def update
@@ -86,21 +76,15 @@ class FootballReturnersController < ApplicationController
 			if live == "Totals"
 				@returner.update_attributes!(params[:football_returner])
 
-				if current_user.score_alert? and params[:football_returner][:kotd].to_i > 0
-					send_alert(@athlete, "Kickoff Return TD score alert for ", @returner, @gameschedule)
-				elsif current_user.score_alert? and params[:football_returner][:punt_returntd].to_i > 0
-					send_alert(@athlete, "Punt Return TD score alert for ", @returner, @gameschedule)
-				elsif current_user.stat_alert?
-					send_alert(@athlete, "Return stat alert for ", @returner, @gameschedule)
-				end
 			elsif live == "Adjust"
 				adjust(@returner, @athlete, params)
 			else
-				livestats(@returner, @athlete, params, game)
+				livestats(@returner, @athlete, params, @gameschedule)
 			end
 
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, @returner], notice: 'Stat updated for ' + @athlete.full_name }
+		        format.html { redirect_to footballspecialteamstats_sport_team_gameschedule_path(sport_id: @sport.id, team_id: @gameschedule.team_id, 
+		        								id: @gameschedule.id), notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { returner: @returner } }
 		     end		
 		rescue Exception => e

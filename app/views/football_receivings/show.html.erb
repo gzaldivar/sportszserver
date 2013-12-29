@@ -1,20 +1,57 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
+<script>
+  	$(document).ready(function() {
+	    $(window).load(function() {
+		   $('#totalreceiving-responsive').modal('show')
+		});
+	});	
+</script>
 <div class="row">
-	<div class="col-xs-10">
-		<h4>Receiving game statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for <%= @gameschedule.game_name %></h4>
-		<table class="table table-bordered">
-			<%= render 'stat_header', name: "Game" %>
-			<%= render 'stat_body', stat: @receiving, player: @athlete, name: @gameschedule %>
-		</table>
+	<div class="col-xs-2">
+		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+	</div>
+	<div class="col-xs-6">
+		<h4>Receiving game statistics for <%= link_to(@athlete.full_name, sport_athlete_path(@sport, @athlete)) %></h4>
+	</div>
+	<div class="col-xs-1 col-xs-offset-2">
+        <button href="#totalreceiving-responsive" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-primary">Update</button>
 	</div>
 </div>
+<p>
 <div class="row">
-	<div class="col-xs-2 col-xs-offset-4">
-		<%= link_to "Totals", sport_athlete_football_receivers_path(@sport, @athlete, gameschedule_id: @receiving.gameschedule_id), 
-			class: "btn btn-sm btn-primary"%>
+	<div class="col-xs-11">
+		<table class="table table-bordered">
+			<thead>
+				<th>REC</th>
+				<th>YDS</th>
+				<th>AVG</th>
+				<th>TD</th>
+			</thead>
+			<tbody>
+				<td><%= @receiving.receptions %></td>
+				<td><%= @receiving.yards %></td>
+				<td><%= number_with_precision(@receiving.comp_average, precision: 2) %></td>
+				<td><%= @receiving.td %></td>
+			</tbody>
+		</table>
+		<table class="table table-bordered">
+			<thead>
+				<th>FD</th>
+				<th>FUMB</th>
+				<th>FUMB LST</th>
+				<th>2PT</th>
+			</thead>
+			<tbody>
+				<td><%= @receiving.firstdowns %></td>
+				<td><%= @receiving.fumbles %></td>
+				<td><%= @receiving.fumbles_lost %></td>
+				<td><%= @receiving.twopointconv %></td>
+			</tbody>
+		</table>
 	</div>
 </div>
 <div class="row">
 	<%= render "layouts/sponsor" %>
 </div>
+<%= render 'receiving-modal', stat: @receiving, player: @athlete %>

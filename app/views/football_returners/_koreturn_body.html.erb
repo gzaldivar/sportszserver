@@ -1,8 +1,10 @@
 <tbody>
-	<% if name.kind_of?(Athlete) %>
-		<td><%= link_to name.logname, [@sport, name] %></td>
-	<% elsif name.kind_of?(Gameschedule) %>
-		<td><%= link_to ("vs " + name.opponent), [@sport, @sport.teams.find(name.team_id), name] %></td>
+	<% if name == "Player" %>
+		<% @theplayer = Athlete.find(stat.athlete_id) %>
+		<td><%= link_to @theplayer.numlogname, [@sport, @theplayer] %></td>
+	<% elsif name == "Game" %>
+		<% @game = Gameschedule.find(stat.gameschedule_id) %>
+		<td><%= link_to ("vs " + @game.opponent), [@sport, @sport.teams.find(@game.team_id), @game] %></td>
 	<% else %>
 		<td><%= name %></td>
 	<% end %>
@@ -10,11 +12,15 @@
 	<td><%= stat.koyards %></td>
 	<td><%= stat.kotd %></td>
 	<td><%= stat.kolong %></td>
-	<% if FootballReturner.find(stat.id).nil? and site_owner? or isTeamManager?(player) and name != "Totals" %>
-		<td><%= link_to "Edit", new_sport_athlete_football_returner_path(@sport, player, gameschedule_id: stat.gameschedule_id), 
-				class: "btn btn-xs btn-primary"%></td>
-	<% elsif name != "Totals" %>
-		<td><%= link_to "Edit", edit_sport_athlete_football_returner_path(@sport, player, stat), class: "btn btn-xs btn-primary"%></td>
+	<% if site_owner? or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
+		<td>
+			<% if FootballReturner.find(stat.id).nil? %>
+				<%= link_to "Update", sport_athlete_football_returner_path(@sport, @theplayer, gameschedule_id: @gameschedule.id), 
+										class: "btn btn-xs btn-info"%>
+			<% else %>
+				<%= link_to "Update", sport_athlete_football_returner_path(@sport, @theplayer, stat_id: stat.id), class: "btn btn-xs btn-info"%>
+			<% end %>
+		</td>
 	<% else %>
 		<td></td>
 	<% end %>

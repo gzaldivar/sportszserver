@@ -5,7 +5,9 @@ class GameschedulesController < ApplicationController
   before_filter :get_sport
   before_filter :get_schedule,        only: [:show, :edit, :update, :destroy, :updatelogo, :passinggamestats, :allfootballgamestats,
                                               :rushinggamestats, :receivinggamestats, :defensegamestats, :kickergamestats, :returnergamestats, 
-                                              :footballboxscore,:footballscoreboard, :footballteamgametotals]
+                                              :footballboxscore,:footballscoreboard, :footballteamgametotals, :addfootballqb,
+                                              :footballdefensestats, :footballspecialteamstats, :addfootballrb, :addfootballrec, :addfootballdef,
+                                              :addfootballpk, :addfootballret, :addfootballkicker, :addfootballpunter]
   before_filter only: [:destroy, :update, :create, :edit, :new, :createlogo, :updatelogo] do |controller| 
     controller.team_manager?(@gameschedule, @team)
   end
@@ -366,11 +368,31 @@ class GameschedulesController < ApplicationController
     receivingstats = Receivingstats.new(@sport, @gameschedule)
     @receivingstats = receivingstats.stats
     @receivingtotals = receivingstats.receivingtotals
+  end
 
+  def footballoffenselive
+    passstats = Passingstats.new(@sport, @gameschedule)
+    @passingstats = passstats.stats
+    @passingtotals = passstats.passingtotals
+
+    rushingstats = Rushingstats.new(@sport, @gameschedule)
+    @rushingstats = rushingstats.stats
+    @rushingtotals = rushingstats.rushingtotals
+
+    @firstdowns = passstats.gamefirstdowns + rushingstats.gamefirstdowns
+
+    receivingstats = Receivingstats.new(@sport, @gameschedule)
+    @receivingstats = receivingstats.stats
+    @receivingtotals = receivingstats.receivingtotals
+  end
+
+  def footballdefensestats
     defense = Defensestats.new(@sport, @gameschedule)
     @defensivestats = defense.stats
     @defensivetotals = defense.defensetotals
+  end
 
+  def footballspecialteamstats
     placekicker = Placekickerstats.new(@sport, @gameschedule)
     @placekickerstats = placekicker.stats
     @placekickertotals = placekicker.placekickertotals
@@ -388,7 +410,39 @@ class GameschedulesController < ApplicationController
     @puntertotals = punterstats.puntertotals
   end
 
-  private
+  def addfootballqb
+    @athlete = Athlete.find(params[:player_id])
+  end
+
+  def addfootballrb
+    @athlete = Athlete.find(params[:player_id])
+  end
+
+  def addfootballrec
+    @athlete = Athlete.find(params[:player_id])
+  end
+
+  def addfootballdef
+    @athlete = Athlete.find(params[:player_id])
+  end
+
+  def addfootballpk
+    @athlete = Athlete.find(params[:player_id])
+  end
+
+  def addfootballret
+    @athlete = Athlete.find(params[:player_id])
+  end
+
+  def addfootballkicker
+    @athlete = Athlete.find(params[:player_id])
+  end
+
+  def addfootballpunter
+    @athlete = Athlete.find(params[:player_id])
+  end
+  
+private
   
     def get_sport
       @sport = Sport.find(params[:sport_id])
@@ -397,6 +451,10 @@ class GameschedulesController < ApplicationController
 
     def get_schedule
          @gameschedule = @team.gameschedules.find(params[:id])
+    end
+
+    def footballgamestats
+      
     end
     
 end

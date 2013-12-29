@@ -1,0 +1,1 @@
+window.location = '<%= sport_athlete_football_receiving_path(@sport, @athlete, gameschedule_id: @gameschedule.id) %>';

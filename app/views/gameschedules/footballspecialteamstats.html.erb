@@ -1,0 +1,172 @@
+<% provide(:title, current_site.sitename + " " + @sport.sportname + " - Live Offensive Statistics") %>
+<script>
+  $(document).ready(function() {
+    $('.select_placekicker').click(function() {
+      $('.modal').modal('hide');
+      $.ajax({
+        url: "<%= sport_team_gameschedule_path %>",
+        data: {
+          id : $(this).data('id')
+        },
+        dataType: "script"
+      });
+    });
+    $('.select_returner').click(function() {
+      $('.modal').modal('hide');
+      $.ajax({
+        url: "<%= sport_team_gameschedule_path %>",
+        data: {
+          id : $(this).data('id')
+        },
+        dataType: "script"
+      });
+    });
+    $('.select_kicker').click(function() {
+      $('.modal').modal('hide');
+      $.ajax({
+        url: "<%= sport_team_gameschedule_path %>",
+        data: {
+          id : $(this).data('id')
+        },
+        dataType: "script"
+      });
+    });
+    $('.select_punter').click(function() {
+      $('.modal').modal('hide');
+      $.ajax({
+        url: "<%= sport_team_gameschedule_path %>",
+        data: {
+          id : $(this).data('id')
+        },
+        dataType: "script"
+      });
+    });
+  });
+</script>
+<div class="row">
+  <div class="col-xs-11">
+    <h4><em>Game Statistics vs. <%= @gameschedule.opponent_mascot %></em></h4>
+    <p>
+    <ul class="nav nav-pills">
+          <li><%= link_to "Offense", allfootballgamestats_sport_team_gameschedule_path(@sport, @team, @gameschedule) %></li>
+          <li><%= link_to "Defense", footballdefensestats_sport_team_gameschedule_path(@sport, @team, @gameschedule) %></li>
+          <li class="disabled"><%= link_to "Special Teams", 
+                                  footballspecialteamstats_sport_team_gameschedule_path(@sport, @team, @gameschedule) %></li>
+    </ul>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-11">
+    <h5>Place Kicker Stats</h5>
+    <table class="table table-bordered">
+        <%= render "football_place_kickers/fieldgoal_header", name: "Player" %>
+
+        <% @placekickerstats.each do |p| %>
+          <% @player =  Athlete.find(p.athlete_id) %>
+
+          <% if isPlaceKicker?(p) or FBPlaceKicker?(@player) %>
+            <%= render 'football_place_kickers/fieldgoal_body', stat: p, name: "Player" %>
+          <% end %>
+
+        <% end %>
+        <%= render 'football_place_kickers/fieldgoal_body', stat: @placekickertotals, name: "Totals" %>
+    </table>
+
+    <table class="table table-bordered">
+        <%= render "football_place_kickers/extrapoint_header", name: "Player" %>
+
+        <% @placekickerstats.each do |p| %>
+          <% @player =  Athlete.find(p.athlete_id) %>
+          <% if isPlaceKicker?(p) or FBPlaceKicker?(@player) %>
+            <%= render 'football_place_kickers/extrapoint_body', stat: p, name: "Player" %>
+        <% end %>
+      <% end %>
+      <%= render 'football_place_kickers/extrapoint_body', stat: @placekickertotals, name: "Totals" %>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-2">
+    <button href="#pkplayerselect-responsive" data-toggle="modal" class="btn btn-sm btn-info">Add Place Kicker</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-11">
+
+      <h5>Punt Returns</h5>
+    <table class="table table-bordered">
+        <%= render "football_returners/puntreturn_header", name: "Player" %>
+
+        <% @returnerstats.each do |p| %>
+          <% @player =  Athlete.find(p.athlete_id) %>
+          <% if isPuntReturner?(p) or FBPuntReturner?(@player) %>
+            <%= render 'football_returners/puntreturn_body', stat: p, name: "Player" %>
+          <% end %>
+        <% end %>
+      <%= render 'football_returners/puntreturn_body', stat: @returnertotals, name: "Totals" %>
+    </table>      <h5>Kickoff Returns</h5>
+    <table class="table table-bordered">
+        <%= render "football_returners/koreturn_header", name: "Player" %>
+
+        <% @returnerstats.each do |p| %>
+          <% @player =  Athlete.find(p.athlete_id) %>
+          <% if isKOReturner?(p) or FBKickReturner?(@player) %>
+            <%= render 'football_returners/koreturn_body', stat: p, name: "Player" %>
+          <% end %>
+        <% end %>
+        <%= render 'football_returners/koreturn_body', stat: @returnertotals, name: "Totals" %>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-1">
+    <button href="#returnerplayerselect-responsive" data-toggle="modal" class="btn btn-sm btn-info">Add Returner</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-11">
+    <h5>Kickoffs</h5>
+    <table class="table table-bordered">
+        <%= render "football_kickers/stat_header", name: "Player" %>
+
+        <% @kickoffstats.each do |p| %>
+          <% @player =  Athlete.find(p.athlete_id) %>
+          <% if isKicker?(p) or FBKicker?(@player) %>
+            <%= render 'football_kickers/stat_body', stat: p, name: "Player" %>
+        <% end %>
+      <% end %>
+      <%= render 'football_kickers/stat_body', stat: @kickofftotals, name: "Totals" %>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-1">
+    <button href="#kickerplayerselect-responsive" data-toggle="modal" class="btn btn-sm btn-info">Add Kicker</button>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-11">
+
+      <h5>Punters</h5>
+    <table class="table table-bordered">
+        <%= render "football_punters/stat_header", name: "Player" %>
+
+        <% @punterstats.each do |p| %>
+          <% @player =  Athlete.find(p.athlete_id) %>
+          <% if isPunter?(p) or FBPunter?(@player) %>
+            <%= render 'football_punters/stat_body', stat: p, name: "Player" %>
+        <% end %>
+      <% end %>
+      <%= render 'football_punters/stat_body', stat: @puntertotals, name: "Totals" %>
+    </table>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-1">
+    <button href="#punterplayerselect-responsive" data-toggle="modal" class="btn btn-sm btn-info">Add Punter</button>
+  </div>
+</div>
+<%= render 'layouts/playerselectmodal', modalname: 'pkplayerselect-responsive', callbackscript: 'select_placekicker' %>
+<%= render 'layouts/playerselectmodal', modalname: 'returnerplayerselect-responsive', callbackscript: 'select_returner' %>
+<%= render 'layouts/playerselectmodal', modalname: 'kickerplayerselect-responsive', callbackscript: 'select_kicker' %>
+<%= render 'layouts/playerselectmodal', modalname: 'punterplayerselect-responsive', callbackscript: 'select_punter' %>

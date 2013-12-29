@@ -3,7 +3,7 @@ class FootballReceivingsController < ApplicationController
 
 	before_filter	[:authenticate_user!, :site_owner?]
   	before_filter 	:get_sport_athlete_stat, only: [:new, :playbyplay, :create, :show, :edit, :update, :destroy, :index]
-  	before_filter	:correct_stat,			only: [:show, :edit, :update, :destroy]
+  	before_filter	:correct_stat,			only: [:edit, :update, :destroy]
 
   	def new
 		@receiving = FootballReceiving.new
@@ -20,14 +20,9 @@ class FootballReceivingsController < ApplicationController
 		begin
 			@receiving = @athlete.football_receivings.create!(params[:football_receiving])
 
-			if current_user.score_alert? and params[:football_receiving][:td].to_i > 0
-				send_alert(@athlete, "Receiver score alert for ")
-			elsif current_user.stat_alert? and params[:football_receiving][:td].to_i == 0
-				send_alert(@athlete, "Recevier stat alert for ")
-			end
-
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, @receiving], notice: 'Stat created for ' + @athlete.full_name }
+		        format.html { redirect_to allfootballgamestats_sport_team_gameschedule_path(sport_id: @sport.id, team_id: @athlete.team_id, 
+		        								id: @receiving.gameschedule_id), notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { receiving: @receiving } }
 		     end			
 		rescue Exception => e
@@ -39,6 +34,12 @@ class FootballReceivingsController < ApplicationController
 	end
 
 	def show
+		if params[:stat_id]
+			@receiving = FootballReceiving.find(params[:stat_id])
+		else
+			@receiving = FootballReceiving.new(athlete_id: @athlete.id, gameschedule_id: params[:gameschedule_id])
+		end
+		@gameschedule = Gameschedule.find(@receiving.gameschedule_id)
 	end
 
 	def edit		
@@ -48,14 +49,9 @@ class FootballReceivingsController < ApplicationController
 		begin
 			@receiving.update_attributes!(params[:football_receiving])
 
-			if current_user.score_alert? and params[:football_receiving][:td].to_i > 0
-				send_alert(@athlete, "Receiver score alert for ")
-			elsif current_user.stat_alert? and params[:football_receiving][:td].to_i == 0
-				send_alert(@athlete, "Receiver stat alert for ")
-			end
-
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, @stat, @receiving], notice: 'Stat updated for ' + @athlete.full_name }
+		        format.html { redirect_to allfootballgamestats_sport_team_gameschedule_path(sport_id: @sport.id, team_id: @athlete.team_id, 
+		        								id: @receiving.gameschedule_id), notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { receiving: @receiving } }
 		     end			
 		rescue Exception => e

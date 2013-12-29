@@ -27,12 +27,12 @@
 			<% end %>
 		    <td>
 		        <% if Photo.where(players: athlete.id.to_s).any? %>
-		        	<%= link_to "Photos", sport_photos_path(@sport, athlete: { id: athlete.id }), class: "btn btn-xs btn-primary" %>              
+		        	<%= link_to "Photos", sport_photos_path(@sport, athlete_id: athlete.id), class: "btn btn-xs btn-primary" %>              
 		        <% end %>
 		    </td>
 	    	<td>
 		        <% if Videoclip.where(players: athlete.id.to_s).any? %>
-		        	<%= link_to "Videos", sport_videoclips_path(@sport, athlete: { id: athlete.id }), class: "btn btn-xs btn-primary" %>              
+		        	<%= link_to "Videos", sport_videoclips_path(@sport, athlete_id: athlete.id), class: "btn btn-xs btn-primary" %>              
 		        <% end %>
 		    </td>
 		</tr>

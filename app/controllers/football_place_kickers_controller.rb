@@ -3,7 +3,7 @@ class FootballPlaceKickersController < ApplicationController
 	
 	before_filter	:authenticate_user!
   	before_filter 	:get_sport_athlete_stat
-  	before_filter	:correct_stat,			only: [:show, :edit, :update, :destroy]
+  	before_filter	:correct_stat,			only: [:update, :destroy]
 	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
 	    controller.team_manager?(@athlete, nil)
 	end
@@ -37,7 +37,8 @@ class FootballPlaceKickersController < ApplicationController
 			end
 
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, placekicker], notice: 'Stat created for ' + @athlete.full_name }
+		        format.html { redirect_to footballspecialteamstats_sport_team_gameschedule_path(sport_id: @sport.id, team_id: game.team_id, 
+		        								id: game.id), notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { placekicker: placekicker } }
 		     end			
 		rescue Exception => e
@@ -45,16 +46,6 @@ class FootballPlaceKickersController < ApplicationController
 				format.html { redirect_to :back, alert: "Error creating football place kicker stats "	+ e.message }
 				format.json { render status: 404, json: { error: e.message } }
 			end
-		end
-	end
-
-	def edit
-		if params[:livestats] == "Play by Play"
-			@live = "Play by Play"
-		elsif params[:livestats] == "Adjust"
-			@live = "Adjust"
-		elsif params[:livestats] == "Totals"
-			@live = "Totals"
 		end
 	end
 
@@ -75,7 +66,8 @@ class FootballPlaceKickersController < ApplicationController
 			end
 
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, @placekicker], notice: 'Stat updated for ' + @athlete.full_name }
+		        format.html { redirect_to footballspecialteamstats_sport_team_gameschedule_path(sport_id: @sport.id, team_id: @gameschedule.team_id, 
+		        								id: @gameschedule.id), notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { placekicker: @placekicker } }
 		     end		
 		rescue Exception => e
@@ -90,6 +82,15 @@ class FootballPlaceKickersController < ApplicationController
 		fbstats = Placekickerstats.new(@sport, @athlete)
 		@stats = fbstats.stats
 		@totals = fbstats.placekickertotals
+	end
+
+	def show
+		if params[:stat_id]
+			@placekicker = FootballPlaceKicker.find(params[:stat_id])
+		else
+			@placekicker = FootballPlaceKicker.new(athlete_id: @athlete.id, gameschedule_id: params[:gameschedule_id])
+		end
+		@gameschedule = Gameschedule.find(@placekicker.gameschedule_id)
 	end
 
 	def destroy

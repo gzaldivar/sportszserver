@@ -3,7 +3,7 @@ class FootballRushingsController < ApplicationController
 
 	before_filter	:authenticate_user!
   	before_filter 	:get_sport_athlete_stat
-  	before_filter	:correct_stat,			only: [:show, :edit, :update, :destroy]
+  	before_filter	:correct_stat,			only: [:edit, :update, :destroy]
 	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
 	    controller.team_manager?(@athlete, nil)
 	end
@@ -37,7 +37,8 @@ class FootballRushingsController < ApplicationController
 			end
 
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, stats], notice: 'Stat created for ' + @athlete.full_name }
+		        format.html { redirect_to allfootballgamestats_sport_team_gameschedule_path(sport_id: @sport.id, team_id: game.team_id, 
+		        								id: game.id), notice: 'Stat created for ' + @athlete.full_name }
 		        format.json { render json: { rushing: stats } }
 		    end
 		rescue Exception => e
@@ -49,6 +50,12 @@ class FootballRushingsController < ApplicationController
 	end
 
 	def show
+		if params[:stat_id]
+			@rushing = FootballRushing.find(params[:stat_id])
+		else
+			@rushing = FootballRushing.new(athlete_id: @athlete.id, gameschedule_id: params[:gameschedule_id])
+		end
+		@gameschedule = Gameschedule.find(@rushing.gameschedule_id)
 	end
 
 	def edit
@@ -78,7 +85,9 @@ class FootballRushingsController < ApplicationController
 			end
 
 			respond_to do |format|
-		        format.html { redirect_to [@sport, @athlete, @rushing], notice: 'Stat updated for ' + @athlete.full_name }
+		        format.html { redirect_to allfootballgamestats_sport_team_gameschedule_path(sport_id: @sport.id, 
+			        							team_id: @gameschedule.team_id, id: @gameschedule.id), 
+			        							notice: 'Stat updated for ' + @athlete.full_name }
 		        format.json  { render json: { rushing: @rushing } }
 		     end
 		rescue Exception => e

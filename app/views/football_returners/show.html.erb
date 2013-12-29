@@ -1,29 +1,59 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
+<script>
+  	$(document).ready(function() {
+	    $(window).load(function() {
+		   $('#returner-responsive').modal('show')
+		});
+	});	
+</script>
 <div class="row">
-	<div class="col-xs-10">
-		<p>
-		<h4>Return statistics for <%= link_to @athlete.full_name, [@sport, @athlete] %> for<br/>
-			<%= @gameschedule.game_name %></h4>
-		<p>
-		<h5>Punt Return Statistics</h5>
-		<table class="table table-bordered">
-			<%= render 'puntreturn_header', name: "Game" %>
-			<%= render 'puntreturn_body', stat: @returner, player: @athlete, name: @gameschedule %>
-		</table>
-		<h5>Kickoff Return Statistics</h5>
-		<table class="table table-bordered">
-			<%= render 'koreturn_header', name: "Game" %>
-			<%= render 'koreturn_body', stat: @returner, player: @athlete, name: @gameschedule %>
-		</table>
+	<div class="col-xs-2">
+		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+	</div>
+	<div class="col-xs-6">
+		<h4>Return game statistics for <%= link_to(@athlete.full_name, sport_athlete_path(@sport, @athlete)) %></h4>
+	</div>
+	<div class="col-xs-1 col-xs-offset-2">
+        <button href="#returner-responsive" data-dismiss="modal" data-toggle="modal" class="btn btn-sm btn-primary">Update</button>
 	</div>
 </div>
+<p>
 <div class="row">
-	<div class="col-xs-2 col-xs-offset-4">
-		<%= link_to "Totals", sport_athlete_football_returners_path(@sport, @athlete, gameschedule_id: @returner.gameschedule_id), 
-			class: "btn btn-sm btn-primary"%>
+	<div class="col-xs-11">
+		<h4>Punt Returner</h4>
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>RET</th>
+				<th>YDS</th>
+				<th>TD</th>
+				<th>LONG</th>
+			</thead>
+			<tbody>
+				<td><%= @returner.punt_return %></td>
+				<td><%= @returner.punt_returnyards %></td>
+				<td><%= @returner.punt_returntd %></td>
+				<td><%= @returner.punt_returnlong %></td>
+			</tbody>
+		</table>
+		<h4>Kickoff Returner</h4>
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>RET</th>
+				<th>YDS</th>
+				<th>TD</th>
+				<th>LONG</th>
+			</thead>
+			<tbody>
+				<td><%= @returner.koreturns %></td>
+				<td><%= @returner.koyards %></td>
+				<td><%= @returner.kotd %></td>
+				<td><%= @returner.kolong %></td>
+			</tbody>
+		</table>
 	</div>
 </div>
 <div class="row">
 	<%= render "layouts/sponsor" %>
 </div>
+<%= render 'returnermodal', stat: @returner, player: @athlete %>

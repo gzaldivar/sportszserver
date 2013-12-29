@@ -35,5 +35,15 @@
         dataType: "script"
       });
     });
+    $('.select_team').click(function() {
+      $('.modal').modal('hide');
+      $.ajax({
+        url: "<%= selectteam_sport_path %>",
+        data: {
+          team_id : $(this).data('id')
+        },
+        dataType: "script"
+      });
+    });
    });
 </script>

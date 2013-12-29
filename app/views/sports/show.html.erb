@@ -6,7 +6,16 @@
 <div class="row">
   <div class="col-xs-7">
       <ul class="nav nav-pills">
-        <li class="dropdown">
+        <% if @sport.teams.count > 1 %>
+          <li><a href="#teamselect-responsive" data-toggle="modal">Teams</a></li>
+        <% elsif @sport.teams.count == 0 %>
+          <script> 
+            $(document).ready(function() {
+              $('#noteamsmodal').modal('show');
+            });
+         </script>
+        <% end %>
+        <!--li class="dropdown">
           <a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams<span class="caret"></span></a>
           <ul class="dropdown-menu">
             <% current_site.teams.each do |t| %>
@@ -14,7 +23,7 @@
               <li class="divider"></li>
             <% end %> 
           </ul>
-        </li>
+        </li-->
         <li><%= link_to "News", sport_path(@sport, photo_mode: "news") %></li>
         <% if current_team? and user_signed_in? %>
           <li><%= link_to "Blog", sport_blogs_path(current_site, team_id: current_team.id) %></li>
@@ -73,12 +82,8 @@
 <p>
 <% if site_owner? %>
   <div class="row">
-    <div class="col-xs-2 col-xs-offset-4">
+    <div class="col-xs-2 col-xs-offset-3">
       <%= link_to "Edit Sport", edit_sport_path(id: @sport.id), class: "btn btn-md btn-primary" %>
-      <p>
-      <% if @sport.teams.blank? %>
-        <strong>No teams entered.</strong> Click Edit Sport to add teams!
-      <% end %>
     </div>
     &nbsp
     <div class="col-xs-2">
@@ -121,7 +126,7 @@
                 <% if !@players.nil? %>
                   <% @players.each do |p| %>
                     <tr>
-                      <td><%= link_to p.number.to_s + " " + p.logname, '#', :class => 'sort_news_players', :data => {:id => p.id.to_s} %></td>
+                      <td><%= link_to p.numlogname, '#', :class => 'sort_news_players', :data => {:id => p.id.to_s} %></td>
                     </tr>
                   <% end %>
                 <% end %>
@@ -158,3 +163,6 @@
     </div>
   </div>
 </div>
+<%= render 'layouts/teamselectmodal', callbackscript: 'select_team' %>
+<%= render 'layouts/messagemodal', modalid: 'noteamsmodal', modaltitle: 'No Teams', messagetext: 'Administrator has added no teams' %>
+

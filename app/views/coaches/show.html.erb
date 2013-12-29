@@ -61,11 +61,11 @@
   </div><br/>      
   <div class="row">
     <div class="col-xs-4 col-xs-offset-5">
-  		<% if isAdmin? or isTeamManager?(@coach) %>
+  		<% if site_owner? or isTeamManager?(@coach) %>
         <%= link_to "Edit", edit_sport_coach_path(@sport, @coach),  class: "btn btn-sm btn-warning" %>&nbsp;
   			<%= link_to "Add News", new_sport_newsfeed_path(@sport),  class: "btn btn-sm btn-info" %>&nbsp;
       <% end %>
-      <% if isAdmin? %>
+      <% if site_owner? %>
         <%= link_to "Delete", sport_coach_path(@sport, @coach),  method:  :delete,  class: "btn btn-sm btn-danger", data: { confirm: "You sure?" } %>&nbsp;
   		<% end %>
     </div>

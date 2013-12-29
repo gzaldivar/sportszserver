@@ -18,7 +18,7 @@
 			<p>
 			<%= render 'defense_totals', defense: @defense %>
 			<div class="col-xs-8 col-xs-offset-2">
-				<% if isAdmin?or isTeamManager?(@athlete) %>
+				<% if isAdmin? or isTeamManager?(@athlete) %>
 					<%= link_to "Add defense Stats", newstat_sport_athlete_football_stat_path(@sport, @athlete, id: "defense"), 
 								class: "btn btn-sm btn-info" %>
 				<% end %>&nbsp

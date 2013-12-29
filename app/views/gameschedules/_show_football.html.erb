@@ -24,7 +24,7 @@
 		<table class="table table-bordered">
 			<thead>
 				<th>Game Log</th>
-				<% if site_owner? or sTeamManager?(@gameschedule) %>
+				<% if site_owner? or isTeamManager?(@gameschedule) %>
 					<th>Edit</th>
 					<th>Delete</th>
 				<% end %>

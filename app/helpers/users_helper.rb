@@ -4,6 +4,8 @@ module UsersHelper
 		if current_site? and !current_site.approved?
 			return false
 	  	elsif current_site? and !current_user.nil? and current_user.admin?
+	puts current_user.id
+	puts current_site.adminid
 		  	if current_user.id.to_s != current_site.adminid
 		  		return false
 		  	else

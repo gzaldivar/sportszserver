@@ -11,31 +11,32 @@ module FootballStatistics
 				score += passscore.td * 6
 				score += passscore.twopointconv * 2
 			end
-		end
 
-		sport.athletes.where(team_id: game.team_id).each do |p|
 			rushscore = p.football_rushings.find_by(gameschedule_id: game.id)
 			if !rushscore.nil?
 				score += rushscore.td * 6
 				score += rushscore.twopointconv * 2
 			end
-		end
 
-		sport.athletes.where(team_id: game.team_id).each do |p|
 			defensescore = p.football_defenses.find_by(gameschedule_id: game.id)
 			if !defensescore.nil?
 				score += defensescore.int_td * 6
 				score += defensescore.safety * 2
 			end
-		end
 
-		sport.athletes.where(team_id: game.team_id).each do |p|
 			returnsscore = p.football_returners.find_by(gameschedule_id: game.id)
 			if !returnsscore.nil?
 				score += returnsscore.kotd * 6
 				score += returnsscore.punt_returntd * 6
 			end
+
+			placekickerscore = p.football_place_kickers.find_by(gameschedule_id: game.id)
+			if !placekickerscore.nil?
+				score += placekickerscore.fgmade
+				score += placekickerscore.xpmade
+			end
 		end
+
 		return score
 	end
 
@@ -47,9 +48,7 @@ module FootballStatistics
 			if !passstat.nil?
 				firstdowns += passstat.firstdowns
 			end
-		end
 
-		sport.athletes.where(team_id: game.team_id).each do |p|
 			rushstat = p.football_rushings.find_by(gameschedule_id: game.id)
 			if !rushstat.nil?
 				firstdowns += rushstat.firstdowns

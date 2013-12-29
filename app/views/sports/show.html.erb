@@ -6,9 +6,9 @@
 <div class="row">
   <div class="col-xs-7">
       <ul class="nav nav-pills">
-        <!--% if @sport.teams.count > 1 %-->
-          <li><a href="#teamselect-responsive" data-toggle="modal">Teams</a></li>
-        <% if @sport.teams.count == 0 %>
+        <% if @sport.teams.count > 1 %>
+          <li><a href="#teamselect-responsive" data-toggle="modal">Select Team</a></li>
+        <% elsif @sport.teams.count == 0 %>
           <script> 
             $(document).ready(function() {
               $('#noteamsmodal').modal('show');
@@ -30,15 +30,15 @@
           <li><%= link_to "Media", photoshome_sport_photos_path(@sport) %></li>
         <% end %>
       </ul>
-        <div id="thenews">
-          <% if !@thenews.nil? %>
-            <%= render 'newsfeeds/newsfeed', newsfeed: @thenews %>
-          <% else %>
-            <div class="well">
-              No News!
-            </div>
-          <% end %>
-        </div>
+      <div id="thenews">
+        <% if !@thenews.nil? %>
+          <%= render 'newsfeeds/newsfeed', newsfeed: @thenews %>
+        <% else %>
+          <div class="well">
+            No News!
+          </div>
+        <% end %>
+      </div>
   </div>
   <div class="col-xs-4">
       <ul class="nav nav-pills">

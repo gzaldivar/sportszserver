@@ -26,6 +26,11 @@
               <div class="row">
                 <h3><p class="text-info"><%= link_to current_site.sitename, sport_path(current_site) %></p></h3>
               </div>
+              <div class="row">
+                <% if current_team? %>
+                  <h3><p class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></p></h3>
+                <% end %>
+              </div>
               <p>
               <div class="row">
                 <% if current_site.sport_logo? %>
@@ -40,11 +45,15 @@
             </div>
           </div>
           <p>
-          <div class="row">
-          </div>
-          <p>
       <% elsif current_site? %>
-        <h1><%= current_site.sitename %></h1>
+          <div class="row">
+            <h1><p class="text-info"><%= link_to current_site.sitename, sport_path(current_site) %></p></h1>
+          </div>
+          <div class="row">
+            <% if current_team? %>
+              <h3><p class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></p></h3>
+            <% end %>
+          </div>
       <% end %>
 
   		<% flash.each do |key, value| %>

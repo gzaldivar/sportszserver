@@ -17,10 +17,11 @@
         <li><%= link_to "Stats", sport_athlete_soccers_path(@sport, @athlete)%></li>
       <% end %>
       <% if Photo.where(players: @athlete.id.to_s).any? %>
-        <li><%= link_to "Photos", sport_photos_path(@sport, athlete: { id: @athlete.id } ) %></li>            
+        <!--li><%= link_to "Photos", sport_photos_path(@sport, athlete: { id: @athlete.id } ) %></li-->            
+        <li><%= link_to "Photos", sport_photos_path(@sport, athlete_id: @athlete.id ) %></li>            
       <% end %>
       <% if Videoclip.where(players: @athlete.id.to_s).any? %>
-        <li><%= link_to "Videos", sport_videoclips_path(@sport, athlete: { id: @athlete.id } ) %></li>           
+        <li><%= link_to "Videos", sport_videoclips_path(@sport, athlete_id: @athlete.id ) %></li>           
       <% end %>
     </ul>
     <p>

@@ -1,8 +1,10 @@
 module SitesHelper
   
   def site_visit(site)
-    cookies.permanent[:remember_site] = site.id
-    self.current_site = site
+    if current_site != site.id
+      cookies.permanent[:remember_site] = site.id
+      self.current_site = site
+    end
   end
   
   def current_site=(site)

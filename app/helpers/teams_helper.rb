@@ -52,8 +52,10 @@ module TeamsHelper
 	end
 
 	def set_current_team(team)
-		session[:current_team] = team.id
-		self.current_team = team
+		if current_site? and current_team != team.id
+			session[:current_team] = team.id
+			self.current_team = team
+		end
 	end
 
 	def current_team=(team)

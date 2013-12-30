@@ -59,9 +59,9 @@ class SportsController < ApplicationController
   def show
     site_visit(@sport)
 
-#    if @sport.teams.count == 1
-#      set_current_team(@sport.teams.first)
-#    end
+    if @sport.teams.count == 1
+      set_current_team(@sport.teams.first)
+    end
 
     if signed_in? and current_user.admin and !current_site.approved?
       respond_to do |format|

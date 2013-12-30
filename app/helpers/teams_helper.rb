@@ -63,10 +63,12 @@ module TeamsHelper
 	end
 
 	def current_team
-		if !session[:current_team].nil?
-			return  @current_team ||= current_site.teams.find(session[:current_team])
-		else
-		 	return nil
+		if current_site?
+			if !session[:current_team].nil?
+				return  @current_team ||= current_site.teams.find(session[:current_team])
+			else
+			 	return nil
+			end
 		end
 	end
   

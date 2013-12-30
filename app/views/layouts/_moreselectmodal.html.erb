@@ -1,19 +1,3 @@
-<script>
-  $(document).ready(function() {
-    $('.coachselected').click(function() {
-      $.ajax({
-        url: "<%= sport_coaches_path(current_site, team_id: current_team.id) %>",
-        dataType: "script"
-      });
-    });
-   $('.eventselected').click(function() {
-      $.ajax({
-        url: "<%= selectteam_sport_path(current_site, team_id: current_team.id) %>",
-        dataType: "script"
-      });
-    });
-  });
-</script>
 <div class-"row">
   <div class="col-xs-4">
     <div id="moreselect-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
@@ -31,10 +15,13 @@
                 </thead>
                 <tbody>
                     <tr>
-                      <td><%= link_to "Coaches", '#', :class => 'coachselected' %></td>
+                      <td><%= link_to "Coaches", sport_coaches_path(current_site, team_id: current_team.id) %></td>
                     </tr>
                      <tr>
-                      <td><%= link_to "Events", '#', :class => 'eventselected' %></td>
+                      <td><%= link_to "Events", sport_events_path(current_site, team_id: current_team.id) %></td>
+                    </tr>
+                     <tr>
+                      <td><%= link_to "Change Site", sports_path %></td>
                     </tr>
                </tbody>
               </table>

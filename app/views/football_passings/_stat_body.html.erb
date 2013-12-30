@@ -1,8 +1,8 @@
 <tbody>
-	<!--% if name.kind_of?(Athlete) %-->
 	<% if name == "Player" %>
 		<% @theplayer = Athlete.find(stat.athlete_id) %>
-		<td><%= link_to @theplayer.numlogname, [@sport, @theplayer] %></td>
+		<td><%= link_to image_tag(getimage(@theplayer, 'tiny'), class: 'img-responsive'), [@sport, @theplayer] %>
+			<%= link_to @theplayer.numlogname, [@sport, @theplayer] %></td>
 	<% elsif name == "Game" %>
 		<% @game = Gameschedule.find(stat.gameschedule_id) %>
 		<td><%= link_to ("vs " + @game.opponent), [@sport, @sport.teams.find(@game.team_id), @game] %></td>

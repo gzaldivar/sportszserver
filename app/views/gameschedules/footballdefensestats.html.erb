@@ -15,7 +15,7 @@
 </script>
 <div class="row">
 	<div class="col-xs-11">
-		<h4><em>Game Statistics vs. <%= @gameschedule.opponent_mascot %></em></h4>
+		<h4><em>Game Statistics vs. <%= link_to @gameschedule.opponent_mascot, sport_team_gameschedule_path(@sport, @team, @gameschedule) %></em></h4>
 		<p>
 		<ul class="nav nav-pills">
         	<li><%= link_to "Offense", allfootballgamestats_sport_team_gameschedule_path(@sport, @team, @gameschedule) %></li>

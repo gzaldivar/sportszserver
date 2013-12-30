@@ -1,0 +1,62 @@
+#banner {
+    position: relative;
+#    top: 80;
+    width: 1000px;
+    margin: 0;
+    height:150px;
+#    left: 50%;
+    left: 0;
+#    margin-left: -499px;
+    z-index: 2;
+}
+
+#homebanner {
+	position: relative;
+	top: 80;
+    width: 1000px;
+    margin: 0;
+    height:333px;
+#    left: 50%;
+    left: 0;
+#    margin-left: -499px;
+    z-index: 2;	
+}
+
+#bodywindow {
+    position: relative;
+ /*   background-color:#FFFFFF; */
+    top: 170;
+    width: 1000px;
+    margin: 0;
+ /*   height:150px; */
+ #   left: 50%;
+ left: 0;
+#    margin-left: -499px;     
+}
+
+#backcolor {
+	background-color:#ffffff;
+}
+
+#follow {
+    height: 200px;
+    overflow:auto;
+    margin-left: -499px;
+    margin: 0;
+    position: relative;
+    left: 15%;
+}
+
+#newsfeed {
+  overflow:auto;
+  height:800px;
+  width:600px;
+}
+
+#alert {
+    height: 200px;
+    overflow:auto;
+    margin: 0;
+    position: relative;
+    right: 0%;  
+}

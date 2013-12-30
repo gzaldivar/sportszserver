@@ -21,7 +21,6 @@
   <div class="row">
   </div>
   <p>
-<p>
   <div class="row">
     <div class="col-xs-11 col-xs-offset-1">
       <% if current_site? && current_site.sport_banner? %>
@@ -67,6 +66,8 @@
   		<%= yield %>
   		<%= render 'layouts/footer' %>
   		<%= debug(params) if Rails.env.development? %>
+      <%= render 'layouts/moreselectmodal' if current_team? %>
+      <%= render 'layouts/toolsselectmodal' if user_signed_in? and site_owner? %>
     </div>
   </div>
 </html>

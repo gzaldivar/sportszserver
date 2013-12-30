@@ -1,24 +1,27 @@
 <% provide(:title, 'Users') %>
 <p>
 <div class="row">
-	<div class="col-xs-10">
+	<div class="col-xs-11">
+		Team managers have edit capabilities for the teams they manage.
 		<div class="row">
-			<div class="col-xs-10">
-				Team managers have edit capabilities for the teams they manage. This includes approval of user uploaded photos and videos if you chosen to enable that feature for this site.
+			<div class="col-xs-11">
 			</div>
 		</div>
 		<p>
 		<%= form_tag users_path, class: "form-search", method: 'get' do %>
 			<div class="row">
-			  	<div class="col-xs-4">
+			  	<div class="col-xs-3">
 			    	<%= label_tag "Name: " %>
-			    	<%= text_field_tag  'name', value=params[:name] %>
+			    	<%= text_field_tag  'name', value=params[:name], class: 'form-control' %>
 			  	</div>
-				<div class="col-xs-n3">
+				<div class="col-xs-3">
 			    	<%= label_tag "email: " %>
-			    	<%= text_field_tag  'email', value=params[:email] %>
+			    	<%= text_field_tag  'email', value=params[:email], class: 'form-control' %>
 				</div>
-				<div class="col-xs-2">
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-2 col-xs-offset-2">
 			    	<%= submit_tag  "Search", class: "btn btn-sm btn-primary", name: nil %>
 			  	</div>
 			</div>

@@ -57,6 +57,8 @@
   			</div>
       </div>
       <p>
+<% 
+=begin %>
       <div class="row">
           <div class="col-xs-2">
             Allow user managed pics
@@ -97,6 +99,8 @@
             <strong>Web Site Only!.</strong>Check this if you want to review all video and photos before your fans see them. Checking this will result in a delay before your users can post photo's or videos. If you are looking for an active fan base, you may not want to check this. You can always review what your fans post as often as you like and delete any material you deem inapproptiate. This is how large sites that alllow video uploading work. It does impose a burden on the admin or team manager to pay attention to what your users are uploading.
           </div>
       </div>
+<%
+=end %>
       <div class="row">
         	<div class="col-xs-11">
           		<h4>Current teams:</h4><p>
@@ -179,6 +183,76 @@
       <p>
       <div class="row">
         <div class="col-xs-11">
+          <h4 class="text-info">Select your the theme for your site. This will be the background of your site and will also provide highlights for buttons, menus, etc. All themes are courtesy of Twitter Bootstrap</h4>
+        </div>
+      </div>
+      <p>
+      <div class="row">
+        <div class="col-xs-2">
+          <%= image_tag 'amelia.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+          <%= f.radio_button :cssstyle, "amelia" %> 
+          <%= f.label :amelia %>
+        </div>
+        <div class="col-xs-2 col-xs-offset-1">
+          <%= image_tag 'cerulean.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+          <%= f.radio_button :cssstyle, "cerulean" %> 
+          <%= f.label :cerulean %>
+        </div>
+        <div class="col-xs-2 col-xs-offset-1">
+          <%= image_tag 'cosmo.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+          <%= f.radio_button :cssstyle, "cosmo" %> 
+          <%= f.label :cosmo %>
+        </div>
+        <div class="col-xs-2 col-xs-offset-1">
+          <%= image_tag 'cyborg.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+          <%= f.radio_button :cssstyle, "cyborg" %> 
+          <%= f.label :cyborg %>
+        </div>
+      </div>
+      <p>
+      <div class="row">
+        <div class="col-xs-2">
+          <%= image_tag 'flatly.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+          <%= f.radio_button :cssstyle, "flatly" %> 
+          <%= f.label :flatly %>
+        </div>
+        <div class="col-xs-2 col-xs-offset-1">
+          <%= image_tag 'journal.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+          <%= f.radio_button :cssstyle, "journal" %> 
+          <%= f.label :journal %>
+        </div>
+        <div class="col-xs-2 col-xs-offset-1">
+          <%= image_tag 'readable.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+          <%= f.radio_button :cssstyle, "readable" %> 
+          <%= f.label :readble %>
+        </div>
+        <div class="col-xs-2 col-xs-offset-1">
+          <%= image_tag 'simplex.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+          <%= f.radio_button :cssstyle, "simplex" %> 
+          <%= f.label :simplex %>
+        </div>
+      </div>
+      <p>
+      <div class="row">
+        <div class="col-xs-2">
+          <%= image_tag 'slate.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+          <%= f.radio_button :cssstyle, "application" %> 
+          <%= f.label :slate %>
+        </div>
+        <div class="col-xs-2 col-xs-offset-1">
+          <%= image_tag 'spacelab.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+          <%= f.radio_button :cssstyle, "spacelab" %> 
+          <%= f.label :spacelab %>
+        </div>
+        <div class="col-xs-2 col-xs-offset-1">
+          <%= image_tag 'united.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+          <%= f.radio_button :cssstyle, "united" %> 
+          <%= f.label :united %>
+        </div>
+        <div class="col-xs-2 col-xs-offset-1">
+          <%= image_tag 'yeti.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+          <%= f.radio_button :cssstyle, "yeti" %> 
+          <%= f.label :yeti %>
         </div>
       </div>
       <div class="row">

@@ -121,20 +121,20 @@
 			</div>
 			<p>
 			<% if !@gameschedule.opponent.nil? %>
-				<div class="row">
-					<div class="col-xs-12">
-						<h4>Real Time Game Summary:</h4>
+				<% if @sport.name == "Basketball" %>
+					<div class="row">
+						<div class="col-xs-12">
+							<h4>Real Time Game Summary:</h4>
+						</div>
 					</div>
-				</div>
-				<p>
-				<div class="row">
-					<div class="col-xs-11">
-						<%= f.label "Last Play:" %>
-						<%= f.text_field :lastplay, class: 'form-control'  %>
+					<p>
+					<div class="row">
+						<div class="col-xs-11">
+							<%= f.label "Last Play:" %>
+							<%= f.text_field :lastplay, class: 'form-control'  %>
+						</div>
 					</div>
-				</div>
-				<p>
-				<% if @sport.sportname == "Football" or @sport.name == "Basketball" %>
+					<p>
 					<div class="row">
 						<div class="col-xs-2">
 							<!--%= f.input :livegametime, label: "Live Game Time:", as: :time, ignore_date: true, 
@@ -166,7 +166,7 @@
 				<% end %>
 				<p>
 				<% if @sport.sportname == "Football" %>
-					<%= render 'footballform', f: f %>
+					<!--%= render 'footballform', f: f %-->
 				<% elsif @sport.sportname == "Basketball" %>
 					<%= render 'basketballform', f: f %>
 				<% elsif @sport.sportname == "Soccer" %>

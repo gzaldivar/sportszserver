@@ -31,7 +31,7 @@
 		  	<%= render "football_defenses/stat_header", name: "Player" %>
 
 		  	<% @defensivestats.each do |p| %>
-			  	<% @player =  Athlete.find(p.athlete_id) %>
+			  	<% @player = Athlete.find(p.athlete_id) %>
 		  		<% if isDefense?(p) or isFBDEF?(@player) %>
 					<%= render 'football_defenses/stat_body', stat: p, name: "Player" %>
 				<% end %>

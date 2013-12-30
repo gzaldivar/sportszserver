@@ -1,0 +1,81 @@
+<%= form_for [@sport, @team, @gameschedule], :input_html => { :class => 'form-horizontal' } do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+	<%= f.hidden_field :gamedate, value: @gameschedule.gamedate %>
+	<div class="row">
+		<div class="col-xs-12">
+			<h4>Real Time Game Summary:</h4>
+		</div>
+	</div>
+	<p>
+	<div class="row">
+		<div class="col-xs-11">
+			<%= f.label "Last Play:" %>
+			<%= f.text_field :lastplay, class: 'form-control'  %>
+		</div>
+	</div>
+	<p>
+	<div class="row">
+		<div class="col-xs-2">
+			<!--%= f.input :livegametime, label: "Live Game Time:", as: :time, ignore_date: true, 
+						input_html: { style: "width: 50px" } %-->
+			<h4>Live Game Time</h4>
+			<!--%= f.text_field :current_game_time, class: 'form-control' %-->
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-1">
+			<%= label_tag "Minutes" %>
+			<%= select_tag "gameminutes", options_for_select((00 .. 20), @gameschedule.current_game_time.split(':')[0]), 
+							class: 'form-control' %>
+		</div>
+		<div class="col-xs-1">
+			<%= label_tag "Seconds" %>
+			<%= select_tag "gameseconds", options_for_select((00 .. 59), @gameschedule.current_game_time.split(':')[1]), 
+							class: 'form-control' %>
+		</div>
+	</div>
+	<p>
+	<div class="row">
+		<div class="col-xs-2">
+			<%= f.label "Possession" %>
+			<%= f.select :possession, [current_team.mascot, @gameschedule.opponent_mascot], {}, class: 'form-control' %>
+		</div>
+	</div>
+	<p>
+	<div class="row">
+		<div class="col-xs-1">
+			<%= f.label "Ball On" %>
+			<%= f.text_field :ballon, class: 'form-control' %>
+		</div>
+		<div class="col-xs-1">
+			<%= f.label "Down" %>
+			<%= f.select :down, (1..4), {}, class: 'form-control' %>
+		</div>
+		<div class="col-xs-1">
+			<%= f.label "To Go" %>
+			<%= f.text_field :togo, class: 'form-control' %>
+		</div>
+		<div class="col-xs-1">
+			<%= f.label "Penalties" %>
+			<%= f.text_field :penalty, class: 'form-control' %>
+		</div>
+		<div class="col-xs-2">
+			<%= f.label "Penalty Yards" %>
+			<%= f.text_field :penaltyyards, class: 'form-control', html: { style: "width 50px" } %>
+		</div>
+	</div>
+
+	<p>
+	<h5>Enter Game Score:<p>
+	<p class="text-danger">
+		Game score data for home team below is automatically generated via the entry of stats for athletes. Changing the data below can result in statistical data being out of sync with the athlete stats. Use with caution!
+	</p></h5>
+
+	<%= render "quarters_form", f: f %>
+	<p>
+	<div class="row">
+		<div class="col-xs-1 col-xs-offset-5">
+			  <%= f.submit :submit, class:	"btn btn-sm btn-primary", id: "submitbtn" %>
+		</div>
+	</div>
+<% end %>

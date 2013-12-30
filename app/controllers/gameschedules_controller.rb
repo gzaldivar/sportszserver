@@ -7,7 +7,7 @@ class GameschedulesController < ApplicationController
                                               :rushinggamestats, :receivinggamestats, :defensegamestats, :kickergamestats, :returnergamestats, 
                                               :footballboxscore,:footballscoreboard, :footballteamgametotals, :addfootballqb,
                                               :footballdefensestats, :footballspecialteamstats, :addfootballrb, :addfootballrec, :addfootballdef,
-                                              :addfootballpk, :addfootballret, :addfootballkicker, :addfootballpunter]
+                                              :addfootballpk, :addfootballret, :addfootballkicker, :addfootballpunter, :footballform]
   before_filter only: [:destroy, :update, :create, :edit, :new, :createlogo, :updatelogo] do |controller| 
     controller.team_manager?(@gameschedule, @team)
   end
@@ -160,7 +160,7 @@ class GameschedulesController < ApplicationController
   end
   
   def update
-    begin
+#    begin
       datetime = DateTime.iso8601(params[:gameschedule][:gamedate])
       if params[:starthour]
         if params[:ampm] == "PM" and params[:stathour].to_i != 12
@@ -187,12 +187,12 @@ class GameschedulesController < ApplicationController
           format.html { redirect_to [@sport, @team, @gameschedule] }
           format.json { render json: { schedule: @gameschedule, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
       end
-    rescue Exception => e
-      respond_to do |format|
-        format.html { redirect_to :back, alert: "Error updating game schedule " + e.message }
-        format.json { render status: 404, json: { error: e.message, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
-      end
-    end
+#    rescue Exception => e
+#      respond_to do |format|
+#        format.html { redirect_to :back, alert: "Error updating game schedule " + e.message }
+#        format.json { render status: 404, json: { error: e.message, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
+#      end
+#    end
   end
   
   def index
@@ -440,6 +440,9 @@ class GameschedulesController < ApplicationController
 
   def addfootballpunter
     @athlete = Athlete.find(params[:player_id])
+  end
+
+  def footballform    
   end
   
 private

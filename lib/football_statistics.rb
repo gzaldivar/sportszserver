@@ -134,6 +134,8 @@ module FootballStatistics
 					end
 				end
 			end
+
+			@stats.sort_by! { |obj| obj.attempts }.reverse!
 		end
 
 		def passingtotals
@@ -225,6 +227,8 @@ module FootballStatistics
 					end
 				end
 			end
+
+			@stats.sort_by! { |obj| obj.attempts }.reverse!
 		end
 
 		def rushingtotals
@@ -300,7 +304,7 @@ module FootballStatistics
 					end
 				end
 			else
-				players = sport.athletes.where(team_id: anobject.team_id).asc(:number)
+				players = sport.athletes.where(team_id: anobject.team_id)
 
 				@stats = []
 
@@ -317,6 +321,8 @@ module FootballStatistics
 					end
 				end
 			end
+
+			@stats.sort_by! { |obj| obj.receptions }.reverse!
 		end
 
 		def receivingtotals
@@ -392,6 +398,8 @@ module FootballStatistics
 					end
 				end
 			end
+
+			@stats.sort_by! { |obj| obj.tackles }.reverse!
 		end
 
 		def defensetotals
@@ -447,7 +455,7 @@ module FootballStatistics
 					end
 				end
 			else
-				players = sport.athletes.where(team_id: anobject.team_id).asc(:number)
+				players = sport.athletes.where(team_id: anobject.team_id)
 
 				@stats = []
 
@@ -464,6 +472,8 @@ module FootballStatistics
 					end
 				end
 			end
+
+			@stats.sort{ |a,b| a.fgattempts <=> b.fgattempts }
 		end
 
 		def placekickertotals

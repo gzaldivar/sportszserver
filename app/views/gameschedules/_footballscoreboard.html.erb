@@ -1,5 +1,8 @@
 <ul class="nav nav-pills">
 	<li><%= link_to "Box Score", "#", :class => 'football_boxscore' %></li>
+	<%if site_owner? or isTeamManager?(@gameschedule) %>
+		<li><%= link_to "Update", footballform_sport_team_gameschedule_path(@sport, @team, @gameschedule) %></li>
+	<% end %>
 </ul>
 <div class="well">
 	<div class="row">

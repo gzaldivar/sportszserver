@@ -46,8 +46,8 @@ Sportzserver::Application.configure do
   # config.action_controller.asset_host = "http://assets.example.com"
 
   # Precompile additional assets (application.js, application.css, and all non-JS/CSS are already added)
-  config.assets.precompile += ['application.css', 'spacelab.css', 'amelia', 'cerulean', 'cosmo', 'cyborg',
-                               'flatly', 'journal', 'readable', 'simplex', 'united', 'yeti']
+  config.assets.precompile += ['application.css', 'spacelab.css', 'amelia.css', 'cerulean.css', 'cosmo.css', 'cyborg.css',
+                               'flatly.css', 'journal.css', 'readable.css', 'simplex.css', 'united.css', 'yeti.css']
 
   # ActionMailer Config
   # Setup for production - deliveries, no errors raised

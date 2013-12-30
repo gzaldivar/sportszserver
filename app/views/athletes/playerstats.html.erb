@@ -11,6 +11,8 @@
 	<div class="col-xs-4">
 		<em><h4>Display stats for: <%= link_to @athlete.full_name, sport_athlete_path(@sport, @athlete) %></h4></em>
 	</div>
+<%
+=begin %>
 	<% if site_owner? or isTeamManager?(@athlete) %>
 		<div class="col-xs-4">
 			<%= form_tag selectedstat_sport_athlete_path(sport_id: @sport, athlete_id: @athlete), class: "form-horizontal", method: 'put' do %>
@@ -27,6 +29,8 @@
 		</div>
 	<% end %>
 </div>
+<%
+=end %>
 <% if isPasser?(@passingtotals) or isRusher?(@rushingtotals) or isReceiver?(@receivingtotals) or isDefense?(@defensivetotals) or 
 		isKicker?(@kickofftotals) or isPunter?(@puntertotals) or isPlaceKicker?(@placekickertotals) or isPuntReturner?(@returnertotals) or
 		isKOReturner?(@returnertotals) or isKicker?(@kickofftotals) %>
@@ -71,7 +75,7 @@
 
 				  	<% @receivingstats.each do |p| %>
 				  		<% if isReceiver?(p) or isFBRec?(@athlete) %>
-							<%= render 'football_receivings/stat_body', stat: p, ame: "Game" %>
+							<%= render 'football_receivings/stat_body', stat: p, name: "Game" %>
 						<% end %>
 					<% end %>
 					<%= render 'football_receivings/stat_body', stat: @receivingtotals, name: "Totals" %>

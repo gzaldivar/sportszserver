@@ -71,10 +71,10 @@ class Gamelog
         stat = FootballPassing.find(football_passing_id)
         rec = FootballReceiving.where(gameschedule_id: gameschedule_id, athlete_id: assist).first
         if !stat.nil? and !rec.nil?
-          if stat.yards > self.yards
+          if stat.yards >= self.yards
             stat.yards = stat.yards - self.yards
           end
-          if rec.yards > self.yards
+          if rec.yards >= self.yards
             rec.yards = rec.yards - self.yards
           end
           if rec.receptions > 0
@@ -109,7 +109,7 @@ class Gamelog
 
         stat = FootballRushing.find(football_rushing_id)
         if !stat.nil?
-          if stat.yards > self.yards
+          if stat.yards >= self.yards
             stat.yards -= self.yards
           end
           if stat.attempts > 0
@@ -126,7 +126,7 @@ class Gamelog
         theplayer = Athlete.find(FootballDefense.find(football_defense_id).athlete_id)
         stat = FootballDefense.find(football_defense_id)
         if !stat.nil?
-          if stat.int_yards > self.yards
+          if stat.int_yards >= self.yards
             stat.int_yards -= self.yards
           end
           if footballPosition == "interception" and stat.interceptions > 0
@@ -151,7 +151,7 @@ class Gamelog
             if stat.punt_returnlong == stat.punt_returnyards
               stat.punt_returnlong =0
             end
-            if stat.punt_returnyards > self.yards
+            if stat.punt_returnyards >= self.yards
               stat.punt_returnyards -= self.yards
             end
             if stat.punt_return > 0
@@ -164,7 +164,7 @@ class Gamelog
             if stat.kolong == stat.koyards
               stat.kolong =0
             end
-            if stat.koyards > self.yards
+            if stat.koyards >= self.yards
               stat.koyards -= self.yards
             end
             if stat.koreturns > 0

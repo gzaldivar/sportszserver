@@ -51,7 +51,7 @@ module GameschedulesHelper
 		elsif game.opponentpic?
 			game.opponentpic.url(:tiny)
 		else
-			"photo_not_available.png"
+			"Tiny_Photo_Not_Available.png"
 		end
 	end
 

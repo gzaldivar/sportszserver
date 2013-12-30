@@ -2,7 +2,11 @@
 <html>
   <head>
     <title><%= full_title(yield(:title)) %></title>
-    <%= stylesheet_link_tag    "application", media: "all" %>
+    <% if current_site? %>
+      <%= stylesheet_link_tag current_site.cssstyle, media: "all" %>
+    <% else %>
+      <%= stylesheet_link_tag    "application", media: "all" %>
+    <% end %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>
     <%= render 'layouts/shim' %>    

@@ -15,6 +15,7 @@ class Sport
   field :season, type: String
   field :mascot, type: String
   field :sitename, type: String
+  field :cssstyle, type: String, default: "application"
 
   field :enable_user_pics,    type: Boolean
   field :enable_user_video,   type: Boolean

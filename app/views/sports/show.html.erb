@@ -6,9 +6,9 @@
 <div class="row">
   <div class="col-xs-7">
       <ul class="nav nav-pills">
-        <% if @sport.teams.count > 1 %>
-          <li><a href="#teamselect-responsive" data-toggle="modal">Select Team</a></li>
-        <% elsif @sport.teams.count == 0 %>
+        <!--% if @sport.teams.count > 1 %-->
+          <li><a href="#teamselect-responsive" data-toggle="modal">Teams</a></li>
+        <% if @sport.teams.count == 0 %>
           <script> 
             $(document).ready(function() {
               $('#noteamsmodal').modal('show');

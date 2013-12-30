@@ -128,5 +128,11 @@ module SportsHelper
       ['Stryker', 'STRK']
     ]
   end
-  
+
+  def themes
+    raw [
+         [image_tag('slate.png'), 'application'],
+         [image_tag('spacelab.png'), 'spacelab']
+        ].join()
+  end  
 end

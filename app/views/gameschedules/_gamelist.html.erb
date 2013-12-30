@@ -15,12 +15,19 @@
                 <tr>
                     <td><%= g.gamedate.strftime("%m/%d") %></td>
                     <% if g.homeaway == "Away" %>
-                        <td><%= link_to g.league ? "@" + g.opponent_mascot + "*" : "@" + g.opponent_mascot, sport_team_gameschedule_path(@sport, current_team, g) %></td>
+                        <td><%= link_to g.league ? "@" + g.opponent_mascot + "*" : "@" + g.opponent_mascot, 
+                                sport_team_gameschedule_path(@sport, current_team, g) %></td>
                     <% else %>
-                        <td><%= link_to g.league ? g.opponent_mascot + "*" : g.opponent_mascot, sport_team_gameschedule_path(@sport, current_team, g) %></td>
+                        <td><%= link_to g.league ? g.opponent_mascot + "*" : g.opponent_mascot, 
+                                sport_team_gameschedule_path(@sport, current_team, g) %></td>
                     <% end %>
                     <td><%= footballhomescore(@sport, g).to_s + "-" + g.opponentscore.to_s %></td>
-                    <td><%= footballhomescore(@sport, g) > g.opponentscore ? "W" : footballhomescore(@sport, g) == g.opponentscore ? "T" : "L" %></td>
+                    <td>
+                        <% if g.starttime < Time.now or g.final %>
+                            <%= footballhomescore(@sport, g) > g.opponentscore ? "W" : 
+                                    footballhomescore(@sport, g) == g.opponentscore ? "T" : "L" %>
+                        <% end %>
+                    </td>
                 </tr>
             <% end %>
         </tbody>

@@ -18,8 +18,7 @@
             <h4><em><strong>No global site Mascot defined. You must enter one for the team.</strong></em></h4>
             <%= t.text_field :mascot, class: 'form-control' %>
           <% else %>
-            Use the site mascot?
-            <%= t.text_field :mascot, value: current_site.mascot, class: 'form-control' %>
+            <%= t.text_field :mascot, value: @team.mascot.blank? ? current_site.mascot : current_team.mascot, class: 'form-control' %>
           <% end %>
         </div>
       </div>

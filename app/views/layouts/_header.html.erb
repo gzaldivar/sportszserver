@@ -47,7 +47,8 @@
 						<li><a href="#toolselect-responsive" data-toggle="modal">Tools</a></li>
 					<% end %>
 					<% if user_signed_in? %>
-						<li id="fat-menu" class="dropdown">
+						<li><a href="#userheaderselect-responsive" data-toggle="modal"><%= current_user.email %></a></li>
+						<!--li id="fat-menu" class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 					            <%= current_user.email %> <b class="caret"></b>
 							</a>
@@ -55,12 +56,12 @@
 								<li><%= link_to "My Profile", user_path(current_user) %></li>
 								<% if isAdmin? and !@sport.nil?  %>
 								<% end %>
-								<!--li class="divider"></li>
-								<li><%= link_to "Change Site", sports_path %></li-->
+								<li class="divider"></li>
+								<li><%= link_to "Change Site", sports_path %></li>
 								<li class="divider"></li>
 								<li><%= link_to "Sign out", destroy_user_session_path, method: "delete" %></li>
 							</ul>
-						</li>
+						</li-->
 					<% else %>
 						<!--li-->
 							<!--%= form_for(resource, :as => resource_name, :url => user_session_path, html: { class: 'form-inline' } ) do |f| %-->

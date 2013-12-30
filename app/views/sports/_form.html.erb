@@ -117,14 +117,15 @@
       <p>
       <div class="row">
         <div class="col-xs-11">
-            <h5>Below you will be able to upload your site banner, logo and background color. You will be able to change them at anytime. Recommended sizes for each are:
+            <h5>Below you will be able to upload your site banner and logo. You will be able to change them at anytime. Recommended sizes for each are:
+              <p>
               <ul>
-                <li>Banner:     300x750</li>
+                <li>Banner:     1000x400</li>
                 <li>Logo:       150x150</li>
                 <!--li>Background: 1600x1200</li-->
               </ul>
             <p>
-            You must use jpg/jpeg or png images for the banner and logo. If you do not upload a banner, none will be displayed for your site. You can use a jpg or png for background. You can use GIMP, Photoshop or some other image manipulation program to create banners and logos. 
+            You must use jpg/jpeg or png images for the banner and logo. If you do not upload a banner, none will be displayed for your site. Use GIMP, Photoshop or some other image manipulation program to create banners and logos. 
             </h5>
              <p>
             <li><h4><em>LOGO</em></h4><h5>Logo will also be used for mobile displays on iPhones and iPads. If your logo is an image with a size other than 150x150, upload it and it will be automatically be resized. We will resize your logo's to create thumbnails to fit the image format on mobile devices.</h5>
@@ -149,14 +150,35 @@
           <% end %>
         </div>
       </div>
+      <p>
       <div class="row">
         <div class="col-xs-4">
           <%= f.file_field  :sport_banner, class: 'form-control' %>
         </div>
       </div>
       <p>
+      <div class="row">
+        <div class="row">
+          <div class="col-xs-3">
+            <p class="text-info">Position banner on upper left of page</p>
+            <%= f.radio_button :bannerpos, "left" %>
+            <%= f.label :left %>
+          </div>
+          <div class="col-xs-3 col-xs-offset-1">
+            <p class="text-info">Position banner on upper center of page</p>
+            <%= f.radio_button :bannerpos, "center" %>
+            <%= f.label :center %>
+          </div>
+          <div class="col-xs-3 col-xs-offset-1">
+            <p class="text-info">Position banner on upper right of page</p>
+            <%= f.radio_button :bannerpos, "right" %>
+            <%= f.label :right %>
+          </div>
+        </div>
+      </div>
+      <p>
       <div class="row"> 
-   			<div class="col-xs-1">
+   			<div class="col-xs-2">
   				<% if !@sport.sport_logo.blank? %>
   					<h4>Current Sport Logo</h4>
   					<%= image_tag @sport.sport_logo.url(:thumb), class: 'img-responsive' %>

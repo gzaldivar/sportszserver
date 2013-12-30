@@ -15,7 +15,9 @@ class Sport
   field :season, type: String
   field :mascot, type: String
   field :sitename, type: String
+
   field :cssstyle, type: String, default: "application"
+  field :bannerpos, type: String, default: "right"
 
   field :enable_user_pics,    type: Boolean
   field :enable_user_video,   type: Boolean
@@ -74,10 +76,10 @@ class Sport
                          access_key_id: S3DirectUpload.config.access_key_id,
     					           secret_access_key: S3DirectUpload.config.secret_access_key },
     :styles => {
-      :original => ['1920x300', :jpg],
+#      :original => ['1920x300', :jpg],
       :thumb    => ['125x50',   :jpg],
-      :medium   => ['600x100',    :jpg],
-      :large    => ['1000x150',   :jpg]
+      :medium   => ['750x300',    :jpg],
+      :large    => ['1000x400',   :jpg]
     }
 
   has_mongoid_attached_file :sport_logo,

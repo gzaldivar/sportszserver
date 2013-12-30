@@ -25,27 +25,91 @@
     <div class="col-xs-11 col-xs-offset-1">
       <% if current_site? && current_site.sport_banner? %>
           <div class="row">
-            <div class="col-xs-4">
-              <div class="row">
-                <h3><p class="text-info"><%= link_to current_site.sitename, sport_path(current_site) %></p></h3>
+            <% if current_site.bannerpos == "right" %>
+              <div class="col-xs-4">
+                <div class="row">
+                    <% if current_site.sport_logo? %>
+                      <%= link_to (image_tag current_site.sport_logo.url(:thumb), class: 'img-responsive'), sport_path(current_site) %>
+                    <% end %>
+                </div>
+                <div class="row">
+                  <h3><p class="text-info"><%= link_to current_site.sitename, sport_path(current_site) %></p></h3>
+                </div>
+                <p>
+                <div class="row">
+                    <% if current_team? and current_team.team_logo? %>
+                      <%= link_to (image_tag get_team_logo(current_site, current_team), class: 'img-responsive'), sport_path(current_site) %>
+                    <% end %>
+                </div>
+                <div class="row">
+                  <% if current_team? %>
+                    <h3><p class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></p></h3>
+                  <% end %>
+                </div>
+             </div>
+              <div class="col-xs-7">
+                <%= image_tag current_site.sport_banner.url(:medium), { class: 'img-responsive', height: '300', width: '750' } %>
               </div>
-              <div class="row">
-                <% if current_team? %>
-                  <h3><p class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></p></h3>
-                <% end %>
+            <% elsif current_site.bannerpos == "center" %>
+              <div class="col-xs-2">
+                <div class="row">
+                  <h4><%= current_site.sitename %></h4>
+                </div>
+                <div class="row">
+                    <% if current_team? %>
+                      <%= link_to (image_tag get_team_logo(current_site, current_team), class: 'img-responsive'), sport_path(current_site) %>
+                    <% end %>
+                </div>
+                <div class="row">
+                  <% if current_team? %>
+                    <h4 class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></h4>
+                  <% end %>
+                </div>
               </div>
-              <p>
-              <div class="row">
-                <% if current_site.sport_logo? %>
-                  <%= link_to (image_tag current_site.sport_logo.url(:thumb), class: 'img-responsive'), sport_path(current_site) %>
-                <% else %>
-                  <%= image_tag 'Photo_Not_Available.jpg' %>
-                <% end %>
+              <div class="col-xs-7">
+                <%= image_tag current_site.sport_banner.url(:medium), { class: 'img-responsive' } %>
               </div>
-            </div>
-            <div class="col-xs-7">
-              <%= image_tag current_site.sport_banner.url(:large), { class: 'img-responsive', height: '300', width: '750' } %>
-            </div>
+              <div class="col-xs-2">
+                <div class="row">
+                  <h4><%= current_site.sitename %></h4>
+                </div>
+                <div class="row">
+                    <% if current_site.sport_logo? %>
+                      <%= link_to (image_tag current_site.sport_logo.url(:thumb), class: 'img-responsive'), sport_path(current_site) %>
+                    <% end %>
+                </div>
+                <div class="row">
+                  <% if current_team? %>
+                    <h4 class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></h4>
+                  <% end %>
+                </div>
+              </div>
+            <% else %>
+              <div class="col-xs-7">
+                <%= image_tag current_site.sport_banner.url(:medium), { class: 'img-responsive', height: '300', width: '750' } %>
+              </div>
+              <div class="col-xs-4">
+                <div class="row">
+                    <% if current_site.sport_logo? %>
+                      <%= link_to (image_tag current_site.sport_logo.url(:thumb), class: 'img-responsive'), sport_path(current_site) %>
+                    <% end %>
+                </div>
+                <div class="row">
+                  <h3><p class="text-info"><%= link_to current_site.sitename, sport_path(current_site) %></p></h3>
+                </div>
+                <p>
+                <div class="row">
+                    <% if current_team? and current_team.team_logo? %>
+                      <%= link_to (image_tag get_team_logo(current_site, current_team), class: 'img-responsive'), sport_path(current_site) %>
+                    <% end %>
+                </div>
+                <div class="row">
+                  <% if current_team? %>
+                    <h3><p class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></p></h3>
+                  <% end %>
+                </div>
+             </div>
+            <% end %>
           </div>
           <p>
       <% elsif current_site? %>
@@ -68,6 +132,7 @@
   		<%= debug(params) if Rails.env.development? %>
       <%= render 'layouts/moreselectmodal' if current_team? %>
       <%= render 'layouts/toolsselectmodal' if user_signed_in? and site_owner? %>
+      <%= render 'layouts/userheaderselectmodal' if user_signed_in? %>
     </div>
   </div>
 </html>

@@ -1,5 +1,6 @@
 class GameschedulesController < ApplicationController
   include FootballStatistics
+  include BasketballStatistics
 
 	before_filter	:authenticate_user!,   only: [:destroy, :new, :edit, :update, :create, :show]
   before_filter :get_sport
@@ -7,7 +8,8 @@ class GameschedulesController < ApplicationController
                                               :rushinggamestats, :receivinggamestats, :defensegamestats, :kickergamestats, :returnergamestats, 
                                               :footballboxscore,:footballscoreboard, :footballteamgametotals, :addfootballqb,
                                               :footballdefensestats, :footballspecialteamstats, :addfootballrb, :addfootballrec, :addfootballdef,
-                                              :addfootballpk, :addfootballret, :addfootballkicker, :addfootballpunter, :footballform]
+                                              :addfootballpk, :addfootballret, :addfootballkicker, :addfootballpunter, :footballform, 
+                                              :basketballteamscorestats, :basketballteamotherstats, :basketballform, :soccerform]
   before_filter only: [:destroy, :update, :create, :edit, :new, :createlogo, :updatelogo] do |controller| 
     controller.team_manager?(@gameschedule, @team)
   end
@@ -76,6 +78,10 @@ class GameschedulesController < ApplicationController
       if @gameschedule.opponent_team_id?
         @opposingsport = Sport.find(@gameschedule.opponent_sport_id)
         @opposingteam = @opposingsport.teams.find(@gameschedule.opponent_team_id)
+
+        if @gameschedule.useopponentstats
+#          @visitorhomescore = footballhomescore(@opposingsport, )
+        end
       end
 
       if @sport.name == "Football"
@@ -88,27 +94,28 @@ class GameschedulesController < ApplicationController
         @turnovers = FootballStatistics.turnovers
 
       elsif @sport.name == "Basketball"
-        @stats = @gameschedule.basketball_stats
-        totals = StatTotal.new(@sport, @gameschedule)
-        
-#        @gameschedule.homescore = totals.basketball_home_totals
-#        @gameschedule.homefouls = totals.fouls
+
+        basketballstats = Basketballstats.new(@sport, @gameschedule)
+        @stats = basketballstats.stats
+        @totals = basketballstats.stattotals
+
       elsif @sport.name == "Soccer"
         @stats = @gameschedule.soccers
-
-        @soccerhomesog = 0
-        @soccerhomeck = 0
-        @soccerhomesaves = 0
-#        @gameschedule.homescore = 0
+        @totals = Soccer.new(athlete_id: nil, gameschedule_id: @gameschedule.id)
 
         @stats.each do |s|
-          @soccerhomesog += s.shotstaken
-          @soccerhomeck += s.cornerkick
-          @soccerhomesaves += s.goalssaved
+          @totals.goals += s.goals
+          @totals.shotstaken += s.shotstaken
+          @totals.assists += s.assists
+          @totals.steals += s.steals
+          @totals.cornerkick += s.cornerkick
+          @totals.goalsagainst += s.goalsagainst
+          @totals.goalssaved += s.goalssaved
+          @totals.shutouts += s.shutouts
+          @totals.minutesplayed += s.minutesplayed
         end
 
         totals = StatTotal.new(@sport, @gameschedule)
-#        @gameschedule.homescore = totals.soccer_home_score
 
         athletes = @players
         @players = []
@@ -160,7 +167,7 @@ class GameschedulesController < ApplicationController
   end
   
   def update
-#    begin
+    begin
       datetime = DateTime.iso8601(params[:gameschedule][:gamedate])
       if params[:starthour]
         if params[:ampm] == "PM" and params[:stathour].to_i != 12
@@ -187,12 +194,12 @@ class GameschedulesController < ApplicationController
           format.html { redirect_to [@sport, @team, @gameschedule] }
           format.json { render json: { schedule: @gameschedule, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
       end
-#    rescue Exception => e
-#      respond_to do |format|
-#        format.html { redirect_to :back, alert: "Error updating game schedule " + e.message }
-#        format.json { render status: 404, json: { error: e.message, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
-#      end
-#    end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: "Error updating game schedule " + e.message }
+        format.json { render status: 404, json: { error: e.message, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
+      end
+    end
   end
   
   def index
@@ -297,9 +304,9 @@ class GameschedulesController < ApplicationController
   end
 
   def passinggamestats
-        passstats = Passingstats.new(@sport, @gameschedule)
-        @passingstats = passstats.stats
-        @passingtotals = passstats.passingtotals
+    passstats = Passingstats.new(@sport, @gameschedule)
+    @passingstats = passstats.stats
+    @passingtotals = passstats.passingtotals
   end
 
   def rushinggamestats
@@ -444,6 +451,37 @@ class GameschedulesController < ApplicationController
 
   def footballform    
   end
+
+  def basketballform
+    render 'gameschedules/basketball/basketballform'
+  end
+
+  def soccerform
+    @soccerhomesog = 0
+    @soccerhomeck = 0
+    @soccerhomesaves = 0
+
+    @stats = @gameschedule.soccers
+
+    @stats.each do |s|
+      @soccerhomesog += s.shotstaken
+      @soccerhomeck += s.cornerkick
+      @soccerhomesaves += s.goalssaved
+    end
+   render 'gameschedules/soccer/soccerform'
+  end
+
+  def basketballteamscorestats   
+    basketballstats = Basketballstats.new(@sport, @gameschedule)
+    @stats = basketballstats.stats
+    @totals = basketballstats.stattotals
+ end
+
+ def basketballteamotherstats
+    basketballstats = Basketballstats.new(@sport, @gameschedule)
+    @stats = basketballstats.stats
+    @totals = basketballstats.stattotals
+ end
   
 private
   

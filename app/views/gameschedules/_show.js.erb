@@ -54,5 +54,17 @@
         dataType: "script"
       });
     });
+    $('.basketballteam_gametotals').click(function() {
+      $.ajax({
+        url: "<%= basketballteamscorestats_sport_team_gameschedule_path %>",
+        dataType: "script"
+      });
+    });
+    $('.basketballteam_stats').click(function() {
+      $.ajax({
+        url: "<%= basketballteamotherstats_sport_team_gameschedule_path %>",
+        dataType: "script"
+      });
+    });
    });
 </script>

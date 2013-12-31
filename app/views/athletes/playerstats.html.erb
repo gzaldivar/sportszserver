@@ -11,6 +11,7 @@
 	<div class="col-xs-4">
 		<em><h4>Display stats for: <%= link_to @athlete.full_name, sport_athlete_path(@sport, @athlete) %></h4></em>
 	</div>
+</div>
 <%
 =begin %>
 	<% if site_owner? or isTeamManager?(@athlete) %>
@@ -185,29 +186,10 @@
 		</div>
 	</div>
 <% else %>
-<div class="row">
-	<div class="col-xs-4">
-		<div id="nostats-responsive" class="modal-dialog" tabindex="-1" data-width="760" style="display: none;">
-		  <div class="modal-header">
-		    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-		    <h4 class="modal-title">No Stats</h4>
-		  </div>
-		  <div class="modal-body">
-		    <div class="row">
-		      <div class="col-md-4">
-		        <div class="well">
-		          <p class="text-info">No stats for player <%=@athlete.full_name %></p>
-		        </div>
-		      </div>
-		    </div>
-		  </div>
-		  <div class="modal-footer">
-		    <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
-		  </div>
-		</div>
-	</div>
-</div>
+	<%= render 'layouts/messagemodal', modalid: "nostatsmodal", modaltitle: "No Stats", messagetext: "No stats for " + @athlete.numlogname %>
+	<script>
+        $(document).ready(function() {
+          $('#nostatsmodal').modal('show');
+        });
+	</script>
 <% end %>
-<script>
-	$("#nostats-responsive").modal('show');
-</script>

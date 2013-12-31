@@ -1,21 +1,25 @@
 <tr>
 	<% if name == "Game" %>
 		<% @game = Gameschedule.find(stat.gameschedule_id.to_s) %>
-		<td><%= link_to(@game.game_name, [@sport, @sport.teams.find(@game.team_id), @game]) %></td>
-	<% else %>
+		<td><%= link_to image_tag(opponentimage(@game), class: 'img-responsive'), [@sport, @sport.teams.find(@game.team_id), @game] %></td>
+		<td><%= link_to(@game.opponent_name, [@sport, @sport.teams.find(@game.team_id), @game]) %></td>
+	<% elsif name == "Player" %>
 		<% athlete = Athlete.find(stat.athlete_id.to_s) %>
-		<td><%= link_to(athlete.logname, [@sport, athlete]) %></td>
+		<td><%= link_to image_tag(getimage(athlete, 'tiny'), class: 'img-responsive'), [@sport, @theplayer] %></td>
+		<td><%= link_to(athlete.numlogname, [@sport, athlete]) %></td>
+	<% else %>
+		<td></td>
+		<td>Totals</td>
 	<% end %>
-
 	<td><%= stat.goalsagainst %></td>
 	<td><%= stat.goalssaved %></td>
 	<td><%= stat.shutouts %></td>
 	<td><%= stat.minutesplayed %></td>
 
-	<% if Soccer.find(stat.id).nil? and isAdmin? %>
+	<% if Soccer.find(stat.id).nil? and site_owner? or isTeamManager?(name == "Player" ? athlete : @game) and name != "Totals" %>
 		<td><%= link_to "Stats", new_sport_athlete_soccer_path(@sport, stat.athlete_id, gameschedule_id: stat.gameschedule_id), 
 						class: "btn btn-xs btn-primary" %></td>
-	<% elsif isAdmin? %>
+	<% elsif site_owner? or isTeamManager?(name == "Player" ? athlete : @game) and name != "Totals" %>
 		<td><%= link_to "Stats", edit_sport_athlete_soccer_path(@sport, stat.athlete_id, stat, gameschedule_id: stat.gameschedule_id), 
 				class: "btn btn-xs btn-primary" %></td>
 	<% end %>

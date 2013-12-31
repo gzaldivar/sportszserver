@@ -9,12 +9,13 @@
 	<div class="col-xs-10">
 		<% if !@athlete.nil? and !@gameschedule.nil? %>
 			<% if @stats.empty? %>
-				<h4>There are no stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> and 
-										   <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
-				<% if isAdmin? %>
-					<%= link_to "Add Stat", new_sport_athlete_soccer_path(@sport, @athlete, gameschedule_id: @gameschedule), 
-							class: "btn btn-sm btn-primary" %>
-				<% end %>
+				<%= render 'layouts/messagemodal', modalid: "nostatsmodal", modaltitle: "No Stats", 
+							messagetext: "No stats for " + @athlete.numlogname %>
+				<script>
+			        $(document).ready(function() {
+			          $('#nostatsmodal').modal('show');
+			        });
+				</script>
 			<% else %>
 				<h4>Stats for <%= @athlete.logname %> for game <%= @gameschedule.game_name %></h4>
 				<% if hasSoccerPlayerStats?(@stats) %>
@@ -32,11 +33,13 @@
 			<% end %>
 		<% elsif !@athlete.nil? %>
 			<% if @stats.empty? %>
-				<h4>There are no stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %></h4>
-				<% if isAdmin? %>
-				 	<%= link_to "Add Stats", new_sport_athlete_soccer_path(@sport, @athlete), 
-							class: "btn btn-sm btn-primary" %>
-				<% end %>
+				<%= render 'layouts/messagemodal', modalid: "nostatsmodal", modaltitle: "No Stats", 
+							messagetext: "No stats for " + @athlete.numlogname %>
+				<script>
+			        $(document).ready(function() {
+			          $('#nostatsmodal').modal('show');
+			        });
+				</script>
 			<% else %>
 				<h4>Stats for <%= @athlete.logname %></h4>
 				<% if hasSoccerPlayerStats?(@stats) %>
@@ -81,11 +84,13 @@
 			<% end %>
 		<% elsif !@gameschedule.nil? %>
 			<% if @stats.empty? %>
-				<h4>There are no stats for <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
-				<% if isAdmin? %>
-					<%= link_to "Add Stats", new_sport_athlete_soccer_path(@sport, @athlete), 
-							class: "btn btn-sm btn-primary" %>
-				<% end %>
+				<%= render 'layouts/messagemodal', modalid: "nostatsmodal", modaltitle: "No Stats", 
+							messagetext: "No stats for " + @athlete.numlogname %>
+				<script>
+			        $(document).ready(function() {
+			          $('#nostatsmodal').modal('show');
+			        });
+				</script>
 			<% else %>
 				<h4>Stats for game <%= @gameschedule.game_name %></h4>
 				<table class="table table-bordered">

@@ -4,74 +4,56 @@
 	<div class="col-xs-2">
 		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
 	</div>
+	<div class="col-xs-9">
+	</div>
 </div>
 <div class="row">
-	<div class="col-xs-10">
-		<% if !@athlete.nil? and !@gameschedule.nil? %>
+	<div class="col-xs-11">
+		<% if !@athlete.nil? %>
 			<% if @bballstats.empty? %>
-				<h4>There are no stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> and <%= @gameschedule.game_name %></h4>
-				<% if isAdmin? %>
-					<%= link_to "Add Stat", newstat_sport_athlete_basketball_stats_path(@sport, @athlete, gameschedule_id: @gameschedule), 
-							class: "btn btn-sm btn-primary" %>
-				<% end %>
-			<% else %>
-				<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for game <%= @gameschedule.game_name %></h4>
-				<table class="table table-bordered">
-					<%= render "stat_header", name: "Game" %>
-					<%= render "stat_body", stat: @bballstats[0], name: "Game" %>
-				</table>
-			<% end %>
-		<% elsif !@athlete.nil? %>
-			<% if @bballstats.empty? %>
-				<h4>There are no stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %></h4>
-				<% if isAdmin? %>
-					<%= link_to "Add Stats", newstat_sport_athlete_basketball_stats_path(@sport, @athlete), 
-							class: "btn btn-sm btn-primary" %>
-				<% end %>
+				<%= render 'layouts/messagemodal', modalid: 'nostatsmodal', modaltitle: 'No Stats', 
+													messagetext: 'No stats entered for ' + @athlete.numlogname %>
+				<script>
+				    $(document).ready(function() {
+	              		$('#nostatsmodal').modal('show');
+	            	});
+				</script>
 			<% else %>
 				<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %></h4>
-				<table class="table table-bordered">
-					<%= render "stat_header", name: "Player" %>
-					<% @gameschedules.each do |g| %>
-						<% @thestat = nil %>
-						<% @bballstats.each do |b| %>
-							<% if g.id == b.gameschedule_id %>
-								<% @thestat = b %>
-								<% break %>
-							<% end %>
-						<% end %>
-						<% if @thestat %>
-							<%= render "stat_body", stat: @thestat, name: "Game" %>
-						<% else %>
-							<%= render "stat_body", stat: BasketballStat.new(gameschedule: g.id, athlete: @athlete.id), name: "Game" %>
-						<% end %>
+				<table class="table table-striped table-bordered table-hover">
+					<%= render "stat_header_score", name: "Game" %>
+					<% @bballstats.each do |b| %>
+						<%= render "stat_body_score", stat: b, name: "Game" %>
+					<% end %>
+				</table>
+				<table class="table table-striped table-bordered table-hover">
+					<%= render "stat_header_other", name: "Game" %>
+					<% @bballstats.each do |b| %>
+						<%= render "stat_body_other", stat: b, name: "Game" %>
 					<% end %>
 				</table>
 			<% end %>
 		<% elsif !@gameschedule.nil? %>
 			<% if @bballstats.empty? %>
-				<h4>There are no stats for <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
-				<% if isAdmin %>
-					<%= link_to "Add Stats", newstat_sport_athlete_basketball_stats_path(@sport, @athlete), 
-							class: "btn btn-sm btn-primary" %>
-				<% end %>
+				<%= render 'layouts/messagemodal', modalid: 'nostatsmodal', modaltitle: 'No Stats', 
+													messagetext: 'No stats entered for ' + @athlete.numlogname %>
+				<script>
+				    $(document).ready(function() {
+	              		$('#nostatsmodal').modal('show');
+	            	});
+				</script>
 			<% else %>
 				<h4>Stats for game <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
-				<table class="table table-bordered">
-					<%= render "stat_header", name: "Player" %>
-					<% @athletes.each do |a| %>
-						<% @thestat = nil %>
-						<% @bballstats.each do |b| %>
-							<% if a.id == b.athlete_id %>
-								<% @thestat = b %>
-								<% break %>
-							<% end %>
-						<% end %>
-						<% if @thestat %>
-							<%= render "stat_body", stat: b, name: "Player" %>
-						<% else %>
-							<%= render "stat_body", stat: BasketballStat.new(gameschedule: @gameschedule.id, athlete: a.id), name: "Player" %>
-						<% end %>
+				<table class="table table-striped table-bordered table-hover">
+					<%= render "stat_header_score", name: "Player" %>
+					<% @bballstats.each do |a| %>
+						<%= render "stat_body_score", stat: b, name: "Player" %>
+					<% end %>
+				</table>
+				<table class="table table-striped table-bordered table-hover">
+					<%= render "stat_header_other", name: "Player" %>
+					<% @bballstats.each do |a| %>
+						<%= render "stat_body_other", stat: b, name: "Player" %>
 					<% end %>
 				</table>
 			<% end %>

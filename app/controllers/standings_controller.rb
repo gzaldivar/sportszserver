@@ -8,7 +8,7 @@ class StandingsController < ApplicationController
       @gamerecords = []
 
       teamrecord = getgamerecord(@sport, schedules)
-      teamrecord.oppimageurl = get_team_logo(@sport, @team)
+      teamrecord.oppimageurl = get_tiny_team_logo(@sport, @team)
       @gamerecords << teamrecord
 
       schedules.each_with_index do |s, cnt|
@@ -27,13 +27,6 @@ class StandingsController < ApplicationController
             oppschedule = oppsport.teams.find(s.opponent_team_id).gameschedules
             arecord = getgamerecord(oppsport, oppschedule)
             arecord.sportid = s.opponent_sport_id
-
-            if oppteam.team_logo?
-              arecord.oppimageurl = oppteam.team_logo.url(:thumb)
-            else
-              arecord.oppimageurl = oppsport.sport_logo.url(:thumb)
-            end
-
           else 
             puts s.opponent_league_wins
             puts s.opponent_mascot
@@ -44,14 +37,9 @@ class StandingsController < ApplicationController
             arecord.leagueties = s.opponent_leagueties
             arecord.nonleagueties = s.opponent_nonleagueties
             arecord.sportid = nil
-
-            if s.opponentpic?
-              arecord.oppimageurl = s.opponentpic.url(:tiny)
-            else 
-              arecord.oppimageurl = nil
-            end
           end
  
+          arecord.oppimageurl = opponentimage(s)
           @gamerecords << arecord
         end
       end

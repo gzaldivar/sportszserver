@@ -1,0 +1,51 @@
+<!--ul class="nav nav-pills">
+  	<li class="disabled"><%= link_to "Totals", '#', :class => 'basketballteam_gametotals' %></li>
+  	<li><%= link_to "Team", '#', :class => 'basketballteam_stats' %></li>
+</ul-->
+    <table class="table table-striped table-bordered table-hover">
+    <thead>
+    	<th>Team Stats</th>
+    	<th class="text-center">Stat</th>
+    </thead>
+    <tbody>
+    	<tr>
+	    	<td>FG Made-Attempted</td>
+	    	<td class="text-success text-center">
+	    				<%= @totals.twomade %>-<%= @totals.twoattempt %> (<%= number_with_precision(@totals.twopct, precision: 3) %>)</td>
+	    </tr>
+    	<tr>
+	    	<td>3PT Made-Attempted</td>
+	    	<td class="text-success text-center">
+	    			<%= @totals.threemade %>-<%= @totals.threeattempt %> (<%= number_with_precision(@totals.threepct, precision: 3) %>)</td>
+	    </tr>
+    	<tr>
+	    	<td>FT Made-Attempted</td>
+	    	<td class="text-success text-center">
+	    		<%= @totals.ftmade %>-<%= @totals.ftattempt %> (<%= number_with_precision(@totals.ftpct, precision: 3) %>)</td>
+	    </tr>
+    	<tr>
+	    	<td>Rebounds( Off-Def)</td>
+	    	<td class="text-success text-center"><%= @totals.offrebound %>-<%= @totals.defrebound %></td>
+	    </tr>
+    	<tr>
+	    	<td>Assists</td>
+	    	<td class="text-success text-center"><%= @totals.assists %></td>
+	    </tr>
+    	<tr>
+	    	<td>Steals</td>
+	    	<td class="text-success text-center"><%= @totals.steals %></td>
+	    </tr>
+    	<tr>
+	    	<td>Blocks</td>
+	    	<td class="text-success text-center"><%= @totals.blocks %></td>
+	    </tr>
+    	<tr>
+	    	<td>Turnovers</td>
+	    	<td class="text-success text-center"><%= @totals.turnovers %></td>
+	    </tr>
+    	<tr>
+	    	<td>Team Fouls</td>
+	    	<td class="text-success text-center"><%= @totals.fouls %></td>
+	    </tr>
+    </tbody>
+</table>

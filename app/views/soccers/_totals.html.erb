@@ -1,39 +1,69 @@
-<% if is_soccer_goalie?(@athlete.position) %>
-	<h4>Goalie Statistics</h4>
-	<div class="row">
-		<div class="col-xs-2 col-xs-offset-2">
-			<%= f.input :goalsagainst, label: "Goals Against", input_html: { style: "width: 50px" } %>
-		</div>
-		<div class="col-xs-2">
-			<%= f.input :goalssaved, label: "Goals Saved", input_html: { style: "width: 50px" } %>
-		</div>
-		<div class="col-xs-2">
-			<%= f.input :shutouts, label: "Shutouts", input_html: { style: "width: 50px" } %>
-		</div>
-	</div>
-<% end %>
-<h4>Player Statistics</h4>
+
 <div class="row">
-	<%= f.input :gameschedule_id, as: :hidden, input_html: { value: @gameschedule.id.to_s } %>
-	<%= f.input :livestats, as: :hidden, input_html: { value: "Totals" } %>
-	<div class="col-xs-2 col-xs-offset-2">
-		<%= f.input :goals, label: "Goals", input_html: { style: "width: 50px" } %>
-	</div>
-	<div class="col-xs-2">
-		<%= f.input :shotstaken, label: "Shots Taken", input_html: { style: "width: 50px" } %>
-	</div>
-	<div class="col-xs-2">
-		<%= f.input :cornerkick, label: "Shots Taken", input_html: { style: "width: 50px" } %>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-2 col-xs-offset-2">
-		<%= f.input :assists, label: "Assists", input_html: { style: "width: 50px" } %>
-	</div>
-	<div class="col-xs-2">
-		<%= f.input :steals, label: "Steals", input_html: { style: "width: 50px" } %>
-	</div>
-	<div class="col-xs-2">
-		<%= f.input :minutesplayed, label: "Minutes Played", input_html: { style: "width: 50px" } %>
+	<div class="col-xs-11">
+		<%= form_for [@sport, @athlete, @stats],  input_html: { class: 'form-horizontal' } do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<% if is_soccer_goalie?(@athlete.position) %>
+				<div class="row">
+					<div class="col-xs-4 col-xs-offset-3">
+						<h4>Goalie Statistics</h4>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-xs-1 col-xs-offset-3">
+						<%= f.label :goals_against %>
+						<%= f.text_field :goalsagainst, class: 'form-control' %>
+					</div>
+					<div class="col-xs-1">
+						<%= f.label :goals_saved %>
+						<%= f.text_field :goalssaved, class: 'form-control' %>
+					</div>
+					<div class="col-xs-1">
+						<%= f.label :shut_outs %>
+						<%= f.text_field :shutouts, class: 'form-control' %>
+					</div>
+				</div>
+			<% end %>
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-3">
+					<h4>Player Statistics</h4>
+				</div>
+			</div>
+			<div class="row">
+				<%= f.hidden_field :gameschedule_id, value: @gameschedule.id %>
+				<div class="col-xs-1 col-xs-offset-3">
+					<%= f.label :goals %>
+					<%= f.text_field :goals, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= f.label :shots %>
+					<%= f.text_field :shotstaken, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= f.label :CK, "CK" %>
+					<%= f.text_field :cornerkick, class: 'form-control' %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-1 col-xs-offset-3">
+					<%= f.label :assists %>
+					<%= f.text_field :assists, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= f.label :steals %>
+					<%= f.text_field :steals, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= f.label :minutes %>
+					<%= f.text_field :minutesplayed, class: 'form-control' %>
+				</div>
+			</div>
+			<p>
+		    <div class="row">
+				<div class="col-xs-1 col-xs-offset-4">
+					<%= f.submit :submit, class: "btn btn-md btn-primary" %>
+		        </div>
+			</div>
+		<% end %>
 	</div>
 </div>

@@ -6,45 +6,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-10">
-		<% if @gameschedule.nil? %>
-			<h4>Select game to add stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %>:</h4>
-			<p>
-			<%= form_tag new_sport_athlete_soccer_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
-				<%= label_tag "Select Game" %>
-				<%= select_tag "gameschedule_id", options_from_collection_for_select(@games, "id", "game_name") %>
-				<%= select_tag "livestats", options_for_select(["Live", "Totals"]) %>
-				<%= submit_tag "Submit", class: "btn btn-sm btn-primary", name: nil %>
-			<% end %>
-		<% elsif @live.nil? and @gameschedule %>
-			<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for 
-						  <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %>:</h4>
-			<%= form_tag new_sport_athlete_soccer_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
-				<%= hidden_field_tag "gameschedule_id", value=@gameschedule.id %>
-				<%= select_tag "livestats", options_for_select(["Live", "Totals"]) %>
-				<%= submit_tag "Submit", class: "btn btn-sm btn-primary", name: nil %>
-		    <% end %>
-		<% elsif !@athlete.nil? %>
-			<h4>Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for 
-						  <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %>:</h4>
-			<%= simple_form_for [@sport, @athlete, @soccers],  html: { multipart: true } do |f| %>
-				<%= render 'shared/error_messages', object: f.object %>
-				<% if @live == "Live" %>
-					<h5>Entering Stats play by play<h5>
-					<%= render "livestats" %>
-				<% else %>
-					<h5><font color="red"><em>Use this form to enter goalie information after the game is final. Warning! All other enteries will be for stat totals. If you entered stats play by play they will be overwritten. 
-						 All automated live game scoring will also be overwritten.</em></font>
-						</h5>
-						<%= render "totals", f: f %>
-				<% end %>
-		    	<p>
-			    <div class="row">
-					<div class="col-xs-1 col-xs-offset-4">
-						<%= f.button :submit, 'Submit', class:	"btn btn-sm btn-primary" %>
-			        </div>
-				</div>
-			<% end %>
-		<% end %>
+	<div class="col-xs-11">
+		<%= render 'totals' %>
 	</div>
 </div>

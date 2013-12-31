@@ -1,7 +1,9 @@
 class BasketballStatsController < ApplicationController
+	include BasketballStatistics
+
 	before_filter	:authenticate_user!, only: [:destroy, :update, :create, :edit, :new]
   	before_filter 	:get_sport_athlete
-  	before_filter	:get_stat, only: [:edit, :update, :destroy, :show]
+  	before_filter	:get_stat, only: [:update, :destroy]
 	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
 		controller.team_manager?(@athlete, nil)
 	end
@@ -59,7 +61,8 @@ class BasketballStatsController < ApplicationController
 			game.save!
 
 			respond_to do |format|
-				format.html { redirect_to [@sport, @athlete, bbstats], notice: "Stat created for " + @athlete.logname }
+				format.html { redirect_to sport_team_gameschedule_path(sport_id: @sport.id, team_id: @athlete.team_id, id: game.id), 
+								notice: "Stat created for " + @athlete.logname }
 				format.json { render status: 200, json: { bbstats: bbstats } }
 			end
 		rescue Exception => e
@@ -71,21 +74,12 @@ class BasketballStatsController < ApplicationController
 	end
 
 	def show
-		@gameschedule = Gameschedule.find(@bbstats.gameschedule_id)
-		@team = @sport.teams.find(@gameschedule.team_id)
-	end
-
-	def edit
-		@gameschedule = Gameschedule.find(@bbstats.gameschedule_id.to_s)
-		@team = @sport.teams.find(@gameschedule.team_id)
-
-		if params[:livestats].nil?
-			@live = nil
-		elsif params[:livestats] == "Live"
-			@live = "Live"
+		if params[:stat_id]
+			@bbstats = BasketballStat.find(params[:stat_id])
 		else
-			@live = "Totals"
+			@bbstats = BasketballStat.new(athlete_id: @athlete.id, gameschedule_id: params[:gameschedule_id])
 		end
+		@gameschedule = Gameschedule.find(@bbstats.gameschedule_id)
 	end
 
 	def update
@@ -126,7 +120,8 @@ class BasketballStatsController < ApplicationController
 			game.save!
 
 			respond_to do |format|
-				format.html { redirect_to [@sport, @athlete, @bbstats], notice: "Stat created for " + @athlete.logname }
+				format.html { redirect_to sport_team_gameschedule_path(sport_id: @sport.id, team_id: @athlete.team_id, id: game.id), 
+								notice: "Stat updated for " + @athlete.logname }
 				format.json { render status: 200, json: { bbstats: @bbstats } }
 			end
 		rescue Exception => e
@@ -140,43 +135,22 @@ class BasketballStatsController < ApplicationController
 	def index
 		if params[:athlete_id]
 			@athlete = @sport.athletes.find(params[:athlete_id].to_s)
-		end
-
-		if params[:gameschedule_id]
+			thestats = Basketballstats.new(@sport, @athlete)
+			@bballstats = thestats.stats
+			@totals = thestats.stattotals
+			@gameschedules = Gameschedule.where(team_id: @athlete.team_id).asc(:starttime)
+		elsif params[:gameschedule_id]
 			@gameschedule = @sport.gameschedules.find(params[:gameschedule_id].to_s).asc(:starttime)
 			@team = @sport.teams.find(@gameschedule.team_id)
-		end
-
-		if !@athlete.nil? and !@gameschedules.nil?
-			@bballstats = []
-			@bballstats[0] = @athlete.basketball_stats.where(gameschedule_id: @gameschedule.id.to_s)
-		elsif !@athlete.nil?
-			@bballstats = @athlete.basketball_stats
-			@gameschedules = Gameschedule.where(team_id: @athlete.team_id).asc(:starttime)
-		elsif !gameschedule.nil?
-			@bballstats = @gameschedule.basketball_stats
+			thestats = Basketballstats.new(@sport, @gameschedule)
+			@bballstats = thestats.stats
+			@totals = thestats.stattotals
 			@athletes = Athlete.where(team_id: @gameschedule.team_id).asc(:number)
 		end
-			
+
 		respond_to do |format|
 			format.html
-			format.json {
-				stats = @bballstats
-				@bballstats = []
-				@gameschedules.each_with_index do |g, cnt|
-					thestat = nil
-					stats.each do |b|
-						if g.id == b.gameschedule_id
-							thestat = b
-							break
-						end
-					end
-					if thestat.nil?
-						thestat = BasketballStat.new(gameschedule: g.id, athlete: @athlete.id)
-					end
-					@bballstats[cnt] = thestat
-				end
-			}
+			format.json 
 		end
 	end
 

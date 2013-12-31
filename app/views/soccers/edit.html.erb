@@ -1,39 +1,12 @@
-<% provide(:title, current_site.sitename + " " + @athlete.name + " - Edit Soccer Stats") %>
+<% provide(:title, current_site.sitename + " " + @sport.name + " - New Soccer Stats") %>
 <p>
 <div class="row">
 	<div class="col-xs-10">
-		<div class="row">
-			<div class="col-xs-2">
-				<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
-			</div>
-			<div class="col-xs-8">
-				<h4>Edit Stats for <%= link_to(@athlete.logname, [@sport, @athlete]) %> for game <%= link_to(@gameschedule.game_name, [@sport, @team, @gameschedule]) %></h4>
-			</div>
-		</div>
-		<p>
-		<% if @live.nil? %>
-			<%= form_tag edit_sport_athlete_soccer_path(@sport, @athlete), class: "form-horizontal", method: 'get' do %>
-				<%= select_tag "livestats", options_for_select(["Live", "Totals"]) %>
-				<%= submit_tag "Submit", class: "btn btn-sm btn-primary", name: nil %>
-			<% end %>
-		<% else %>
-			<%= simple_form_for [@sport, @athlete, @stats],  html: { multipart: true } do |f| %>
-				<%= render 'shared/error_messages', object: f.object %>
-				<% if @live == "Live" %>
-					<h5>Entering Stats play by play<h5>
-					<%= render "livestats" %>
-				<% else %>
-					<h5><font color="red"><em>Use this form to enter goalie information after the game is final.  Warning! Entering Stat totals. If you entered stats play by play they will be overwritten. 
-						All automated live game scoring will also be overwritten.</em></font></h5>
-						<%= render "totals", f: f %>
-				<% end %>
-		    	<p>
-			    <div class="row">
-					<div class="col-xs-1 col-xs-offset-4">
-						<%= f.button :submit, 'Submit', class:	"btn btn-sm btn-primary" %>
-			        </div>
-				</div>
-		    <% end %>
-		<% end %>
+		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-11">
+		<%= render 'totals' %>
 	</div>
 </div>

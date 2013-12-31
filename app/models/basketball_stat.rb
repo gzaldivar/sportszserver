@@ -38,6 +38,34 @@ class BasketballStat
   validates_numericality_of :defrebound, greater_than_or_equal_to: 0
   validates_numericality_of :turnovers, greater_than_or_equal_to: 0
 
+  def twopct
+    if twomade > 0
+      Float(twomade)/Float(twoattempt)
+    else
+      0.0
+    end
+  end
+
+  def threepct
+    if threemade > 0
+      Float(threemade)/Float(threeattempt)
+    else
+      0.0
+    end
+  end
+
+  def ftpct
+    if ftmade > 0
+      Float(ftmade)/Float(ftattempt)
+    else
+      0.0
+    end
+  end
+
+  def totalpoints
+    (self.twomade * 2) + (self.threemade * 3) + self.ftmade
+  end
+
   private
 
     def send_alerts

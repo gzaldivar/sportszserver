@@ -1,0 +1,48 @@
+<tr>
+	<% if name == "Game" %>
+		<% @game = Gameschedule.find(stat.gameschedule_id.to_s) %>
+		<td><%= link_to image_tag(opponentimage(@game), class: 'img-responsive'), [@sport, @sport.teams.find(@game.team_id), @game] %></td>
+		<td><%= link_to(@game.opponent_name, [@sport, @sport.teams.find(@game.team_id), @game]) %></td>
+	<% elsif name == "Player" %>
+		<% athlete = Athlete.find(stat.athlete_id.to_s) %>
+		<td><%= link_to image_tag(getimage(athlete, 'tiny'), class: 'img-responsive'), [@sport, @theplayer] %></td>
+		<td><%= link_to(athlete.numlogname, [@sport, athlete]) %></td>
+	<% else %>
+		<td></td>
+		<td>Totals</td>
+	<% end %>
+	<td><%= stat.twoattempt %></td>
+	<td><%= stat.twomade %></td>
+	<% if stat.twomade > 0 %>
+		<td><%= number_with_precision(stat.twoattempt/stat.twomade, precision: 2) %></td>
+	<% else %>
+		<td>0.0</td>
+	<% end %>
+	<td><%= stat.threeattempt %></td>
+	<td><%= stat.threemade %></td>
+	<% if stat.threemade > 0 %>
+		<td><%= number_with_precision(stat.threeattempt/stat.threemade, precision: 2) %></td>
+	<% else %>
+		<td>0.0</td>
+	<% end %>
+	<td><%= stat.ftattempt %></td>
+	<td><%= stat.ftmade %></td>
+	<% if stat.ftmade > 0 %>
+		<td><%= number_with_precision(stat.ftattempt/stat.ftmade, precision: 2) %></td>
+	<% else %>
+		<td>0.0</td>
+	<% end %>
+	<td><%= stat.totalpoints %></td>
+	<% if site_owner? or isTeamManager?(name == "Player" ? athlete : @game) and name == "Player" %>
+		<td>
+			<% if BasketballStat.find(stat.id).nil? %>
+				<%= link_to "Update", sport_athlete_basketball_stat_path(@sport, athlete, gameschedule_id: @gameschedule.id), 
+										class: "btn btn-xs btn-info"%>
+			<% else %>
+				<%= link_to "Update", sport_athlete_basketball_stat_path(@sport, athlete, stat_id: stat.id), class: "btn btn-xs btn-info"%>
+			<% end %>
+		</td>
+	<% else %>
+		<td></td>
+	<% end %>
+</tr>

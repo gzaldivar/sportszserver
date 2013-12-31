@@ -3,7 +3,7 @@
     <div id="livepassing-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">Live Passing Score</h4>
+        <h4 class="modal-title">Passing Stats</h4>
       </div>
       <div class="modal-body">
         <div class="well">
@@ -12,7 +12,7 @@
               <%= link_to image_tag(player.pic.url(:thumb)), sport_athlete_path(@sport, player) %>
             </div>
             <div class="col-xs-6">
-              <h4>Update Live Passing Stats for <%= link_to(player.full_name, sport_athlete_path(@sport, player)) %></h4>
+              <h4>Update Passing Stats for <%= link_to(player.full_name, sport_athlete_path(@sport, player)) %></h4>
             </div>
           </div>
           <p>
@@ -283,7 +283,7 @@
     <div id="totalpassing-responsive" class="modal fade" tabindex="-1" data-width="760" style="display: none;">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-        <h4 class="modal-title">Live Stats</h4>
+        <h4 class="modal-title">Stat Totals</h4>
       </div>
       <div class="modal-body">
         <div class="well">
@@ -292,7 +292,7 @@
               <%= link_to image_tag(player.pic.url(:thumb)), sport_athlete_path(@sport, player) %>
             </div>
             <div class="col-xs-9">
-              <h4>Update Live Stats for <%= link_to(player.full_name, sport_athlete_path(@sport, player)) %></h4>
+              <h4>Update Stat Totals for <%= link_to(player.full_name, sport_athlete_path(@sport, player)) %></h4>
             </div>
           </div>
           <div class="row">

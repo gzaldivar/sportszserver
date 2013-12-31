@@ -14,6 +14,7 @@ class Gameschedule
 
   field :opponent_sport_id, type: String
   field :opponent_team_id, type: String
+  field :useopponentstats, type: Boolean, default: false
   
   field :opponent, type: String
   field :opponent_mascot, type: String, default: ""

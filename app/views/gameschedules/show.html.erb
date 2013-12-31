@@ -18,7 +18,7 @@
       			<p class="text-success">All times are in current local time.</p>
       		</div>
       	</div>
-      	<% if @gameschedule.event %>
+      	<% if !@gameschedule.event.nil? and !@gameschedule.event.blank? %>
 	      	<div class="row">
 	      		<div class="col-xs-1">
 	      			<p class="text-info">Event:</p>
@@ -29,11 +29,11 @@
 			</div>
 		<% end %>
   		<% if @sport.sportname == "Basketball" %>
-  			<%= render 'show_basketball' %>
+  			<%= render 'gameschedules/basketball/show_basketball' %>
   		<% elsif @sport.sportname == "Football" %>
   			<%= render 'show_football' %>
   		<% elsif @sport.sportname == "Soccer" %>
-        <%= render 'show_soccer' %>
+        <%= render 'gameschedules/soccer/show_soccer' %>
 		<% end %>
 		<p>
 	  	<% if site_owner? or isTeamManager?(@gameschedule) %>

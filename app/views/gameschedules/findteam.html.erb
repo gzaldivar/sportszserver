@@ -6,9 +6,9 @@
 			<%= form_tag new_sport_team_gameschedule_path(@sport, @team), method: :get, html: { class: 'form-horizontal' } do %>
 				<%= hidden_field_tag "opponent", @opposingsport.id  %>
 				<div class="row">
-					<div class="col-xs-2">
+					<div class="col-xs-4">
              			<%= label_tag "Team:" %>
-              			<%= select_tag :opposingteam, options_from_collection_for_select(@opposingteams, "id", "team_name"), include_blank: true %>
+              			<%= select_tag :opposingteam, options_from_collection_for_select(@opposingteams, "id", "team_name"), include_blank: true, class: 'form-control' %>
 					</div>
 				</div>
 				<p>
@@ -23,9 +23,10 @@
 				<%= hidden_field_tag "gameschedule_id", @gameschedule.id %>
 				<%= hidden_field_tag "opponent", @opposingsport.id  %>
 				<div class="row">
-					<div class="col-xs-2">
+					<div class="col-xs-4">
              			<%= label_tag "Team:" %>
-              			<%= select_tag :opposingteam, options_from_collection_for_select(@opposingteams, "id", "team_name"), include_blank: true %>
+              			<%= select_tag :opposingteam, options_from_collection_for_select(@opposingteams, "id", "team_name"), include_blank: true,
+              							class: 'form-control' %>
 					</div>
 				</div>
 				<p>

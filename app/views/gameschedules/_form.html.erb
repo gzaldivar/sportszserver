@@ -120,60 +120,6 @@
 				</div>
 			</div>
 			<p>
-			<% if !@gameschedule.opponent.nil? %>
-				<% if @sport.name == "Basketball" %>
-					<div class="row">
-						<div class="col-xs-12">
-							<h4>Real Time Game Summary:</h4>
-						</div>
-					</div>
-					<p>
-					<div class="row">
-						<div class="col-xs-11">
-							<%= f.label "Last Play:" %>
-							<%= f.text_field :lastplay, class: 'form-control'  %>
-						</div>
-					</div>
-					<p>
-					<div class="row">
-						<div class="col-xs-2">
-							<!--%= f.input :livegametime, label: "Live Game Time:", as: :time, ignore_date: true, 
-										input_html: { style: "width: 50px" } %-->
-							<h4>Live Game Time</h4>
-							<!--%= f.text_field :current_game_time, class: 'form-control' %-->
-						</div>
-					</div>
-					<div class="row">
-						<div class="col-xs-1">
-							<%= label_tag "Minutes" %>
-							<%= select_tag "gameminutes", options_for_select((00 .. 20), @gameschedule.current_game_time.split(':')[0]), 
-											class: 'form-control' %>
-						</div>
-						<div class="col-xs-1">
-							<%= label_tag "Seconds" %>
-							<%= select_tag "gameseconds", options_for_select((00 .. 59), @gameschedule.current_game_time.split(':')[1]), 
-											class: 'form-control' %>
-						</div>
-					</div>
-					<p>
-					<div class="row">
-						<div class="col-xs-2">
-							<%= f.label "Possession" %>
-							<%= f.select :possession, [current_team.mascot, @gameschedule.opponent_mascot], {}, class: 'form-control' %>
-						</div>
-					</div>
-					<p>
-				<% end %>
-				<p>
-				<% if @sport.sportname == "Football" %>
-					<!--%= render 'footballform', f: f %-->
-				<% elsif @sport.sportname == "Basketball" %>
-					<%= render 'basketballform', f: f %>
-				<% elsif @sport.sportname == "Soccer" %>
-					<%= render 'soccerform', f: f %>
-				<% end %>
-			<% end %>
-			<p>
 			<div class="col-xs-1 col-xs-offset-5">
 				<%= f.submit :submit, class: "btn btn-sm btn-primary" %>
 			</div>

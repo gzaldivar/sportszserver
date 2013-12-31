@@ -11,17 +11,23 @@
 		<td></td>
 		<td>Totals</td>
 	<% end %>
-	<td><%= stat.goals %></td>
-	<td><%= stat.shotstaken %></td>
-	<td><%= stat.cornerkick %></td>
+	<td><%= stat.fouls %></td>
 	<td><%= stat.assists %></td>
+	<td><%= stat.blocks %></td>
 	<td><%= stat.steals %></td>
-
-	<% if Soccer.find(stat.id).nil?  and site_owner? or isTeamManager?(name == "Player" ? athlete : @game) and name != "Totals" %>
-		<td><%= link_to "Stats", new_sport_athlete_soccer_path(@sport, stat.athlete_id, gameschedule_id: stat.gameschedule_id), 
-						class: "btn btn-xs btn-primary" %></td>
-	<% elsif site_owner? or isTeamManager?(name == "Player" ? athlete : @game) and name != "Totals" %>
-		<td><%= link_to "Stats", edit_sport_athlete_soccer_path(@sport, stat.athlete_id, stat, gameschedule_id: stat.gameschedule_id), 
-				class: "btn btn-xs btn-primary" %></td>
+	<td><%= stat.offrebound %></td>
+	<td><%= stat.defrebound %></td>
+	<td><%= stat.turnovers %></td>
+	<% if site_owner? or isTeamManager?(name == "Player" ? athlete : @game) and name == "Player" %>
+		<td>
+			<% if BasketballStat.find(stat.id).nil? %>
+				<%= link_to "Update", sport_athlete_basketball_stat_path(@sport, athlete, gameschedule_id: @gameschedule.id), 
+										class: "btn btn-xs btn-info"%>
+			<% else %>
+				<%= link_to "Update", sport_athlete_basketball_stat_path(@sport, athlete, stat_id: stat.id), class: "btn btn-xs btn-info"%>
+			<% end %>
+		</td>
+	<% else %>
+		<td></td>
 	<% end %>
 </tr>

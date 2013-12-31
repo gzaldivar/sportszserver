@@ -12,48 +12,26 @@ class SoccersController < ApplicationController
 			@team = @sport.teams.find(@gameschedule.team_id.to_s)
 		end
 		@athlete = Athlete.find(params[:athlete_id].to_s)
-
-		if params[:livestats] == "Live"
-			@live = "Live"
-		elsif params[:livestats] == "Totals"
-			@live = "Totals"
-		end
-
-		@games = @sport.teams.find(@athlete.team_id.to_s).gameschedules.asc(:starttime)
-		@soccers = Soccer.new
+		@stats = @athlete.soccers.new(gameschedule_id: @gameschedule.id)
 	end
 
 	def create
 		begin
-			if params[:soccer].nil?
-				game = Gameschedule.find(params[:gameschedule_id].to_s)
-				live = params[:livestats].to_s
-			else
-				game = Gameschedule.find(params[:soccer][:gameschedule_id].to_s)
-				live = params[:soccer][:livestats].to_s
-			end
+			game = Gameschedule.find(params[:soccer][:gameschedule_id].to_s)
 
-			if live == "Totals"
-				stats = @athlete.soccers.create!(params[:soccer])
+			stats = @athlete.soccers.create!(params[:soccer])
 #				game.homescore = stats.goals
-				if !params[:soccer][:goalsagainst].blank? or !params[:soccer][:goalssaved].blank? or
-				   !params[:soccer][:shutouts].blank?
-				   	@goalie = true
-				else
-					@goalie = false
-				end
+			if !params[:soccer][:goalsagainst].blank? or !params[:soccer][:goalssaved].blank? or
+			   !params[:soccer][:shutouts].blank?
+			   	@goalie = true
 			else
-				stats = @athlete.soccers.new(gameschedule_id: game.id.to_s)
-				@goalie = livestats(stats, @athlete, params)
-#				game.homescore += params[:goals].to_i
-				
+				@goalie = false
 			end
 
 			if params[:goals]
 				game.lastplay = @athlete.logname + " Goal Scored"
+				game.save!
 			end
-
-			game.save!
 
 			respond_to do |format|
 				format.html { redirect_to [@sport, @athlete, stats], notice: "Stat created for " + @athlete.logname }
@@ -76,39 +54,18 @@ class SoccersController < ApplicationController
 	def edit
 		@gameschedule = Gameschedule.find(@stats.gameschedule_id.to_s)
 		@team = @sport.teams.find(@gameschedule.team_id)
-
-		if params[:livestats].nil?
-			@live = nil
-		elsif params[:livestats] == "Live"
-			@live = "Live"
-		else
-			@live = "Totals"
-		end
 	end
 
 	def update
 		begin
-			if params[:soccer].nil?
-				game = Gameschedule.find(params[:gameschedule_id].to_s)
-				live = params[:livestats].to_s
-			else
-				game = Gameschedule.find(params[:soccer][:gameschedule_id].to_s)
-				live = params[:soccer][:livestats].to_s
-			end
-
-			if live == "Totals"
-				@stats.update_attributes!(params[:soccer])
-#				game.homescore = @stats.goals
-			else
-				livestats(@stats, @athlete, params)
-#				game.homescore += params[:goals].to_i				
-			end
+			game = Gameschedule.find(params[:soccer][:gameschedule_id].to_s)
+			live = params[:soccer][:livestats].to_s
+			@stats.update_attributes!(params[:soccer])
 
 			if params[:goals]
 				game.lastplay = @athlete.logname + " Goal Scored"
+				game.save!
 			end
-
-			game.save!
 
 			respond_to do |format|
 				format.html { redirect_to [@sport, @athlete, @stats], notice: "Stat created for " + @athlete.logname }

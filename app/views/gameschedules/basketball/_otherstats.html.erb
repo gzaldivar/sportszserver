@@ -1,0 +1,7 @@
+    <table class="table table-striped table-bordered table-hover">
+	<%= render "basketball_stats/stat_header_other", name: "Player" %>
+	<% @stats.each do |s| %>
+		<%= render "basketball_stats/stat_body_other", stat: s, name: "Player" %>
+	<% end %>
+	<%= render "basketball_stats/stat_body_other", stat: @totals, name: "Totals" %>
+</table>

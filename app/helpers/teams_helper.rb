@@ -51,6 +51,17 @@ module TeamsHelper
 		end
 	end
 
+	def get_tiny_team_logo(sport, team)
+		if team.team_logo?
+			return team.team_logo(:tiny)
+		elsif sport.sport_logo?
+			sport.sport_logo(:tiny)
+		else
+			return "Tiny_Photo_Not_Available.png"
+		end
+	end
+
+
 	def set_current_team(team)
 		if current_site? and current_team != team.id
 			session[:current_team] = team.id

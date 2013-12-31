@@ -45,9 +45,9 @@ module GameschedulesHelper
 	end
 
 	def opponentimage(game)
-		if game.opponent_team_id
+		if !game.opponent_team_id.nil? and !game.opponent_team_id.blank?
 			sport = Sport.find(game.opponent_sport_id)
-			get_team_logo(sport, sport.teams.find(game.opponent_team_id))
+			get_tiny_team_logo(sport, sport.teams.find(game.opponent_team_id))
 		elsif game.opponentpic?
 			game.opponentpic.url(:tiny)
 		else

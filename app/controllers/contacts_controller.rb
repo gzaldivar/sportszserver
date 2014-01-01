@@ -33,11 +33,10 @@ class ContactsController < ApplicationController
   end
   
   def update
-    contact = @sport.contacts.find(params[:id])
-    if contact.update_attributes(params[:contact])      
+    if @contact.update_attributes(params[:contact])      
       respond_to do |format|
-        format.html { redirect_to [@sport, contact], notice: "Contact updated!" }
-        format.json { render json: { contact: contact, request: [@sport, @contact] } }
+        format.html { redirect_to [@sport, @contact], notice: "Contact updated!" }
+        format.json { render json: { contact: @contact, request: [@sport, @contact] } }
       end
     else
       respond_to do |format|
@@ -49,14 +48,14 @@ class ContactsController < ApplicationController
   
   def destroy
     begin
-      @sport.contacts.find(params[:id]).destroy
+      @contact.destroy
       respond_to do |format|
-        format.html { redirect_to site_contacts_path, notice: "Contact deleted" }
+        format.html { redirect_to sport_contacts_path(@sport), notice: "Contact deleted" }
         format.json { render json: { success: "success", request: @sport } }
       end
     rescue Exception => e
       respond_to do |format|
-        format.html { redirect_to site_contacts_path, alert: "Error deleting contact: " + e.message }
+        format.html { redirect_to sport_contacts_path(@sport), alert: "Error deleting contact: " + e.message }
         format.json { render status: 404, json: { error: e.message, request: @sport } }
       end
     end

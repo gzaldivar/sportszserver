@@ -7,11 +7,9 @@
 			<% if @contacts.empty? %>
 				No contacts entered for this site!
 			<% else %>
-				<!--%= render @contacts %-->
+				<%= render @contacts %>
 			<% end %>
 			<p>
-<%
-=begin
 			<% if user_signed_in? %> 
 				<% if site_owner? %>
 					<div class="row">
@@ -21,7 +19,6 @@
 					</div>
 				<% end %>
 			<% end %>
-=end %>
 		</div>
 	</div>
 	<p>

@@ -32,7 +32,7 @@ module FootballStatistics
 
 			placekickerscore = p.football_place_kickers.find_by(gameschedule_id: game.id)
 			if !placekickerscore.nil?
-				score += placekickerscore.fgmade
+				score += placekickerscore.fgmade * 3
 				score += placekickerscore.xpmade
 			end
 		end

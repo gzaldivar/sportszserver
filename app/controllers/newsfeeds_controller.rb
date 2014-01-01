@@ -6,7 +6,7 @@ class NewsfeedsController < ApplicationController
   
   def new
     @newsfeed = Newsfeed.new
-    @athletes = @sport.athletes
+    @athletes = @sport.athletes.asc(:number)
     @coaches = @sport.coaches
     @teams = @sport.teams
     if current_team?

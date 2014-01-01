@@ -306,6 +306,7 @@ class SportsController < ApplicationController
   
   def contact
     if current_site?
+      puts 'trying to redirect'
       redirect_to sport_contacts_path(current_site)
     else
       render 'contacts/index'

@@ -25,12 +25,12 @@
 	<div class="row">
 		<div class="col-xs-1">
 			<%= label_tag "Minutes" %>
-			<%= select_tag "gameminutes", options_for_select((00 .. 20), @gameschedule.current_game_time.split(':')[0]), 
+			<%= select_tag "gameminutes", options_for_select((00 .. 20), @gameschedule.current_game_time.split(':')[0].to_i.to_s), 
 							class: 'form-control' %>
 		</div>
 		<div class="col-xs-1">
 			<%= label_tag "Seconds" %>
-			<%= select_tag "gameseconds", options_for_select((00 .. 59), @gameschedule.current_game_time.split(':')[1]), 
+			<%= select_tag "gameseconds", options_for_select((00 .. 59), @gameschedule.current_game_time.split(':')[1].to_i.to_s), 
 							class: 'form-control' %>
 		</div>
 	</div>
@@ -75,7 +75,7 @@
 	<p>
 	<div class="row">
 		<div class="col-xs-1 col-xs-offset-5">
-			  <%= f.submit :submit, class:	"btn btn-sm btn-primary", id: "submitbtn" %>
+			  <%= f.submit :submit, class:	"btn btn-md btn-primary", id: "submitbtn" %>
 		</div>
 	</div>
 <% end %>

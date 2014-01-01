@@ -18,10 +18,10 @@
           <% else %>    
             <%= link_to image_tag(coach.coachpic.url(:tiny), class: 'img-responsive'), sport_coach_path(@sport, coach) %>
           <% end %>
-        <% elsif !newsfeed.gameschedule_id.nil? or !newsfeed.team_id.nil? %>
+        <% elsif !newsfeed.gameschedule_id.nil? and !newsfeed.team_id.nil? %>
             <% newsteam = @sport.teams.find(newsfeed.team_id) %>
             <%= link_to image_tag(get_tiny_team_logo(@sport, newsteam), class: 'img-responsive'), 
-                        sport_team_gameschedule_path(@sport, newsteam, gameschedule_id: newsfeed.gameschedule_id) %>
+                        sport_team_gameschedule_path(sport_id: @sport.id, team_id: newsfeed.team_id, id: newsfeed.gameschedule_id) %>
         <% end %>
       </div>
       <div class="col-xs-8">
@@ -38,16 +38,16 @@
       <div class="col-xs-10">
             <em>
             <%= link_to newsfeed.sport.name, sport_path(@sport) %>&nbsp
-              <% if !newsfeed.team.nil? and !newsfeed.team.blank? %>
-                <%= newsfeed.sport.teams.find(newsfeed.team).team_name %>&nbsp
+              <% if !newsfeed.team_id.nil? and !newsfeed.team_id.blank? %>
+                <%= newsfeed.sport.teams.find(newsfeed.team_id).team_name %>&nbsp
               <% end %>
-              <% if !newsfeed.athlete.nil? and !newsfeed.athlete.blank? %>
+              <% if !newsfeed.athlete_id.nil? and !newsfeed.athlete_id.blank? %>
           Athlete:
-                <%= link_to @sport.athletes.find(newsfeed.athlete).full_name, sport_athlete_path(@sport, newsfeed.athlete) %>&nbsp
+                <%= link_to @sport.athletes.find(newsfeed.athlete_id).full_name, sport_athlete_path(@sport, newsfeed.athlete_id) %>&nbsp
               <% end %>
-              <% if !newsfeed.coach.nil? and !newsfeed.coach.blank? %>
+              <% if !newsfeed.coach_id.nil? and !newsfeed.coach_id.blank? %>
               Coach:
-                <%= link_to @sport.coaches.find(newsfeed.coach).full_name, sport_coach_path(@sport, newsfeed.coach) %>
+                <%= link_to @sport.coaches.find(newsfeed.coach_id).full_name, sport_coach_path(@sport, newsfeed.coach_id) %>
               <% end %>
             </em>
       </div>

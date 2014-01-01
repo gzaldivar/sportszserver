@@ -63,10 +63,7 @@ class ContactsController < ApplicationController
   end
   
   def index
-    @contacts = []
-    @sport.contacts.each_with_index do |c, cnt|
-      @contacts[cnt] = c
-    end
+    @contacts = @sport.contacts
 
     respond_to do |format|
       format.html

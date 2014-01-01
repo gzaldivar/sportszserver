@@ -187,7 +187,7 @@ class GameschedulesController < ApplicationController
 #                                                  params[:gameschedule][:"livegametime(5i)"].to_i)
 
       if params[:gameminutes]
-        @gameschedule.current_game_time = params[:gameminutes].to_s + ":" + params[:gameseconds].to_s
+        @gameschedule.current_game_time = addzerototime(params[:gameminutes].to_s) + ":" + addzerototime(params[:gameseconds].to_s)
       end
 
       @gameschedule.update_attributes!(params[:gameschedule])
@@ -497,6 +497,14 @@ private
 
     def footballgamestats
       
+    end
+
+    def addzerototime(time)
+      if time.to_i >= 0 and time.to_i <=9
+        time = "0" + time
+      else
+        time
+      end
     end
     
 end

@@ -52,6 +52,10 @@ class NewsfeedsController < ApplicationController
       @newsfeeds = @sport.newsfeeds.limit(40).desc(:updated_at).paginate(:page=>params[:page])
     end
     
+@newsfeeds.each do |n|
+  puts n.team_id
+end
+
     @coaches = @sport.coaches
     @athletes = @sport.athletes
     

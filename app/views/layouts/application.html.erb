@@ -37,13 +37,15 @@
                 </div>
                 <p>
                 <div class="row">
+                  <div class="col-xs-2">
                     <% if current_team? and current_team.team_logo? %>
                       <%= link_to (image_tag get_team_logo(current_site, current_team), class: 'img-responsive'), sport_path(current_site) %>
                     <% end %>
+                  </div>
                 </div>
                 <div class="row">
                   <% if current_team? %>
-                    <h3><p class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></p></h3>
+                    <h4><p class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></p></h4>
                   <% end %>
                 </div>
              </div>
@@ -99,13 +101,15 @@
                 </div>
                 <p>
                 <div class="row">
+                  <div class="col-xs-2">
                     <% if current_team? and current_team.team_logo? %>
                       <%= link_to (image_tag get_team_logo(current_site, current_team), class: 'img-responsive'), sport_path(current_site) %>
                     <% end %>
+                  </div>
                 </div>
                 <div class="row">
                   <% if current_team? %>
-                    <h3><p class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></p></h3>
+                    <h4><p class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></p></h4>
                   <% end %>
                 </div>
              </div>
@@ -133,6 +137,7 @@
       <%= render 'layouts/moreselectmodal' if current_team? %>
       <%= render 'layouts/toolsselectmodal' if user_signed_in? and site_owner? %>
       <%= render 'layouts/userheaderselectmodal' if user_signed_in? %>
+      <%= render 'layouts/solutions' %>
     </div>
   </div>
 </html>

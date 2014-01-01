@@ -348,6 +348,9 @@ class SportsController < ApplicationController
   def eazebasketball
   end
 
+  def eazesoccer
+  end
+
   def publisher
   end
 

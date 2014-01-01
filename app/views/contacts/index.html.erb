@@ -10,7 +10,7 @@
 				<%= render @contacts %>
 			<% end %>
 			<p>
-			<% if isAdmin? %>
+			<% if site_owner? %>
 				<div class="row">
 					<div class="col-xs-2 col-xs-offset-3">
 						<%= link_to "Add Contact", new_sport_contact_path(current_site), class: "btn btn-sm btn-primary" %>
@@ -28,7 +28,7 @@
 <% else %>
 	<% provide(:title, "Contact Eazesportz.com") %>
 	<div class="row">
-		<div class="col-xs-8 col-xs-offset-1" id="backcolor">
+		<div class="col-xs-8 col-xs-offset-1">
 			<h4>Contact Eazesportz. Email Us below at:</h4>
 			<p>
 			<em>info@eazesportz.com</em>

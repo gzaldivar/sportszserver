@@ -1,176 +1,83 @@
 <% provide(:title, "Easy Sports Mobile - Football, Basketball and Soccer") %>
 <p>
-<!--font color="b3f10c"-->
-<% if user_signed_in? %>
-	<div class="row">
-		<div class="col-xs-8 col-xs-offset-1">
-			<h3>Welcome <%= current_user.name %></h3><p>
-			<% if current_user.admin and @admin_sites.any? %>
-				<% @admin_sites.each do |s| %>
-					Administer:&nbsp
-					<%= link_to s.sitename, sitechange_user_path(sport_id: s) %>&nbsp
-					<% if current_user.default_site == s.id %>
-						<h4><em>Current Default Site</em></h4>
-					<% end %>
-					<p>
-					<%= link_to (image_tag s.banner.url(:medium)), s %>&nbsp
-					<% if !(current_user.default_site == s.id) %>
-						<%= link_to "Set Default", site_user_path(s), class: "btn btn-xs btn-primary" %>
-					<% end %>
-					<p>
-				<% end %>
-				<p>
-			<% end %>
-			<%= link_to "Create New Site", new_sport_path, class: "btn btn-sm btn-primary" %>
-		</div>
-	</div>
-<% else %>
-	<div class="row">
-		<div class="col-md-10">
-			<h1>Welcome to Eazesportz Mobile!</h1>
-			<p>
-			<h3>Who we are:</h3>
-			<p>
-			<h4>Easzesportz provides mobile applications in addition to web site support to manage your sports program. Mobiles apps are available for Football, Basketball and Soccer.</h4>
-			<h5><p class="text-info">Click on the icons below to learn more about our solutions  .....</p></h5>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-12">
-			<h4><em><p class="text-info">Don't have an iPad app. Use our web site! 
-			<%= link_to "Web Site", websiteinfo_path, class: "btn btn-sm btn-primary" %></p></em></h4>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-3">
-			<h5><em><p class="text-info">iPad Football</p></em></h5>
-		</div>
-		<div class="col-xs-2">
-			<h6><em><p class="text-info">Get the app!</p></em></h6>
-		</div>
-		<div class="col-xs-3 col-xs-offset-1">
-			<h5><em><p class="text-info">iPad Basketball</p></em></h5>
-		</div>
-		<div class="col-xs-2">
-			<h6><em><p class="text-info">Get the app!</p></em></h6>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-3">
-			<%= link_to (image_tag "FootballGameStats.png", class: 'img-responsive'), eazefootball_path  %>
-		</div>
-		<div class="col-xs-2">
-			<div class="row">
-				<div class="col-xs-1">
-					<%= link_to (image_tag "Football-iPad-50.png", class: 'img-responsive'),
-								"https://itunes.apple.com/us/app/eazesportz-football-management/id703243944?mt=8" %>
-				</div>
-			</div>
-			<div class="row">
-				<h5>No iPad?</h5>
-				<p>
-				<h6><%= link_to "Use the web ....", websiteinfo_path %></h6>
-			</div>
-		</div>
-		<div class="col-xs-3 col-xs-offset-1">
-			<%= link_to (image_tag "BasketballGameStats.png", class: 'img-responsive'), eazebasketball_path %>
-		</div>
-		<div class="col-xs-2">
-			<div class="row">
-				<div class="col-xs-1">
-					<%= link_to (image_tag "Basketball-Icon-Small-50.png", class: 'img-responsive'),
-											"https://itunes.apple.com/us/app/eazesportz-basketball-console/id717200419?mt=8" %>
-				</div>
-			</div>
-			<div class="row">
-				<h5>No iPad?</h5>
-				<p>
-				<h6><%= link_to "Use the web ....", webbballinfo_path %></h6>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-3">
-			<h5><em><p class="text-info">iPad Soccer</p></em></h5>
-		</div>
-		<div class="col-xs-2">
-			<h6><em><p class="text-info">Get the app!</p></em></h6>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-3">
-			<%= link_to (image_tag "SoccerLiveStats.png", class: 'img-responsive'), "#" %>
-		</div>
-		<div class="col-xs-2">
-			<div class="row">
-				<div class="col-xs-1">
-					<%= link_to (image_tag "Soccer-Icon-Small-50.png", class: 'img-responsive'), 
-											"https://itunes.apple.com/us/app/eazesportz-soccer/id748838917?mt=8" %>
-				</div>
-			</div>
-			<div class="row">
-				<h5>No iPad?</h5>
-			</div>
-		</div>
-	</div>
-	<div class="row">
-		<div class="col-xs-10">
-			<p>
-			<p class="text-info">If you are a sports program administrator for a college, high school, youth program, booster, etc.,keep your fans up to date while the game is in progress!</p> 
-			<p>
-			<h5><em><%= link_to "Content publishers or media distributors click here for more information.", publisher_path %></em></h5>
-			<p>
-			Our apps or web site provide you the capabilities to update and manage all your sports content. Fans view the sports content using an iPhone app or they can log in and use the web site. There is no charge for you to use our iPad app to manage a sports program. 
-		</div>
-	</div>
-	<p>
-	<!--div class="row">
-		<div class="col-xs-10">
-			<h2>How it works and what's in it for your program:</h2>
-			<h5>You use our iPad app or the web site to manage your program. Your fans can use our iPhone app to follow your program. Features that are free to your users include:
-				<ul>
-					<li>Program News</li>
-					<li>Game Schedule</li>
-					<li>Roster</li>
-					<li>Coaches</li>
-				</ul>
-				Your fans can access the upgraded features by paying $3.00. For every fan that upgrades to access the advanced app features, $1.00 will be refunded back to your program. This allows your program to monetize your content. Use it as a fundraising device. After all, your players and your league, school, club, etc. are the ones creating the content. We just help you make it available to your fans. 
-				<p>
-				Features your fans have access to after they upgrade the app include:
-				<ul>
-					<li>Live game summary and stats</li>
-					<li>Photos</li>
-					<li>Videos</li>
-					<li>Blogging</li>
-					<li>And much more .....</li>
-				</ul>
-			</h5>
-		</div>
-	</div-->
-	<div class="row">
-		<div class="col-xs-10">
-			<h4><p class="text-warning"><em>
-			Currently, we are offering our solution to a controlled set of beta programs and their fans. If you would like to try our solution follow the links below and we will contact you with instructions on how to get set up! Your fans will have access to the upgraded features free of charge.
-			</em></p></h4>
-		</div>
-	</div>
-	<p>
-<% end %>
 <div class="row">
-	<div class="col-xs-10">
-		<% if user_signed_in? %>
-			<% if !current_user.mysites.nil? %>
-				List of sites you are registered for:&nbsp
-				<% current_user.mysites.keys.each do |k| %>
-					<%= link_to current_user.mysites[k], site_path(id: k) %>&nbsp
-					<% if current_user.default_site == k %>
-						<em>Default Site!</em>
-					<% end %>
-				<% end %>
-			<% end %>
-		<% end %>
+	<div class="col-xs-11">
+		<h1>Welcome to Eazesportz Mobile!</h1>
+		<p>
+		<h4>Easzesportz provides mobile applications and mobile web site support to manage your sports program.</h4>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-11">
+		Manage your program from your iPad .... or use our mobile optimized web site
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-3">
+		<h5 class="text-info"><em>iPad Football</em></h5>
+	</div>
+	<div class="col-xs-3 col-xs-offset-1">
+		<h5 class="text-info"><em>Football Web...</em></h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-3">
+		<%= link_to (image_tag "FootballGameStats.png", class: 'img-responsive'), eazefootball_path  %>
+	</div>
+	<div class="col-xs-3 col-xs-offset-1">
+		<%= link_to (image_tag "footballwebhome.png", class: 'img-responsive'), websiteinfo_path %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-11">
+		<h4 class="text-info">We support Football, Basketball and Soccer. More sports are comming soon .....</h4>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-2">
+		<h5><em><p class="text-info">iPad Football</p></em></h5>
+	</div>
+	<div class="col-xs-2 col-xs-offset-1">
+		<h5><em><p class="text-info">iPad Basketball</p></em></h5>
+	</div>
+	<div class="col-xs-2 col-xs-offset-1">
+		<h5><em><p class="text-info">iPad Soccer</p></em></h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-2">
+		<%= link_to (image_tag "FootballGameStats.png", class: 'img-responsive'), eazefootball_path  %>
+	</div>
+	<div class="col-xs-2 col-xs-offset-1">
+		<%= link_to (image_tag "BasketballGameStats.png", class: 'img-responsive'), eazebasketball_path %>
+	</div>
+	<div class="col-xs-2 col-xs-offset-1">
+		<%= link_to (image_tag "SoccerLiveStats.png", class: 'img-responsive'), eazesoccer_path %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-11">
+		<p>
+		<p class="text-info">Keep your fans up to date while the game is in progress!</p> 
+		<p>
+		<h5><em><%= link_to "Content publishers or media distributors click here for more information.", publisher_path %></em></h5>
+		<p>
+		Our apps or web makes it easy update and manage all your sports content. Your fans view the sports content using an iPhone app or they can use our mobile optimized web site. 
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		<h4><p class="text-warning"><em>
+		Currently, we are offering our solution to a controlled set of beta programs and their fans. If you would like to try our solution follow the links below and we will contact you with instructions on how to get set up! Your fans will have access to the upgraded features free of charge.
+		</em></p></h4>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-11">
 	    <h4>If you are looking for another school or athletic program powered by Eazesportz.com, 
-	    	<%= link_to "Click Here", sports_path, class: "btn btn-xs btn-primary" %></h4>
+	    	<%= link_to "Click Here", sports_path, class: "btn btn-md btn-primary" %></h4>
 	</div>
 </div>
 <!--/font-->

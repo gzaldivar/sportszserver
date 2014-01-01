@@ -5,7 +5,7 @@ class Gameschedule
 
   attr_accessor :content_type, :original_filename, :image_data
 
-  before_save :decode_base64_image, :update_opponent_score
+  before_save :decode_base64_image
   before_create :set_live_game_time
 
   field :starttime, type: DateTime
@@ -159,10 +159,6 @@ class Gameschedule
  
         self.opponentpic = data
       end
-    end
-
-    def update_opponent_score
-      self.opponentscore = opponentq1 + opponentq2 + opponentq3 + opponentq4
     end
 
 end

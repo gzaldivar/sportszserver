@@ -18,7 +18,7 @@
 		<% end %>
 		Email:&nbsp
 		<%= contact.email %><p>
-		<% if isAdmin? %>
+		<% if site_owner? %>
 			<div class="row">
 				<div class="col-xs-1">
 					<%= link_to "Edit", edit_sport_contact_path(@sport, contact), class: "btn btn-xs btn-primary" %>

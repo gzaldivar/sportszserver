@@ -1,28 +1,31 @@
 <% provide(:title, "Eazesportz Football Web Site Example") %>
 <div class="row">
-	<div class="col-xs-12">
+	<div class="col-xs-11">
 		<h2>Eazesportz.com Web site</h2>
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-3">
-		<p class="text-info">Web site home page example</p>
+	<div class="col-xs-5">
+		<div class="row">
+			<p class="text-info">Our web site is optimized for mobile devices. That way, your fans can follow the action on mobile devices using a browser in addition to using our mobile apps.</p>
+			<p class="text-info">When you use our solutions, a site is created for your program. You can manage your programs content via our iPad apps or via the web. Your fans have access to your programs content via your customized web site exclusive to your program.</p>
+		</div>
+		<div class="row">
+			<p class="text-info">Make sure you let your fans know where your site is so they can bookmark the page. Your url for the site will be eazesportz.com/"your program". When your fans log in, your banner and logo will be displayed and they will have access to all your programs content. If you want to map your URL to your page on this site we can help you with that also.</p>
+			<p class="text-info">Our web solution allows you to configure your own backbround, banners, logos, etc.</P>
+		</div>
+		<div class="row">
+			<p class="text-info">
+				Take a tour of what you can do on the web - <%= link_to "Click here to navigate our test site.", 
+					"http://powerful-everglades-2345.herokuapp.com/sports/522e2ff239ee2f58ca000004" %></p>
+			<h5>Make sure to use username: </h5><em><p class="text-info"> footballeazesportz@gmail.com</em></p>
+			<h5>Password: </h5><em><p class="text-info">tester01</p></em>
+			<h5>You will be able to navigate features available to registered users.</h5>
+			<h5>Create a customized site for Basketball and Soccer.</h5>
+		</div>
 	</div>
 	<div class="col-xs-6">
-		<%= link_to (image_tag 'home.png', class: 'img-responsive'), 
+		<%= link_to (image_tag 'footballwebhome.png', class: 'img-responsive'), 
 							"http://powerful-everglades-2345.herokuapp.com/sports/522e2ff239ee2f58ca000004" %>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-12">
-		<p class="text-success">Our web site is optimized for mobile devices. That way, your fans can follow the action on mobile devices using a browser in addition to using our mobile apps.</p>
-		<p>
-		Make sure you let your fans know where your site is so they can bookmark the page. Your url for the site will be eazesportz.com/"your program". When your fans log in, your banner and logo will be displayed and they will have access to all your programs content. If you want to map your URL to your page on this site we can help you with that also. There is a cost of $99/yr to do so. 
-		<p>
-		<h5><%= link_to "Click here to navigate our test site.", "http://powerful-everglades-2345.herokuapp.com/sports/522e2ff239ee2f58ca000004" %>
-		</h5>
-		<h5>Make sure to use username: <em><p class="text-info"> footballeazesportz@gmail.com</p>
-		</em>Password: <em><p class="text-info">tester01</p></em>
-			when prompted. You will be able to navigate features available to registered users.</h4>
 	</div>
 </div>

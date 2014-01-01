@@ -25,7 +25,7 @@
                     <td>
                         <% if g.starttime < Time.now or g.final %>
                             <%= footballhomescore(@sport, g) > g.opponentscore ? "W" : 
-                                    footballhomescore(@sport, g) == g.opponentscore ? "T" : "L" %>
+                                footballhomescore(@sport, g) == (g.opponentq1 + g.opponentq2 + g.opponentq3 + g.opponentq4) ? "T" : "L" %>
                         <% end %>
                     </td>
                 </tr>

@@ -85,7 +85,8 @@ class GameschedulesController < ApplicationController
       end
 
       if @sport.name == "Football"
-        @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
+#        @gamelogs = @gameschedule.gamelogs.all.sort_by{ |t| [t.period, t.time] }
+        @gamelogs = @gameschedule.gamelogs.asc(:period).desc(:time)
 
         @footballhomescore = footballhomescore(@sport, @gameschedule)
         @footballtotalyards = footballtotalyards(@sport, @gameschedule)

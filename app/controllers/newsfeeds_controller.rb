@@ -9,7 +9,11 @@ class NewsfeedsController < ApplicationController
     @athletes = @sport.athletes
     @coaches = @sport.coaches
     @teams = @sport.teams
-    @schedules = []
+    if current_team?
+      @schedules = current_team.gameschedules.asc(:gamedate)
+    else
+      @schedules = []
+    end
   end
   
   def create
@@ -60,10 +64,17 @@ class NewsfeedsController < ApplicationController
   
   def edit
     @teams = @sport.teams
-    if !@newsfeed.team.nil? and !@newsfeed.team.blank?
-      @athletes = @sport.athletes.where(team_id: @newsfeed.team_id).entries
-      @coaches = @sport.coaches.where(team_id: @newsfeed.team_id).entries
-      @schedules = @sport.teams.find(@newsfeed.team_id).gameschedules.asc(:gamedate).entries
+
+    if !@newsfeed.team_id.nil? and !@newsfeed.team_id.blank? or current_team?
+      @athletes = @sport.athletes.where(team_id: @newsfeed.team_id).asc(:number)
+      @coaches = @sport.coaches.where(team_id: @newsfeed.team_id)
+      if current_team?
+        puts "using current team"
+        @schedules = current_team.gameschedules.asc(:gamedate)
+      else 
+        puts "using news feed team id"
+        @schedules = @sport.teams.find(@newsfeed.team_id).gameschedules.asc(:gamedate)
+      end
     else
       @athletes = @sport.athletes
       @coaches = @sport.coaches

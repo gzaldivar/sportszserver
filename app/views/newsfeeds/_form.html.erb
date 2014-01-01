@@ -33,36 +33,25 @@
   				</div>
 				  <div class="col-xs-4">
     		    <div class="row">
-        			<% if current_team? %>
-        				<h3><em>News for <%= current_team.mascot %></em></h3>
-              <% end %>
               <%= f.label "Team" %>
-			    	  <%= f.select :team_id, options_for_select(@teams.collect{ |t| [t.team_name, t.id] }, @newsfeed.team_id), { include_blank: true }, 
+			    	  <%= f.select :team_id, options_for_select(@teams.collect{ |t| [t.team_name, t.id] }, 
+                            @newsfeed.team_id.nil? ? current_team.id : @newsfeed.team_id), { include_blank: true }, 
                           { id: "select_team", class: 'form-control' } %>
       			</div>
             <p>
             <div class="row">
-                <% if @schedule %>
-                  <h3><em>News for schedule <%= @schedule %></em></h3>
-                <% end %>
                 <%= f.label :game_schedule, "Game Schedule" %>
-                <%= f.select :gameschedule_id, options_for_select(@schedules.collect{ |t| [t.game_name, t.id] },@newsfeed.gameschedule_id), {}, 
-                            { id: "gameschedules_select", class: 'form-control'} %>
+                <%= f.select :gameschedule_id, options_for_select(@schedules.collect{ |t| [t.game_name, t.id] },@newsfeed.gameschedule_id), 
+                            { include_blank: true }, { id: "gameschedules_select", class: 'form-control'} %>
             </div>
             <p>
     		    <div class="row">
-        			<% if @athlete %>
-        				<h3><em>News for <%= @athlete %></em></h3>
-              <% end %>
               <%= f.label :athlete %>
 			    	  <%= f.select	:athlete_id, options_for_select(@athletes.collect{ |t| [t.full_name, t.id] }, @newsfeed.athlete_id), {
                              include_blank: true }, { id: "athletes_select", class: 'form-control' } %>
     		    </div>
             <p>
     		    <div class="row">
-        			<% if @coach %>
-        				<h3><em>News for <%= @coach %></em></h3>
-        			<% end %>
               <%= f.label :coach %>
               <%= f.select :coach_id, options_for_select(@coaches.collect{ |t| [t.full_name, t.id] }, @newsfeed.coach_id), { include_blank: true }, 
                           { id: "coaches_select", class: 'form-control' } %>

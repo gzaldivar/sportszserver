@@ -56,7 +56,10 @@ class PhotosController < ApplicationController
 
   def featuredphoto
     @photos = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
-    puts @photos.count
+    respond_to do |format|
+      format.html
+      format.json { render status: 200, json: { featured: @photos } }
+    end
   end
 
   def updatefeaturedphotos

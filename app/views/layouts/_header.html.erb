@@ -29,7 +29,11 @@
 					<% else %>
 						<li><a href="#oursolutions-responsive" data-toggle="modal">Sport Solutions</a></li>
 					<% end %>
-					<li><%= link_to "Contact", contacts_path %></li>
+					<% if current_site? %>
+						<li><%= link_to "Contact", sport_contacts_path(current_site) %></li>
+					<% else %>
+						<li><%= link_to "Contact", contacts_path %></li>
+					<% end %>
 					<% if user_signed_in? and site_owner? %>
 						<!--li id="fat-menu" class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools<b class="caret"></b></a>

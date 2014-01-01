@@ -52,7 +52,10 @@ class VideoclipsController < ApplicationController
 
   def featuredvideo
     @videoclips = @sport.videoclips.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
-    puts @videoclips.count
+
+    respond_to do |format|
+      format.html
+      format.json { render status: 200, json: { featured: @videoclips } }
   end
 
   def updatefeaturedvideos

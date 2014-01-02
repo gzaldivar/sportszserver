@@ -93,12 +93,6 @@ class SportsController < ApplicationController
         @thenews = @newsfeeds[0]
         puts @newsfeeds.count
       end
-
-      if params[:photo_mode] == "photos"
-        @photomode = "photos"
-      else
-        @photomode = "news"
-      end
       
       respond_to do |format|
         format.html

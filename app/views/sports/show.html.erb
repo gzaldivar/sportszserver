@@ -24,7 +24,7 @@
             <% end %> 
           </ul>
         </li-->
-        <li><%= link_to "News", sport_path(@sport, photo_mode: "news") %></li>
+        <li><%= link_to "News", sport_path(@sport) %></li>
         <% if current_team? and user_signed_in? %>
           <li><%= link_to "Blog", sport_blogs_path(current_site, team_id: current_team.id) %></li>
           <li><%= link_to "Media", photoshome_sport_photos_path(@sport) %></li>

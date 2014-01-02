@@ -17,7 +17,7 @@
 		    		<td><%= link_to Athlete.find(p.athlete_id).logname, sport_athlete_path(@sport, p.athlete_id) %></td>
 		    		<td><%= p.fgmade %></td>
 		    		<td><%= p.xpmade %></td>
-		    		<td><%= (p.xpmade * 3) + p.xpmade %></td>
+		    		<td><%= (p.fgmade * 3) + p.xpmade %></td>
 		    	</tr>
 		    <% end %>
     	<% end %>
@@ -25,7 +25,7 @@
             <td>Totals</td>
             <td><%= kickertotals.fgmade %></td>
             <td><%= kickertotals.xpmade %></td>
-            <td><%= (kickertotals.xpmade * 3) + kickertotals.xpmade %></td>
+            <td><%= (kickertotals.fgmade * 3) + kickertotals.xpmade %></td>
     	</tr>
     </tbody>
 </table>

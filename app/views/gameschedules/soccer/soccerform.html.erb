@@ -12,7 +12,7 @@
 	<div class="row">
 		<div class="col-xs-1">
 			<%= f.label "Period" %>
-			<%= f.select :currentperiod, [1..4], {}, class: 'form-control' %>
+			<%= f.select :currentperiod, (1..4), {}, class: 'form-control' %>
 		</div>
 		<div class="col-xs-1">
 			<%= label_tag "Minutes" %>
@@ -23,6 +23,10 @@
 			<%= label_tag "Seconds" %>
 			<%= select_tag "gameseconds", options_for_select((00 .. 59), @gameschedule.current_game_time.split(':')[1]), 
 							class: 'form-control' %>
+		</div>
+		<div class="col-xs-2">
+			<%= f.label "Mark game as final" %>
+			<%= f.check_box :final %>
 		</div>
 	</div>
 	<p>

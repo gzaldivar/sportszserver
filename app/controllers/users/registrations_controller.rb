@@ -3,16 +3,34 @@ class Users::RegistrationsController < Devise::RegistrationsController
   def create
     respond_to do |format|
         format.html {
-           super
+#            super
+            build_resource(sign_up_params)
+
             if current_site?
               resource.default_site = current_site.id   #set default site
 
               if current_site.beta?
                 resource.tier = "Features"
               end
-              
-              resource.save
             end
+
+            if resource.save
+              yield resource if block_given?
+              if resource.active_for_authentication?
+                set_flash_message :notice, :signed_up if is_flashing_format?
+                sign_up(resource_name, resource)
+                respond_with resource, :location => after_sign_up_path_for(resource)
+              else
+                set_flash_message :notice, :"signed_up_but_#{resource.inactive_message}" if is_flashing_format?
+                expire_data_after_sign_in!
+                respond_with resource, :location => after_inactive_sign_up_path_for(resource)
+              end
+            else
+              clean_up_passwords resource
+              respond_with resource
+            end
+
+#              resource.save
         }
         format.json {
           begin
@@ -110,6 +128,25 @@ class Users::RegistrationsController < Devise::RegistrationsController
       user.email != params[:user][:email] ||
         !params[:user][:password].blank?
     end
+
+    def after_inactive_sign_up_path_for(resource)
+      puts 'inactive'
+        if resource.default_site.nil?
+          root_path
+        else
+          sport_path(resource.default_site)
+        end
+    end
+   
+    def after_sign_up_path_for(resource)
+      puts 'after sign up'
+      if resource.default_site.nil?
+        root_path
+      else
+        sport_path(resource.default_site)
+      end
+    end
+
 
 
 end

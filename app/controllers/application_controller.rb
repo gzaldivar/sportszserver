@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
   end
 
   private
-  
+
     def after_sign_out_path_for(resource)
       if current_site?
         sport_path(current_site)
@@ -71,7 +71,7 @@ class ApplicationController < ActionController::Base
           flash[:error] = "Admin user cannot be used to login to other Eazesportz sites. Login to " + current_site.sitename + " failed!"
         end
         puts 'sport_path'
-        sport_path(resource.default_site)
+        sport_path(id: resource.default_site)
       else
         puts 'root_path'
         root_path

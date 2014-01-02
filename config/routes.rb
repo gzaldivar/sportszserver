@@ -1,6 +1,6 @@
 Sportzserver::Application.routes.draw do
 
-  devise_for :users, controllers: { registrations: "users/registrations", sessions: "users/sessions" }
+  devise_for :users, controllers: { registrations: "users/registrations", sessions: "users/sessions", confirmations: "users/confirmations" }
 
   resources :users, only: [:edit, :update, :show, :index] do
     member do

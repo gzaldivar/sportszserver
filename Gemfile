@@ -92,6 +92,7 @@ gem 'streamio-ffmpeg'
 gem "simple_calendar", "~> 0.1.5"
 gem 'browser-timezone-rails'
 gem 'sitemap_generator'
+gem 'rails_12factor'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

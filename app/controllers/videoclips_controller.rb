@@ -401,48 +401,48 @@ class VideoclipsController < ApplicationController
       @videoclips = []
       @athletes = []
 
+      if params[:team_id] or current_team
+        @team = params[:team_id] ? @sport.teams.find(params[:team_id]) : @sport.teams.find(current_team.id)
+        @gameschedules = @team.gameschedules
+      end
+
       if params[:all].to_i == 1
         
-        @videoclips = @sport.videoclips.where(team_id: current_team.id).desc(:updated_at).paginate(per_page: 10, page: params[:page])
+        @videoclips = @sport.videoclips.where(team_id: @team.id).desc(:updated_at).paginate(per_page: 10, page: params[:page])
 
       elsif params[:username].to_i == 1 
 
-        @videoclips = @sport.videoclips.where(team_id: current_team.id).and(user_id: current_user.id).desc(:updated_at).paginate(per_page: 10, page: params[:page])
+        @videoclips = @sport.videoclips.where(team_id: @team.id).and(user_id: current_user.id).desc(:updated_at).paginate(per_page: 10, page: params[:page])
 
       elsif !params[:athlete_id].blank? and !params[:gameschedule_id].blank? and !params[:gamelog_id].blank?
 
-        @videoclips = @sport.videoclips.where(team_id: current_team.id).and(players: params[:athlete_id]).and(gameschedule_id: params[:gameschedule_id]).
+        @videoclips = @sport.videoclips.where(team_id: @team.id).and(players: params[:athlete_id]).and(gameschedule_id: params[:gameschedule_id]).
                   desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
 
       elsif !params[:athlete_id].blank? and !params[:gameschedule_id].blank?
         
-        @videoclips = @sport.videoclips.where(team_id: current_team.id).and(players: params[:athlete_id]).and(gameschedule_id: params[:gameschedule_id]).
+        @videoclips = @sport.videoclips.where(team_id: @team.id).and(players: params[:athlete_id]).and(gameschedule_id: params[:gameschedule_id]).
                   desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
 
       elsif !params[:gameschedule_id].blank? and !params[:gamelog_id].blank?
         
-        @videoclips = @sport.videoclips.where(team_id: current_team.id).and(gameschedule_id: params[:gameschedule_id]).and(gamelog_id: params[:gamelog_id]).
+        @videoclips = @sport.videoclips.where(team_id: @team.id).and(gameschedule_id: params[:gameschedule_id]).and(gamelog_id: params[:gamelog_id]).
                   desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
 
       elsif !params[:athlete_id].blank?
         
-        @videoclips = @sport.videoclips.where(team_id: current_team.id, players: params[:athlete_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+        @videoclips = @sport.videoclips.where(team_id: @team.id, players: params[:athlete_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
 
       elsif !params[:gameschedule_id].blank?
         
-        @videoclips = @sport.videoclips.where(team_id: current_team.id).and(gameschedule_id: params[:gameschedule_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+        @videoclips = @sport.videoclips.where(team_id: @team.id).and(gameschedule_id: params[:gameschedule_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
 
       elsif params[:all].to_i == 0 and !params[:updated_at].nil? or !params[:updated_at].blank?
         @videoclips = @sport.videoclips.where(:updated_at.lt => params[:updated_at].any_of({athlete_id: params[:athlete_id]}, 
                               {coach_id: params[:coach_id]}, {user_id: params[:user_id]}, {gameschedule: params[:gameschedule_id]}, 
                               {gamelog: params[:gamelog_id]}).to_s.to_datetime).limit(20).desc(:updated_at)
       else
-        @videoclips = @sport.videoclips.where(team_id: current_team.id).desc(:updated_at).paginate(per_page: 20, page: params[:page])
-      end
-
-      if params[:team_id] or current_team
-        @team = params[:team_id] ? @sport.teams.find(params[:team_id]) : @sport.teams.find(current_team.id)
-        @gameschedules = @team.gameschedules
+        @videoclips = @sport.videoclips.where(team_id: @team.id).desc(:updated_at).paginate(per_page: 20, page: params[:page])
       end
 
     respond_to do |format|

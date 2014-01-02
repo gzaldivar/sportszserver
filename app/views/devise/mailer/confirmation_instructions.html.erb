@@ -1,10 +1,10 @@
 <% provide(:title, "Resend confirmation instructions") %>
 
 <div class="row">
-  	<div class="col-xs-7" style="background-color:#ffffff;position:relative;top:0;left:100px;">
+  	<div class="col-xs-7">
 		<div class="row">
 		  	<div class="col-xs-4 col-xs-offset-2">
-		  		<% if respond_to?("current_site") %>
+		  		<% if current_site? %>
 		  			<p>Welcome to <%= current_site.sitename %>! You can confirm your account for <%= current_site.sitename %> through the link below:</p>
 		  		<% else %>
 					<p>Welcome to Eazesportz. You can confirm your account by clicking the link below:</p>

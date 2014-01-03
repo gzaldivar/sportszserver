@@ -29,13 +29,14 @@ class VideoclipsController < ApplicationController
 
   def showfeaturedvideos
     if !current_team.featuredvideoclips.nil?
-      @featuredlists = @sport.videoclips.where(team_id: current_team.id.to_s, 
+      @featuredlists = @sport.videoclips.where(team_id: current_team? ? current_team.id.to_s : params[:team_id], 
                                           :id.in => current_team.featuredvideoclips).desc(:updated_at).paginate(per_page: 10)
     else
       @featuredlists = nil
     end
     respond_to do |format|
       format.js
+      format.json
     end
   end
 
@@ -51,7 +52,7 @@ class VideoclipsController < ApplicationController
   end
 
   def featuredvideo
-    @videoclips = @sport.videoclips.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+    @videoclips = @sport.videoclips.where(team_id: current_team? ? current_team.id.to_s : params[:team_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
 
     respond_to do |format|
       format.html

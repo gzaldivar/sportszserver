@@ -157,7 +157,12 @@ class SportsController < ApplicationController
     if current_team.featuredplayers.nil?
       @featured = nil
     else
-      @featured = @sport.athletes.where(team_id: current_team.id, :id.in => current_team.featuredplayers).asc(:number)
+      @featured = @sport.athletes.where(team_id: current_team? ? current_team.id.to_s : params[:team_id], :id.in => current_team.featuredplayers).asc(:number)
+    end
+
+    respond_to do |format|
+      format.html
+      format.json { render status: 200, json: { featuredplayers: @featured } }
     end
   end
 

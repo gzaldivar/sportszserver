@@ -33,13 +33,14 @@ class PhotosController < ApplicationController
 
   def showfeaturedphotos
     if !current_team.featuredphotos.nil?
-      @featuredlists = @sport.photos.where(team_id: current_team.id.to_s, 
+      @featuredlists = @sport.photos.where(team_id: current_team? ? current_team.id.to_s : params[:team_id], 
                                           :id.in => current_team.featuredphotos).desc(:updated_at).paginate(per_page: 10)
     else
       @featuredlists = nil
     end
     respond_to do |format|
       format.js
+      format.json
     end
   end
 
@@ -55,11 +56,7 @@ class PhotosController < ApplicationController
   end
 
   def featuredphoto
-    @photos = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
-    respond_to do |format|
-      format.html
-      format.json { render status: 200, json: { featured: @photos } }
-    end
+    @photos = @sport.photos.where(team_id: current_team? ? current_team.id.to_s : params[:team_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
   end
 
   def updatefeaturedphotos

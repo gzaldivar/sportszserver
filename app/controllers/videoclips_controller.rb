@@ -28,9 +28,9 @@ class VideoclipsController < ApplicationController
   end
 
   def showfeaturedvideos
-    if !current_team.featuredvideoclips.nil?
-      @featuredlists = @sport.videoclips.where(team_id: current_team? ? current_team.id.to_s : params[:team_id], 
-                                          :id.in => current_team.featuredvideoclips).desc(:updated_at).paginate(per_page: 10)
+    @team = current_team? ? current_team : Team.find(params[:team_id])
+    if !@team.featuredvideoclips.nil?
+      @featuredlists = @sport.videoclips.where(team_id: @team.id, :id.in => @team.featuredvideoclips).desc(:updated_at).paginate(per_page: 10)
     else
       @featuredlists = nil
     end
@@ -52,27 +52,94 @@ class VideoclipsController < ApplicationController
   end
 
   def featuredvideo
-    @videoclips = @sport.videoclips.where(team_id: current_team? ? current_team.id.to_s : params[:team_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+    @team = current_team? ? current_team : Team.find(params[:team_id])
+    @athletes = @sport.athletes.where(team_id: @team.id)
+    @gameschedules = @team.gameschedules
 
-    respond_to do |format|
-      format.html
-      format.json { render status: 200, json: { featured: @videoclips } }
+    if params[:athlete_id] and !params[:athlete_id].blank? and params[:gameschedule_id] and !params[:gameschedule_id].blank?
+      @videoclips = @sport.videoclips.where(team_id: @team.id, players: params[:athlete_id], 
+                gameschedule_id: params[:gameschedule_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+    elsif params[:athlete_id] and !params[:athlete_id].blank?
+      @videoclips = @sport.videoclips.where(team_id: @team.id, players: params[:athlete_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+    elsif params[:gameschedule_id] and !params[:gameschedule_id].blank?
+      @videoclips = @sport.videoclips.where(team_id: @team.id, gameschedule_id: params[:gameschedule_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+    elsif params[:username].to_i == 1
+      @videoclips = @sport.videoclips.where(user_id: current_user.id).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+    else
+      @videoclips = @sport.videoclips.where(team_id: @team.id).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
     end
+
+    if @team.featuredvideoclips.nil?
+      @featuredvideoclips = nil
+    else
+      @featuredvideoclips = @sport.videoclips.where(team_id: @team.id, :id.in => @team.featuredvideoclips).desc(:updated_at)
+    end
+  end
+
+  def updatefeaturedvideoclipslist
+    if current_team.featuredvideoclips.nil?
+      current_team.featuredvideoclips = Array.new
+    end
+
+    if !params[:videoselect_ids].nil?
+      params[:videoselect_ids].each do |values|
+        if !current_team.featuredvideoclips.include?(values)
+          current_team.featuredvideoclips << values
+        end
+      end
+    end
+
+    current_team.save!
+
+    redirect_to featuredvideo_sport_videoclips_path(@sport)
+  end
+
+  def deletefeaturedvideoclips
+    if !params[:video_ids].nil?
+      params[:video_ids].each do |p|
+        current_team.featuredvideoclips.delete(p)
+      end
+    end
+
+    current_team.save!
+
+    redirect_to featuredvideo_sport_videoclips_path(@sport)
   end
 
   def updatefeaturedvideos
     if !params[:video_ids].nil?
-        current_team.featuredvideoclips = Array.new
+        @team = current_team? ? current_team : @sport.teams.find(params[:team_id])
+
+        if @team.featuredvideoclips.nil?
+          @team.featuredvideoclips = Array.new
+        end
 
         params[:video_ids].each do |values|
-          current_team.featuredvideoclips << values
+          if !@team.featuredvideoclips.include?(values)
+            @team.featuredvideoclips << values
+          end
         end
 
-        if current_team.featuredvideoclips.count == 0
-          current_team.featuredvideos = nil
+        if !@team.featuredvideoclips.nil? and !@team.featuredvideoclips.empty?
+          @team.featuredvideoclips.each do |f|
+            found = false
+            params[:video_ids].each do |p|
+              if f == p
+                found = true
+                break
+              end
+            end
+            if !found
+              @team.featuredvideoclips.delete(f)
+            end
+          end
+        end
+
+        if @team.featuredvideoclips.count == 0
+          @team.featuredvideoclips = nil
         end
         
-      current_team.save!
+      @team.save!
     end
 
     respond_to do |format|

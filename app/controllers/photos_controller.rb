@@ -32,9 +32,9 @@ class PhotosController < ApplicationController
   end
 
   def showfeaturedphotos
-    if !current_team.featuredphotos.nil?
-      @featuredlists = @sport.photos.where(team_id: current_team? ? current_team.id.to_s : params[:team_id], 
-                                          :id.in => current_team.featuredphotos).desc(:updated_at).paginate(per_page: 10)
+    @team = current_team? ? current_team : @sport.teams.find(params[:team_id])
+    if !@team.featuredphotos.nil?
+      @featuredlists = @sport.photos.where(team_id: @team.id, :id.in => @team.featuredphotos).desc(:updated_at).paginate(per_page: 10)
     else
       @featuredlists = nil
     end
@@ -56,22 +56,94 @@ class PhotosController < ApplicationController
   end
 
   def featuredphoto
-    @photos = @sport.photos.where(team_id: current_team? ? current_team.id.to_s : params[:team_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+    @team = current_team? ? current_team : Team.find(params[:team_id])
+    @athletes = @sport.athletes.where(team_id: @team.id)
+    @gameschedules = @team.gameschedules
+
+    if params[:athlete_id] and !params[:athlete_id].blank? and params[:gameschedule_id] and !params[:gameschedule_id].blank?
+      @photos = @sport.photos.where(team_id: @team.id, players: params[:athlete_id], 
+                gameschedule_id: params[:gameschedule_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+    elsif params[:athlete_id] and !params[:athlete_id].blank?
+      @photos = @sport.photos.where(team_id: @team.id, players: params[:athlete_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+    elsif params[:gameschedule_id] and !params[:gameschedule_id].blank?
+      @photos = @sport.photos.where(team_id: @team.id, gameschedule_id: params[:gameschedule_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+    elsif params[:username].to_i == 1
+      @photos = @sport.photos.where(user_id: current_user.id).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+    else
+      @photos = @sport.photos.where(team_id: @team.id).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
+    end
+
+    if @team.featuredphoto.nil?
+      @featuredphotos = nil
+    else
+      @featuredphotos = @sport.photos.where(team_id: @team.id, :id.in => @team.featuredphotos).desc(:updated_at)
+    end
   end
 
-  def updatefeaturedphotos
-    if !params[:photo_ids].nil?
-        current_team.featuredphotos = Array.new
+  def updatefeaturedphotoslist
+    if current_team.featuredphotos.nil?
+      current_team.featuredphotos = Array.new
+    end
 
-        params[:photo_ids].each do |values|
+    if !params[:photoselect_ids].nil?
+      params[:photoselect_ids].each do |values|
+        if !current_team.featuredphotos.include?(values)
           current_team.featuredphotos << values
         end
+      end
+    end
 
-        if current_team.featuredphotos.count == 0
-          current_team.featuredphotos = nil
+    current_team.save!
+
+    redirect_to featuredphoto_sport_photos_path(@sport)
+  end
+
+  def deletefeaturedphoto
+    if !params[:photo_ids].nil?
+      params[:photo_ids].each do |p|
+        current_team.featuredphotos.delete(p)
+      end
+    end
+
+    current_team.save!
+
+    redirect_to featuredphoto_sport_photos_path(@sport)
+  end
+
+  def updatefeaturedphotos        #used by mobile apps to update featured photo list
+    if !params[:photo_ids].nil?
+        @team = current_team? ? current_team : @sport.teams.find(params[:team_id])
+
+        if @team.featuredphotos.nil?
+          @team.featuredphotos = Array.new
+        end
+
+        params[:photo_ids].each do |values|
+          if !@team.featuredphotos.include?(values)
+            @team.featuredphotos << values
+          end
+        end
+
+        if !@team.featuredphotos.nil? and !@team.featuredphotos.empty?
+          @team.featuredphotos.each do |f|
+            found = false
+            params[:photo_ids].each do |p|
+              if f == p
+                found = true
+                break
+              end
+            end
+            if !found
+              @team.featuredphotos.delete(f)
+            end
+          end
+        end
+
+        if @team.featuredphotos.count == 0
+          @team.featuredphotos = nil
         end
         
-      current_team.save!
+      @team.save!
     end
 
     respond_to do |format|

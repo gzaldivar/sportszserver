@@ -1,40 +1,78 @@
 <% provide(:title, current_site.sitename + ' - Featured Photos') %>
 <p>
 <div class="row">
-	<div class="col-xs-6 col-xs-offset-2">
-		<h4>Add or Remove Photos - Featured Photos</h4>
+	<div class="col-xs-5">
+		<h4>Add or Remove Photos - <%= link_to "Search", "#searchphotos-responsive", :data => {:toggle=>"modal"}, class: "btn btn-md btn-primary" %></h4>
+	</div>
+	<div class="col-xs-5 col-xs-offset-1">
+		<h4>Featured Photos</h4>
 	</div>
 </div>
-<% if @photos.nil? or @photos.empty? %>
-	<label id='#nophotos-responsive'></label>
-<% else %>
-	<%= form_tag updatefeaturedphotos_sport_photos_path(@sport), method: :post, class: 'form-horizontal'  do %>
-		<div class="row">
-			<div class="col-xs-6 col-xs-offset-2">
-				<%= render 'photoslist', photolist: @photos, featured: "Photos", photoselect: true %>
+<div class="row">
+	<div class="col-xs-5">
+		<% if @photos.nil? or @photos.empty? %>
+          <script> 
+            $(document).ready(function() {
+              $('#nophotos-responsive').modal('show');
+            });
+         </script>
+		<% else %>
+			<%= form_tag updatefeaturedphotoslist_sport_photos_path(@sport), method: :get, class: 'form-horizontal'  do %>
+				<div class="row">					
+					<table class="table table-striped table-bordered table-hover">
+					    <thead>
+					        <th>Select</th>
+					        <th>Photo</th>
+					    	<th>Name</th>
+					    </thead>
+					    <tbody>
+						    <% if @photos.any? %>
+							    <% @photos.each do |p| %>
+								    <tr>
+								    	<% found = false %>
+								    	<% if !@featuredphotos.nil? %>
+								    		<% @featuredphotos.each do |f| %>
+								    			<% if p.id == f.id %>
+								    				<% found = true %>
+								    				<% break %>
+								    			<% end %>
+								    		<% end %>
+								    	<% end %>
+								    	<% if found %>
+						            		<td><%= check_box_tag "photoselect_ids[]", p.id, true %></td>
+								    	<% else %>
+						            		<td><%= check_box_tag "photoselect_ids[]", p.id %></td>
+						            	<% end %>
+						              	<td><%= link_to image_tag(p.thumbnail_url, { class: 'img-responsive', height: '100px', width: '100px' }),
+						              					sport_photo_path(@sport, p) %></td>
+								    	<td><%= link_to p.displayname, sport_photo_path(@sport, p) %></td>
+								    </tr>
+						        <% end %>
+						        <%= will_paginate @photos %>
+							<% end %>
+					    </tbody>
+					</table>
+				</div>
+		        <div class="row">
+					<div class="col-xs-2 col-xs-offset-4">
+						<%= submit_tag "Update", class: 'btn btn-md btn-primary' %>
+					</div>
+		        </div>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="col-xs-5 col-xs-offset-1">
+		<%= form_tag deletefeaturedphoto_sport_photos_path(@sport), method: :get, class: 'form-horizontal'  do %>
+			<div id="featuredphotoslist">
+				<%= render 'featuredphotoslist', featuredphotos: @featuredphotos %>
 			</div>
-		</div>
-        <div class="row">
-			<div class="col-xs-2 col-xs-offset-4">
-				<%= submit_tag "Add Photo", class: 'btn btn-md btn-primary' %>
-			</div>
-        </div>
-	<% end %>
-<% end %>
-<div class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Notice</h4>
-			</div>
-			<div class="modal-body">
-				<p>No photos to display!</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		</div>
-	</div><!-- /.modal-content -->
-</div><!-- /.modal -->
+	        <div class="row">
+				<div class="col-xs-2">
+					<%= submit_tag "Update", class: 'btn btn-md btn-primary' %>
+				</div>
+	        </div>
+		<% end %>
+	</div>
+</div>
+<%= render 'layouts/messagemodal', modalid: "nophotos-responsive", modaltitle: "No Photos", messagetext: "No photos to select from!" %>
+<%= render 'layouts/seachmediamodal', getpath: featuredphoto_sport_photos_path(@sport) %>

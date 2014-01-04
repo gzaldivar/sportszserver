@@ -10,20 +10,20 @@
         <% else %>
           <%= featured %>
         <% end %>
-        </th>
+       </th>
     </thead>
     <tbody>
 	    <% if photolist.any? %>
 	     <% photolist.each do |p| %>
 		    	<tr>
             <% if photoselect == true %>
-              <td><%= check_box_tag "photo_ids[]", p.id %></td>
+              <td><%= check_box_tag "photoselect_ids[]", p.id %></td>
               <td><%= image_tag p.thumbnail_url, { class: 'img-responsive', height: '100px', width: '100px' } %></td>
             <% end %>
 		    		<td><%= link_to p.displayname, '#', :class => 'select_photo', :data => {:id => p.id.to_s} %></td>
 		    	</tr>
 		    <% end %>
-        <% if photoselect == true %>
+        <% if photoselect == true and photolist.respond_to?(:total_pages) %>
           <%= will_paginate photolist %>
         <% end %>
 		  <% end %>

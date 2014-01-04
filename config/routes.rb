@@ -143,7 +143,8 @@ Sportzserver::Application.routes.draw do
 
       collection do
         post :untagathlete, :createmobile, :updatefeaturedphotos
-        get :updategameschedule, :clear_error, :updategamelogs, :photoshome, :featuredphoto, :showfeaturedphotos, :displayphoto, :latest
+        get :updategameschedule, :clear_error, :updategamelogs, :photoshome, :featuredphoto, :showfeaturedphotos, :displayphoto, :latest,
+            :updatefeaturedphotoslist, :deletefeaturedphoto
       end
     end
     
@@ -155,7 +156,8 @@ Sportzserver::Application.routes.draw do
 
       collection do
         post :untagathlete, :createmobile, :updatefeaturedvideos
-        get :updategameschedule, :updategamelogs, :videoclipshome, :showfeaturedvideos, :latest, :displayvideo, :featuredvideo
+        get :updategameschedule, :updategamelogs, :videoclipshome, :showfeaturedvideos, :latest, :displayvideo, :featuredvideo,
+            :updatefeaturedvideoclipslist, :deletefeaturedvideoclips
       end
     end
 

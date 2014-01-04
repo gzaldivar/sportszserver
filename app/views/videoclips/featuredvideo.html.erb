@@ -1,40 +1,96 @@
-<% provide(:title, current_site.sitename + ' - Featured Video Clips') %>
+<% provide(:title, current_site.sitename + ' - Featured Videos') %>
 <p>
 <div class="row">
-	<div class="col-xs-6 col-xs-offset-2">
-		<h4>Add or Remove Video Clips - Featured Videos</h4>
+	<div class="col-xs-5">
+		<h4>Add or Remove Videos - <%= link_to "Search", "#searchphotos-responsive", :data => {:toggle=>"modal"}, class: "btn btn-md btn-primary" %></h4>
+	</div>
+	<div class="col-xs-5 col-xs-offset-1">
+		<h4>Featured Videos</h4>
 	</div>
 </div>
-<% if @videoclips.nil? or @videoclips.empty? %>
-	<label id='#novideos-responsive'></labal>
-<% else %>
-	<%= form_tag updatefeaturedvideos_sport_videoclips_path(@sport), method: :post, class: 'form-horizontal'  do %>
-		<div class="row">
-			<div class="col-xs-6 col-xs-offset-2">
-				<%= render 'videoslist', videolist: @videoclips, featured: "Videos", videoselect: true %>
+<div class="row">
+	<div class="col-xs-5">
+		<% if @videoclips.nil? or @videoclips.empty? %>
+          <script> 
+            $(document).ready(function() {
+              $('#novideoclips-responsive').modal('show');
+            });
+         </script>
+		<% else %>
+			<%= form_tag updatefeaturedvideoclipslist_sport_videoclips_path(@sport), method: :get, class: 'form-horizontal'  do %>
+				<div class="row">					
+					<table class="table table-striped table-bordered table-hover">
+					    <thead>
+					        <th>Select</th>
+					        <th>Photo</th>
+					    	<th>Name</th>
+					    </thead>
+					    <tbody>
+						    <% if @videoclips.any? %>
+							    <% @videoclips.each do |p| %>
+								    <tr>
+								    	<% found = false %>
+								    	<% if !@featuredvideoclips.nil? and !@featuredvideoclips.empty? %>
+								    		<% @featuredvideoclips.each do |f| %>
+								    			<% if p.id == f.id %>
+								    				<% found = true %>
+								    				<% break %>
+								    			<% end %>
+								    		<% end %>
+								    	<% end %>
+								    	<% if found %>
+						            		<td><%= check_box_tag "videoselect_ids[]", p.id, true %></td>
+								    	<% else %>
+						            		<td><%= check_box_tag "videoselect_ids[]", p.id %></td>
+						            	<% end %>
+						              	<td><%= link_to image_tag(p.poster_url, { class: 'img-responsive', height: '100px', width: '100px' }),
+						              					sport_videoclip_path(@sport, p) %></td>
+								    	<td><%= link_to p.displayname, sport_videoclip_path(@sport, p) %></td>
+								    </tr>
+						        <% end %>
+						        <%= will_paginate @videoclips %>
+							<% end %>
+					    </tbody>
+					</table>
+				</div>
+		        <div class="row">
+					<div class="col-xs-2 col-xs-offset-4">
+						<%= submit_tag "Update", class: 'btn btn-md btn-primary' %>
+					</div>
+		        </div>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="col-xs-5 col-xs-offset-1">
+		<%= form_tag deletefeaturedvideoclips_sport_videoclips_path(@sport), method: :get, class: 'form-horizontal'  do %>
+			<div id="featuredvideoclipslist">
+				<table class="table table-striped table-bordered table-hover">
+				    <thead>
+				        <th>Video</th>
+				    	<th>Featured Video</th>
+				        <th>Remove</th>
+				    </thead>
+				    <tbody>
+					    <% if !@featuredvideoclips.nil? %>
+					     	<% @featuredvideoclips.each do |p| %>
+							    <tr>
+									<td><%= link_to image_tag(p.poster_url, { class: 'img-responsive', height: '100px', width: '100px' }), 
+											sport_videoclip_path(@sport, p) %></td>
+							    	<td><%= link_to p.displayname, sport_videoclip_path(@sport, p) %></td>
+									<td><%= check_box_tag "video_ids[]", p.id %></td>
+							    </tr>
+							<% end %>
+						<% end %>
+					</tbody>
+				</table>
 			</div>
-		</div>
-        <div class="row">
-			<div class="col-xs-2 col-xs-offset-4">
-				<%= submit_tag "Add Video", class: 'btn btn-md btn-primary' %>
-			</div>
-        </div>
-	<% end %>
-<% end %>
-<div class="modal fade">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-				<h4 class="modal-title">Notice</h4>
-			</div>
-			<div class="modal-body">
-				<p>No video clips to display!</p>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Save changes</button>
-			</div>
-		</div>
-	</div><!-- /.modal-content -->
-</div><!-- /.modal -->
+	        <div class="row">
+				<div class="col-xs-2">
+					<%= submit_tag "Update", class: 'btn btn-md btn-primary' %>
+				</div>
+	        </div>
+		<% end %>
+	</div>
+</div>
+<%= render 'layouts/messagemodal', modalid: "novideoclips-responsive", modaltitle: "No Videos", messagetext: "No videos to select from!" %>
+<%= render 'layouts/seachmediamodal', getpath: featuredvideo_sport_videoclips_path(@sport) %>

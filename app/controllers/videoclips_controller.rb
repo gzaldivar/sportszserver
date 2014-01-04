@@ -28,7 +28,9 @@ class VideoclipsController < ApplicationController
   end
 
   def showfeaturedvideos
-    @team = current_team? ? current_team : Team.find(params[:team_id])
+    puts params[:team_id]
+    @team = current_team? ? current_team : @sport.teams.find(params[:team_id])
+    puts @team.mascot
     if !@team.featuredvideoclips.nil?
       @featuredlists = @sport.videoclips.where(team_id: @team.id, :id.in => @team.featuredvideoclips).desc(:updated_at).paginate(per_page: 10)
     else
@@ -52,7 +54,7 @@ class VideoclipsController < ApplicationController
   end
 
   def featuredvideo
-    @team = current_team? ? current_team : Team.find(params[:team_id])
+    @team = current_team? ? current_team : @sport.teams.find(params[:team_id])
     @athletes = @sport.athletes.where(team_id: @team.id)
     @gameschedules = @team.gameschedules
     @gamelogs = []

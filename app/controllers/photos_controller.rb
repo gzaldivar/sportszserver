@@ -56,7 +56,7 @@ class PhotosController < ApplicationController
   end
 
   def featuredphoto
-    @team = current_team? ? current_team : Team.find(params[:team_id])
+    @team = current_team? ? current_team : @sport.teams.find(params[:team_id])
     @athletes = @sport.athletes.where(team_id: @team.id)
     @gameschedules = @team.gameschedules
     @gamelogs = []

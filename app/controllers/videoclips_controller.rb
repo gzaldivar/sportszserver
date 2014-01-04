@@ -55,6 +55,7 @@ class VideoclipsController < ApplicationController
     @team = current_team? ? current_team : Team.find(params[:team_id])
     @athletes = @sport.athletes.where(team_id: @team.id)
     @gameschedules = @team.gameschedules
+    @gamelogs = []
 
     if params[:athlete_id] and !params[:athlete_id].blank? and params[:gameschedule_id] and !params[:gameschedule_id].blank?
       @videoclips = @sport.videoclips.where(team_id: @team.id, players: params[:athlete_id], 

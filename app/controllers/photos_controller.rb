@@ -73,7 +73,7 @@ class PhotosController < ApplicationController
       @photos = @sport.photos.where(team_id: @team.id).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
     end
 
-    if @team.featuredphoto.nil?
+    if @team.featuredphotos.nil?
       @featuredphotos = nil
     else
       @featuredphotos = @sport.photos.where(team_id: @team.id, :id.in => @team.featuredphotos).desc(:updated_at)

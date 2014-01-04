@@ -162,6 +162,7 @@ class SportsController < ApplicationController
 
     respond_to do |format|
       format.html
+      format.js
       format.json { render status: 200, json: { featuredplayers: @featured } }
     end
   end

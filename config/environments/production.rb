@@ -96,4 +96,15 @@ Sportzserver::Application.configure do
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
 
+  #Paypal
+  config.after_initialize do
+    ActiveMerchant::Billing::Base.mode = :production
+    paypal_options = {
+      login: "gzaldivar-facilitator_api1.icloud.com",
+      password: "1388935614",
+      signature: "AHUvrj4LS85hez4e0oNOt.ng8k.sApA9qsWrgVikPTlU8RdriVeo8t3a"
+    }
+    ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(paypal_options)
+  end
+
 end

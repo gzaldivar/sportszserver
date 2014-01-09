@@ -1,17 +1,29 @@
 <% provide(:title, "404 - Error") %>
 <p>
+	<div class="row">
+		<div class="col-xs-4 col-xs-offset-1">
+			<%= image_tag "FootballGameStats.png", class: 'img-responsive' %>
+		</div>
+		<div class="col-xs-4 col-xs-offset-1">
+			<%= image_tag "BasketballGameStats.png", class: 'img-responsive' %>
+		</div>
+	</div>
+<p>
 <div class="row">
-	<div class="col-xs-10">
-		<h2>Error 404</h2>
-		<h3>We are sorry, the content you requested cannot be found!
-		<p>
-		You tried to access <%= @not_found_path %>, which is not a valid page.
-		<p>
-		<% if current_site? %>
-			Want to <%= link_to current_site.sitename, current_site %> go back to our home page and try again?
+	<div class="col-xs-11">
+
+		<% if @message.nil? %>
+			<h3 class="text-danger text-center">We are sorry, an error has occurred!</h3>
 		<% else %>
-			Want to <%= link_to "Home", root_path %> go back to our home page and try again?
+			<h3 class="text-danger text-center"><%= @message %></h3>
 		<% end %>
-		</h3>	
+
+		<h4 class="text-center">
+		<% if current_site? %>
+			Want to go back to <%= link_to current_site.sitename, current_site %>? You can also hit the back button and continue.
+		<% else %>
+			Want to <%= link_to "Home", root_path %> go back to our home page?
+		<% end %>
+		</h4>	
 	</div>
 </div>

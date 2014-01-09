@@ -4,8 +4,11 @@ class FootballDefensesController < ApplicationController
 	before_filter	:authenticate_user!
   	before_filter 	:get_sport_athlete_stat
   	before_filter	:correct_stat,			only: [:edit, :update, :destroy]
-	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
-	    controller.team_manager?(@athlete, nil)
+	before_filter 	only: [:destroy, :update, :create, :edit, :new] do |controller| 
+	    controller.SiteOwner?(@athlete.team_id)
+	end
+	before_filter do |check|
+		check.packageEnabled?(current_site)
 	end
 
 	def new

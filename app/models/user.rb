@@ -51,12 +51,12 @@ class User
 
 #  has_many :sites
   has_many :sports
-  has_many :alerts
+  has_many :alerts, dependent: :destroy
   has_many :photos
   has_many :videoclips
-  has_many :newsfeeds
   has_many :events
-  has_many :blogs
+  has_many :blogs, dependent: :destroy
+  has_one :payment
 
   index({ email: 1 }, { unique: true, background: true })
 

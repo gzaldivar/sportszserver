@@ -1,0 +1,24 @@
+<% provide(:title, "Upgrade") %>
+<p>
+	<div class="row">
+		<div class="col-xs-4">
+			<%= image_tag "FootballGameStats.png", class: 'img-responsive' %>
+		</div>
+		<div class="col-xs-4">
+			<%= image_tag "BasketballGameStats.png", class: 'img-responsive' %>
+		</div>
+	</div>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		<h2>Upgrade Required</h2>
+		<h3>We are sorry, you need to upgrade to use this feature! Please contact your site administrator.
+		<p>
+		<% if current_site? %>
+			Want to <%= link_to current_site.sitename, current_site %> go back to your home page? You can also hit the back button and continue.
+		<% else %>
+			Want to <%= link_to "Home", root_path %> go back to our home page?
+		<% end %>
+		</h3>	
+	</div>
+</div>

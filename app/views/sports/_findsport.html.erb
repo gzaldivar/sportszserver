@@ -64,7 +64,7 @@
             </tr>
           </thead>
           <tbody>
-        <% if sports.any? %>
+        <% if !sports.nil? and sports.any? %>
               <% sports.each do |s| %>
                 <tr>
                   <td><%= s.name %></td>

@@ -95,7 +95,7 @@
 		</div>
 		<p>
 		<div class="row">
-			<div class="col-xs-1 col-xs-offset-5">
+			<div class="col-xs-4 col-xs-offset-4">
 				<% if (!current_user.nil?  and !current_site.nil? and (@user.id == current_user.id)) or isAdmin? %>
 				    <%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-sm btn-primary" %>
 				<% end %>

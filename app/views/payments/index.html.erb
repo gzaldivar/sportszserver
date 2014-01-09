@@ -1,0 +1,76 @@
+<% provide(:title, "Easy Sports Mobile - Football, Basketball and Soccer") %>
+<p>
+<div class="row">
+	<div class="col-xs-4">
+		<%= link_to (image_tag "FootballGameStats.png", width: "300", height: "400"), info_path %>
+	</div>
+	<div class="col-xs-4">
+		<%= link_to (image_tag "BasketballGameStats.png", width: "300", height: "400"), info_path %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		<h5 class="text-info">Thanks for signing up and using Eazesportz for your sports program. Please select your package below. Once you select your package 
+			you will be redirected to a page where you can start building your site.</h5>
+		<h5 class="text-info">You can always change your package later if you want to upgrade!</h5>
+	</div>
+</div>
+<h5 class="text-success">
+<div class="row">
+	<div class="col-xs-2">
+		Basic - Free
+	</div>
+	<div class= "col-xs-2 col-xs-offset-1">
+		Silver - $49 per year
+	</div>
+	<div class="col-xs-2 col-xs-offset-1">
+		Gold - $99 per year
+	</div>
+	<div class="col-xs-2 col-xs-offset-1">
+		Platinum - $249 per year
+	</div>
+</div>
+</h5>
+<div class="well">
+	<div class="row">
+		<div class="col-xs-2">
+			<div class="well">
+				<h6 class="text-info">Home Page, News, Standings, Schedule, Scores, Roster, Player Profiles</h6>
+			</div>
+		</div>
+		<div class="col-xs-2 col-xs-offset-1">
+			<div class="well">
+				<h6 class="text-info">Live stats, 300MB of storage for Photos and Video, Blog Support</h6>
+			</div>
+		</div>
+		<div class="col-xs-2 col-xs-offset-1">
+			<div class="well">
+				<h6 class="text-info">1GB storage for Photos and Video, Sponsor support for your program</h6>
+			</div>
+		</div>
+		<div class="col-xs-2 col-xs-offset-1">
+			<div class="well">
+				<h6 class="text-info">10GB storage for Photos and Video, Branded iPhone app for your program</h6>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-2">
+			<%= link_to "Basic", new_sport_path, class: "btn btn-md btn-primary" %>
+		</div>
+		<div class="col-xs-2 col-xs-offset-1">
+			<%= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), 
+									new_payment_path(package: "Silver") %>
+		</div>
+		<div class="col-xs-2 col-xs-offset-1">
+			<%= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), 
+									new_payment_path(package: "Gold") %>
+		</div>
+		<div class="col-xs-2 col-xs-offset-1">
+			<%= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), 
+									new_payment_path(package: "Platinum ") %>
+		</div>
+	</div>
+	</h6>
+</div>

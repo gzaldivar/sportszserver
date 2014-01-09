@@ -3,7 +3,7 @@ class EventsController < ApplicationController
   	before_filter :get_sport
   	before_filter :get_event,			only: [:edit, :update, :show, :destroy]
 	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
-	    controller.team_manager?(@event, nil)
+	    controller.SiteOwner?(@event.team_id)
 	end
 
 	def new

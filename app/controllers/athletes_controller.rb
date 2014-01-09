@@ -2,12 +2,14 @@ class AthletesController < ApplicationController
   include FootballStatistics
 
 	before_filter	:authenticate_user!,	only: [:destroy, :update, :create, :edit, :playerstats, :new, :follow, :unfollow]
- #  before_filter :site_owner?,         only: [:destroy, :update, :create, :edit, :new]
   before_filter :get_sport
   before_filter :correct_athlete,     only: [:show, :edit, :update, :destroy, :follow, :unfollow, :stats, :updatephoto, 
                                             :playerstats, :selectedstat]
   before_filter only: [:destroy, :update, :create, :edit, :new, :playerstats, :selectedstat] do |controller| 
-    controller.team_manager?(@athlete, nil)
+    controller.SiteOwner?(@athlete.nil? ? nil : @athlete.team_id)
+  end
+  before_filter only: [:follow, :unfollow] do |controller|
+    controller.packageEnabled?(current_site)
   end
   
   def new    

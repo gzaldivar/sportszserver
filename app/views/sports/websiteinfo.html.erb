@@ -1,4 +1,5 @@
 <% provide(:title, "Eazesportz Football Web Site Example") %>
+<p>
 <div class="row">
 	<div class="col-xs-11">
 		<h2>Eazesportz.com Web site</h2>
@@ -27,5 +28,10 @@
 	<div class="col-xs-6">
 		<%= link_to (image_tag 'footballwebhome.png', class: 'img-responsive'), 
 							"http://powerful-everglades-2345.herokuapp.com/sports/522e2ff239ee2f58ca000004" %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-11">
+		<%= link_to "Get Started", admininfo_path, class: "btn btn-md btn-primary" %>
 	</div>
 </div>

@@ -17,7 +17,18 @@
                     <tr>
                       <td><%= link_to "My Profile", user_path(current_user) %></td>
                     </tr>
-                     <tr>
+                    <% if current_user.godmode %>
+                      <tr>
+                        <td><%= link_to "Manage Sites", admins_path %></td>
+                      </tr>
+                      <tr>
+                        <td><%= link_to "Manage All Users", users_admins_path %></td>
+                      </tr>
+                    <% end %>
+                    <tr>
+                      <td><%= link_to "Find Site .....", sports_path %></td>
+                    </tr>
+                    <tr>
                       <td><%= link_to "Sign out", destroy_user_session_path, method: "delete" %></td>
                     </tr>
                </tbody>

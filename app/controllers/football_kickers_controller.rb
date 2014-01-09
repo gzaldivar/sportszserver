@@ -3,7 +3,10 @@ class FootballKickersController < ApplicationController
 	before_filter	:authenticate_user!
   	before_filter 	:get_sport_athlete_stat
   	before_filter	:correct_stat,			only: [:update, :destroy,] do |controller| 
-	    controller.team_manager?(@athlete, nil)
+	    controller.SiteOwner?(@athlete.team_id)
+	end
+	before_filter do |check|
+		check.packageEnabled?(current_site)
 	end
 
 	def new

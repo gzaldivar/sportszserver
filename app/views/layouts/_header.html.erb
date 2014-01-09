@@ -26,13 +26,14 @@
 							</a>
 						</li-->
 						<li><a href="#moreselect-responsive" data-toggle="modal">More</a></li>
-					<% else %>
+					<% elsif !current_site? %>
 						<li><a href="#oursolutions-responsive" data-toggle="modal">Sport Solutions</a></li>
 					<% end %>
 					<% if current_site? %>
 						<li><%= link_to "Contact", sport_contacts_path(current_site) %></li>
 					<% else %>
 						<li><%= link_to "Contact", contacts_path %></li>
+						<li><%= link_to "Find", sports_path %></li>
 					<% end %>
 					<% if user_signed_in? and site_owner? %>
 						<!--li id="fat-menu" class="dropdown">

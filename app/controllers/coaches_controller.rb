@@ -3,7 +3,7 @@ class CoachesController < ApplicationController
   before_filter :get_sport
 	before_filter	:correct_coach,	      only:	[:show, :edit, :update, :destroy, :updatephoto]
   before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
-    controller.team_manager?(@coach, nil)
+    controller.SiteOwner?(@coach.nil? ? nil : @coach.team_id)
   end
 	
   def new

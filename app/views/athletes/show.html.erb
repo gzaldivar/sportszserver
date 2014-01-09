@@ -9,19 +9,36 @@
   <%= render 'athletes/photo', athlete: @athlete %>
   <div class="col-xs-7">
     <ul class="nav nav-pills">
-      <% if @sport.sportname == "Football" %>
-        <li><%= link_to "Stats", playerstats_sport_athlete_path(@sport, @athlete) %></li>
-      <% elsif @sport.sportname == "Basketball" %>
-        <li><%= link_to "Stats", sport_athlete_basketball_stats_path(@sport, @athlete) %></li>
-      <% elsif @sport.sportname == "Soccer" %>
-        <li><%= link_to "Stats", sport_athlete_soccers_path(@sport, @athlete)%></li>
-      <% end %>
-      <% if Photo.where(players: @athlete.id.to_s).any? %>
-        <!--li><%= link_to "Photos", sport_photos_path(@sport, athlete: { id: @athlete.id } ) %></li-->            
-        <li><%= link_to "Photos", sport_photos_path(@sport, athlete_id: @athlete.id ) %></li>            
-      <% end %>
-      <% if Videoclip.where(players: @athlete.id.to_s).any? %>
-        <li><%= link_to "Videos", sport_videoclips_path(@sport, athlete_id: @athlete.id ) %></li>           
+      <% if is_package_enabled?(@sport) %>
+        <% if @sport.sportname == "Football" %>
+          <li><%= link_to "Stats", playerstats_sport_athlete_path(@sport, @athlete) %></li>
+        <% elsif @sport.sportname == "Basketball" %>
+          <li><%= link_to "Stats", sport_athlete_basketball_stats_path(@sport, @athlete) %></li>
+        <% elsif @sport.sportname == "Soccer" %>
+          <li><%= link_to "Stats", sport_athlete_soccers_path(@sport, @athlete)%></li>
+        <% end %>
+        <% if Photo.where(players: @athlete.id.to_s).any? %>
+          <!--li><%= link_to "Photos", sport_photos_path(@sport, athlete: { id: @athlete.id } ) %></li-->            
+          <li><%= link_to "Photos", sport_photos_path(@sport, athlete_id: @athlete.id ) %></li>            
+        <% end %>
+        <% if Videoclip.where(players: @athlete.id.to_s).any? %>
+          <li><%= link_to "Videos", sport_videoclips_path(@sport, athlete_id: @athlete.id ) %></li>           
+        <% end %>
+      <% elsif !is_package_enabled?(@sport) and site_owner? %>
+        <% if @sport.sportname == "Football" %>
+          <li><%= link_to "Stats", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
+        <% elsif @sport.sportname == "Basketball" %>
+          <li><%= link_to "Stats", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
+        <% elsif @sport.sportname == "Soccer" %>
+          <li><%= link_to "Stats", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
+        <% end %>
+        <% if Photo.where(players: @athlete.id.to_s).any? %>
+          <!--li><%= link_to "Photos", sport_photos_path(@sport, athlete: { id: @athlete.id } ) %></li-->            
+          <li><%= link_to "Photos", "#upgrademediamodal", data: { toggle: "modal" } %></li>            
+        <% end %>
+        <% if Videoclip.where(players: @athlete.id.to_s).any? %>
+          <li><%= link_to "Videos", "#upgrademediamodal", data: { toggle: "modal" } %></li>           
+        <% end %>
       <% end %>
     </ul>
     <p>
@@ -80,10 +97,18 @@
 <div class="row">
   <div class="col-xs-7 col-xs-offset-3">
     <% if user_signed_in? and (user_pics_ok? or site_owner? or isTeamManager?(@athlete)) and !@athlete.team_id.nil? %>
-		  <%= link_to	"Add Photo", newathlete_sport_photo_path(@sport, @athlete), class:	"btn btn-sm btn-primary" %>&nbsp;  
+      <% if is_package_enabled?(@sport) %>
+		    <%= link_to	"Add Photo", newathlete_sport_photos_path(@sport, athlete_id: @athlete), class:	"btn btn-sm btn-primary" %>
+      <% elsif !is_package_enabled?(@sport) and site_owner? %>
+        <%= link_to "Add Photo", "#upgrademediamodal", data: { toggle: "modal" }, class:  "btn btn-sm btn-primary" %>
+      <% end %> 
     <% end %>
     <% if user_signed_in? and (user_videos_ok? or site_owner? or isTeamManager?(@athlete)) and !@athlete.team_id.nil? %>
-		  <%= link_to	"Add Video", newathlete_sport_videoclip_path(@sport, @athlete), class:	"btn btn-sm btn-primary" %>&nbsp;  
+      <% if is_package_enabled?(@sport) %>
+		    <%= link_to	"Add Video", newathlete_sport_videoclips_path(@sport, athlete_id: @athlete), class:	"btn btn-sm btn-primary" %>  
+      <% elsif !is_package_enabled?(@sport) and site_owner? %>
+        <%= link_to "Add Video", "#upgrademediamodal", data: { toggle: "modal" }, class:  "btn btn-sm btn-primary" %>
+      <% end %> 
     <% end %>
     <% if site_owner? or isTeamManager?(@athlete) %>
       	<%= link_to "Edit", edit_sport_athlete_path(@sport, @athlete),  class: "btn btn-sm btn-warning" %>&nbsp;
@@ -98,4 +123,8 @@
 <div class="row">
   <%= render "layouts/sponsor" %>
 </div>
+<%= render 'layouts/messagemodal', modalid: 'upgradestatsmodal', modaltitle: 'Upgrade for Stats', 
+            messagetext: 'Click on "Manage Eazesportz Package" in Tools menu to upgrade!' %>
+<%= render 'layouts/messagemodal', modalid: 'upgrademediamodal', modaltitle: 'Upgrade for Photos/Videos', 
+            messagetext: 'Click on "Manage Eazesportz Package" in Tools menu to upgrade!' %>
 

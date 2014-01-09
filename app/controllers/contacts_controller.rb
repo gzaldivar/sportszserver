@@ -1,8 +1,10 @@
 class ContactsController < ApplicationController
   before_filter :authenticate_user!,  only: [:new, :create, :edit, :update, :destroy]
-  before_filter :site_owner?, only: [:new, :create, :edit, :update, :destroy]
   before_filter :get_site
   before_filter :correct_contact,       only: [:show, :update, :edit, :destroy]
+  before_filter only: [:new, :create, :edit, :update, :destroy] do |controller|
+    controller.SiteOwner?(nil)
+  end
 
   def new
     @contact = Contact.new

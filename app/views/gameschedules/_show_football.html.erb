@@ -9,16 +9,27 @@
 	<div class="col-xs-5">
       	<ul class="nav nav-pills">
           	<li><%= link_to "Team", '#', :class => 'team_gametotals' %></li>
-          	<li><%= link_to "Offense", '#', :class => 'passing_stats' %></li>
-          	<li><%= link_to "Defense", '#', :class => 'defense_gametotals' %></li>
-          	<li><%= link_to "Kick", '#', :class => 'kicker_gametotals' %></li>
-          	<li><%= link_to "Return", '#', :class => 'returner_gametotals' %></li>
+			<% if is_package_enabled?(@sport) or current_user.godmode %>
+	          	<li><%= link_to "Offense", '#', :class => 'passing_stats' %></li>
+	          	<li><%= link_to "Defense", '#', :class => 'defense_gametotals' %></li>
+	          	<li><%= link_to "Kick", '#', :class => 'kicker_gametotals' %></li>
+	          	<li><%= link_to "Return", '#', :class => 'returner_gametotals' %></li>
+	        <% elsif !is_package_enabled?(@sport) and site_owner? %>
+	          	<li><%= link_to "Offense", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
+	          	<li><%= link_to "Defense", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
+	          	<li><%= link_to "Kick", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
+	          	<li><%= link_to "Return", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
+	        <% end %>
        	</ul>
        	<div id="stattotals">
        		<%= render 'teamfootballtotals' %>
        	</div>
-       	<%= link_to "Game Stats", allfootballgamestats_sport_team_gameschedule_path(@sport, current_team, @gameschedule), 
+       	<% if is_package_enabled?(@sport) %>
+       		<%= link_to "Game Stats", allfootballgamestats_sport_team_gameschedule_path(@sport, current_team, @gameschedule), 
        				class: "btn btn-sm btn-info" %>
+       	<% elsif !is_package_enabled?(@sport) and site_owner? %>
+    		<%= link_to "Game Stats", "#upgradestatsmodal", data: { toggle: "modal" }, class: "btn btn-sm btn-info" %>
+      	<% end %>
 	</div>
 	<div class="col-xs-6">
 		<table class="table table-striped table-bordered table-hover">
@@ -63,3 +74,5 @@
 		</tbody>
 	</table>
 <% end %>
+<%= render 'layouts/messagemodal', modalid: 'upgradestatsmodal', modaltitle: 'Upgrade for Stats', 
+			messagetext: 'Click on "Manage Eazesportz Package" in Tools menu to upgrade!' %>

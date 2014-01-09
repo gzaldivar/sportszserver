@@ -1,8 +1,13 @@
 class SponsorsController < ApplicationController
 	before_filter :authenticate_user! #,  only: [:new, :create, :edit, :update, :destroy, :index, :show]
-	before_filter :site_owner?,			only: [:new, :create, :edit, :update, :destroy]
   	before_filter :get_sport
   	before_filter :get_sponsor,		only: [:edit, :show, :destroy]
+	before_filter only: [:new, :create, :edit, :update, :destroy] do |controller|
+		SiteOwner?(current_user.teamid)
+	end
+	before_filter do |check|
+		check.sponsorEnabled?(current_site)
+	end
 
 	def new
 		@sponsor = Sponsor.new

@@ -14,7 +14,9 @@
 				<th>Update?</th>
 				<th>Remove?</th>
 			<% end %>
-      		<th>Photos</th>
-      		<th>Videos</th>          
+			<% if is_package_enabled?(@sport) or current_user.godmode %>
+	      		<th>Photos</th>
+	      		<th>Videos</th>
+	      	<% end %>    
 		</tr>
 	</thead>

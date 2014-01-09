@@ -3,6 +3,9 @@ class BlogsController < ApplicationController
   	before_filter :get_sport
   	before_filter :get_blog,			      only: [:edit, :update, :show, :destroy, :comment]
     before_filter :blog_owner?,         only: [:edit, :update, :destroy]
+    before_filter do |controller|
+      packageEnabled?(current_site)
+    end
 
   	def new
   		@blog = Blog.new()

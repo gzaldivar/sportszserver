@@ -42,8 +42,6 @@
                       <%= link_to (image_tag get_team_logo(current_site, current_team), class: 'img-responsive'), sport_path(current_site) %>
                     <% end %>
                   </div>
-                </div>
-                <div class="row">
                   <% if current_team? %>
                     <h4><p class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></p></h4>
                   <% end %>
@@ -106,8 +104,6 @@
                       <%= link_to (image_tag get_team_logo(current_site, current_team), class: 'img-responsive'), sport_path(current_site) %>
                     <% end %>
                   </div>
-                </div>
-                <div class="row">
                   <% if current_team? %>
                     <h4><p class="text-info"><%= link_to current_team.team_name, sport_path(current_site) %></p></h4>
                   <% end %>

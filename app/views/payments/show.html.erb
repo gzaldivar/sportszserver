@@ -1,0 +1,30 @@
+<% provide(:title, "Easy Sports Mobile - Package") %>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		<h2>Thank you for your order!</h2>
+
+		<table class="table table-bordered">
+			<thead>
+				<th>Order Id</th>
+				<th>User</th>
+				<th>Package</th>
+				<th>Price</th>
+			</thead>
+			<tbody>
+				<tr>
+					<td><%= @order.id %></td>
+					<td><%= User.find(@order.user_id).email %></td>
+					<td><%= @order.package %></td>
+					<td>$<%= @order.package == "Silver" ? @order.silver / 100.0 : @order.package == "Gold" ? @order.gold / 100.0 : @order.platinum / 100.0 %></td>
+				</tr>
+			</tbody>
+		</table>
+		<p>
+		<% if current_user.default_site.nil? %>
+			<%= link_to "Set Up Sport", new_sport_path, class: "btn btn-md btn-primary" %>
+		<% else %>
+			<%= link_to "Continue", sport_path(current_user.default_site), class: "btn btn-md btn-primary" %>
+		<% end %>
+	</div>
+</div>

@@ -1,0 +1,36 @@
+<% provide(:title, "Easy Sports Mobile - Confirm Order") %>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		<h2>Confirm your order for Eazesportz <%= @package %></h2>
+
+		<%= form_for @order do |f| %>
+			<%= f.hidden_field :package, value: @order.package %>
+			<%= f.hidden_field :express_token, value: @order.express_token %>
+
+			<table class="table table-bordered">
+				<thead>
+					<th>Name</th>
+					<th>Email</th>
+					<th>Order</th>
+					<th>Price</th>
+				</thead>
+				<tbody>
+					<tr>
+						<td><%=h @order.first_name %> <%=h @order.last_name %></td>
+						<td><%=h current_user.email %></td>
+						<td><%=h @order.package %></td>
+						<td>$<%= @price %></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div class="row">
+				<div class="col-xs-1 col-xs-offset-5">
+					<%= f.submit :submit, class: "btn btn-md btn-primary" %>
+				</div>
+			</div>
+		<% end %>
+
+	</div>
+</div>

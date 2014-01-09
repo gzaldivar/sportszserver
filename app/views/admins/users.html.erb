@@ -1,0 +1,83 @@
+<% provide(:title, 'Users') %>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		Team managers have edit capabilities for the teams they manage.
+		<div class="row">
+			<div class="col-xs-11">
+			</div>
+		</div>
+		<p>
+		<%= form_tag users_path, class: "form-search", method: 'get' do %>
+			<div class="row">
+			  	<div class="col-xs-3">
+			    	<%= label_tag "Name: " %>
+			    	<%= text_field_tag  'name', value=params[:name], class: 'form-control' %>
+			  	</div>
+				<div class="col-xs-3">
+			    	<%= label_tag "email: " %>
+			    	<%= text_field_tag  'email', value=params[:email], class: 'form-control' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-2 col-xs-offset-2">
+			    	<%= submit_tag  "Search", class: "btn btn-sm btn-primary", name: nil %>
+			  	</div>
+			</div>
+		<% end %>
+		<p>
+		<table class="table">
+			<thead>
+				<th>Avatar</th>
+				<th>Username</th>
+				<th>Email</th>
+				<th>Manager</th>
+				<% if current_user.godmode %>
+					<th>Site</th>
+				<% end %>
+				<th>Disable</th>
+				<% if current_user.godmode %>
+					<th>Delete</th>
+				<% end %>
+			</thead>
+			<tbody>
+				<% @users.each do |u| %>
+					<tr>
+						<% if u.avatartinyurl.nil? %>
+							<td><%= link_to image_tag("Tiny_Photo_Not_Available.png"), u  %></td>
+						<% else %>
+							<td><%= link_to image_tag(u.avatartinyurl), u  %></td>
+						<% end %>
+						<td><%= link_to u.name, u %></td>
+						<td><%= link_to u.email, u %></td>
+						<% if !u.teamid.nil? and !u.teamid.blank? %>
+							<td><%= find_team(u.teamid.to_s).team_name %></td>
+						<% else %>
+							<td>None</td>
+						<% end %>
+						<% if current_user.godmode and !u.default_site.nil? %>
+							<td><%= link_to Sport.find(u.default_site).sitename, sport_path(u.default_site) %></td>
+						<% else %>
+							<td></td>
+						<% end %>
+						<% if (u.is_active and !u.admin) or current_user.godmode %>
+							<td><%= link_to "Disable User", disable_user_path(u), class: "btn btn-xs btn-danger" %></td>
+					    	<% if current_user.godmode %>
+							    <td><%= link_to 'Delete', deleteuser_admins_path(user_id: u.id), class: "btn btn-xs btn-danger", data: { confirm: "You sure?" } %></td>
+							<% end %>
+						<% elsif !u.admin %>
+									<td><%= link_to "Enable User", enable_user_path(u), class: "btn btn-xs btn-danger" %></td>
+						<% end %>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-2">
+				Click here to go back to <em><strong>
+				<%= link_to current_site.sitename, sport_path(current_site) %></strong></em>.<br/>
+			</div>
+		</div>
+	</div>
+</div>

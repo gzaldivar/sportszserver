@@ -5,7 +5,10 @@ class FootballPlaceKickersController < ApplicationController
   	before_filter 	:get_sport_athlete_stat
   	before_filter	:correct_stat,			only: [:update, :destroy]
 	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
-	    controller.team_manager?(@athlete, nil)
+	    controller.SiteOwner?(@athlete.team_id)
+	end
+	before_filter do |check|
+		check.packageEnabled?(current_site)
 	end
 
   	def new

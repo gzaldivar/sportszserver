@@ -1,6 +1,6 @@
 class UsersController < ApplicationController
 	before_filter :authenticate_user!,	only: [:sitechange, :edit, :update, :index, :disable, :enable, :delete_avatar]
-  before_filter :get_user, only: [:edit, :show, :update, :disable, :enable, :delete_avatar, :getuser, :uploadavatar, :createavatar, :cleanup]
+  before_filter :get_user, only: [:edit, :show, :update, :disable, :enable, :delete_avatar, :getuser, :uploadavatar, :createavatar, :cleanup, :destroy]
   before_filter :owner, only: [:edit, :update]
 
 	def show

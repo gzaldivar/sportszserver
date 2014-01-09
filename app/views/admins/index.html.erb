@@ -1,0 +1,22 @@
+<% provide(:title, "Admin") %>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		<table class="table table-striped table-bordered table-hover">
+		    <thead>
+		    	<th>Sitemane</th>
+		    	<th>Sport</th>
+		    	<th>Admin User</th>
+		    </thead>
+		    <tbody>
+		    	<% @sports.each do |s| %>
+			    	<tr>
+			    		<td><%= link_to s.sitename, sport_path(s) %></td>
+			    		<td><%= link_to s.name, sport_path(s) %></td>
+			    		<td><%= link_to User.find(s.adminid).email, user_path(s.adminid) %></td>
+			    	</tr>
+			    <% end %>
+		    </tbody>
+		</table>
+	</div>
+</div>

@@ -6,7 +6,6 @@ module SportsHelper
   end
 
   def find_a_sport(thesport)
-    sports = []
     if !params[:zip].blank? and !params[:city].blank? and !params[:state].blank? and !params[:sitename].blank?
       site = Sport.where(name: thesport).full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s + " " + 
             params[:sitename].to_s, match: :all)      
@@ -20,17 +19,11 @@ module SportsHelper
       site = Sport.where(name: thesport).full_text_search(params[:state].to_s)
     elsif !params[:sitename].blank?
       site = Sport.where(name: thesport).full_text_search(params[:sitename].to_s)
-    elsif params[:all]
-      site = Sport.where(name: thesport)
+    elsif thesport
+      site = Sport.where(name: thesport).or(sportname: thesport)
      end
 
-    if site 
-      site.each_with_index do |s, cnt|
-         sports[cnt] = s
-      end
-    end
-
-    return sports
+    return site
   end
   
   def sports_list
@@ -134,5 +127,6 @@ module SportsHelper
          [image_tag('slate.png'), 'application'],
          [image_tag('spacelab.png'), 'spacelab']
         ].join()
-  end  
+  end 
+ 
 end

@@ -45,4 +45,14 @@ Sportzserver::Application.configure do
   # Expands the lines which load the assets
   config.assets.debug = true
 
+  #Paypal
+  config.after_initialize do
+    ActiveMerchant::Billing::Base.mode = :test
+    paypal_options = {
+      login: "gzaldivar-facilitator_api1.icloud.com",
+      password: "1388935614",
+      signature: "AHUvrj4LS85hez4e0oNOt.ng8k.sApA9qsWrgVikPTlU8RdriVeo8t3a"
+    }
+    ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(paypal_options)
+  end
 end

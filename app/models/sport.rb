@@ -42,7 +42,6 @@ class Sport
   field :beta, type: Boolean, default: true
   field :approved, type: Boolean, default: true
   field :mediasize, type: Integer, default: 0
-  field :mediatier, type: String, default: "Basic"
 
   field :periods, type: Integer, default: 0          # periods to display for basketball, hockey, etc.
 
@@ -68,6 +67,7 @@ class Sport
   has_many :blogs, dependent: :destroy
   has_many :events, dependent: :destroy
   has_many :alerts, dependent: :destroy
+  has_one :payment
   embeds_many :teams
 
   has_mongoid_attached_file :sport_banner,

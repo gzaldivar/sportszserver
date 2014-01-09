@@ -120,7 +120,7 @@
 		<%= render 'gameschedules/basketball/teamtotals' %>
 	</div>
 </div>
-<div class="roW">
+<div class="row">
 	<div class="col-xs-11">
 		<table class="table table-striped table-bordered table-hover">
 			<thead>
@@ -134,13 +134,23 @@
 </div>
 <div class="row">
 	<div class="col-xs-11">
-		<ul class="nav nav-pills">
-		  	<li><%= link_to "Scoring", '#', :class => 'basketballteam_gametotals' %></li>
-		  	<li><%= link_to "Other Stats", '#', :class => 'basketballteam_stats' %></li>
-		</ul>
-		<div id="stattable">
-			<%= render 'gameschedules/basketball/scorestats' %>
-		</div>
+		<% if is_package_enabled?(@sport) or current_user.godmode %>
+			<ul class="nav nav-pills">
+			  	<li><%= link_to "Scoring", '#', :class => 'basketballteam_gametotals' %></li>
+			  	<li><%= link_to "Other Stats", '#', :class => 'basketballteam_stats' %></li>
+			</ul>
+			<div id="stattable">
+				<%= render 'gameschedules/basketball/scorestats' %>
+			</div>
+		<% elsif !is_package_enabled?(@sport) and site_owner? %>
+			<ul class="nav nav-pills">
+			  	<li><%= link_to "Scoring", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
+			  	<li><%= link_to "Other Stats", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
+			</ul>
+		<% end %>
 	</div>
 </div>
+<%= render 'layouts/messagemodal', modalid: 'upgradestatsmodal', modaltitle: 'Upgrade for Stats', 
+            messagetext: 'Click on "Manage Eazesportz Package" in Tools menu to upgrade!' %>
+
 		

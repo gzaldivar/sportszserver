@@ -4,7 +4,7 @@ class GamelogsController < ApplicationController
     before_filter :get_gameschedule
     before_filter :correct_gamelog, only: [:destroy, :edit, :update, :show]
     before_filter only: [:destroy, :create, :update] do |controller| 
-      controller.team_manager?(@gameschedule, @team)
+      controller.SiteOwner?(@gameschedule.team_id)
     end
 
     def new

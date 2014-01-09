@@ -3,7 +3,7 @@ class SoccersController < ApplicationController
   	before_filter 	:get_sport_athlete
   	before_filter	:get_stat, only: [:edit, :update, :destroy, :show]
 	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
-		controller.team_manager?(@athlete, nil)
+		controller.SiteOwner?(@athlete.team_id)
 	end
 
 	def new

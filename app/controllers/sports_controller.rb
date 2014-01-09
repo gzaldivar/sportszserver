@@ -1,10 +1,12 @@
 class SportsController < ApplicationController
   before_filter :authenticate_user!,    only: [:new, :create, :edit, :update, :destroy]
-  before_filter :site_owner?,           only: [:edit, :update, :destroy]
-  before_filter :correct_sport,         only: [:show, :edit, :update, :destroy, :sport_user_alerts, :updatelogo, :displaynews, 
-                                                :selectteam, :sortgamenews, :sortplayernews, :allnews, :featuredplayers, :selectfeaturedplayers,
-                                                :showfeaturedplayers, :showfollowedplayers, :updateabout, :uploadabout, :clearabout]
-   
+  before_filter only: [:edit, :update, :destroy] do |controller|
+    controller.SiteOwner?(nil)
+  end
+  before_filter :correct_sport, only: [:show, :edit, :update, :destroy, :sport_user_alerts, :updatelogo, :displaynews, 
+                                      :selectteam, :sortgamenews, :sortplayernews, :allnews, :featuredplayers, :selectfeaturedplayers,
+                                      :showfeaturedplayers, :showfollowedplayers, :updateabout, :uploadabout, :clearabout]
+
   def new
     @sport = Sport.new
     @sport.teams.build
@@ -33,11 +35,14 @@ class SportsController < ApplicationController
           @sport.approved = false
         end
 
+        payment = Payment.find_by(user_id: current_user.id)
+        @sport.payment_id = payment.id if !payment.nil?
+
         if @sport.save!
           
           current_user.admin = true
           current_user.default_site = @sport.id
-          current_user.tier = "Features"
+#          current_user.tier = "Features"
           current_user.save
 
           respond_to do |format|
@@ -174,8 +179,8 @@ class SportsController < ApplicationController
   def index
     if !params[:sport].nil? and !params[:sport].blank?
       thesport = params[:sport].to_s
-    else
-      thesport = "Football"   # Fix for forgetting to add this parameter to the football apps
+#    elsif params[:all]
+#      thesport = "Football"   # Fix for forgetting to add this parameter to the football apps
     end
 
     @sports = find_a_sport(thesport)
@@ -247,7 +252,7 @@ class SportsController < ApplicationController
   def home
     clear_site
     if user_signed_in? and current_site.nil? and current_user.default_site.nil?
-      redirect_to new_sport_path
+      redirect_to payments_path
     elsif user_signed_in? and !current_user.default_site.nil?
       if !Sport.find(current_user.default_site).nil?
         redirect_to sport_path(id: current_user.default_site)
@@ -264,7 +269,7 @@ class SportsController < ApplicationController
       end
     end
   end
-  
+
   def about
   end
 

@@ -16,3 +16,14 @@ end
 if root_object.name == "Soccer"
 	node(:soccer_positions) { soccer_positions }
 end
+node :foo, :if => lambda { |s| Payment.find_by(sport_id: s.id).nil? } do
+	Basic
+end
+node :package, :if => lambda { |s| !Payment.find_by(sport_id: s.id).nil? } do |a|
+	payment = Payment.find_by(sport_id: a.id)
+	if payment.nil?
+		"Basic"
+	else
+		payment.package
+	end
+end

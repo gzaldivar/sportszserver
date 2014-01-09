@@ -39,18 +39,6 @@ module SitesHelper
     current_site.review_media
   end
 
-  def roomformedia?(sport)
-    if sport.mediatier == "Basic" and sport.mediasize > 300000000
-      return false
-    elsif sport.mediatier == "Mobile" and sport.mediasize > 1000000000
-      return false
-    elsif sport.mediatier == "All"
-      return true
-    else
-      return true
-    end
-  end
- 
   def us_states
     [
       ['Alabama', 'AL'],

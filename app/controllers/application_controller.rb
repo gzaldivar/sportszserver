@@ -20,16 +20,31 @@ class ApplicationController < ActionController::Base
   include SoccersHelper
   include GameschedulesHelper
 
-#  def not_authorized
-#    raise ActionController::RoutingError.new('You are not Authorized for this')
-#  end
-
   unless Rails.application.config.consider_all_requests_local
-    rescue_from Exception, with: lambda { |exception| render_error 500, exception }
-    rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, with: lambda { |exception| render_error 404, exception }
+#    rescue_from Exception, with: lambda { |exception| render_error 500, exception }
+#    rescue_from ActionController::RoutingError, ActionController::UnknownController, ::AbstractController::ActionNotFound, with: lambda { |exception| render_error 404, exception }
+    rescue_from Exception do |exception|
+      logger.error(exception)
+      render "/errors/error_500", :status => 500
+    end
+#    rescue_from ActiveRecord::RecordNotFound, :with => :render_not_found
+    rescue_from ActionController::RoutingError do |exception|
+      logger.error(exception)
+  #    raise ActionController::RoutingError.new('You are not Authorized for this')
+      @message = exception.message
+      render "/errors/error_404", :status => 404
+    end
+#    rescue_from ActionController::UnknownController, :with => :render_not_found
+#    rescue_from ActionController::UpgradeNeeded, :with => :upgrade_needed
   end
 
   private
+
+    def upgrade_needed(exception)
+      logger.error(exception)
+#      raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality')
+      render :template => "/errors/error_upgrade.html.erb", :status => 404
+    end
 
     def after_sign_out_path_for(resource)
       if current_site?

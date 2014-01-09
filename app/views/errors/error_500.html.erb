@@ -1,15 +1,26 @@
 <% provide(:title, "500 - Error") %>
 <p>
+	<div class="row">
+		<div class="col-xs-4 col-xs-offset-1">
+			<%= image_tag "FootballGameStats.png", class: 'img-responsive' %>
+		</div>
+		<div class="col-xs-4 col-xs-offset-1">
+			<%= image_tag "BasketballGameStats.png", class: 'img-responsive' %>
+		</div>
+	</div>
+<p>
 <div class="row">
-	<div class="col-xs-10">
-		<h2>Error 500</h2>
-		<h3>We are sorry, the content you requested cannot be found!
-		<p>
+	<div class="col-xs-11">
+		<h2 class="text-danger text-center">Page Not Found</h2>
+		<h3 class="text-danger text-center">We are sorry, the content you requested cannot be found!</h3>
+		<h4 class="text-center">
+
 		<% if current_site? %>
 			Want to <%= link_to current_site.sitename, current_site %> go back to our home page and try again?
 		<% else %>
 			Want to <%= link_to "Home", root_path %> go back to our home page and try again?
 		<% end %>
-		</h3>	
+
+		</h4>	
 	</div>
 </div>

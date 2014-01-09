@@ -4,7 +4,10 @@ class PhotosController < ApplicationController
   before_filter :get_sport
   before_filter :correct_photo,       only: [:edit, :show, :destroy, :update, :errors, :clear_error, :approval, :untag_athletes, :tag_athletes]
   before_filter only: [:destroy, :update, :create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, :tag_athletes, :createmobile] do |controller| 
-    controller.team_manager?(@athlete, nil)
+    controller.SiteOwner?(@photo.nil? ? nil : @photo.team_id)
+  end
+  before_filter do |controller|
+    packageEnabled?(current_site)
   end
 
   require 'base64'
@@ -211,7 +214,7 @@ class PhotosController < ApplicationController
   
   def newschedule
     if roomformedia?(@sport)
-      @gameschedule = Gameschedule.find(params[:id].to_s)
+      @gameschedule = Gameschedule.find(params[:gameschedule_id].to_s)
       team = @sport.teams.find(@gameschedule.team_id)
       @prefix = "t_" + team.id + "_g_" + @gameschedule.id + "_s_" + @sport.id
       
@@ -233,13 +236,13 @@ class PhotosController < ApplicationController
         format.js
       end
     else
-      redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgradig or delete some media."
+      redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgrading or delete some media."
     end
   end
   
   def newathlete
     if roomformedia?(@sport)
-      @athlete = @sport.athletes.find(params[:id].to_s)
+      @athlete = @sport.athletes.find(params[:athlete_id].to_s)
       @prefix = "t_" + @athlete.team_id + "_a_" + @athlete.id + "_s_" + @sport.id
       
 #      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
@@ -261,13 +264,13 @@ class PhotosController < ApplicationController
         format.js
       end
     else
-      redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgradig or delete some media."
+      redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgrading or delete some media."
     end
   end
   
   def newteam
     if roomformedia?(@sport)
-      @team = @sport.teams.find(params[:id].to_s)
+      @team = @sport.teams.find(params[:team_id].to_s)
       @prefix = "t_" + @team.id + "_s_" + @sport.id
       
 #      time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
@@ -287,7 +290,7 @@ class PhotosController < ApplicationController
         format.js
       end
     else
-      redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgradig or delete some media."
+      redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgrading or delete some media."
     end
   end
 

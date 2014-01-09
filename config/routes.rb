@@ -8,6 +8,7 @@ Sportzserver::Application.routes.draw do
 #      put   :update_user_info
       put :createavatar, :uploadavatar
     end
+
   end
 
   namespace :api do
@@ -16,6 +17,18 @@ Sportzserver::Application.routes.draw do
     end
   end  
    
+  resources :payments, only: [:index, :new, :show, :create] do
+    collection do
+      get :confirmsilver, :confirmgold, :confirmplatinum, :cancel, :upgrade
+    end
+  end
+    
+  resources :admins, only: [:index] do
+    collection do
+      get   :users, :deleteuser
+    end
+  end
+
   resources :sports do
     resources :contacts
     resources :sponsors
@@ -135,7 +148,7 @@ Sportzserver::Application.routes.draw do
     
     resources :photos, only: [:edit, :create, :update, :destroy, :index, :show] do
       member do
-        get :newteam, :newathlete, :newschedule, :errors, :approval
+        get :errors, :approval
         put :untag_athletes, :tag_athletes
         get :slideshow
         get :untagteam
@@ -143,7 +156,7 @@ Sportzserver::Application.routes.draw do
 
       collection do
         post :untagathlete, :createmobile, :updatefeaturedphotos
-        get :updategameschedule, :clear_error, :updategamelogs, :photoshome, :featuredphoto, :showfeaturedphotos, :displayphoto, :latest,
+        get :newteam, :newathlete, :newschedule, :updategameschedule, :clear_error, :updategamelogs, :photoshome, :featuredphoto, :showfeaturedphotos, :displayphoto, :latest,
             :updatefeaturedphotoslist, :deletefeaturedphoto
       end
     end
@@ -156,8 +169,8 @@ Sportzserver::Application.routes.draw do
 
       collection do
         post :untagathlete, :createmobile, :updatefeaturedvideos
-        get :updategameschedule, :updategamelogs, :videoclipshome, :showfeaturedvideos, :latest, :displayvideo, :featuredvideo,
-            :updatefeaturedvideoclipslist, :deletefeaturedvideoclips
+        get :newteam, :newathlete, :newschedule, :updategameschedule, :updategamelogs, :videoclipshome, :showfeaturedvideos, :latest, 
+            :displayvideo, :featuredvideo, :updatefeaturedvideoclipslist, :deletefeaturedvideoclips
       end
     end
 

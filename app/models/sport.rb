@@ -39,7 +39,7 @@ class Sport
   field :address,       type: String
 
   field :adminid, type: String
-  field :beta, type: Boolean, default: true
+  field :beta, type: Boolean, default: false
   field :approved, type: Boolean, default: true
   field :mediasize, type: Integer, default: 0
 
@@ -140,6 +140,18 @@ class Sport
     else
       return nil
     end
+  end
+
+  def silverMedia
+    300000000
+  end
+
+  def goldMedia
+    1000000000
+  end
+
+  def platinumMedia
+    10000000000
   end
 
   private

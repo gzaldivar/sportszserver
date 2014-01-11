@@ -317,7 +317,7 @@ class PhotosController < ApplicationController
 
       Resque.enqueue(PhotoProcessor, queue.id)
 
-      render status: 200, json: { photo: photo, request: [@sport, photo] }
+      render status: 200, json: { photo: photo, mediasize: @sport.mediasize }
     rescue Exception => e
       render status: 404, json: { error: e.message, request: @sport }
     end

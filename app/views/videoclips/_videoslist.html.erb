@@ -2,8 +2,8 @@
     <thead>
       <% if videoselect == true %>
         <th>Select</th>
-        <th>Video</th>
       <% end %>
+      <th>Video</th>
     	<th>
         <% if featured == "Featured" %>
           Featured Video
@@ -19,6 +19,8 @@
             <% if videoselect == true %>
               <td><%= check_box_tag "video_ids[]", v.id %></td>
               <td><%= image_tag v.poster_url, { class: 'img-responsive', height: '200px', width: '300px' } %></td>
+            <% else %>
+              <td><%= image_tag v.poster_url, { class: 'img-responsive', height: '100px', width: '150px' } %></td>
             <% end %>
 		    		<td><%= link_to v.displayname, '#', :class => 'select_video', :data => {:id => v.id.to_s} %></td>
 		    	</tr>

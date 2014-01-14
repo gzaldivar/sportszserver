@@ -2,8 +2,8 @@
     <thead>
       <% if photoselect == true %>
         <th>Select</th>
-        <th>Photo</th>
       <% end %>
+      <th>Photo</th>
     	<th>
         <% if featured == "Featured" %>
           Featured Photo
@@ -19,6 +19,8 @@
             <% if photoselect == true %>
               <td><%= check_box_tag "photoselect_ids[]", p.id %></td>
               <td><%= image_tag p.thumbnail_url, { class: 'img-responsive', height: '100px', width: '100px' } %></td>
+            <% else %>
+              <td><%= image_tag p.thumbnail_url, { class: 'img-responsive', height: '50px', width: '50px' } %></td>
             <% end %>
 		    		<td><%= link_to p.displayname, '#', :class => 'select_photo', :data => {:id => p.id.to_s} %></td>
 		    	</tr>

@@ -4,6 +4,9 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user_from_token!
   # This is Devise's authentication
   before_filter :authenticate_user!
+#  before_filter do |controller| 
+#    checklogin(controller)
+#  end
 
   include ApplicationHelper
   include PhotosHelper
@@ -39,6 +42,14 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+    def checklogin(controller)
+      if current_site? and controller.controller_name == "sports" and (controller.action_name == "home" or controller.action_name == "pricing")
+        logger.debug controller.action_name
+        logger.debug controller.controller_name
+        redirect_to sport_path(current_site)
+      end
+    end
 
     def upgrade_needed(exception)
       logger.error(exception)

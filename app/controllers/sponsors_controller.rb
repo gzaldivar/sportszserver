@@ -1,7 +1,7 @@
 class SponsorsController < ApplicationController
 	before_filter :authenticate_user! #,  only: [:new, :create, :edit, :update, :destroy, :index, :show]
   	before_filter :get_sport
-  	before_filter :get_sponsor,		only: [:edit, :show, :destroy, :update]
+  	before_filter :get_sponsor,		only: [:edit, :show, :destroy, :update, :updatephoto]
 	before_filter only: [:new, :create, :edit, :update, :destroy] do |controller|
 		SiteOwner?(current_user.teamid)
 	end
@@ -24,9 +24,16 @@ class SponsorsController < ApplicationController
 			end
 
 			@sponsor.save!
-			redirect_to [@sport, @sponsor], notice: "Added #{@sponsor.name}!"
+
+			respond_to do |format|
+				format.html { redirect_to [@sport, @sponsor], notice: "Added #{@sponsor.name}!" }
+				format.json { render status: 200, json: { sponsor: @sponsor } }
+			end
 		rescue Exception => e
-			redirect_to :back, alert: "Error adding Sponsor " + e.message
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error adding Sponsor " + e.message }
+				format.json { render status: 404, json: { error: e.message } }
+			end
 		end
 	end
 
@@ -40,33 +47,50 @@ class SponsorsController < ApplicationController
         	@sponsor.state = @sponsor.zip.to_region(state: true)
         	@sponsor.save!
 
-			redirect_to [@sport, @sponsor], notice: "Sponsor updated"
+			respond_to do |format|
+				format.html { redirect_to [@sport, @sponsor], notice: "Sponsor updated!" }
+				format.json { render status: 200, json: { sponsor: @sponsor } }
+			end
 		rescue Exception => e
-			redirect_to [@sport, @sponsor], alert: "Error updating Sponsor" + e.message
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error adding Sponsor " + e.message }
+				format.json { render status: 404, json: { error: e.message } }
+			end
 		end
 	end
 
 	def index
-		begin
+#		begin
 			@sponsors = @sport.sponsors.all.entries
 			respond_to do |format|
 				format.html
 				format.json
 			end	
-		rescue Exception => e
-			respond_to do |format|
-				format.html { redirect_to :back, alert: e.message }
-				format.json { render status: 404, json: { error: e.message } }
-			end
-		end
+#		rescue Exception => e
+#			respond_to do |format|
+#				format.html { redirect_to :back, alert: e.message }
+#				format.json { render status: 404, json: { error: e.message } }
+#			end
+#		end
 	end
 
 	def show
 	end
 
 	def destroy
-		@sponsor.destroy
-		redirect_to :back, notice: "Sponsor delete sucessful!"
+		begin
+			@sponsor.destroy
+
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Sponsor delete sucessful!" }
+				format.json { render status: 200, json: { success: "success" } }
+			end
+		rescue Exception => e
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error deleting Sponsor " + e.message }
+				format.json { render status: 404, json: { error: e.message } }
+			end
+		end
 	end
 
 	def createphoto

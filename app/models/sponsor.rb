@@ -8,7 +8,7 @@ class Sponsor
   before_save :decode_base64_image
 
   field :name, type: String
-  field :addrnum, type: Integer
+  field :addrnum, type: Integer, default: 0
   field :street, type: String
   field :city, type: String
   field :state, type: String
@@ -38,7 +38,7 @@ class Sponsor
     }
 
   validates_attachment_content_type :sponsorpic, content_type: ['image/jpg', 'image/jpeg', 'image/png']
-  validates_presence_of :name, :addrnum, :street, :state, :city, :zip, :contactemail, :adurl
+  validates_presence_of :name, :contactemail, :adurl
   validates :phone, format: { with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})?([ .-]?)([0-9]{4})/ }
   validates_format_of :mobile, allow_blank: true, with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})?([ .-]?)([0-9]{4})/  
   validates_format_of :fax, allow_blank: true, with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})?([ .-]?)([0-9]{4})/  

@@ -24,7 +24,7 @@
 		<% sponsors.each do |s| %>
 			<tr>
         		<td><% if s.sponsorpic.blank? %>
-              		<%= link_to image_tag('Photo_Not_Available.jpg'), c %>
+              		<%= link_to image_tag('Tiny_Photo_Not_Available.png'), [@sport, s] %>
             	<% else %>
               		<%= link_to image_tag(s.sponsorpic.url(:thumb)), [@sport, s] %>
             	<% end %>

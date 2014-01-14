@@ -1,28 +1,62 @@
-<% if current_site.sponsors.any? %>
-  <div class="row">
-    <div class="col-xs-11">        
-      <div class="panel panel-primary">
-        <div class="panel-heading">
-            <h4 class="panel-title"><%= current_site.sitename %> Sponsors</h4>
-         </div>
+<% if current_site? %>
+  <% if current_site.sponsors.where(sponsorlevel: "Platinum").any? %>
+    <div class="row">
+      <div class="col-xs-11">        
+        <div class="panel panel-primary">
+          <div class="panel-heading">
+              <h4 class="panel-title"><%= current_site.sitename %> Platinum Sponsors</h4>
+           </div>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-      <% if !(@sponsor = sponsorad(current_site)).nil? %>
+    <div class="row">
+      <% if !(@sponsor = sponsorad(current_site, "Platinum")).nil? %>
           <div class="col-xs-3 col-xs-offset-1">
-              <%= image_tag @sponsor.sponsorpic.url(:medium), class: 'img-responsive' %></td>
+              <%= link_to (image_tag @sponsor.sponsorpic.url(:thumb), class: 'img-responsive'), @sponsor.adurl %></td>
           </div>
        <% end %>
-      <% if !(@sponsor = sponsorad(current_site)).nil? %>
+      <% if !(@sponsor = sponsorad(current_site, "Platinum")).nil? %>
           <div class="col-xs-3">
-              <%= image_tag @sponsor.sponsorpic.url(:medium), class: 'img-responsive' %></td>
+              <%= link_to (image_tag @sponsor.sponsorpic.url(:thumb), class: 'img-responsive'), @sponsor.adurl %></td>
           </div>
        <% end %>
-      <% if !(@sponsor = sponsorad(current_site)).nil? %>
+      <% if !(@sponsor = sponsorad(current_site, "Platinum")).nil? %>
           <div class="col-xs-3">
-              <%= image_tag @sponsor.sponsorpic.url(:medium), class: 'img-responsive' %></td>
+              <%= link_to (image_tag @sponsor.sponsorpic.url(:thumb), class: 'img-responsive'), @sponsor.adurl %></td>
           </div>
        <% end %>
-  </div>
+    </div>
+  <% end %>
+  <p>
+  <% if current_site.sponsors.where(sponsorlevel: "Gold").any? %>
+    <div class="row">
+        <div class="col-xs-2">
+          <div class="row">      
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                  <h4 class="panel-title">Gold Sponsor</h4>
+               </div>
+            </div>
+          </div>
+        </div>
+        <% if !(@sponsor = sponsorad(current_site, "Gold")).nil? %>
+          <div class="col-xs-2 col-xs-offset-1">
+            <%= link_to (image_tag @sponsor.sponsorpic.url(:thumb), class: 'img-responsive'), @sponsor.adurl %></td>
+          </div>
+        <% end %>
+        <div class="col-xs-2 col-xs-offset-1">
+          <div class="row">      
+            <div class="panel panel-primary">
+              <div class="panel-heading">
+                  <h4 class="panel-title">Gold Sponsor</h4>
+               </div>
+            </div>
+          </div>
+        </div>
+        <% if !(@sponsor = sponsorad(current_site, "Gold")).nil? %>
+          <div class="col-xs-2 col-xs-offset-1">
+            <%= link_to (image_tag @sponsor.sponsorpic.url(:thumb), class: 'img-responsive'), @sponsor.adurl %></td>
+          </div>
+        <% end %>
+  <% end %>
 <% end %>

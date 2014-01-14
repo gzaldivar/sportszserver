@@ -6,13 +6,28 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-4">
-	<% if !@sponsor.sponsorpic.blank? %> 
-		<%= image_tag @sponsor.sponsorpic.url(:medium) %>
-	<% else %>
-		<%= image_tag 'Photo_Not_Available.jpg' %>
-	<% end %>
-	</div>
+  <div class="col-xs-4">
+    <% if @sponsor.processing %>
+      <h4><em><font color="red">Processing Replacement Photo ...</font></em></h4>
+    <% end %>
+    <h4>Change Sponsor Image:</h4>
+    <% if @sponsor.sponsorpic? %> 
+      <%= image_tag @sponsor.sponsorpic.url(:medium), class: 'img-responsive' %>
+    <% else %>
+      <%= image_tag 'Photo_Not_Available.jpg', class: 'img-responsive' %>
+    <% end %>
+    <%= s3_uploader_form callback_url: createphoto_sport_sponsors_path, callback_param: "sponsor[image_url]", 
+               key: "uploads/sponsorsphotos/#{@sponsor.id}/${filename}", id:  "myS3Uploader" do %>
+        <%= file_field_tag :file %>
+    <% end %>
+
+    <script id="template-upload" type="text/x-tmpl">
+      <div id="file-{%=o.unique_id%}" class="upload">
+        {%=o.name%}
+        <div class="progress"><div class="bar" style="width: 0%"></div></div>
+      </div>
+    </script>    
+  </div>
   <div class="col-xs-6">
     <div class="row">
       <table class="table">
@@ -20,7 +35,7 @@
           <tr>
       			<th>Name</th>
       			<th>Email</th>
-            <th>Sponsor Priority</th>
+            <th>Sponsor Level</th>
             <th>Team?</th>           
          </tr>
         </thead>
@@ -28,7 +43,7 @@
       		<tr>
       			<td><%= @sponsor.name %></td>
       			<td><%= @sponsor.contactemail %></td>
-            <td><%= @sponsor.priority %></td>
+            <td><%= @sponsor.sponsorlevel %></td>
             <% if !@sponsor.team_id.nil? %>
               <td><%= @sport.teams.find(@sponsor.team_id).team_name %></td>
             <% else %>

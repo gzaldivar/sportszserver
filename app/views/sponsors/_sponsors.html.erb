@@ -11,7 +11,7 @@
 			<!--th>Fax</th>
 			<th>Mobile</th>
 			<th>Email</th>
-			<th>Sponsor Priority</td>
+			<th>Sponsor Level</td>
 			<th>Team</th>
 			<th>Ad URL</th-->
 			<% if site_owner? %>
@@ -37,7 +37,7 @@
 				<!--td><%= s.fax %></td>
 				<td><%= s.mobile %></td>
 				<td><%= s.contactemail %></td>
-				<td><%= s.priority %></td>
+				<td><%= s.sponsorlevel %></td>
 				<% if !s.team_id.nil? %>
 					<td><%= @sport.teams.find(s.team_id).team_name %></td>
 				<% else %>

@@ -18,7 +18,7 @@ if root_object.name == "Soccer"
 	node(:soccer_positions) { soccer_positions }
 end
 node :package, :if => lambda { |s| !Payment.find_by(sport_id: s.id).nil? } do |a|
-	Payment.find_by(sport_id: a.id).payment
+	Payment.find_by(sport_id: a.id).package
 end
 node :package, :if => lambda { |s| Payment.find_by(sport_id: s.id).nil? } do |a|
 	"Basic"

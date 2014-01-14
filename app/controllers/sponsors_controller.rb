@@ -1,7 +1,7 @@
 class SponsorsController < ApplicationController
 	before_filter :authenticate_user! #,  only: [:new, :create, :edit, :update, :destroy, :index, :show]
   	before_filter :get_sport
-  	before_filter :get_sponsor,		only: [:edit, :show, :destroy]
+  	before_filter :get_sponsor,		only: [:edit, :show, :destroy, :update]
 	before_filter only: [:new, :create, :edit, :update, :destroy] do |controller|
 		SiteOwner?(current_user.teamid)
 	end
@@ -15,11 +15,15 @@ class SponsorsController < ApplicationController
 
 	def create
 		begin 
-			@sponsor = @sport.sponsors.create!(params[:sponsor])
+			@sponsor = @sport.sponsors.build(params[:sponsor])
+			@sponsor.city = @sponsor.zip.to_region(city: true)
+        	@sponsor.state = @sponsor.zip.to_region(state: true)
+
 			if !params[:team_id].nil? and !params[:team_id].blank?
 				@sponsor.team_id = params[:team_id]
-				@sponsor.save!
 			end
+
+			@sponsor.save!
 			redirect_to [@sport, @sponsor], notice: "Added #{@sponsor.name}!"
 		rescue Exception => e
 			redirect_to :back, alert: "Error adding Sponsor " + e.message
@@ -31,11 +35,14 @@ class SponsorsController < ApplicationController
 
 	def update
 		begin
-			sponsor = @sport.sponsors.find(params[:id])
-			sponsor.update_attributes!(params[:sponsor])
-			redirect_to [@sport, sponsor], notice: "Sponsor updated"
+			@sponsor.update_attributes!(params[:sponsor])
+			@sponsor.city = @sponsor.zip.to_region(city: true)
+        	@sponsor.state = @sponsor.zip.to_region(state: true)
+        	@sponsor.save!
+
+			redirect_to [@sport, @sponsor], notice: "Sponsor updated"
 		rescue Exception => e
-			redirect_to [@sport, sponsor], alert: "Error updating Sponsor" + e.message
+			redirect_to [@sport, @sponsor], alert: "Error updating Sponsor" + e.message
 		end
 	end
 
@@ -62,6 +69,48 @@ class SponsorsController < ApplicationController
 		redirect_to :back, notice: "Sponsor delete sucessful!"
 	end
 
+	def createphoto
+		begin
+			path = CGI.unescape(params[:filepath]).split('/')
+			@sponsor = @sport.sponsors.find(path[4])    
+			path = params[:filepath].split('/')
+			imagepath = CGI.unescape(path[2])
+			@sponsor.processing = true
+
+			@sponsor.save!
+
+			queue = @sport.photo_queues.new(modelid: @sponsor.id, modelname: "sponsors", filename: params[:filename], filetype: params[:filetype], 
+											filepath: imagepath)
+			if queue.save!
+				Resque.enqueue(PhotoProcessor, queue.id)
+			end
+		rescue Exception => e
+		  puts e.message
+		end
+	end
+
+	def updatephoto
+		begin    
+			@sponsor.processing = true
+
+			@sponsor.save!
+
+			queue = @sport.photo_queues.new(modelid: @sponsor.id, modelname: "sponsors", filename: params[:filename], filetype: params[:filetype], 
+			                              filepath: params[:filepath])
+			if queue.save!
+				Resque.enqueue(PhotoProcessor, queue.id)
+			end
+
+			respond_to do |format|
+				format.json { render json: { success: "success", sponsor: @sponsor } }
+			end
+		rescue Exception => e
+			respond_to do |format|
+				format.json { render status: 404, json: { error: e.message, sponsor: @sponsor } }
+			end
+		end
+	end
+  
 	private
 
 		def get_sport

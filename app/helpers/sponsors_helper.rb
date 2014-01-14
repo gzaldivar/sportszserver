@@ -1,6 +1,6 @@
 module SponsorsHelper
 
-	def sponsorad(sport)
-		sport.sponsors.all.sample
+	def sponsorad(sport, level)
+		sport.sponsors.where(sponsorlevel: level).sample
 	end
 end

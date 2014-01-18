@@ -23,7 +23,9 @@ module ApplicationHelper
 	end
 
 	def is_package_enabled?(sport)
-		if !sport.nil? and !current_user.godmode
+		if user_signed_in? and current_user.godmode
+			return true
+		elsif !sport.nil?
 			payment = Payment.find_by(sport_id: sport.id)
 
 			if payment.nil?
@@ -35,15 +37,15 @@ module ApplicationHelper
 			  		return false
 				end
 			end
-		elsif current_user.godmode
-			return true
 		else
 			return false
 		end
 	end
 
 	def packageEnabled?(sport)
-		if !sport.nil? and !current_user.godmode
+		if user_signed_in? and current_user.godmode
+			return true
+		elsif !sport.nil?
 			payment = Payment.find_by(sport_id: sport.id)
 
 			if payment.nil?
@@ -55,15 +57,13 @@ module ApplicationHelper
 			      	raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
 				end
 			end
-		elsif current_user.godmode
-			return true
 		else
 			return false
 		end
 	end
 
 	def roomformedia?(sport)
-		if !sport.nil? and !current_user.godmode
+		if !sport.nil? and user_signed_in? and !current_user.godmode
 			payment = Payment.find_by(sport_id: sport.id)
 
 			if payment.nil?
@@ -77,7 +77,7 @@ module ApplicationHelper
 			else
 			 	return true
 			end
-		elsif current_user.godmode
+		elsif user_signed_in? and current_user.godmode
 			return true
 		else
 			return false
@@ -85,7 +85,7 @@ module ApplicationHelper
 	end
  
 	def sponsorEnabled?(sport)
-		if !sport.nil? and !current_user.godmode
+		if !sport.nil? and user_signed_in? and !current_user.godmode
 			payment = Payment.find_by(sport_id: sport.id)
 
 			if payment.nil?
@@ -97,7 +97,7 @@ module ApplicationHelper
 			      	raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
 				end
 			end
-		elsif current_user.godmode
+		elsif user_signed_in? and current_user.godmode
 			return true
 		else
 			return false

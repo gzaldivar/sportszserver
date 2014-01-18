@@ -2,7 +2,7 @@ class GameschedulesController < ApplicationController
   include FootballStatistics
   include BasketballStatistics
 
-	before_filter	:authenticate_user!,   only: [:destroy, :new, :edit, :update, :create, :show]
+	before_filter	:authenticate_user!,   only: [:destroy, :new, :edit, :update, :create]
   before_filter :get_sport
   before_filter :get_schedule,        only: [:show, :edit, :update, :destroy, :updatelogo, :passinggamestats, :allfootballgamestats,
                                               :rushinggamestats, :receivinggamestats, :defensegamestats, :kickergamestats, :returnergamestats, 

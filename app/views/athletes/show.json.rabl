@@ -9,7 +9,9 @@ node(:team_id) { |t| t.team_id.to_s }
 if !@team.nil? 
 	node(:teamname) { @team.team_name }
 end
-node(:following) { |o| o.fans.include?(current_user.id) }
+if user_signed_in?
+	node(:following) { |o| o.fans.include?(current_user.id) }
+end
 if @sport.name == "Football"
 	child :football_passings do
 		node(:football_passing_id) { |f| f.id.to_s }

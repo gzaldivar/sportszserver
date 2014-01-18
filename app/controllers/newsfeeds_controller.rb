@@ -48,6 +48,8 @@ class NewsfeedsController < ApplicationController
       @newsfeeds = @sport.newsfeeds.where(team: params[:teamname].to_s).limit(20).desc(:updated_at).paginate(:page=>params[:page])
     elsif !params[:coachname].nil? and !params[:coachname].blank?
       @newsfeeds = @sport.newsfeeds.where(coach: params[:coachname].to_s).limit(20).desc(:updated_at).paginate(:page=>params[:page])
+    elsif !params[:team_id].nil?
+      @newsfeeds = @sport.newsfeeds.where(team_id: params[:team_id].to_s).limit(20).desc(:updated_at).paginate(:page => params[:page])
     else
       @newsfeeds = @sport.newsfeeds.limit(40).desc(:updated_at).paginate(:page=>params[:page])
     end

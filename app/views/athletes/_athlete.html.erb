@@ -25,7 +25,7 @@
 				<td><%= link_to "Delete", sport_athlete_path(@sport, athlete),  method:	:delete,  
 										class: "btn btn-xs btn-danger", data: { confirm: "You sure?" } %></td>
 			<% end %>
-			<% if is_package_enabled?(@sport) or current_user.godmode %>
+			<% if is_package_enabled?(@sport) or (user_signed_in? ? current_user.godmode : nil) %>
 			    <td>
 			        <% if Photo.where(players: athlete.id.to_s).any? %>
 			        	<%= link_to "Photos", sport_photos_path(@sport, athlete_id: athlete.id), class: "btn btn-xs btn-primary" %>              

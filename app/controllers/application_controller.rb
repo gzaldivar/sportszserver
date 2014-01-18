@@ -4,9 +4,6 @@ class ApplicationController < ActionController::Base
   before_filter :authenticate_user_from_token!
   # This is Devise's authentication
   before_filter :authenticate_user!
-#  before_filter do |controller| 
-#    checklogin(controller)
-#  end
 
   include ApplicationHelper
   include PhotosHelper

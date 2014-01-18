@@ -6,6 +6,7 @@
 	</div>
 </div>
 <div class="row">
+<% if is_package_enabled?(@sport) %>
 	<div class="col-xs-5">
       	<ul class="nav nav-pills">
           	<li><%= link_to "Team", '#', :class => 'team_gametotals' %></li>
@@ -32,6 +33,9 @@
       	<% end %>
 	</div>
 	<div class="col-xs-6">
+<% else %>
+	<div class="col-xs-11">
+<% end %>
 		<table class="table table-striped table-bordered table-hover">
 			<thead>
 				<th>Score Log</th>
@@ -65,7 +69,7 @@
 </div>
 <p>
 <% if !@gameschedule.lastplay.nil? %>
-	<table class="table table-bordered">
+	<table class="table table-striped table-bordered table-hover">
 		<thead>
 			<th>Last Play:</th>
 		</thead>

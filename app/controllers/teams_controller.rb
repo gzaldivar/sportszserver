@@ -1,5 +1,5 @@
 class TeamsController < ApplicationController
-  before_filter :authenticate_user! #,   only: [:new, :create, :edit, :update, :destroy, :index, :show, :getplayers, :addplayers]
+  before_filter :authenticate_user!,   only: [:new, :create, :edit, :update, :destroy]
   before_filter :get_sport
   before_filter :get_team,	only: [:edit, :update, :show, :destroy, :getplayers, :addplayers, :createteamlogo, :teamlogo, :updatelogo]
   before_filter only: [:new, :create, :edit, :update, :destroy, :addplayers] do |controller|

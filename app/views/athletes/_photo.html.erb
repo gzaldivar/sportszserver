@@ -1,13 +1,17 @@
 <div class="col-xs-4">
     <% if signed_in? %>
       <ul class="nav nav-pills">
-        <% if !@athlete.fans.empty? and @athlete.fans.include?(current_user.id) %>
-          <li><%= link_to "Stop Following", unfollow_sport_athlete_path(@sport, @athlete) %></li>
+        <% if is_package_enabled?(@sport) %>
+          <% if !@athlete.fans.empty? and @athlete.fans.include?(current_user.id) %>
+            <li><%= link_to "Stop Following", unfollow_sport_athlete_path(@sport, @athlete) %></li>
+          <% else %>
+            <li><%= link_to "Follow", follow_sport_athlete_path(@sport, @athlete) %></li>
+          <% end %>
+          <% if hasAlerts?(@athlete, current_user) %>
+            <li><%= link_to "Alerts", sport_athlete_alerts_path(@sport, @athlete) %></li>
+          <% end %>
         <% else %>
-          <li><%= link_to "Follow", follow_sport_athlete_path(@sport, @athlete) %></li>
-        <% end %>
-        <% if hasAlerts?(@athlete, current_user) %>
-          <li><%= link_to "Alerts", sport_athlete_alerts_path(@sport, @athlete) %></li>
+            <li><%= link_to "Follow", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
         <% end %>
       </ul>
     <% end %>

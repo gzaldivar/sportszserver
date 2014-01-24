@@ -114,7 +114,12 @@ class SportsController < ApplicationController
   end
 
   def allnews
-    @newsfeeds = @sport.newsfeeds.desc(:updated_at).paginate(:per_page => 10)
+    if current_team?
+      @newsfeeds = @sport.newsfeeds.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
+    else
+      @newsfeeds = @sport.newsfeeds.desc(:updated_at).paginate(:per_page => 10)
+    end
+
     respond_to do |format|
       format.js
     end
@@ -352,6 +357,14 @@ class SportsController < ApplicationController
   end
 
   def publisher
+  end
+
+  def testcss
+    if params[:cssstyle]
+      @testcss = params[:cssstyle]
+    else
+      @testcss = "application"
+    end
   end
 
   def updatelogo

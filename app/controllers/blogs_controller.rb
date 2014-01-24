@@ -79,59 +79,59 @@ class BlogsController < ApplicationController
       end
 
       if params[:all].to_i == 1 
-        @blogs = @sport.blogs.where(team_id: @team.id).desc(:updated_at).paginate(per_page: 20, page: params[:page])
+        @blogs = @sport.blogs.where(team_id: @team.id).desc(:updated_at).paginate(per_page: 40, page: params[:page])
       elsif !params[:athlete_id].blank? and !params[:coach_id].blank? and !params[:gameschedule_id].blank? and !params[:gamelog_id].blank?
 
         @blogs = @sport.blogs.where(team_id: @team.id).and(athlete_id: params[:athlete_id]).and(coach_id: params[:coach_id]).
                     and(gameschedule_id: params[:gameschedule_id]).and(gamelog_id: params[:gamelog_id]).desc(:updated_at).
-                    paginate(per_page: 20, :page=>params[:page])
+                    paginate(per_page: 40, :page=>params[:page])
 
       elsif !params[:athlete_id].blank? and !params[:coach_id].blank? and !params[:gameschedule_id].blank?
 
         @blogs = @sport.blogs.where(team_id: @team.id).and(athlete_id: params[:athlete_id]).and(coach_id: params[:coach_id]).
-                    and(gameschedule_id: params[:gameschedule_id]).desc(:updated_at).paginate(per_page: 20, :page=>params[:page])
+                    and(gameschedule_id: params[:gameschedule_id]).desc(:updated_at).paginate(per_page: 40, :page=>params[:page])
 
       elsif !params[:athlete_id].blank? and !params[:gameschedule_id].blank? and !params[:gamelog_id].blank?
 
         @blogs = @sport.blogs.where(team_id: @team.id).and(athlete_id: params[:athlete_id]).and(gameschedule_id: params[:gameschedule_id]).
-                  desc(:updated_at).paginate(per_page: 20, :page=>params[:page])
+                  desc(:updated_at).paginate(per_page: 40, :page=>params[:page])
 
       elsif !params[:coach_id].blank? and !params[:gameschedule_id].blank? and !params[:gamelog_id].blank?
         
         @blogs = @sport.blogs.where(team_id: @team.id).and(coach_id: params[:coach_id]).and(gameschedule_id: params[:gameschedule_id]).
-                  desc(:updated_at).paginate(per_page: 20, :page=>params[:page])
+                  desc(:updated_at).paginate(per_page: 40, :page=>params[:page])
 
       elsif !params[:athlete_id].blank? and !params[:gameschedule_id].blank?
         
         @blogs = @sport.blogs.where(team_id: @team.id).and(athlete_id: params[:athlete_id]).and(gameschedule_id: params[:gameschedule_id]).
-                  desc(:updated_at).paginate(per_page: 20, :page=>params[:page])
+                  desc(:updated_at).paginate(per_page: 40, :page=>params[:page])
 
       elsif !params[:coach_id].blank? and !params[:gameschedule_id].blank?
         
         @blogs = @sport.blogs.where(team_id: @team.id).and(coach_id: params[:coach_id]).and(gameschedule_id: params[:gameschedule_id]).
-                  desc(:updated_at).paginate(per_page: 20, :page=>params[:page])
+                  desc(:updated_at).paginate(per_page: 40, :page=>params[:page])
 
       elsif !params[:gameschedule_id].blank? and !params[:gamelog_id].blank?
         
         @blogs = @sport.blogs.where(team_id: @team.id).and(gameschedule_id: params[:gameschedule_id]).and(gamelog_id: params[:gamelog_id]).
-                  desc(:updated_at).paginate(per_page: 20, :page=>params[:page])
+                  desc(:updated_at).paginate(per_page: 40, :page=>params[:page])
 
       elsif !params[:athlete_id].blank?
         
-        @blogs = @sport.blogs.where(team_id: @team.id).and(athlete_id: params[:athlete_id]).desc(:updated_at).paginate(per_page: 20, :page=>params[:page])
+        @blogs = @sport.blogs.where(team_id: @team.id).and(athlete_id: params[:athlete_id]).desc(:updated_at).paginate(per_page: 40, :page=>params[:page])
 
       elsif !params[:coach_id].blank?
         
-        @blogs = @sport.blogs.where(team_id: @team.id).and(coach_id: params[:coach_id]).desc(:updated_at).paginate(per_page: 20, :page=>params[:page])
+        @blogs = @sport.blogs.where(team_id: @team.id).and(coach_id: params[:coach_id]).desc(:updated_at).paginate(per_page: 40, :page=>params[:page])
 
       elsif !params[:gameschedule_id].blank?
         
-        @blogs = @sport.blogs.where(team_id: @team.id).and(gameschedule_id: params[:gameschedule_id]).desc(:updated_at).paginate(per_page: 20, :page=>params[:page])
+        @blogs = @sport.blogs.where(team_id: @team.id).and(gameschedule_id: params[:gameschedule_id]).desc(:updated_at).paginate(per_page: 40, :page=>params[:page])
 
       elsif params[:all].to_i == 0 and !params[:updated_at].nil? or !params[:updated_at].blank?
         @blogs = @sport.blogs.where(:updated_at.lt => params[:updated_at].any_of({athlete_id: params[:athlete_id]}, 
                               {coach_id: params[:coach_id]}, {user_id: params[:user_id]}, {gameschedule: params[:gameschedule_id]}, 
-                              {gamelog: params[:gamelog_id]}).to_s.to_datetime).limit(20).desc(:updated_at)
+                              {gamelog: params[:gamelog_id]}).to_s.to_datetime).limit(40).desc(:updated_at)
       else
         @blogs = @sport.blogs.where(team_id: @team.id).desc(:updated_at).paginate(per_page: 20, page: params[:page])
       end

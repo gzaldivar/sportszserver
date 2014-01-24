@@ -315,24 +315,44 @@ class GameschedulesController < ApplicationController
     passstats = Passingstats.new(@sport, @gameschedule)
     @passingstats = passstats.stats
     @passingtotals = passstats.passingtotals
+
+    respond_to do |format|
+      format.js
+      format.json
+    end
   end
 
   def rushinggamestats
     rushingstats = Rushingstats.new(@sport, @gameschedule)
     @rushingstats = rushingstats.stats
     @rushingtotals = rushingstats.rushingtotals
+
+    respond_to do |format|
+      format.js
+      format.json
+    end
   end
 
   def receivinggamestats
     receivingstats = Receivingstats.new(@sport, @gameschedule)
     @receivingstats = receivingstats.stats
     @receivingtotals = receivingstats.receivingtotals
+
+    respond_to do |format|
+      format.js
+      format.json
+    end
   end
 
   def defensegamestats
     defense = Defensestats.new(@sport, @gameschedule)
     @defensivestats = defense.stats
     @defensivetotals = defense.defensetotals
+
+    respond_to do |format|
+      format.js
+      format.json
+    end
   end
 
   def kickergamestats
@@ -343,12 +363,22 @@ class GameschedulesController < ApplicationController
     punterstats = Punterstats.new(@sport, @gameschedule)
     @punterstats = punterstats.stats
     @puntertotals = punterstats.puntertotals
+
+    respond_to do |format|
+      format.js
+      format.json
+    end
   end
 
   def returnergamestats
     returnerstats = Returnerstats.new(@sport, @gameschedule)
     @returnerstats = returnerstats.stats
     @returnertotals = returnerstats.returnertotals
+
+    respond_to do |format|
+      format.js
+      format.json
+    end
   end
 
   def footballboxscore
@@ -362,11 +392,16 @@ class GameschedulesController < ApplicationController
   end
 
   def footballteamgametotals
-        @footballhomescore = footballhomescore(@sport, @gameschedule)
-        @footballtotalyards = footballtotalyards(@sport, @gameschedule)
-        @rushingtotalyards = FootballStatistics.rushingyardtotals
-        @passingtotalyards = FootballStatistics.passingyardtotals
-        @turnovers = FootballStatistics.turnovers
+      @footballhomescore = footballhomescore(@sport, @gameschedule)
+      @footballtotalyards = footballtotalyards(@sport, @gameschedule)
+      @rushingtotalyards = FootballStatistics.rushingyardtotals
+      @passingtotalyards = FootballStatistics.passingyardtotals
+      @turnovers = FootballStatistics.turnovers
+
+      respond_to do |format|
+          format.js
+          format.json
+      end
   end
 
   def allfootballgamestats

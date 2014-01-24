@@ -67,10 +67,9 @@ class ApplicationController < ActionController::Base
         sport = nil
       else
         sport = Sport.find(resource.default_site)
-        puts sport.sitename
       end
     
-      if resource.default_site and !sport.nil?                      # if the user has a default site
+      if !sport.nil?                      # if the user has a default site
 
         # if the current site sport is not the default sport they are logging into a new sport
 
@@ -79,7 +78,6 @@ class ApplicationController < ActionController::Base
 
           # See if the user has logged into this sport type before. If not, add this sport to the users list. If the user does have this sport
           # in their list, then replace this site for that sport in the user list
-
 
 #          if !resource.mysites.detect {|f| f[current_site.name] == sport.name }
           if resource.mysites.nil?
@@ -93,10 +91,8 @@ class ApplicationController < ActionController::Base
         elsif resource.admin and !current_site.nil? and current_site.adminid.to_s != resource.id.to_s
           flash[:error] = "Admin user cannot be used to login to other Eazesportz sites. Login to " + current_site.sitename + " failed!"
         end
-        puts 'sport_path'
         sport_path(id: resource.default_site)
       else
-        puts 'root_path'
         root_path
       end
     end

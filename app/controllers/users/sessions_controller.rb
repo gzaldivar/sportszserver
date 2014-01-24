@@ -11,6 +11,11 @@ class Users::SessionsController < Devise::SessionsController
 			    user = resource
 			    sign_in(resource_name, resource)
 			    user.reset_authentication_token
+
+			    if params[:user][:site] and !user.admin
+			    	user.default_site = params[:user][:site]
+			    end
+
 			    user.save!
 			 	render :json => { :success => true, :user => user, authentication_token: user.authentication_token }, :status => 200
 			}

@@ -4,8 +4,10 @@
     <title><%= full_title(yield(:title)) %></title>
     <% if current_site? %>
       <%= stylesheet_link_tag current_site.cssstyle, media: "all" %>
+    <% elsif !@testcss.nil? %>
+      <%= stylesheet_link_tag @testcss, media: "all" %>
     <% else %>
-      <%= stylesheet_link_tag    "application", media: "all" %>
+      <%= stylesheet_link_tag  "application", media: "all" %>
     <% end %>
     <%= javascript_include_tag "application" %>
     <%= csrf_meta_tags %>

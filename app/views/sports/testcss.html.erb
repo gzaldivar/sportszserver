@@ -1,0 +1,121 @@
+<% provide(:title, "Eazesportz Football Web Site Example") %>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		<h2 class="text-center">Eazesportz.com Web site</h2>
+		<h4 class="text-info">You can select a theme below to see what backgrounds you can choose for your web site.</h4>
+		<h5>Themes are provided by Twitter bootstrap</h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-11">
+    	<%= form_tag testcss_sports_path, class: "form-horizontal", method: 'get' do %>
+			<div class="row">
+				<div class="col-xs-2">
+					<%= image_tag 'amelia.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+					<%= radio_button_tag :cssstyle, "amelia" %> 
+					<%= label_tag :amelia %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= image_tag 'cerulean.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+					<%= radio_button_tag :cssstyle, "cerulean" %> 
+					<%= label_tag :cerulean %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= image_tag 'cosmo.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+					<%= radio_button_tag :cssstyle, "cosmo" %> 
+					<%= label_tag :cosmo %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= image_tag 'cyborg.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+					<%= radio_button_tag :cssstyle, "cyborg" %> 
+					<%= label_tag :cyborg %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-2">
+					<%= image_tag 'flatly.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+					<%= radio_button_tag :cssstyle, "flatly" %> 
+					<%= label_tag :flatly %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= image_tag 'journal.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+					<%= radio_button_tag :cssstyle, "journal" %> 
+					<%= label_tag :journal %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= image_tag 'readable.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+					<%= radio_button_tag :cssstyle, "readable" %> 
+					<%= label_tag :readble %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= image_tag 'simplex.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+					<%= radio_button_tag :cssstyle, "simplex" %> 
+					<%= label_tag :simplex %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-2">
+					<%= image_tag 'slate.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+					<%= radio_button_tag :cssstyle, "application" %> 
+					<%= label_tag :slate %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= image_tag 'spacelab.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+					<%= radio_button_tag :cssstyle, "spacelab" %> 
+					<%= label_tag :spacelab %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= image_tag 'united.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+					<%= radio_button_tag :cssstyle, "united" %> 
+					<%= label_tag :united %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= image_tag 'yeti.png', { class: 'img-responsive', width: '100px', height: '100px' } %>
+					<%= radio_button_tag :cssstyle, "yeti" %> 
+					<%= label_tag :yeti %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-1 col-xs-offset-5">
+					  <%= submit_tag "Change Theme", class:	"btn btn-md btn-primary", id: "submitbtn" %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-11">
+		<h5>Below are some sample text, table and button. Hopefully, these will give you an idea of the themes you can pick from for your site.</h5>
+		<h5>Click to see a sample dialog box <%= link_to "Dialog", "#testmodal", :data => {:toggle=>"modal"}, :class=>"btn btn-sm btn-info" %></h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-5">
+		<div class="well">
+			<h4 class="text-warning">Some sample text</h4>
+		</div>
+	</div>
+	<div class="col-xs-5">
+		<table class="table table-striped table-bordered table-hover">
+		    <thead>
+		        <th>Date</th>
+		        <th>Opponent</th>
+		        <th>Score</th>
+		        <th>W/L</th>
+		    </thead>
+		    <tbody>
+		    	<tr>
+		    		<td>1/21/2014</td>
+		    		<td>Eagles</td>
+		    		<td>22-21</td>
+		    		<td>Won</td>
+		    	</tr>
+		    </tbod>
+		</table>
+	</div>
+</div>
+<%= render 'layouts/messagemodal', modalid: 'testmodal', modaltitle: 'Example Modal', 
+            messagetext: 'An example of what a modal would look like using this style!' %>

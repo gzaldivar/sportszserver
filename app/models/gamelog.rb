@@ -287,49 +287,54 @@ class Gamelog
     def alert
       if self.football_place_kicker_id
         athlete = Athlete.find(FootballPlaceKicker.find(football_place_kicker_id).athlete_id)
-        athlete.fans.each do |user|
+        athlete.fans.each do |u|
+          user = User.find(u)
           if user.score_alert and self.score == "FG"
-            athlete.alerts.create!(sport: athlete.sport, user: user, athlete: athlete.id, 
+            athlete.alerts.create!(sport: athlete.sport_id, user: user.id, athlete: athlete.id, 
                                    message:  "Field Goal score alert for " + self.gameschedule.game_name, 
                                    football_place_kicker: self.football_place_kicker, stat_football: "Place Kicker")
           elsif user.score_alert 
-            athlete.alerts.create!(sport: athlete.sport, user: user, athlete: athlete.id, 
+            athlete.alerts.create!(sport: athlete.sport_id, user: user.id, athlete: athlete.id, 
                                    message:  "Extra Point score alert for " + self.gameschedule.game_name, 
                                    football_place_kicker: self.football_place_kicker, stat_football: "Place Kicker")
           end
         end
       elsif self.football_passing_id
         athlete = Athlete.find(FootballPassing.find(football_passing_id).athlete_id)
-        athlete.fans.each do |user|
+        athlete.fans.each do |u|
+          user = User.find(u)
           if user.score_alert
-            athlete.alerts.create!(sport: athlete.sport, user: user, athlete: athlete.id, 
+            athlete.alerts.create!(sport: athlete.sport_id, user: user.id, athlete: athlete.id, 
                                    message:  "Passing score alert for " + self.gameschedule.game_name, 
                                    football_passing_id: self.football_passing_id, stat_football: "Passing")
           end
         end
         receiver = Athlete.find(self.assist)
         recstat = FootballReceiving.where(gameschedule_id: gameschedule_id, athlete_id: assist).first
-        receiver.fans.each do |user|
+        receiver.fans.each do |u|
+          user = User.find(u)
           if user.score_alert
-            receiver.alerts.create!(sport: receiver.sport, user: user, athlete: receiver.id, 
+            receiver.alerts.create!(sport: receiver.sport_id, user: user.id, athlete: receiver.id, 
                                    message:  "Receiver score alert for " + self.gameschedule.game_name, 
                                    football_receiver_id: self.recstat.id, stat_football: "Reciever")
           end
         end
       elsif self.football_rushing_id
         athlete = Athlete.find(FootballRushing.find(football_rushing_id).athlete_id)
-        athlete.fans.each do |user|
+        athlete.fans.each do |u|
+          user = User.find(u)
           if user.score_alert
-            athlete.alerts.create!(sport: athlete.sport, user: user, athlete: athlete.id, 
+            athlete.alerts.create!(sport: athlete.sport_id, user: user.id, athlete: athlete.id, 
                                    message:  "Rushing score alert for " + self.gameschedule.game_name, 
                                    football_rushing_id: self.football_rushing_id, stat_football: "Rushing")
           end
         end
       elsif self.football_defense_id
         athlete = Athlete.find(FootballDefense.find(football_defense_id).athlete_id)
-        athlete.fans.each do |user|
+        athlete.fans.each do |u|
+          user = User.find(u)
           if user.score_alert
-            athlete.alerts.create!(sport: athlete.sport, user: user, athlete: athlete.id, 
+            athlete.alerts.create!(sport: athlete.sport_id, user: user.id, athlete: athlete.id, 
                                    message:  "Defensive score alert for " + self.gameschedule.game_name, 
                                    football_defense_id: self.football_defense_id, stat_football: "Defense")
           end

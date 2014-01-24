@@ -65,7 +65,8 @@ elsif @sport.name == "Basketball"
 	child :basketball_stats do
 		node(:basketball_stat_id) { |b| b.id.to_s }
 		node(:gameschedule_id) { |g| g.gameschedule_id.to_s }
-		attributes :twoattempt, :twomade, :threeattempt, :threemade, :ftmade, :ftattempt, :fouls, :assists, :steals, :blocks, :offrebound, :defrebound
+		attributes :twoattempt, :twomade, :threeattempt, :threemade, :ftmade, :ftattempt, :fouls, :assists, :steals, :blocks, :offrebound, 
+					:defrebound, :turnovers
 	end
 elsif @sport.name == "Soccer"
 	child :soccers do

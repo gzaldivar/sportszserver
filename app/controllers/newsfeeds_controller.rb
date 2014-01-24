@@ -37,19 +37,19 @@ class NewsfeedsController < ApplicationController
   
   def index
     if (!params[:team].nil? and !params[:team][:id].blank?)
-      @newsfeeds = @sport.newsfeeds.where(team: params[:team][:id].to_s).limit(20).desc(:updated_at).paginate(:page=>params[:page])
+      @newsfeeds = @sport.newsfeeds.where(team: params[:team][:id].to_s).or({team_id: ""}, {team_id: nil}).limit(40).desc(:updated_at).paginate(:page=>params[:page])
     elsif !params[:athlete].nil? and !params[:athlete][:id].blank?
-      @newsfeeds = @sport.newsfeeds.where(athlete: params[:athlete][:id].to_s).limit(20).desc(:updated_at).paginate(:page=>params[:page])
+      @newsfeeds = @sport.newsfeeds.where(athlete: params[:athlete][:id].to_s).limit(40).desc(:updated_at).paginate(:page=>params[:page])
     elsif !params[:coach].nil? and !params[:coach][:id].blank?
-      @newsfeeds = @sport.newsfeeds.where(coach: params[:coach][:id].to_s).limit(20).desc(:updated_at).paginate(:page=>params[:page])
+      @newsfeeds = @sport.newsfeeds.where(coach: params[:coach][:id].to_s).limit(40).desc(:updated_at).paginate(:page=>params[:page])
     elsif !params[:player].nil? and !params[:player].blank?
-      @newsfeeds = @sport.newsfeeds.where(athlete: params[:player].to_s).limit(20).desc(:updated_at).paginate(:page=>params[:page])
+      @newsfeeds = @sport.newsfeeds.where(athlete: params[:player].to_s).limit(40).desc(:updated_at).paginate(:page=>params[:page])
     elsif !params[:teamname].nil? and !params[:teamname].blank?
-      @newsfeeds = @sport.newsfeeds.where(team: params[:teamname].to_s).limit(20).desc(:updated_at).paginate(:page=>params[:page])
+      @newsfeeds = @sport.newsfeeds.where(team: params[:teamname].to_s).limit(40).desc(:updated_at).paginate(:page=>params[:page])
     elsif !params[:coachname].nil? and !params[:coachname].blank?
-      @newsfeeds = @sport.newsfeeds.where(coach: params[:coachname].to_s).limit(20).desc(:updated_at).paginate(:page=>params[:page])
+      @newsfeeds = @sport.newsfeeds.where(coach: params[:coachname].to_s).limit(40).desc(:updated_at).paginate(:page=>params[:page])
     elsif !params[:team_id].nil?
-      @newsfeeds = @sport.newsfeeds.where(team_id: params[:team_id].to_s).limit(20).desc(:updated_at).paginate(:page => params[:page])
+      @newsfeeds = @sport.newsfeeds.where(team_id: params[:team_id].to_s).limit(40).desc(:updated_at).paginate(:page => params[:page])
     else
       @newsfeeds = @sport.newsfeeds.limit(40).desc(:updated_at).paginate(:page=>params[:page])
     end

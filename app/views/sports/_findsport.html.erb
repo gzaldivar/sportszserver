@@ -57,7 +57,7 @@
               <th>City</th>
               <th>State</th>
               <th>Zip</th>
-              <th>Banner</th>
+              <th>Logo</th>
               <% if user_signed_in? and findsite == true %>
                 <th>Default Site</th>
               <% end %>
@@ -83,17 +83,17 @@
                   <td><%= s.state %></td>
                   <td><%= s.zip %></td>
                   <% if findsite == true %>
-                    <td><%= link_to (image_tag s.sport_logo.url(:thumb)), s %></td>
+                    <td><%= link_to (image_tag get_sport_logo(s)), s %></td>
                     <% if user_signed_in? and (current_user.default_site == s.id.to_s) %>
                        <td><em><strong>Default Site</strong></em></td>
                     <% elsif user_signed_in? %>
                       <td><%= link_to "Set As Default", sitechange_user_path(current_user, sport_id: s), class: "btn btn-xs btn-primary" %></td>
                     <% end %>
                   <% elsif !@gameschedule.nil? %>
-                    <td><%= link_to (image_tag s.sport_logo.url(:thumb)), findteam_sport_team_gameschedules_path(@sport, @team, 
+                    <td><%= link_to (image_tag get_sport_logo(s)), findteam_sport_team_gameschedules_path(@sport, @team, 
                                       gameschedule_id: @gameschedule.id, opponent: s.id) %></td>
                   <% else %>
-                    <td><%= link_to (image_tag s.sport_logo.url(:thumb)), findteam_sport_team_gameschedules_path(@sport, @team, opponent: s.id) %></td>
+                    <td><%= link_to (image_tag get_sport_logo(s)), findteam_sport_team_gameschedules_path(@sport, @team, opponent: s.id) %></td>
                   <% end %>
                 </tr>
               <% end %>

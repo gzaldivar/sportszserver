@@ -21,7 +21,7 @@ class VideoclipsController < ApplicationController
       if @videolists.any?
         @thevideo = @videolists[0]
       else
-        @thevideo = Videoclips.new(displayname: 'No Videos')
+        @thevideo = Videoclip.new(displayname: 'No Videos')
       end
     end
 

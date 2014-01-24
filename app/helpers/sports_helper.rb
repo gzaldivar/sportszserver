@@ -26,6 +26,14 @@ module SportsHelper
     return site
   end
   
+  def get_sport_logo(sport)
+    if sport.sport_logo?
+      sport.sport_logo(:thumb)
+    else
+      return "photo_not_available.png"
+    end
+  end
+
   def sports_list
     [
       ['Football', 'Football'],

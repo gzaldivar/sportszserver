@@ -70,7 +70,7 @@
       <div id="playerlist">
         <% if user_signed_in? and !@followed.nil? and @followed.any? %>
             <%= render 'athletes/playerlist', players: @followed, list: "Following" %>
-        <% elsif !@featured.nil? and @featured.any? %>
+        <% else %>
           <%= render 'athletes/playerlist', players: @featured, list: "Featured" %>
         <!--% else %-->
           <!--%= render 'athletes/playerlist', players: @players, list: "Roster" %-->

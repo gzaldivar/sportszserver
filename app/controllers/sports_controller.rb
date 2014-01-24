@@ -62,47 +62,54 @@ class SportsController < ApplicationController
   end
   
   def show
-    site_visit(@sport)
+    begin
+      site_visit(@sport)
 
-    if @sport.teams.count == 1
-      set_current_team(@sport.teams.first)
-    end
-
-    if signed_in? and current_user.admin and !current_site.approved?
-      respond_to do |format|
-        format.html { redirect_to approve_path }
-        format.json
-      end
-    else
-      if user_signed_in?
-        @followed = @sport.athletes.where(fans: current_user.id).asc(:number)
+      if @sport.teams.count == 1
+        set_current_team(@sport.teams.first)
       end
 
-      if current_team?
-        @schedules = @sport.teams.find(current_team.id).gameschedules.asc(:gamedate)
-        @players = @sport.athletes.where(team_id: current_team.id).asc(:number)
-        @newsfeeds = @sport.newsfeeds.where(team_id: current_team.id).desc(:updated_at).paginate(per_page: 10)
-
-        if current_team.featuredplayers.nil?
-          @featured = nil
-        else
-          @featured = @sport.athletes.where(team_id: current_team.id, :id.in => current_team.featuredplayers).asc(:number)
+      if signed_in? and current_user.admin and !current_site.approved?
+        respond_to do |format|
+          format.html { redirect_to approve_path }
+          format.json
         end
       else
-        @schedules = nil
-        @players = nil
-        @newsfeeds = @sport.newsfeeds.where(allsports: true).desc(:updated_at).paginate(per_page: 10)
-      end
+        if user_signed_in?
+          @followed = @sport.athletes.where(fans: current_user.id).asc(:number)
+        end
 
-      if @newsfeeds.count > 0
-        @thenews = @newsfeeds[0]
-        puts @newsfeeds.count
+        if current_team?
+          @schedules = @sport.teams.find(current_team.id).gameschedules.asc(:gamedate)
+          @players = @sport.athletes.where(team_id: current_team.id).asc(:number)
+          @newsfeeds = @sport.newsfeeds.where(team_id: current_team.id).desc(:updated_at).paginate(per_page: 10)
+
+          if current_team.featuredplayers.nil?
+            @featured = nil
+          else
+            @featured = @sport.athletes.where(team_id: current_team.id, :id.in => current_team.featuredplayers).asc(:number)
+          end
+        else
+          @schedules = nil
+          @players = nil
+          @newsfeeds = @sport.newsfeeds.where(allsports: true).desc(:updated_at).paginate(per_page: 10)
+        end
+
+        if @newsfeeds.count > 0
+          @thenews = @newsfeeds[0]
+          puts @newsfeeds.count
+        end
+        
+        respond_to do |format|
+          format.html
+          format.json 
+         end
       end
-      
+    rescue Exception => e
       respond_to do |format|
-        format.html
-        format.json 
-       end
+        format.html { raise ActionController::RoutingError.new(e.message) }
+        format.json { render status: 404, json: { error: e.message } }
+      end
     end
   end
   

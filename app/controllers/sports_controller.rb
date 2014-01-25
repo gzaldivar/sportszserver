@@ -142,7 +142,6 @@ class SportsController < ApplicationController
 
   def selectteam
     set_current_team(@sport.teams.find(params[:team_id]))
-#    redirect_to sport_path
   end
 
   def selectfeaturedplayers
@@ -275,9 +274,6 @@ class SportsController < ApplicationController
       @admin_sites = []
       current_user.sports.each_with_index do |s, cnt|
         @admin_sites[cnt] = s
-      end
-      respond_to do |format|
-        format.html
       end
     end
   end

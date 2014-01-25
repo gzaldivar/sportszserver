@@ -65,7 +65,7 @@
           <li><%= link_to "Following", "#", :class => 'following_players' %></li>
         <% end %>
         <li><%= link_to "Featured", "#", :class => 'featured_players' %></li>
-        <li><%= link_to  "Roster", sport_athletes_path(@sport) %></li>
+        <li><%= link_to  "Roster", sport_athletes_path(@sport, team_id: current_team.id) %></li>
       </ul>
       <div id="playerlist">
         <% if user_signed_in? and !@followed.nil? and @followed.any? %>
@@ -152,13 +152,15 @@
         <div class="row">
           <div class="col-md-4">
             <div class="well">
-              <p class="text-info">No players have been added to the list to display!</p>
+              <p class="text-info">No players featured for this team.</p>
             </div>
           </div>
         </div>
       </div>
       <div class="modal-footer">
-        <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+        <div class="col-xs-1">
+          <button type="button" data-dismiss="modal" class="btn btn-default">Close</button>
+        </div>
       </div>
     </div>
   </div>

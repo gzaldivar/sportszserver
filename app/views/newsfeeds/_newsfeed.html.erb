@@ -12,7 +12,7 @@
             <%= link_to image_tag(athlete.pic.url(:tiny), class: 'img-responsive'), sport_athlete_path(@sport, athlete) %>
           <% end %>
         <% elsif !newsfeed.coach.nil? and !newsfeed.coach.blank? %>
-          <% coach = f.sport.coaches.find(newsfeed.coach) %>
+          <% coach = @sport.coaches.find(newsfeed.coach) %>
           <% if coach.coachpic.blank? %>
             <%= link_to image_tag("Tiny_Photo_Not_Available.png", class: 'img-responsive'), sport_coach_path(@sport, coach) %> 
           <% else %>    

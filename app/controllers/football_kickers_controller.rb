@@ -103,8 +103,18 @@ class FootballKickersController < ApplicationController
 	end
 
 	def destroy
-		@kicker.destroy
-		redirect_to sport_athlete_path(@sport, @athlete)
+		begin
+			@kicker.destroy
+			respond_to do |format|
+				format.html { redirect_to sport_athlete_path(@sport, @athlete) }
+				format.json { render status: 200, json: { message: "Success" } }
+			end
+		rescue Exception => e
+			respond_to do |format|
+				format.html { redirect_to sport_athlete_path(@sport, @athlete), alert: e.message }
+				format.json { render status: 404, json: { error: e.message } }
+			end
+		end
 	end
 
 	private

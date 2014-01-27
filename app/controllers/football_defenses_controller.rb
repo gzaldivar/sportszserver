@@ -107,8 +107,18 @@ class FootballDefensesController < ApplicationController
 	end
 
 	def destroy
-		@defense.destroy
-		redirect_to defense_sport_athlete_football_stats_path(@sport, @athlete)
+		begin
+			@defense.destroy
+			respond_to do |format|
+				format.html { redirect_to sport_athlete_path(@sport, @athlete) }
+				format.json { render status: 200, json: { message: "Success" } }
+			end
+		rescue Exception => e
+			respond_to do |format|
+				format.html { redirect_to sport_athlete_path(@sport, @athlete), alert: e.message }
+				format.json { render status: 404, json: { error: e.message } }
+			end
+		end
 	end
 
 	private

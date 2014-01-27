@@ -23,11 +23,15 @@
 					</h1>
 					<div class="row">
 						<h4 class="text-warning text-center">Possession Arrow</h4>
-						<% if @gameschedule.bballpossessionarrow == "Home" %>
-							<%= image_tag "Small-triangle-red-left.png", class: 'img-responsive', width: "25px", height: '25px' %>
-						<% else %>
-							<%= image_tag "Small-triangle-red-right.png", class: 'img-responsive', width: "25px", height: '25px' %>
-						<% end %>
+					</div>
+					<div class="row">
+						<div class="col-xs-8 col-xs-offset-3">
+							<% if @gameschedule.bballpossessionarrow != current_team.team_name %>
+								<%= image_tag "Small-triangle-red-left.png", class: 'img-responsive', width: "25px", height: '25px' %>
+							<% else %>
+								<%= image_tag "Small-triangle-red-right.png", class: 'img-responsive', width: "25px", height: '25px' %>
+							<% end %>
+						</div>
 					</div>
 				</div>
 

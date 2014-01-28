@@ -6,14 +6,17 @@
 		<p>
 		<h5 class="text-info">Our Eazesportz mobile app allows your fans access to real time stats in addition to being able to follow players and comment on your program. No login is required if your fans just want to follow the action. Fans will be required to register if they want to follow players and get alerts when a player score, etc. Login is also required if they want to post comments.</h5> 
 		<h5 class="text-info">The app supports football, basketball and soccer. A fan selects the site they are interested in and can then follow the action. Below are some screen shots of what the app can do.</h5>
-		<h5 class="text-warning">If you would like to see what the app can do, feel free to download and search for a site. We have some test sites out there and other Eazesportz user's sites will also be accessible via the app.</h5> 
-		<h5 class="text-danger">If you purchase a branded app, there will be no ads.</h5>
-		<p>
 		<div class="row">
+			<div class="col-xs-6">
+				<h5 class="text-warning">If you would like to see what the app can do, download it and search for a site. We have some test sites in the cloud and other Eazesportz user's sites will also be accessible via the app.</h5> 
+			</div>
 			<div class="col-xs-2">
-				<%= link_to "Get Started Now!", pricing_path, class: "btn btn-sm btn-primary" %>
+				<%= link_to image_tag("EazesportziTunesArtwork.png", class: 'img-responsive'), 
+									"" %>
 			</div>
 		</div>
+		<h5 class="text-danger">If you purchase a branded app, there will be no ads.</h5>
+		<p>
 		<div class="row">
 			<div class="col-xs-11">
 				<h3>Here are some screenshots of the app when following a football game</h3>
@@ -41,7 +44,7 @@
 			</div>
 			<div class="col-xs-4 col-xs-offset-1">
 				<h5 class="text-success"><em>Live game stats! Whatever you or your admin staff is availble to your fans in real time!</em></h5>
-				<%= image_tag "EazesportzFootballGameStats.png", width: "200", height: "300" %>
+				<%= image_tag "EazesportzBasketballPlayerGameStats.png", width: "200", height: "300" %>
 			</div>
 		</div>
 		<div class="row">
@@ -56,7 +59,7 @@
 			</div>
 			<div class="col-xs-4 col-xs-offset-1">
 				<h5 class="text-success"><em>Live game stats! Whatever you or your admin staff is availble to your fans in real time!</em></h5>
-				<%= image_tag "EazesportzFootballGameStats.png", width: "200", height: "300" %>
+				<%= image_tag "EazesportzSoccerPlayerGameStats.png", width: "200", height: "300" %>
 			</div>
 		</div>
 		<div class="row">
@@ -66,67 +69,32 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-4">
-				<h5 class="text-success"><em>Your fans can access your game schedule:</em></h5>
+				<h5 class="text-success"><em>Access your game schedule:</em></h5>
 				<%= image_tag "EazesportzSchedule.png", width: "200", height: "300" %>
 			</div>
 			<div class="col-xs-4 col-xs-offset-1">
-				<h5><em>Team Roster:</em></h5>
-				<%= image_tag "FB_Roster_IOS7.png", width: "200", height: "300" %>
+				<h5 class="text-success"><em>Access your roster and follow players:</em></h5>
+				<%= image_tag "EazesportzFootballRoster.png", width: "200", height: "300" %>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-4">
-				<h5><em>Team Game Schedule:</em></h5>
-				<%= image_tag "FB_GameSchedule_IOS7.png", width: "200", height: "300" %>
+				<h5 class="text-success"><em>Team Photos:</em></h5>
+				<%= image_tag "EazesportzPhotos.png", width: "200", height: "300" %>
 			</div>
 			<div class="col-xs-4 col-xs-offset-1">
-				<h5 class="text-success"><em>Access your roster and follow players:</em></h5>
+				<h5 class="text-success"><em>Team Videos:</em></h5>
+				<%= image_tag "EazesportzFootballVideos.png", width: "200", height: "300" %>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-4">
+				<h5 class="text-success"><em>Blog support!</em></h5>
 				<%= image_tag "FB_Blog_IOS7.png", width: "200", height: "300" %>
 			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-4">
-				<h5><em>Team Photos:</em></h5>
-				<%= image_tag "FB_Photos_IOS7.png", width: "200", height: "300" %>
-			</div>
 			<div class="col-xs-4 col-xs-offset-1">
-				<h5><em>Team Videos:</em></h5>
-				<%= image_tag "FB_Videos_IOS7.png", width: "200", height: "300" %>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-4">
-				<h5><em>Passing Stats:</em></h5>
-				<%= image_tag "FB_PassingStats_IOS7.png", width: "200", height: "300" %>
-			</div>
-			<div class="col-xs-4 col-xs-offset-1">
-				<h5><em>Rushing Stats:</em></h5>
-				<%= image_tag "FB_RushingStats_IOS7.png", width: "200", height: "300" %>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-4">
-				<h5><em>Receiving Stats:</em></h5>
-				<%= image_tag "FB_ReceivingStats_IOS7.png", width: "200", height: "300" %>
-			</div>
-			<div class="col-xs-4 col-xs-offset-1">
-				<h5><em>Defensive Stats:</em></h5>
-				<%= image_tag "FB_DefensiveStats_IOS7.png", width: "200", height: "300" %>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-4">
-				<h5><em>Special Team Stats:</em></h5>
-				<%= image_tag "FB_ReturnerStats_IOS7.png", width: "200", height: "300" %>
-			</div>
-			<div class="col-xs-4 col-xs-offset-1">
-				<h5><em>Player Stats:</em></h5>
-				<%= image_tag "FB_PlayerStats_IOS7.png", width: "200", height: "300" %>
-			</div>
-		</div>
-		<div class="row">
-			<div class="col-xs-4">
-				<h5><em>And much, much more .......</em></h5>
+				<h5 class="text-success"><em>and much, much more .....</em></h5>
+				<h5 class="text-success"><em>Download the app to see what it can do!</em></h5>
 			</div>
 		</div>
 		<p>

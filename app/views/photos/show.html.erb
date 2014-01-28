@@ -76,7 +76,7 @@
 <div class="row">
   <div class="col-xs-2 col-xs-offset-5">
     <% if isAdmin? or (user_signed_in? and (current_user.id == @photo.user_id) and enable_user_pics? ) %>
-      <%= link_to	"Edit Photo", edit_sport_photo_path(@sport, @photo), class:	"btn btn-sm btn-primary" %>
+      <%= link_to	"Edit Photo", edit_sport_photo_path(@sport, @photo), class:	"btn btn-md btn-primary" %>
     <% end %>
   </div>
 </div>

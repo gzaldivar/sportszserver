@@ -605,7 +605,7 @@ class VideoclipsController < ApplicationController
   end
 
   def destroy
-  	begin
+#  	begin
       @sport.mediasize = @sport.mediasize - @videoclip.size
       @sport.save
 	  	@videoclip.destroy
@@ -613,12 +613,12 @@ class VideoclipsController < ApplicationController
 	  	  format.html { redirect_to sport_videoclips_path(@sport), notice: "Videoclip delete sucessful!" }
         format.json { render json: { sucess: "successful" } }
       end
-	  rescue => e
-      respond_to do |format|
-	  	  format.html { redirect_to :back, alert: "Error deleting video " + e.message }
-        format.json { render status: 404, json: { error: e.message, videoclip: @videoclip } }
-      end
-	  end
+#	  rescue Exception => e
+ #     respond_to do |format|
+	#  	  format.html { redirect_to :back, alert: "Error deleting video " + e.message }
+   #     format.json { render status: 404, json: { error: e.message, videoclip: @videoclip } }
+    #  end
+#	  end
   end
 
   def untagathlete
@@ -692,7 +692,9 @@ class VideoclipsController < ApplicationController
   private
 
   	def get_sport
+      puts params[:sport_id]
   		@sport = Sport.find(params[:sport_id])
+      puts @sport.id
   	end
 
   	def correct_video

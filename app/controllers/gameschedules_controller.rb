@@ -61,7 +61,11 @@ class GameschedulesController < ApplicationController
 #      schedule.livegametime = DateTime.civil(schedule.gamedate.year, schedule.gamedate.month, schedule.gamedate.day, 
 #                              params[:gameschedule][:"livegametime(4i)"].to_i,params[:gameschedule][:"livegametime(5i)"].to_i)
 
-      schedule.current_game_time = params[:gameminutes].to_s + ":" + params[:gameseconds].to_s
+      if params[:gameminutes].nil?
+        schedule.current_game_time = "00:00"
+      else
+        schedule.current_game_time = params[:gameminutes].to_s + ":" + params[:gameseconds].to_s
+      end
       
       schedule.save!
 

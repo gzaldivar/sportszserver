@@ -15,7 +15,7 @@ class AdminsController < ApplicationController
 		begin
 			@user = User.find(params[:user_id])
 
-			if !@user.admin
+			if !@user.admin || (@user.admin && @user.confirmed_at.nil?)
 				@user.destroy
 				@user.photos = nil
 				@user.videoclips = nil

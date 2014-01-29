@@ -16,15 +16,15 @@ class UsersController < ApplicationController
 
   def index
     if !params[:site].blank? and !params[:email].blank? and !params[:name].blank?
-      @users = User.full_text_search(params[:site].to_s + " " + params[:email].to_s + " " + params[:name].to_s, match: :all).asc(:name, :updated_at).entries
+      @users = User.full_text_search(params[:site].to_s + " " + params[:email].to_s + " " + params[:name].to_s, match: :all).asc(:name, :updated_at).paginate(:page => params[:page])
     elsif !params[:site].blank? and !params[:name].blank? 
-      @users = User.full_text_search(params[:site] + " " + params[:name].to_s, match: :all).asc(:name, :updated_at).entries
+      @users = User.full_text_search(params[:site] + " " + params[:name].to_s, match: :all).asc(:name, :updated_at).paginate(:page => params[:page])
     elsif !params[:site].blank? and !params[:email].blank?
-      @users = User.full_text_search(params[:site] + " " + params[:email].to_s, match: :all).asc(:name, :updated_at).entries
+      @users = User.full_text_search(params[:site] + " " + params[:email].to_s, match: :all).asc(:name, :updated_at).paginate(:page => params[:page])
      elsif !params[:site].nil? and !params[:site].blank?
-      @users = User.where(default_site: params[:site].to_s).asc(:name, :updated_at).entries
+      @users = User.where(default_site: params[:site].to_s).asc(:name, :updated_at).paginate(:page => params[:page])
     elsif current_user.godmode
-      @users = User.all.entries
+      @users = User.all.paginate(:page => params[:page])
     end
 
     respond_to do |format|

@@ -16,6 +16,7 @@
 			    		<td><%= link_to User.find(s.adminid).email, user_path(s.adminid) %></td>
 			    	</tr>
 			    <% end %>
+				<%= will_paginate @sports %>
 		    </tbody>
 		</table>
 	</div>

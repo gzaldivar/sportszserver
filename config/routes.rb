@@ -185,7 +185,7 @@ Sportzserver::Application.routes.draw do
 
     collection do
       get :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo, :ipadexample_path, :approve, :eazefootball, :eazebasketball,
-          :infobasketball, :webbballinfo, :iphone_basketballinfo, :about, :eazesoccer, :testcss
+          :infobasketball, :webbballinfo, :iphone_basketballinfo, :about, :eazesoccer, :testcss, :faqs
     end
 
     member do
@@ -219,6 +219,7 @@ Sportzserver::Application.routes.draw do
   match '/webbballinfo', to: 'sports#webbballinfo'
   match '/webbballinfo', to: 'sports#websiteinfo'
   match '/publisher', to: 'sports#publisher'
+  match '/faqs', to: 'sports#faqs'
    
   authenticate :user, lambda {|u| u.admin == true} do
     mount Resque::Server, :at => "/resque"

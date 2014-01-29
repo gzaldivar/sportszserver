@@ -362,6 +362,9 @@ class SportsController < ApplicationController
   def publisher
   end
 
+  def faqs
+  end
+
   def testcss
     if params[:cssstyle]
       @testcss = params[:cssstyle]

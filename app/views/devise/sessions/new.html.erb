@@ -2,23 +2,26 @@
 <p>
 <% if !current_site? %>
   <div class="row">
-    <div class="col-xs-12">
-      <h3>Sign into Eazesportz!</h3>
+    <div class="col-xs-11">
+      <h1 class="text-center">Sign into Eazesportz!</h1>
     </div>
   </div>
   <div class="row">
-    <div class="col-xs-4">
+    <div class="col-xs-3">
       <%= image_tag "FootballGameStats.png", class: 'img-responsive' %>
     </div>
-    <div class="col-xs-4 col-xs-offset-1">
+    <div class="col-xs-3 col-xs-offset-1">
       <%= image_tag "BasketballGameStats.png", class: 'img-responsive' %>
+    </div>
+    <div class="col-xs-3 col-xs-offset-1">
+      <%= image_tag "SoccerLiveStats.png", class: 'img-responsive' %>
     </div>
   </div>
 <% end %>
 <div class="row">
 	<div class="col-xs-4 col-xs-offset-3">
 		<div class="row">
-				<h3>Sign In</h3><p>
+			<h3>Sign In</h3><p>
 		</div>
 		<%= form_for(resource, :as => resource_name, :url => user_session_path, html: { class: 'form-horizontal' } ) do |f| %>
 			<div class="form-group">

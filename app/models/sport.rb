@@ -37,6 +37,7 @@ class Sport
   field :state,         type: String
   field :city,          type: String
   field :address,       type: String
+  field :country, type: String
 
   field :adminid, type: String
   field :beta, type: Boolean, default: false
@@ -106,7 +107,7 @@ class Sport
     }
 
   validates_presence_of :name, :sitename
-  validates :zip, presence: true, format: { with: /^[0-9]{5}(-[0-9]{4})?$/ }
+#  validates :zip, presence: true, format: { with: /^[0-9]{5}(-[0-9]{4})?$/ }
 
   validates :year, presence: true, format: { with: /^[0-9]{4}$/ }
   validates_presence_of :season

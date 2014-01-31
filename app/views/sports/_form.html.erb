@@ -43,11 +43,18 @@
       </div>
       <p>
       <div class="row">
+        <div class="col-xs-3">
+          <%= f.label :country %>
+          <%= f.country_select :country, ["United States"], {}, class: 'form-control' %>
+        </div>
         <div class="col-xs-2">
             <%= f.label :zip %>
             <%= f.text_field :zip, class: 'form-control' %>
         </div>
-  			<div class="col-xs-2 col-xs-offset-1">
+      </div>
+      <p>
+      <div class="row">
+  			<div class="col-xs-2">
           <%= f.label :year %>
   				<%= f.text_field :year, class: 'form-control' %>
   			</div>

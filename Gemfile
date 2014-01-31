@@ -42,6 +42,7 @@ gem 'bootstrap-will_paginate'
 gem "will_paginate_mongoid"
 gem 'devise'
 gem 'area'
+gem 'country-select'
 # gem 'timezone'
 # gem 'geocoder'
 

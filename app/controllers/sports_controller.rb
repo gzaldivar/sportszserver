@@ -18,8 +18,12 @@ class SportsController < ApplicationController
 
       if duplicate_user.nil?
         @sport = current_user.sports.build(params[:sport])
-        @sport.city = @sport.zip.to_region(city: true)
-        @sport.state = @sport.zip.to_region(state: true)
+
+        if @sport.zip and @sport.country == "United States" and @sport.zip.match(/^[0-9]{5}(-[0-9]{4})?$/)
+          @sport.city = @sport.zip.to_region(city: true)
+          @sport.state = @sport.zip.to_region(state: true)
+        end
+
         @sport.contactemail = current_user.email
         @sport.adminid = current_user.id
 
@@ -207,6 +211,11 @@ class SportsController < ApplicationController
   
   def update
     begin
+      if params[:sport][:zip] and params[:sport][:country] == "United States" and params[:sport][:zip].match(/^[0-9]{5}(-[0-9]{4})?$/)
+        @sport.city = @sport.zip.to_region(city: true)
+        @sport.state = @sport.zip.to_region(state: true)
+      end
+
       @sport.update_attributes(params[:sport])
       respond_to do |format|
         format.html { redirect_to @sport, notice: "Sport updated!" }

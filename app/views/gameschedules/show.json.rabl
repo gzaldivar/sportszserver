@@ -15,12 +15,12 @@ node :opponentpic, :if => lambda { |a| !a.opponent_team_id? } do |a|
 end
 node(:starttime) { |t| t.starttime.strftime("%I:%M%p") }
 node(:startdate) { |t| t.gamedate.strftime("%m-%d-%Y") }
-node(:opponentscore) { |t| t.opponentq1 + t.opponentq2 + t.opponentq3 + t.opponentq4 }
 attributes :gamedate, :location, :opponent, :event, :homeaway, :game_name, :homeq1, :homeq2, :homeq3, :homeq4, :opponentq1, :opponentq2, 
 		   :opponentq3, :opponentq4, :possession, :lastplay, :final, :opponent_mascot, :current_game_time,
 		   :opponent_name, :hometimeouts, :opponenttimeouts, :league, :opponent_sport_id, :opponent_team_id,
 		   :opponent_league_wins, :opponent_league_losses, :opponent_nonleague_wins, :opponent_nonleague_losses
 if @sport.name == "Football"
+	node(:opponentscore) { |t| t.opponentq1 + t.opponentq2 + t.opponentq3 + t.opponentq4 }
 	node(:homescore) { |t| footballhomescore(@sport, t) }
 	node(:firstdowns) { |f| totalfirstdowns(@sport, f) }
 	attributes :currentqtr, :penaltyyards, :down, :own, :ballon, :our, :togo, :penalty, :penaltyyards, :currentperiod
@@ -41,10 +41,10 @@ if @sport.name == "Football"
 		end
 	end
 elsif @sport.name == "Basketball"
-	attributes :opponentfouls, :currentperiod, :homebonus, :visitorbonus
+	attributes :opponentfouls, :currentperiod, :homebonus, :visitorbonus, :opponentscore
 	node(:homescore) { |g| basketball_home_score(@sport, g) }
 	node(:homefouls) { |g| basketball_home_fouls(g) }
 elsif @sport.name == "Soccer"
-	attributes :socceroppck, :socceroppsog, :socceroppsaves, :currentperiod
+	attributes :socceroppck, :socceroppsog, :socceroppsaves, :currentperiod, :opponentscore
 	node(:homescore) { |g| soccer_home_score(@sport, g) }
 end

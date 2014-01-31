@@ -20,7 +20,6 @@ class AdminsController < ApplicationController
 				@user.photos = nil
 				@user.videoclips = nil
 				@user.events = nil
-				@user.newsfeeds = nil
 
 				redirect_to users_admins_path, notice: "User deleted"
 			else

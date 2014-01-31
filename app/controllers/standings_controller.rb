@@ -28,8 +28,6 @@ class StandingsController < ApplicationController
             arecord = getgamerecord(oppsport, oppschedule)
             arecord.sportid = s.opponent_sport_id
           else 
-            puts s.opponent_league_wins
-            puts s.opponent_mascot
             arecord.leaguewins = s.opponent_league_wins
             arecord.leaguelosses = s.opponent_league_losses
             arecord.nonleaguewins = s.opponent_nonleague_wins
@@ -127,19 +125,21 @@ class StandingsController < ApplicationController
             homescore = footballhomescore(sport, s)
           end
 
-          if homescore > s.opponentscore and s.league == true and s.final == true
+          oppscore = s.opponentq1 + s.opponentq2 + s.opponentq3 + s.opponentq4
+
+          if homescore > oppscore and s.league == true and s.final == true
             teamwins += 1
             leaguewins += 1
-          elsif homescore < s.opponentscore and s.league and s.final
+          elsif homescore < oppscore and s.league and s.final
             teamlosses += 1
             leaguelosses += 1
-          elsif homescore > s.opponentscore and s.final
+          elsif homescore > oppscore and s.final
             teamwins += 1
-          elsif homescore < s.opponentscore and s.final
+          elsif homescore < oppscore and s.final
             teamlosses += 1
-          elsif homescore == s.opponentscore and s.league and s.final
+          elsif homescore == oppscore and s.league and s.final
             leagueties += 1
-          elsif homescore == s.opponentscore and s.final
+          elsif homescore == oppscore and s.final
             nonleagueties += 1
           end
         end

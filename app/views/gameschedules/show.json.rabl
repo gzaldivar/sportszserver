@@ -1,5 +1,6 @@
 object @gameschedule
 node(:id) { |o| o.id.to_s }
+node(:team_id) { |t| t.team_id.to_s }
 node :opponentpic, :if => lambda { |a| a.opponent_team_id? } do |a|
 	if Sport.find(a.opponent_sport_id).teams.find(a.opponent_team_id).team_logo?
 		Sport.find(a.opponent_sport_id).teams.find(a.opponent_team_id).team_logo(:thumb)

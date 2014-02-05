@@ -1,7 +1,6 @@
 class Blog
   include Mongoid::Document  
   include Mongoid::Timestamps
-  include Mongoid::Search
 
   after_save :send_alert
   

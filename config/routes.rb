@@ -185,7 +185,7 @@ Sportzserver::Application.routes.draw do
 
     collection do
       get :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo, :ipadexample_path, :approve, :eazefootball, :eazebasketball,
-          :infobasketball, :webbballinfo, :iphone_basketballinfo, :about, :eazesoccer, :testcss, :faqs
+          :infobasketball, :webbballinfo, :iphone_basketballinfo, :about, :eazesoccer, :testcss, :faqs, :get_usstates
     end
 
     member do

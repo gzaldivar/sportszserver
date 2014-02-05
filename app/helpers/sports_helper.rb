@@ -6,17 +6,24 @@ module SportsHelper
   end
 
   def find_a_sport(thesport)
-    if !params[:zip].blank? and !params[:city].blank? and !params[:state].blank? and !params[:sitename].blank?
+    if !params[:zip].blank? and !params[:city].blank? and !params[:state].blank? and !params[:sitename].blank? and !params[:country].blank?
       site = Sport.where(name: thesport).full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s + " " + 
-            params[:sitename].to_s, match: :all)      
-    elsif !params[:zip].blank? and !params[:city].blank? and !params[:state].blank?
-      site = Sport.where(name: thesport).full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s, match: :all)
+            params[:sitename].to_s + " " + params[:country].to_s, match: :all)      
+    elsif !params[:zip].blank? and !params[:city].blank? and !params[:state].blank? and !params[:country].blank?
+      site = Sport.where(name: thesport).full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s +
+            " " + params[:country].to_s, match: :all)
+    elsif !params[:country].blank? and !params[:city].blank?
+      site = Sport.where(name: thesport).full_text_search(params[:country].to_s + " " + params[:city].to_s, match: :all)
+    elsif !params[:country].blank? and !params[:state].blank?
+      site = Sport.where(name: thesport).full_text_search(params[:country].to_s + " " + params[:state].to_s, match: :all)
     elsif !params[:zip].blank?
       site = Sport.where(name: thesport).full_text_search(params[:zip].to_s)
     elsif !params[:city].blank?
       site = Sport.where(name: thesport).full_text_search(params[:city].to_s)
     elsif !params[:state].blank?
       site = Sport.where(name: thesport).full_text_search(params[:state].to_s)
+    elsif !params[:country].blank?
+      site = Sport.where(name: thesport).full_text_search(params[:country].to_s)
     elsif !params[:sitename].blank?
       site = Sport.where(name: thesport).full_text_search(params[:sitename].to_s)
     elsif thesport

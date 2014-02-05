@@ -374,6 +374,10 @@ class SportsController < ApplicationController
   def faqs
   end
 
+  def get_usstates
+    @country = params[:country]
+  end
+
   def testcss
     if params[:cssstyle]
       @testcss = params[:cssstyle]

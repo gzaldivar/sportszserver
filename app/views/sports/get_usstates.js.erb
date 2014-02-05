@@ -1,0 +1,5 @@
+<% if @country != "United States" %>
+	$("#states").html("<%= j render 'nonus_states' %>");
+<% else %>
+	$("#states").html("<%= j render 'us_statelist' %>");
+<% end %>

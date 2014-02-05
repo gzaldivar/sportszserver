@@ -1,3 +1,16 @@
+<script>
+  $(document).ready(function() {
+    $('#get_states').change(function() {
+      $.ajax({
+        url: "<%= get_usstates_sports_path %>",
+        data: {
+          country : $('#get_states').val()
+        },
+        dataType: "script"
+      });
+    });
+  });
+</script>
 <div class="row">
   <div class="col-xs-12">
     <div class="row">
@@ -17,7 +30,7 @@
               <%= text_field_tag "city", "",  { class: "form-control" } %>
             </div>
             <div class="col-xs-2 col-xs-offset-1">
-              <%= label_tag "Sport: " %>
+              <h5 class="text-warning"><%= label_tag "Sport: *Required" %></h5>
               <% if thesport %>
                 <%= hidden_field_tag "sport", thesport %>
                 <%= thesport %>
@@ -30,7 +43,14 @@
           <div class="row">
             <div class="col-xs-2">
               <%= label_tag "State: " %>
-              <%= select_tag :state, options_for_select(us_states), include_blank: true, class: "form-control" %>
+              <div id="states">
+                <%= select_tag :state, options_for_select(us_states), include_blank: true, class: "form-control" %>
+              </div>
+            </div>
+            <div class="col-xs-2 col-xs-offset-1">
+              <%= label_tag "Country: " %>
+              <%= select_tag :country, country_options_for_select(selected = nil, priority_countries = ["United States"]),
+                              id: "get_states", class: 'form-control' %>
             </div>
             <div class="col-xs-2 col-xs-offset-1">
               <%= label_tag "Site Name: " %>
@@ -54,6 +74,7 @@
               <th>Sport</th>
               <th>Site Name</th>
               <th>Mascot</th>
+              <th>Country</th>
               <th>City</th>
               <th>State</th>
               <th>Zip</th>
@@ -79,6 +100,7 @@
                   <% end %>
                   </td>
                   <td><%= s.mascot %></td>
+                  <td><%= s.country %></td>
                   <td><%= s.city %></td>
                   <td><%= s.state %></td>
                   <td><%= s.zip %></td>

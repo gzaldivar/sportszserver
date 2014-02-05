@@ -52,7 +52,7 @@ class Sport
 
   field :logoprocessing, type: Boolean, default: false
 
-  search_in :sitename, :mascot, :state, :zip, :city, :name, :sportname, :featuredplayers
+  search_in :sitename, :mascot, :state, :zip, :city, :name, :sportname, :featuredplayers, :country
 
 #  belongs_to :site
   belongs_to :user

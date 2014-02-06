@@ -4,11 +4,11 @@ class AdminsController < ApplicationController
 	end
 
 	def index
-		@sports = Sport.all.paginate(:page => params[:page])
+		@sports = Sport.all.desc(:updated_at).paginate(:page => params[:page])
 	end
 
 	def users
-    	@users = User.all.paginate(page: params[:page])
+    	@users = User.all.desc(:updated_at).paginate(page: params[:page])
 	end
 
 	def deleteuser

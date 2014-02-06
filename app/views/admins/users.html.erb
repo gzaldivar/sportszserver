@@ -36,6 +36,7 @@
 				<% if current_user.godmode %>
 					<th>Site</th>
 				<% end %>
+				<th>Updated</th>
 				<th>Disable</th>
 				<% if current_user.godmode %>
 					<th>Delete</th>
@@ -61,6 +62,7 @@
 						<% else %>
 							<td></td>
 						<% end %>
+						<td><%= u.updated_at.strftime("%m/%d/%Y") %></td>
 						<% if (u.is_active and !u.admin) or current_user.godmode %>
 							<td><%= link_to "Disable User", disable_user_path(u), class: "btn btn-xs btn-danger" %></td>
 					    	<% if current_user.godmode %>

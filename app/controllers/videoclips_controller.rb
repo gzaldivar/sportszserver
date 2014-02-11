@@ -289,10 +289,10 @@ class VideoclipsController < ApplicationController
             @videoclip.frame_rate = movie.frame_rate
             @videoclip.resolution = movie.resolution
 
-            if @videoclip.duration > 24.0
-              @videoclip.error_status = true
-              @videoclip.error_message = "Video clip exceeds maximum duration of 24 seconds"
-            end
+#            if @videoclip.duration > 24.0
+#              @videoclip.error_status = true
+#              @videoclip.error_message = "Video clip exceeds maximum duration of 24 seconds"
+#            end
 
           end
         else
@@ -360,6 +360,8 @@ class VideoclipsController < ApplicationController
         @videoclip.save!
 
         FileUtils.rm(poster_path)
+      else
+        throw "Error Processing Video " + video.error_message
       end
       
       respond_to do |format|
@@ -422,10 +424,10 @@ class VideoclipsController < ApplicationController
             video.frame_rate = movie.frame_rate
             video.resolution = movie.resolution
 
-            if video.duration > 24.0
-              video.error_status = true
-              video.error_message = "Video clip exceeds maximum duration of 24 seconds"
-            end
+#            if video.duration > 24.0
+#              video.error_status = true
+#              video.error_message = "Video clip exceeds maximum duration of 24 seconds"
+#            end
 
           end
         else

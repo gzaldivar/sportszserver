@@ -270,12 +270,14 @@ class VideoclipsController < ApplicationController
       if !movie.nil?
         if movie.video_codec != nil
           str = movie.video_codec.split(" ")
+          puts str[0]
           if str[0] != "h264"
             @videoclip.error_status = true
             @videoclip.error_message = "Uploaded video is not an h264 video"
           else
             if movie.audio_codec != nil
               str = movie.audio_codec.split(" ")
+              puts str[0]
               if str[0] != "aac"
                 @videoclip.error_status = true
                 @videoclip.error_message = "Audio for video clip is not AAC"
@@ -361,7 +363,9 @@ class VideoclipsController < ApplicationController
 
         FileUtils.rm(poster_path)
       else
-        throw "Error Processing Video " + video.error_message
+        FileUtils.rm(video_path)
+        obj.delete
+        raise "Error Processing Video " + @videoclip.error_message
       end
       
       respond_to do |format|
@@ -405,12 +409,14 @@ class VideoclipsController < ApplicationController
       if !movie.nil?
         if movie.video_codec != nil
           str = movie.video_codec.split(" ")
+          puts str[0]
           if str[0] != "h264"
             video.error_status = true
             video.error_message = "Uploaded video is not an h264 video"
           else
             if movie.audio_codec != nil
               str = movie.audio_codec.split(" ")
+              puts str[0]
               if str[0] != "aac"
                 video.error_status = true
                 video.error_message = "Audio for video clip is not AAC"
@@ -463,11 +469,14 @@ class VideoclipsController < ApplicationController
         @sport.save
         video.save!
       else
-        throw "Error Processing Video " + video.error_message
+        FileUtils.rm(video_path)
+        obj.delete
+        raise "Error Processing Video " + video.error_message
       end
 
       FileUtils.rm(poster_path)
-      render status: 200, json: { videoclip: video, request: [@sport, video] }
+      FileUtils.rm(video_path)
+     render status: 200, json: { videoclip: video, request: [@sport, video] }
     rescue Exception => e
       render status: 404, json: { error: e.message, request: @sport }
     end

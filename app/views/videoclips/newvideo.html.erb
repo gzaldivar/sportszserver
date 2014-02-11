@@ -23,14 +23,15 @@
 	<div class="col-xs-8 col-xs-offset-1">
     <br/>
     <h4>Upload Video Clips.</h4><p><p>
-      	Video clip should already be processed as h.264 in an MP4 container with AAC audio which is what iPhone, iPad and other mobile devices expect. This will also allow the video to be played in browsers. Although this sounds daunting it realy is not. You can use a tool like Handbrake 
+      	Video clip should already be processed as h.264 in an MP4 container with AAC audio which is what iPhone, iPad and other mobile devices expect. This will also allow the video to be played in all HTML5 browsers. Although this sounds daunting it realy is not. You can use a tool like Handbrake 
       	<%= link_to "http://handbrake.fr" %> to process the video. It comes with presets that match the iPhone. If you pick that preset, you should be ok. Here is a screen shot showing the iPhone/iPad as the target.<p>
       	<%= image_tag "HandBrake2.jpg" %>
       	<p>
       	Handbrake can be downloaded for the Mac, Windows or Linux and best of all it's FREE!
       	<p>
       	We will check to make sure the video is the right format and can be played online and on mobile devices. You will know there is an error since the uploaded video will lack a poster and there will be a link that you can follow to see what was wrong. The poster will be taken from the first frame of the video and will be displayed before the video is played back<p>
-	<h4>
+      	<h5 class="text-info">We are working on a tool that will allow you to create video clips from game footage. You will be able to tag plays, players, etc. using this tool. This tool will also take care of the video transcoding so you don't have to worry about proper video formats. Watch for it!</h5>
+	<h4 class="text-warning">
 		<% if !@team.nil? %>
 			Uploaded video clips will be tagged for team <em><%= @team.team_name %></em>
 		<% elsif !@athlete.nil? %>
@@ -43,7 +44,7 @@
     
     <%= s3_uploader_form callback_url: sport_videoclips_url, callback_param: "videoclip[image_url]", 
     					 key: "uploads/videoclips/#{@id}/#{@prefix}/${filename}", id:  "myS3Uploader" do %>
-      <%= file_field_tag :file, multiple: true %>
+      <%= file_field_tag :file, multiple: true, class: 'form-control' %>
     <% end %>
     
 	<script id="template-upload" type="text/x-tmpl">

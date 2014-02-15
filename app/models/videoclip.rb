@@ -54,8 +54,14 @@ class Videoclip
   def deleteclips
     s3 = AWS::S3.new
     bucket = s3.buckets[S3DirectUpload.config.bucket]
-    bucket.objects[self.filepath].delete
-    bucket.objects[self.poster_filepath].delete
+
+    if self.filepath
+      bucket.objects[self.filepath].delete
+    end
+
+    if self.poster_filepath
+      bucket.objects[self.poster_filepath].delete
+    end
   end
 
   private

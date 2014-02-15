@@ -177,7 +177,7 @@ Sportzserver::Application.routes.draw do
       end
 
       collection do
-        post :untagathlete, :createmobile, :updatefeaturedvideos
+        post :untagathlete, :createmobile, :updatefeaturedvideos, :createclient
         get :newteam, :newathlete, :newschedule, :updategameschedule, :updategamelogs, :videoclipshome, :showfeaturedvideos, :latest, 
             :displayvideo, :featuredvideo, :updatefeaturedvideoclipslist, :deletefeaturedvideoclips
       end

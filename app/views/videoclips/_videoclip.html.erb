@@ -45,12 +45,12 @@
 		    	<td></td> 
 		    <% end %>
 			<% if !videoclip.gameschedule.nil? and !videoclip.gameschedule.blank? %>
-		    	<td><%= @sport.teams.find(videoclip.teamid).gameschedules.find(videoclip.gameschedule).game_name %></td>
+		    	<td><%= @sport.teams.find(videoclip.team_id).gameschedules.find(videoclip.gameschedule).game_name %></td>
 			<% else %>
 				<td></td>
 			<% end %>
 			<% if @sport.name == "Football" and !videoclip.gamelog.nil? and !videoclip.gamelog.blank? %>
-				<td><%= @sport.teams.find(videoclip.teamid).gameschedules.find(videoclip.gameschedule).gamelogs.find(videoclip.gamelog).logentrytext %></td>
+				<td><%= @sport.teams.find(videoclip.team_id).gameschedules.find(videoclip.gameschedule).gamelogs.find(videoclip.gamelog).logentrytext %></td>
 			<% else %>
 				<td></td>
 			<% end %>

@@ -1,6 +1,6 @@
 class VideoclipsController < ApplicationController
 	before_filter :authenticate_user!,	only: [:edit, :update, :destroy, :newathlete, :newteam, :newgame, :create, :tag_athletes, 
-                                             :untag_athletes, :untagathlete, :untagteam]
+                                             :untag_athletes, :untagathlete, :untagteam, :createclient]
 	before_filter :get_sport
 	before_filter :correct_video, 		only: [:edit, :update, :destroy, :show, :untag_athletes, :tag_athletes]
   before_filter only: [:destroy, :update, :create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, :tag_athletes, :createmobile] do |controller| 
@@ -233,6 +233,19 @@ class VideoclipsController < ApplicationController
       redirect_to :back, alert: "You have exceeded your space allotment for media. Conisder upgradig or delete some media."
     end
   end
+
+  def createclient
+    begin
+      video = @sport.videoclips.create!(params[:videoclip])
+      respond_to do |format|
+        format.json { render json: { videoclip: video } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.json { render json: { error: e.message } }
+      end
+    end
+ end
 
   def create
     begin
@@ -591,17 +604,26 @@ class VideoclipsController < ApplicationController
   def update
     begin
       @videoclip.update_attributes!(params[:videoclip])
+
+      s3 = AWS::S3.new
+      bucket = s3.buckets[S3DirectUpload.config.bucket]
+      obj = bucket.objects[@videoclip.filepath]
+      @videoclip.video_url = obj.url_for(:read, expires:  473040000)
+      posterobj = bucket.objects[@videoclip.poster_filepath]
+      @videoclip.poster_url = posterobj.url_for(:read, expires:  473040000)
+
       if @videoclip.players.nil?
         @videoclip.players = Array.new
       end
+
       if !params[:athlete].nil? and !params[:athlete][:id].blank?
         unless @videoclip.players.include?(params[:athlete][:id].to_s)
           @videoclip.players << params[:athlete][:id].to_s
         end
-#        @videoclip.players.push(params[:athlete][:id].to_s)
-        @videoclip.save!
       end
-    
+
+      @videoclip.save!
+   
       respond_to do |format|
         format.html { redirect_to [@sport, @videoclip], notice: "Update successful!" }
         format.json { render json: { videoclip: @videoclip, request: [@sport, @videoclip] } }
@@ -616,7 +638,7 @@ class VideoclipsController < ApplicationController
   end
 
   def destroy
-#  	begin
+ 	  begin
       @sport.mediasize = @sport.mediasize - @videoclip.size
       @sport.save
 	  	@videoclip.destroy
@@ -624,12 +646,12 @@ class VideoclipsController < ApplicationController
 	  	  format.html { redirect_to sport_videoclips_path(@sport), notice: "Videoclip delete sucessful!" }
         format.json { render json: { sucess: "successful" } }
       end
-#	  rescue Exception => e
- #     respond_to do |format|
-	#  	  format.html { redirect_to :back, alert: "Error deleting video " + e.message }
-   #     format.json { render status: 404, json: { error: e.message, videoclip: @videoclip } }
-    #  end
-#	  end
+    rescue Exception => e
+      respond_to do |format|
+	  	  format.html { redirect_to :back, alert: "Error deleting video " + e.message }
+        format.json { render status: 404, json: { error: e.message, videoclip: @videoclip } }
+      end
+	  end
   end
 
   def untagathlete

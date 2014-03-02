@@ -75,7 +75,7 @@ $('video,audio').mediaelementplayer({
 <div class="row">
   <div class="col-xs-5 col-xs-offset-4">
     <% if isAdmin? or (user_signed_in? and (current_user.id == @videoclip.user_id) and enable_user_pics? ) %>
-      <%= link_to "Edit ", edit_sport_videoclip_path(@sport, @videoclip), class:	"btn btn-sm btn-primary" %>
+      <%= link_to "Edit ", edit_sport_videoclip_path(@sport, @videoclip), class:	"btn btn-md btn-primary" %>
     <% end %>
   </div>
 </div>

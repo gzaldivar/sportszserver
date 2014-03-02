@@ -104,6 +104,7 @@ class Gameschedule
   has_many :football_receivings, dependent: :destroy
   has_many :football_returners, dependent: :destroy
   has_many :football_rushings, dependent: :destroy
+  has_many :events, dependent: :destroy
 
 
   validates_presence_of :starttime

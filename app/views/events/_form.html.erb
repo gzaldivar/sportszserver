@@ -9,7 +9,25 @@
                                 :value => @event.try(:start_time).try(:strftime,'%m/%d/%Y') %>
                     <%= f.hidden_field :start_time, :id => 'recorded-at-alt' %>
                 </div>
+                <div class="col-xs-1" %>
+                    <%= label_tag "Hour" %><label id='game_start_hour'></label>     
+                    <%= select_tag "starthour", options_for_select((01 .. 12), include_blank: false), class: 'form-control' %>
+                </div>
+                <div class="col-xs-1" %>
+                    <%= label_tag "Minute" %>
+                    <%= select_tag "startminutes", options_for_select((00 .. 59), include_blank: false), class: 'form-control' %>
+                </div>
+                <div class="col-xs-1" %>
+                    <%= label_tag :ampm, "AMPM" %>
+                    <!--%= select_tag "ampm", options_for_select(['AM', 'PM'], @gameschedule.starttime.strftime("%p") == "AM" ? "AM" : "PM" ), class: 'form-control' %-->
+                    <%= select_tag "ampm", options_for_select(['AM', 'PM'], include_blank: false), class: 'form-control' %>
+                </div>
+                <!--div class="col-xs-2">
+                    <%= label_tag :videoevent, "Live Event" %>
+                    <%= select_tag :videoevent, options_for_select(['Live', 'Local'], include_blank: false), class: 'form-control' %>
+                </div-->
             </div>
+            <p>
             <div class="row">
                  <div class="col-xs-2">
                     <%= f.label :end %>
@@ -17,28 +35,87 @@
                                 :value => @event.try(:end_time).try(:strftime,'%m/%d/%Y') %>
                     <%= f.hidden_field :end_time, :id => 'recorded-at-alt-end' %>
                  </div>
+                <div class="col-xs-1" %>
+                    <%= label_tag "Hour" %><label id='game_start_hour'></label>     
+                    <%= select_tag "endhour", options_for_select((01 .. 12), include_blank: false), class: 'form-control' %>
+                </div>
+                <div class="col-xs-1" %>
+                    <%= label_tag "Minute" %>
+                    <%= select_tag "endminutes", options_for_select((00 .. 59), include_blank: false), class: 'form-control' %>
+                </div>
+                <div class="col-xs-1" %>
+                    <%= label_tag :ampm, "AMPM" %>
+                    <!--%= select_tag "ampm", options_for_select(['AM', 'PM'], @gameschedule.starttime.strftime("%p") == "AM" ? "AM" : "PM" ), class: 'form-control' %-->
+                    <%= select_tag "endampm", options_for_select(['AM', 'PM'], include_blank: false), class: 'form-control' %>
+                </div>
             </div>
             <div class="row">
-                <div class="col-xs-3">
+                <div class="col-xs-11">
                     <%= f.label :event_name, "Event Name" %>
                     <%= f.text_field :name, class: 'form-control' %>
                 </div>
-                <div class="col-xs-4 col-xs-offset-1">
+            </div>
+            <div class="row">
+                <div class="col-xs-11">
                     <%= f.label :event_description, "Event Description" %>
                     <%= f.text_area :desc, class: 'form-control' %>
                 </div>
             </div>
-            <%= f.hidden_field :user, value: current_user.id.to_s %>
+            <%= f.hidden_field :user_id, value: current_user.id.to_s %>
             <p>
             <% if !@team.nil? %>
                 Event for team: <em><strong><%= @team.team_name %></strong></em>
                 <%= f.hidden_field :team_id, value: @team.id %>
             <% end %>
             <div class="row">
-  			    <div class="col-xs-1 col-xs-offset-3">
-                    <%= f.submit :submit, class: "btn btn-sm btn-primary" %>
+  			    <div class="col-xs-1 col-xs-offset-5">
+                    <%= f.submit :submit, class: "btn btn-md btn-primary" %>
   			    </div>
             </div>
 		<% end %>	
 	</div>	
 </div>
+<script>
+    $('#starthour').find('option').each(function() {
+        var $this = $(this);
+        if ($this.text() == moment('<%= @event.start_time.to_s %>').utc().format("h")) {
+            $this.attr('selected','selected');
+            return false;
+        }
+    });
+    $('#startminutes').find('option').each(function() {
+        var $this = $(this);
+        if ($this.text() == moment('<%= @event.start_time.to_s %>').utc().format("m")) {
+            $this.attr('selected','selected');
+            return false;
+        }
+    });
+    $('#ampm').find('option').each(function() {
+        var $this = $(this);
+        if ($this.text() == moment('<%= @event.start_time.to_s %>').utc().format("A")) {
+            $this.attr('selected','selected');
+            return false;
+        }
+    });
+    $('#endhour').find('option').each(function() {
+        var $this = $(this);
+        if ($this.text() == moment('<%= @event.end_time.to_s %>').utc().format("h")) {
+            $this.attr('selected','selected');
+            return false;
+        }
+    });
+    $('#endminutes').find('option').each(function() {
+        var $this = $(this);
+        if ($this.text() == moment('<%= @event.end_time.to_s %>').utc().format("m")) {
+            $this.attr('selected','selected');
+            return false;
+        }
+    });
+    $('#endampm').find('option').each(function() {
+        var $this = $(this);
+        if ($this.text() == moment('<%= @event.end_time.to_s %>').utc().format("A")) {
+            $this.attr('selected','selected');
+            return false;
+        }
+    });
+</script>

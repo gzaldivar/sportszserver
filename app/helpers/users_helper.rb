@@ -30,6 +30,15 @@ module UsersHelper
 	  		else
 	  			return true
 	  		end
+	  	elsif teamid and current_user.admin 
+			sport = Sport.where('teams._id' => Moped::BSON::ObjectId(teamid)).first
+			team = sport.teams.detect { |t| t.id.to_s == teamid }
+
+			if current_user.default_site == team.sport.id.to_s
+				return true
+			else
+				return false
+			end
 	  	else
 	  		raise ActionController::RoutingError.new('you are not Authorized for this')
     	end

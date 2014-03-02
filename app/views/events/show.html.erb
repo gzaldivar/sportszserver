@@ -6,32 +6,43 @@
 		<p>
         <div class="row">
             <div class="col-xs-4">
-            	<h5>Start Time: </h5>
-                <%= @event.start_time.strftime("%m/%d/%Y") %>
+            	<h5>Start: </h5>
+                <h5><%= @event.start_time.strftime("%m/%d/%Y") %> at <label id='start_time'></label></h5>
             </div>
             <div class="col-xs-4 col-xs-offset-1">
-            	<h5>End Time: </h5>
-                <%= @event.end_time.strftime("%m/%d/%Y") %>
+            	<h5>End: </h5>
+                <h5><%= @event.end_time.strftime("%m/%d/%Y") %> at <label id='end_time'></label></h5>
             </div>
 		</div>
 		<p>
 		<div class="row">
 			<div class="col-xs-4">
-				<h5>Event Description:</h5><p>
+				<h5>Event:</h5><p>
 				<%= @event.name %>
 			</div>
             <div class="col-xs-4 col-xs-offset-1">
-            	<h5>Event Description:</h5><p>
+            	<h5>Description:</h5><p>
                 <%= @event.desc %>
             </div>
         </div>
+        <% if @event.videoevent > 0 %>
+            <div class="row">
+                <div class="col-xs-4">
+                    <h5 class="text-danger"><em>Broadcast Event</em></h5>
+                </div>
+            </div>
+        <% end %>
 	</div>
 </div>
 <% if site_owner? or isTeamManager?(@event) %>
     <div class="row">
     	<div class="col-xs-2 col-xs-offset-4">
-            <%= link_to "Edit", edit_sport_event_path(@sport, @event), class: "btn btn-sm btn-primary" %>
-            <%= link_to "Delete", sport_event_path(@sport, @event), method: :delete, class: "btn btn-sm btn-danger" %>
+            <%= link_to "Edit", edit_sport_event_path(@sport, @event), class: "btn btn-md btn-primary" %>
+            <%= link_to "Delete", sport_event_path(@sport, @event), method: :delete, class: "btn btn-md btn-danger" %>
         </div>
     </div>
 <% end %>
+<script>
+  $('#start_time').html(moment('<%= @event.start_time.to_s %>').utc().format("hh:mm A"));
+  $('#end_time').html(moment('<%= @event.end_time.to_s %>').utc().format("hh:mm A"));
+</script>

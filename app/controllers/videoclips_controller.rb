@@ -605,12 +605,18 @@ class VideoclipsController < ApplicationController
     begin
       @videoclip.update_attributes!(params[:videoclip])
 
+      puts @videoclip.filepath
+      puts @videoclip.poster_filepath
+
       s3 = AWS::S3.new
       bucket = s3.buckets[S3DirectUpload.config.bucket]
       obj = bucket.objects[@videoclip.filepath]
       @videoclip.video_url = obj.url_for(:read, expires:  473040000)
       posterobj = bucket.objects[@videoclip.poster_filepath]
       @videoclip.poster_url = posterobj.url_for(:read, expires:  473040000)
+
+      puts @videoclip.poster_url
+      puts @videoclip.video_url
 
       if @videoclip.players.nil?
         @videoclip.players = Array.new

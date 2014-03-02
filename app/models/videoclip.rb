@@ -29,6 +29,7 @@ class Videoclip
   field :error_status, type: Boolean
   field :error_message, type: String
   field :pending, type: Boolean, default: false
+  field :hidden, type: Boolean, default: false
 
 
   field :teamid,  type: String

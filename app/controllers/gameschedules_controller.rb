@@ -49,10 +49,10 @@ class GameschedulesController < ApplicationController
       datetime = DateTime.iso8601(params[:gameschedule][:gamedate])
 
       if params[:starthour]
-        if params[:ampm] == "PM" and params[:stathour].to_i != 12
+        if params[:ampm] == "PM" and params[:starthour].to_i != 12
           params[:starthour] = (params[:starthour].to_i + 12).to_s
         end
-        schedule.starttime = datetime.change({:hour => hour , :min => params[:startminutes].to_i , :sec => 0 })
+        schedule.starttime = datetime.change({:hour => params[:starthour].to_i , :min => params[:startminutes].to_i , :sec => 0 })
       else
         schedule.starttime = DateTime.civil(datetime.year, datetime.month, datetime.day, params[:gameschedule][:"starttime(4i)"].to_i,
                                             params[:gameschedule][:"starttime(5i)"].to_i)
@@ -182,7 +182,7 @@ class GameschedulesController < ApplicationController
     begin
       datetime = DateTime.iso8601(params[:gameschedule][:gamedate])
       if params[:starthour]
-        if params[:ampm] == "PM" and params[:stathour].to_i != 12
+        if params[:ampm] == "PM" and params[:starthour].to_i != 12
           hour = (params[:starthour].to_i + 12)
         else
           hour = params[:starthour].to_i

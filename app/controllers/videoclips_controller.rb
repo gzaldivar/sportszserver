@@ -605,9 +605,6 @@ class VideoclipsController < ApplicationController
     begin
       @videoclip.update_attributes!(params[:videoclip])
 
-      puts @videoclip.filepath
-      puts @videoclip.poster_filepath
-
       s3 = AWS::S3.new
       bucket = s3.buckets[S3DirectUpload.config.bucket]
       obj = bucket.objects[@videoclip.filepath]
@@ -645,7 +642,7 @@ class VideoclipsController < ApplicationController
 
   def destroy
  	  begin
-      @sport.mediasize = @sport.mediasize - @videoclip.size
+#      @sport.mediasize = @sport.mediasize - @videoclip.size
       @sport.save
 	  	@videoclip.destroy
       respond_to do |format|

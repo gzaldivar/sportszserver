@@ -7,3 +7,5 @@ attributes :players, :if => lambda { |m| !m.players.nil? }
 node(:user) { |o| o.user_id.to_s }
 node(:gameschedule) { |o| o.gameschedule_id.to_s }
 node(:gamelog) { |o| o.gamelog_id.to_s }
+node(:sport_id) { |s| s.sport_id.to_s }
+node(:team_id) { |t| t.team_id.to_s }

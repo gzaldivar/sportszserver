@@ -7,7 +7,7 @@
   	<div class="col-xs-11">
   		<div class="row">
   			<div class="col-xs-3">
-		  		<h4><p class="text-info"><%= @gameschedule.gamedate.strftime("%m/%d/%Y") %> at <label id='game_start_time'></label></p></h4>  
+		  		<h4><p class="text-info"><%= @gameschedule.starttime.strftime("%m/%d/%Y") %> at <label id='game_start_time'></label></p></h4>  
 		  	</div>
 		  	<div class="col-xs-8">
      			<h4><p class="text-info"><%= @team.title + " " + @team.mascot %> vs. <%= @gameschedule.opponent_name %> at <%= @gameschedule.location %></P</h4>

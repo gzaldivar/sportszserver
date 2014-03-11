@@ -146,7 +146,6 @@ class EventsController < ApplicationController
 
 	def destroy
 		begin
-
 			if @event.team_id.nil?
 				@event.destroy
 
@@ -159,14 +158,14 @@ class EventsController < ApplicationController
 				@event.destroy
 
 				respond_to do |format|
-					format.html { redirect_to sport_events_path(@sport, @team), notice: "Event deleted for " + @team.team_name }
+					format.html { redirect_to sport_events_path(@sport, team_id: @team.id), notice: "Event deleted for " + @team.team_name }
 					format.json { render status: 200, json: { success: "success" } }
 				end
 			end
 			
 		rescue Exception => e
 			respond_to do |format|
-				format.html { redirect_to sport_events_path(@sport, @team), alert: "Error deleting event " + e.message }
+				format.html { redirect_to sport_events_path(@sport), alert: "Error deleting event " + e.message }
 				format.json { render status: 404, json: { error: e.message } }
 			end			
 		end

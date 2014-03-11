@@ -22,11 +22,11 @@
 <div class="row">
 	<div class="col-xs-10">
 		<%= calendar @events do |event| %>
-  			<div><%= link_to event.name, [@sport, event] %>
-  				<p>
+  			<div><p class="text-danger"><%= link_to event.name, [@sport, event] %>
   				<% if event.videoevent > 0 %>
-  					<p class="text-danger"><em>*Broadcast Event</em></p>
+  					*Live
   				<% end %>
+  				</p>
   			</div>
 		<% end %>
 	</div>

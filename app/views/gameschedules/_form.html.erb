@@ -43,12 +43,6 @@
 				<%= f.hidden_field :opponent_sport_id, value: @opposingsport.id.to_s %>
 				<%= f.hidden_field :opponent_team_id, value: @opposingteam.id.to_s %>
 
-				<% if @opposingteam.team_logo? %>
-					<%= f.hidden_field :opponentpic, value: @opposingteam.team_logo %>
-				<% elsif @opposingsport.sport_logo? %>
-					<%= f.hidden_field :opponentpic, value: @opposingsport.sport_logo %>
-				<% end %>
-
 				<h3>Selected Eazesportz Opposing Team</h3>
 				<div class="row">
 					<div class="col-xs-5">

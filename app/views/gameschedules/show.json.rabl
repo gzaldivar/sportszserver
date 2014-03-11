@@ -16,6 +16,7 @@ node :opponentpic, :if => lambda { |a| !a.opponent_team_id? } do |a|
 end
 node(:starttime) { |t| t.starttime.strftime("%I:%M%p") }
 node(:startdate) { |t| t.gamedate.strftime("%m-%d-%Y") }
+node(:gamedatetime) { |t| t.starttime }
 attributes :gamedate, :location, :opponent, :event, :homeaway, :game_name, :homeq1, :homeq2, :homeq3, :homeq4, :opponentq1, :opponentq2, 
 		   :opponentq3, :opponentq4, :possession, :lastplay, :final, :opponent_mascot, :current_game_time,
 		   :opponent_name, :hometimeouts, :opponenttimeouts, :league, :opponent_sport_id, :opponent_team_id,
@@ -26,8 +27,11 @@ if @sport.name == "Football"
 	node(:firstdowns) { |f| totalfirstdowns(@sport, f) }
 	attributes :currentqtr, :penaltyyards, :down, :own, :ballon, :our, :togo, :penalty, :penaltyyards, :currentperiod
 	child :gamelogs do
-		attributes :period, :time, :score, :logentry, :assist, :yards, :logentrytext
+		attributes :period, :time, :score, :logentry, :yards, :logentrytext
 		node(:id) { |o| o.id.to_s }
+		node :assist, :if => lambda { |g| !g.assist.nil? } do |g|
+			g.assist
+		end
 		node(:gameschedule_id) { |g| g.gameschedule_id.to_s }
 		node(:football_passing_id) { |g| g.football_passing_id.to_s }
 		node(:football_rushing_id) { |g| g.football_rushing_id.to_s }
@@ -40,6 +44,21 @@ if @sport.name == "Football"
 		node :hasvideos, :if => lambda { |a| !@sport.videoclips.where(gamelog_id: a.id.to_s).empty? } do
 			true
 		end
+		node :player, :if => lambda { |p| p.football_passing_id } do |p|
+			FootballPassing.find(p.football_passing_id).athlete_id.to_s
+		end
+		node :player, :if => lambda { |p| p.football_rushing_id } do |p|
+			FootballRushing.find(p.football_rushing_id).athlete_id.to_s
+		end
+		node :player, :if => lambda { |p| p.football_returner_id } do |p|
+			FootballReturner.find(p.football_returner_id).athlete_id.to_s
+		end
+		node :player, :if => lambda { |p| p.football_defense_id } do |p|
+			FootballDefense.find(p.football_defense_id).athlete_id.to_s
+		end
+		node :player, :if => lambda { |p| p.football_place_kicker_id } do |p|
+			FootballPlaceKicker.find(p.football_place_kicker_id).athlete_id.to_s
+		end
 	end
 elsif @sport.name == "Basketball"
 	attributes :opponentfouls, :currentperiod, :homebonus, :visitorbonus, :opponentscore
@@ -48,4 +67,7 @@ elsif @sport.name == "Basketball"
 elsif @sport.name == "Soccer"
 	attributes :socceroppck, :socceroppsog, :socceroppsaves, :currentperiod, :opponentscore
 	node(:homescore) { |g| soccer_home_score(@sport, g) }
+end
+node :liveevent, :if => lambda { |e| !@sport.events.where(gameschedule_id: e.id.to_s, videoevent: 1).empty? } do
+	true
 end

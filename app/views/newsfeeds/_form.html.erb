@@ -21,10 +21,20 @@
             <%= f.label "Title" %>
 		          <%= f.text_field :title, class: 'form-control' %>
 		      </div>
-	        <div class="col-xs-4">
-            <%= f.label "External-url" %>
-	          <%= f.text_field :external_url, class: 'form-control' %>
-	        </div>
+          <div class="col-xs-4">
+            <div class="row">
+              <div class="col-xs-10">
+                <%= f.label "External-url" %>
+                <%= f.text_field :external_url, class: 'form-control' %>
+              </div>
+  	        </div>
+            <div class="row">
+              <div class="col-xs-10">
+                <h6 class="text-info">If you want to create news item that sends your fans to external web page, enter the url in this field. You will
+                also be able to add a photo if you like after you create the news item.</h5>
+              </div>
+            </div>
+          </div>
 		    </div>
 		    <div class="row">
   				<div class="col-xs-6">

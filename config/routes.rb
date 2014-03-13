@@ -97,7 +97,11 @@ Sportzserver::Application.routes.draw do
     end
     
     resources :newsfeeds do
+      member do
+        put   :updatephoto
+      end
       collection do
+        post :createphoto
         get :updateteams
       end
     end

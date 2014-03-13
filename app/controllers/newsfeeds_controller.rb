@@ -2,7 +2,7 @@ class NewsfeedsController < ApplicationController
   before_filter :authenticate_user!,    only: [:new, :create, :edit, :update, :destroy]
   before_filter :site_owner?,           only: [:new, :create, :edit, :update, :destroy]
   before_filter :get_sport
-  before_filter :correct_feeditem,      only: [:edit, :update, :destroy, :show]
+  before_filter :correct_feeditem,      only: [:edit, :update, :destroy, :show, :updatephoto]
   
   def new
     @newsfeed = Newsfeed.new
@@ -54,9 +54,9 @@ class NewsfeedsController < ApplicationController
       @newsfeeds = @sport.newsfeeds.limit(40).desc(:updated_at).paginate(:page=>params[:page])
     end
     
-@newsfeeds.each do |n|
-  puts n.team_id
-end
+    @newsfeeds.each do |n|
+      puts n.team_id
+    end
 
     @coaches = @sport.coaches
     @athletes = @sport.athletes
@@ -124,6 +124,46 @@ end
       @coaches = @sport.coaches.where(team: params[:teamid].to_s).entries
   end
 
+  def createphoto
+    begin
+      path = CGI.unescape(params[:filepath]).split('/')
+      @newsfeed = @sport.newsfeeds.find(path[4])   
+      path = params[:filepath].split('/')
+      imagepath = CGI.unescape(path[2])
+      @newsfeed.processing = true
+
+      @newsfeed.save!
+
+      queue = @sport.photo_queues.new(modelid: @newsfeed.id, modelname: "newsfeeds", filename: params[:filename], filetype: params[:filetype], filepath: imagepath)
+      if queue.save!
+        Resque.enqueue(PhotoProcessor, queue.id)
+      end
+    rescue Exception => e
+      puts e.message
+    end
+  end
+
+  def updatephoto
+    begin    
+      @newsfeed.processing = true
+
+      @newsfeed.save!
+
+      queue = @sport.photo_queues.new(modelid: @newsfeed.id, modelname: "newsfeeds", filename: params[:filename], filetype: params[:filetype], 
+                                      filepath: params[:filepath])
+      if queue.save!
+        Resque.enqueue(PhotoProcessor, queue.id)
+      end
+
+      respond_to do |format|
+        format.json { render json: { success: "success", newsfeed: @newsfeed } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.json { render status: 404, json: { error: e.message, newsfeed: @newsfeed } }
+      end
+    end
+  end
 
   private
   

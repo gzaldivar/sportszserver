@@ -202,6 +202,15 @@ class GameschedulesController < ApplicationController
       end
 
       @gameschedule.update_attributes!(params[:gameschedule])
+
+      event = Event.find_by(gameschedule_id: @gameschedule.id)
+
+      if (event)
+        event.start_time = @gameschedule.starttime
+        event.end_time = event.start_time + 3.hours
+        event.save!
+      end
+
       respond_to do |format|
           format.html { redirect_to [@sport, @team, @gameschedule] }
           format.json { render json: { schedule: @gameschedule, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }

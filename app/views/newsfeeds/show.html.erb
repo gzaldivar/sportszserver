@@ -2,8 +2,96 @@
 <p>
 <div class ="row">
 	<div class="col-xs-11">
-  		<%= render @newsfeed %>
+    <div class="row">
+      	<p class="text-success"><%= @newsfeed.title %></p>
+    </div>
+    <div class="row">
+		<div class="col-xs-4">
+			<% if !@newsfeed.external_url.nil? and !@newsfeed.external_url.blank? %>
+				<% if @newsfeed.processing %>
+			    	<h4><em><font color="red">Processing Replacement Photo ...</font></em></h4>
+			  	<% end %>
+			  	<h4>Change Image:</h4>
+		  		<% if @newsfeed.newsfeedpic.file? %> 
+		    		<%= image_tag @newsfeed.newsfeedpic.url(:thumb), class: 'img-responsive' %>
+		  		<% else %>
+		    		<%= image_tag 'Photo_Not_Available.jpg', class: 'img-responsive' %>
+		  		<% end %>
+		  		<%= s3_uploader_form callback_url: createphoto_sport_newsfeeds_path, callback_param: "@newsfeed[image_url]", 
+		             	key: "uploads/@newsfeedsphotos/#{@newsfeed.id}/${filename}", id:  "myS3Uploader" do %>
+		      		<%= file_field_tag :file %>
+		  		<% end %>
+
+		  		<script id="template-upload" type="text/x-tmpl">
+		    		<div id="file-{%=o.unique_id%}" class="upload">
+		      			{%=o.name%}
+		      			<div class="progress"><div class="bar" style="width: 0%"></div></div>
+		    		</div>
+		  		</script>    
+			<% elsif !@newsfeed.athlete.nil? and !@newsfeed.athlete.blank? %>
+			 	<% athlete = @newsfeed.sport.athletes.find(@newsfeed.athlete) %>
+			  	<% if athlete.pic.blank? %>
+			    	<%= link_to image_tag("Tiny_Photo_Not_Available.png", class: 'img-responsive'), sport_athlete_path(@sport, athlete) %> 
+			  	<% else %>    
+			    	<%= link_to image_tag(athlete.pic.url(:thumb), class: 'img-responsive'), sport_athlete_path(@sport, athlete) %>
+			  	<% end %>
+			<% elsif !@newsfeed.coach.nil? and !@newsfeed.coach.blank? %>
+			  	<% coach = @sport.coaches.find(@newsfeed.coach) %>
+			  	<% if coach.coachpic.blank? %>
+			    	<%= link_to image_tag("Tiny_Photo_Not_Available.png", class: 'img-responsive'), sport_coach_path(@sport, coach) %> 
+			  	<% else %>    
+			    	<%= link_to image_tag(coach.coachpic.url(:thumb), class: 'img-responsive'), sport_coach_path(@sport, coach) %>
+			  	<% end %>
+			<% elsif !@newsfeed.gameschedule_id.nil? and !@newsfeed.team_id.nil? %>
+			    <% newsteam = @sport.teams.find(@newsfeed.team_id) %>
+			    <%= link_to image_tag(get_tiny_team_logo(@sport, newsteam), class: 'img-responsive'), 
+			                sport_team_gameschedule_path(sport_id: @sport.id, team_id: @newsfeed.team_id, id: @newsfeed.gameschedule_id) %>
+			<% else %>
+			    <%= image_tag get_sport_logo(@sport), class: "img-responsive" %>
+			<% end %>
+		</div>
+      	<div class="col-xs-6">
+        	<p class="text-info">
+          	<% if site_owner? %>
+            	<%= link_to @newsfeed.news, sport_newsfeed_path(@sport, @newsfeed) %>
+          	<% else %>
+            	<%= @newsfeed.news %>
+          	<% end %>
+        	</p>
+      	</div>
+    </div>
+    <div class="row">
+      	<div class="col-xs-4">
+            <h5><%= link_to @newsfeed.sport.name, sport_path(@sport) %></h5>
+        </div>
+        <div class="col-xs-4>"
+			<% if !@newsfeed.team_id.nil? and !@newsfeed.team_id.blank? %>
+				<%= @newsfeed.sport.teams.find(@newsfeed.team_id).team_name %>
+			<% end %>
+		</div>
 	</div>
+	<div class="row">
+		<div class="col-xs-4">
+            <% if !@newsfeed.athlete_id.nil? and !@newsfeed.athlete_id.blank? %>
+            	<font color="red">Athlete:</font>
+            	<%= link_to @sport.athletes.find(@newsfeed.athlete_id).full_name, sport_athlete_path(@sport, @newsfeed.athlete_id) %>&nbsp
+            <% end %>
+        </div>
+        <div class="col-xs-4">
+            <% if !@newsfeed.coach_id.nil? and !@newsfeed.coach_id.blank? %>
+                <font color="red">Coach:</font>
+                <%= link_to @sport.coaches.find(@newsfeed.coach_id).full_name, sport_coach_path(@sport, @newsfeed.coach_id) %>
+            <% end %>
+        </div>
+    </div>
+    <div class="row">
+    	<div class="col-xs-10">
+            <% if !@newsfeed.external_url.nil? and !@newsfeed.external_url.blank? %>
+                <font color="red">More Info:</font>
+                <%= link_to @newsfeed.external_url, @newsfeed.external_url %>
+            <% end %>
+      	</div>
+ 	</div>
 	<div class="col-xs-4 col-xs-offset-4">
 		<%= link_to "Edit", edit_sport_newsfeed_path(@sport, @newsfeed), class: "btn btn-sm btn-primary" %>
 		<%= link_to "Delete", sport_newsfeed_path(@sport, @newsfeed), method: :delete, class: "btn btn-sm btn-danger", 

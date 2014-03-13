@@ -4,7 +4,17 @@
     </div>
     <div class="row">
       <div class="col-xs-2">
-        <% if !newsfeed.athlete.nil? and !newsfeed.athlete.blank? %>
+        <% if !newsfeed.external_url.nil? and !newsfeed.external_url.blank? %>
+          <% if newsfeed.processing %>
+            <h4><em><font color="red">Processing Replacement Photo ...</font></em></h4>
+          <% end %>
+          <h4>Change Image:</h4>
+          <% if newsfeed.newsfeedpic.file? %> 
+            <%= image_tag newsfeed.newsfeedpic.url(:tiny), class: 'img-responsive' %>
+          <% else %>
+            <%= image_tag 'Photo_Not_Available.jpg', class: 'img-responsive' %>
+          <% end %>
+         <% elsif !newsfeed.athlete.nil? and !newsfeed.athlete.blank? %>
           <% athlete = newsfeed.sport.athletes.find(newsfeed.athlete) %>
           <% if athlete.pic.blank? %>
             <%= link_to image_tag("Tiny_Photo_Not_Available.png", class: 'img-responsive'), sport_athlete_path(@sport, athlete) %> 
@@ -22,6 +32,8 @@
             <% newsteam = @sport.teams.find(newsfeed.team_id) %>
             <%= link_to image_tag(get_tiny_team_logo(@sport, newsteam), class: 'img-responsive'), 
                         sport_team_gameschedule_path(sport_id: @sport.id, team_id: newsfeed.team_id, id: newsfeed.gameschedule_id) %>
+        <% else %>
+            <%= image_tag get_sport_logo(@sport) %>
         <% end %>
       </div>
       <div class="col-xs-8">
@@ -37,17 +49,21 @@
     <div class="row">
       <div class="col-xs-10">
             <em>
-            <%= link_to newsfeed.sport.name, sport_path(@sport) %>&nbsp
+              <%= link_to newsfeed.sport.name, sport_path(@sport) %>&nbsp
               <% if !newsfeed.team_id.nil? and !newsfeed.team_id.blank? %>
                 <%= newsfeed.sport.teams.find(newsfeed.team_id).team_name %>&nbsp
               <% end %>
               <% if !newsfeed.athlete_id.nil? and !newsfeed.athlete_id.blank? %>
-          Athlete:
+                <font color="red">Athlete:</font>
                 <%= link_to @sport.athletes.find(newsfeed.athlete_id).full_name, sport_athlete_path(@sport, newsfeed.athlete_id) %>&nbsp
               <% end %>
               <% if !newsfeed.coach_id.nil? and !newsfeed.coach_id.blank? %>
-              Coach:
+                <font color="red">Coach:</font>
                 <%= link_to @sport.coaches.find(newsfeed.coach_id).full_name, sport_coach_path(@sport, newsfeed.coach_id) %>
+              <% end %>
+              <% if !newsfeed.external_url.nil? and !newsfeed.external_url.blank? %>
+                <font color="red">More Info:</font>
+                <%= link_to newsfeed.external_url, newsfeed.external_url %>
               <% end %>
             </em>
       </div>

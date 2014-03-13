@@ -101,7 +101,6 @@ class SportsController < ApplicationController
 
         if @newsfeeds.count > 0
           @thenews = @newsfeeds[0]
-          puts @newsfeeds.count
         end
         
         respond_to do |format|

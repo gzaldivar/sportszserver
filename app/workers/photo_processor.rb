@@ -189,6 +189,30 @@ class PhotoProcessor
         error.save
         item.delete
       end
+    elsif item.modelname == "newsfeeds"
+      begin
+        newsfeed = Newsfeed.find(item.modelid)    
+        s3 = AWS::S3.new
+        bucket = s3.buckets[S3DirectUpload.config.bucket]
+        obj = bucket.objects[item.filepath]
+
+        newsfeed.image_data = obj.read
+        newsfeed.original_filename = item.filename
+        newsfeed.content_type = item.filetype
+        newsfeed.processing = false
+        newsfeed.save!
+        
+        obj.delete
+        item.delete
+      rescue Exception => e
+        error = item.sport.photo_errors.new
+        error.error_message = e.message
+        error.modelname = item.modelname
+        error.modelid = item.modelid
+        error.sport = item.sport
+        error.save
+        item.delete
+      end
     elsif item.modelname == "sportlogo"
       begin
         sport = Sport.find(item.modelid)    

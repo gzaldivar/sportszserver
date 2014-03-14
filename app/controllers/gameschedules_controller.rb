@@ -206,8 +206,8 @@ class GameschedulesController < ApplicationController
       event = Event.find_by(gameschedule_id: @gameschedule.id)
 
       if (event)
-        event.start_time = @gameschedule.starttime
-        event.end_time = event.start_time + 3.hours
+        event.start_time = @gameschedule.starttime - 30.minutes
+        event.end_time = event.start_time + 4.hours
         event.save!
       end
 

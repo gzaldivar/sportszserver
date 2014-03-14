@@ -1,6 +1,7 @@
 class Event
   include Mongoid::Document
   include Mongoid::Timestamps
+  include Mongoid::Search
 
   field :start_time, type: DateTime
   field :end_time, type: DateTime
@@ -11,6 +12,8 @@ class Event
   field :eventurl, type: String
  
   attr_accessor :date_string, :string_date
+
+  search_in :name
 
   belongs_to :sport
   belongs_to :team

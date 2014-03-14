@@ -117,14 +117,18 @@ class EventsController < ApplicationController
 	   			@events = @sport.events.where(gameschedule_id: @gameschedule.id.to_s)
 			end
 			
+		elsif !params[:name].nil?
+			@team = @sport.teams.find(params[:team_id])
+
+			@events = @sport.events.where(team_id: @team.id).full_text_search(params[:name].to_s)
 	    elsif !params[:team_id].nil?
 	    	@team = @sport.teams.find(params[:team_id])
 
 	    	if params[:startdate]
-				@events = @sport.events.where(team: params[:team_id].to_s, :start_time.gte =>  params[:startdate], 
+				@events = @sport.events.where(team_id: params[:team_id].to_s, :start_time.gte =>  params[:startdate], 
 	   															:end_time.lte => params[:enddate])
 	    	else
-				@events = @sport.events.where(team: params[:team_id].to_s)
+				@events = @sport.events.where(team_id: params[:team_id].to_s)
 			end
 
 		else

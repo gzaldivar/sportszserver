@@ -55,4 +55,6 @@ Sportzserver::Application.configure do
     }
     ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(paypal_options)
   end
+
+  Sportzserver::Application.config.streamingurl = 'http://eazesportzstreaming.s3-website-us-east-1.amazonaws.com'
 end

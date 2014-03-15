@@ -57,4 +57,5 @@ Sportzserver::Application.configure do
   end
 
   Sportzserver::Application.config.streamingurl = 'http://eazesportzstreaming.s3-website-us-east-1.amazonaws.com'
+  Sportzserver::Application.config.streamingbucket = 'eazesportzstreaming'
 end

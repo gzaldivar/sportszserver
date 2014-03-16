@@ -1,6 +1,9 @@
 object @newsfeed
 node(:id) { |o| o.id.to_s }
-attributes :title, :news, :external_url, :gameschedule_id, :updated_at
+attributes :title, :news, :gameschedule_id, :updated_at
+node :external_url, :if => lambda { |n| !n.external_url.nil? } do |n|
+	n.external_url
+end
 node (:athlete_id) { |o| o.athlete_id.to_s }
 node (:coach_id) { |o| o.coach_id.to_s }
 node (:team_id) { |o| o.team_id.to_s }

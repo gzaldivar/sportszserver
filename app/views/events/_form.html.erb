@@ -2,53 +2,77 @@
 	<div class="col-xs-11">
 		<%= form_for [@sport, @event], :input_html => { :class => 'form-horizontal' } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
-            <div class="row">
-                <div class="col-xs-2">
-                    <%= f.label :start %>
-                    <%= f.text_field :date_string, as: :string, class: 'datepicker form-control', 
-                                :value => @event.try(:start_time).try(:strftime,'%m/%d/%Y') %>
-                    <%= f.hidden_field :start_time, :id => 'recorded-at-alt' %>
+            <% if @event.gameschedule_id.nil? %>
+                <div class="row">
+                    <div class="col-xs-2">
+                        <%= f.label :start %>
+                        <%= f.text_field :date_string, as: :string, class: 'datepicker form-control', 
+                                    :value => @event.try(:start_time).try(:strftime,'%m/%d/%Y') %>
+                        <%= f.hidden_field :start_time, :id => 'recorded-at-alt' %>
+                    </div>
+                    <div class="col-xs-1" %>
+                        <%= label_tag "Hour" %><label id='game_start_hour'></label>     
+                        <%= select_tag "starthour", options_for_select((01 .. 12), include_blank: false), class: 'form-control' %>
+                    </div>
+                    <div class="col-xs-1" %>
+                        <%= label_tag "Minute" %>
+                        <%= select_tag "startminutes", options_for_select((00 .. 59), include_blank: false), class: 'form-control' %>
+                    </div>
+                    <div class="col-xs-1" %>
+                        <%= label_tag :ampm, "AMPM" %>
+                        <!--%= select_tag "ampm", options_for_select(['AM', 'PM'], @gameschedule.starttime.strftime("%p") == "AM" ? "AM" : "PM" ), class: 'form-control' %-->
+                        <%= select_tag "ampm", options_for_select(['AM', 'PM'], include_blank: false), class: 'form-control' %>
+                    </div>
+                    <!--div class="col-xs-2">
+                        <%= label_tag :videoevent, "Live Event" %>
+                        <%= select_tag :videoevent, options_for_select(['Live', 'Local'], include_blank: false), class: 'form-control' %>
+                    </div-->
                 </div>
-                <div class="col-xs-1" %>
-                    <%= label_tag "Hour" %><label id='game_start_hour'></label>     
-                    <%= select_tag "starthour", options_for_select((01 .. 12), include_blank: false), class: 'form-control' %>
+                <p>
+                <div class="row">
+                     <div class="col-xs-2">
+                        <%= f.label :end %>
+                        <%= f.text_field :string_date, as: :string, class: 'enddatepicker form-control', 
+                                    :value => @event.try(:end_time).try(:strftime,'%m/%d/%Y') %>
+                        <%= f.hidden_field :end_time, :id => 'recorded-at-alt-end' %>
+                     </div>
+                    <div class="col-xs-1" %>
+                        <%= label_tag "Hour" %><label id='game_start_hour'></label>     
+                        <%= select_tag "endhour", options_for_select((01 .. 12), include_blank: false), class: 'form-control' %>
+                    </div>
+                    <div class="col-xs-1" %>
+                        <%= label_tag "Minute" %>
+                        <%= select_tag "endminutes", options_for_select((00 .. 59), include_blank: false), class: 'form-control' %>
+                    </div>
+                    <div class="col-xs-1" %>
+                        <%= label_tag :ampm, "AMPM" %>
+                        <!--%= select_tag "ampm", options_for_select(['AM', 'PM'], @gameschedule.starttime.strftime("%p") == "AM" ? "AM" : "PM" ), class: 'form-control' %-->
+                        <%= select_tag "endampm", options_for_select(['AM', 'PM'], include_blank: false), class: 'form-control' %>
+                    </div>
                 </div>
-                <div class="col-xs-1" %>
-                    <%= label_tag "Minute" %>
-                    <%= select_tag "startminutes", options_for_select((00 .. 59), include_blank: false), class: 'form-control' %>
+            <% else %>
+                <div class="row">
+                    <div class="col-xs-10">
+                        <h4>Start and end time for a live game are calculated from game start time. They can be changed on the game info page</h4>
+                    </div>
                 </div>
-                <div class="col-xs-1" %>
-                    <%= label_tag :ampm, "AMPM" %>
-                    <!--%= select_tag "ampm", options_for_select(['AM', 'PM'], @gameschedule.starttime.strftime("%p") == "AM" ? "AM" : "PM" ), class: 'form-control' %-->
-                    <%= select_tag "ampm", options_for_select(['AM', 'PM'], include_blank: false), class: 'form-control' %>
+                <div class="row">
+                    <div class="col-xs-2">
+                        <h5>Start Time:</h5>
+                    </div>
+                    <div class="col-xs-4">
+                        <h5><%= @event.start_time.strftime("%m/%d/%Y") %> at <label id='start_time'></label></h5>
+                    </div>
                 </div>
-                <!--div class="col-xs-2">
-                    <%= label_tag :videoevent, "Live Event" %>
-                    <%= select_tag :videoevent, options_for_select(['Live', 'Local'], include_blank: false), class: 'form-control' %>
-                </div-->
-            </div>
-            <p>
-            <div class="row">
-                 <div class="col-xs-2">
-                    <%= f.label :end %>
-                    <%= f.text_field :string_date, as: :string, class: 'enddatepicker form-control', 
-                                :value => @event.try(:end_time).try(:strftime,'%m/%d/%Y') %>
-                    <%= f.hidden_field :end_time, :id => 'recorded-at-alt-end' %>
-                 </div>
-                <div class="col-xs-1" %>
-                    <%= label_tag "Hour" %><label id='game_start_hour'></label>     
-                    <%= select_tag "endhour", options_for_select((01 .. 12), include_blank: false), class: 'form-control' %>
+                <div class="row">
+                    <div class="col-xs-2">
+                        <h5>End Time: </h5>
+                    </div>
+                    <div class="col-xs-4">
+                        <h5><%= @event.end_time.strftime("%m/%d/%Y") %> at <label id='end_time'></label></h5>
+                    </div>
                 </div>
-                <div class="col-xs-1" %>
-                    <%= label_tag "Minute" %>
-                    <%= select_tag "endminutes", options_for_select((00 .. 59), include_blank: false), class: 'form-control' %>
-                </div>
-                <div class="col-xs-1" %>
-                    <%= label_tag :ampm, "AMPM" %>
-                    <!--%= select_tag "ampm", options_for_select(['AM', 'PM'], @gameschedule.starttime.strftime("%p") == "AM" ? "AM" : "PM" ), class: 'form-control' %-->
-                    <%= select_tag "endampm", options_for_select(['AM', 'PM'], include_blank: false), class: 'form-control' %>
-                </div>
-            </div>
+            <% end %>
             <div class="row">
                 <div class="col-xs-11">
                     <%= f.label :event_name, "Event Name" %>
@@ -118,4 +142,6 @@
             return false;
         }
     });
+    $('#start_time').html(moment('<%= @event.start_time.to_s %>').utc().format("hh:mm A"));
+    $('#end_time').html(moment('<%= @event.end_time.to_s %>').utc().format("hh:mm A"));
 </script>

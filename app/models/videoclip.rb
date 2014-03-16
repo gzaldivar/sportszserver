@@ -43,6 +43,7 @@ class Videoclip
   belongs_to :gamelog
   belongs_to :team
   has_many :alerts, dependent: :destroy
+  has_one :newsfeed, dependent: :destroy
   
   index( { teamid: 1 }, { unique: false } )
 

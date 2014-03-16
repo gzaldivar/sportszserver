@@ -20,6 +20,7 @@ class Newsfeed
   belongs_to :coach
   belongs_to :team
   belongs_to :gameschedule
+  belongs_to :videoclip
   
   index(  { team: 1 }, { unique: false } )
   index( { gameschedule: 1 } , { unique: false } )

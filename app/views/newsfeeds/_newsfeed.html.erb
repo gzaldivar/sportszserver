@@ -8,7 +8,6 @@
           <% if newsfeed.processing %>
             <h4><em><font color="red">Processing Replacement Photo ...</font></em></h4>
           <% end %>
-          <h4>Change Image:</h4>
           <% if newsfeed.newsfeedpic.file? %> 
             <%= image_tag newsfeed.newsfeedpic.url(:tiny), class: 'img-responsive' %>
           <% else %>

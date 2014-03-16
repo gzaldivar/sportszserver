@@ -7,7 +7,10 @@
     </div>
     <div class="row">
 		<div class="col-xs-4">
-			<% if !@newsfeed.external_url.nil? and !@newsfeed.external_url.blank? %>
+	        <% if @newsfeed.videoclip_id %>
+	            <% video = @sport.videoclips.find(@newsfeed.videoclip_id) %>
+	            <%= link_to image_tag(video.poster_url, class: 'img-responsive'), sport_videoclip_path(@sport, video) %>
+	        <% elsif !@newsfeed.external_url.nil? and !@newsfeed.external_url.blank? %>
 				<% if @newsfeed.processing %>
 			    	<h4><em><font color="red">Processing Replacement Photo ...</font></em></h4>
 			  	<% end %>

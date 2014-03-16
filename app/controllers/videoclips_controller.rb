@@ -237,6 +237,7 @@ class VideoclipsController < ApplicationController
   def createclient
     begin
       video = @sport.videoclips.create!(params[:videoclip])
+      createNewsItem(video)
       respond_to do |format|
         format.json { render json: { videoclip: video } }
       end
@@ -374,6 +375,7 @@ class VideoclipsController < ApplicationController
         @sport.save
         @videoclip.save!
 
+        createNewsItem(@videoclip)
         FileUtils.rm(poster_path)
       else
         FileUtils.rm(video_path)
@@ -481,6 +483,8 @@ class VideoclipsController < ApplicationController
         @sport.mediasize = @sport.mediasize + video.size
         @sport.save
         video.save!
+
+        createNewsItem(video)
       else
         FileUtils.rm(video_path)
         obj.delete
@@ -736,5 +740,16 @@ class VideoclipsController < ApplicationController
   	def correct_video
   		@videoclip = Videoclip.find(params[:id])
   	end
+
+    def createNewsItem(video)
+      newsitem = @sport.newsfeeds.new(videoclip_id: video.id, news: video.description, title: video.displayname, team_id: video.team_id,
+                                      gameschedule_id: video.gameschedule_id)
+
+      if video.description.nil? or video.description.blank?
+        newsitem.news = "New highlight posted - " + video.displayname
+      end
+
+      newsitem.save!
+    end
   
 end

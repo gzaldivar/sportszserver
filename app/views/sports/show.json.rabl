@@ -23,5 +23,9 @@ end
 node :package, :if => lambda { |s| Payment.find_by(sport_id: s.id).nil? } do |a|
 	"Basic"
 end
-node (:streamingurl) { Sportzserver::Application.config.streamingurl }
-node (:streamingbucket) { Sportzserver::Application.config.streamingbucket }
+
+admin = Admin.all.first
+node (:streamingurl) { admin.streamingurl }
+node (:streamingbucket) { admin.streamingbucket }
+node (:broadcastAppVersion) { admin.broadcastAppVersion }
+node (:highlightAppVersion) { admin.highlightAppVersion }

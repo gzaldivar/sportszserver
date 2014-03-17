@@ -1,0 +1,39 @@
+<div class="row">
+	<div class="col-xs-11">
+		<%= form_for [@admin], :input_html => { :class => 'form-horizontal' } do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<div class="row">
+				<div class="col-xs-6">
+					<%= f.label :streamingurl, "Streaming URL" %>
+					<%= f.text_field :streamingurl, class: 'form-control' %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= f.label :streamingbucket, "Streaming Bucket" %>
+					<%= f.text_field :streamingbucket, class: 'form-control' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-2">
+					<%= f.label :highlightAppVersion, "Highlights App Version" %>
+					<%= f.text_field :highlightAppVersion, class: 'form-control' %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= f.label :broadcastAppVersion, "Broadcast App Version" %>
+					<%= f.text_field :broadcastAppVersion, class: 'form-control' %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-2">
+					<%= f.label :disableads, "Disable All Site Ads" %>
+					<%= f.check_box :disableads, class: 'form-control' %>
+				</div>
+				<div class="col-xs-3">
+					<p class="text-danger">Checking this effects all Eazesportz sports. 
+						Use the individual sport page to disable ads for one sport.</p>
+				</div>
+			</div>
+			<div class="col-xs-2 col-xs-offset-5">
+				<%= f.submit :submit, class: "btn btn-md btn-primary" %>
+			</div>
+		<% end %>
+	</div>
+</div>

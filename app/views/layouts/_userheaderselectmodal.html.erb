@@ -19,10 +19,13 @@
                     </tr>
                     <% if current_user.godmode %>
                       <tr>
-                        <td><%= link_to "Manage Sites", admins_path %></td>
+                        <td><%= link_to "Manage Sites", sports_admins_path %></td>
                       </tr>
                       <tr>
                         <td><%= link_to "Manage All Users", users_admins_path %></td>
+                      </tr>
+                      <tr>
+                        <td><%= link_to "Admin Settings", admins_path %></td>
                       </tr>
                     <% end %>
                     <tr>

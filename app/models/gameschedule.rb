@@ -8,6 +8,8 @@ class Gameschedule
   before_save :decode_base64_image
   before_create :set_live_game_time
 
+  field :hideads, type: Boolean, default: false
+
   field :starttime, type: DateTime
   field :gamedate, type: Date
   field :location, type: String

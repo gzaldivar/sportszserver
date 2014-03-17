@@ -1,9 +1,20 @@
 class AdminsController < ApplicationController
+	before_filter :authenticate_user!,	only: [:update, :edit, :index, :sports, :users]
+	before_filter :isGod?
+	before_filter :getAdmin, only: [:edit, :update, :index]
 
-	def show
+	def edit
+	end
+
+	def update
+		@admin.update_attributes!(params[:admin])
 	end
 
 	def index
+		render 'show'
+	end
+
+	def sports
 		@sports = Sport.all.desc(:updated_at).paginate(:page => params[:page])
 	end
 
@@ -30,5 +41,14 @@ class AdminsController < ApplicationController
 		end
 	end
 
+	private
+
+		def isGod?
+			current_user.godmode
+		end
+
+		def getAdmin
+			@admin = Admin.all.first
+		end
 
 end

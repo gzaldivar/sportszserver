@@ -8,6 +8,7 @@ class AdminsController < ApplicationController
 
 	def update
 		@admin.update_attributes!(params[:admin])
+		redirect_to admins_path
 	end
 
 	def index

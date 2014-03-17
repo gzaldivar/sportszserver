@@ -85,7 +85,8 @@ class Gameschedule
                          access_key_id: S3DirectUpload.config.access_key_id,
                          secret_access_key: S3DirectUpload.config.secret_access_key },
     :styles => {
-      :tiny     => ['50x50', :jpg]
+      :tiny     => ['50x50', :jpg],
+      :thumb    => ['125x125', :jpg]
     }
 
   belongs_to :team, index: true

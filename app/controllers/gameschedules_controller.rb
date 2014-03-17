@@ -201,6 +201,8 @@ class GameschedulesController < ApplicationController
         @gameschedule.current_game_time = addzerototime(params[:gameminutes].to_s) + ":" + addzerototime(params[:gameseconds].to_s)
       end
 
+      final = @gameschedule.final
+
       @gameschedule.update_attributes!(params[:gameschedule])
 
       event = Event.find_by(gameschedule_id: @gameschedule.id)
@@ -209,6 +211,10 @@ class GameschedulesController < ApplicationController
         event.start_time = @gameschedule.starttime - 30.minutes
         event.end_time = event.start_time + 4.hours
         event.save!
+      end
+
+      if !final
+        createNewsItem(@gameschedule)
       end
 
       respond_to do |format|
@@ -560,6 +566,18 @@ private
       else
         time
       end
+    end
+
+    def createNewsItem(game)
+      vsscore = (game.opponentq1 + game.opponentq2 + game.opponentq3 + game.opponentq4)
+      result = footballhomescore(@sport, game) > vsscore ? "W" : footballhomescore(@sport, game) == vsscore ? "T" : "L"
+
+      newsitem = @sport.newsfeeds.new(news: @team.mascot + " " + footballhomescore(@sport, game).to_s + " " + game.opponent_mascot + " " + vsscore.to_s, 
+                                      title: "Final - " + @team.mascot + " vs " + game.opponent_mascot + " " + result + " " + 
+                                              footballhomescore(@sport, game).to_s + "-" + vsscore.to_s, team_id: @team.id,
+                                      gameschedule_id: game.id)
+
+      newsitem.save!
     end
     
 end

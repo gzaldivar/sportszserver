@@ -243,7 +243,7 @@ class VideoclipsController < ApplicationController
       end
     rescue Exception => e
       respond_to do |format|
-        format.json { render json: { error: e.message } }
+        format.json { render status: 404, json: { error: e.message } }
       end
     end
  end

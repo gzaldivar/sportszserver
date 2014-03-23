@@ -95,7 +95,7 @@
 </div>
 <div class="row">
 	<div class="col-xs-11">
-		<% if is_package_enabled?(@sport) or current_user.godmode %>
+		<% if current_user.godmode %>
 			<h4>Goalie Stats</h4>
 			<h4>Stats for game <%= @gameschedule.game_name %></h4>
 			<table class="table table-striped table-bordered table-hover">
@@ -116,7 +116,7 @@
 				<% end %>
 				<%= render "soccers/goaliebody", stat: @totals, name: "Totals" %>
 			</table>
-		<% elsif !is_package_enabled?(@sport) and site_owner? %>
+		<% elsif site_owner? %>
 			<h4><%= link_to "Goalie Stats", "#upgradestatsmodal", data: { toggle: "modal" } %></h4>
 		<% end %>
 	</div>

@@ -646,7 +646,7 @@ class VideoclipsController < ApplicationController
 
   def destroy
  	  begin
-#      @sport.mediasize = @sport.mediasize - @videoclip.size
+      @sport.mediasize = @sport.mediasize - @videoclip.size
       @sport.save
 	  	@videoclip.destroy
       respond_to do |format|

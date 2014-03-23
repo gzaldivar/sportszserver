@@ -13,13 +13,13 @@ class GameschedulesController < ApplicationController
   before_filter only: [:destroy, :update, :create, :edit, :new, :createlogo, :updatelogo] do |controller| 
     controller.SiteOwner?(@team.id)
   end
-  before_filter only: [:passinggamestats, :allfootballgamestats, :rushinggamestats, :receivinggamestats, :defensegamestats, 
-                       :kickergamestats, :returnergamestats, :footballteamgametotals, :addfootballqb, :footballdefensestats, 
-                       :footballspecialteamstats, :addfootballrb, :addfootballrec, :addfootballdef, :addfootballpk, :addfootballret, 
-                       :addfootballkicker, :addfootballpunter, :footballform, :basketballteamscorestats, 
-                       :basketballteamotherstats,] do |check|
-    check.packageEnabled?(current_site)
-  end
+#  before_filter only: [:passinggamestats, :allfootballgamestats, :rushinggamestats, :receivinggamestats, :defensegamestats, 
+#                       :kickergamestats, :returnergamestats, :footballteamgametotals, :addfootballqb, :footballdefensestats, 
+#                       :footballspecialteamstats, :addfootballrb, :addfootballrec, :addfootballdef, :addfootballpk, :addfootballret, 
+#                       :addfootballkicker, :addfootballpunter, :footballform, :basketballteamscorestats, 
+#                       :basketballteamotherstats,] do |check|
+#    check.packageEnabled?(current_site)
+#  end
   
   def new
     @gameschedule = Gameschedule.new

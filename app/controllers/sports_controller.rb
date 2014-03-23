@@ -373,6 +373,12 @@ class SportsController < ApplicationController
   def faqs
   end
 
+  def highlightsinfo
+  end
+
+  def broadcastinfo
+  end
+
   def get_usstates
     @country = params[:country]
   end

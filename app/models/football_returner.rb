@@ -29,7 +29,7 @@ class FootballReturner
 
 	def puntreturnaverage
 		if punt_return > 0
-			return Float(punt_returnyards/punt_returns)
+			return Float(punt_returnyards/punt_return)
 		else
 			return 0.0
 		end

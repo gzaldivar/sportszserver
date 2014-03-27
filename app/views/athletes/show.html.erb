@@ -9,31 +9,22 @@
   <%= render 'athletes/photo', athlete: @athlete %>
   <div class="col-xs-7">
     <ul class="nav nav-pills">
-      <% if is_package_enabled?(@sport) %>
-        <% if @sport.sportname == "Football" %>
-          <li><%= link_to "Stats", playerstats_sport_athlete_path(@sport, @athlete) %></li>
-        <% elsif @sport.sportname == "Basketball" %>
-          <li><%= link_to "Stats", sport_athlete_basketball_stats_path(@sport, @athlete) %></li>
-        <% elsif @sport.sportname == "Soccer" %>
-          <li><%= link_to "Stats", sport_athlete_soccers_path(@sport, @athlete)%></li>
-        <% end %>
+      <% if @sport.sportname == "Football" %>
+        <li><%= link_to "Stats", playerstats_sport_athlete_path(@sport, @athlete) %></li>
+      <% elsif @sport.sportname == "Basketball" %>
+        <li><%= link_to "Stats", sport_athlete_basketball_stats_path(@sport, @athlete) %></li>
+      <% elsif @sport.sportname == "Soccer" %>
+        <li><%= link_to "Stats", sport_athlete_soccers_path(@sport, @athlete)%></li>
+      <% end %>
+      <% if Photo.where(players: @athlete.id.to_s).any? %>
+        <!--li><%= link_to "Photos", sport_photos_path(@sport, athlete: { id: @athlete.id } ) %></li-->            
+        <li><%= link_to "Photos", sport_photos_path(@sport, athlete_id: @athlete.id ) %></li>            
+      <% end %>
+      <% if Videoclip.where(players: @athlete.id.to_s).any? %>
+        <li><%= link_to "Videos", sport_videoclips_path(@sport, athlete_id: @athlete.id ) %></li>           
+      <% end %>
+      <% if !is_package_enabled?(@sport) and site_owner? %>
         <% if Photo.where(players: @athlete.id.to_s).any? %>
-          <!--li><%= link_to "Photos", sport_photos_path(@sport, athlete: { id: @athlete.id } ) %></li-->            
-          <li><%= link_to "Photos", sport_photos_path(@sport, athlete_id: @athlete.id ) %></li>            
-        <% end %>
-        <% if Videoclip.where(players: @athlete.id.to_s).any? %>
-          <li><%= link_to "Videos", sport_videoclips_path(@sport, athlete_id: @athlete.id ) %></li>           
-        <% end %>
-      <% elsif !is_package_enabled?(@sport) and site_owner? %>
-        <% if @sport.sportname == "Football" %>
-          <li><%= link_to "Stats", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
-        <% elsif @sport.sportname == "Basketball" %>
-          <li><%= link_to "Stats", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
-        <% elsif @sport.sportname == "Soccer" %>
-          <li><%= link_to "Stats", "#upgradestatsmodal", data: { toggle: "modal" } %></li>
-        <% end %>
-        <% if Photo.where(players: @athlete.id.to_s).any? %>
-          <!--li><%= link_to "Photos", sport_photos_path(@sport, athlete: { id: @athlete.id } ) %></li-->            
           <li><%= link_to "Photos", "#upgrademediamodal", data: { toggle: "modal" } %></li>            
         <% end %>
         <% if Videoclip.where(players: @athlete.id.to_s).any? %>

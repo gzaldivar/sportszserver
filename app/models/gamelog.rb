@@ -3,7 +3,7 @@ class Gamelog
   include Mongoid::Timestamps
 
   before_destroy :updatestats
-  before_save :logentrytext, :alert
+  before_save :logentrytext, :alert, :adjusttime
 
   field :logentry, type: String
   field :period, type: String
@@ -33,7 +33,7 @@ class Gamelog
   validates_presence_of :logentry
   validates_numericality_of :inning, greater_than_or_equal_to: 0
 
-  def logentrytext 
+  def logentrytext
     if football_passing_id
       theplayer = Athlete.find(FootballPassing.find(football_passing_id).athlete_id)
       self.period + ": " + self.time + " - " +  theplayer.logname + " " + self.yards.to_s + " yard pass to " +
@@ -61,6 +61,20 @@ class Gamelog
   end
 
   private
+
+    def adjusttime
+      timearray = self.time.split(':')
+
+      if timearray[0].to_i < 10
+        timearray[0] = '0' + timearray[0]
+      end
+
+      if timearray[1].to_i < 10
+        timearray[1] = '0' + timearray[1]
+      end
+
+      self.time = timearray[0] + ':' + timearray[1]
+    end
 
     def updatestats
       theplayer = nil

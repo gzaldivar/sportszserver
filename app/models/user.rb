@@ -72,6 +72,7 @@ class User
   field :avatartinyurl, type: String
   field :tier, type: String, default: "Basic"
   field :godmode, type: Boolean, default: false
+  field :mobile, type: String
 
   # Alert levels 
 

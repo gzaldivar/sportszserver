@@ -6,6 +6,9 @@ node(:thumb) { |t| t.pic(:thumb) }
 node(:mediumpic) { |t| t.pic(:medium) }
 node(:largepic) { |t| t.pic(:large) }
 node(:team_id) { |t| t.team_id.to_s }
+node :pic_updated_at, :if => lambda { |a| !a.pic_updated_at.nil? } do |a|
+	a.pic_updated_at
+end
 if !@team.nil? 
 	node(:teamname) { @team.team_name }
 end

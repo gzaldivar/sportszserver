@@ -213,9 +213,9 @@ class GameschedulesController < ApplicationController
         event.save!
       end
 
-      if !final
-        createNewsItem(@gameschedule)
-      end
+#      if final
+#        createNewsItem(@gameschedule)
+#      end
 
       respond_to do |format|
           format.html { redirect_to [@sport, @team, @gameschedule] }

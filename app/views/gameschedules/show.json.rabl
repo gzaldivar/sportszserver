@@ -14,6 +14,9 @@ end
 node :opponentpic, :if => lambda { |a| !a.opponent_team_id? } do |a|
 	a.opponentpic.url(:tiny)
 end
+node :opponentpic_updated_at, :if => lambda { |a| !a.opponentpic_updated_at.nil? } do |a|
+	a.opponentpic_updated_at
+end
 node(:starttime) { |t| t.starttime.strftime("%I:%M%p") }
 node(:startdate) { |t| t.gamedate.strftime("%m-%d-%Y") }
 node(:gamedatetime) { |t| t.starttime }

@@ -35,7 +35,7 @@
             <%= link_to image_tag(get_tiny_team_logo(@sport, newsteam), class: 'img-responsive'), 
                         sport_team_gameschedule_path(sport_id: @sport.id, team_id: newsfeed.team_id, id: newsfeed.gameschedule_id) %>
         <% else %>
-            <%= image_tag get_sport_logo(@sport) %>
+            <%= image_tag get_tiny_sport_logo(@sport) %>
         <% end %>
       </div>
       <div class="col-xs-8">

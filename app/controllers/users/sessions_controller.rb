@@ -16,6 +16,12 @@ class Users::SessionsController < Devise::SessionsController
 			    	user.default_site = params[:user][:site]
 			    end
 
+			    if params[:user][:mobile]
+			    	mobile = params[:user][:mobile]
+			    else
+			    	mobile = "Web"
+			    end
+
 			    user.save!
 			 	render :json => { :success => true, :user => user, authentication_token: user.authentication_token }, :status => 200
 			}

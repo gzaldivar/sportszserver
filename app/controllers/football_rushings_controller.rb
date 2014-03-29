@@ -84,7 +84,7 @@ class FootballRushingsController < ApplicationController
 			elsif live == "Adjust"
 				adjust(@rushing, params)
 			else
-				livestats(@rushing, @athlete_id, params, @gameschedule)
+				livestats(@rushing, @athlete, params, @gameschedule)
 			end
 
 			respond_to do |format|
@@ -137,28 +137,29 @@ class FootballRushingsController < ApplicationController
 		def livestats(stat, athlete, params, game)
 			stat.attempts = stat.attempts + 1
 			stat.yards = stat.yards + params[:yards].to_i
+			game.lastplay = athlete.logname +  " " + params[:yards] + " yard run"
+			
 			stat.fumbles = stat.fumbles + params[:fumble].to_i
-			stat.fumbles_lost = stat.fumbles_lost + params[:fumbles_lost].to_i
 
+			if params[:fumbles_lost].to_i > 0
+				stat.fumbles_lost = stat.fumbles_lost + params[:fumbles_lost].to_i
+				game.lastplay = athlete.logname + " fumble lost"
+				return
+			end
+	
 			if params[:yards].to_i > stat.longest
 				stat.longest = params[:yards].to_i
 			end
 
 			if params[:fd].to_i > 0
 				stat.firstdowns = stat.firstdowns + 1
-			end
-
-			if params[:td].to_i > 0
-				stat.td = stat.td + params[:td].to_i
-			end
-
-			if params[:two].to_i > 0
-				stat.twopointconv = stat.twopointconv + params[:two].to_i
+				game.lastplay = game.lastplay + " - First Down"
 			end
 
 			stat.save!
 
 			if params[:td].to_i > 0
+				stat.td = stat.td + params[:td].to_i
 				gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "yard run", score: "TD", yards: params[:yards],
 																			football_rushing_id: stat.id)
 				gamelog.save!
@@ -176,6 +177,7 @@ class FootballRushingsController < ApplicationController
 					game.save!
 				end
 			elsif params[:two].to_i > 0
+				stat.twopointconv = stat.twopointconv + params[:two].to_i
 				gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "yard run", score: "TD", yards: params[:yards],
 																			football_rushing_id: stat.id)
 				gamelog.save!
@@ -190,10 +192,10 @@ class FootballRushingsController < ApplicationController
 						when "Q4"
 							game.homeq4 = game.homeq4 + 2
 					end
-					game.save!
 				end
 			end
 
+			game.save!
 			return stat
 		end
 

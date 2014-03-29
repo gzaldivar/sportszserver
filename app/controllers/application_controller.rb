@@ -63,6 +63,7 @@ class ApplicationController < ActionController::Base
     end
 
     def after_sign_in_path_for(resource)
+      puts request.env["HTTP_USER_AGENT"]
       if resource.default_site.nil?
         sport = nil
       else

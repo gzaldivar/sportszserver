@@ -134,36 +134,59 @@ class FootballDefensesController < ApplicationController
 		end
 		
 		def livestats(stat, athlete, params, game)
-			stat.tackles = stat.tackles + params[:tackles].to_i
+			if params[:tackles].to_i > 0
+				stat.tackles = stat.tackles + params[:tackles].to_i
+				game.lastplay = athlete.logname + " - Tackle"
+			end
+
 			stat.int_yards = stat.int_yards + params[:int_yards].to_i
-			stat.assists = stat.assists + params[:assists].to_i
-			stat.sackassist += params[:sackassits].to_i
+
+			if params[:assists].to_i
+				stat.assists = stat.assists + params[:assists].to_i
+				game.lastplay = athlete.logname + " - Tackle Assist"
+			end
+
+			if params[:sackassist].to_i
+				stat.sackassist += params[:sackassits].to_i
+				game.lastplay = athlete.logname + " - Sack Assist"
+			end
 
 			if params[:sack].to_i > 0
 				stat.sacks = stat.sacks + 1
+				game.lastplay = athlete.logname + " - Sack"
 			end
+
 			if params[:pass_defended].to_i > 0
 				stat.pass_defended = stat.pass_defended + 1
+				game.lastplay = athlete.logname + " - Pass Defended"
 			end
-			if params[:int].to_i > 0
-				stat.interceptions = stat.interceptions + 1
-			end
-			if params[:fumbles_recovered].to_i > 0
-				stat.fumbles_recovered = stat.fumbles_recovered + 1
-			end
+
 			if params[:int_yards].to_i > stat.int_long
 				stat.int_long = params[:int_yards]
 			end
 
-			if params[:int_td].to_i > 0
-				stat.int_td = stat.int_td + 1
-			elsif params[:safety].to_i > 0
-				stat.safety = stat.safety + 1
+			if params[:int].to_i > 0
+				stat.interceptions = stat.interceptions + 1
+				game.lastplay = athlete.logname + " - Interception"
+
+				if params[:int_yards].to_i > 0
+					game.lastplay = game.lastplay + " return - " + params[:int_yards]
+				end
+			end
+
+			if params[:fumbles_recovered].to_i > 0
+				stat.fumbles_recovered = stat.fumbles_recovered + 1
+				game.lastplay = athlete.logname + " - Fumble recoverd"
+
+				if params[:int_yards].to_i > 0
+					game.lastplay = game.lastplay + " return - " + params[:int_yards]
+				end
 			end
 
 			stat.save!
 
 			if params[:int_td].to_i > 0
+				stat.int_td = stat.int_td + 1
 
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
 					if params[:int].to_i > 0
@@ -186,10 +209,10 @@ class FootballDefensesController < ApplicationController
 						when "Q4"
 							game.homeq4 = game.homeq4 + 6
 						end
-						game.save!
 					end
 				end
 			elsif params[:safety].to_i > 0
+				stat.safety = stat.safety + 1
 
 				if !params[:time].nil? and !params[:time].blank? and !params[:quarter].nil? and !params[:quarter].blank?
 					gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "defensive safety", 
@@ -207,11 +230,11 @@ class FootballDefensesController < ApplicationController
 						when "Q4"
 							game.homeq4 = game.homeq4 + 2
 						end
-						game.save!
 					end
 				end
 			end
 
+			game.save!
 			return stat
 		end
 

@@ -41,6 +41,14 @@ module SportsHelper
     end
   end
 
+  def get_tiny_sport_logo(sport)
+    if sport.sport_logo?
+      sport.sport_logo(:tiny)
+    else
+      "photo_not_available.png"
+    end
+  end
+
   def sports_list
     [
       ['Football', 'Football'],

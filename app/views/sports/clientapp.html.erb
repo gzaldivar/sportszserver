@@ -1,0 +1,17 @@
+<% provide(:title, "Eazesportz - Email Confirmation Successful") %>
+<p>
+<div class="row">
+	<div class="col-xs-4">
+		<% if @client == "Football" %>
+	  		<%= image_tag "FootballGameStats.png", class: 'img-responsive' %>
+	  	<% elsif @client == "Basketball" %>
+	  		<%= image_tag "BasketballGameStats.png", class: 'img-responsive' %>
+	  	<% elsif @client == "Soccer" %>
+	  		<%= image_tag "SoccerLiveStats.png", class: 'img-responsive' %>
+	  	<% end %>
+	</div>
+	<div class="col-xs-4 col-xs-offset-1">
+		<h1 class="text-success">Welcome to Eazesportz!</h1>
+		<h4 class="text-info"><%= link_to "Click here to open the app and log in", "#{@clientapp}" %></h4>
+	</div>
+</div>

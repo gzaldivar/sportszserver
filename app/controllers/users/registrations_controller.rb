@@ -62,16 +62,19 @@ class Users::RegistrationsController < Devise::RegistrationsController
                 return
               end
             end
-
             @user = User.create(params[:user])
             @user.default_site = params[:user][:site]
+
+            if params[:user][:mobile]
+              @user.mobile = params[:user][:mobile]
+            end
 
             if !params[:user][:site].nil? and Sport.find(params[:user][:site].to_s).beta?
               @user.tier = "Features"
             end
 
             if params[:user][:admin]
-              @user.admin = true
+              @user.admin = params[:user][:mobile]
             end
 
             if @user.save!

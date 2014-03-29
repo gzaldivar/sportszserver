@@ -379,6 +379,20 @@ class SportsController < ApplicationController
   def broadcastinfo
   end
 
+  def clientapp
+    clear_site
+
+    if params[:mobile] == "EazeFootballConsole"
+      @client = "Football"
+    elsif params[:mobile] == "EazeBasketballConsole"
+      @client = "Basketball"
+    elsif params[:mobile] == "EazeSoccerConsole"
+      @client = "Soccer"
+    end
+
+    @clientapp = params[:mobile] + "://"
+  end
+
   def get_usstates
     @country = params[:country]
   end

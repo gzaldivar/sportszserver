@@ -8,7 +8,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
 				sport_path(resource.default_site)
 			end
 		else
-			clientapp_path(mobile: resource.mobile)
+			clientapp_path(mobile: resource.mobile, email: resource.email, admin: resource.admin)
 #			render js: "window.location = '#{resource.mobile}://#{resource.email}'"
 		end
     end

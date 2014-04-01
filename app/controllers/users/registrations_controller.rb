@@ -74,7 +74,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
             end
 
             if params[:user][:admin]
-              @user.admin = params[:user][:mobile]
+              @user.admin = true
             end
 
             if @user.save!

@@ -388,8 +388,18 @@ class SportsController < ApplicationController
       @client = "Basketball"
     elsif params[:mobile] == "EazeSoccerConsole"
       @client = "Soccer"
+    elsif params[:mobile] == "Eazesportz"
+      @client = "Eazesportz"
     end
 
+    @email = params[:email]
+
+    if params[:admin] == "true"
+      @admin = true
+    else
+      @admin = false
+    end
+    
     @clientapp = params[:mobile] + "://"
   end
 

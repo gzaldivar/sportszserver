@@ -283,7 +283,7 @@ class GameschedulesController < ApplicationController
       @gameschedule.videoclips = nil
       @gameschedule.destroy
       respond_to do |format|
-        format.html { redirect_to sport_team_gameschedules_path(@sport, @team), notice: "Schedule deleted!" }
+        format.html { redirect_to sport_path(@sport), notice: "Game deleted!" }
         format.json { render json: { message: "Success", request: [@sport, @team] } }
       end
     rescue Exception => e

@@ -64,6 +64,7 @@ class User
   field :admin, type: Boolean, default: false
   field :mysites, type: Hash
   field :default_site, type: String
+  field :adminsite, type: String
 
   field :teamid, type: String
   field :is_active, type: Boolean, default: true

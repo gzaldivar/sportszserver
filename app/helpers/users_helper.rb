@@ -32,9 +32,9 @@ module UsersHelper
 	  		end
 	  	elsif teamid and current_user.admin 
 			sport = Sport.where('teams._id' => Moped::BSON::ObjectId(teamid)).first
-			team = sport.teams.detect { |t| t.id.to_s == teamid }
+			team = sport.teams.find(teamid)
 
-			if current_user.default_site == team.sport.id.to_s
+			if current_user.adminsite == team.sport.id.to_s
 				return true
 			else
 				return false

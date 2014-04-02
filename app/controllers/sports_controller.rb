@@ -45,6 +45,7 @@ class SportsController < ApplicationController
         if @sport.save!
           
           current_user.admin = true
+          current_user.adminsite = @sport.id
           current_user.default_site = @sport.id
 #          current_user.tier = "Features"
           current_user.save

@@ -21,7 +21,7 @@
 		    		<%= image_tag 'Photo_Not_Available.jpg', class: 'img-responsive' %>
 		  		<% end %>
 		  		<%= s3_uploader_form callback_url: createphoto_sport_newsfeeds_path, callback_param: "@newsfeed[image_url]", 
-		             	key: "uploads/@newsfeedsphotos/#{@newsfeed.id}/${filename}", id:  "myS3Uploader" do %>
+		             	key: "uploads/newsfeedsphotos/#{@newsfeed.id}/${filename}", id:  "myS3Uploader" do %>
 		      		<%= file_field_tag :file %>
 		  		<% end %>
 

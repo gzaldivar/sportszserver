@@ -123,7 +123,7 @@
 </div>
 <div class="row">
 	<div class="col-xs-11">
-		<% if is_package_enabled?(@sport) or (user_signed_in? and current_user.godmode) %>
+		<% if user_signed_in? and current_user.godmode %>
 			<h4>Player Stats</h4>
 			<table class="table table-striped table-bordered table-hover">
 				<%= render "soccers/playerstatsheader", name: "Player" %>
@@ -143,7 +143,7 @@
 				<% end %>
 				<%= render 'soccers/playerstatsbody', stat: @totals, name: "Totals" %>
 			</table>
-		<% elsif !is_package_enabled?(@sport) and site_owner? %>
+		<% elsif site_owner? %>
 			<h4><%= link_to "Player Stats", "#upgradestatsmodal", data: { toggle: "modal" } %></h4>
 		<% end %>
 	</div>

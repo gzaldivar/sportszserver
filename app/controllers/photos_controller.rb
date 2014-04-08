@@ -467,10 +467,21 @@ class PhotosController < ApplicationController
   end
   
   def destroy
-    @sport.mediasize = @sport.mediasize - @photo.thumbsize - @photo.mediumsize - @photo.largesize
-    @sport.save
-    @photo.delete
-    redirect_to sport_photos_path(@sport), notice: "Photo deleted!"
+    begin
+      @sport.mediasize = @sport.mediasize - @photo.thumbsize - @photo.mediumsize - @photo.largesize
+      @sport.save
+      @photo.destroy
+
+      respond_to do |format|
+        format.html { redirect_to sport_photos_path(@sport), notice: "Photo deleted!" }
+        format.json { render status: 200, json: { success: "Success" } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to [@sport], alert: "Delete failed!" }
+        format.json { render status: 404, json: { error: e.message } }
+      end
+    end
   end
   
   def untagathlete

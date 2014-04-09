@@ -5,3 +5,4 @@ attributes :name, :addrnum, :street, :city,  :state,  :zip, :phone,  :fax,  :mob
 node(:thumb) { |t| t.sponsorpic(:thumb) }
 node(:medium) { |t| t.sponsorpic(:medium) }
 node(:large) { |t| t.sponsorpic(:large) }
+node(:tiny) { |t| t.sponsorpic(:tiny) }

@@ -29,3 +29,4 @@ node (:streamingurl) { admin.streamingurl }
 node (:streamingbucket) { admin.streamingbucket }
 node (:broadcastAppVersion) { admin.broadcastAppVersion }
 node (:highlightAppVersion) { admin.highlightAppVersion }
+node (:pricingurl) { admin.pricingurl }

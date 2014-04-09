@@ -7,5 +7,6 @@ class Admin
   field :disableads, type: Boolean, default: false
   field :highlightAppVersion, type: String
   field :broadcastAppVersion, type: String
+  field :pricingurl, type: String, default: ""
 
 end

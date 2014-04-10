@@ -8,5 +8,6 @@ class Admin
   field :highlightAppVersion, type: String
   field :broadcastAppVersion, type: String
   field :pricingurl, type: String, default: ""
+  field :supportedsports, type: Array, default: ["Football", "Basketball", "Soccer"]
 
 end

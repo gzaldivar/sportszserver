@@ -30,3 +30,4 @@ node (:streamingbucket) { admin.streamingbucket }
 node (:broadcastAppVersion) { admin.broadcastAppVersion }
 node (:highlightAppVersion) { admin.highlightAppVersion }
 node (:pricingurl) { admin.pricingurl }
+node (:supportedsports) { admin.supportedsports }

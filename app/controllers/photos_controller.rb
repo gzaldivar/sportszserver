@@ -203,7 +203,7 @@ class PhotosController < ApplicationController
       else
         @photos = @sport.photos.where(team_id: @team.id).desc(:updated_at).paginate(per_page: 20, page: params[:page])
       end
-    
+
     respond_to do |format|
       format.html
       format.xml

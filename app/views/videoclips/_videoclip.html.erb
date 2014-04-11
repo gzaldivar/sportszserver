@@ -10,6 +10,9 @@
 		<% if @sport.name == "Football" %>
 			<th>Play</th>
 		<% end %>
+	    <% if @sport.review_media? %>
+    		<th>Approved?</th>
+	    <% end %>
 		<th>Errors?</th>
     </tr>
   </thead>
@@ -24,17 +27,21 @@
 				    <% end %>
 				</div>
 			</div>
+
 		    <td><%= videoclip.updated_at.strftime("%m/%d/%Y %H:%M:%S") %></td>
+
 		    <% if !videoclip.pending %>
 		    	<td><%= link_to videoclip.displayname, sport_videoclip_path(@sport, videoclip) %></td>
 		    <% else %>
 		    	<td><%= videoclip.displayname %></td>
 		    <% end %>
+
 		  	<% if !videoclip.teamid.nil? %>
 		  		<td><%= @sport.teams.find(videoclip.teamid).team_name %></td>
 			<% else %>
 				<td></td>
 			<% end %>
+
 		    <% if !videoclip.players.nil? and videoclip.players.any? %>
 			    <td>
 			      <% videoclip.players.each do |p| %>
@@ -44,16 +51,25 @@
 		    <% else %>
 		    	<td></td> 
 		    <% end %>
+
 			<% if !videoclip.gameschedule.nil? and !videoclip.gameschedule.blank? %>
 		    	<td><%= @sport.teams.find(videoclip.team_id).gameschedules.find(videoclip.gameschedule).game_name %></td>
 			<% else %>
 				<td></td>
 			<% end %>
+
 			<% if @sport.name == "Football" and !videoclip.gamelog.nil? and !videoclip.gamelog.blank? %>
 				<td><%= @sport.teams.find(videoclip.team_id).gameschedules.find(videoclip.gameschedule).gamelogs.find(videoclip.gamelog).logentrytext %></td>
-			<% else %>
-				<td></td>
 			<% end %>
+
+		    <% if @sport.review_media? %>
+			    <% if videoclip.pending and user_signed_in? and isTeamManager?(videoclip.team_id) %>
+			    	<td><%= link_to "Approve?", approval_sport_videoclip_path(@sport, videoclip), class: "btn btn-xs btn-primary" %></td>
+			    <% else %>
+			    	<td><%= videoclip.pending ? "Pending Approval" : "Approved" %></td>
+			    <% end %>
+		    <% end %>
+
 		    <td><%= videoclip.error_status %>
 		  </tr>
 		</tbody></table>

@@ -176,7 +176,7 @@ Sportzserver::Application.routes.draw do
     
     resources :videoclips, only: [:edit, :create, :update, :destroy, :index, :show] do
       member do
-        get :newteam, :newathlete, :newschedule, :untagteam
+        get :newteam, :newathlete, :newschedule, :untagteam, :approval
         put :untag_athletes, :tag_athletes
       end
 

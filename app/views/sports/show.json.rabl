@@ -1,7 +1,8 @@
 object @sport
 node(:id) { |o| o.id.to_s }
 attributes :season, :name, :has_stats, :alert_interval, :gamelog_interval, :newsfeed_interval, :sitename, :mascot, :year, :zip, :beta, :approved,
-					:silverMedia, :goldMedia, :platinumMedia, :city, :state, :country, :allstreams, :streamquality, :sdhdhighlights
+					:silverMedia, :goldMedia, :platinumMedia, :city, :state, :country, :allstreams, :streamquality, :sdhdhighlights, :review_media,
+					:enable_user_pics, :enable_user_video
 node(:sport_logo_thumb) { |t| t.sport_logo(:thumb) }
 node(:sport_logo_tiny) { |t| t.sport_logo(:tiny) }
 node(:banner_url) { |b| b.sport_banner.url(:thumb) }

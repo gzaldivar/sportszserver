@@ -1,6 +1,6 @@
 object @videoclip
 node(:id) { |o| o.id.to_s }
-attributes :video_url, :poster_url, :resolution, :duration, :displayname, :size, :width, :height
+attributes :video_url, :poster_url, :resolution, :duration, :displayname, :size, :width, :height, :pending
 attributes :description, :if => lambda { |m| !m.description.nil? }
 attributes :players, :if => lambda { |m| !m.players.nil? }
 node(:user_id) { |o| o.user_id.to_s }

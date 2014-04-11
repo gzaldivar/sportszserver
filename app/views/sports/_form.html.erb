@@ -35,7 +35,7 @@
           <% end %>
         </div>
         <% if @sport.name == "Basketball" %>
-          <div class="col-xs-2 col-xs-offset-1">
+          <div class="col-xs-1 col-xs-offset-1">
             <%= f.label :periods %>
             <%= f.select :periods,["2", "4"], {}, class: 'form-control' %>
           </div>
@@ -80,8 +80,6 @@
   			</div>
       </div>
       <p>
-<% 
-=begin %>
       <div class="row">
           <div class="col-xs-2">
             Allow user managed pics
@@ -91,8 +89,8 @@
             <%= f.check_box :enable_user_pics %>
           </div>
           <div class="col-xs-8">
-            <strong>Web Site Only!.</strong> If you enable user pics, a user will be able to upload, edit and delete the pics they own. You can leave this unchecked and choose 
-            to only have the admin or team manager approve pics. This is a great feature for engaging your fan base in your program. If you check this and assign a user to review pics, then users will be able to upload pics but they will not be viewable until the admin or a user you designate as site reviewer approves them.
+            If you enable user pics, a user will be able to upload, edit and delete the pics they post. You can leave this unchecked and choose 
+            to only have the admin or team manager upload photos. Photos will not be viewable until they are approved if you enable the approval feature.
           </div>
       </div>
       <p>
@@ -105,8 +103,7 @@
             <%= f.check_box :enable_user_video %>
           </div>
           <div class="col-xs-8">
-            <strong>Web Site Only!.</strong>If you enable user videos, a user will be able to upload, edit and delete the vidoes they own. You can leave this unchecked and choose 
-            to only have an admin or team manager approve videos. This is a great feature for engaging your fan base in your program. If you check this and assign a user to review videos, then users will be able to upload videos but they will not be viewable until the admin or a user you designate as site reviewer approves them.
+            If you enable user videos, a user will be able to upload, edit and delete the vidoes they post. You can leave this unchecked and choose to only have an admin or team manager approve videos. Videos will not be viewable until they are approved if you enable the approval feature.
           </div>
       </div>
       <p>
@@ -119,11 +116,9 @@
             <%= f.check_box :review_media %>
           </div>
           <div class="col-xs-8">
-            <strong>Web Site Only!.</strong>Check this if you want to review all video and photos before your fans see them. Checking this will result in a delay before your users can post photo's or videos. If you are looking for an active fan base, you may not want to check this. You can always review what your fans post as often as you like and delete any material you deem inapproptiate. This is how large sites that alllow video uploading work. It does impose a burden on the admin or team manager to pay attention to what your users are uploading.
+            Check this if you want to review all video and photos before your fans see them. Checking this will result in a delay before your users can post photo's or videos. If you don't check this, you can always review what your fans post as often as you like and delete any material you deem inapproptiate.
           </div>
       </div>
-<%
-=end %>
       <div class="row">
         	<div class="col-xs-11">
           		<h4>Current teams:</h4><p>

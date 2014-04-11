@@ -2,7 +2,7 @@ class VideoclipsController < ApplicationController
 	before_filter :authenticate_user!,	only: [:edit, :update, :destroy, :newathlete, :newteam, :newgame, :create, :tag_athletes, 
                                              :untag_athletes, :untagathlete, :untagteam, :createclient]
 	before_filter :get_sport
-	before_filter :correct_video, 		only: [:edit, :update, :destroy, :show, :untag_athletes, :tag_athletes]
+	before_filter :correct_video, 		only: [:edit, :update, :destroy, :show, :untag_athletes, :tag_athletes, :approval]
   before_filter only: [:destroy, :update, :create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, :tag_athletes, :createmobile] do |controller| 
     controller.SiteOwner?(@videoclip.nil? ? nil : @videoclip.team_id)
   end
@@ -727,6 +727,12 @@ class VideoclipsController < ApplicationController
         format.json { render status: 404, json: { error: e.message } }
       end
     end
+  end
+
+  def approval
+    @videoclip.pending = false
+    @videoclip.save
+    redirect_to sport_videoclips_path(@sport)
   end
   
   private

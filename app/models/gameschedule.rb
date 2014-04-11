@@ -9,6 +9,7 @@ class Gameschedule
   before_create :set_live_game_time
 
   field :hideads, type: Boolean, default: false
+  field :EditHomeScore, type: Boolean, default: false
 
   field :starttime, type: DateTime
   field :gamedate, type: Date

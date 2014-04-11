@@ -201,9 +201,11 @@ class GameschedulesController < ApplicationController
         @gameschedule.current_game_time = addzerototime(params[:gameminutes].to_s) + ":" + addzerototime(params[:gameseconds].to_s)
       end
 
-      final = @gameschedule.final
+      if params[:final].to_i == 1 and @gameschedules.final == false
+        createNewsItem(@gameschedule)
+      end
 
-      @gameschedule.update_attributes!(params[:gameschedule])
+     @gameschedule.update_attributes!(params[:gameschedule])
 
       event = Event.find_by(gameschedule_id: @gameschedule.id)
 
@@ -212,10 +214,6 @@ class GameschedulesController < ApplicationController
         event.end_time = event.start_time + 4.hours
         event.save!
       end
-
-#      if final
-#        createNewsItem(@gameschedule)
-#      end
 
       respond_to do |format|
           format.html { redirect_to [@sport, @team, @gameschedule] }

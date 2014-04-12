@@ -60,18 +60,18 @@ class SponsorsController < ApplicationController
 	end
 
 	def index
-#		begin
+		begin
 			@sponsors = @sport.sponsors.all.entries
 			respond_to do |format|
 				format.html
 				format.json
 			end	
-#		rescue Exception => e
-#			respond_to do |format|
-#				format.html { redirect_to :back, alert: e.message }
-#				format.json { render status: 404, json: { error: e.message } }
-#			end
-#		end
+		rescue Exception => e
+			respond_to do |format|
+				format.html { redirect_to :back, alert: e.message }
+				format.json { render status: 404, json: { error: e.message } }
+			end
+		end
 	end
 
 	def show
@@ -82,7 +82,7 @@ class SponsorsController < ApplicationController
 			@sponsor.destroy
 
 			respond_to do |format|
-				format.html { redirect_to :back, alert: "Sponsor delete sucessful!" }
+				format.html { redirect_to sport_sponsors_path(@sport), alert: "Sponsor delete sucessful!" }
 				format.json { render status: 200, json: { success: "success" } }
 			end
 		rescue Exception => e

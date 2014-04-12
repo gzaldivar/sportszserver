@@ -33,7 +33,8 @@ class Sponsor
                          secret_access_key: S3DirectUpload.config.secret_access_key },
     :styles => {
       :tiny     => ['50x50',     :jpg],
-      :thumb    => ['125x125',   :jpg],
+      :portraitbanner   => ['320x50',   :jpg],
+      :landscapebanner  => ['640x50'],  :jpg],
       :medium   => ['300x250',   :jpg],
       :large    => ['640x960',   :jpg]
     }

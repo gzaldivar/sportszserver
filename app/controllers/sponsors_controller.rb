@@ -5,7 +5,7 @@ class SponsorsController < ApplicationController
 	before_filter only: [:new, :create, :edit, :update, :destroy] do |controller|
 		SiteOwner?(current_user.teamid)
 	end
-	before_filter do |check|
+	before_filter only: [:destroy, :update, :create, :edit, :new], :createphoto, :updatephoto do |check|
 		check.sponsorEnabled?(current_site)
 	end
 

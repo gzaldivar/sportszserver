@@ -317,6 +317,10 @@
           <%= f.label :sdhdhighlights, "Highlights" %>
           <%= f.select :sdhdhighlights, ["SD", "HD"], {}, class: "form-control" %>
         </div>
+        <div class="col-xs-2 col-xs-offset-1">
+          <%= f.label :enablelive, "Enable Live Streaming" %>
+          <%= f.check_box :enablelive, class: "form-control" %>
+        </div>
       </div>
 <%
 =end %>

@@ -57,6 +57,7 @@ class Sport
   field :streamquality, type: String, default: "Medium"
   field :allstreams, type: Boolean, default: false
   field :sdhdhighlights, type: String, default: "HD"
+  field :enablelive, type: Boolean, default: false
 
   search_in :sitename, :mascot, :state, :zip, :city, :name, :sportname, :featuredplayers, :country
 

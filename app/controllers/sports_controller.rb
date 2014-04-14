@@ -380,6 +380,9 @@ class SportsController < ApplicationController
   def broadcastinfo
   end
 
+  def mobileadmin
+  end
+
   def clientapp
     clear_site
 

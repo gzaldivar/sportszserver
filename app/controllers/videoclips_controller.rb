@@ -7,7 +7,7 @@ class VideoclipsController < ApplicationController
     controller.SiteOwner?(@videoclip.nil? ? nil : @videoclip.team_id)
   end
   before_filter do |controller|
-    controller.packageEnabled?(current_site)
+    controller.packageEnabled?(@sport)
   end
   
   def videoclipshome

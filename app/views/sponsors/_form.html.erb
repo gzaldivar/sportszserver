@@ -111,7 +111,7 @@
 				</div>
 				<div class="col-xs-3 col-xs-offset-1">
 					<%= f.label :platinum_gold_silver, "Platinum or Gold" %>
-					<%= f.text_field :sponsorlevel, class: 'form-control' %>
+					<%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %>
 				</div>
 			</div>
 			<div class="row">

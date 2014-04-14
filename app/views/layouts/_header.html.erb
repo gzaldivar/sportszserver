@@ -84,6 +84,13 @@
 				</ul>
 			</div>
 		</h5>
+		<nav class="collapse navbar-collapse navbar-right">
+			<% if user_signed_in? %>
+			    <ul class="nav pull-right"> 
+			    	<li><%= link_to "Eazesportz News", mobileadmin_path %></li>
+			    </ul>
+			<% end %>
+		</nav>
 		</div>
 	</div>
   </div>

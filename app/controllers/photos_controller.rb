@@ -7,7 +7,7 @@ class PhotosController < ApplicationController
     controller.SiteOwner?(@photo.nil? ? nil : @photo.team_id)
   end
   before_filter do |controller|
-    packageEnabled?(current_site)
+    packageEnabled?(@sport)
   end
 
   require 'base64'

@@ -302,6 +302,8 @@
           <h5 class="text-warning">Be careful selecting the all streams option. Selecting this option will result in a Low, Medium and High stream being uploaded for your fans. This provides a fans device to select the stream best suited to their connection. However, it requires more upstream bandwidth to upload the three video streams. Make sure your internet connection can support the upload.</h5>
         </div>
       </div>
+<%
+=begin %>
       <div class="row">
         <div class="col-xs-2">
           <%= f.label :streamquality, "Streaming Quality" %>
@@ -316,6 +318,8 @@
           <%= f.select :sdhdhighlights, ["SD", "HD"], {}, class: "form-control" %>
         </div>
       </div>
+<%
+=end %>
       <p>
       <div class="row">
         <div class="col-xs-1 col-xs-offset-5">

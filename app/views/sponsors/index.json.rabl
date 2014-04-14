@@ -1,2 +1,4 @@
-collection @sponsors
-extends "sponsors/show"
+if is_platinum?
+	collection @sponsors
+	extends "sponsors/show"
+end

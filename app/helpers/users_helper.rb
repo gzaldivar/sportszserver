@@ -44,6 +44,14 @@ module UsersHelper
     	end
 	end
 
+	def SiteAdmin?(sport)
+		if user_signed_in? and current_user.id == sport.adminid
+			true
+		else
+	  		raise ActionController::RoutingError.new('you are not Authorized for this')
+		end
+	end
+
 	def isAdmin?
 		if !current_user.nil? and current_site?
 			return current_site.adminid == current_user.id.to_s

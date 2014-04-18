@@ -35,7 +35,7 @@
 						<li><%= link_to "Contact", contacts_path %></li>
 						<li><%= link_to "Find", sports_path %></li>
 					<% end %>
-					<% if user_signed_in? and site_owner?(@sport) %>
+					<% if user_signed_in? and current_site? and site_owner?(current_site) %>
 						<!--li id="fat-menu" class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">Tools<b class="caret"></b></a>
 				    			<ul class="dropdown-menu">

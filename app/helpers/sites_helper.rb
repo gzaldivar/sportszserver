@@ -31,6 +31,22 @@ module SitesHelper
     current_site.enable_user_pics
   end
   
+  def sportUserPics?(sport)
+    if user_signed_in?
+        user_pics_ok?
+    else
+        raise ActionController::RoutingError.new('you are not Authorized for this')
+    end
+  end
+ 
+  def sportUserVideos?(sport)
+    if user_signed_in?
+        user_videos_ok?
+    else
+        raise ActionController::RoutingError.new('you are not Authorized for this')
+    end
+  end
+ 
   def user_videos_ok?
     current_site.enable_user_video
   end

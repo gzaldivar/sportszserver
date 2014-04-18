@@ -4,7 +4,12 @@ class VideoclipsController < ApplicationController
 	before_filter :get_sport
 	before_filter :correct_video, 		only: [:edit, :update, :destroy, :show, :untag_athletes, :tag_athletes, :approval]
   before_filter only: [:destroy, :update, :create, :edit, :newteam, :newathlete, :untagathlete, :untagteam, :update, :untag_athletes, :tag_athletes, :createmobile] do |controller| 
-    controller.SiteOwner?(@videoclip.nil? ? nil : @videoclip.team_id)
+#    controller.SiteOwner?(@videoclip.nil? ? nil : @videoclip.team_id)
+    if sportUserVideos?(@sport) or SiteAdmin?(@sport)
+      true
+    else
+      false
+    end
   end
   before_filter do |controller|
     controller.packageEnabled?(@sport)

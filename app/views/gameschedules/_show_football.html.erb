@@ -24,7 +24,7 @@
 		<table class="table table-striped table-bordered table-hover">
 			<thead>
 				<th>Score Log</th>
-				<% if site_owner? or isTeamManager?(@gameschedule) %>
+				<% if site_owner?(@sport) or isTeamManager?(@gameschedule) %>
 					<th>Edit</th>
 					<th>Delete</th>
 				<% end %>
@@ -33,7 +33,7 @@
 				<% @gamelogs.each do |g| %>
 					<tr>
 						<td><%= g.logentrytext %></td>
-					 	<% if site_owner? or isTeamManager?(@gameschedule) %>
+					 	<% if site_owner?(@sport) or isTeamManager?(@gameschedule) %>
 					 		<td><%= link_to "Edit", edit_sport_team_gameschedule_gamelog_path(@sport, @team, @gameschedule, g), 
 					 					class: "btn btn-xs btn-warning" %></td>
 					 		<td><%= link_to "Delete", [@sport, @team, @gameschedule, g], method: :delete,
@@ -43,7 +43,7 @@
 				<% end %>
 			</tbody>
 		</table>
-		<% if site_owner? or isTeamManager?(@gameschedule) %>
+		<% if site_owner?(@sport) or isTeamManager?(@gameschedule) %>
 			<em>Score entries are added automatically when you add scoring stats and automatically computed.</em>
 			<h5 class="text-danger">Be careful editing game log data manually. If you create or update a log entry your stats can get out of sync. If you want to edit an existing log entry, it is much better to delete the entry and update the stats for the players involved in the score. The system will automatically generate a new log.</h5>
 			<!--%= link_to "New Gamelog", new_sport_team_gameschedule_gamelog_path(@sport, @team, @gameschedule), 

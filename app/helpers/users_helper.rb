@@ -1,10 +1,10 @@
 module UsersHelper
 
-	def site_owner?
-		if current_site? and !current_site.approved?
+	def site_owner?(sport)
+		if !sport.approved?
 			return false
-	  	elsif current_site? and !current_user.nil? and current_user.admin?
-		  	if current_user.id.to_s != current_site.adminid and !current_user.godmode
+	  	elsif !current_user.nil? and current_user.admin?
+		  	if current_user.id.to_s != sport.adminid and !current_user.godmode
 		  		return false
 		  	else
 		  		return true

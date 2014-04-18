@@ -14,7 +14,7 @@
 	<td><%= stat.koattempts %></td>
 	<td><%= stat.kotouchbacks %></td>
 	<td><%= stat.koreturned %></td>
-	<% if site_owner? or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
+	<% if site_owner?(@sport) or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
 		<td>
 			<% if FootballKicker.find(stat.id).nil? %>
 				<%= link_to "Update", sport_athlete_football_kicker_path(@sport, @theplayer, gameschedule_id: @gameschedule.id), 

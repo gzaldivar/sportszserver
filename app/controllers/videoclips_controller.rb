@@ -17,9 +17,14 @@ class VideoclipsController < ApplicationController
       @thevideo = @featuredlists[0]
     else
       @videolists = @sport.videoclips.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
-      puts @videolists.count
+
       if @videolists.any?
-        @thevideo = @videolists[0]
+        @videolists.each_with_index do |v, cnt|
+          if !v.pending and SiteOwner?(current_team.id)
+            @thevideo = @videolists[cnt]
+            break
+          end
+        end
       else
         @thevideo = Videoclip.new(displayname: 'No Videos')
       end
@@ -31,9 +36,7 @@ class VideoclipsController < ApplicationController
   end
 
   def showfeaturedvideos
-    puts params[:team_id]
     @team = current_team? ? current_team : @sport.teams.find(params[:team_id])
-    puts @team.mascot
     if !@team.featuredvideoclips.nil?
       @featuredlists = @sport.videoclips.where(team_id: @team.id, :id.in => @team.featuredvideoclips).desc(:updated_at).paginate(per_page: 10)
     else
@@ -46,7 +49,7 @@ class VideoclipsController < ApplicationController
   end
 
   def latest
-    @videolists = @sport.videoclips.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
+    @videolists = @sport.videoclips.where(team_id: current_team.id.to_s, pending: false).desc(:updated_at).paginate(per_page: 10)
     respond_to do |format|
       format.js
     end

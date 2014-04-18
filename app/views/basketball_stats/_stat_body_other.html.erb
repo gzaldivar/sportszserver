@@ -18,7 +18,7 @@
 	<td><%= stat.offrebound %></td>
 	<td><%= stat.defrebound %></td>
 	<td><%= stat.turnovers %></td>
-	<% if site_owner? or isTeamManager?(name == "Player" ? athlete : @game) and name == "Player" %>
+	<% if site_owner?(@sport) or isTeamManager?(name == "Player" ? athlete : @game) and name == "Player" %>
 		<td>
 			<% if BasketballStat.find(stat.id).nil? %>
 				<%= link_to "Update", sport_athlete_basketball_stat_path(@sport, athlete, gameschedule_id: @gameschedule.id), 

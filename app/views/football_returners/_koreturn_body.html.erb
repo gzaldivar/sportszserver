@@ -14,7 +14,7 @@
 	<td><%= stat.koyards %></td>
 	<td><%= stat.kotd %></td>
 	<td><%= stat.kolong %></td>
-	<% if site_owner? or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
+	<% if site_owner?(@sport) or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
 		<td>
 			<% if FootballReturner.find(stat.id).nil? %>
 				<%= link_to "Update", sport_athlete_football_returner_path(@sport, @theplayer, gameschedule_id: @gameschedule.id), 

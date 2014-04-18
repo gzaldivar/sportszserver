@@ -135,7 +135,7 @@
   		<%= render 'layouts/footer' %>
   		<%= debug(params) if Rails.env.development? %>
       <%= render 'layouts/moreselectmodal' if current_team? %>
-      <%= render 'layouts/toolsselectmodal' if user_signed_in? and site_owner? %>
+      <%= render 'layouts/toolsselectmodal' if user_signed_in? and site_owner?(@sport) %>
       <%= render 'layouts/userheaderselectmodal' if user_signed_in? %>
       <%= render 'layouts/solutions' %>
     </div>

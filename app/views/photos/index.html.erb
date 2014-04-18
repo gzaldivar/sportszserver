@@ -20,7 +20,7 @@
   	</div>
 	<div class="row">
 		<div class="col-xs-3 col-xs-offset-4">
-			<% if !@team.nil? and user_signed_in? and (user_pics_ok? or site_owner?) %>
+			<% if !@team.nil? and user_signed_in? and (user_pics_ok? or site_owner?(@sport)) %>
 				<%= link_to "Add Team Photo", newteam_sport_photos_path(@sport, team_id: @team), class: "btn btn-sm btn-primary" %>
 			<% elsif !@athlete.nil? %>
 				<%= link_to "Add Athlete Photo", newathlete_sport_photos_path(@sport, athlete_id: @athlete), class: "btn btn-sm btn-primary" %>

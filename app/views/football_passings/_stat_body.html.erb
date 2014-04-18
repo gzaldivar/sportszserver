@@ -22,7 +22,7 @@
 	<td><%= stat.sacks %></td>
 	<td><%= stat.yards_lost %></td>
 	<td><%= stat.twopointconv %></td>
-	<% if site_owner? or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
+	<% if site_owner?(@sport) or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
 		<td>
 			<% if FootballPassing.find(stat.id).nil? %>
 				<%= link_to "Update", sport_athlete_football_passing_path(@sport, @theplayer, gameschedule_id: @gameschedule.id), 

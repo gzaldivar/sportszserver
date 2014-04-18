@@ -17,6 +17,6 @@
         </tbody>
     <% end %>
 </table>
-<% if site_owner? and current_team? %>
+<% if site_owner?(@sport) and current_team? %>
     <%= link_to "Add News Item", new_sport_newsfeed_path(@sport), class: "btn btn-xs btn-primary" %>
 <% end %>

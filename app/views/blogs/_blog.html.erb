@@ -64,7 +64,7 @@
             </div>
             <div class="row">
               <div class="col-xs-4 col-xs-offset-2">
-          			<% if site_owner? or (user_signed_in? and (current_user.id == user.id)) %>
+          			<% if site_owner?(@sport) or (user_signed_in? and (current_user.id == user.id)) %>
           				<%= link_to "Edit", edit_sport_blog_path(b.sport, b, team_id: current_team.id),  class: "btn btn-xs btn-warning" %>
           				<%= link_to "Delete", sport_blog_path(b.sport, b),  method:	:delete,  class: "btn btn-xs btn-danger", data: { confirm: "You sure?" } %>
           			<% end %>

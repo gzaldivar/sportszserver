@@ -39,7 +39,7 @@
         </div>
 	</div>
 </div>
-<% if site_owner? or isTeamManager?(@event) %>
+<% if site_owner?(@sport) or isTeamManager?(@event) %>
     <div class="row">
     	<div class="col-xs-2 col-xs-offset-4">
             <%= link_to "Edit", edit_sport_event_path(@sport, @event), class: "btn btn-md btn-primary" %>

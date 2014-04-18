@@ -18,7 +18,7 @@
 			<% else %>
 				<td><%= @sport.teams.find(athlete.team_id).team_name %></td>
 			<% end %>
-			<% if site_owner? or isTeamManager?(athlete) %>
+			<% if site_owner?(@sport) or isTeamManager?(athlete) %>
 				<td><%= link_to "Edit", edit_sport_athlete_path(@sport, athlete),  class: "btn btn-xs btn-warning" %></td>
 			<% end %>
 			<% if isAdmin? %>

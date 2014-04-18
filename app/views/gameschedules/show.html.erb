@@ -41,7 +41,7 @@
         <%= render 'gameschedules/soccer/show_soccer' %>
 		<% end %>
 		<p>
-	  	<% if site_owner? or isTeamManager?(@gameschedule) %>
+	  	<% if site_owner?(@sport) or isTeamManager?(@gameschedule) %>
 	  		<div class="center">
 	  			<%= link_to "Edit", edit_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "btn btn-sm btn-warning" %>
 	  			<%= link_to "Delete", [@sport, @team, @gameschedule],  method:	:delete, class: "btn btn-sm btn-danger", 
@@ -50,13 +50,13 @@
 				<% if is_package_enabled?(@sport) or current_user.godmode %>
 					<%= link_to "Add Photo", newschedule_sport_photos_path(@sport, gameschedule_id: @gameschedule.id), 
 								class: "btn btn-sm btn-primary" %>
-				<% elsif !is_package_enabled?(@sport) and site_owner? %>
+				<% elsif !is_package_enabled?(@sport) and site_owner?(@sport) %>
 					<%= link_to "Add Photo", "#upgrademediamodal", data: { toggle: "modal" }, class: "btn btn-sm btn-primary" %>
 				<% end %>
 				<% if is_package_enabled?(@sport) or current_user.godmode %>
 					<%= link_to "Add Video", newschedule_sport_videoclips_path(@sport, gameschedule_id: @gameschedule.id), 
 								class: "btn btn-sm btn-primary" %>
-				<% elsif !is_package_enabled?(@sport) and site_owner? %>
+				<% elsif !is_package_enabled?(@sport) and site_owner?(@sport) %>
 					<%= link_to "Add Video", "#upgrademediamodal", data: { toggle: "modal" }, class: "btn btn-sm btn-primary" %>
 				<% end %>
 			</div>

@@ -21,7 +21,7 @@
 	<td><%= stat.int_td %></td>
 	<td><%= stat.fumbles_recovered %></td>
 	<td><%= stat.safety %></td>
-	<% if site_owner? or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
+	<% if site_owner?(@sport) or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
 		<td>
 			<% if FootballDefense.find(stat.id).nil? %>
 				<%= link_to "Update", sport_athlete_football_defense_path(@sport, @theplayer, gameschedule_id: @gameschedule.id), 

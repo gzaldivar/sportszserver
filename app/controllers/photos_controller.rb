@@ -21,9 +21,14 @@ class PhotosController < ApplicationController
       @thephoto = @featuredlists[0]
     else
       @photolists = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
-      puts @photolists.count
+
       if @photolists.any?
-        @thephoto = @photolists[0]
+        @photolists.each_with_index do |p, cnt|
+          if !p.pending and !SiteOwner?(current_team.id)
+            @thephoto = @photolists[cnt]
+            break
+          end
+        end
       else
         @thephoto = Photo.new(displayname: 'No Photos')
       end
@@ -37,7 +42,7 @@ class PhotosController < ApplicationController
   def showfeaturedphotos
     @team = current_team? ? current_team : @sport.teams.find(params[:team_id])
     if !@team.featuredphotos.nil?
-      @featuredlists = @sport.photos.where(team_id: @team.id, :id.in => @team.featuredphotos).desc(:updated_at).paginate(per_page: 10)
+        @featuredlists = @sport.photos.where(team_id: @team.id, :id.in => @team.featuredphotos).desc(:updated_at).paginate(per_page: 10)
     else
       @featuredlists = nil
     end
@@ -48,7 +53,7 @@ class PhotosController < ApplicationController
   end
 
   def latest
-    @photolists = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
+    @photolists = @sport.photos.where(team_id: current_team.id.to_s, pending: false).desc(:updated_at).paginate(per_page: 10)
     respond_to do |format|
       format.js
     end

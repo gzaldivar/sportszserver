@@ -55,7 +55,7 @@
 		</div>
       	<div class="col-xs-6">
         	<p class="text-info">
-          	<% if site_owner? %>
+          	<% if site_owner?(@sport) %>
             	<%= link_to @newsfeed.news, sport_newsfeed_path(@sport, @newsfeed) %>
           	<% else %>
             	<%= @newsfeed.news %>

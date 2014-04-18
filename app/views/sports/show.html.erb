@@ -25,10 +25,10 @@
           </ul>
         </li-->
         <li><%= link_to "News", sport_path(@sport) %></li>
-        <% if current_team? and user_signed_in? and (is_package_enabled?(@sport) or site_owner?) %>
+        <% if current_team? and user_signed_in? and (is_package_enabled?(@sport) or site_owner?(@sport)) %>
           <li><%= link_to "Blog", sport_blogs_path(current_site, team_id: current_team.id) %></li>
         <% end %>
-        <% if current_team? and (is_package_enabled?(@sport) or site_owner?) %>
+        <% if current_team? and (is_package_enabled?(@sport) or site_owner?(@sport)) %>
           <li><%= link_to "Media", photoshome_sport_photos_path(@sport) %></li>
         <% end %>
       </ul>
@@ -80,7 +80,7 @@
   </div>
 <% end %>
 <p>
-<% if site_owner? %>
+<% if site_owner?(@sport) %>
   <div class="row">
     <div class="col-xs-2 col-xs-offset-3">
       <%= link_to "Edit Sport", edit_sport_path(id: @sport.id), class: "btn btn-md btn-primary" %>

@@ -38,6 +38,6 @@
     <% end %>
 </table>
 <p class="text-info">* Denotes league game</p>
-<% if site_owner? %>
+<% if site_owner?(@sport) %>
     <%= link_to "Add Game", new_sport_team_gameschedule_path(@sport, current_team), class: "btn btn-xs btn-primary" %>
 <% end %>

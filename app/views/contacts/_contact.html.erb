@@ -19,7 +19,7 @@
 		Email:&nbsp
 		<%= contact.email %><p>
 		<% if user_signed_in? %>
-			<% if site_owner? %>
+			<% if site_owner?(@sport) %>
 				<div class="row">
 					<div class="col-xs-1">
 						<%= link_to "Edit", edit_sport_contact_path(@sport, contact), class: "btn btn-xs btn-primary" %>

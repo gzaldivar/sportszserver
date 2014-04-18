@@ -12,7 +12,7 @@
 	<th>BLKD</th>
 	<th>YDS</th>
 	<th>LONG</th>
-	<% if site_owner? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
+	<% if site_owner?(@sport) or isTeamManager?(name == "Game" ? @athlete : @gameschedule) %>
 		<th>Edit</th>
 	<% end %>
 </thead>

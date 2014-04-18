@@ -18,7 +18,7 @@
 	<th>TD</th>
 	<th>FUMB REC</th>
 	<th>S</th>
-	<% if site_owner? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) and name == "Player" %>
+	<% if site_owner?(@sport) or isTeamManager?(name == "Game" ? @athlete : @gameschedule) and name == "Player" %>
 		<th>Edit</th>
 	<% end %>
 </thead>

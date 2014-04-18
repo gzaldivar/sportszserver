@@ -16,10 +16,10 @@
 	<td><%= stat.shutouts %></td>
 	<td><%= stat.minutesplayed %></td>
 
-	<% if Soccer.find(stat.id).nil? and site_owner? or isTeamManager?(name == "Player" ? athlete : @game) and name != "Totals" %>
+	<% if Soccer.find(stat.id).nil? and site_owner?(@sport) or isTeamManager?(name == "Player" ? athlete : @game) and name != "Totals" %>
 		<td><%= link_to "Stats", new_sport_athlete_soccer_path(@sport, stat.athlete_id, gameschedule_id: stat.gameschedule_id), 
 						class: "btn btn-xs btn-primary" %></td>
-	<% elsif site_owner? or isTeamManager?(name == "Player" ? athlete : @game) and name != "Totals" %>
+	<% elsif site_owner?(@sport) or isTeamManager?(name == "Player" ? athlete : @game) and name != "Totals" %>
 		<td><%= link_to "Stats", edit_sport_athlete_soccer_path(@sport, stat.athlete_id, stat, gameschedule_id: stat.gameschedule_id), 
 				class: "btn btn-xs btn-primary" %></td>
 	<% end %>

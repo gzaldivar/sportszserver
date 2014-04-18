@@ -25,7 +25,7 @@
   	<% else %>
   		<%= image_tag 'Photo_Not_Available.jpg', class: 'img-responsive' %>
   	<% end %>
-    <% if site_owner? %>
+    <% if site_owner?(@sport) %>
       <%= s3_uploader_form callback_url: createathletephoto_sport_athletes_path, callback_param: "athlete[image_url]", 
                  key: "uploads/athletephotos/#{@athlete.id}/${filename}", id:  "myS3Uploader" do %>
           <%= file_field_tag :file, class: 'form-control' %>

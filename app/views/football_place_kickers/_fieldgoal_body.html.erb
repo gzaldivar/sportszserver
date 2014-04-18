@@ -15,7 +15,7 @@
 	<td><%= stat.fgmade %></td>
 	<td><%= stat.fgblocked %></td>
 	<td><%= stat.fglong %></td>
-	<% if site_owner? or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
+	<% if site_owner?(@sport) or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
 		<td>
 			<% if FootballPlaceKicker.find(stat.id).nil? %>
 				<%= link_to "Update", sport_athlete_football_place_kicker_path(@sport, @theplayer, gameschedule_id: @gameschedule.id), 

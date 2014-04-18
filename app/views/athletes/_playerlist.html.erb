@@ -45,7 +45,7 @@
         </tbody>
     <% end %>
 </table>
-<% if site_owner? %>
+<% if site_owner?(@sport) %>
     <%= link_to "Add Player", new_sport_athlete_path(@sport, team_id: current_team.id), class: "btn btn-xs btn-primary" %>
     <%= link_to "Featured Players", selectfeaturedplayers_sport_path(@sport), class: "btn btn-xs btn-primary" %>
 <% end %>

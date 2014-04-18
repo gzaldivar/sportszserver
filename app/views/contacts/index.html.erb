@@ -10,7 +10,7 @@
 		<% end %>
 		<p>
 		<% if user_signed_in? %> 
-			<% if site_owner? %>
+			<% if site_owner?(@sport) %>
 				<div class="row">
 					<div class="col-xs-2 col-xs-offset-3">
 						<%= link_to "Add Contact", new_sport_contact_path(current_site), class: "btn btn-sm btn-primary" %>

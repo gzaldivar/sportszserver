@@ -14,7 +14,7 @@
 </div>
 <%
 =begin %>
-	<% if site_owner? or isTeamManager?(@athlete) %>
+	<% if site_owner?(@sport) or isTeamManager?(@athlete) %>
 		<div class="col-xs-4">
 			<%= form_tag selectedstat_sport_athlete_path(sport_id: @sport, athlete_id: @athlete), class: "form-horizontal", method: 'put' do %>
 				<%= render 'shared/error_messages', object: @athlete %>

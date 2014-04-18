@@ -15,7 +15,7 @@
 	<th>FTM</th>
 	<th>FT%</th>
 	<th><strong>Total</strong></th>
-	<% if site_owner? or isTeamManager?(name == "Game" ? @athlete : @gameschedule) and name == "Player" %>
+	<% if site_owner?(@sport) or isTeamManager?(name == "Game" ? @athlete : @gameschedule) and name == "Player" %>
 		<th>Update</th>
 	<% end %>
 </thead>

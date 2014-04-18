@@ -6,7 +6,7 @@
 <div class="row">
 	<div class="col-xs-8">
       	<ul class="nav nav-pills">
-      		<% if is_package_enabled?(@sport) or site_owner? %>
+      		<% if is_package_enabled?(@sport) or site_owner?(@sport) %>
 				<li><%= link_to "Videos", videoclipshome_sport_videoclips_path(@sport, team_id: current_team.id) %></li>
 			<% end %>
 		</ul>
@@ -33,7 +33,7 @@
 <p>
 <div class="row">
 	<div class="col-xs-3 col-xs-offset-4">
-		<% if !current_team.nil? and user_signed_in? and (user_pics_ok? or site_owner?) %>
+		<% if !current_team.nil? and user_signed_in? and (user_pics_ok? or site_owner?(@sport)) %>
 			<%= link_to "Add Team Photo", newteam_sport_photos_path(@sport, team_id: current_team), class: "btn btn-sm btn-primary" %>
 		<% end %>
 	</div>

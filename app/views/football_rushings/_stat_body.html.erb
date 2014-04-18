@@ -19,7 +19,7 @@
 	<td><%= stat.fumbles %></td>
 	<td><%= stat.fumbles_lost %></td>
 	<td><%= stat.twopointconv %></td>
-	<% if site_owner? or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
+	<% if site_owner?(@sport) or isTeamManager?(name == "Player" ? @theplayer : @game) and name == "Player" %>
 		<td>
 			<% if FootballRushing.find(stat.id).nil? %>
 				<%= link_to "Update", sport_athlete_football_rushing_path(@sport, @theplayer, gameschedule_id: @gameschedule.id), class: "btn btn-xs btn-info"%>

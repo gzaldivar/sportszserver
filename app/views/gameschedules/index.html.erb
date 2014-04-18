@@ -77,7 +77,7 @@
 <div class="row">
   <div class="center">
 		<div class="col-xs-1 col-xs-offset-5">
-			<% if site_owner? or isTeamManager?(@gameschedules.first) %>
+			<% if site_owner?(@sport) or isTeamManager?(@gameschedules.first) %>
 				<%= link_to "Add", new_sport_team_gameschedule_path(@sport, @team), class: "btn btn-primary" %>	
 			<% end %>
 		</div>

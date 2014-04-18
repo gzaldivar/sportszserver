@@ -12,19 +12,24 @@ class VideoclipsController < ApplicationController
   
   def videoclipshome
     if !current_team.featuredvideoclips.nil?
-      @featuredlists = @sport.videoclips.where(team_id: current_team.id.to_s, 
-                                          :id.in => current_team.featuredvideoclips).desc(:updated_at).paginate(per_page: 10)
+      if isAdmin?
+        @featuredlists = @sport.videoclips.where(team_id: current_team.id.to_s, 
+                                            :id.in => current_team.featuredvideoclips).desc(:updated_at).paginate(per_page: 10)
+      else
+        @featuredlists = @sport.videoclips.where(team_id: current_team.id.to_s, 
+                                            :id.in => current_team.featuredvideoclips).desc(:updated_at, pending: false).paginate(per_page: 10)
+      end
+
       @thevideo = @featuredlists[0]
     else
-      @videolists = @sport.videoclips.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
+      if isAdmin?
+        @videolists = @sport.videoclips.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
+      else
+        @videolists = @sport.videoclips.where(team_id: current_team.id.to_s).desc(:updated_at, pending: false).paginate(per_page: 10)
+      end
 
       if @videolists.any?
-        @videolists.each_with_index do |v, cnt|
-          if !v.pending and SiteOwner?(current_team.id)
-            @thevideo = @videolists[cnt]
-            break
-          end
-        end
+        @thevideo = @videolists[0]
       else
         @thevideo = Videoclip.new(displayname: 'No Videos')
       end

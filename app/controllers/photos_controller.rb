@@ -16,19 +16,24 @@ class PhotosController < ApplicationController
 
   def photoshome
     if !current_team.featuredphotos.nil?
-      @featuredlists = @sport.photos.where(team_id: current_team.id.to_s, 
-                                          :id.in => current_team.featuredphotos).desc(:updated_at).paginate(per_page: 10)
+      if isAdmin?
+        @featuredlists = @sport.photos.where(team_id: current_team.id.to_s, 
+                                              :id.in => current_team.featuredphotos).desc(:updated_at).paginate(per_page: 10)
+      else
+        @featuredlists = @sport.photos.where(team_id: current_team.id.to_s, 
+                                              :id.in => current_team.featuredphotos, pending: false).desc(:updated_at).paginate(per_page: 10)
+      end
+
       @thephoto = @featuredlists[0]
     else
-      @photolists = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
+      if isAdmin?
+        @photolists = @sport.photos.where(team_id: current_team.id.to_s).desc(:updated_at).paginate(per_page: 10)
+      else
+        @photolists = @sport.photos.where(team_id: current_team.id.to_s, pending: false).desc(:updated_at).paginate(per_page: 10)
+      end
 
       if @photolists.any?
-        @photolists.each_with_index do |p, cnt|
-          if !p.pending and !SiteOwner?(current_team.id)
-            @thephoto = @photolists[cnt]
-            break
-          end
-        end
+        @thephoto = @photolists[0]
       else
         @thephoto = Photo.new(displayname: 'No Photos')
       end

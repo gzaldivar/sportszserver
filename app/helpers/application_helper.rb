@@ -31,7 +31,7 @@ module ApplicationHelper
 			if payment.nil?
 				return false
 			else
-				if payment.isSilver? or payment.isGold? or isPlatinum?
+				if payment.isSilver? or payment.isGold? or payment.isPlatinum?
 					return true
 			  	else
 			  		return false

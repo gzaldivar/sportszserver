@@ -19,9 +19,9 @@ class Sport
   field :cssstyle, type: String, default: "application"
   field :bannerpos, type: String, default: "right"
 
-  field :enable_user_pics,    type: Boolean
-  field :enable_user_video,   type: Boolean
-  field :review_media,      type: Boolean
+  field :enable_user_pics,    type: Boolean, default: false
+  field :enable_user_video,   type: Boolean, default: false
+  field :review_media,      type: Boolean, default: false
 
   field :about_filename_url,  type: String
   field :about_filename,    type: String

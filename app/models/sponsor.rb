@@ -25,6 +25,7 @@ class Sponsor
 
   belongs_to :team
   belongs_to :sport
+  has_one :sportadinv
 
   has_mongoid_attached_file :sponsorpic,
     :storage        => :s3,

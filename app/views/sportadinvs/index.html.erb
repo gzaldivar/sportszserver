@@ -1,0 +1,32 @@
+<% provide(:title, "Adminstor Ad Inventroy") %>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		<table class="table table-striped table-bordered table-hover">
+		    <thead>
+		    	<th>Ad Class</th>
+		    	<th>Price</th>
+		    	<th>Active</th>
+		    </thead>
+		    <tbody>
+		    	<% if !@sportadinvs.nil? and !@sportadinvs.empty? %>
+			    	<% @sportadinvs.each do |s| %>
+				    	<tr>
+				    		<td><%= link_to s.adlevelname, sport_sportadinv_path(@sport, s) %></td>
+				    		<td><%= link_to s.price, sport_sportadinv_path(@sport, s) %></td>
+				    		<td><%= s.active %></td>
+				    	</tr>
+				    <% end %>
+					<%= will_paginate @sports %>
+			    <% end %>
+		    </tbody>
+		</table>
+		<% if user_signed_in? and site_owner?(@sport) %>
+			<div class="row">
+				<div class="col-xs-3 col-xs-offset-5">
+					<%= link_to "Add New Ad Inventory", new_sport_sportadinv_path(@sport), class: "btn btn-md btn-primary" %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>

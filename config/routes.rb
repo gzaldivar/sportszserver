@@ -32,6 +32,8 @@ Sportzserver::Application.routes.draw do
   resources :sports do
     resources :contacts
 
+    resources :sportadinvs
+
     resources :sponsors do
       member do
         put :updatephoto

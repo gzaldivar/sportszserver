@@ -138,6 +138,7 @@
       <%= render 'layouts/toolsselectmodal' if user_signed_in? and current_site? and site_owner?(current_site) %>
       <%= render 'layouts/userheaderselectmodal' if user_signed_in? %>
       <%= render 'layouts/solutions' %>
+      <%= render 'layouts/adsponsormodal' if  user_signed_in? and current_site? and site_owner?(current_site) %>
     </div>
   </div>
 </html>

@@ -6,7 +6,7 @@ class PaymentsController < ApplicationController
 			price = Payment.new.silver
 		elsif params[:package] == "Gold"
 			price = Payment.new.gold
-		else 
+		else
 			price = Payment.new.platinum
 		end
 

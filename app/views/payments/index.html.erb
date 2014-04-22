@@ -2,10 +2,10 @@
 <p>
 <div class="row">
 	<div class="col-xs-4">
-		<%= link_to (image_tag "FootballGameStats.png", width: "300", height: "400"), info_path %>
+		<%= link_to (image_tag "fanapp/iPhoneEditGame.png", class: "img-responsive"), info_path %>
 	</div>
 	<div class="col-xs-4">
-		<%= link_to (image_tag "BasketballGameStats.png", width: "300", height: "400"), info_path %>
+		<%= link_to (image_tag "fanapp/iPhoneBasketballGameEdit.png", class: "img-responsive"), info_path %>
 	</div>
 </div>
 <p>
@@ -22,13 +22,13 @@
 		Basic - Free
 	</div>
 	<div class= "col-xs-2 col-xs-offset-1">
-		Silver - $49 per year
+		Intermediate - $49 per year
 	</div>
 	<div class="col-xs-2 col-xs-offset-1">
-		Gold - $99 per year
+		Expert - $99 per year
 	</div>
 	<div class="col-xs-2 col-xs-offset-1">
-		Platinum - $249 per year
+		Platinum - $149 per year
 	</div>
 </div>
 </h5>
@@ -36,22 +36,22 @@
 	<div class="row">
 		<div class="col-xs-2">
 			<div class="well">
-				<h6 class="text-info">Home Page, News, Standings, Schedule, Scores, Roster, Player Profiles</h6>
+				<h6 class="text-info">Home Page, News, Standings, Schedule, Scores, Roster, Player Profiles, Web Sponsors</h6>
 			</div>
 		</div>
 		<div class="col-xs-2 col-xs-offset-1">
 			<div class="well">
-				<h6 class="text-info">Live stats, 300MB of storage for Photos and Video, Blog Support</h6>
+				<h6 class="text-info">Live stats, 5GB of storage for Photos and Video, Blog Support</h6>
 			</div>
 		</div>
 		<div class="col-xs-2 col-xs-offset-1">
 			<div class="well">
-				<h6 class="text-info">1GB storage for Photos and Video, Sponsor support for your program</h6>
+				<h6 class="text-info">10GB storage for Photos and Video</h6>
 			</div>
 		</div>
 		<div class="col-xs-2 col-xs-offset-1">
 			<div class="well">
-				<h6 class="text-info">10GB storage for Photos and Video, Branded iPhone app for your program</h6>
+				<h6 class="text-info">10GB storage for Photos and Video, Sponsor support on our mobile app!</h6>
 			</div>
 		</div>
 	</div>
@@ -61,11 +61,11 @@
 		</div>
 		<div class="col-xs-2 col-xs-offset-1">
 			<%= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), 
-									new_payment_path(package: "Silver") %>
+									new_payment_path(package: "Intermediate") %>
 		</div>
 		<div class="col-xs-2 col-xs-offset-1">
 			<%= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), 
-									new_payment_path(package: "Gold") %>
+									new_payment_path(package: "Expert") %>
 		</div>
 		<div class="col-xs-2 col-xs-offset-1">
 			<%= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), 

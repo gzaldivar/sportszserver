@@ -18,10 +18,23 @@ class SponsorsController < ApplicationController
 	end
 
 	def createad
-		begin
-			
+		begin			
+			@sponsor = @sport.sponsors.build(params[:sponsor])
+			@sponsor.city = @sponsor.zip.to_region(city: true)
+        	@sponsor.state = @sponsor.zip.to_region(state: true)
+
+			if !params[:team_id].nil? and !params[:team_id].blank?
+				@sponsor.team_id = params[:team_id]
+			end
+
+			@sponsor.save!
+
+			redirect_to new_sport_adpayment_path(@sport, @sponsor, sportadinv_id: params[:sportadinv])
 		rescue Exception => e
-			
+			respond_to do |format|
+				format.html { redirect_to :back, alert: "Error adding Ad " + e.message }
+				format.json { render status: 404, json: { error: e.message } }
+			end
 		end
 	end
 
@@ -45,6 +58,7 @@ class SponsorsController < ApplicationController
 				format.html { redirect_to [@sport, @sponsor], notice: "Added #{@sponsor.name}!" }
 				format.json { render status: 200, json: { sponsor: @sponsor } }
 			end
+
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error adding Sponsor " + e.message }

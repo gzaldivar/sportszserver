@@ -7,6 +7,7 @@ class Adpayment
 	field :expiration, type: DateTime
 
 	belongs_to :sportadinv
+	belongs_to :sponsor
 
 	attr_accessor :first_name, :last_name, :ip_address
 

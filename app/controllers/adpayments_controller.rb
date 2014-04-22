@@ -24,13 +24,19 @@ class AdpaymentsController < ApplicationController
 
 	def show
    		@order = Adpayment.find(params[:id])
+   		@sportadinv = @sport.sportadinvs.find(@order.sportadinv)
+   		@sponsor = @sport.sponsors.find(@sportadinv.sponsor_id)
+   		redirect_to sport_sponsor_path(@sport, @sponsor)
   	end
 
   	def index
   	end
 
 	def cancel
-		redirect_to root_path, notice: "Order Canceled"
+		@sportadinv = @sport.sportadinv.find(params[:custom])
+		@sponsor = @sport.sponsors.find(@sportadinv.sponsor_id)
+
+		redirect_to sport_sponsors_path(@sport), notice: "Ad Order Canceled"
   	end
 
 	def create
@@ -45,8 +51,6 @@ class AdpaymentsController < ApplicationController
 
 			if payment.nil?
 				@order.expiration = DateTime.now + 1.year
-			else
-				@order.expiration = payment.expiration + 1.year
 			end
 
 			if @order.save

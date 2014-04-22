@@ -16,7 +16,7 @@
 </div>
 <div class="row">
   <div class="col-xs-12">
-    <%= form_for [@sport, @sponsor], :input_html => { :class => 'form-horizontal' } do |f| %>
+    <%= form_for [@sport, @sponsor], url: createad_sport_sponsors_path(@sport), method: :post, :input_html => { :class => 'form-horizontal' } do |f| %>
       <%= render 'form', f: f %>
     <% end %>
   </div>

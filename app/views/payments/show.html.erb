@@ -16,7 +16,7 @@
 					<td><%= @order.id %></td>
 					<td><%= User.find(@order.user_id).email %></td>
 					<td><%= @order.package %></td>
-					<td>$<%= @order.package == "Silver" ? @order.silver / 100.0 : @order.package == "Gold" ? @order.gold / 100.0 : @order.platinum / 100.0 %></td>
+					<td>$<%= @order.package == "Intermediate" ? @order.silver / 100.0 : @order.package == "Expert" ? @order.gold / 100.0 : @order.platinum / 100.0 %></td>
 				</tr>
 			</tbody>
 		</table>

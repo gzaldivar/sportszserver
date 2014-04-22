@@ -1,12 +1,28 @@
 class SponsorsController < ApplicationController
-	before_filter :authenticate_user!,  only: [:new, :create, :edit, :update, :destroy]
+	before_filter :authenticate_user!,  only: [:new, :create, :edit, :update, :destroy, :add, :createad]
   	before_filter :get_sport
   	before_filter :get_sponsor,		only: [:edit, :show, :destroy, :update, :updatephoto]
 	before_filter only: [:new, :create, :edit, :update, :destroy] do |controller|
 		SiteOwner?(current_user.teamid)
 	end
-	before_filter only: [:destroy, :update, :create, :edit, :new, :createphoto, :updatephoto] do |check|
-		check.sponsorEnabled?(current_site)
+#	before_filter only: [:destroy, :update, :create, :edit, :new, :createphoto, :updatephoto] do |check|
+#		check.sponsorEnabled?(current_site)
+#	end
+
+	def info
+		@sportadinvs = @sport.sportadinvs.all
+	end
+
+	def add
+		@sponsor = Sponsor.new
+	end
+
+	def createad
+		begin
+			
+		rescue Exception => e
+			
+		end
 	end
 
 	def new
@@ -14,7 +30,7 @@ class SponsorsController < ApplicationController
 	end
 
 	def create
-		begin 
+		begin
 			@sponsor = @sport.sponsors.build(params[:sponsor])
 			@sponsor.city = @sponsor.zip.to_region(city: true)
         	@sponsor.state = @sponsor.zip.to_region(state: true)

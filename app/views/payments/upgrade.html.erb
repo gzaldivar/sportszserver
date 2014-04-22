@@ -20,8 +20,8 @@
 					<td><%= User.find(@order.user_id).email %></td>
 					<td><%= Sport.find(current_user.default_site).sitename %></td>
 					<td><%= @order.package %></td>
-					<td>$<%= @order.package == "Silver" ? @order.silver / 100.0 : @order.package == "Gold" ? @order.gold / 100.0 : 
-							 @order == "Platinum" ? @order.platinum / 100.0 : 0.0 %></td>
+					<td>$<%= @order.package == "Intermediate" ? @order.silver / 100.0 : @order.package == "Expert" ? @order.gold / 100.0 : 
+							 @order.package == "Platinum" ? @order.platinum / 100.0 : 0.0 %></td>
 				</tr>
 			</tbody>
 		</table>
@@ -37,34 +37,47 @@
 		<div class="well">
 			<div class="row">
 				<div class="col-xs-2">
-						<h6 class="text-info">Home Page, News, Standings, Schedule, Scores, Roster, Player Profiles</h6>
+						<h4 class="text-success">Novice</h4><h6 class="text-info">Home Page, News, Standings, Schedule, Scores, Roster, Player Profiles</h6>
 				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-						<h6 class="text-info">Live stats, 300MB of storage for Photos and Video, Blog Support</h6>
+				<div class="col-xs-2">
+						<h4 class="text-success">Intermediate</h4><h6 class="text-info">Live stats, 5GB of storage for Photos and Video, Blog Support - <font class="text-danger">Extend for one more year</font></h6>
 				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-						<h6 class="text-info">1GB storage for Photos and Video, Sponsor support for your program</h6>
+				<div class="col-xs-2">
+						<h4 class="text-success">Expert</h4><h6 class="text-info">Upgrade Intermediate to Expert for this seasons for an additional $50</h6>
 				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-						<h6 class="text-info">5GB storage for Photos and Video, Branded iPhone app for your program</h6>
+				<div class="col-xs-2">
+						<h4 class="text-success">Expert</h4><h6 class="text-info">10GB storage for Photos and Video, Sponsor support for your program -  <font class="text-danger">Extend for one more year</font></h6>
+				</div>
+				<div class="col-xs-2">
+						<h4 class="text-success">Platinum</h4><h6 class="text-info">Upgrade Expert to Platinum for this seasons for an additional $50</h6>
+				</div>
+				<div class="col-xs-2">
+						<h4 class="text-success">Platinum</h4><h6 class="text-info">10GB storage for Photos and Video, Branded iPhone app for your program -  <font class="text-danger">Extend for one more year</font></h6>
 				</div>
 			</div>
 			<div class="row">
 				<div class="col-xs-2">
 					<%= link_to "Basic", new_sport_path, class: "btn btn-sm btn-primary" %>
 				</div>
-				<div class="col-xs-2 col-xs-offset-1">
+				<div class="col-xs-2">
 					<%= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), 
-											new_payment_path(package: "Silver") %>
+											new_payment_path(package: "Intermediate") %>
 				</div>
-				<div class="col-xs-2 col-xs-offset-1">
+				<div class="col-xs-2">
 					<%= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), 
-											new_payment_path(package: "Gold") %>
+											new_payment_path(package: "Intermediate to Expert") %>
 				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-					<!--%= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), 
-											new_payment_path(package: "Platinum ") %-->
-					Coming Soon!
+				<div class="col-xs-2">
+					<%= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), 
+											new_payment_path(package: "Expert") %>
+				</div>
+				<div class="col-xs-2">
+					<%= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), 
+											new_payment_path(package: "Expert to Platinum") %>
+				</div>
+				<div class="col-xs-2">
+					<%= link_to image_tag('https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif'), 
+											new_payment_path(package: "Platinum ") %>
 				</div>
 			</div>
 		</div>

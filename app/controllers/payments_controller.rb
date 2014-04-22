@@ -2,10 +2,18 @@ class PaymentsController < ApplicationController
 #	include ActiveMerchant::Billing
 
 	def new
-		if params[:package] == "Silver"
+		if params[:package] == "Intermediate"
 			price = Payment.new.silver
-		elsif params[:package] == "Gold"
+			package = "Intermediate"
+		elsif params[:package] == "Intermediate to Expert"
+			price = Payment.new.silvergold
+			package = "Upgrade Intermediate to Expert"
+		elsif params[:package] == "Expert"
 			price = Payment.new.gold
+			package = "Expert"
+		elsif params[:package] == "Expert to Platinum"
+			price = Payment.new.goldplatinum
+			package = "Upgrade Expert to Platinum"
 		else
 			price = Payment.new.platinum
 		end
@@ -13,12 +21,14 @@ class PaymentsController < ApplicationController
 		response = EXPRESS_GATEWAY.setup_purchase(
 			price,
 			ip: request.remote_ip,
-			return_url: params[:package] == "Silver" ? confirmsilver_payments_url : params[:package] == "Gold" ? confirmgold_payments_url : 
-														confirmplatinum_payments_url,
+			return_url: params[:package] == "Intermediate" ? confirmsilver_payments_url : params[:package] == "Intermediate to Expert" ? 
+						confirmsilvergold_payments_url : params[:package] == "Expert" ? confirmgold_payments_url : 
+						params[:package] == "Expert to Platinum" ? confirmgoldplatinum_payments_url : confirmplatinum_payments_url,
 			cancel_return_url: cancel_payments_url,
 			allow_guest_checkout: 'true',				   #payment with credit card for non PayPal users
-			items: [ { name: params[:package], description: "Eazesportz - " + params[:package], quantity: "1", 
-						amount: params[:package] == "Silver" ? 4900 : params[:package] == "Gold" ? 9900 : 24900 } ] #array of hashes, amount is a price in cents
+			items: [ { name: package, description: "Eazesportz - " + package, quantity: "1", 
+						amount: params[:package] == "Intermediate" ? 4900 : params[:package] == "Intermediate to Expert" ? 5000 : 
+						params[:package] == "Expert" ? 9900 : params[:package] == "Expert to Platinum" ? 5000 : 14900 } ] #array of hashes, amount is a price in cents
 		)
 		redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
 	end
@@ -27,7 +37,15 @@ class PaymentsController < ApplicationController
 		@order = Payment.new
 		@order.express_token = params[:token]
 		@price = @order.silver/100
-		@order.package = "Silver"
+		@order.package = "Intermediate"
+		render 'confirm'
+	end
+
+	def confirmsilvergold
+		@order = Payment.new
+		@order.express_token = params[:token]
+		@price = 50
+		@order.package = "Intermediate to Expert"
 		render 'confirm'
 	end
 
@@ -35,7 +53,15 @@ class PaymentsController < ApplicationController
 		@order = Payment.new
 		@order.express_token = params[:token]
 		@price = @order.gold/100
-		@order.package = "Gold"
+		@order.package = "Expert"
+		render 'confirm'
+	end
+
+	def confirmgoldplatinum
+		@order = Payment.new
+		@order.express_token = params[:token]
+		@price = 50
+		@order.package = "Expert to Platinum"
 		render 'confirm'
 	end
 
@@ -52,12 +78,16 @@ class PaymentsController < ApplicationController
   	end
 
   	def upgrade
-		if params[:payment_id].nil?
-			@order = Payment.new(user_id: current_user.id)
-			@order.package = "Basic"
-		else
-    		@order = Payment.find(params[:payment_id])
-    	end
+  		begin
+			if params[:payment_id].nil?
+				@order = Payment.new(user_id: current_user.id)
+				@order.package = "Basic"
+			else
+	    		@order = Payment.find(params[:payment_id])
+	    	end  			
+  		rescue Exception => e
+  			redirect_to :back, alert: e.message
+  		end
   	end
 
   	def index
@@ -68,7 +98,7 @@ class PaymentsController < ApplicationController
   	end
 
 	def create
-#		begin
+		begin
 			@order = Payment.new(user_id: current_user.id)
 			@order.attributes = params[:payment].merge(:ip_address => request.remote_ip)
 			
@@ -79,8 +109,14 @@ class PaymentsController < ApplicationController
 
 				if payment.nil?
 					@order.expiration = DateTime.now + 1.year
-				else
+				elsif @order.package != "Intermediate to Expert" and @order.package != "Expert to Platinum"
 					@order.expiration = payment.expiration + 1.year
+				end
+
+				if params[:payment][:package] == "Intermediate to Expert"
+					@order.package = "Expert"
+				elsif params[:payment][:package] == "Expert to Platinum"
+					@order.package = "Platinum"
 				end
 
 				if current_user.default_site
@@ -97,9 +133,9 @@ class PaymentsController < ApplicationController
 			else
 				raise 'failed to purchase. ' + response.message
 			end
-#		rescue Exception => e
-#			redirect_to :back, alert: e.message
-#		end
+		rescue Exception => e
+			redirect_to :back, alert: e.message
+		end
 	end
 
 end

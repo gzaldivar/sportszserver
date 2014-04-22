@@ -91,7 +91,7 @@ module ApplicationHelper
 			if payment.nil?
 				raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
 			else
-				if payment.isGold? or isPlatinum?
+				if payment.isGold? or payment.isPlatinum?
 					return true
 			  	else
 			      	raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')

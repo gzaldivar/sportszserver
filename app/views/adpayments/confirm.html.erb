@@ -1,11 +1,11 @@
-<% provide(:title, "Easy Sports Mobile - Confirm Order") %>
+<% provide(:title, "Confirm Ad Order") %>
 <p>
 <div class="row">
 	<div class="col-xs-11">
-		<h2>Confirm your order for Eazesportz <%= @package %></h2>
+		<h2>Confirm your ad order for <%= current_site.sitename %> - <%= @order.adlevelname %></h2>
 
 		<%= form_for @order do |f| %>
-			<%= f.hidden_field :package, value: @order.package %>
+			<%= f.hidden_field :sportadinv_id, value: @sportadinv.id.to_s %>
 			<%= f.hidden_field :express_token, value: @order.express_token %>
 
 			<table class="table table-bordered">
@@ -17,9 +17,9 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td><%= @order.first_name %> <%=h @order.last_name %></td>
-						<td><%= current_user.email %></td>
-						<td><%= @order.package %></td>
+						<td><%=h @order.first_name %> <%=h @order.last_name %></td>
+						<td><%=h current_user.email %></td>
+						<td><%=h @sportadinv.adlevelname %></td>
 						<td>$<%= @price %></td>
 					</tr>
 				</tbody>

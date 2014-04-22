@@ -19,7 +19,13 @@ Sportzserver::Application.routes.draw do
    
   resources :payments, only: [:index, :new, :show, :create] do
     collection do
-      get :confirmsilver, :confirmgold, :confirmplatinum, :cancel, :upgrade
+      get :confirmsilver, :confirmgold, :confirmplatinum, :cancel, :upgrade, :confirmsilvergold, :confirmgoldplatinum
+    end
+  end
+    
+  resources :adpayments, only: [:index, :new, :show, :create] do
+    collection do
+      get :confirm, :cancel
     end
   end
     
@@ -37,9 +43,11 @@ Sportzserver::Application.routes.draw do
     resources :sponsors do
       member do
         put :updatephoto
+        post :createad
       end
       
       collection do
+        get :info, :add
         post :createphoto
       end
     end

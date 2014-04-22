@@ -8,17 +8,16 @@
        <p>
       <em>Sponsor Image</em> - Sponsor images will be automatically resized for mobile devices.
       <p>
-      You may create as many sponsors as you like. They will be automatically cycled in a queue and presented on your web site. If you opt to have a custom mobile app, they will be cycled on the mobile app as well.
+      You may create as many sponsors as you like.  They will be cycled on our mobile app automatically. They will also be automatically cycled in a queue and presented on your web site.
       <p>
-      We provide support for the following classes of sponsors:
-      <ul>
-        <li>Platinum - Sponsor will be given priority and displayed frequently.</li>
-        <li>Gold - Sponsor will be displayed half as many times as a platinum sponsor.</li>
-      </ul>
-      <p>
-      Your website home page will display the different levels of sponsors starting with the platinum sponsors first. Other pages on your web site will do the same. Custom mobile apps will cycle your sponsors as described above.
       </h5><br/>
 		</div>
 	</div>
 </div>
-<%= render 'form' %>
+<div class="row">
+  <div class="col-xs-12">
+    <%= form_for [@sport, @sponsor], :input_html => { :class => 'form-horizontal' } do |f| %>
+      <%= render 'form', f: f %>
+    <% end %>
+  </div>
+</div>

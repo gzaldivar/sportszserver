@@ -16,20 +16,28 @@ class Payment
 		4900	# $49
 	end
 
+	def silvergold
+		5000
+	end
+
 	def gold
 		9900	# $99
 	end
 
+	def goldplatinum
+		5000
+	end
+
 	def platinum
-		24900	# $249
+		14900	# $149
 	end
 
 	def isSilver?
-		package == "Silver"
+		package == "Intermediate"
 	end
 
 	def isGold?
-		package == "Gold"
+		package == "Expert"
 	end
 
 	def isPlatinum?
@@ -37,10 +45,14 @@ class Payment
 	end
 
 	def purchase(package)
-		if package == "Silver"
+		if package == "Intermediate"
 			response = process_purchase(silver)
-		elsif package == "Gold"
+		elsif package == "Intermediate to Expert"
+			response = process_purchase(silvergold)
+		elsif package == "Expert"
 			response = process_purchase(gold)
+		elsif package == "Gold to Platinum"
+			response = process_purchase(goldplatinum)
 		else
 			response = process_purchase(platinum)
 		end

@@ -1,124 +1,127 @@
+<%= render 'shared/error_messages', object: f.object %>
 <div class="row">
-	<div class="col-xs-12">
-		<%= form_for [@sport, @sponsor], :input_html => { :class => 'form-horizontal' } do |f| %>
-			<%= render 'shared/error_messages', object: f.object %>
-			<div class="row">
-				<div class="col-xs-11">
-					<%= f.label :sponsor_name %>
-					<%= f.text_field :name, class: 'form-control' %>
-				</div>
-			</div>
-			<p>
-			<div class="row">
-				<div class="col-xs-2">
-					<%= f.label :number %>
-					<%= f.text_field :addrnum, class: 'form-control' %>
-				</div>
-				<div class="col-xs-4">
-					<%= f.label :street %>
-					<%= f.text_field :street, class: 'form-control' %>
-				</div>
-				<div class="col-xs-5">
-					<%= f.label :city, "City - city is computed from zip." %>
-					<!--%= f.text_field :city, class: 'form-control' %-->
-					<h4 class="text-info"><%= @sponsor.city %></h4>
-				</div>
-			</div>
-			<p>
-			<div class="row">
-				<div class="col-xs-3">
-					<%= f.label :state, "State - state is computed from zip." %>
-					<!--%= f.select :state, us_states, { include_blank: true }, class: 'form-control' %-->
-					<h4 class="text-info"><%= @sponsor.state %></h4>
-				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-					<%= f.label :zip %>
-					<%= f.text_field :zip, class: 'form-control' %>
-				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-					<%= f.label :phone %>
-					<%= f.text_field :phone, class: 'form-control' %>
-				</div>
-			</div>
-			<p>
-			<div class="row">
-				<div class="col-xs-2">
-					<%= f.label :fax %>
-					<%= f.text_field :fax, class: 'form-control' %>
-				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-					<%= f.label :mobile %>
-					<%= f.text_field :mobile, class: 'form-control' %>
-				</div>
-			</div>
-			<p>
-			<div class="row">
-				<div class="col-xs-8">
-					<%= f.label :sponsors_url, "Sponsors URL" %>
-					<%= f.text_field :adurl, class: 'form-control' %>
-				</div>
-			</div>
-	        <div id="loading">
-	          <div id="loadingcontent">
-	              <p id="loadingspinner">
-	                  Updating Sponsor Info ....
-	              </p>
-	          </div>
-	        </div>
-	        <p>
-			<div class="row">
-				<div class="col-xs-4">
-					<%= f.label :contact_email, "Contact Email" %>
-					<%= f.text_field :contactemail, class: 'form-control' %>
-				</div>
+	<div class="col-xs-11">
+		<%= f.label :sponsor_name %>
+		<%= f.text_field :name, class: 'form-control' %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-2">
+		<%= f.label :number %>
+		<%= f.text_field :addrnum, class: 'form-control' %>
+	</div>
+	<div class="col-xs-4">
+		<%= f.label :street %>
+		<%= f.text_field :street, class: 'form-control' %>
+	</div>
+	<div class="col-xs-5">
+		<%= f.label :city, "City - city is computed from zip." %>
+		<!--%= f.text_field :city, class: 'form-control' %-->
+		<h4 class="text-info"><%= @sponsor.city %></h4>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-3">
+		<%= f.label :state, "State - state is computed from zip." %>
+		<!--%= f.select :state, us_states, { include_blank: true }, class: 'form-control' %-->
+		<h4 class="text-info"><%= @sponsor.state %></h4>
+	</div>
+	<div class="col-xs-2 col-xs-offset-1">
+		<%= f.label :zip %>
+		<%= f.text_field :zip, class: 'form-control' %>
+	</div>
+	<div class="col-xs-2 col-xs-offset-1">
+		<%= f.label :phone %>
+		<%= f.text_field :phone, class: 'form-control' %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-2">
+		<%= f.label :fax %>
+		<%= f.text_field :fax, class: 'form-control' %>
+	</div>
+	<div class="col-xs-2 col-xs-offset-1">
+		<%= f.label :mobile %>
+		<%= f.text_field :mobile, class: 'form-control' %>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-8">
+		<%= f.label :sponsors_url, "Sponsors URL" %>
+		<%= f.text_field :adurl, class: 'form-control' %>
+	</div>
+</div>
+<div id="loading">
+  <div id="loadingcontent">
+      <p id="loadingspinner">
+          Updating Sponsor Info ....
+      </p>
+  </div>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-4">
+		<%= f.label :contact_email, "Contact Email" %>
+		<%= f.text_field :contactemail, class: 'form-control' %>
+	</div>
 <%
 =begin %>
-				<div class="col-xs-3 col-xs-offset-2">
-					<%= f.input :priority, as: :radio_buttons, label: "Sponsorship Priority:", hint: "Select if you want your sponorship ads to take prioirty over ads displayed from an ad server on your mobile app", :selected => (@sponsor.priority? ? true : false) %>
-				</div>
+	<div class="col-xs-3 col-xs-offset-2">
+		<%= f.input :priority, as: :radio_buttons, label: "Sponsorship Priority:", hint: "Select if you want your sponorship ads to take prioirty over ads displayed from an ad server on your mobile app", :selected => (@sponsor.priority? ? true : false) %>
+	</div>
 <%
 =end %>
-			</div>
-			<p>
-			<div class="row">
-				<div class="col-xs-3">
-					<h4>Current Sponsor image</h4>
-					<% if @sponsor.sponsorpic? %>
-						<%= image_tag @sponsor.sponsorpic.url(:medium) %>
-		          	<% else %>
-		            	<%= image_tag "Photo_Not_Available.jpg" %>
-					<%end %>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-3">
+		<h4>Current Sponsor image</h4>
+		<% if @sponsor.sponsorpic? %>
+			<%= image_tag @sponsor.sponsorpic.url(:medium) %>
+      	<% else %>
+        	<%= image_tag "Photo_Not_Available.jpg" %>
+		<%end %>
 
-		      		<% if @sponsor.name.blank? %>
-		      			<h6 class="text-info">New sponsor info must be submitted before uploading pic!</h6>
-		      		<% else %>
-						<%= s3_uploader_form callback_url: createphoto_sport_sponsors_url, callback_param: "sponsor[image_url]", 
-											 key: "uploads/sponsorsphotos/#{@sponsor.id}/${filename}", id:  "myS3Uploader" do %>
-		    				<%= file_field_tag :file %>
-		   				 <% end %>
-		    
-						<script id="template-upload" type="text/x-tmpl">
-							<div id="file-{%=o.unique_id%}" class="upload">
-								{%=o.name%}
-								<div class="progress"><div class="bar" style="width: 0%"></div></div>
-							</div>
-						</script>    
-		      		<% end %>
+  		<% if @sponsor.name.blank? %>
+  			<h6 class="text-info">New sponsor info must be submitted before uploading pic!</h6>
+  		<% else %>
+			<%= s3_uploader_form callback_url: createphoto_sport_sponsors_url, callback_param: "sponsor[image_url]", 
+								 key: "uploads/sponsorsphotos/#{@sponsor.id}/${filename}", id:  "myS3Uploader" do %>
+				<%= file_field_tag :file %>
+				 <% end %>
+
+			<script id="template-upload" type="text/x-tmpl">
+				<div id="file-{%=o.unique_id%}" class="upload">
+					{%=o.name%}
+					<div class="progress"><div class="bar" style="width: 0%"></div></div>
 				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-					<%= f.label :select_team, "Select Team" %>
-					<%= collection_select(:sponsor, :team_id, @sport.teams, :id, :team_name, { prompt: true }, { class: 'form-control' } ) %>
-				</div>
-				<div class="col-xs-3 col-xs-offset-1">
-					<%= f.label :platinum_gold_silver, "Platinum or Gold" %>
-					<%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-2 col-xs-offset-4">
-					<%= f.submit :submit, class:	"btn btn-md btn-primary", id: "submitbtn" %>
-				</div>
-			</div>
-		<% end %>	
-	</div>	
+			</script>    
+  		<% end %>
+	</div>
+	<div class="col-xs-2 col-xs-offset-1">
+		<%= f.label :select_team, "Select Team" %>
+		<%= collection_select(:sponsor, :team_id, @sport.teams, :id, :team_name, { prompt: true }, { class: 'form-control' } ) %>
+	</div>
+	<div class="col-xs-3 col-xs-offset-1">
+		<% if isAdmin? %>
+			<p class="text-info">If you have an ad sponsor to add that is not signing up via our mobile or web site, you can enter them here!<p>
+			<%= f.label :sportadinv, "Ad Sponsor Level" %>
+			<!--%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %-->
+			<%= f.select :sportadinv, @sport.sportadinvs.collect { |s| [s.adlevelname, s.id] }, {}, class: 'form-control' %>
+		<% elsif user_signed_in? %>
+			<p class="text-info">Select the ad level to advertise on <%= @sport.sitename %><p>
+			<%= f.label :sportadinv, "Ad Sponsor Level" %>
+			<!--%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %-->
+			<%= f.select :sportadinv, @sport.sportadinvs.collect { |s| [s.adlevelname + " - $" + s.price.to_s, s.id] }, {}, class: 'form-control' %>
+		<% end %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-2 col-xs-offset-4">
+		<%= f.submit :submit, class:	"btn btn-md btn-primary", id: "submitbtn" %>
+	</div>
 </div>

@@ -1,0 +1,37 @@
+<% provide(:title, 'Become a sponsor for ' + @sport.sitename) %>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		<h4 class="text-info">Welcome to <%= @sport.sitename %>. We thank you for your interest in potentially buying ad space on our mobile site and web site. Be assured that your ad will be appear to our fans when they access our content on mobile devices or our web site.</h4>
+		<p>
+		<h4 class="text-warning"><em><%= @sport.sitename %></em> currently has <%= @sportadinvs.count.to_s %> ad level for you to choose from.</h4>
+		<h5 class="text-success">Here is a list of the add levels <%= @sport.sitename %> has available for your to choose from!</h5>
+
+		<div class="row">
+			<div class="col-xs-6">
+				<table class="table able-striped table-bordered table-hover">
+					<thead>
+						<th>Ad Level</th>
+						<th>Ad Price</th>
+					</thead>
+					<tbody>
+						<% if !@sportadinvs.nil? %>
+						 	<% @sportadinvs.each do |s| %>
+								<td><%= s.adlevelname %></td>
+								<td><%= s.price %></td>
+					 		<% end %>
+					 	<% end %>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<h5 class="text-success">They higher the price of the ad level the more often your ad will appear.</h5>
+		<p>
+		<% if !user_signed_in? %>
+			<h4 class="text-danger">You will need to login to advertise on <%= @sport.sitename %>. If you do not have a login, select the "Sign Up" when you are prompted to login.</h4>
+		<% end %>
+		<p>
+		<h5><%= link_to "Click here to get started!", new_sport_sponsor_path(@sport) %></h5>
+		<%= link_to "Click Here", add_sport_sponsors_path(@sport), class: "btn btn-sm btn-primary" %>
+	</div>
+</div>

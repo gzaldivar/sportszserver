@@ -1,0 +1,23 @@
+<% provide(:title, 'New Sponsor') %>
+<div class="row">
+  <div class="col-xs-12">
+		<div class="hero-unit">
+			<h5>Enter your ad information below. You will be able to update the information at anytime. Your add will be active for one year from the date of purchase.
+      <p>
+      You must use jpg/jpeg/png images for the ad image. If you don't like the image, you will always be able to change it.
+       <p>
+      <em>Ad Image</em> - Your ad images will be automatically resized for mobile devices. You should take a look at the image on our mobile app and upload a new one if you don't like the way it looks.
+      <p>
+      Your ad will be cycled on our mobile app automatically and will also be automatically cycled in a queue and presented on your web site. How often it appears is a function of the ad level that was defined by the sports programs administrator. 
+      <p>
+      </h5><br/>
+		</div>
+	</div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <%= form_for [@sport, @sponsor], :input_html => { :class => 'form-horizontal' } do |f| %>
+      <%= render 'form', f: f %>
+    <% end %>
+  </div>
+</div>

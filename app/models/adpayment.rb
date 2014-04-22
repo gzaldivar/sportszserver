@@ -1,19 +1,21 @@
-class Sportadinv
+class Adpayment
 	include Mongoid::Document
 	include Mongoid::Timestamps
 
-	field :price, type: Float
-	field :adlevelname, type: String
-	field :active, type: Boolean
+	field :express_token, :type => String
+	field :express_payer_id, :type => String
 	field :expiration, type: DateTime
 
-	belongs_to :sport
-	belongs_to :sponsor
+	belongs_to :sportadinv
 
 	attr_accessor :first_name, :last_name, :ip_address
 
-	def purchase(package)
-		response = process_purchase(price)
+	def priceincents
+		price * 100
+	end
+
+	def purchase(sportadinv)
+		response = process_purchase(sportadinv.priceincents)
 
 		if response.success?
 			return true
@@ -43,4 +45,5 @@ class Sportadinv
 				:payer_id => express_payer_id
 			)
 		end
+
 end

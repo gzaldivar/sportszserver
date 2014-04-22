@@ -29,7 +29,7 @@ class SponsorsController < ApplicationController
 
 			@sponsor.save!
 
-			redirect_to new_sport_adpayment_path(@sport, @sponsor, sportadinv_id: params[:sportadinv])
+			redirect_to new_sport_sponsor_adpayment_path(@sport, @sponsor, sportadinv_id: @sponsor.sportadinv_id.to_s)
 		rescue Exception => e
 			respond_to do |format|
 				format.html { redirect_to :back, alert: "Error adding Ad " + e.message }
@@ -91,7 +91,15 @@ class SponsorsController < ApplicationController
 
 	def index
 		begin
-			@sponsors = @sport.sponsors.all.entries
+			if isAdmin?
+				@sponsors = @sport.sponsors.all
+				@totals = 0
+				@sponsors.each do |s|
+					@totals += s.sportadinv.price
+				end
+			else
+				@sponsors = @sport.sponsors.where(adminentered: false)
+			end
 			respond_to do |format|
 				format.html
 				format.json

@@ -1,13 +1,29 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + " - Sponsors") %>
 <div class="row">
   <div class="col-xs-10">
-		<ul class="homesites">
+		<% if isAdmin? %>
 			<div class="row">
 				<div class="col-xs-12">
-					<%= render 'sponsors', sponsors:  @sponsors %>
+					<%= render 'sponsors', sponsors:  @sponsors, adminentered: true %>
 				</div>
-			</div>   
-		</ul>
+			</div>
+			<h4 class="text-success">List of advertisers that have bought ad space on your site</h4>
+		<% end %>  
+		<div class="row">
+			<div class="col-xs-12">
+				<%= render 'sponsors', sponsors:  @sponsors, adminentered: false %>
+			</div>
+		</div>
+		<% if isAdmin? %>
+			<div class="row">
+				<div class="col-xs-3">
+					<h4 class="text-danger">Total ad sales to date: </h4>
+				</div>
+				<div class="col-xs-1">
+					<h4 class="text-danger"><%= @totals %></h4>
+				</div>
+			</div>
+		<% end %>
 		<div class="row">
       		<div class="col-xs-2 col-xs-offset-5">
       			<% if isAdmin? %>

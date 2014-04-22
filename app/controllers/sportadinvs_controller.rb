@@ -31,7 +31,7 @@ class SportadinvsController < ApplicationController
 	end
 
 	def index
-		@sportadinvs = @sport.sportadinvs.all.paginate( page: params[:page])
+		@sportadinvs = @sport.sportadinvs.all.asc(:price).paginate( page: params[:page])
 	end
 
 	def update

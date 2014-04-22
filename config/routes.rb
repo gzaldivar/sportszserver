@@ -23,12 +23,6 @@ Sportzserver::Application.routes.draw do
     end
   end
     
-  resources :adpayments, only: [:index, :new, :show, :create] do
-    collection do
-      get :confirm, :cancel
-     end
-  end
-    
   resources :admins, only: [:edit, :update, :index] do
     collection do
       get   :users, :deleteuser, :sports
@@ -49,6 +43,13 @@ Sportzserver::Application.routes.draw do
         get :info, :add
         post :createphoto, :createad
       end
+      
+      resources :adpayments, only: [:index, :new, :show, :create] do
+        collection do
+          get :confirm, :cancel
+         end
+      end
+        
     end
 
     resources :events do

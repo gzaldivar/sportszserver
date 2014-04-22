@@ -20,12 +20,13 @@ class Sponsor
   field :teamonly, type: Boolean, default: false
   field :adurl, type: String
   field :sponsorlevel, type: String, default: "Platinum"
+  field :adminentered, type: Boolean, default: false
 
   field :processing, type: Boolean, default: false
 
   belongs_to :team
   belongs_to :sport
-  has_one :sportadinv
+  belongs_to :sportadinv
   has_one :adpayment
 
   has_mongoid_attached_file :sponsorpic,

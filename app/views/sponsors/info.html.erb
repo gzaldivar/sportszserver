@@ -31,7 +31,15 @@
 			<h4 class="text-danger">You will need to login to advertise on <%= @sport.sitename %>. If you do not have a login, select the "Sign Up" when you are prompted to login.</h4>
 		<% end %>
 		<p>
-		<h5><%= link_to "Click here to get started!", new_sport_sponsor_path(@sport) %></h5>
-		<%= link_to "Click Here", add_sport_sponsors_path(@sport), class: "btn btn-sm btn-primary" %>
+		<div class="row">
+			<div class="col-xs-2">
+				<h5><%= link_to "Click here to get started!", new_sport_sponsor_path(@sport) %></h5>
+				<%= link_to "Click Here", add_sport_sponsors_path(@sport), class: "btn btn-sm btn-primary" %>
+			</div>
+			<div class="col-xs-4 col-xs-offset-1">
+				<h5>List of current advertisers for <%= @sport.sitename %></h5>
+				<%= link_to @sport.sitename + " Advertisters", sport_sponsors_path(@sport), class: "btn btn-sm btn-primary" %>
+			</div>
+		</div>
 	</div>
 </div>

@@ -8,6 +8,10 @@ class Sportadinv
 	field :expiration, type: DateTime
 
 	belongs_to :sport
-	belongs_to :sponsor
+	has_many :sponsors
+
+	def priceincents
+		price * 100
+	end
 
 end

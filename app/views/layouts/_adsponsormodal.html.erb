@@ -15,10 +15,10 @@
                 </thead>
                 <tbody>
                     <tr>
-                      <td><%= link_to "Manage Ad Inventory", sport_sportadinvs_path(current_site) %></td>
+                      <td><%= link_to "Manage Ad Sales Inventory", sport_sportadinvs_path(current_site) %></td>
                     </tr>
                      <tr>
-                      <td><%= link_to "Manage Sponsors", sport_sponsors_path(current_site) %></td>
+                      <td><%= link_to "Manage Advertisers and Sponsors", sport_sponsors_path(current_site) %></td>
                     </tr>
                     <tr>
                       <% if payment = Payment.find_by(user_id: current_user.id) %>

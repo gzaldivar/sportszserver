@@ -109,14 +109,16 @@
 	<div class="col-xs-3 col-xs-offset-1">
 		<% if isAdmin? %>
 			<p class="text-info">If you have an ad sponsor to add that is not signing up via our mobile or web site, you can enter them here!<p>
-			<%= f.label :sportadinv, "Ad Sponsor Level" %>
+			<%= f.label :sportadinv_id, "Ad Sponsor Level" %>
 			<!--%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %-->
-			<%= f.select :sportadinv, @sport.sportadinvs.collect { |s| [s.adlevelname, s.id] }, {}, class: 'form-control' %>
+			<%= f.select :sportadinv_id, @sport.sportadinvs.collect { |s| [s.adlevelname, s.id] }, {}, class: 'form-control' %>
+			<%= f.hidden_field :adminentered, value: true %>
 		<% elsif user_signed_in? %>
 			<p class="text-info">Select the ad level to advertise on <%= @sport.sitename %><p>
-			<%= f.label :sportadinv, "Ad Sponsor Level" %>
+			<%= f.label :sportadinv_id, "Ad Sponsor Level" %>
 			<!--%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %-->
-			<%= f.select :sportadinv, @sport.sportadinvs.collect { |s| [s.adlevelname + " - $" + s.price.to_s, s.id] }, {}, class: 'form-control' %>
+			<%= f.select :sportadinv_id, @sport.sportadinvs.collect { |s| [s.adlevelname + " - $" + s.price.to_s, s.id] }, {}, class: 'form-control' %>
+			<%= f.hidden_field :adminentered, value: false %>
 		<% end %>
 	</div>
 </div>

@@ -11,10 +11,6 @@ class Adpayment
 
 	attr_accessor :first_name, :last_name, :ip_address
 
-	def priceincents
-		price * 100
-	end
-
 	def purchase(sportadinv)
 		response = process_purchase(sportadinv.priceincents)
 

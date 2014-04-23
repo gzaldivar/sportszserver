@@ -3,11 +3,12 @@
 <div class="row">
  	<div class="col-xs-11">
 		<h4>Update User Profile</h4>
-		<%= simple_form_for @user, :defaults => { :input_html => { :class => "form-control" } } do |f| %>
+		<%= form_for @user, :input_html => { :class => 'form-horizontal' } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 			<div class="row">
 				<div class="col-xs-2">
-					<%= f.input :name %>
+					<%= f.label :name, "Username" %>
+					<%= f.text_field :name, class: 'form-control' %>
 				</div>
 				<p>
 				<div class="col-xs-2 col-xs-offset-1">
@@ -27,14 +28,13 @@
 			<h4>Athlete Alert Options:</h4>
 			<div class="row">
 				<div class="col-xs-2">
-					<%= f.input :bio_alert, as: :boolean,  label: "Enable Bio Alerts" %>
+					<%= f.label :bio_alert, "Athlete Info Alert" %>
+					<%= f.check_box :bio_alert, class: 'form-control' %>
 				</div>
 				<div class="col-xs-2 col-xs-offset-1">
-					<%= f.input :blog_alert, as: :boolean, label: "Enable Blog Alerts" %>
+					<%= f.label :blog_alert, "Blog Alerts" %>
+					<%= f.check_box :blog_alert, class: 'form-control' %>
 				</div>
-				<!--div class="col-xs-2 col-xs-offset-1">
-					<%= f.input :stat_alert, as: :boolean, label: "Enable Stat Alerts" %>
-				</div-->
 			</div>
 			<p>
 		      <div id="loading">
@@ -47,30 +47,34 @@
 		      <p>
 			<div class="row">
 				<div class="col-xs-2">
-					<%= f.input :score_alert, as: :boolean, label: "Enable Scoring Alerts" %>
+					<%= f.label :score_alert, "Score Alerts" %>
+					<%= f.check_box :score_alert, class: 'form-control' %>
 				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-					<%= f.input :media_alert, as: :boolean, label: "Enable Photo and Video Alerts" %>
+				<div class="col-xs-3 col-xs-offset-1">
+					<%= f.label :media_alert, "Photo and Video Alerts" %>
+					<%= f.check_box :media_alert, class: 'form-control' %>
 				</div>
 			</div>
 			<p>
 			<div class="row">
 				<% if isAdmin? and current_user != @user %>
 					<div class="col-xs-2 ">
-						<%= f.input :teamid, collection: @teams.collect{ |t| [t.team_name, t.id] }, label: "Manage Team", 
-									input_html: {id: "select_team"}  %>
+						<%= f.select :teamid, @teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true }, class: "form-control"  %>
 					</div>
 					<div class="col-xs-2 col-xs-offset-1">
 						<%= f.input :is_active, as: :boolean %>
+						<%= f.label :media_alert, "Photo and Video Alerts" %>
+						<%= f.check_box :media_alert, class: 'form-control' %>
 					</div>
 				<% end %>
 			</div>
 			<div class="row">
 				<div class="col-xs-2 col-xs-offset-3">
-					<%= f.button :submit, 'Update Profile', class: "btn btn-md btn-primary", id: "submitbtn" %>
+					<%= f.submit 'Update Profile', class: "btn btn-md btn-primary", id: "submitbtn" %>
 				</div>
 			</div>
 		<% end %>
+		<p>
 		<div class="row">
 			<div class="col-xs-8 col-xs-offset-2">
 				<% if current_site? and (@user.default_site != current_site.id.to_s) %>

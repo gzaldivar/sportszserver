@@ -17,8 +17,10 @@
 					<tbody>
 						<% if !@sportadinvs.nil? %>
 						 	<% @sportadinvs.each do |s| %>
-								<td><%= s.adlevelname %></td>
-								<td><%= s.price %></td>
+						 		<tr>
+									<td><%= s.adlevelname %></td>
+									<td><%= s.price %></td>
+								</tr>
 					 		<% end %>
 					 	<% end %>
 					</tbody>

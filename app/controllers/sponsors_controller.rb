@@ -10,7 +10,7 @@ class SponsorsController < ApplicationController
 #	end
 
 	def info
-		@sportadinvs = @sport.sportadinvs.all
+		@sportadinvs = @sport.sportadinvs.all.asc(:price).paginate( page: params[:page])
 	end
 
 	def add

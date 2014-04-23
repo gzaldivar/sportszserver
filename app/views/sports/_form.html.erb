@@ -5,16 +5,16 @@
       <div class="row">
         <div class="col-xs-5">
           <h5>Enter name of site (ex. My School, Laguna Hills Pop Warner)</h5>
-          <%= f.label :site_name, "Site Name" %>
-          <%= f.text_field :sitename, class: 'form-control' %>
         </div>
-      </div>
-      <div class="row">
-        <div class="col-xs-11">
+        <div class="col-xs-5">
           <h5>Mascot will be used for all teams. If your teams have different mascots. Ex: Pee Lions, Jr. Pee Wee Mustangs you will have the opportunity to enter a mascot for that team on the team page</h5>
         </div>
       </div>
       <div class="row">
+        <div class="col-xs-5">
+          <%= f.label :site_name, "Site Name" %>
+          <%= f.text_field :sitename, class: 'form-control' %>
+        </div>
         <div class="col-xs-5">
           <%= f.label :mascot %>
           <%= f.text_field :mascot, class: 'form-control'  %>
@@ -40,6 +40,14 @@
             <%= f.select :periods,["2", "4"], {}, class: 'form-control' %>
           </div>
         <% end %>
+      </div>
+      <p>
+      <div class="row">
+        <div class="col-xs-11">
+          <h5 class="text-warning">Paypal email used to deposit your program's ad revenue. If you do not enter a PayPal eaccount mail , there will be no account to deposit revenue from advertisers who advertise on your site. You create ad inventory for advertisors by selecting the Ads and Sponsors tab the tab bar.</h5>
+            <%= f.label :paypal_email, "Paypal Email Account" %>
+            <%= f.text_field :paypal_email, class: "form-control" %> 
+        </div>
       </div>
       <p>
       <div class="row">

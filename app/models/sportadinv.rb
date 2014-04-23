@@ -14,4 +14,7 @@ class Sportadinv
 		price * 100
 	end
 
+#	validates_numericality_of :price, greater_than_or_equal_to: 0, message: "Only numeric values allowed for price"
+	validates :price, :format => {  :with => /^\d+??(?:\.\d{0,2})?$/ }, :numericality =>{:greater_than => 0}, 
+	:presence => { :message => "Only numeric values allowed for price" }
 end

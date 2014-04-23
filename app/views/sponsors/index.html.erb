@@ -1,13 +1,24 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + " - Sponsors") %>
+<p>
+<% if !@sport.paypal_email and isAdmin? %>
+	<div class="row">
+		<div class="col-xs-11">
+			<h3 class="text-warning">You do not have a paypal account email defined for your sports program. You can create Sponsors for your
+			 program but advertisers will not be able to buy ad space for your sports program.</h3>
+		</div>
+	</div>
+<% end %>
+<p>
 <div class="row">
   <div class="col-xs-10">
 		<% if isAdmin? %>
+			<h4 class="text-success">List of advertisers you have entered. These ad sponsors were sold by you directly.</h4>
 			<div class="row">
 				<div class="col-xs-12">
 					<%= render 'sponsors', sponsors:  @sponsors, adminentered: true %>
 				</div>
 			</div>
-			<h4 class="text-success">List of advertisers that have bought ad space on your site</h4>
+			<h4 class="text-success">List of advertisers that have bought ad space on your site. Revenue from these advertisers were deposited into your PayPal account.</h4>
 		<% end %>  
 		<div class="row">
 			<div class="col-xs-12">

@@ -31,7 +31,11 @@ class SportadinvsController < ApplicationController
 	end
 
 	def index
-		@sportadinvs = @sport.sportadinvs.all.asc(:price).paginate( page: params[:page])
+		begin
+			@sportadinvs = @sport.sportadinvs.all.asc(:price).paginate( page: params[:page])
+		rescue Exception => e
+			redirect_to :back, alert: e.message + " You can so by editing you user profile."
+		end
 	end
 
 	def update

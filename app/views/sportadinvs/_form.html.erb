@@ -8,12 +8,16 @@
 					<%= f.text_field :adlevelname, class: 'form-control' %>
 				</div>
 				<div class="col-xs-1 col-xs-offset-1">
+					<h5>Decimal or numeric only</h5>
 					<%= f.label :price, "Price" %>
 					<%= f.text_field :price, class: 'form-control' %>
 				</div>
 				<div class="col-xs-1 col-xs-offset-1">
-					<%= f.label :active %>
+					<%= f.label :active, "General Sale" %>
 					<%= f.check_box :active, class: 'form-control' %>
+				</div>
+				<div class="col-xs-offset-3">
+					<h5>Available to all advertisers for sale</h5>
 				</div>
 			</div>
 			<p>

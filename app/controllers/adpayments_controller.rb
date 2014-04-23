@@ -36,7 +36,6 @@ class AdpaymentsController < ApplicationController
 
 	def cancel
 		@sportadinv = @sport.sportadinvs.find(params[:custom])
-		@sponsor = @sport.sponsors.find(@sportadinv.sponsor_id)
 
 		redirect_to sport_sponsors_path(@sport), notice: "Ad Order Canceled"
   	end
@@ -56,6 +55,7 @@ class AdpaymentsController < ApplicationController
 
 				if @order.save
 					payment.destroy if !payment.nil?
+					transfer_funds_to_program(@sponsor, @sport.paypal_email)
 
 					redirect_to sport_sponsor_path(@sport, @sponsor)
 				else
@@ -75,6 +75,25 @@ class AdpaymentsController < ApplicationController
 		def get_sport
 			@sport = Sport.find(params[:sport_id])
 			@sponsor = @sport.sponsors.find(params[:sponsor_id])
+		end
+
+		def transfer_funds_to_program(sponsor, email)
+			adpercentage = (100 - Admin.first.adpercentage) / 100
+			payout = sponsor.sportadinv.price * adpercentage
+
+			if Rails.env.production?
+				gateway = ActiveMerchant::Billing::PaypalGateway.new({
+					      login: "gzaldivar_api1.icloud.com",
+					      password: "1388935614",
+					      signature: "AFcWxV21C7fd0v3bYYYRCpSSRl31Am0NwfOHNMcHaKUsemcqiBUkF" })
+				gateway.transfer(payout * 100, email, subject: sponsor.name, note: "Purchased ad level" + sponsor.sportadinv.adlevelname)
+			else
+				gateway = ActiveMerchant::Billing::PaypalGateway.new({
+					      login: "gzaldivar-facilitator_api1.icloud.com",
+					      password: "1388935614",
+					      signature: "AHUvrj4LS85hez4e0oNOt.ng8k.sApA9qsWrgVikPTlU8RdriVeo8t3a" })
+				gateway.transfer(payout * 100, email, subject: sponsor.name, note: "Purchased ad level" + sponsor.sportadinv.adlevelname)
+			end
 		end
 
 end

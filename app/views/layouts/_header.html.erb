@@ -27,10 +27,10 @@
 					<% end %>
 					<li><%= link_to "Find Sport", sports_path if (!user_signed_in? and current_site?) or !current_site? %></li>
 					<% if user_signed_in? and current_site? and site_owner?(current_site) %>
-						<!--li><a href="#adsponsor-responsive" data-toggle="modal">Ads and Sponsors</a></li-->
+						<li><a href="#adsponsor-responsive" data-toggle="modal">Ads and Sponsors</a></li>
 						<li><a href="#toolselect-responsive" data-toggle="modal">Tools</a></li>
 					<% end %>
-					<!--li><%= link_to "Advertisers", info_sport_sponsors_path(current_site) if  user_signed_in? and current_site? and !isAdmin?%></li-->
+					<li><%= link_to "Advertisers", info_sport_sponsors_path(current_site) if  user_signed_in? and current_site? and !isAdmin?%></li>
 				</ul>
 			</div>
 			</h5>

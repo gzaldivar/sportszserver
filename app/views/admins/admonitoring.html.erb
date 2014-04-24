@@ -1,0 +1,41 @@
+<% provide(:title, "Administer Failed Ads") %>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		<h3 class="text-center">List of failed ads that were purchased but failed revenue share distribution</h3>
+		<% if @sponsors.count > 0 %>
+			<table class="table table-striped table-bordered table-hover">
+			    <thead>
+			    	<th>Sport</th>
+			    	<th>Admin Email</th>
+			    	<th>Ad Name</th>
+			    	<th>Ad Level</th>
+			    	<th>Price</th>
+			    </thead>
+			    <tbody>
+			    	<% @sponsors.each do |s| %>
+				    	<tr>
+				    		<% sport = Sport.find(s.sport_id) %>
+				    		<% user = User.find(sport.adminid) %>
+				    		<% sportadinv = sport.sportadinvs.find(s.sportadinv_id) %>
+				    		<td><%= link_to sport.sitename, sport_path(sport) %></td>
+				    		<td><%= link_to user.email, user_path(user) %></td>
+				    		<td><%= link_to s.name, sport_sponsor_path(sport, s) %></td>
+				    		<td><%= link_to sportadinv.adlevelname, sport_sportadinv_path(sport, sportadinv) %></td>
+				    		<td><%= s.sportadinv.price %></td>
+				    	</tr>
+				    <% end %>
+					<%= will_paginate @sponsors %>
+			    </tbody>
+			</table>
+		<% else %>
+			<script> 
+				$(document).ready(function() {
+					$('#noadsmodal').modal('show');
+				});
+			</script>
+		<% end %>
+		<h5 class="text-info">Once you manually send fix the payment distribution problem, select the Ad Name to clear the error.</h5>
+	</div>
+</div>
+<%= render 'layouts/messagemodal', modalid: 'noadsmodal', modaltitle: 'No Failed Ads', messagetext: 'There are no failed ads to display!' %>

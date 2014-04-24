@@ -1,5 +1,5 @@
 class AdminsController < ApplicationController
-	before_filter :authenticate_user!,	only: [:update, :edit, :index, :sports, :users]
+	before_filter :authenticate_user!,	only: [:update, :edit, :index, :sports, :users, :admonitoring]
 	before_filter :isGod?
 	before_filter :getAdmin, only: [:edit, :update, :index]
 
@@ -13,6 +13,10 @@ class AdminsController < ApplicationController
 
 	def index
 		render 'show'
+	end
+
+	def admonitoring
+		@sponsors = Sponsor.where(sharepaid: false).paginate(:page => params[:page])
 	end
 
 	def sports

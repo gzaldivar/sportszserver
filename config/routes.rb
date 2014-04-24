@@ -25,7 +25,7 @@ Sportzserver::Application.routes.draw do
     
   resources :admins, only: [:edit, :update, :index] do
     collection do
-      get   :users, :deleteuser, :sports
+      get   :users, :deleteuser, :sports, :admonitoring
     end
   end
 

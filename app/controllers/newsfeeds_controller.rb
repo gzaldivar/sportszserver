@@ -1,9 +1,11 @@
 class NewsfeedsController < ApplicationController
   before_filter :authenticate_user!,    only: [:new, :create, :edit, :update, :destroy]
-  before_filter :site_owner?,           only: [:new, :create, :edit, :update, :destroy]
   before_filter :get_sport
   before_filter :correct_feeditem,      only: [:edit, :update, :destroy, :show, :updatephoto]
-  
+  before_filter only: [:new, :create, :edit, :update, :destroy] do |controller|
+    SiteAdmin?(@sport)
+  end
+
   def new
     @newsfeed = Newsfeed.new
     @athletes = @sport.athletes.asc(:number)

@@ -24,6 +24,9 @@ class Sponsor
 
   field :processing, type: Boolean, default: false
 
+  field :sharepaid, type: Boolean, default: true
+  field :sharetime, type: DateTime
+
   belongs_to :team
   belongs_to :sport
   belongs_to :sportadinv

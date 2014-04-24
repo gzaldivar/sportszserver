@@ -47,7 +47,7 @@ class AdpaymentsController < ApplicationController
 			@order.attributes = params[:adpayment].merge(:ip_address => request.remote_ip)
 			
 			if @order.purchase(@sportadinv)
-				payment = Adpayment.find_by(sportadinv_id: @sportadinv.id)
+				payment = Adpayment.find_by(sponsor_id: @sponsor.id)
 
 				if payment.nil?
 					@order.expiration = DateTime.now + 1.year
@@ -78,7 +78,7 @@ class AdpaymentsController < ApplicationController
 		end
 
 		def transfer_funds_to_program(sponsor, email)
-			adpercentage = (100 - Admin.first.adpercentage) / 100
+			adpercentage = (100 - Admin.first.adpercentage) / Float(100)
 			payout = sponsor.sportadinv.price * adpercentage
 
 			if Rails.env.production?
@@ -86,14 +86,24 @@ class AdpaymentsController < ApplicationController
 					      login: "gzaldivar_api1.icloud.com",
 					      password: "1388935614",
 					      signature: "AFcWxV21C7fd0v3bYYYRCpSSRl31Am0NwfOHNMcHaKUsemcqiBUkF" })
-				gateway.transfer(payout * 100, email, subject: sponsor.name, note: "Purchased ad level" + sponsor.sportadinv.adlevelname)
+				response = gateway.transfer(payout * 100, email, subject: sponsor.name, note: "Purchased ad level" + sponsor.sportadinv.adlevelname)
 			else
 				gateway = ActiveMerchant::Billing::PaypalGateway.new({
 					      login: "gzaldivar-facilitator_api1.icloud.com",
 					      password: "1388935614",
 					      signature: "AHUvrj4LS85hez4e0oNOt.ng8k.sApA9qsWrgVikPTlU8RdriVeo8t3a" })
-				gateway.transfer(payout * 100, email, subject: sponsor.name, note: "Purchased ad level" + sponsor.sportadinv.adlevelname)
+				response = gateway.transfer(payout * 100, email, subject: sponsor.name, note: "Purchased ad level" + sponsor.sportadinv.adlevelname)
 			end
+
+			sponsor.sharetime = DateTime.parse(response.params["timestamp"])
+			
+			if response.success?
+				sponsor.sharepaid = true
+			else
+				sponsor.sharepaid = false
+			end
+
+			sponsor.save
 		end
 
 end

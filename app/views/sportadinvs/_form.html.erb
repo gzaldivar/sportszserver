@@ -1,5 +1,7 @@
 <div class="row">
 	<div class="col-xs-11">
+		<h5 class="text-info">Select available for general sale below only if you want to allow this ad class to be sold to all advertisers.</h5>
+		<p>
 		<%= form_for [@sport, @sportadinv], :input_html => { :class => 'form-horizontal' } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 			<div class="row">
@@ -7,17 +9,26 @@
 					<%= f.label :adlevelname, "Ad Level" %>
 					<%= f.text_field :adlevelname, class: 'form-control' %>
 				</div>
-				<div class="col-xs-1 col-xs-offset-1">
-					<h5>Decimal or numeric only</h5>
-					<%= f.label :price, "Price" %>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= f.label :price, "Price - Numeric" %>
 					<%= f.text_field :price, class: 'form-control' %>
 				</div>
-				<div class="col-xs-1 col-xs-offset-1">
-					<%= f.label :active, "General Sale" %>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= f.label :expiration, "Expiration Date" %>
+					<%= f.text_field :date_string, as: :string, class: 'datepicker form-control', 
+                                    :value => @event.try(:start_time).try(:strftime,'%m/%d/%Y') %>
+                    <%= f.hidden_field :expiration, :id => 'recorded-at-alt' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-2">
+					<%= f.label :active, "Available for General Sale" %>
 					<%= f.check_box :active, class: 'form-control' %>
 				</div>
-				<div class="col-xs-offset-3">
-					<h5>Available to all advertisers for sale</h5>
+				<div class="col-xs-3">
+					<%= f.label :playerad, "Player only ad" %>
+					<%= f.check_box :playerad, class: "form-control" %>
 				</div>
 			</div>
 			<p>

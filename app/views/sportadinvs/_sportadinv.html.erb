@@ -6,6 +6,9 @@
 		<font class="text-info"><%= sportadinv.price %></font></h5>
 		<h5>Available for general sale to all advertisers: 
 		<font class="text-info"><%= sportadinv.active %></font></h5>
+		<h5>Expiration Date: 
+		<font class="text-info"><%= sportadinv.expiration.strftime("%m/%d/%Y") %></font></h5>
+		<p>
 		<% if user_signed_in? and site_owner?(@sport) %>
 			<div class="row">
 				<div class="col-xs-1">

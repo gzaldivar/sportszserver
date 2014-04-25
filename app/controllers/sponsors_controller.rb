@@ -91,15 +91,15 @@ class SponsorsController < ApplicationController
 
 	def index
 		begin
-			if isAdmin?
-				@sponsors = @sport.sponsors.all
-				@totals = 0
-				@sponsors.each do |s|
-					@totals += s.sportadinv.price
-				end
-			else
-				@sponsors = @sport.sponsors.where(adminentered: false)
+			@sponsors = @sport.sponsors.all
+			@sponsors.sort! { |a,b| a.sportadinv.price <=> b.sportadinv.price }
+
+			@totals = 0
+			
+			@sponsors.each do |s|
+				@totals += s.sportadinv.price
 			end
+			
 			respond_to do |format|
 				format.html
 				format.json

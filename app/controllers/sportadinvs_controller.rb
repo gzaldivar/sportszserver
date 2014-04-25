@@ -13,11 +13,17 @@ class SportadinvsController < ApplicationController
 
 	def create
 		begin
-    		sportadinv = @sport.sportadinvs.create!(params[:sportadinv])
+			player = @sport.sportadvins.where(playerad: true).all
 
-    		respond_to do |format|
-				format.html { redirect_to [@sport, sportadinv], notice: "Ad Level created for " + @sport.name }
-				format.json { render json: { sportadinv: sportadinv } }
+			if player.nil?
+	    		sportadinv = @sport.sportadinvs.create!(params[:sportadinv])
+
+	    		respond_to do |format|
+					format.html { redirect_to [@sport, sportadinv], notice: "Ad Level created for " + @sport.name }
+					format.json { render json: { sportadinv: sportadinv } }
+				end
+			else
+				raise "Player ad already defined. You must delete or edit the existing player ad."
 			end
 		rescue Exception => e
 			respond_to do |format|

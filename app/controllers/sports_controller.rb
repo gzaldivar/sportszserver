@@ -44,6 +44,7 @@ class SportsController < ApplicationController
 
         if @sport.save!
           
+#          nextad = @sport.nextad.create!(adlevel: 0, adindex: 0, levelarray: Array.new, pricearray: Array.new)
           current_user.admin = true
           current_user.adminsite = @sport.id
           current_user.default_site = @sport.id
@@ -70,7 +71,7 @@ class SportsController < ApplicationController
     begin
       site_visit(@sport)
 
-      if @sport.teams.count == 1
+     if @sport.teams.count == 1
         set_current_team(@sport.teams.first)
       end
 
@@ -103,7 +104,7 @@ class SportsController < ApplicationController
         if @newsfeeds.count > 0
           @thenews = @newsfeeds[0]
         end
-        
+
         respond_to do |format|
           format.html
           format.json 

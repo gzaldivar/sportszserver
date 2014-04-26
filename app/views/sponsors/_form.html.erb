@@ -105,16 +105,16 @@
 			<!--%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %-->
 			<%= f.label :sportadinv_id, "Sponsor Level" %>
 			<%= f.select :sportadinv_id, @sport.sportadinvs.where(active: false).collect { |s| [s.adlevelname, s.id] }, {}, class: 'form-control' %>
-			<!--p class="text-info">Ad inventory for general sale.<p-->
+			<p class="text-info">Ad inventory for general sale.<p>
 			<%= f.hidden_field :adminentered, value: true %>
-		<!--% else %>
-			<p class="text-info">Select the ad level to advertise on <%= @sport.sitename %><p-->
-			<!--%= f.hidden_field :adminentered, value: false %-->
+		<% else %>
+			<p class="text-info">Select the ad level to advertise on <%= @sport.sitename %><p>
+			<%= f.hidden_field :adminentered, value: false %>
 		<% end %>
 
-		<!--%= f.label :sportadinv_id, "Ad Level" %-->
+		<%= f.label :sportadinv_id, "Ad Level" %>
 		<!--%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %-->
-		<!--%= f.select :sportadinv_id, @sport.sportadinvs.where(active: true).collect { |s| [s.adlevelname + " - $" + s.price.to_s, s.id] }, {}, class: 'form-control' %-->
+		<%= f.select :sportadinv_id, @sport.sportadinvs.where(active: true).collect { |s| [s.adlevelname + " - $" + s.price.to_s, s.id] }, {}, class: 'form-control' %>
 	</div>
 </div>
 <div class="row">

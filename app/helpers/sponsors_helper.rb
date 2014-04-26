@@ -1,52 +1,49 @@
 module SponsorsHelper
 
-	def sponsorad(sport, level)
-		sport.sponsors.where(sponsorlevel: level).sample
+	def sponsorad(sport)
+		sport.sponsors.where(adminenterd: true).sample
 	end
 
 	def getsponsor(sport)
-
 		if sport.sponsors.count > 0
-#			getnextad(sport, 0)
-			sport.sponsors.where(adminentered: true).sample
-		end
+			levelsarray = []
+			oldprice = 100000000.0
+			inventory = sport.sportadinvs.where(playerad: false).desc(:price)
+			cnt = inventory.count
+
+			inventory.each_with_index do |inv, i|
+				if oldprice > inv.price
+					puts i
+					levelsarray[i] = 2**cnt
+					cnt -= 1
+				end
+
+				oldprice = inv.price
+			end
+
+	        numbers = levelsarray.count**2
+	        randomNumber = rand(numbers) + Float(rand(numbers + 1) / numbers)
+	        n = 0
+	        totalPercentage = 0.0
+
+	        levelsarray.each_with_index do |l, i|
+	            totalPercentage += Float(l)
+	            
+	            if totalPercentage >= randomNumber  
+	                break;
+	            end
+	            
+	            n += 1
+			end 
+
+			sport.sponsors.where(sportadinv_id: inventory[n].id).sample
+		else
+			nil
+ 		end
 	end
 
-	def number_of_adlevels(sport)
-		num = 0
-
-		sport.sportadinvs.where(playerad: false).each do |s|
-			if sport.sponsors.where(sportadinv_id: s.id).count > 0
-				num += 1
-			end
-		end
-
-		return num
+	def getPlayerAd(sport)
+		sport.sponsors.where(playerad: true).sample
 	end
 
-	def get_adinventory_levels(sport)
-		pricearray = Array.new
-
-		sport.sportadinvs.where(playerad: false).each do |s|
-			if sport.sponsors.where(sportadinv_id: s.id).count > 0
-				pricearray << s
-			end
-		end
-
-		return pricearray
-	end
-
-	def getnextad(sport, index, nextad)
-		if index == nextad.adindex
-			getnextad(sport, index + 1)
-		elsif nextad.levelarray[index] < index + 1
-			nextad.adindex = index
-			nextad.levelarray[index] += 1
-		elsif nextad.adindex == nextad.levelarray.count - 1 and nextad.levelarray[nextad.levelarray.count - 1] == nextad.levelarray.count
-			for i in nextad.levelarray do
-				nextad.levelarray[i] = 0
-			end
-			nextad.adindex = nextad.levelarray.count - 1
-		end 
- 	end
 end

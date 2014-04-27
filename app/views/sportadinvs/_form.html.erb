@@ -27,8 +27,8 @@
 					<%= f.check_box :active, class: 'form-control' %>
 				</div>
 				<div class="col-xs-3">
-					<%= f.label :playerad, "Player only ad" %>
-					<%= f.check_box :playerad, class: "form-control" %>
+					<%= f.label :athlete_id, "Player" %>
+					<%= f.select :athlete_id, @sport.athletes.all.asc(:number).collect { |a| [a.numlogname, a.id] }, { include_blank: true }, class: "form-control" %>
 				</div>
 			</div>
 			<p>

@@ -19,3 +19,5 @@ node(:thumb) { |t| t.sponsorpic(:thumb) }
 node(:medium) { |t| t.sponsorpic(:medium) }
 node(:large) { |t| t.sponsorpic(:large) }
 node(:tiny) { |t| t.sponsorpic(:tiny) }
+node(:portraitbanner) { |p| p.adbanner(:portraitbanner) }
+node(:landscapebanner) { |p| p.adbanner(:landscapebanner) }

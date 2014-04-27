@@ -35,7 +35,7 @@
 		    	<th>Price</th>
 		    	<th>Expiration</th>
 		    	<th>General Sale</th>
-		    	<th>Player Only Ad</th>
+		    	<th>Player Ad</th>
 		    </thead>
 		    <tbody>
 		    	<% if !@sportadinvs.nil? and !@sportadinvs.empty? %>
@@ -45,7 +45,7 @@
 				    		<td><%= link_to s.price, sport_sportadinv_path(@sport, s) %></td>
 				    		<td><%= s.expiration.strftime("%m/%d/%Y") %></td>
 				    		<td><%= s.active %></td>
-				    		<td><%= s.playerad ? s.playerad : "" %></td>
+				    		<td><%= !s.athlete_id.nil? ? @sport.athletes.find(s.athlete_id).logname : "" %></td>
 				    	</tr>
 				    <% end %>
 					<%= will_paginate @sports %>

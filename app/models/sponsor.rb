@@ -39,13 +39,23 @@ class Sponsor
                          secret_access_key: S3DirectUpload.config.secret_access_key },
     :styles => {
       :tiny     => ['50x50',     :jpg],
-      :thumb   => ['320x50',   :jpg],
-#      :landscapebanner  => ['640x50',  :jpg],
+      :thumb   => ['125x125',   :jpg],
       :medium   => ['300x250',   :jpg],
       :large    => ['640x960',   :jpg]
     }
 
+  has_mongoid_attached_file :adbanner,
+    :storage        => :s3,
+    :s3_credentials => { bucket: S3DirectUpload.config.bucket,
+                         access_key_id: S3DirectUpload.config.access_key_id,
+                         secret_access_key: S3DirectUpload.config.secret_access_key },
+    :styles => {
+      :landscapebanner  => ['640x50',   :jpg],
+      :portraitbanner   => ['320x50',   :jpg]
+    }
+
   validates_attachment_content_type :sponsorpic, content_type: ['image/jpg', 'image/jpeg', 'image/png']
+  validates_attachment_content_type :adbanner, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_presence_of :name, :contactemail, :adurl
   validates :phone, format: { with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})?([ .-]?)([0-9]{4})/ }
   validates_format_of :mobile, allow_blank: true, with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})?([ .-]?)([0-9]{4})/  

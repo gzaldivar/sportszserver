@@ -30,7 +30,7 @@
 						<li><a href="#adsponsor-responsive" data-toggle="modal">Ads and Sponsors</a></li>
 						<li><a href="#toolselect-responsive" data-toggle="modal">Tools</a></li>
 					<% end %>
-					<li><%= link_to "Advertisers", info_sport_sponsors_path(current_site) if  user_signed_in? and current_site? and !isAdmin?%></li>
+					<li><%= link_to "Advertisers", info_sport_sponsors_path(current_site) if  current_site? and !isAdmin?%></li>
 				</ul>
 			</div>
 			</h5>

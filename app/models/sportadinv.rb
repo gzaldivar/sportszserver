@@ -8,9 +8,9 @@ class Sportadinv
 	field :adlevelname, type: String
 	field :active, type: Boolean
 	field :expiration, type: DateTime
-	field :playerad, type: Boolean, default: false
 
 	belongs_to :sport
+	belongs_to :athlete
 	has_many :sponsors
 
 	def priceincents

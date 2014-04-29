@@ -102,11 +102,11 @@
 <div class="row">
   <div class="col-xs-4">
     <% if @sponsor.processing %>
-      <h4><em><font color="red">Processing Replacement Photo ...</font></em></h4>
+      <h4><em><font color="red">Processing Replacement Banner ...</font></em></h4>
     <% end %>
     <h4>Change Sponsor Banner:</h4>
-    <% if @sponsor.sponsorpic? %> 
-      <%= image_tag @sponsor.adbanner.url(:medium), class: 'img-responsive' %>
+    <% if @sponsor.adbanner? %> 
+      <%= image_tag @sponsor.adbanner.url(:portraitbanner), class: 'img-responsive' %>
     <% else %>
       <%= image_tag 'Tiny_Photo_Not_Available.png', class: 'img-responsive' %>
     <% end %>

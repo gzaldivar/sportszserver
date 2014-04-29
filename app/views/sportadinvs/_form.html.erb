@@ -1,6 +1,6 @@
 <div class="row">
 	<div class="col-xs-11">
-		<h5 class="text-info">Select available for general sale below only if you want to allow this ad class to be sold to all advertisers.</h5>
+		<h4 class="text-info">Select available for general sale below only if you want to allow this ad class to be sold to all advertisers. You can only create one inventory ad for a player. That inventory item will be available for use by advertisers to sponsor all players.</h4>
 		<p>
 		<%= form_for [@sport, @sportadinv], :input_html => { :class => 'form-horizontal' } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
@@ -16,7 +16,7 @@
 				<div class="col-xs-2 col-xs-offset-1">
 					<%= f.label :expiration, "Expiration Date" %>
 					<%= f.text_field :date_string, as: :string, class: 'datepicker form-control', 
-                                    :value => @event.try(:start_time).try(:strftime,'%m/%d/%Y') %>
+                                    :value => @sportadinv.try(:expiration).try(:strftime,'%m/%d/%Y') %>
                     <%= f.hidden_field :expiration, :id => 'recorded-at-alt' %>
 				</div>
 			</div>
@@ -27,8 +27,8 @@
 					<%= f.check_box :active, class: 'form-control' %>
 				</div>
 				<div class="col-xs-3">
-					<%= f.label :athlete_id, "Player" %>
-					<%= f.select :athlete_id, @sport.athletes.all.asc(:number).collect { |a| [a.numlogname, a.id] }, { include_blank: true }, class: "form-control" %>
+					<%= f.label :playerad, "Player" %>
+					<%= f.check_box :playerad, class: "form-control" %>
 				</div>
 			</div>
 			<p>

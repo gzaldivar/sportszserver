@@ -1,13 +1,7 @@
 class SponsorsController < ApplicationController
-	before_filter :authenticate_user!,  only: [:new, :create, :edit, :update, :destroy]
+	before_filter :authenticate_user!,  only: [:new, :create, :edit, :update, :destroy, :createad, :add]
   	before_filter :get_sport
   	before_filter :get_sponsor,		only: [:edit, :show, :destroy, :update, :updatephoto]
-	before_filter only: [:new, :create, :edit, :update, :destroy] do |controller|
-		SiteOwner?(current_user.teamid)
-	end
-#	before_filter only: [:destroy, :update, :create, :edit, :new, :createphoto, :updatephoto] do |check|
-#		check.sponsorEnabled?(current_site)
-#	end
 
 	def info
 		@sportadinvs = @sport.sportadinvs.all.asc(:price).paginate( page: params[:page])
@@ -18,7 +12,7 @@ class SponsorsController < ApplicationController
 	end
 
 	def createad
-		begin			
+		begin	
 			@sponsor = @sport.sponsors.build(params[:sponsor])
 			@sponsor.city = @sponsor.zip.to_region(city: true)
         	@sponsor.state = @sponsor.zip.to_region(state: true)
@@ -91,15 +85,24 @@ class SponsorsController < ApplicationController
 
 	def index
 		begin
-			@sponsors = @sport.sponsors.all
-			@sponsors.sort! { |a,b| a.sportadinv.price <=> b.sportadinv.price }
+			if !isAdmin?
+				if user_signed_in?
+					@sponsors = @sport.sponsors.where(user_id: current_user.id).all.paginate(page: params[:page])
+				else
+					@sponsors = @sport.sponsors.all.paginate(page: params[:page])
+				end
+			else
+				@sponsors = @sport.sponsors.all.paginate(page: params[:page])
 
-			@totals = 0
-			
-			@sponsors.each do |s|
-				@totals += s.sportadinv.price
+				@totals = 0
+				
+				@sponsors.each do |s|
+					@totals += s.sportadinv.price
+				end
 			end
 			
+			@sponsors.sort! { |a,b| a.sportadinv.price <=> b.sportadinv.price }				
+
 			respond_to do |format|
 				format.html
 				format.json

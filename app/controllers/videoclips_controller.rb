@@ -11,9 +11,9 @@ class VideoclipsController < ApplicationController
       false
     end
   end
-  before_filter do |controller|
-    controller.packageEnabled?(@sport)
-  end
+#  before_filter do |controller|
+#    controller.packageEnabled?(@sport)
+#  end
   
   def videoclipshome
     if !current_team.featuredvideoclips.nil?

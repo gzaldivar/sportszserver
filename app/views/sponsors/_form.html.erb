@@ -12,6 +12,7 @@
 <% end %>
 <div class="row">
 	<div class="col-xs-9">
+		<%= f.hidden_field :user_id, value: current_user.id.to_s %>
 		<%= f.label :sponsor_name %>
 		<%= f.text_field :name, class: 'form-control' %>
 	</div>
@@ -96,25 +97,36 @@
 	</div>
 	<div class="col-xs-2 col-xs-offset-1">
 		<%= f.label :select_team, "Select Team" %>
-		<%= collection_select(:sponsor, :team_id, @sport.teams, :id, :team_name, { prompt: true }, { class: 'form-control' } ) %>
+		<%= f.select :team_id, @sport.teams.collect { |t| [t.team_name, t.id] }, {}, class: "form-control" %>
 	</div>
 	<div class="col-xs-3 col-xs-offset-1">
-		<% if isAdmin? %>
+		<% if isAdmin? and @sponsor.sportadinv_id.nil? %>
 			<p class="text-info">Non advertiser sale inventory<p>
 			<!--%= f.label :sponsorlevel, "Sponsor Level" %-->
 			<!--%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %-->
 			<%= f.label :sportadinv_id, "Sponsor Level" %>
-			<%= f.select :sportadinv_id, @sport.sportadinvs.where(active: false).collect { |s| [s.adlevelname, s.id] }, {}, class: 'form-control' %>
-			<p class="text-info">Ad inventory for general sale.<p>
+			<%= f.select :sportadinv_id, @sport.sportadinvs.where(active: false).collect { |s| [s.adlevelname, s.id] }, { include_blank: true },
+										 class: 'form-control' %>
 			<%= f.hidden_field :adminentered, value: true %>
 		<% else %>
-			<p class="text-info">Select the ad level to advertise on <%= @sport.sitename %><p>
+			<% if @sponsor.sportadinv_id.nil? %>
+				<p class="text-info">Ad inventory for general sale.<p>
+				<p class="text-info">Select the ad level to advertise on <%= @sport.sitename %><p>
+			<% else %>
+				<p class="text-info">Current Ad Level<p>
+			<% end %>
 			<%= f.hidden_field :adminentered, value: false %>
 		<% end %>
 
-		<%= f.label :sportadinv_id, "Ad Level" %>
-		<!--%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %-->
-		<%= f.select :sportadinv_id, @sport.sportadinvs.where(active: true).collect { |s| [s.adlevelname + " - $" + s.price.to_s, s.id] }, {}, class: 'form-control' %>
+		<% if @sponsor.sportadinv_id.nil? %>
+			<%= f.label :sportadinv_id, "Ad Level" %>
+			<!--%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %-->
+			<%= f.select :sportadinv_id, @sport.sportadinvs.where(active: true).asc(:price).collect { |s| [s.adlevelname + " - $" + s.price.to_s, s.id] }, { include_blank: true }, class: 'form-control' %>
+		<% else %>
+			<h5>Ad Inventory - <%= link_to @sponsor.sportadinv.adlevelname + " - $" + @sponsor.sportadinv.price.to_s, 
+								sport_sportadinv_path(@sport, id: @sponsor.sportadinv_id) %></h5>
+		<% end %>
+		<p>
 	</div>
 </div>
 <div class="row">

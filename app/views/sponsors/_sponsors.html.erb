@@ -10,38 +10,35 @@
 			<th>Phone</th>
 			<th>Expiration</th>
 			<th>Price</th>
-			<% if site_owner?(@sport) %>
-				<th>Update?</th>
-			<% end %>
+			<th>Player</th>
+			<th>Owner</th>
 		</tr>
 	</thead>
 	<tbody>
 		<% sponsors.each do |s| %>
-			<% if s.adminentered == adminentered %>
-				<tr>
-	        		<td><% if s.sponsorpic.blank? %>
-	              		<%= link_to image_tag('Tiny_Photo_Not_Available.png'), [@sport, s] %>
-	            	<% else %>
-	              		<%= link_to image_tag(s.sponsorpic.url(:thumb)), [@sport, s] %>
-	            	<% end %>
-					<td><%= link_to s.name, [@sport, s] %></td>
-					<td><%= s.addrnum.to_s + " " + s.street %></td>
-					<td><%= s.city %></td>
-					<td><%= s.state %></td>
-					<td><%= s.zip %></td>
-					<td><%= s.phone %></td>
-					<% if s.adminentered %>
-						<td>None</td>
-					<% else %>
-						<td><%= s.adpayment.expiration.strftime("%m/%d/%Y") %></td>
-					<% end %>
-					<td><%= s.sportadinv.price %></td>
-					<% if site_owner?(@sport) %>
-	          			<td><%= link_to "Edit", edit_sport_sponsor_path(@sport, s), class: "btn btn-xs btn-warning" %></td>
-					<% end %>
-				</tr>
-			<% end %>
+			<tr>
+        		<td><% if s.sponsorpic.blank? %>
+              		<%= link_to image_tag('Tiny_Photo_Not_Available.png'), [@sport, s] %>
+            	<% else %>
+              		<%= link_to image_tag(s.sponsorpic.url(:thumb)), [@sport, s] %>
+            	<% end %>
+				<td><%= link_to s.name, [@sport, s] %></td>
+				<td><%= s.addrnum.to_s + " " + s.street %></td>
+				<td><%= s.city %></td>
+				<td><%= s.state %></td>
+				<td><%= s.zip %></td>
+				<td><%= s.phone %></td>
+				<% if s.adminentered %>
+					<td>None</td>
+				<% else %>
+					<td><%= s.adpayment.expiration.strftime("%m/%d/%Y") if s.adpayment %></td>
+				<% end %>
+				<td><%= s.sportadinv.price %></td>
+				<td><%= @sport.athletes.find(s.athlete_id).numlogname if s.athlete_id %></td>
+				<td><%= User.find(s.user_id).email if s.user_id %></td>
+			</tr>
 		<% end %>
+		<%= will_paginate %>
 	</tbody>
 </table>
 

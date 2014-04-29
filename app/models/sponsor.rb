@@ -19,7 +19,7 @@ class Sponsor
   field :contactemail, type: String
   field :teamonly, type: Boolean, default: false
   field :adurl, type: String
-  field :sponsorlevel, type: String, default: "Platinum"
+  field :sponsorlevel, type: String
   field :adminentered, type: Boolean, default: false
 
   field :processing, type: Boolean, default: false
@@ -30,6 +30,8 @@ class Sponsor
   belongs_to :team
   belongs_to :sport
   belongs_to :sportadinv
+  belongs_to :user
+  belongs_to :athlete
   has_one :adpayment
 
   has_mongoid_attached_file :sponsorpic,
@@ -56,7 +58,7 @@ class Sponsor
 
   validates_attachment_content_type :sponsorpic, content_type: ['image/jpg', 'image/jpeg', 'image/png']
   validates_attachment_content_type :adbanner, content_type: ['image/jpg', 'image/jpeg', 'image/png']
-  validates_presence_of :name, :contactemail, :adurl
+  validates_presence_of :name
   validates :phone, format: { with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})?([ .-]?)([0-9]{4})/ }
   validates_format_of :mobile, allow_blank: true, with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})?([ .-]?)([0-9]{4})/  
   validates_format_of :fax, allow_blank: true, with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})?([ .-]?)([0-9]{4})/  

@@ -12,9 +12,9 @@ class PhotosController < ApplicationController
       false
     end
   end
-  before_filter do |controller|
-    packageEnabled?(@sport)
-  end
+#  before_filter do |controller|
+#    packageEnabled?(@sport)
+#  end
 
   require 'base64'
   require 'openssl'

@@ -5,3 +5,7 @@ node(:team_id) { |t| t.team_id.to_s }
 node(:thumb) { |t| t.coachpic(:thumb) }
 node(:tiny) { |t| t.coachpic(:tiny) }
 node(:medium) { |t| t.coachpic(:medium) }
+node :coachpic_updated_at, :if => lambda { |s| s.coachpic? } do |s|
+	s.coachpic_updated_at
+end
+

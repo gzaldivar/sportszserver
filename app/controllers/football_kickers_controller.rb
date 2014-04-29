@@ -5,9 +5,9 @@ class FootballKickersController < ApplicationController
   	before_filter	:correct_stat,			only: [:update, :destroy,] do |controller| 
 	    controller.SiteOwner?(@athlete.team_id)
 	end
-	before_filter do |check|
-		check.packageEnabled?(current_site)
-	end
+#	before_filter do |check|
+#		check.packageEnabled?(current_site)
+#	end
 
 	def new
 		@kicker = FootballKicker.new(gameschedule_id: params[:gameschedule_id])

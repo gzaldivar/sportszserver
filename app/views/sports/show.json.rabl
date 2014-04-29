@@ -32,3 +32,4 @@ node (:broadcastAppVersion) { admin.broadcastAppVersion }
 node (:highlightAppVersion) { admin.highlightAppVersion }
 node (:pricingurl) { admin.pricingurl }
 node (:supportedsports) { admin.supportedsports }
+node (:adurl) { admin.adurl }

@@ -44,7 +44,7 @@ class Athlete
     has_many :blogs, dependent: :nullify
     has_many :newsfeeds, dependent: :nullify
     has_many :alerts, dependent: :destroy
-    has_many :sportadinvs
+    has_many :sponsors
 
     has_many :basketball_stats, dependent: :destroy
 

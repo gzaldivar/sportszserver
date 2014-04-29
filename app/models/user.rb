@@ -56,6 +56,7 @@ class User
   has_many :videoclips
   has_many :events
   has_many :blogs, dependent: :destroy
+  has_many :sponsors
   has_one :payment
 
   index({ email: 1 }, { unique: true, background: true })

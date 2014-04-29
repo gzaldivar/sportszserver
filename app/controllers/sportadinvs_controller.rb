@@ -13,9 +13,9 @@ class SportadinvsController < ApplicationController
 
 	def create
 		begin
-			player = @sport.sportadvins.where(playerad: true).all
+			player = @sport.sportadinvs.where(athlete_id: params[:athlete_id]).all
 
-			if player.nil?
+			if player.count > 0
 	    		sportadinv = @sport.sportadinvs.create!(params[:sportadinv])
 
 	    		respond_to do |format|
@@ -49,7 +49,7 @@ class SportadinvsController < ApplicationController
     		sportadinv = @sportadinv.update_attributes!(params[:sportadinv])
 
     		respond_to do |format|
-				format.html { redirect_to [@sport, @sportadinv], notice: "Ad Level created for " + @sport.name }
+				format.html { redirect_to [@sport, @sportadinv], notice: "Ad Level updated for " + @sport.name }
 				format.json { render json: { sportadinv: @sportadinv } }
 			end
 		rescue Exception => e

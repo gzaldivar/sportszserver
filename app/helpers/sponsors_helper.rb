@@ -42,8 +42,8 @@ module SponsorsHelper
  		end
 	end
 
-	def getPlayerAd(sport)
-		sport.sponsors.where(playerad: true).sample
+	def getPlayerAd(sport, athlete)
+		sport.sponsors.where(athlete_id: athlete.id).sample
 	end
 
 end

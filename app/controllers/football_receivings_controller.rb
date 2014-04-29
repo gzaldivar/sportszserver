@@ -7,9 +7,9 @@ class FootballReceivingsController < ApplicationController
 	before_filter only: [:destroy, :update, :create, :edit, :new] do |controller| 
 	    controller.SiteOwner?(@athlete.team_id)
 	end
-	before_filter do |check|
-		check.packageEnabled?(current_site)
-	end
+#	before_filter do |check|
+#		check.packageEnabled?(current_site)
+#	end
 
   	def new
 		@receiving = FootballReceiving.new

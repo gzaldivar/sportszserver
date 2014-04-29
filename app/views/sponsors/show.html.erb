@@ -111,18 +111,20 @@
       <%= image_tag 'Tiny_Photo_Not_Available.png', class: 'img-responsive' %>
     <% end %>
     <% if isAdmin? or @sponsor.user_id == current_user.id %>
-      <%= s3_uploader_form callback_url: createphoto_sport_sponsors_path, callback_param: "sponsor[image_url]", 
-                 key: "uploads/sponsorsphotos/#{@sponsor.id}/${filename}", id:  "myS3Uploader" do %>
-          <%= file_field_tag :file %>
-      <% end %>
-
-      <script id="template-upload" type="text/x-tmpl">
-        <div id="file-{%=o.unique_id%}" class="upload">
-          {%=o.name%}
-          <div class="progress"><div class="bar" style="width: 0%"></div></div>
+      <%= form_for [@sport, @sponsor], :input_html => { :class => 'form-horizontal' } do |f| %>
+        <div class= "row">
+          <div class="col-xs-11">
+            <%= f.file_field  :adbanner, class: 'form-control' %>
+          </div>
         </div>
-      </script> 
-    <% end %>   
+        <p>
+        <div class="row">
+          <div class="col-xs-2">
+            <%= f.submit :submit, class:  "btn btn-sm btn-primary", id: "submitbtn" %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
   </div>
   <div class="col-xs-6">
     <h5 class="text-info">You can upload a banner ad for display on our mobile app. Banner ads should be 320x50 pixels. If you choose not download a banner ad the default banner ad will be displayed. The default banner will use the ad copy above in addition to your sponsor name. Here is an example of the default banner ad.</h5>
@@ -146,7 +148,7 @@
           <p>
           <div class="row">
             <div class="col-xs-2 col-xs-offset-1">
-              <%= f.submit "Attach Playe to Ad", class:  "btn btn-sm btn-primary", id: "submitbtn" %>
+              <%= f.submit "Attach Player to Ad", class:  "btn btn-sm btn-primary", id: "submitbtn" %>
             </div>
           </div>
         <% end %>

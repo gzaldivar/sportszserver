@@ -102,8 +102,6 @@
 	<div class="col-xs-3 col-xs-offset-1">
 		<% if isAdmin? and @sponsor.sportadinv_id.nil? %>
 			<p class="text-info">Non advertiser sale inventory<p>
-			<!--%= f.label :sponsorlevel, "Sponsor Level" %-->
-			<!--%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %-->
 			<%= f.label :sportadinv_id, "Sponsor Level" %>
 			<%= f.select :sportadinv_id, @sport.sportadinvs.where(active: false).collect { |s| [s.adlevelname, s.id] }, { include_blank: true },
 										 class: 'form-control' %>
@@ -115,12 +113,11 @@
 			<% else %>
 				<p class="text-info">Current Ad Level<p>
 			<% end %>
-			<%= f.hidden_field :adminentered, value: false %>
+			<%= f.hidden_field :adminentered, value: false if @sponsor.sportadinv_id.nil? %>
 		<% end %>
 
 		<% if @sponsor.sportadinv_id.nil? %>
 			<%= f.label :sportadinv_id, "Ad Level" %>
-			<!--%= f.select :sponsorlevel, ["Platinum", "Gold", "Silver"], {}, class: 'form-control' %-->
 			<%= f.select :sportadinv_id, @sport.sportadinvs.where(active: true).asc(:price).collect { |s| [s.adlevelname + " - $" + s.price.to_s, s.id] }, { include_blank: true }, class: 'form-control' %>
 		<% else %>
 			<h5>Ad Inventory - <%= link_to @sponsor.sportadinv.adlevelname + " - $" + @sponsor.sportadinv.price.to_s, 

@@ -71,7 +71,6 @@ module Sportzserver
     end
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     if Rails.env.production?
-        config.middleware.use Rack::SslEnforcer, :redirect_to => 'https://powerful-everglades-2345'
         config.middleware.use Rack::SslEnforcer, :only => ['/users'], 
                                                  :ignore => ['/users/sign_out', '/users/password/new', '/users/confirmation/new'],
                                                  :except => ['/sports', ], :strict => true

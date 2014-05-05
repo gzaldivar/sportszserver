@@ -32,7 +32,8 @@ class Newsfeed
                          secret_access_key: S3DirectUpload.config.secret_access_key },
     :styles => {
       :tiny     => ['50x50', :jpg],
-      :thumb    => ['125x125',   :jpg]
+      :thumb    => ['125x125',   :jpg],
+      :medium   => ['512x512',    :jpg]
     }
 
   validates_attachment_content_type :newsfeedpic, content_type: ['image/jpg', 'image/jpeg', 'image/png']

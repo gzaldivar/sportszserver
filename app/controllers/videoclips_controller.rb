@@ -712,11 +712,11 @@ class VideoclipsController < ApplicationController
       @videoclip.save!
 
       respond_to do |format|
-        format.json { render json: { videoclip: @videoclip, request: [@sport, @videoclip] } }
+        format.json { render json: { videoclip: @videoclip } }
       end
     rescue Exception => e
       respond_to do |format|
-        format.json {  render status: 404, json: { error: e.message, request: [@sport, @videoclip] } }
+        format.json {  render status: 404, json: { error: e.message } }
       end
     end
   end

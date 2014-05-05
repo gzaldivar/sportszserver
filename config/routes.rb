@@ -214,6 +214,8 @@ Sportzserver::Application.routes.draw do
     
   root to: 'sports#home'
 
+  match '/loginuser' => redirect('https://powerful-everglades-2345.herokuapp.com/users/sign_in')
+
   match '/home',    to: 'sports#home'
   match '/help',    to: 'sports#help'
   match '/contacts', to: 'sports#contact'

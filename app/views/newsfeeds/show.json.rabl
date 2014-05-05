@@ -15,3 +15,6 @@ end
 node :thumburl, :if => lambda { |n| n.newsfeedpic.file? } do |n|
 	n.newsfeedpic.url(:thumb)
 end
+node :mediumurl, :if => lambda { |n| n.newsfeedpic.file? } do |n|
+	n.newsfeedpic.url(:medium)
+end

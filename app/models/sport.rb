@@ -59,10 +59,6 @@ class Sport
   field :sdhdhighlights, type: String, default: "HD"
   field :enablelive, type: Boolean, default: false
 
-  # Paypal email account
-
-  field :paypal_email, type: String
-
   search_in :sitename, :mascot, :state, :zip, :city, :name, :sportname, :featuredplayers, :country
 
 #  belongs_to :site

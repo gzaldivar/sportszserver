@@ -11,9 +11,13 @@ end
 node :eazesportzOpponent, :if => lambda { |a| a.opponent_team_id? } do
 	true
 end
-node :opponentpic, :if => lambda { |a| !a.opponent_team_id? } do |a|
+node :opponentpic, :if => lambda { |a| !a.opponent_team_id? and a.opponentpic? } do |a|
 	a.opponentpic.url(:tiny)
 end
+node :opponentpicthumb, :if => lambda { |a| !a.opponent_team_id? and a.opponentpic } do |a|
+	a.opponentpic.url(:thumb)
+end
+
 node :opponentpic_updated_at, :if => lambda { |a| !a.opponentpic_updated_at.nil? } do |a|
 	a.opponentpic_updated_at
 end

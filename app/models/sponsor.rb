@@ -43,7 +43,7 @@ class Sponsor
       :tiny     => ['50x50',     :jpg],
       :thumb   => ['125x125',   :jpg],
       :medium   => ['300x250',   :jpg],
-      :large    => ['640x960',   :jpg]
+      :large    => ['500x400',   :jpg]
     }
 
   has_mongoid_attached_file :adbanner,

@@ -63,6 +63,7 @@ class Gameschedule
   field :currentqtr, type: String, default: "Q1"
 
   field :final, type: Boolean, default: false
+  field :mobilealerts, type: Boolean, default: false
 
   # generic game fields
 

@@ -88,7 +88,7 @@ Sportzserver::Application.routes.draw do
                 :footballboxscore, :footballscoreboard, :footballteamgametotals,  :footballdefensestats, :footballspecialteamstats, 
                 :addfootballqb, :addfootballrb, :addfootballrec, :addfootballdef, :addfootballkicker, :addfootballpunter, :addfootballpk,
                 :addfootballret, :footballform, :basketballteamscorestats, :basketballteamotherstats, :basketballform, :soccerform
-          put   :updatelogo
+          put   :updatelogo, :mobilealerts, :alertupdate
         end
 
         resources :gamelogs, only: [:new, :create, :edit, :destroy, :show, :update, :index] do

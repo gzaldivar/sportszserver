@@ -176,5 +176,12 @@ class NewsfeedsController < ApplicationController
     def correct_feeditem
       @newsfeed = @sport.newsfeeds.find(params[:id])
     end
+
+    def send_mobilealert(newsfeeed)
+      alert = Alert.create!(message: "News - " + newsfeed.title, team_id: newsfeed.team_id, athlete_id: newsfeed.athlete_id, 
+                            sport_id: newsfeed.sport_id)
+      Resque.enqueue(SendApnNotification, alert.id)
+
+    end
   
 end

@@ -302,6 +302,8 @@ class Gamelog
     end
 
     def alert
+      game = Gameschedule.find(gameschedule_id)
+      
       if self.football_place_kicker_id
         athlete = Athlete.find(FootballPlaceKicker.find(football_place_kicker_id).athlete_id)
         sport = Sport.find(athlete.sport_id)
@@ -333,7 +335,7 @@ class Gamelog
             user = User.find(u)
             if user.score_alert
               self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                  message:  "Passing score alert for " + self.gameschedule.game_name, 
+                                  message:  self.logentrytext, 
                                   football_passing_id: self.football_passing_id, stat_football: "Passing")
             end
           end
@@ -358,7 +360,7 @@ class Gamelog
             user = User.find(u)
             if user.score_alert
               self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                     message:  "Rushing score alert for " + self.gameschedule.game_name, 
+                                     message:  self.logentrytext, 
                                      football_rushing_id: self.football_rushing_id, stat_football: "Rushing")
             end
           end
@@ -373,7 +375,7 @@ class Gamelog
             user = User.find(u)
             if user.score_alert
               self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                     message:  "Defensive score alert for " + self.gameschedule.game_name, 
+                                     message:  self.logentrytext, 
                                      football_defense_id: self.football_defense_id, stat_football: "Defense")
             end
           end

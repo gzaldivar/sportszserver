@@ -9,7 +9,8 @@ class GameschedulesController < ApplicationController
                                               :footballboxscore,:footballscoreboard, :footballteamgametotals, :addfootballqb,
                                               :footballdefensestats, :footballspecialteamstats, :addfootballrb, :addfootballrec, :addfootballdef,
                                               :addfootballpk, :addfootballret, :addfootballkicker, :addfootballpunter, :footballform, 
-                                              :basketballteamscorestats, :basketballteamotherstats, :basketballform, :soccerform]
+                                              :basketballteamscorestats, :basketballteamotherstats, :basketballform, :soccerform, :mobilealerts,
+                                              :alertupdate]
   before_filter only: [:destroy, :update, :create, :edit, :new, :createlogo, :updatelogo] do |controller| 
     controller.SiteOwner?(@team.id)
   end
@@ -545,7 +546,40 @@ class GameschedulesController < ApplicationController
     @totals = basketballstats.stattotals
  end
   
-private
+  def mobilealerts
+    begin
+      @gameschedule.mobilealerts = params[:gameschedule][:mobilealerts].to_i
+      @gameschedule.save!
+
+      respond_to do |format|
+        format.html { redirect_to :back }
+        format.json { render status: 200, json: { gameschedule: @gameschedule } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: e.message }
+        format.json { render status: 404, json: { error: e.message } }
+     end
+    end
+  end
+
+  def alertupdate
+    begin
+      @message = ""
+
+      respond_to do |format|
+        format.html { redirect_to :back, notice: "Alert sent!" }
+        format.json { render status: 200, json: { message: @message } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: e.message }
+        format.json { render status: 404, json: { error: e.message } }
+      end
+    end
+  end
+
+  private
   
     def get_sport
       @sport = Sport.find(params[:sport_id])

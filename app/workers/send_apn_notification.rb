@@ -101,6 +101,12 @@ class SendApnNotification
 		connection.close
 		ipadconection.close
 
+		# clean up
+
+		if alert.athlete_id.nil?
+			alert.destroy
+		end
+
 		File.delete(iPhoneFname)
 		File.delete(iPadFname)
 

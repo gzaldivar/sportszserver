@@ -40,7 +40,7 @@ class Newsfeed
   validates_presence_of :title
   
   search_in :title, :news
-  
+
   private
 
       def decode_base64_image
@@ -58,4 +58,5 @@ class Newsfeed
           self.newsfeedpic = data
         end
       end
+
 end

@@ -1,0 +1,17 @@
+<% if !teamalerts.nil? and !teamalerts.empty? %>
+    <table class="table table-striped table-bordered table-hover">
+        <thead>
+            <th>Score</th>
+            <th>Clear</th>
+        </thead>
+        <tbody>
+            <% teamalerts.each do |t| %>
+                <tr>
+                    <td><%= link_to t.message, sport_team_gameschedule_path(sport_id: @sport.id, team_id: t.getGame.team_id, id: t.getGame) %></td>
+                    <td><%= link_to("Clear", sport_athlete_alert_path(sport_id: @sport.id, athlete_id: t.athlete_id, id: t.id), 
+                                    method: :delete, class: "btn btn-xs btn-warning", data: { confirm: "You sure?" }) %></td>
+                </tr>
+            <% end %>
+        </tbody>
+    </table>
+<% end %>

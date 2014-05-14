@@ -13,17 +13,8 @@
             $(document).ready(function() {
               $('#noteamsmodal').modal('show');
             });
-         </script>
+          </script>
         <% end %>
-        <!--li class="dropdown">
-          <a class="dropdown-toggle" data-toggle="dropdown" href="#">Teams<span class="caret"></span></a>
-          <ul class="dropdown-menu">
-            <% current_site.teams.each do |t| %>
-              <li><%= link_to (t.title + " " + t.mascot), selectteam_sport_path(current_site, team_id: t) %></li>
-              <li class="divider"></li>
-            <% end %> 
-          </ul>
-        </li-->
         <li><%= link_to "News", sport_path(@sport) %></li>
         <% if current_team? and user_signed_in? and (is_package_enabled?(@sport) or site_owner?(@sport)) %>
           <li><%= link_to "Blog", sport_blogs_path(current_site, team_id: current_team.id) %></li>
@@ -57,6 +48,9 @@
 <% if !current_team.nil? %>
   <div class="row">
     <div class="col-xs-5">
+      <% if @teamalerts %>
+        <%= render "alerts/alertlist", teamalerts: @teamalerts %>
+      <% end %>
       <%= render 'gameschedules/gamelist', gameschedules: @schedules %>
     </div>
     <div class="col-xs-5 col-xs-offset-1">

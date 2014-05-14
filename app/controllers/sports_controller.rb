@@ -5,7 +5,7 @@ class SportsController < ApplicationController
   end
   before_filter :correct_sport, only: [:show, :edit, :update, :destroy, :sport_user_alerts, :updatelogo, :displaynews, 
                                       :selectteam, :sortgamenews, :sortplayernews, :allnews, :featuredplayers, :selectfeaturedplayers,
-                                      :showfeaturedplayers, :showfollowedplayers, :updateabout, :uploadabout, :clearabout]
+                                      :showfeaturedplayers, :showfollowedplayers, :updateabout, :uploadabout, :clearabout, :updateApnNotification]
 
   def new
     @sport = Sport.new
@@ -68,7 +68,7 @@ class SportsController < ApplicationController
   end
   
   def show
-    begin
+#    begin
       site_visit(@sport)
 
      if @sport.teams.count == 1
@@ -95,6 +95,10 @@ class SportsController < ApplicationController
           else
             @featured = @sport.athletes.where(team_id: current_team.id, :id.in => current_team.featuredplayers).asc(:number)
           end
+
+          if user_signed_in? and current_user.score_alert
+            @teamalerts = getTeamAlerts(current_team, current_user)
+          end
         else
           @schedules = nil
           @players = nil
@@ -110,12 +114,12 @@ class SportsController < ApplicationController
           format.json 
          end
       end
-    rescue Exception => e
-      respond_to do |format|
-        format.html { raise ActionController::RoutingError.new(e.message) }
-        format.json { render status: 404, json: { error: e.message } }
-      end
-    end
+#    rescue Exception => e
+#      respond_to do |format|
+#        format.html { raise ActionController::RoutingError.new(e.message) }
+#        format.json { render status: 404, json: { error: e.message } }
+#      end
+#    end
   end
   
   def displaynews
@@ -384,6 +388,12 @@ class SportsController < ApplicationController
   def mobileadmin
   end
 
+  def privacy
+  end
+
+  def terms
+  end
+
   def clientapp
     clear_site
 
@@ -438,6 +448,45 @@ class SportsController < ApplicationController
     rescue Exception => e
       respond_to do |format|
         format.json { render status: 404, json: { error: e.message, sport: @sport } }
+      end
+    end
+  end
+
+  def updateApnNotification
+    begin
+      team = @sport.teams.find(params[:team_id])
+      notification = team.apn_notifications.find_by(token: params[:token])
+
+      if notification
+        notification.token = params[:token]
+        notification.name = params[:name]
+        notification.model = params[:model]
+        notification.systemname = params[:systemname]
+        notification.systemversion = params[:systemversion]
+        notification.scorealerts = params[:scorealerts]
+        notification.blogalerts = params[:blogalerts]
+        notification.mediaalerts = params[:mediaalerts]
+        notification.athletealerts = params[:athletealerts]
+        notification.team_id = params[:team_id]
+        notification.user_id = params[:user_id]
+        notification.athlete_id = params[:athlete_id]
+        notification.bundleidentifier = params[:bundleidentifier]
+      else
+        notification = ApnNotification.new(token: params[:token], name: params[:name], model: params[:model], systemname: params[:systemname],
+                                          systemversion: params[:systemversion], user_id: params[:user_id], team_id: params[:team_id],
+                                          scorealerts: params[:scorealerts], blogalerts: params[:blogalerts], athlete: params[:athlete_id],
+                                          mediaalerts: params[:mediaalerts], athletealerts: params[:athletealerts], 
+                                          bundleidentifier: params[:bundleidentifier])
+      end
+
+      notification.save!
+
+      respond_to do |format|
+        format.json { render status: 200, json: { notification: notification } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.json { render status: 404, json: { error: e.message } }
       end
     end
   end

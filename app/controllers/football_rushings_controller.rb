@@ -156,8 +156,6 @@ class FootballRushingsController < ApplicationController
 				game.lastplay = game.lastplay + " - First Down"
 			end
 
-			stat.save!
-
 			if params[:td].to_i > 0
 				stat.td = stat.td + params[:td].to_i
 				gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "yard run", score: "TD", yards: params[:yards],
@@ -196,6 +194,8 @@ class FootballRushingsController < ApplicationController
 			end
 
 			game.save!
+			stat.save!
+
 			return stat
 		end
 

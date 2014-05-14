@@ -183,8 +183,6 @@ class FootballDefensesController < ApplicationController
 				end
 			end
 
-			stat.save!
-
 			if params[:int_td].to_i > 0
 				stat.int_td = stat.int_td + 1
 
@@ -235,6 +233,8 @@ class FootballDefensesController < ApplicationController
 			end
 
 			game.save!
+			stat.save!
+
 			return stat
 		end
 

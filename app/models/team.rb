@@ -22,6 +22,8 @@ class Team
   field :fb_kickers, type: Array
   field :fb_punters, type: Array
   field :fb_returners, type: Array
+  field :fans, type: Array                  # List of fans following team for score alerts
+  field :mobilefans, type: Array            # List of devices registered for notifications
 
   field :logoprocessing, type: Boolean, default: false
 
@@ -49,9 +51,19 @@ class Team
   has_many :newsfeeds, dependent: :destroy
   has_many :photos, dependent: :destroy
   has_many :videoclips, dependent: :destroy
+  has_many :alerts, dependent: :destroy
+  has_many :apn_notifications, dependent: :destroy
     
   def team_name
     title + " " + mascot
+  end
+
+  def isFollowing?(user)
+    if !self.fans.nil? and self.fans.include?(user.id.to_s)
+      true
+    else
+      false
+    end
   end
 
   private

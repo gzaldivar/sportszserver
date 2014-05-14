@@ -50,7 +50,7 @@ class ApplicationController < ActionController::Base
 
     def upgrade_needed(exception)
       logger.error(exception)
-#      raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality')
+#      raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality')
       render :template => "/errors/error_upgrade.html.erb", :status => 404
     end
 
@@ -90,7 +90,7 @@ class ApplicationController < ActionController::Base
           resource.default_site = current_site.id
           resource.save!
         elsif resource.admin and !current_site.nil? and current_site.adminid.to_s != resource.id.to_s
-          flash[:error] = "Admin user cannot be used to login to other Eazesportz sites. Login to " + current_site.sitename + " failed!"
+          flash[:error] = "Admin user cannot be used to login to other Game Tracker sites. Login to " + current_site.sitename + " failed!"
         end
         sport_path(id: resource.default_site)
       else

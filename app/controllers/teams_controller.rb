@@ -31,8 +31,21 @@ class TeamsController < ApplicationController
 	def update
 		begin
 			@team.update_attributes!(params[:team])
+
+			if params[:followteam] and user_signed_in?
+				if @team.fans.nil?
+					@team.fans = Array.new
+				end
+				if params[:followteam].to_i == 1 and !@team.fans.include?(current_user.id.to_s)
+					@team.fans << current_user.id.to_s
+				elsif params[:followteam].to_i == 0
+					@team.fans.delete(current_user.id.to_s)
+				end
+				@team.save!
+			end
+
 			respond_to do |format|
-				format.html { redirect_to @sport, notice: "Team updated" }
+				format.html { redirect_to @sport, notice: "Team updated succesful" }
 				format.json { render json: { team: @team } }
 			end
 		rescue Exception => e

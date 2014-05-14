@@ -6,9 +6,9 @@
 				<div class="col-xs-6">
 					<h4>
 						<% if @gameschedule.nil? %>
-							<%= link_to "Search for Eazesportz Opponent?", findsport_sport_team_gameschedules_path(sport: @sport.name) %>
+							<%= link_to "Search for Game Tracker Opponent?", findsport_sport_team_gameschedules_path(sport: @sport.name) %>
 						<% else %>
-							<%= link_to "Search for Eazesportz Opponent?", 
+							<%= link_to "Search for Game Tracker Opponent?", 
 										findsport_sport_team_gameschedules_path(sport: @sport.name, gameschedule_id: @gameschedule.id) %>
 						<% end %>
 					</h4>
@@ -17,7 +17,7 @@
 			<% if @opposingsport.nil? %>
 				<div class="row">
 					<div class="col-xs-12">
-						<h4>You can also enter opposing team information below if you could not find them in Eazesportz</h4>
+						<h4>You can also enter opposing team information below if you could not find them in Game Tracker</h4>
 					</div>
 				</div>
 				<div class="row">
@@ -43,7 +43,7 @@
 				<%= f.hidden_field :opponent_sport_id, value: @opposingsport.id.to_s %>
 				<%= f.hidden_field :opponent_team_id, value: @opposingteam.id.to_s %>
 
-				<h3>Selected Eazesportz Opposing Team</h3>
+				<h3>Selected Game Tracker Opposing Team</h3>
 				<div class="row">
 					<div class="col-xs-5">
 						<%= f.text_field :opponent, value: @opposingteam.title , class: 'form-control'%>

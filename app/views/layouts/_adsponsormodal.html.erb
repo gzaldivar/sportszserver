@@ -22,9 +22,9 @@
                     </tr>
                     <tr>
                       <% if payment = Payment.find_by(user_id: current_user.id) %>
-                        <td><%= link_to "Manage Eazesportz Package ...", upgrade_payments_path(payment_id: payment) %></td>
+                        <td><%= link_to "Manage Game Tracker Package ...", upgrade_payments_path(payment_id: payment) %></td>
                       <% else %>
-                        <td><%= link_to "Manage Eazesportz Package ...", upgrade_payments_path %></td>
+                        <td><%= link_to "Manage Game Tracker Package ...", upgrade_payments_path %></td>
                       <% end %>
                     </tr>
                 </tbody>

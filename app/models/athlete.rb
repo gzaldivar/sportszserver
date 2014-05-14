@@ -22,7 +22,8 @@ class Athlete
   field :bio, type: String, default: ""
     
   field :followers, type: Hash, default: Hash[]
-  field :fans, type: Array
+  field :fans, type: Array                          # html fans that are logged in that want alerts
+  field :mobilefans, type: Array                    # List of mobile devices following this athlete
   field :processing, type: Boolean, default: false
 
   search_in :lastname, :firstname, :middlename, :number, :team, :position
@@ -59,6 +60,8 @@ class Athlete
     has_many :football_returners, dependent: :destroy
     has_many :football_rushings, dependent: :destroy
 
+    has_many :apn_notifications, dependent: :destroy
+
     validates :number, presence: true, numericality: { greater_than: 0 }
     validates :lastname, presence: true, format: { with: /^[a-zA-Z\d\s]*$/ }
     validates :firstname, presence: true, format: { with: /^[a-zA-Z\d\s]*$/ }
@@ -91,7 +94,7 @@ class Athlete
       def send_alerts
           self.fans.each do |user|
             if User.find(user).bio_alert?
-              self.alerts.create!(sport: sport, user: user, message: "Athlete info updated")
+              self.alerts.create!(sport_id: sport_id, user_id: user_id, message: "Athlete info updated", team_id: team_id)
             end
           end
       end

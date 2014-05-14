@@ -19,6 +19,16 @@
 					<%= f.text_field :pricingurl, class: 'form-control' %>
 				</div>
 			</div>
+			<div class="row">
+				<div class="col-xs-4">
+					<%= f.label :iPhonePemAPN, "Upload PEM for iPhone Push Notifications" %>
+					<%= f.file_field :iPhonePemAPN, class: 'form-control' %>
+				</div>
+				<div class="col-xs-4 col-xs-offset-1">
+					<%= f.label :iPadPemAPN, "Upload PEM for iPad Push Notifications" %>
+					<%= f.file_field :iPadPemAPN, class: 'form-control' %>
+				</div>
+			</div>
 			<p>
 			<div class="row">
 				<div class="col-xs-6">
@@ -45,7 +55,7 @@
 					<%= f.check_box :disableads, class: 'form-control' %>
 				</div>
 				<div class="col-xs-3">
-					<p class="text-danger">Checking this effects all Eazesportz sports. 
+					<p class="text-danger">Checking this effects all Game Tracker sports. 
 						Use the individual sport page to disable ads for one sport.</p>
 				</div>
 			</div>

@@ -37,7 +37,7 @@ class FootballPlaceKickersController < ApplicationController
 			else
 				placekicker = @athlete.football_place_kickers.new(gameschedule_id: game.id.to_s)
 
-				if params[:fgmissed] or params[:fgmade] or params[:fgblocked]
+				if params[:fgmissed] or params[:fgmade] or params[:fgblocked] or params[:xpmade] or params[:xpmissed] or params[:xpblocked]
 					livestats(placekicker, @athlete, params, game)
 				else
 					raise "Please check Made, Missed or Blocked!"
@@ -70,7 +70,7 @@ class FootballPlaceKickersController < ApplicationController
 			elsif live == "Adjust"
 				adjust(@placekicker, @athlete, params)
 			else
-				if params[:fgmissed] or params[:fgmade] or params[:fgblocked]
+				if params[:fgmissed] or params[:fgmade] or params[:fgblocked] or params[:xpmade] or params[:xpmissed] or params[:xpblocked]
 					livestats(@placekicker, @athlete, params, @gameschedule)
 				else
 					raise "Please check Made, Missed or Blocked!"

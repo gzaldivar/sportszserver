@@ -125,10 +125,10 @@ class FootballReturnersController < ApplicationController
 			@gameschedule = @sport.teams.find(@athlete.team_id).gameschedules.find(@returner.gameschedule_id)
 		end
 
-		def send_alert(athlete, message, stat, game)	
+		def send_alert(athlete, message, stat, game, gamelog)	
 	        athlete.fans.each do |user|
 	            alert = athlete.alerts.create!(sport: @sport, user: user, athlete: athlete, message: message + game.game_name, 
-	                						   football_returner: stat.id, stat_football: "Returner")
+	                						   football_returner: stat.id, stat_football: "Returner", team: game.team_id, gamelog: gamelog.id)
 	        end
 		end
 
@@ -204,11 +204,11 @@ class FootballReturnersController < ApplicationController
 			end
 			
 			if current_user.score_alert? and params[:kotd].to_i > 0
-				send_alert(athlete, "Kickoff Return TD score alert for ", stat, game)
+				send_alert(athlete, "Kickoff Return TD score alert for ", stat, game, gamelog)
 			elsif current_user.score_alert? and params[:punt_returntd].to_i > 0
-				send_alert(athlete, "Punt Return TD score alert for ", stat, game)
+				send_alert(athlete, "Punt Return TD score alert for ", stat, game, gamelog)
 			elsif current_user.stat_alert?
-				send_alert(athlete, "Return stat alert for ", stat, game)
+				send_alert(athlete, "Return stat alert for ", stat, game, gamelog)
 			end
 		end
 

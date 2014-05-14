@@ -2,7 +2,7 @@ module ApplicationHelper
 
   # Returns the full title on a per-page basis.
 	def full_title(page_title)
-	    base_title = "Eazesportz.com"
+	    base_title = "GameTrackerPro.com"
 	    if page_title.empty?
 	      base_title
 	    else
@@ -49,12 +49,12 @@ module ApplicationHelper
 			payment = Payment.find_by(sport_id: sport.id)
 
 			if payment.nil?
-				raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
+				raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
 			else
 				if payment.isSilver? or payment.isGold? or payment.isPlatinum?
 					return true
 			  	else
-			      	raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
+			      	raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
 				end
 			end
 		else
@@ -67,7 +67,7 @@ module ApplicationHelper
 			payment = Payment.find_by(sport_id: sport.id)
 
 			if payment.nil?
-				raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
+				raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
 			elsif payment.isSilver? and sport.mediasize > sport.silverMedia
 			 	return false
 			elsif payment.isGold? and sport.mediasize > sport.goldMedia
@@ -89,12 +89,12 @@ module ApplicationHelper
 			payment = Payment.find_by(sport_id: sport.id)
 
 			if payment.nil?
-				raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
+				raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
 			else
 				if payment.isGold? or payment.isPlatinum?
 					return true
 			  	else
-			      	raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
+			      	raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
 				end
 			end
 		elsif user_signed_in? and current_user.godmode
@@ -109,10 +109,10 @@ module ApplicationHelper
 			payment = Payment.find_by(sport_id: sport.id)
 
 			if payment.nil?
-				raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
+				raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
 			else
 				if !payment.isSilver?
-			      raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
+			      raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
 				end
 			end
 		end
@@ -135,10 +135,10 @@ module ApplicationHelper
 			payment = Payment.find_by(sport_id: current_site.id)
 
 			if payment.nil?
-				raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
+				raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
 			else
 				if !payment.isGold?
-					raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
+					raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
 				end
 			end
 		end
@@ -161,10 +161,10 @@ module ApplicationHelper
 			payment = Payment.find_by(sport_id: current_site.id)
 
 			if payment.nil?
-				raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
+				raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
 			else
 				if !payment.isPlatinum?
-					raise ActionController::RoutingError.new('Eazesportz upgrade needed for this functionality. You can upgrade from the Tools menu!')
+					raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
 				end
 			end
 		end

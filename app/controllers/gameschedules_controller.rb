@@ -100,7 +100,9 @@ class GameschedulesController < ApplicationController
         @gamelogs = @gameschedule.gamelogs.asc(:period).desc(:time)
 
         @footballhomescore = footballhomescore(@sport, @gameschedule)
+        puts @footballhomescore.to_s
         @footballtotalyards = footballtotalyards(@sport, @gameschedule)
+        puts @footballtotalyards.to_s
         @rushingtotalyards = FootballStatistics.rushingyardtotals
         @passingtotalyards = FootballStatistics.passingyardtotals
         @turnovers = FootballStatistics.turnovers

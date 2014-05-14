@@ -2,7 +2,11 @@
 	<div class="row">
 		<div class="col-xs-3">
 			<strong>
-			    <a href="/"><h4>Eazesportz.com Home</h4></a>
+				<% if current_site? and user_signed_in? %>
+					<h4><%= link_to current_site.sitename, "/" %></h4>
+			    <% else %>
+			    	<a href="/"><h4>GameTrackerPro.com Home</h4></a>
+			    <% end %>
 			</strong>
 		</div>
 		<div class="col-xs-1 col-xs-offset-5">
@@ -10,6 +14,14 @@
 		</div>
 		<div class="col-xs-1">
 			<h4><%= link_to "About",   about_path %></h4>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-xs-2 col-xs-offset-3">
+			<h5><%= link_to "Privacy", privacy_sports_path %></h5>
+		</div>
+		<div class="col-xs-2">
+			<h5><%= link_to "Terms of use", terms_sports_path %></h5>
 		</div>
 	</div>
 </footer>

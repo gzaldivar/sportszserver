@@ -5,36 +5,29 @@ module FootballStatistics
 	def footballhomescore(sport, game)
 		score = 0
 
-		sport.athletes.where(team_id: game.team_id).each do |p|
-			passscore = p.football_passings.find_by(gameschedule_id: game.id)
-			if !passscore.nil?
-				score += passscore.td * 6
-				score += passscore.twopointconv * 2
-			end
+		game.football_passings.each do |p|
+			score += p.td * 6
+			score += p.twopointconv * 2
+		end
 
-			rushscore = p.football_rushings.find_by(gameschedule_id: game.id)
-			if !rushscore.nil?
-				score += rushscore.td * 6
-				score += rushscore.twopointconv * 2
-			end
+		game.football_rushings.each do |g|
+			score += g.td * 6
+			score += g.twopointconv * 2
+		end
 
-			defensescore = p.football_defenses.find_by(gameschedule_id: game.id)
-			if !defensescore.nil?
-				score += defensescore.int_td * 6
-				score += defensescore.safety * 2
-			end
+		game.football_defenses.each do |g|
+			score += g.int_td * 6
+			score += g.safety * 2
+		end
 
-			returnsscore = p.football_returners.find_by(gameschedule_id: game.id)
-			if !returnsscore.nil?
-				score += returnsscore.kotd * 6
-				score += returnsscore.punt_returntd * 6
-			end
+		game.football_returners.each do |g|
+			score += g.kotd * 6
+			score += g.punt_returntd * 6
+		end
 
-			placekickerscore = p.football_place_kickers.find_by(gameschedule_id: game.id)
-			if !placekickerscore.nil?
-				score += placekickerscore.fgmade * 3
-				score += placekickerscore.xpmade
-			end
+		game.football_place_kickers.each do |g|
+			score += g.fgmade * 3
+			score += g.xpmade * 1
 		end
 
 		return score

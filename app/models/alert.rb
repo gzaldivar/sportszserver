@@ -2,6 +2,8 @@ class Alert
 	include Mongoid::Document
 	include Mongoid::Timestamps
 
+	after_save :sendNotifications
+
 	field :message, type: String
 	field :stat_football, type: String
 
@@ -11,10 +13,10 @@ class Alert
 	belongs_to :videoclip
 	belongs_to :user
 	belongs_to :sport
-
   	belongs_to :basketball_stat
 	belongs_to :gamelog
 	belongs_to :soccer
+	belongs_to :team
 
 	belongs_to :football_defense
 	belongs_to :football_kicker
@@ -25,6 +27,25 @@ class Alert
 	belongs_to :football_returner
 	belongs_to :football_rushing
 
-	validates :stat_football, format: { with: /Defense|Passing|Receiving|Kicker|Returner|Rushing|Place Kicker|Punter/ }, allow_nil: true, allow_blank: true
+	validates :stat_football, format: { with: /Defense|Passing|Receiving|Kicker|Returner|Rushing|Place Kicker|Punter/ }, 
+								allow_nil: true, allow_blank: true
+
+	def teamHasScoreAlerts(team)
+		if self.gamelog and team.id.to_s == self.team_id.to_s
+			return true
+		else
+			return false
+		end
+	end
+
+	def getGame
+		Gameschedule.find(Gamelog.find(self.gamelog).gameschedule_id)
+	end
+
+	private
+
+		def sendNotifications
+    		Resque.enqueue(SendApnNotification, self.id)
+		end
 
 end

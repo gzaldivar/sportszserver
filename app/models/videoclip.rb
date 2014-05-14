@@ -74,7 +74,7 @@ class Videoclip
               player = Athlete.find(p)
               player.fans.each do |user|
                 if User.find(user).media_alert?
-                  player.alerts.create!(sport: sport, user: user, videoclip: self.id, message: "Video Clip Updated")
+                  player.alerts.create!(sport_id: sport_id, user_id: user_id, videoclip_id: self.id, message: "Video Clip Updated", team_id: team_id)
                 end
               end
             end

@@ -5,6 +5,13 @@ attributes :season, :bio_alert, :blog_alert, :stat_alert, :score_alert, :media_a
 node :adminsite, :if => lambda { |u| !u.adminsite.nil? } do |u|
 	u.adminsite
 end
+node :setupforads do |u|
+	if u.paypal_email.nil?
+		false
+	else
+		true
+	end
+end
 # if lambda { |m| m.admin }
 	node(:awskey) { S3DirectUpload.config.secret_access_key }
 	node(:awskeyid) { S3DirectUpload.config.access_key_id }

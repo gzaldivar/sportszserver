@@ -1,142 +1,62 @@
-<% provide(:title, "Easy Sports Mobile - Football, Basketball and Soccer") %>
+<% provide(:title, "Game Tracker - Mobile Apps for Football, Basketball and Soccer") %>
 <p>
 <div class="row">
-	<div class="col-xs-11">
-		<h1>Welcome to Eazesportz Mobile!</h1>
+	<div class="col-xs-11" style="background-color:#ffffff;">
+		<h1 class="text-success text-center">Welcome to Game Tracker!</h1>
 		<p>
-		<h4>Easzesportz provides mobile applications and mobile web site support to manage your sports program.</h4>
+		<h3 class="text-success text-center">Mobile solutions for Live Stats, Photos, Videos and more all while the game is on!</h3>
+		<%= image_tag "fanapp/GameTrackerIntro.jpg", class: "img-responsive" %>
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-3">
-		<div class="row">
-			<h4 class="text-danger">New - Sell ads on your site!</h4>
-		</div>
+	<div class="col-xs-11" style="background-color:#fffff0;">
+		<h2 class="text-center text-danger">Supported Sports! More on the way ....</h2>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-11" style="background-color:#fffff0;">
 		<div class="row">
 			<div class="col-xs-4">
+				<%= link_to (image_tag "fanapp/FootballButton.png", class: "img-responsive"), eazefootball_path %>
+			</div>
+			<div class="col-xs-4">
+				<%= link_to (image_tag "fanapp/BasketballButton.png", class: "img-responsive"), eazebasketball_path %>
+			</div>
+			<div class="col-xs-4">
+				<%= link_to (image_tag "fanapp/SoccerButton.png", class: "img-responsive"), eazesoccer_path %>
+			</div>
+		</div>
+		<p>
+ 	</div>
+</div>
+<div class="row">
+	<div class="col-xs-11" style="background-color:#ffffff;">
+		<h2 class="text-center text-danger">Use our mobile apps to raise funds for your program. Sell ads on your site!</h2>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-11" style="background-color:#ffffff;">
+		<div class="row">
+			<div class="col-xs-3">
 				<%= image_tag "fanapp/banner_ad_pic2.png", class: "img-responsive" %>
 			</div>
-			<div class="col-xs-8">
-				<h5>In addition to showcasing your program and players, we are happy to annouce that we have added the capability for you to raise funds for your program. Log in and select the <em><font color="red">Ads and Sponsors</font></em> tab for more information!</h5>
+			<div class="col-xs-9">
+				<h3 class="text-danger">Create a log in and select the "Ads and Sponsors" tab for more information!</h3>
 			</div>
 		</div>
 		<div class="row">
 			<h5 class="text-success">Use our site to monetize your content and raise funds for your program!</h5>
 		</div>
 	</div>
-	<div class="col-xs-3">
-		<h4 class="text-success">New - Highlights Manager App</h4>
-		<%= link_to (image_tag "clientapps/HighlightManager.png", class: 'img-responsive'), highlightsinfo_path %>
-	</div>
-	<div class="col-xs-5">
-		<div class="row">
-			<h4 class="text-success">New - Post live stats, photos and video from our iphone app</h4>
-		</div>
-		<div class="row">
-			<div class="col-xs-3">
-				<%= link_to (image_tag "fanapp/iPhoneEditGame.png", class: "img-responsive"), mobileinfo_path %>
-			</div>
-			<div class="col-xs-3">
-				<%= link_to (image_tag "fanapp/iPhoneStats.png", class: "img-responsive"), mobileinfo_path %>
-			</div>
-			<div class="col-xs-3">
-				<%= link_to (image_tag "fanapp/iPhonePhoto.png", class: "img-responsive"), mobileinfo_path %>
-			</div>
-		</div>
-	</div>
 </div>
 <p>
-<div class="row">
-	<div class="col-xs-11">
-		<h4 class="text-info">Supported sports include Football, Basketball and Soccer. More sports are comming soon .....</h4>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-2">
-		<h5><em><p class="text-info">Manage Your Football Program</p></em></h5>
-	</div>
-	<div class="col-xs-2 col-xs-offset-1">
-		<h5><em><p class="text-info">Manage Your Basketball Program</p></em></h5>
-	</div>
-	<div class="col-xs-2 col-xs-offset-1">
-		<h5><em><p class="text-info">Manage Your SoccerProgram</p></em></h5>
-	</div>
-	<div class="col-xs-3 col-xs-offset-1">
-		<h5 class="text-info"><em>You also can use our mobile optimized web site<e/m></h5>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-2">
-		<%= link_to (image_tag "fanapp/iPhoneEditGame.png", class: 'img-responsive'), eazefootball_path  %>
-	</div>
-	<div class="col-xs-2 col-xs-offset-1">
-		<%= link_to (image_tag "fanapp/iPhoneBasketballGameEdit.png", class: 'img-responsive'), eazebasketball_path %>
-	</div>
-	<div class="col-xs-2 col-xs-offset-1">
-		<%= link_to (image_tag "fanapp/iPhoneSoccerGameEdit.png", class: 'img-responsive'), eazesoccer_path %>
-	</div>
-	<div class="col-xs-2 col-xs-offset-1">
-		<%= link_to (image_tag "footballwebhome.png", class: 'img-responsive'), websiteinfo_path %>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-11">
-		<p>
-		<h2 class="text-info">Keep your fans up to date while the game is in progress!</h2> 
-		<p>
-		Our apps and web site makes it easy to update and manage all your sports content. Your fans access your content from our Eazesportz iPhone app or via a branded iPhone app we create for your program (coming soon)! Of course, they can use our mobile optimized web site also. 
-		<p>
-	</div>
-</div>
-<p>
-<div class="row">
+<!--div class="row">
 	<div class="col-xs-5">
 		<h3 class="text-danger">Coming soon - Live Broadcast app</h3>
 		<%= link_to (image_tag "clientapps/BroadcastWindow.png", class: "img-responsive"), broadcastinfo_path %>
 	</div>
-</div>
+</div-->
 <p>
-<div class="row">
-	<div class="col-xs-11">
-		<h4>Pricing</h4>
-	</div>
-</div>
-<div class="row">
-	<div class="col-xs-11">
-		<h5 class="text-success">
-		<div class="row">
-			<div class="col-xs-2">
-				Novice - Everything you need to get started
-			</div>
-			<div class= "col-xs-2 col-xs-offset-1">
-				Intermediate - $49/year
-			</div>
-			<div class="col-xs-2 col-xs-offset-1">
-				Expert - $99/year
-			</div>
-			<div class="col-xs-2 col-xs-offset-1">
-				Platinum - $149/year
-			</div>
-		</div>
-		</h5>
-		<div class="well">
-			<div class="row">
-				<div class="col-xs-2">
-					<h6 class="text-info"><%= link_to "Home Page, News, Standings, Schedule, Scores, Roster, Player Profiles, Live Stats, 1GB of storage for Photos and Video, Live Blog Support", pricing_path %></h6>
-				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-					<h6 class="text-info"><%= link_to "Increase your storage to 5GB for Photos and Video", pricing_path %></h6>
-				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-					<h6 class="text-info"><%= link_to "Increase your storage to 10GB for Photos and Video", pricing_path %></h6>
-				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-					<h6 class="text-info"><%= link_to "Increase your storage to 15GB for Photos and Video", pricing_path %></h6>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
 <div class="row">
 	<div class="col-xs-11">
 		<h4><em><%= link_to "Content publishers or media distributors click here for more information.", publisher_path %></em></h4>

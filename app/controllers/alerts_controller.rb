@@ -51,7 +51,7 @@ class AlertsController < ApplicationController
 			alert.destroy
 
 		  	respond_to do |format|
-		  		format.html { redirect_to sport_athlete_alerts_path(@sport, @athlete) }
+		  		format.html { redirect_to :back, notice: "Alert Deleted!" }
 		  		format.json { render json: { success: "success", request: sport_athlete_alerts_url(@sport, @athlete) } }
 		  	end
 		rescue Exception => e

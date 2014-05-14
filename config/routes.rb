@@ -198,15 +198,15 @@ Sportzserver::Application.routes.draw do
     end
 
     collection do
-      get :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo, :ipadexample_path, :approve, :eazefootball, :eazebasketball,
-          :infobasketball, :webbballinfo, :iphone_basketballinfo, :about, :eazesoccer, :testcss, :faqs, :get_usstates, :highlightsinfo,
-          :broadcastinfo, :clientapp, :mobileadmin
+      get   :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo, :ipadexample_path, :approve, :eazefootball, :eazebasketball,
+            :infobasketball, :webbballinfo, :iphone_basketballinfo, :about, :eazesoccer, :testcss, :faqs, :get_usstates, :highlightsinfo,
+            :broadcastinfo, :clientapp, :mobileadmin, :privacy, :terms
     end
 
     member do
       get :sport_user_alerts, :displaynews, :updatecontact, :selectteam, :sortplayernews, :sortgamenews, :allnews, 
           :selectfeaturedplayers, :showfeaturedplayers, :showfollowedplayers, :updateabout, :clearabout
-      post :uploadpage, :uploadcontact
+      post :uploadpage, :uploadcontact, :updateApnNotification
       put :updatelogo, :featuredplayers, :uploadabout
     end
 

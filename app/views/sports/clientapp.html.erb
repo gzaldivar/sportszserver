@@ -1,4 +1,4 @@
-<% provide(:title, "Eazesportz - Email Confirmation Successful") %>
+<% provide(:title, "Game Tracker - Email Confirmation Successful") %>
 <p>
 <div class="row">
 	<div class="col-xs-4">
@@ -8,14 +8,14 @@
 	  		<%= image_tag "BasketballGameStats.png", class: 'img-responsive' %>
 	  	<% elsif @client == "Soccer" %>
 	  		<%= image_tag "SoccerLiveStats.png", class: 'img-responsive' %>
-	  	<% elsif @client == "Eazesportz" %>
+	  	<% elsif @client == "Game Tracker" %>
 	  		<%= image_tag "fanapp/EazeHomeScreen.png", class: 'img-responsive' %>
 	  	<% end %>
 	</div>
 	<div class="col-xs-6 col-xs-offset-1">
-		<h1 class="text-success">Welcome to Eazesportz!</h1>
+		<h1 class="text-success">Welcome to Game Tracker!</h1>
 		<h2 class="text-info">
-		<% if @client == "Eazesportz" %>
+		<% if @client == "Game Tracker" %>
 			<% if @admin %>
 				<%= link_to "Click here to open the app", "#{@clientapp}email/#{@email}/admin/admin" %>
 			<% else %>

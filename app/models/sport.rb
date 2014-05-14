@@ -77,8 +77,8 @@ class Sport
   has_many :alerts, dependent: :destroy
   has_one :payment
   has_many :sportadinvs, dependent: :destroy
-  has_one :lastad, dependent: :destroy
   embeds_many :teams
+  has_many :apn_notifications, dependent: :destroy
 
   has_mongoid_attached_file :sport_banner,
     :storage        => :s3,

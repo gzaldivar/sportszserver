@@ -11,6 +11,10 @@ module AlertsHelper
 		return athlete.alerts.all.entries
 	end
 
+	def getTeamAlerts(team, user)
+		return team.alerts.where(user_id: user.id, :gamelog.ne => "", :gamelog.exists => true).desc(:updated_at)
+	end
+
 	def hasAlerts?(athlete, user)
 		return !athlete.alerts.where(user: user.id).blank?
 	end

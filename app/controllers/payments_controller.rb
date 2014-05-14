@@ -26,8 +26,8 @@ class PaymentsController < ApplicationController
 						params[:package] == "Expert to Platinum" ? confirmgoldplatinum_payments_url : confirmplatinum_payments_url,
 			cancel_return_url: cancel_payments_url,
 			allow_guest_checkout: 'true',				   #payment with credit card for non PayPal users
-			items: [ { name: package, description: "Eazesportz - " + package, quantity: "1", 
-						amount: params[:package] == "Intermediate" ? 4900 : params[:package] == "Intermediate to Expert" ? 5000 : 
+			items: [ { name: package, description: "Game Tracker - " + package, quantity: "1", 
+						amount: params[:package] == "Intermediate" ? 5900 : params[:package] == "Intermediate to Expert" ? 4000 : 
 						params[:package] == "Expert" ? 9900 : params[:package] == "Expert to Platinum" ? 5000 : 14900 } ] #array of hashes, amount is a price in cents
 		)
 		redirect_to EXPRESS_GATEWAY.redirect_url_for(response.token)
@@ -44,7 +44,7 @@ class PaymentsController < ApplicationController
 	def confirmsilvergold
 		@order = Payment.new
 		@order.express_token = params[:token]
-		@price = 50
+		@price = 40
 		@order.package = "Intermediate to Expert"
 		render 'confirm'
 	end

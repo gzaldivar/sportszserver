@@ -62,6 +62,7 @@ class User
   has_many :blogs, dependent: :destroy
   has_many :sponsors
   has_one :payment
+  has_many :apn_notifications, dependent: :destroy
 
   index({ email: 1 }, { unique: true, background: true })
 

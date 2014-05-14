@@ -96,6 +96,7 @@ gem 'sitemap_generator'
 gem 'rails_12factor'
 # gem 'paypal-express'
 gem 'activemerchant'
+gem 'houston'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'

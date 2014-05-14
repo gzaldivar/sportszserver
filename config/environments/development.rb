@@ -55,4 +55,5 @@ Sportzserver::Application.configure do
     }
     ::EXPRESS_GATEWAY = ActiveMerchant::Billing::PaypalExpressGateway.new(paypal_options)
   end
+
 end

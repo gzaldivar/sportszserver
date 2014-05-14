@@ -1,5 +1,7 @@
 class CleanupNewsBlog
   
+  require 'houston'
+
   @queue = :cleanup_queue
   
   def self.perform(id)
@@ -20,20 +22,15 @@ class CleanupNewsBlog
    		end
 
       time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
-      alertdate = time.to_time.prev_month.to_date.iso8601
+#      alertdate = time.to_time.prev.to_date.iso8601
+      alertdate = Time.now - 1.days
 
       s.athletes.each do |a|
         a.alerts.where(:updated_at.lt => alertdate).each do |alert|
           alert.destroy
         end
       end
-
-#      User.where(:confirmation_sent_at.lt => alertdate).each do |user|
-#        if user.unconfirmed_email.nil?
-#          user.destroy
-#        end
-#      end
-  	end
-
+    end
   end
+
 end

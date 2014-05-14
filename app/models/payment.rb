@@ -13,11 +13,11 @@ class Payment
 	attr_accessor :first_name, :last_name, :ip_address
 
 	def silver
-		4900	# $49
+		5900	# $49
 	end
 
 	def silvergold
-		5000
+		4000
 	end
 
 	def gold

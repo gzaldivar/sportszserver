@@ -1,5 +1,5 @@
 # Set the host name for URL creation
-SitemapGenerator::Sitemap.default_host = "http://www.eazesportz.com"
+SitemapGenerator::Sitemap.default_host = "http://www.gametrackerpro.com"
 SitemapGenerator::Sitemap.public_path = 'tmp/'
 SitemapGenerator::Sitemap.sitemaps_path = 'sitemaps/'
 
@@ -18,11 +18,8 @@ SitemapGenerator::Sitemap.create do
   add '/about'
   add '/eazefootball'
   add '/eazebasketball'
-  add '/infobasketball'
-  add '/iphone_basketball'
   add '/mobileinfo'
   add '/websiteinfo'
-  add '/webbballinfo'
 
   #
   # The root path '/' and sitemap index file are added automatically for you.

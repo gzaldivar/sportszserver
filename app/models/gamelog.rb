@@ -3,7 +3,8 @@ class Gamelog
   include Mongoid::Timestamps
 
   before_destroy :updatestats
-  before_save :logentrytext, :alert, :adjusttime
+  before_save :logentrytext, :adjusttime
+  after_save :alert
 
   field :logentry, type: String
   field :period, type: String
@@ -20,7 +21,7 @@ class Gamelog
   has_many :photos
   has_many :videoclips
   has_many :blogs
-  has_many :alerts
+  has_many :alerts, dependent: :destroy
 
   belongs_to :football_passing
   belongs_to :football_rushing
@@ -64,6 +65,8 @@ class Gamelog
 
     def adjusttime
       timearray = self.time.split(':')
+      timearray[0] = timearray[0].to_i.to_s
+      timearray[1] = timearray[1].to_i.to_s
 
       if timearray[0].to_i < 10
         timearray[0] = '0' + timearray[0]
@@ -215,57 +218,57 @@ class Gamelog
       if self.score == "TD"
         case self.period
         when "Q1"
-          if game.homeq1 > 0
+          if game.homeq1 > 5
             game.homeq1-=6
           end
         when "Q2"
-          if game.homeq2 > 0
+          if game.homeq2 > 5
             game.homeq2-=6
           end
         when "Q3"
-          if game.homeq3 > 0
+          if game.homeq3 > 5
             game.homeq3-=6
           end
         when "Q4"
-          if game.homeq4 > 0
+          if game.homeq4 > 5
             game.homeq4-=6
           end
         end
       elsif self.score == "2P"
         case self.period
         when "Q1"
-          if game.homeq1 > 0
+          if game.homeq1 > 1
             game.homeq1-=2
           end
         when "Q2"
-          if game.homeq2 > 0
+          if game.homeq2 > 1
             game.homeq2-=2
           end
         when "Q3"
-          if game.homeq3 > 0
+          if game.homeq3 > 1
             game.homeq3-=2
           end
         when "Q4"
-          if game.homeq4 > 0
+          if game.homeq4 > 1
             game.homeq4-=2
           end
         end
       elsif self.score == "FG"
         case self.period
         when "Q1"
-          if game.homeq1 > 0
+          if game.homeq1 > 2
             game.homeq1 -= 3
           end
         when "Q2"
-          if game.homeq2 > 0
+          if game.homeq2 > 2
             game.homeq2 -= 3
           end
         when "Q3"
-          if game.homeq3 > 0
+          if game.homeq3 > 2
             game.homeq3 -= 3
           end
         when "Q4"
-          if game.homeq4 > 0
+          if game.homeq4 > 2
             game.homeq4 -= 3
           end
         end
@@ -301,56 +304,78 @@ class Gamelog
     def alert
       if self.football_place_kicker_id
         athlete = Athlete.find(FootballPlaceKicker.find(football_place_kicker_id).athlete_id)
-        athlete.fans.each do |u|
-          user = User.find(u)
-          if user.score_alert and self.score == "FG"
-            athlete.alerts.create!(sport: athlete.sport_id, user: user.id, athlete: athlete.id, 
-                                   message:  "Field Goal score alert for " + self.gameschedule.game_name, 
-                                   football_place_kicker: self.football_place_kicker, stat_football: "Place Kicker")
-          elsif user.score_alert 
-            athlete.alerts.create!(sport: athlete.sport_id, user: user.id, athlete: athlete.id, 
-                                   message:  "Extra Point score alert for " + self.gameschedule.game_name, 
-                                   football_place_kicker: self.football_place_kicker, stat_football: "Place Kicker")
+        sport = Sport.find(athlete.sport_id)
+ #       sport = Sport.where('teams._id' => Moped::BSON::ObjectId(Gameschedule.find(self.gameschedule_id).team_id)).first
+        team = sport.teams.find(Gameschedule.find(self.gameschedule_id).team_id)
+
+        if !team.fans.nil?
+          team.fans.each do |u|
+            user = User.find(u)
+            if user.score_alert and self.score == "FG"
+              self.alerts.create!(sport_id: sport.id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
+                                  message:  self.logentrytext, 
+                                  football_place_kicker_id: self.football_place_kicker_id, stat_football: "Place Kicker")
+            elsif user.score_alert 
+              self.alerts.create!(sport_id: sport.id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
+                                  message:  logentrytext, 
+                                  football_place_kicker_id: self.football_place_kicker_id, stat_football: "Place Kicker")
+            end
           end
         end
       elsif self.football_passing_id
         athlete = Athlete.find(FootballPassing.find(football_passing_id).athlete_id)
-        athlete.fans.each do |u|
-          user = User.find(u)
-          if user.score_alert
-            athlete.alerts.create!(sport: athlete.sport_id, user: user.id, athlete: athlete.id, 
-                                   message:  "Passing score alert for " + self.gameschedule.game_name, 
-                                   football_passing_id: self.football_passing_id, stat_football: "Passing")
+        sport = Sport.find(athlete.sport_id)
+#        sport = Sport.where('teams._id' => Moped::BSON::ObjectId(Gameschedule.find(self.gameschedule_id).team_id)).first
+        team = sport.teams.find(Gameschedule.find(self.gameschedule_id).team_id)
+
+        if !team.fans.nil?
+          team.fans.each do |u|
+            user = User.find(u)
+            if user.score_alert
+              self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
+                                  message:  "Passing score alert for " + self.gameschedule.game_name, 
+                                  football_passing_id: self.football_passing_id, stat_football: "Passing")
+            end
           end
-        end
-        receiver = Athlete.find(self.assist)
-        recstat = FootballReceiving.where(gameschedule_id: gameschedule_id, athlete_id: assist).first
-        receiver.fans.each do |u|
-          user = User.find(u)
-          if user.score_alert
-            receiver.alerts.create!(sport: receiver.sport_id, user: user.id, athlete: receiver.id, 
-                                   message:  "Receiver score alert for " + self.gameschedule.game_name, 
-                                   football_receiver_id: self.recstat.id, stat_football: "Reciever")
-          end
+#          receiver = Athlete.find(self.assist)
+#          recstat = FootballReceiving.where(gameschedule_id: gameschedule_id, athlete_id: assist).first
+#          receiver.fans.each do |u|
+#            user = User.find(u)
+#            if user.score_alert
+#              receiver.alerts.create!(sport: receiver.sport_id, user: user.id, athlete: receiver.id, 
+#                                     message:  "Receiver score alert for " + self.gameschedule.game_name, 
+#                                     football_receiver_id: self.recstat.id, stat_football: "Reciever")
+#            end
+#          end
         end
       elsif self.football_rushing_id
         athlete = Athlete.find(FootballRushing.find(football_rushing_id).athlete_id)
-        athlete.fans.each do |u|
-          user = User.find(u)
-          if user.score_alert
-            athlete.alerts.create!(sport: athlete.sport_id, user: user.id, athlete: athlete.id, 
-                                   message:  "Rushing score alert for " + self.gameschedule.game_name, 
-                                   football_rushing_id: self.football_rushing_id, stat_football: "Rushing")
+        sport = Sport.find(athlete.sport_id)
+        team = sport.teams.find(Gameschedule.find(self.gameschedule_id).team_id)
+
+        if !team.fans.nil?
+          team.fans.each do |u|
+            user = User.find(u)
+            if user.score_alert
+              self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
+                                     message:  "Rushing score alert for " + self.gameschedule.game_name, 
+                                     football_rushing_id: self.football_rushing_id, stat_football: "Rushing")
+            end
           end
         end
       elsif self.football_defense_id
         athlete = Athlete.find(FootballDefense.find(football_defense_id).athlete_id)
-        athlete.fans.each do |u|
-          user = User.find(u)
-          if user.score_alert
-            athlete.alerts.create!(sport: athlete.sport_id, user: user.id, athlete: athlete.id, 
-                                   message:  "Defensive score alert for " + self.gameschedule.game_name, 
-                                   football_defense_id: self.football_defense_id, stat_football: "Defense")
+        sport = Sport.find(athlete.sport_id)
+        team = sport.teams.find(Gameschedule.find(self.gameschedule_id).team_id)
+
+        if !team.fans.nil?
+          team.fans.each do |u|
+            user = User.find(u)
+            if user.score_alert
+              self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
+                                     message:  "Defensive score alert for " + self.gameschedule.game_name, 
+                                     football_defense_id: self.football_defense_id, stat_football: "Defense")
+            end
           end
         end
       end

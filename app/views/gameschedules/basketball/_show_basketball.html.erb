@@ -145,7 +145,7 @@
 			</ul>
 	</div>
 	<div class="col-xs-7">
-	    <% if Time.now > @gameschedule.starttime + 5.hours or @gameschedule.final %>
+	    <% if Time.now > @gameschedule.starttime + 5.hours or @gameschedule.final and isAdmin? %>
 	      	<h4 class="text-warning">Game is past end time. Turn of mobile alerts?</h4>
 	      	<p class="text-danger">If you update scoreing stats with alerts enabled after the games end and your fans have scoreing alerts enabled, 	they will get a scoring alert notification sent to their mobile device.</p>
         	<%= form_for [@sport, @team, @gameschedule], url: mobilealerts_sport_team_gameschedule_path(@sport, @team, @gameschedule), 

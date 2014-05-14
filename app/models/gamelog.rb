@@ -302,81 +302,83 @@ class Gamelog
     end
 
     def alert
-      game = Gameschedule.find(gameschedule_id)
+      game = Gameschedule.find(self.gameschedule_id)
       
-      if self.football_place_kicker_id
-        athlete = Athlete.find(FootballPlaceKicker.find(football_place_kicker_id).athlete_id)
-        sport = Sport.find(athlete.sport_id)
- #       sport = Sport.where('teams._id' => Moped::BSON::ObjectId(Gameschedule.find(self.gameschedule_id).team_id)).first
-        team = sport.teams.find(Gameschedule.find(self.gameschedule_id).team_id)
+      if game.mobilealerts
+        if self.football_place_kicker_id
+          athlete = Athlete.find(FootballPlaceKicker.find(football_place_kicker_id).athlete_id)
+          sport = Sport.find(athlete.sport_id)
+   #       sport = Sport.where('teams._id' => Moped::BSON::ObjectId(Gameschedule.find(self.gameschedule_id).team_id)).first
+          team = sport.teams.find(game.team_id)
 
-        if !team.fans.nil?
-          team.fans.each do |u|
-            user = User.find(u)
-            if user.score_alert and self.score == "FG"
-              self.alerts.create!(sport_id: sport.id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                  message:  self.logentrytext, 
-                                  football_place_kicker_id: self.football_place_kicker_id, stat_football: "Place Kicker")
-            elsif user.score_alert 
-              self.alerts.create!(sport_id: sport.id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                  message:  logentrytext, 
-                                  football_place_kicker_id: self.football_place_kicker_id, stat_football: "Place Kicker")
+          if !team.fans.nil?
+            team.fans.each do |u|
+              user = User.find(u)
+              if user.score_alert and self.score == "FG"
+                self.alerts.create!(sport_id: sport.id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
+                                    message:  self.logentrytext, 
+                                    football_place_kicker_id: self.football_place_kicker_id, stat_football: "Place Kicker")
+              elsif user.score_alert 
+                self.alerts.create!(sport_id: sport.id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
+                                    message:  logentrytext, 
+                                    football_place_kicker_id: self.football_place_kicker_id, stat_football: "Place Kicker")
+              end
             end
           end
-        end
-      elsif self.football_passing_id
-        athlete = Athlete.find(FootballPassing.find(football_passing_id).athlete_id)
-        sport = Sport.find(athlete.sport_id)
-#        sport = Sport.where('teams._id' => Moped::BSON::ObjectId(Gameschedule.find(self.gameschedule_id).team_id)).first
-        team = sport.teams.find(Gameschedule.find(self.gameschedule_id).team_id)
+        elsif self.football_passing_id
+          athlete = Athlete.find(FootballPassing.find(football_passing_id).athlete_id)
+          sport = Sport.find(athlete.sport_id)
+  #        sport = Sport.where('teams._id' => Moped::BSON::ObjectId(Gameschedule.find(self.gameschedule_id).team_id)).first
+          team = sport.teams.find(game.team_id)
 
-        if !team.fans.nil?
-          team.fans.each do |u|
-            user = User.find(u)
-            if user.score_alert
-              self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                  message:  self.logentrytext, 
-                                  football_passing_id: self.football_passing_id, stat_football: "Passing")
+          if !team.fans.nil?
+            team.fans.each do |u|
+              user = User.find(u)
+              if user.score_alert
+                self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
+                                    message:  self.logentrytext, 
+                                    football_passing_id: self.football_passing_id, stat_football: "Passing")
+              end
+            end
+  #          receiver = Athlete.find(self.assist)
+  #          recstat = FootballReceiving.where(gameschedule_id: gameschedule_id, athlete_id: assist).first
+  #          receiver.fans.each do |u|
+  #            user = User.find(u)
+  #            if user.score_alert
+  #              receiver.alerts.create!(sport: receiver.sport_id, user: user.id, athlete: receiver.id, 
+  #                                     message:  "Receiver score alert for " + self.gameschedule.game_name, 
+  #                                     football_receiver_id: self.recstat.id, stat_football: "Reciever")
+  #            end
+  #          end
+          end
+        elsif self.football_rushing_id
+          athlete = Athlete.find(FootballRushing.find(football_rushing_id).athlete_id)
+          sport = Sport.find(athlete.sport_id)
+          team = sport.teams.find(game.team_id)
+
+          if !team.fans.nil?
+            team.fans.each do |u|
+              user = User.find(u)
+              if user.score_alert
+                self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
+                                       message:  self.logentrytext, 
+                                       football_rushing_id: self.football_rushing_id, stat_football: "Rushing")
+              end
             end
           end
-#          receiver = Athlete.find(self.assist)
-#          recstat = FootballReceiving.where(gameschedule_id: gameschedule_id, athlete_id: assist).first
-#          receiver.fans.each do |u|
-#            user = User.find(u)
-#            if user.score_alert
-#              receiver.alerts.create!(sport: receiver.sport_id, user: user.id, athlete: receiver.id, 
-#                                     message:  "Receiver score alert for " + self.gameschedule.game_name, 
-#                                     football_receiver_id: self.recstat.id, stat_football: "Reciever")
-#            end
-#          end
-        end
-      elsif self.football_rushing_id
-        athlete = Athlete.find(FootballRushing.find(football_rushing_id).athlete_id)
-        sport = Sport.find(athlete.sport_id)
-        team = sport.teams.find(Gameschedule.find(self.gameschedule_id).team_id)
+        elsif self.football_defense_id
+          athlete = Athlete.find(FootballDefense.find(football_defense_id).athlete_id)
+          sport = Sport.find(athlete.sport_id)
+          team = sport.teams.find(game.team_id)
 
-        if !team.fans.nil?
-          team.fans.each do |u|
-            user = User.find(u)
-            if user.score_alert
-              self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                     message:  self.logentrytext, 
-                                     football_rushing_id: self.football_rushing_id, stat_football: "Rushing")
-            end
-          end
-        end
-      elsif self.football_defense_id
-        athlete = Athlete.find(FootballDefense.find(football_defense_id).athlete_id)
-        sport = Sport.find(athlete.sport_id)
-        team = sport.teams.find(Gameschedule.find(self.gameschedule_id).team_id)
-
-        if !team.fans.nil?
-          team.fans.each do |u|
-            user = User.find(u)
-            if user.score_alert
-              self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                     message:  self.logentrytext, 
-                                     football_defense_id: self.football_defense_id, stat_football: "Defense")
+          if !team.fans.nil?
+            team.fans.each do |u|
+              user = User.find(u)
+              if user.score_alert
+                self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
+                                       message:  self.logentrytext, 
+                                       football_defense_id: self.football_defense_id, stat_football: "Defense")
+              end
             end
           end
         end

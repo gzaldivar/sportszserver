@@ -108,7 +108,7 @@ Sportzserver::Application.routes.draw do
     
     resources :newsfeeds do
       member do
-        put   :updatephoto
+        put   :updatephoto, :alertupdate
       end
       collection do
         post :createphoto
@@ -149,7 +149,7 @@ Sportzserver::Application.routes.draw do
       resources :soccers
       
       member do
-        get :follow, :unfollow, :stats, :playerstats
+        get :follow, :unfollow, :stats, :playerstats, :mobilefollow, :mobileunfollow
         put :updatephoto, :selectedstat
       end
       

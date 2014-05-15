@@ -168,6 +168,36 @@ class AthletesController < ApplicationController
     end
   end
 
+  def mobilefollow
+    begin
+      @athlete.mobilefans.push(params[:token]) unless !@athlete.mobilefans.include?(params[:token])
+      @athlete.save!
+      
+      respond_to do |format|
+        format.json { render status: 200, json: { mobilefans: @athlete.mobilefans } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.json { render status: 404, json: { error: e.message } }
+      end
+    end
+  end
+
+  def mobileunfollow
+    begin
+      @athlete.mobilefans.delete(params[:token]) if @athlete.mobilefans.include?(params[:token])
+      @athlete.save!
+
+      respond_to do |format|
+        format.json { render status: 200, json: { mobilefans: @athlete.mobilefans } } 
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.json { render status: 404, json: { error: e.message } }
+      end
+    end
+  end
+
   def stats
     if @sport.name == "Football"
       @stats = AthleteFootballStatsTotal.new

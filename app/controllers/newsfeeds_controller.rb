@@ -1,7 +1,7 @@
 class NewsfeedsController < ApplicationController
   before_filter :authenticate_user!,    only: [:new, :create, :edit, :update, :destroy]
   before_filter :get_sport
-  before_filter :correct_feeditem,      only: [:edit, :update, :destroy, :show, :updatephoto]
+  before_filter :correct_feeditem,      only: [:edit, :update, :destroy, :show, :updatephoto, :alertupdate]
   before_filter only: [:new, :create, :edit, :update, :destroy] do |controller|
     SiteAdmin?(@sport)
   end
@@ -163,6 +163,25 @@ class NewsfeedsController < ApplicationController
     rescue Exception => e
       respond_to do |format|
         format.json { render status: 404, json: { error: e.message, newsfeed: @newsfeed } }
+      end
+    end
+  end
+
+
+  def alertupdate
+    begin
+      message = params[:message]
+      team = @sport.teams.find(params[:team_id])
+      team.alerts.create!(sport_id: @sport.id, team_id: team.id, teamusers: team.fans, message: message)
+      
+      respond_to do |format|
+        format.html { redirect_to :back, notice: "Alert sent!" }
+        format.json { render status: 200, json: { message: message } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to :back, alert: e.message }
+        format.json { render status: 404, json: { error: e.message } }
       end
     end
   end

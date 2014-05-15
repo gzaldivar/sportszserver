@@ -69,37 +69,22 @@ class SendApnNotification
 		team = sport.teams.find(alert.team_id)
 
 		team.apn_notifications.each do |n|
-			bundle = n.bundleidentifier.split(".")
 
-			if n.scorealerts and alert.gamelog_id
-				if bundle[2] == "gametracker"
-					send_notification(n, connection, alert)
-				elsif bundle[2] == "gametrackerhd"
-					send_notification(n, ipadconection, alert)
-				end
-			elsif n.mediaalerts and (alert.photo_id or alert.videoclip_id)
-				if bundle[2] == "gametracker"
-					send_notification(n, connection, alert)
-				elsif bundle[2] == "gametrackerhd"
-					send_notification(n, ipadconection, alert)
-				end
-			elsif n.blogalerts and alert.blog_id
-				if bundle[2] == "gametracker"
-					send_notification(n, connection, alert)
-				elsif bundle[2] == "gametrackerhd"
-					send_notification(n, ipadconection, alert)
-				end
-			elsif n.athleterts and alert.athlete_id
-				if bundle[2] == "gametracker"
-					send_notification(n, connection, alert)
-				elsif bundle[2] == "gametrackerhd"
-					send_notification(n, ipadconection, alert)
-				end
-			elsif n.teamalerts
-				if bundle[2] == "gametracker"
-					send_notification(n, connection, alert)
-				elsif bundle[2] == "gametrackerhd"
-					send_notification(n, ipadconection, alert)
+			if n.scorealerts and alert.gamelog_id or alert.athlete_id.nil?
+				send_notification(n, connection, ipadconection, alert)
+			elsif !alert.athlete_id.nil?
+				athlete = sport.athletes.find(alert.athlete_id)
+
+				if athlete.mobilefans.include?(n.token)
+					if n.mediaalerts and (alert.photo_id or alert.videoclip_id)
+						send_notification(n, connection, ipadconection, alert)
+					elsif n.blogalerts and alert.blog_id
+						send_notification(n, connection, ipadconection, alert)
+					elsif n.athleterts and alert.athlete_id
+						send_notification(n, connection, ipadconection, alert)
+					elsif n.teamalerts
+						send_notification(n, connection, ipadconection, alert)
+					end
 				end
 			end
 		end
@@ -109,9 +94,7 @@ class SendApnNotification
 
 		# clean up
 
-		if alert.athlete_id.nil?
-			alert.destroy
-		elsif alert.teamusers.empty? and alert.users.empty?
+		if alert.athlete_id.nil? and alert.teamusers.empty?			# Delete alert if there are no website fans following the team
 			alert.destroy
 		end
 
@@ -143,12 +126,20 @@ class SendApnNotification
 		end
 	end
 
-    def self.send_notification(apn, connection, alert)
+    def self.send_notification(apn, connection, ipadconection, alert)
     	puts "send notification"
     	puts alert.message
+
+		bundle = apn.bundleidentifier.split(".")
       	notification = Houston::Notification.new(device: apn.token)
       	notification.alert  = alert.message
-      	connection.write(notification.message)
+
+    	if bundle[2] == "gametracker"
+	      	connection.write(notification.message)
+		elsif bundle[2] == "gametrackerhd"
+	      	ipadconection.write(notification.message)
+		end
+
     end
 
 end

@@ -103,7 +103,6 @@ class GameschedulesController < ApplicationController
         @footballhomescore = footballhomescore(@sport, @gameschedule)
         puts @footballhomescore.to_s
         @footballtotalyards = footballtotalyards(@sport, @gameschedule)
-        puts @footballtotalyards.to_s
         @rushingtotalyards = FootballStatistics.rushingyardtotals
         @passingtotalyards = FootballStatistics.passingyardtotals
         @turnovers = FootballStatistics.turnovers
@@ -115,6 +114,12 @@ class GameschedulesController < ApplicationController
         @totals = basketballstats.stattotals
 
       elsif @sport.name == "Soccer"
+        @gamelogs = @gameschedule.gamelogs.asc(:period)
+
+        if @gamlogs.nil?
+          @gamlogs = []
+        end
+        
         @stats = @gameschedule.soccers
         @totals = Soccer.new(athlete_id: nil, gameschedule_id: @gameschedule.id)
 
@@ -135,6 +140,7 @@ class GameschedulesController < ApplicationController
         athletes = @players
         @players = []
         @goalies = []
+
         athletes.each do |a|
           if is_soccer_goalie?(a.position) and hasSoccerPlayerStats?(@stats)
             @goalies << a
@@ -145,6 +151,7 @@ class GameschedulesController < ApplicationController
             @players << a
           end
         end
+        
       end
 
       respond_to do |format|
@@ -204,7 +211,11 @@ class GameschedulesController < ApplicationController
         @gameschedule.current_game_time = addzerototime(params[:gameminutes].to_s) + ":" + addzerototime(params[:gameseconds].to_s)
       end
 
-      if params[:final].to_i == 1 and @gameschedules.final == false
+      if params[:currentperiod].to_i > @gameschedule.currentperiod
+        sendPeriodAlert(@sport, @team, @gameschedule)
+      end
+
+      if params[:final].to_i and @gameschedule.final
         createNewsItem(@gameschedule)
       end
 
@@ -227,7 +238,7 @@ class GameschedulesController < ApplicationController
         format.html { redirect_to :back, alert: "Error updating game schedule " + e.message }
         format.json { render status: 404, json: { error: e.message, request: sport_team_gameschedule_url(@sport, @team, @gameschedule) } }
       end
-    end
+   end
   end
   
   def index
@@ -565,11 +576,13 @@ class GameschedulesController < ApplicationController
 
   def alertupdate
     begin
-      @message = ""
+      message = params[:message]
 
+      @team.alerts.create!(sport_id: @sport.id, team_id: @team.id, teamusers: @team.fans, message: message)
+      
       respond_to do |format|
         format.html { redirect_to :back, notice: "Alert sent!" }
-        format.json { render status: 200, json: { message: @message } }
+        format.json { render status: 200, json: { message: message } }
       end
     rescue Exception => e
       respond_to do |format|
@@ -605,13 +618,31 @@ class GameschedulesController < ApplicationController
     def createNewsItem(game)
       vsscore = (game.opponentq1 + game.opponentq2 + game.opponentq3 + game.opponentq4)
       result = footballhomescore(@sport, game) > vsscore ? "W" : footballhomescore(@sport, game) == vsscore ? "T" : "L"
-
+      message = "Final - " + @team.mascot + " vs " + game.opponent_mascot + " " + result + " " + 
+                                              footballhomescore(@sport, game).to_s + "-" + vsscore.to_s
       newsitem = @sport.newsfeeds.new(news: @team.mascot + " " + footballhomescore(@sport, game).to_s + " " + game.opponent_mascot + " " + vsscore.to_s, 
-                                      title: "Final - " + @team.mascot + " vs " + game.opponent_mascot + " " + result + " " + 
-                                              footballhomescore(@sport, game).to_s + "-" + vsscore.to_s, team_id: @team.id,
-                                      gameschedule_id: game.id)
+                                      title: message, team_id: @team.id, gameschedule_id: game.id)
+      team.alerts.create!(sport_id: @sport.id, team_id: @team.id, message: message)
 
       newsitem.save!
     end
-    
+
+    def sendPeriodAlert(sport, team, gameschedule)
+      if sport.name = "Football"
+        vsscore = (game.opponentq1 + game.opponentq2 + game.opponentq3 + game.opponentq4)
+        qtr = "QTR" + @gameschedule.currentperiod.to_s
+        team.alerts.create!(sport_id: sport.id, team_id: team.id, 
+                            message: "End of " + qtr + " - " + team.mascot + " " + footballhomescore(sport,gameschedule).to_s + " " +
+                            gameschedule.opponent_mascot + " " + vsscore.to_s)
+      elsif sport == "Basketball"
+        team.alerts.create!(sport_id: sport.id, team_id: team.id, 
+                            message: "End of " + gameschedule.currentperiod.to_s + " - " + team.mascot + " " + basketball_home_score(sport, gameschedule).to_s + 
+                            " " + gameschedule.opponent_mascot + " " + gameschedule.opponentscore.to_s)
+      elsif sport == "soccer"
+        team.alerts.create!(sport_id: sport.id, team_id: team.id, 
+                            message: "End of " + gameschedule.currentperiod.to_s + " - " + team.mascot + " " + soccer_home_score(sport, gameschedule).to_s + 
+                            " " + gameschedule.opponent_mascot + " " + gameschedule.opponentscore.to_s)
+      end
+    end
+
 end

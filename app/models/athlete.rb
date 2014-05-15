@@ -21,9 +21,8 @@ class Athlete
   field :season, type: String
   field :bio, type: String, default: ""
     
-  field :followers, type: Hash, default: Hash[]
-  field :fans, type: Array                          # html fans that are logged in that want alerts
-  field :mobilefans, type: Array                    # List of mobile devices following this athlete
+  field :fans, type: Array, default: []                          # html fans that are logged in that want alerts
+  field :mobilefans, type: Array, default: []                    # List of mobile devices following this athlete
   field :processing, type: Boolean, default: false
 
   search_in :lastname, :firstname, :middlename, :number, :team, :position
@@ -92,11 +91,7 @@ class Athlete
     private
 
       def send_alerts
-          self.fans.each do |user|
-            if User.find(user).bio_alert?
-              self.alerts.create!(sport_id: sport_id, user_id: user_id, message: "Athlete info updated", team_id: team_id)
-            end
-          end
+        self.alerts.create!(sport_id: sport_id, users: self.fans, message: "Athlete info updated", team_id: team_id)
       end
 
       def decode_base64_image

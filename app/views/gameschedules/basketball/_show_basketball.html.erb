@@ -1,4 +1,22 @@
 <div class="row">
+	<div class="col-xs-7">
+	    <% if Time.now > @gameschedule.starttime + 5.hours or @gameschedule.final and isAdmin? %>
+	      	<h4 class="text-warning">Game is past end time. Turn of mobile notifications and alerts?</h4>
+	      	<p class="text-danger">Mobile notifications updating fans on the score of the game are automatically generated when the period is changed.</p>
+        	<%= form_for [@sport, @team, @gameschedule], url: mobilealerts_sport_team_gameschedule_path(@sport, @team, @gameschedule), 
+                	method: :put, html: { class: 'form-inline' }  do |f| %>
+            	<%= f.label :mobilealerts, "Mobile Alerts" %>
+            	<%= f.check_box :mobilealerts %>
+            	<%= f.submit :submit %>
+        	<% end %>
+	        <p class="text-danger">Click to turn on or off</p>
+	    <% end %>
+	</div>
+	<div class="col-xs-4">
+		<%= link_to "Create Manual Notification/Alert", "#my-modal", :class => "btn btn-xs btn-primary", "data-toggle" => "modal" %>
+	</div>
+</div>
+<div class="row">
 	<div class="col-xs-8">
 		<%if site_owner?(@sport) or isTeamManager?(@gameschedule) %>
 			<ul class="nav nav-pills">
@@ -137,25 +155,12 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-4">
+	<div class="col-xs-6">
 		<!--% if site_owner?(@sport) or (user_signed_in? and current_user.godmode) %-->
 			<ul class="nav nav-pills">
 			  	<li><%= link_to "Scoring", '#', :class => 'basketballteam_gametotals' %></li>
 			  	<li><%= link_to "Other Stats", '#', :class => 'basketballteam_stats' %></li>
 			</ul>
-	</div>
-	<div class="col-xs-7">
-	    <% if Time.now > @gameschedule.starttime + 5.hours or @gameschedule.final and isAdmin? %>
-	      	<h4 class="text-warning">Game is past end time. Turn of mobile alerts?</h4>
-	      	<p class="text-danger">If you update scoreing stats with alerts enabled after the games end and your fans have scoreing alerts enabled, 	they will get a scoring alert notification sent to their mobile device.</p>
-        	<%= form_for [@sport, @team, @gameschedule], url: mobilealerts_sport_team_gameschedule_path(@sport, @team, @gameschedule), 
-                	method: :put, html: { class: 'form-inline' }  do |f| %>
-            	<%= f.label :mobilealerts, "Mobile Alerts" %>
-            	<%= f.check_box :mobilealerts %>
-            	<%= f.submit :submit %>
-        	<% end %>
-	        <p class="text-danger">Click to turn on or off</p>
-	    <% end %>
 	</div>
 </div>
 <div class="row">
@@ -168,5 +173,6 @@
 </div>
 <%= render 'layouts/messagemodal', modalid: 'upgradestatsmodal', modaltitle: 'Upgrade for Stats', 
             messagetext: 'Click on "Manage Game Tracker Package" in Tools menu to upgrade!' %>
+<%= render 'layouts/notificationmodal', modalname: 'my-modal', url_path: alertupdate_sport_team_gameschedule_path(@sport, @team, @gameschedule) %>
 
 		

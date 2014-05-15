@@ -55,7 +55,6 @@ class User
 
 #  has_many :sites
   has_many :sports
-  has_many :alerts, dependent: :destroy
   has_many :photos
   has_many :videoclips
   has_many :events

@@ -95,6 +95,12 @@ class SendApnNotification
 				elsif bundle[2] == "gametrackerhd"
 					send_notification(n, ipadconection, alert)
 				end
+			elsif n.teamalerts
+				if bundle[2] == "gametracker"
+					send_notification(n, connection, alert)
+				elsif bundle[2] == "gametrackerhd"
+					send_notification(n, ipadconection, alert)
+				end
 			end
 		end
 
@@ -104,6 +110,8 @@ class SendApnNotification
 		# clean up
 
 		if alert.athlete_id.nil?
+			alert.destroy
+		elsif alert.teamusers.empty? and alert.users.empty?
 			alert.destroy
 		end
 

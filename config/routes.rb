@@ -70,7 +70,7 @@ Sportzserver::Application.routes.draw do
 
     resources :teams,   only: [:new, :create, :edit, :update, :destroy, :index, :show] do
       member do
-        get   :getplayers, :teamlogo
+        get   :getplayers, :teamlogo, :follow, :unfollow
         post  :addplayers
         put   :createteamlogo, :updatelogo
       end
@@ -120,7 +120,7 @@ Sportzserver::Application.routes.draw do
 
       resources :alerts, only: [:index, :destroy] do
         collection do
-          get :clearall
+          get :clearall, :clearuser, :clearteamuser
         end
       end
  
@@ -205,7 +205,7 @@ Sportzserver::Application.routes.draw do
 
     member do
       get :sport_user_alerts, :displaynews, :updatecontact, :selectteam, :sortplayernews, :sortgamenews, :allnews, 
-          :selectfeaturedplayers, :showfeaturedplayers, :showfollowedplayers, :updateabout, :clearabout
+          :selectfeaturedplayers, :showfeaturedplayers, :showfollowedplayers, :updateabout, :clearabout, :deletealert
       post :uploadpage, :uploadcontact, :updateApnNotification
       put :updatelogo, :featuredplayers, :uploadabout
     end

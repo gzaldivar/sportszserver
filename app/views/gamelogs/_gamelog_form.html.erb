@@ -7,6 +7,7 @@
 	</div>
 	<div class="row">
 		<div class="col-xs-4 col-xs-offset-2">
+
 			<% if @sport.name == "Football" %>
 				<%= f.label :period %>
 				<%= f.select :period, quarters, {}, class: 'form-control' %>
@@ -20,11 +21,20 @@
 				<%= f.select :period, halfs, {}, class: 'form-control' %>
 			<% end %>
 			<p>
-			<%= f.label :time_of_score, "Time of Score" %>
+
+			<% if @sport.name = "Soccer" %>
+				<%= f.label :time_of_score, "Time of Score - Not required but encouraged" %>
+			<% else %>
+				<%= f.label :time_of_score, "Time of Score" %>
+			<% end %>
+
 			<%= f.text_field :time, class: 'form-control' %>
 			<p>
-			Ex. yard pass to. The rest of the game log will be automatically generated.
-			<%= f.text_field :logentry, class: 'form-control' %>
+			<% if @sport.name == "Football" %>
+				Ex. yard pass to. The rest of the game log will be automatically generated.
+			<% else %>
+				<%= f.text_field :logentry, class: 'form-control' %>
+			<% end %>
 		</div>
 	</div>
 	<p>

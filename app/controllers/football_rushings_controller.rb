@@ -176,7 +176,7 @@ class FootballRushingsController < ApplicationController
 				end
 			elsif params[:two].to_i > 0
 				stat.twopointconv = stat.twopointconv + params[:two].to_i
-				gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "yard run", score: "TD", yards: params[:yards],
+				gamelog = game.gamelogs.new(period: params[:quarter], time: params[:time], logentry: "yard run", score: "2PT", yards: params[:yards],
 																			football_rushing_id: stat.id)
 				gamelog.save!
 				if params[:quarter]

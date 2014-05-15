@@ -1,15 +1,13 @@
 <ul class="nav nav-pills">
     <!--li><%= link_to current_team.mascot + "  Game Schedule", sport_team_gameschedules_path(@sport, current_team) %></li-->
     <li><%= link_to "Standings", sport_team_standings_path(@sport, current_team) %></li>
-    <% if user_signed_in? %>
         <li>
-            <%= form_for [@sport, current_team], html: { class: 'form-inline' }  do |f| %>
-                <%= label_tag "Follow Team for score alerts?" %>
-                <%= check_box_tag "followteam", 1, value: current_team.isFollowing?(current_user) %>
-                <%= f.submit :submit %>
+            <% if user_signed_in? and current_team.isFollowing?(current_user) %>
+                <%= link_to "Stop Following", unfollow_sport_team_path(@sport, current_team) %>
+            <% elsif user_signed_in? %>
+                <%= link_to  "Follow Team", follow_sport_team_path(@sport, current_team) %>
             <% end %>
         </li>
-    <% end %>
 </ul>
 <table class="table table-striped table-bordered table-hover">
     <thead>

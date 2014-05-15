@@ -89,8 +89,7 @@
             				<!--%= select("athteam", "team", @sport.teams.collect{ |t| [t.team_name, t.id] }, selected: @sport.teams.find(@athlete.team).id ) %-->
 						<% end %></h5>
 						<%= f.label :change_team, "Change Team" %>
-						<%= f.select :team_id, @sport.teams.collect{ |t| [t.team_name, t.id] }, include_blank: true, 
-												class: 'form-control'  %>
+						<%= f.select :team_id, @sport.teams.collect{ |t| [t.team_name, t.id] }, include_blank: true, class: 'form-control'  %>
 	        		<% end %>
 				</div>
 			</div>

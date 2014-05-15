@@ -28,9 +28,10 @@ class SoccersController < ApplicationController
 				@goalie = false
 			end
 
-			if params[:goals]
+			if params[:goals].to_i > 0
 				game.lastplay = @athlete.logname + " Goal Scored"
 				game.save!
+				createGamelog(stats, game)
 			end
 
 			respond_to do |format|
@@ -47,7 +48,7 @@ class SoccersController < ApplicationController
 
 	def show
 		@gamesplayed = @athlete.soccers.count
-		@gameschedule = Gameschedule.find(@stats.gameschedule_id.to_s)
+		@gameschedule = Gameschedule.find(@stats.gameschedule_id)
 		@team = @sport.teams.find(@gameschedule.team_id)
 	end
 
@@ -60,11 +61,13 @@ class SoccersController < ApplicationController
 		begin
 			game = Gameschedule.find(params[:soccer][:gameschedule_id].to_s)
 			live = params[:soccer][:livestats].to_s
+			goals = @stats.goals
 			@stats.update_attributes!(params[:soccer])
 
-			if params[:goals]
+			if goals < @stats.goals
 				game.lastplay = @athlete.logname + " Goal Scored"
 				game.save!
+				createGamelog(@stats, game)
 			end
 
 			respond_to do |format|
@@ -127,6 +130,10 @@ class SoccersController < ApplicationController
 	end
 
 	private
+
+		def createGamelog(soccer, game)
+			game.gamelogs.create!(period: game.currentperiod.to_s, time: "", logentry: "Goal Scored", score: "Goal", soccer_id: soccer.id)
+		end
 
 		def get_sport_athlete
 			@sport = Sport.find(params[:sport_id])

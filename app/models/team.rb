@@ -22,7 +22,7 @@ class Team
   field :fb_kickers, type: Array
   field :fb_punters, type: Array
   field :fb_returners, type: Array
-  field :fans, type: Array                  # List of fans following team for score alerts
+  field :fans, type: Array, default: []                  # List of fans following team for score alerts
   field :mobilefans, type: Array            # List of devices registered for notifications
 
   field :logoprocessing, type: Boolean, default: false
@@ -59,11 +59,7 @@ class Team
   end
 
   def isFollowing?(user)
-    if !self.fans.nil? and self.fans.include?(user.id.to_s)
-      true
-    else
-      false
-    end
+    self.fans.include?(user.id.to_s)
   end
 
   private

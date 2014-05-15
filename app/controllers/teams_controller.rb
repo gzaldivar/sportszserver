@@ -1,7 +1,7 @@
 class TeamsController < ApplicationController
   before_filter :authenticate_user!,   only: [:new, :create, :edit, :update, :destroy]
   before_filter :get_sport
-  before_filter :get_team,	only: [:edit, :update, :show, :destroy, :getplayers, :addplayers, :createteamlogo, :teamlogo, :updatelogo]
+  before_filter :get_team,	only: [:edit, :update, :show, :destroy, :getplayers, :addplayers, :createteamlogo, :teamlogo, :updatelogo, :follow, :unfollow]
   before_filter only: [:edit, :update, :destroy, :addplayers] do |controller|
   	SiteOwner?(@team.id)
   end
@@ -28,21 +28,31 @@ class TeamsController < ApplicationController
 	def edit
 	end
 
+	def follow
+		begin			
+			@team.fans << current_user.id.to_s if !@team.fans.include?(current_user.id.to_s)
+			@team.save!
+
+			redirect_to :back, notice: "Following " + current_team.mascot
+		rescue Exception => e
+			redirect_to :back, alert: e.message
+		end
+	end
+
+	def unfollow
+		begin
+			@team.fans.delete(current_user.id.to_s) if @team.fans.include?(current_user.id.to_s)
+			@team.save!
+
+			redirect_to :back, notice: "No longer following " + current_team.mascot
+		rescue Exception => e
+			redirect_to :back, alert: e.message
+		end
+	end
+
 	def update
 		begin
 			@team.update_attributes!(params[:team])
-
-			if params[:followteam] and user_signed_in?
-				if @team.fans.nil?
-					@team.fans = Array.new
-				end
-				if params[:followteam].to_i == 1 and !@team.fans.include?(current_user.id.to_s)
-					@team.fans << current_user.id.to_s
-				elsif params[:followteam].to_i == 0
-					@team.fans.delete(current_user.id.to_s)
-				end
-				@team.save!
-			end
 
 			respond_to do |format|
 				format.html { redirect_to @sport, notice: "Team updated succesful" }

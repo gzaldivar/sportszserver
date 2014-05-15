@@ -28,6 +28,7 @@ class Gamelog
   belongs_to :football_defense
   belongs_to :football_returner
   belongs_to :football_place_kicker
+  belongs_to :soccer
 
   # football stats
   
@@ -58,6 +59,9 @@ class Gamelog
     elsif football_rushing_id
       theplayer = Athlete.find(FootballRushing.find(football_rushing_id).athlete_id.to_s)
       self.period + ": " + self.time + " - " + theplayer.logname + " " + self.yards.to_s + " " + self.logentry + " " + self.score
+    elsif soccer_id
+      theplayer = Athlete.find(Soccer.find(soccer_id).athlete_id)
+      theplayer.logname + " - " + self.score
     end
   end
 
@@ -207,6 +211,12 @@ class Gamelog
 
           stat.save!
         end
+      elsif soccer_id
+        stat = Soccer.find(soccer_id)
+        if !stat.nil? and stat.goal > 0
+          stat.goal -=1
+          stat.shotstaken -= 1
+        end
       end
 
       adjustgamescore
@@ -215,80 +225,83 @@ class Gamelog
     def adjustgamescore
       game = Gameschedule.find(gameschedule)
 
-      if self.score == "TD"
-        case self.period
-        when "Q1"
-          if game.homeq1 > 5
-            game.homeq1-=6
+      if soccer_id
+      else
+        if self.score == "TD"
+          case self.period
+          when "Q1"
+            if game.homeq1 > 5
+              game.homeq1-=6
+            end
+          when "Q2"
+            if game.homeq2 > 5
+              game.homeq2-=6
+            end
+          when "Q3"
+            if game.homeq3 > 5
+              game.homeq3-=6
+            end
+          when "Q4"
+            if game.homeq4 > 5
+              game.homeq4-=6
+            end
           end
-        when "Q2"
-          if game.homeq2 > 5
-            game.homeq2-=6
+        elsif self.score == "2P"
+          case self.period
+          when "Q1"
+            if game.homeq1 > 1
+              game.homeq1-=2
+            end
+          when "Q2"
+            if game.homeq2 > 1
+              game.homeq2-=2
+            end
+          when "Q3"
+            if game.homeq3 > 1
+              game.homeq3-=2
+            end
+          when "Q4"
+            if game.homeq4 > 1
+              game.homeq4-=2
+            end
           end
-        when "Q3"
-          if game.homeq3 > 5
-            game.homeq3-=6
+        elsif self.score == "FG"
+          case self.period
+          when "Q1"
+            if game.homeq1 > 2
+              game.homeq1 -= 3
+            end
+          when "Q2"
+            if game.homeq2 > 2
+              game.homeq2 -= 3
+            end
+          when "Q3"
+            if game.homeq3 > 2
+              game.homeq3 -= 3
+            end
+          when "Q4"
+            if game.homeq4 > 2
+              game.homeq4 -= 3
+            end
           end
-        when "Q4"
-          if game.homeq4 > 5
-            game.homeq4-=6
-          end
-        end
-      elsif self.score == "2P"
-        case self.period
-        when "Q1"
-          if game.homeq1 > 1
-            game.homeq1-=2
-          end
-        when "Q2"
-          if game.homeq2 > 1
-            game.homeq2-=2
-          end
-        when "Q3"
-          if game.homeq3 > 1
-            game.homeq3-=2
-          end
-        when "Q4"
-          if game.homeq4 > 1
-            game.homeq4-=2
-          end
-        end
-      elsif self.score == "FG"
-        case self.period
-        when "Q1"
-          if game.homeq1 > 2
-            game.homeq1 -= 3
-          end
-        when "Q2"
-          if game.homeq2 > 2
-            game.homeq2 -= 3
-          end
-        when "Q3"
-          if game.homeq3 > 2
-            game.homeq3 -= 3
-          end
-        when "Q4"
-          if game.homeq4 > 2
-            game.homeq4 -= 3
-          end
-        end
-      elsif self.score == "XP"
-        case self.period
-        when "Q1"
-          if game.homeq1 > 0
-            game.homeq1 -= 1
-          end
-        when "Q2"
-          if game.homeq2 > 0
-            game.homeq2 -= 1
-          end
-        when "Q3"
-          if game.homeq3 > 0
-            game.homeq3 -= 1
-          end
-        when "Q4"
-          if game.homeq4 > 0
-            game.homeq4 -= 1
+        elsif self.score == "XP"
+          case self.period
+          when "Q1"
+            if game.homeq1 > 0
+              game.homeq1 -= 1
+            end
+          when "Q2"
+            if game.homeq2 > 0
+              game.homeq2 -= 1
+            end
+          when "Q3"
+            if game.homeq3 > 0
+              game.homeq3 -= 1
+            end
+          when "Q4"
+            if game.homeq4 > 0
+              game.homeq4 -= 1
+            end
           end
         end
       end
@@ -304,83 +317,49 @@ class Gamelog
     def alert
       game = Gameschedule.find(self.gameschedule_id)
       
-      if game.mobilealerts
+      if !game.mobilealerts
         if self.football_place_kicker_id
           athlete = Athlete.find(FootballPlaceKicker.find(football_place_kicker_id).athlete_id)
           sport = Sport.find(athlete.sport_id)
-   #       sport = Sport.where('teams._id' => Moped::BSON::ObjectId(Gameschedule.find(self.gameschedule_id).team_id)).first
           team = sport.teams.find(game.team_id)
 
-          if !team.fans.nil?
-            team.fans.each do |u|
-              user = User.find(u)
-              if user.score_alert and self.score == "FG"
-                self.alerts.create!(sport_id: sport.id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                    message:  self.logentrytext, 
-                                    football_place_kicker_id: self.football_place_kicker_id, stat_football: "Place Kicker")
-              elsif user.score_alert 
-                self.alerts.create!(sport_id: sport.id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                    message:  logentrytext, 
-                                    football_place_kicker_id: self.football_place_kicker_id, stat_football: "Place Kicker")
-              end
-            end
+          if self.score == "FG"
+            self.alerts.create!(sport_id: sport.id, athlete_id: athlete.id, team_id: team.id, message:  self.logentrytext, teamusers: team.fans,
+                                football_place_kicker_id: self.football_place_kicker_id, stat_football: "Place Kicker")
+          else 
+            self.alerts.create!(sport_id: sport.id, athlete_id: athlete.id, team_id: team.id, message:  logentrytext, teamusers: team.fans,
+                                football_place_kicker_id: self.football_place_kicker_id, stat_football: "Place Kicker")
           end
         elsif self.football_passing_id
           athlete = Athlete.find(FootballPassing.find(football_passing_id).athlete_id)
           sport = Sport.find(athlete.sport_id)
-  #        sport = Sport.where('teams._id' => Moped::BSON::ObjectId(Gameschedule.find(self.gameschedule_id).team_id)).first
           team = sport.teams.find(game.team_id)
 
-          if !team.fans.nil?
-            team.fans.each do |u|
-              user = User.find(u)
-              if user.score_alert
-                self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                    message:  self.logentrytext, 
-                                    football_passing_id: self.football_passing_id, stat_football: "Passing")
-              end
-            end
-  #          receiver = Athlete.find(self.assist)
-  #          recstat = FootballReceiving.where(gameschedule_id: gameschedule_id, athlete_id: assist).first
-  #          receiver.fans.each do |u|
-  #            user = User.find(u)
-  #            if user.score_alert
-  #              receiver.alerts.create!(sport: receiver.sport_id, user: user.id, athlete: receiver.id, 
-  #                                     message:  "Receiver score alert for " + self.gameschedule.game_name, 
-  #                                     football_receiver_id: self.recstat.id, stat_football: "Reciever")
-  #            end
-  #          end
-          end
+          self.alerts.create!(sport_id: athlete.sport_id, athlete_id: athlete.id, team_id: team.id, message:  self.logentrytext, teamusers: team.fans,
+                              football_passing_id: self.football_passing_id, stat_football: "Passing")
         elsif self.football_rushing_id
           athlete = Athlete.find(FootballRushing.find(football_rushing_id).athlete_id)
           sport = Sport.find(athlete.sport_id)
           team = sport.teams.find(game.team_id)
 
-          if !team.fans.nil?
-            team.fans.each do |u|
-              user = User.find(u)
-              if user.score_alert
-                self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                       message:  self.logentrytext, 
-                                       football_rushing_id: self.football_rushing_id, stat_football: "Rushing")
-              end
-            end
-          end
+          puts "sending alert"
+
+          self.alerts.create!(sport_id: athlete.sport_id, athlete_id: athlete.id, team_id: team.id, message:  self.logentrytext, teamusers: team.fans,
+                              football_rushing_id: self.football_rushing_id, stat_football: "Rushing")
         elsif self.football_defense_id
           athlete = Athlete.find(FootballDefense.find(football_defense_id).athlete_id)
           sport = Sport.find(athlete.sport_id)
           team = sport.teams.find(game.team_id)
 
-          if !team.fans.nil?
-            team.fans.each do |u|
-              user = User.find(u)
-              if user.score_alert
-                self.alerts.create!(sport_id: athlete.sport_id, user_id: user.id, athlete_id: athlete.id, team_id: team.id,
-                                       message:  self.logentrytext, 
-                                       football_defense_id: self.football_defense_id, stat_football: "Defense")
-              end
-            end
-          end
+          self.alerts.create!(sport_id: athlete.sport_id, athlete_id: athlete.id, team_id: team.id, message:  self.logentrytext, teamusers: team.fans,
+                              football_defense_id: self.football_defense_id, stat_football: "Defense")
+        elsif self.soccer_id
+          athlete = Athlete.find(Soccer.find(soccer_id).athlete_id)
+          sport = Sport.find(athlete.sport_id)
+          team = sport.teams.find(game.team_id)
+
+          self.alerts.create!(sport_id: athlete.sport_id, athlete_id: athlete.id, team_id: team.id, message:  self.logentrytext, teamusers: team.fans,
+                              soccer_id: self.soccer_id)
         end
       end
     end

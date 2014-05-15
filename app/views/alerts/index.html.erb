@@ -72,7 +72,7 @@
 			  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.photos.find(a.photo_id).displayname, sport_photo_path(@sport, a.photo_id) %></td>
-			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+			  			<td><%= link_to "Clear", clearuser_sport_athlete_alerts_path(@sport, @athlete, alert_id: a, user_id: current_user.id), 
 			  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 			  		</tbody>
 			  	</table>
@@ -89,8 +89,8 @@
 			  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.videoclips.find(a.videoclip_id).displayname, sport_videoclip_path(@sport, a.videoclip_id) %></td>
-			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
-			  												class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
+			  			<td><%= link_to "Clear", clearuser_sport_athlete_alerts_path(@sport, @athlete, alert_id: a, user_id: current_user.id), class: "btn btn-xs btn-warning", 
+			  										data: { confirm: "You sure?" } %></td>
 			  		</tbody>
 			  	</table>
 			<% elsif !a.blog.blank? %>
@@ -106,7 +106,7 @@
 			  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 			  			<td><%= a.message %></td>
 			  			<td><%= link_to @sport.blogs.find(a.blog_id).title, sport_blog_path(@sport, a.blog_id) %></td>
-			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+			  			<td><%= link_to "Clear", clearuser_sport_athlete_alerts_path(@sport, @athlete, alert_id: a, user_id: current_user.id), 
 			  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 			  		</tbody>
 			  	</table>
@@ -124,7 +124,7 @@
 				  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 				  			<td><%= link_to a.message, sport_athlete_football_defense_path(@sport, @athlete, id: a.football_defense_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
-				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  			<td><%= link_to "Clear", clearuser_sport_athlete_alerts_path(@sport, @athlete, alert_id: a, user_id: current_user.id), 
 				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Passing" %>
@@ -132,7 +132,7 @@
 				  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 				  			<td><%= link_to a.message, sport_athlete_football_passing_path(@sport, @athlete, id: a.football_passing_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
-				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  			<td><%= link_to "Clear", clearuser_sport_athlete_alerts_path(@sport, @athlete, alert_id: a, user_id: current_user.id),  
 				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Receiving" %>
@@ -141,7 +141,7 @@
 				  			<td><%= link_to a.message, sport_athlete_football_receiving_path(@sport, @athlete, 
 				  									id: a.football_receiving_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
-				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  			<td><%= link_to "Clear", clearuser_sport_athlete_alerts_path(@sport, @athlete, alert_id: a, user_id: current_user.id),  
 				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Rushing" %>
@@ -150,7 +150,7 @@
 				  			<td><%= link_to a.message, sport_athlete_football_rushing_path(@sport, @athlete, 
 				  										id: a.football_rushing_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
-				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  			<td><%= link_to "Clear", clearuser_sport_athlete_alerts_path(@sport, @athlete, alert_id: a, user_id: current_user.id),  
 				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Kicker" %>
@@ -159,7 +159,7 @@
 				  			<td><%= link_to a.message, sport_athlete_football_kicker_path(@sport, @athlete, 
 				  										id: a.football_kicker_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
-				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  			<td><%= link_to "Clear", clearuser_sport_athlete_alerts_path(@sport, @athlete, alert_id: a, user_id: current_user.id), 
 				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Returner" %>
@@ -168,7 +168,7 @@
 				  			<td><%= link_to a.message, sport_athlete_football_returner_path(@sport, @athlete, 
 				  										id: a.football_returner_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
-				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  			<td><%= link_to "Clear", clearuser_sport_athlete_alerts_path(@sport, @athlete, alert_id: a, user_id: current_user.id),  
 				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Place Kicker" %>
@@ -177,7 +177,7 @@
 				  			<td><%= link_to a.message, sport_athlete_football_place_kicker_path(@sport, @athlete, 
 				  										id: a.football_place_kicker_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
-				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  			<td><%= link_to "Clear", clearuser_sport_athlete_alerts_path(@sport, @athlete, alert_id: a, user_id: current_user.id),  
 				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% elsif a.stat_football == "Punter" %>
@@ -186,7 +186,7 @@
 				  			<td><%= link_to a.message, sport_athlete_football_punter_path(@sport, @athlete, 
 				  										id: a.football_punter_id) %></td>
 				  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
-				  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+				  			<td><%= link_to "Clear", clearuser_sport_athlete_alerts_path(@sport, @athlete, alert_id: a, user_id: current_user.id),  
 				  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 				  		</tbody>
 					<% end %>
@@ -204,7 +204,7 @@
 			  			<td><%= a.created_at.localtime.strftime("%m-%d-%Y %H:%M:%S") %></td>
 			  			<td><%= link_to a.message, sport_athlete_path(@sport, @athlete) %></td>
 			  			<td><%= link_to @sport.athletes.find(a.athlete).full_name, sport_athlete_path(@sport, @athlete) %></td>
-			  			<td><%= link_to "Clear", sport_athlete_alert_path(@sport, @athlete, a), method: :delete, 
+			  			<td><%= link_to "Clear", clearuser_sport_athlete_alerts_path(@sport, @athlete, alert_id: a, user_id: current_user.id),  
 			  							class: "btn btn-xs btn-warning", data: { confirm: "You sure?" } %></td>
 			  		</tbody>
 			  	</table>

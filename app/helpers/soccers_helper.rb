@@ -10,6 +10,7 @@ module SoccersHelper
 
   def hasSoccerPlayerStats?(stats)
   	player = false
+    
   	if stats.kind_of?(Array)
   		stats.each do |s|
   			if s.goals > 0 or s.shotstaken > 0 or s.assists > 0 or s.steals > 0
@@ -20,7 +21,8 @@ module SoccersHelper
   	elsif stats.goals > 0 or stats.shotstaken > 0 or stats.assists > 0 or stats.steals > 0
   		player = true
   	end
-	return player
+    
+    return player
   end
 
 end

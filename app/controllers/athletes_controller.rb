@@ -149,7 +149,7 @@ class AthletesController < ApplicationController
   end
   
   def follow
-    @athlete.fans.push(current_user.id) unless @athlete.fans.include?(current_user.id)
+    @athlete.fans.push(current_user.id.to_s) unless @athlete.fans.include?(current_user.id.to_s)
     @athlete.save
     
     respond_to do |format|
@@ -159,7 +159,7 @@ class AthletesController < ApplicationController
   end
   
   def unfollow
-    @athlete.fans.delete(current_user.id)
+    @athlete.fans.delete(current_user.id.to_s)
     @athlete.save
 
     respond_to do |format|

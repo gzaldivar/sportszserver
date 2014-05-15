@@ -3,7 +3,7 @@ class SportsController < ApplicationController
   before_filter only: [:edit, :update, :destroy] do |controller|
     controller.SiteOwner?(nil)
   end
-  before_filter :correct_sport, only: [:show, :edit, :update, :destroy, :sport_user_alerts, :updatelogo, :displaynews, 
+  before_filter :correct_sport, only: [:show, :edit, :update, :destroy, :sport_user_alerts, :updatelogo, :displaynews, :deletealert,
                                       :selectteam, :sortgamenews, :sortplayernews, :allnews, :featuredplayers, :selectfeaturedplayers,
                                       :showfeaturedplayers, :showfollowedplayers, :updateabout, :uploadabout, :clearabout, :updateApnNotification]
 
@@ -68,7 +68,7 @@ class SportsController < ApplicationController
   end
   
   def show
-#    begin
+    begin
       site_visit(@sport)
 
      if @sport.teams.count == 1
@@ -96,7 +96,7 @@ class SportsController < ApplicationController
             @featured = @sport.athletes.where(team_id: current_team.id, :id.in => current_team.featuredplayers).asc(:number)
           end
 
-          if user_signed_in? and current_user.score_alert
+          if user_signed_in? and current_team.isFollowing?(current_user)
             @teamalerts = getTeamAlerts(current_team, current_user)
           end
         else
@@ -114,12 +114,12 @@ class SportsController < ApplicationController
           format.json 
          end
       end
-#    rescue Exception => e
-#      respond_to do |format|
-#        format.html { raise ActionController::RoutingError.new(e.message) }
-#        format.json { render status: 404, json: { error: e.message } }
-#      end
-#    end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { raise ActionController::RoutingError.new(e.message) }
+        format.json { render status: 404, json: { error: e.message } }
+      end
+    end
   end
   
   def displaynews
@@ -471,12 +471,13 @@ class SportsController < ApplicationController
         notification.user_id = params[:user_id]
         notification.athlete_id = params[:athlete_id]
         notification.bundleidentifier = params[:bundleidentifier]
+        notification.teamalerts = params[:teamalerts]
       else
         notification = ApnNotification.new(token: params[:token], name: params[:name], model: params[:model], systemname: params[:systemname],
                                           systemversion: params[:systemversion], user_id: params[:user_id], team_id: params[:team_id],
                                           scorealerts: params[:scorealerts], blogalerts: params[:blogalerts], athlete: params[:athlete_id],
                                           mediaalerts: params[:mediaalerts], athletealerts: params[:athletealerts], 
-                                          bundleidentifier: params[:bundleidentifier])
+                                          bundleidentifier: params[:bundleidentifier], teamalerts: params[:teamalerts])
       end
 
       notification.save!
@@ -489,6 +490,12 @@ class SportsController < ApplicationController
         format.json { render status: 404, json: { error: e.message } }
       end
     end
+  end
+
+  def deletealert
+    @sport.alerts.find(params[:alert_id]).destroy
+
+    redirect_to :back, notice: "Alert cleared"
   end
 
   private

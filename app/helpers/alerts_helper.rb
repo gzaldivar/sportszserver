@@ -12,11 +12,15 @@ module AlertsHelper
 	end
 
 	def getTeamAlerts(team, user)
-		return team.alerts.where(user_id: user.id, :gamelog.ne => "", :gamelog.exists => true).desc(:updated_at)
+		return team.alerts.where(teamusers: user.id.to_s).and(:blog.exists => false, :photo.exists => false, :videoclip.exists => false).desc(:updated_at)
 	end
 
 	def hasAlerts?(athlete, user)
-		return !athlete.alerts.where(user: user.id).blank?
+		return !athlete.alerts.where(users: user.id.to_s).blank?
+	end
+
+	def deleteAlert(alert)
+		alert.destroy
 	end
 
 end

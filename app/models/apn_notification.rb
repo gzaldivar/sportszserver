@@ -13,6 +13,7 @@ class ApnNotification
 	field :athletealerts, type: Boolean
 	field :mediaalerts, type: Boolean
 	field :blogalerts, type: Boolean
+	field :teamalerts, type: Boolean
 
 	belongs_to :user
 	belongs_to :athlete

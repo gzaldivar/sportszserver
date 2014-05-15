@@ -6,12 +6,13 @@ class Alert
 
 	field :message, type: String
 	field :stat_football, type: String
+	field :users, type: Array, default: []
+	field :teamusers, type: Array, default: []
 
 	belongs_to :athlete
 	belongs_to :blog
 	belongs_to :photo
 	belongs_to :videoclip
-	belongs_to :user
 	belongs_to :sport
   	belongs_to :basketball_stat
 	belongs_to :gamelog

@@ -94,6 +94,7 @@ class Gameschedule
     }
 
   belongs_to :team, index: true
+
   has_many :gamelogs, dependent: :destroy
   has_many :blogs, dependent: :nullify
   has_many :photos, dependent: :nullify
@@ -110,6 +111,8 @@ class Gameschedule
   has_many :football_returners, dependent: :destroy
   has_many :football_rushings, dependent: :destroy
   has_many :events, dependent: :destroy
+
+  embeds_one :lacross_game
 
 
   validates_presence_of :starttime

@@ -38,7 +38,9 @@
   		<% elsif @sport.sportname == "Football" %>
   			<%= render 'show_football' %>
   		<% elsif @sport.sportname == "Soccer" %>
-        <%= render 'gameschedules/soccer/show_soccer' %>
+        	<%= render 'gameschedules/soccer/show_soccer' %>
+        <% elsif @sport.sportname == "Lacrosse" %>
+        	<%= render 'gameschedules/lacrosse/showlacrosse' %>
 		<% end %>
 		<p>
 	  	<% if site_owner?(@sport) or isTeamManager?(@gameschedule) %>

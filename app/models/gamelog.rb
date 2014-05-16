@@ -29,6 +29,7 @@ class Gamelog
   belongs_to :football_returner
   belongs_to :football_place_kicker
   belongs_to :soccer
+  belongs_to :lacrosses
 
   # football stats
   

@@ -2,7 +2,7 @@ class GameschedulesController < ApplicationController
   include FootballStatistics
   include BasketballStatistics
 
-	before_filter	:authenticate_user!,   only: [:destroy, :new, :edit, :update, :create]
+	before_filter	:authenticate_user!,   only: [:destroy, :new, :edit, :update, :create, :alertupdate]
   before_filter :get_sport
   before_filter :get_schedule,        only: [:show, :edit, :update, :destroy, :updatelogo, :passinggamestats, :allfootballgamestats,
                                               :rushinggamestats, :receivinggamestats, :defensegamestats, :kickergamestats, :returnergamestats, 
@@ -11,7 +11,7 @@ class GameschedulesController < ApplicationController
                                               :addfootballpk, :addfootballret, :addfootballkicker, :addfootballpunter, :footballform, 
                                               :basketballteamscorestats, :basketballteamotherstats, :basketballform, :soccerform, :mobilealerts,
                                               :alertupdate]
-  before_filter only: [:destroy, :update, :create, :edit, :new, :createlogo, :updatelogo] do |controller| 
+  before_filter only: [:destroy, :update, :create, :edit, :new, :createlogo, :updatelogo, :alertupdate] do |controller| 
     controller.SiteOwner?(@team.id)
   end
 #  before_filter only: [:passinggamestats, :allfootballgamestats, :rushinggamestats, :receivinggamestats, :defensegamestats, 
@@ -76,7 +76,7 @@ class GameschedulesController < ApplicationController
        end
     rescue Exception => e
       respond_to do |format|
-        format.html { redirect_to :back, alert: "Error creating game schedule " + schedule.message }
+        format.html { redirect_to :back, alert: "Error creating game schedule " + e.message }
         format.json { render status: 404, json: { error: e.message } }
       end
     end
@@ -151,7 +151,12 @@ class GameschedulesController < ApplicationController
             @players << a
           end
         end
-        
+      elsif @sport.name == "Lacrosse"
+        @gamelogs = @gameschedule.gamelogs.asc(:period)
+
+        if @gamelogs.nil?
+          @gamelogs = []
+        end
       end
 
       respond_to do |format|

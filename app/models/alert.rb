@@ -9,15 +9,18 @@ class Alert
 	field :users, type: Array, default: []
 	field :teamusers, type: Array, default: []
 
+	belongs_to :sport
+ 	belongs_to :team
 	belongs_to :athlete
 	belongs_to :blog
 	belongs_to :photo
 	belongs_to :videoclip
-	belongs_to :sport
-  	belongs_to :basketball_stat
+
 	belongs_to :gamelog
+	
+ 	belongs_to :basketball_stat
 	belongs_to :soccer
-	belongs_to :team
+	belongs_to :lacrosse
 
 	belongs_to :football_defense
 	belongs_to :football_kicker

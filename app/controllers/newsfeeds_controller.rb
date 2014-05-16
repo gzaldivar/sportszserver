@@ -1,8 +1,8 @@
 class NewsfeedsController < ApplicationController
-  before_filter :authenticate_user!,    only: [:new, :create, :edit, :update, :destroy]
+  before_filter :authenticate_user!,    only: [:new, :create, :edit, :update, :destroy, :alertupdate]
   before_filter :get_sport
   before_filter :correct_feeditem,      only: [:edit, :update, :destroy, :show, :updatephoto, :alertupdate]
-  before_filter only: [:new, :create, :edit, :update, :destroy] do |controller|
+  before_filter only: [:new, :create, :edit, :update, :destroy, :alertupdate] do |controller|
     SiteAdmin?(@sport)
   end
 

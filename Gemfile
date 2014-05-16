@@ -83,6 +83,8 @@ group :production do
   gem 'pg', '0.12.2'
   gem 'newrelic_rpm'
   gem 'fog'
+  gem 'sitemap_generator'
+  gem 'whenever', :require => false
 end
 
 #gem 'resque', :require => "resque/server"
@@ -92,7 +94,6 @@ gem 'rabl'
 gem 'streamio-ffmpeg'
 gem "simple_calendar", "~> 0.1.5"
 gem 'browser-timezone-rails'
-gem 'sitemap_generator'
 gem 'rails_12factor'
 # gem 'paypal-express'
 gem 'activemerchant'

@@ -53,8 +53,8 @@ module SportsHelper
     [
       ['Football', 'Football'],
       ['Basketball', 'Basketball'],
-      ['Soccer', 'Soccer'],
 #      ['Lacrosse', 'Lacrosse'],
+      ['Soccer', 'Soccer']
 #      ['Baseball', 'Baseball']
     ]
   end
@@ -144,6 +144,16 @@ module SportsHelper
       ['Fullback', 'FB'],
       ['Stryker', 'STRK']
     ]
+  end
+
+  def lacrosse_positions
+    [
+      ['Attacker', 'A'],
+      ['Midfielder', 'M'],
+      ['Defender', 'D'],
+      ['Goalie', 'G']
+    ]
+    
   end
 
   def themes

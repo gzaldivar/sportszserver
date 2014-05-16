@@ -147,6 +147,8 @@ Sportzserver::Application.routes.draw do
       end
 
       resources :soccers
+
+      resources :lacrosses
       
       member do
         get :follow, :unfollow, :stats, :playerstats, :mobilefollow, :mobileunfollow

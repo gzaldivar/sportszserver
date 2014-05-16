@@ -31,20 +31,34 @@
 				<li>Much, much more ....</li><p>
 			</ul>
 			</h5>
-			<p class="text-info">Click on the image to the right to learn more!</font><p>
-			<div class="row">
-				<div class="col-xs-10">
-					<h5>Only the site creator/admin can edit the data.</h5>
-				</div>
-				<div class="col-xs-2">
-					<%= link_to image_tag("EazesportziTunesArtwork.png", class: 'img-responsive'), 
-										"https://itunes.apple.com/us/app/Game Tracker/id703282588?ls=1&mt=8#" %>
-				</div>
-			</div>
+			<h4 class="text-primary">Only the site creator/admin can edit the data.</h4>
 		</div>
 	</div>
 	<div class="col-xs-6">
-		<%= link_to (image_tag "fanapp/IOSBasketballInfo1.png", class: 'img-responsive'), mobileinfo_path %>
+		<div class="row">
+			<div class="col-xs-12">
+				<%= link_to (image_tag "fanapp/IOSBasketballInfo1.png", class: 'img-responsive'), mobileinfo_path %>
+			</div>
+		</div>
+		<p>
+		<div class="well">
+			<div class="row">
+				<div class="col-xs-4">
+					<h5 class="text-info">Click to learn more about Game Tracker for iPhone</h5>
+				</div>
+				<div class="col-xs-2">
+					<%= link_to image_tag("fanapp/Icon-Small-50.png", class: 'img-responsive'), 
+											"https://itunes.apple.com/us/app/gametracker-live-sports/id876025780?mt=8" %>
+				</div>
+				<div class="col-xs-4">
+					<h5 class="text-info">Click to learn more about Game Tracker for iPad</h5>
+				</div>
+				<div class="col-xs-2">
+					<%= link_to image_tag("fanapp/Icon-Small-50.png", class: 'img-responsive'), 
+											"https://itunes.apple.com/us/app/gametracker-hd-live-sports/id876081145?mt=8" %>
+				</div>
+			</div>
+		</div>
 	</div>
 </div>
 <div class="row">

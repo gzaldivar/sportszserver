@@ -1,0 +1,66 @@
+<% if playerstats.count > 0 %>
+	<table class="table table-striped table-bordered table-hover">
+		<thead>
+			<% if name == "Game" %>
+				<th>Game</th>
+				<th>Position</th>
+				<th>Number</th>
+				<td>Player</td>
+			<% elsif name == "Player" %>
+				<th>Position</th>
+				<th>Number</th>
+				<th>Player</th>
+			<% else %>
+				<th>Totals</th>
+			<% end %>
+			<th>Goals</th>
+			<th>Assists</th>
+			<th>Shots</th>
+			<th>Ground Balls</th>
+			<th>Turnovers</th>
+			<th>Caused Turnovers</th>
+		</thead>
+		<tbody>
+			<% if playerstats.kind_of?(Array) %>
+				<% playerstats.each do |p| %>
+					<% if name == "Game" %>
+						<td><%= Gameschedule.find(anobject.id) %></td>
+						<td>Number</td>
+						<td>Player</td>
+					<% elsif name == "Player" %>
+						<% player = Athlete.find(p[:athlete_id]) %>
+						<td><%= player.position %></td>
+						<td><%= player.number %></td>
+						<td><%= player.logname %></td>
+					<% else %>
+						<td></td>
+					<% end %>
+					<td><%= p[:goal] %></td>
+					<td><%= p[:assist] %></td>
+					<td><%= p[:shot] %></td>
+					<td><%= p[:ground_ball] %></td>
+					<td><%= p[:turnover] %></td>
+					<td><%= p[:caused_turnover] %></td>
+				<% end %>
+			<% else %>
+				<% if name == "Game" %>
+					<td><%= Gameschedule.find(anobject.id) %></td>
+					<td>Number</td>
+					<td>Player</td>
+				<% elsif name == "Player" %>
+					<td>Position</td>
+					<td>Number</td>
+					<td>Player</td>
+				<% else %>
+					<td></td>
+				<% end %>
+				<td><%= playerstats[:goal] %></td>
+				<td><%= playerstats[:assist] %></td>
+				<td><%= playerstats[:shot] %></td>
+				<td><%= playerstats[:ground_ball] %></td>
+				<td><%= playerstats[:turnover] %></td>
+				<td><%= playerstats[:caused_turnover] %></td>
+			<% end %>
+		</tbody>
+	</table>
+<% end %>

@@ -121,55 +121,12 @@ class LacrossesController < ApplicationController
 
 		def livelacrossestats(lacrossestats, athlete, params)
 			begin
-				goalie = false
-
-				if params[:goals].to_i == 1
-					lacrossestats.goals += 1
-					if params[:shottaken].to_i == 0
-						lacrossestats.shotstaken += 1
-					end
-				end
-
-				if params[:shottaken].to_i == 1
-					lacrossestats.shotstaken += 1
-				end
-
-				if params[:assists].to_i == 1
-					lacrossestats.assists += 1
-				end
-
-				if params[:steals].to_i == 1
-					lacrossestats.steals += 1
-				end
-
-				if params[:cornerkick].to_i == 1
-					lacrossestats.cornerkick += 1
-				end
-
-				if params[:goalsagainst].to_i == 1
-					lacrossestats.goalsagainst += 1
-					goalie = true
-				end
-
-				if params[:goalssaved].to_i == 1
-					lacrossestats.goalssaved += 1
-					goalie = true
-				end
-
-				if params[:shutouts].to_i == 1
-					lacrossestats.shutouts += 1
-					goalie = true
-				end
-
-				if params[:minutesplayed].to_i > 0
-					lacrossestats.minutesplayed = params[:minutesplayed].to_i
-				end
-
-				lacrossestats.save!
-				return goalie
 			rescue Exception => e
 				throw "Error updating live lacrossestats!"
 			end
+		end
+
+		def updateLacrossStats(stats)
 		end
 
 end

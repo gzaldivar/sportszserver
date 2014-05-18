@@ -20,7 +20,7 @@ class Alert
 	
  	belongs_to :basketball_stat
 	belongs_to :soccer
-	belongs_to :lacrosse
+	belongs_to :lacross
 
 	belongs_to :football_defense
 	belongs_to :football_kicker

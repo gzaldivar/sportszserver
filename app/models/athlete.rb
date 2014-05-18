@@ -50,7 +50,7 @@ class Athlete
 
     has_many :soccers, dependent: :destroy
 
-    has_many :lacrosses, dependent: :destroy
+    has_many :lacrosstats, dependent: :destroy
 
     has_many :football_kickers, dependent: :destroy
     has_many :football_defenses, dependent: :destroy

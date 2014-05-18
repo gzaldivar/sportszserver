@@ -1,0 +1,2 @@
+class VisitingRostersController < ApplicationController
+end

@@ -1,0 +1,2 @@
+class VisitingTeamsController < ApplicationController
+end

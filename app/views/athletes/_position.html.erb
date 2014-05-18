@@ -32,7 +32,8 @@
 		</div>
 	<% elsif @sport.sportname == "Basketball" %>
 		<div class="col-xs-2">
-			<%= f.select :position, basketball_positions, include_blank: true %>
+			<%= f.label :position %>
+			<%= f.select :position, basketball_positions, include_blank: true, class: 'form-control' %>
 		</div>
 	<% elsif @sport.sportname == "Soccer" %>
 		<div class="col-xs-2">
@@ -64,6 +65,11 @@
 				<%= select_tag "soccer3_pos", options_for_select(soccer_positions), include_blank: true, class: 'form-control' %>
 			<% end %>
 			<!--%= f.input :special_teamspos, collection: specialteams_football_positions, label: "Special Teams Position:" %-->
+		</div>
+	<% elsif @sport.sportname == "Lacrosse" %>
+		<div class="col-xs-2">
+			<%= f.label :position %>
+			<%= f.select :position, lacrosse_positions, include_blank: true, class: 'form-control' %>
 		</div>
 	<% end %>
 <% else %>

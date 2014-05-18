@@ -1,6 +1,7 @@
 class GameschedulesController < ApplicationController
   include FootballStatistics
   include BasketballStatistics
+  include LacrosseStatistics
 
 	before_filter	:authenticate_user!,   only: [:destroy, :new, :edit, :update, :create, :alertupdate]
   before_filter :get_sport
@@ -59,9 +60,6 @@ class GameschedulesController < ApplicationController
                                             params[:gameschedule][:"starttime(5i)"].to_i)
       end
 
-#      schedule.livegametime = DateTime.civil(schedule.gamedate.year, schedule.gamedate.month, schedule.gamedate.day, 
-#                              params[:gameschedule][:"livegametime(4i)"].to_i,params[:gameschedule][:"livegametime(5i)"].to_i)
-
       if params[:gameminutes].nil?
         schedule.current_game_time = "00:00"
       else
@@ -69,6 +67,10 @@ class GameschedulesController < ApplicationController
       end
       
       schedule.save!
+
+      if @sport.name == "Lacrosse"
+        schedule.lacross_game = LacrossGame.new
+      end
 
       respond_to do |format|
         format.html { redirect_to [@sport, @team, schedule] }
@@ -84,7 +86,7 @@ class GameschedulesController < ApplicationController
   end
 
   def show
-    begin
+#    begin
       @players = @sport.athletes.where(team_id: @team.id.to_s).asc(:number)
 
       if @gameschedule.opponent_team_id?
@@ -152,23 +154,19 @@ class GameschedulesController < ApplicationController
           end
         end
       elsif @sport.name == "Lacrosse"
-        @gamelogs = @gameschedule.gamelogs.asc(:period)
-
-        if @gamelogs.nil?
-          @gamelogs = []
-        end
+        showlacrosse
       end
 
       respond_to do |format|
         format.html
         format.json
       end
-    rescue Exception => e
-     respond_to do |format|
-        format.html { redirect_to :back, alert: "Error: " + e.message }
-        format.json { render status: 404, json: { error: e.message } }
-      end
-    end
+#    rescue Exception => e
+#     respond_to do |format|
+#        format.html { redirect_to :back, alert: "Error: " + e.message }
+#        format.json { render status: 404, json: { error: e.message } }
+#      end
+#    end
   end
   
   def edit
@@ -648,6 +646,32 @@ class GameschedulesController < ApplicationController
                             message: "End of " + gameschedule.currentperiod.to_s + " - " + team.mascot + " " + soccer_home_score(sport, gameschedule).to_s + 
                             " " + gameschedule.opponent_mascot + " " + gameschedule.opponentscore.to_s)
       end
+    end
+
+    def showlacrosse
+#      begin
+        @gamelogs = @gameschedule.gamelogs.asc(:period)
+
+        if @gamelogs.nil?
+          @gamelogs = []
+        end
+
+        @homepenalties = @gameschedule.lacross_game.homepenaltybox
+        @visitorpenalties = @gameschedule.lacross_game.visitorpenaltybox
+
+        @homescores = lacrossehomescore(@gameschedule)
+        @visitorscores = lacrossevisitorscore(@gameschedule)
+
+        lacrossestats = Lacrossestats.new(@sport, @gameschedule)
+        @playerstats = lacrossestats.playerstats
+        @homeplayertotals = lacrossestats.playertotals
+        @visitorstats = []
+        @totalhomegoals = lacrossehomescore(@gameschedule).inject{|sum,x| sum + x }
+        @totalhomeassists = lacrosshomeassists(@gameschedule).inject{|sum,x| sum + x }
+
+#      rescue Exception => e
+#        raise "Error processing Lacrosse Statistics - " + e.message
+#      end
     end
 
 end

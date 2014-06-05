@@ -12,9 +12,6 @@ class PhotosController < ApplicationController
       false
     end
   end
-#  before_filter do |controller|
-#    packageEnabled?(@sport)
-#  end
 
   require 'base64'
   require 'openssl'
@@ -320,7 +317,7 @@ class PhotosController < ApplicationController
       obj = bucket.objects[photo.filepath]
       photo.original_url = obj.url_for(:read, expires:  473040000)
 
-      if @sport.review_media?
+      if @sport.review_media? and !SiteAdmin(@sport)
         photo.pending = true
       else
         photo.pending = false
@@ -378,7 +375,7 @@ class PhotosController < ApplicationController
         end
       end
               
-      if @sport.review_media?
+      if @sport.review_media? and !SiteAdmin(@sport)
         @photo.pending = true
       else
         @photo.pending = false
@@ -442,35 +439,43 @@ class PhotosController < ApplicationController
     end
     @teams = @sport.teams
     @gameschedules = []
-#    @teams.each do |t|
-      @teams.first.gameschedules.each_with_index do |g, cnt|
-        @gameschedules[cnt] = g
-      end
-#    end
-    if @photo.gameschedule
-      @gamelogs = Gameschedule.find(@photo.gameschedule_id.to_s).gamelogs
+
+    @teams.first.gameschedules.each_with_index do |g, cnt|
+      @gameschedules[cnt] = g
+    end
+
+    @game = Gameschedule.find(@photo.gameschedule_id)
+
+    if @game
+      @gamelogs = @game.gamelogs
     else
       @gamelogs = []
+    end
+
+    @scores = []
+
+    if @sport.name == "Lacrosse" and @game
+      @scores = lacrosse_score_logs(@game)
     end
   end
   
   def update
     begin 
       @photo.update_attributes(params[:photo])
+
       if @photo.players.nil?
         @photo.players = Array.new
       end
+
       if !params[:athlete].nil? and !params[:athlete][:id].blank?
         unless @photo.players.include?(params[:athlete][:id].to_s)
           @photo.players << params[:athlete][:id].to_s
         end
-#        @photo.players.push(params[:athlete][:id].to_s)
         @photo.save!
       end
     
       respond_to do |format|
         format.html { redirect_to [@sport, @photo], notice: "Update successful!" }
-        format.xml
         format.json { render json: { photo: @photo, request: [@sport, @photo] } }
         format.js
       end

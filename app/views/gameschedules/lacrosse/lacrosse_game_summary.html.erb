@@ -1,0 +1,112 @@
+<% provide(:title, current_site.sitename + " " + @sport.sportname + " - Edit Schedule" ) %>
+<p>
+<div class="row">
+	<div class="col-xs-12">
+		<%= form_tag update_lacrosse_game_summary_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "form-horizontal", method: 'put' do %>
+			<div class="row">
+				<div class="col-xs-7">
+					<h3 class="text-center">Game Time Scoreboard and Period</h3>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-1 col-xs-offset-2">
+					<%= label_tag 'Minutes' %>
+					<%= select_tag 'minutes', options_for_select((00 .. 20), @gameschedule.current_game_time.split(':')[0].to_i), class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Seconds' %>
+					<%= select_tag 'seconds', options_for_select((00 .. 59), @gameschedule.current_game_time.split(':')[1].to_i), class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'period' %>
+					<%= text_field_tag 'period', @gameschedule.currentperiod, class: 'form-control' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-7">
+					<h3 class="text-center">Penalty Box</h3>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-3">
+					<h4>Home Player - First Entry</h4>
+				</div>
+				<div class="col-xs-3 col-xs-offset-1">
+					<h4>Visitor Player - First Entry</h4>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-1">
+					<%= label_tag 'Number' %>
+					<%= text_field_tag 'homeonenumber', @lacrossgame.home_penaltyone_number, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Minute' %>
+					<%= text_field_tag 'homeoneminutes', @lacrossgame.home_penaltyone_minutes, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Seconds' %>
+					<%= text_field_tag 'homeoneseconds', @lacrossgame.home_penaltyone_seconds, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1 col-xs-offset-1">
+					<%= label_tag 'Number' %>
+					<%= text_field_tag 'visitoronenumber', @lacrossgame.visitor_penaltyone_number, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Minute' %>
+					<%= text_field_tag 'visitoroneminutes', @lacrossgame.visitor_penaltyone_minutes, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Seconds' %>
+					<%= text_field_tag 'visitoroneseconds', @lacrossgame.visitor_penaltyone_seconds, class: 'form-control' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-3">
+					<h4>Home Player - Second Entry</h4>
+				</div>
+				<div class="col-xs-3 col-xs-offset-1">
+					<h4>Visitor Player - Second Entry</h4>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-1">
+					<%= label_tag 'Number' %>
+					<%= text_field_tag 'hometwonumber', @lacrossgame.home_penaltytwo_number, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Minute' %>
+					<%= text_field_tag 'hometwominutes', @lacrossgame.home_penaltytwo_minutes, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Seconds' %>
+					<%= text_field_tag 'hometwoseconds', @lacrossgame.home_penaltytwo_seconds, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1 col-xs-offset-1">
+					<%= label_tag 'Number' %>
+					<%= text_field_tag 'visitortwonumber', @lacrossgame.visitor_penaltytwo_number, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Minute' %>
+					<%= text_field_tag 'visitortwominutes', @lacrossgame.visitor_penaltytwo_minutes, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Seconds' %>
+					<%= text_field_tag 'visitortwoseconds', @lacrossgame.visitor_penaltytwo_seconds, class: 'form-control' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-2 col-xs-offset-3">
+					<%= submit_tag 'submit', class: 'btn btn-md btn-primary' %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>

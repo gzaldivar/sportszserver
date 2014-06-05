@@ -1,0 +1,46 @@
+<h4><%= home %></h4>
+<table class="table table-striped table-bordered table-hover">
+	<thead>
+		<th>Time - Type</th>
+
+		<% for i in start .. start + 10 %>
+			<% if home == "Home"  %>
+				<th><%= link_to(scores.count > i ? scores[i].gametime + " - " + scores[i].scorecode : "00:00 -  ", "#", 
+						data: {toggle: "modal", target: "#" + home + "score-entry" + i.to_s }) %></th>
+				<%= render 'gameschedules/lacrosse/scoretablemodal', scoremodalid: home + "score-entry" + i.to_s, 
+							score: scores.count > i ? scores[i] : nil, index: i, home: home, players: @players %>
+			<% elsif home == "Visitor" and @gameschedule.lacross_game.visiting_team %>
+				<th><%= link_to(scores.count > i ? scores[i].gametime + " - " + scores[i].scorecode : "00:00 - ", "#", 
+						data: {toggle: "modal", target: "#" + home + "score-entry" + i.to_s }) %></th>
+				<%= render 'gameschedules/lacrosse/scoretablemodal', scoremodalid: home + "score-entry" + i.to_s, 
+							score: scores.count > i ? scores[i] : nil, index: i, home: home, players: @visiting_roster %>
+			<% else %>
+				<th><%= link_to(scores.count > i ? scores[i].gametime + " - " + scores[i].scorecode : "00:00 - ", "#", 
+						data: {toggle: "modal", target: "#novisitingteam-responsive" }) %></th>
+			<% end %>
+		<% end %>
+	</thead>
+	<tbody>
+		<td>Goal - Assist</td>
+
+		<% for i in start .. start + 10 %>
+			<% if scores.count > i and home == lacrosse_home_team %>
+				<% if scores[i].assist %>
+					<td><%= Athlete.find(scores[i].lacrosstat.athlete_id).number.to_s + " - " + Athlete.find(scores[i].assist).number.to_s %></td>
+				<% else %>
+					<td><%= Athlete.find(scores[i].lacrosstat.athlete_id).number %></td>
+				<% end %>
+			<% elsif scores.count > i and home == lacrosse_visitor_team and @gameschedule.lacross_game.visiting_team %>
+				<% if scores[i].assist %>
+					<td><%= VisitorRoster.find(scores[i].lacrosstat.visitor_roster_id).number.to_s + " - " + VisitorRoster.find(scores[i].assist).number.to_s %></td>
+				<% else %>
+					<td><%= VisitorRoster.find(scores[i].lacrosstat.visitor_roster_id).number %></td>
+				<% end %>
+			<% else %>
+				<td>       </td>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>
+<%= render 'layouts/messagemodal', modalid: 'novisitingteam-responsive', modaltitle: "No Visiting Team", 
+			messagetext: "You can only score visiting teams if you have entered a visiting team for this game" %>

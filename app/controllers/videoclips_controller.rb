@@ -201,16 +201,13 @@ class VideoclipsController < ApplicationController
       
       time = DateTime.now.in_time_zone(Time.zone).beginning_of_day.iso8601
       time = time.to_time.yesterday.to_date.iso8601
-      @videoclips = []    
-      @sport.videoclips.where(team_id: @team.id, :updated_at.gt => time, owner: current_user.id).asc(:updated_at).each_with_index do |q, cnt|
-        @videoclips[cnt] = q
-      end
+      
+      @videoclips = @sport.videoclips.where(team_id: @team.id, :updated_at.gt => time, owner: current_user.id).asc(:updated_at)
       
       @id = @sport.id.to_s + @team.id.to_s
       
       respond_to do |format|
         format.html { render 'newvideo'}
-        format.xml
         format.json 
         format.js
       end  	
@@ -359,7 +356,7 @@ class VideoclipsController < ApplicationController
           @videoclip.team_id = params[:team_id]
         end
                 
-        if @sport.review_media?
+        if @sport.review_media? and !SiteAdmin(@sport)
           @videoclip.pending = true
         else
           @videoclip.pending = false
@@ -590,31 +587,44 @@ class VideoclipsController < ApplicationController
   
   def edit
     @athletes = []
+
     if @videoclip.team_id.nil?
       ath = @sport.athletes
     else
       ath = @sport.athletes.where(team: @videoclip.team_id)
     end
+
     ath.each_with_index do |a, cnt|
       @athletes[cnt] = a
     end
+
     @athlete_tags = []
+
     if !@videoclip.players.nil? and @videoclip.players.any?
       @videoclip.players.each_with_index do |p, cnt|
         @athlete_tags[cnt] = Athlete.find(p)
       end
     end
+
     @teams = @sport.teams
     @gameschedules = []
-#    @teams.each do |t|
-      @teams.first.gameschedules.each_with_index do |g, cnt|
+
+    @teams.first.gameschedules.each_with_index do |g, cnt|
         @gameschedules[cnt] = g
-      end
-#    end
-    if @videoclip.gameschedule
-      @gamelogs = Gameschedule.find(@videoclip.gameschedule_id.to_s).gamelogs
+    end
+
+    game = Gameschedule.find(@videoclip.gameschedule_id.to_s)
+
+    if game
+      @gamelogs = game.gamelogs
     else
       @gamelogs = []
+    end
+
+    @scores = []
+
+    if @sport.name == "Lacrosse" and game
+      @scores = lacrosse_score_logs(game)
     end
   end
   

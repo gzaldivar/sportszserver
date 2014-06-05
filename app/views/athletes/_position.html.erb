@@ -33,7 +33,7 @@
 	<% elsif @sport.sportname == "Basketball" %>
 		<div class="col-xs-2">
 			<%= f.label :position %>
-			<%= f.select :position, basketball_positions, include_blank: true, class: 'form-control' %>
+			<%= f.select :position, basketball_positions, { include_blank: true }, { class: 'form-control' } %>
 		</div>
 	<% elsif @sport.sportname == "Soccer" %>
 		<div class="col-xs-2">
@@ -69,7 +69,7 @@
 	<% elsif @sport.sportname == "Lacrosse" %>
 		<div class="col-xs-2">
 			<%= f.label :position %>
-			<%= f.select :position, lacrosse_positions, include_blank: true, class: 'form-control' %>
+			<%= f.select :position, lacrosse_positions, { include_blank: true }, { class: 'form-control' } %>
 		</div>
 	<% end %>
 <% else %>

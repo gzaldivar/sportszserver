@@ -58,6 +58,12 @@ Sportzserver::Application.routes.draw do
       end
     end
 
+    resources :visiting_teams do
+
+      resources :visitor_rosters 
+      
+    end
+
     resources :blogs do
       collection do
         get :updateforteams, :newteamblog, :updategamelogs
@@ -87,8 +93,12 @@ Sportzserver::Application.routes.draw do
           get   :passinggamestats, :rushinggamestats, :allfootballgamestats, :receivinggamestats, :defensegamestats, :kickergamestats, :returnergamestats,
                 :footballboxscore, :footballscoreboard, :footballteamgametotals,  :footballdefensestats, :footballspecialteamstats, 
                 :addfootballqb, :addfootballrb, :addfootballrec, :addfootballdef, :addfootballkicker, :addfootballpunter, :addfootballpk,
-                :addfootballret, :footballform, :basketballteamscorestats, :basketballteamotherstats, :basketballform, :soccerform
-          put   :updatelogo, :mobilealerts, :alertupdate
+                :addfootballret, :footballform, :basketballteamscorestats, :basketballteamotherstats, :basketballform, :soccerform, :selectvisitingteam, 
+                :visitingteamselected, :lacrossescoresheet, :delete_visiting_score, :delete_visiting_penalty, :delete_visiting_playershot, 
+                :delete_visiting_player_stats, :lacrosse_game_summary
+          put   :updatelogo, :mobilealerts, :alertupdate, :lacrosstimeout, :lacrosse_score_entry, :lacrosse_add_penalty, :lacrosse_add_shot, 
+                :lacrosse_player_remove_allshots, :lacrosse_player_stats, :lacrosse_extra_man, :lacrosse_clears, :lacrosse_goalstats, :delete_lacrosse_player_shot,
+                :update_lacrosse_game_summary
         end
 
         resources :gamelogs, only: [:new, :create, :edit, :destroy, :show, :update, :index] do
@@ -148,7 +158,7 @@ Sportzserver::Application.routes.draw do
 
       resources :soccers
 
-      resources :lacrosses
+      resources :lacrosstats , only: [:destroy]
       
       member do
         get :follow, :unfollow, :stats, :playerstats, :mobilefollow, :mobileunfollow

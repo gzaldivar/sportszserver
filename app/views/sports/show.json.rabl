@@ -7,17 +7,24 @@ node(:sport_logo_thumb) { |t| t.sport_logo(:thumb) }
 node(:sport_logo_tiny) { |t| t.sport_logo(:tiny) }
 node(:banner_url) { |b| b.sport_banner.url(:thumb) }
 node(:teamcount) { |t| t.teams.count }
+
 if root_object.name == "Football"
 	node(:football_offense_position) { offense_football_positions }
 	node(:football_defense_position) { defense_football_positions } 
 	node(:football_specialteams_position) { specialteams_football_positions }
-end
-if root_object.name == "Basketball"
+elsif root_object.name == "Basketball"
 	node(:basketball_positions) { basketball_positions }
-end
-if root_object.name == "Soccer"
+elsif root_object.name == "Soccer"
 	node(:soccer_positions) { soccer_positions }
+elsif root_object.name == "Lacrosse"
+	node(:lacrosse_positions) { lacrosse_positions }
+	node(:lacrosse_score_codes) { lacrosse_score_codes }
+	node(:lacrosse_shots) { lacrosse_shots }
+	node(:lacrosse_periods) { lacrosse_periods }
+	node(:lacrosse_personal_fouls) { lacrosse_personal_fouls }
+	node(:lacrosse_technical_fouls) { lacrosse_technical_fouls }
 end
+
 node :package, :if => lambda { |s| !Payment.find_by(sport_id: s.id).nil? } do |a|
 	Payment.find_by(sport_id: a.id).package
 end

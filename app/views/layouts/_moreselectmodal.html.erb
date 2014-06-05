@@ -20,7 +20,12 @@
                      <tr>
                       <td><%= link_to "Events", sport_events_path(current_site, team_id: current_team.id) %></td>
                     </tr>
-                     <tr>
+                    <% if current_site? and current_site.name == "Lacrosse" %>
+                       <tr>
+                        <td><%= link_to "Visiting Teams", sport_visiting_teams_path(current_site) %></td>
+                      </tr>
+                      <% end %>
+                    <tr>
                       <td><%= link_to "Change Sport", sports_path %></td>
                     </tr>
                </tbody>

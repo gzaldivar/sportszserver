@@ -1,0 +1,72 @@
+<div class="modal" id="<%= modalid %>">
+	<div class="modal-dialog">
+      	<div class="modal-content">
+        	<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          		<h4 class="modal-title">Goal Stats</h4>
+        	</div>
+        	<div class="modal-body">
+        		<%= form_tag lacrosse_goalstats_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "form-horizontal", method: 'put' do %>
+        			<%= hidden_field_tag "home", home %>
+                    <% if playerstat %>
+                        <%= hidden_field_tag "lacrosstat_id", playerstat.lacrosstat.id %>
+                        <%= hidden_field_tag "lacross_player_stat_id", playerstat.id %>
+                    <% end %>
+                    <div class="row">
+                    	<div class="col-xs-3">
+                    		<%= label_tag 'Player' %>
+                            <% if playerstat %>
+                                <%= home == "Home" ? Athlete.find(playerstat.lacrosstat.athlete_id).numlogname :
+                                                     VisitorRoster.find(playerstat.lacrosstat.visitor_roster).numlogname %>
+                            <% else %>
+                                <%= select_tag 'player', options_from_collection_for_select(players, "id", "numlogname"), include_blank: true, 
+                                                class: 'form-control' %>
+                            <% end %>
+                    	</div>
+
+                        <div class="col-xs-2">
+                            <%= label_tag 'Saves' %>
+                            <%= text_field_tag 'saves', playerstat ? playerstat.saves : 0, class: 'form-control' %>
+                        </div>
+                        <div class="col-xs-2">
+                            <%= label_tag 'Allowed' %>
+                            <%= text_field_tag 'allowed', playerstat ? playerstat.goals_allowed : 0, class: 'form-control' %>
+                        </div>
+                         <div class="col-xs-2">
+                            <%= label_tag 'Minutes' %>
+                            <%= text_field_tag 'minutes', playerstat ? playerstat.minutesplayed : 0, class: 'form-control' %>
+                        </div>
+
+                        <div class="col-xs-2">
+                            <%= label_tag 'Period' %>
+
+                            <% if playerstat %>
+                                <h4><%= lacrosse_display_period(playerstat.period) %></h4>
+                            <% else %>
+                                <%= select_tag "period", options_for_select(lacrosse_periods, '1'), class: 'form-control' %>
+                            <% end %>
+                        </div>
+                    </div>
+                    <p>
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-5">
+                            <%= submit_tag "Submit", class: 'btn btn-primary' %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
+                <% if playerstat and home == "Home" %>
+                    <%= link_to "Delete", sport_athlete_lacrosstat_path(@sport, athlete_id: playerstat.lacrosstat.athlete_id, id: playerstat.lacrosstat.id,
+                                          lacross_goalstat_id: playerstat.id), method: :delete, class: "btn btn-danger", 
+                                          data: { confirm: "You sure? All player stats will be deleted. Not just Face Off stats." } %>
+                <% elsif playerstat %>
+                    <%= link_to "Delete", delete_visiting_player_stats_sport_team_gameschedule_path(@sport, @team, @gameschedule, 
+                                        lacrosstat_id: playerstat.lacrosstat, lacross_goalstat_id: playerstat.id), class: "btn btn-danger", 
+                                        data: { confirm: "You sure?  All player stats will be deleted. Not just Face Off stats." } %>
+                <% end %>
+            </div>
+        </div>
+    </div> 
+</div>

@@ -2,6 +2,7 @@ class GameschedulesController < ApplicationController
   include FootballStatistics
   include BasketballStatistics
   include LacrosseStatistics
+  include LacrosseScoresheet
 
 	before_filter	:authenticate_user!,   only: [:destroy, :new, :edit, :update, :create, :alertupdate]
   before_filter :get_sport
@@ -11,17 +12,14 @@ class GameschedulesController < ApplicationController
                                               :footballdefensestats, :footballspecialteamstats, :addfootballrb, :addfootballrec, :addfootballdef,
                                               :addfootballpk, :addfootballret, :addfootballkicker, :addfootballpunter, :footballform, 
                                               :basketballteamscorestats, :basketballteamotherstats, :basketballform, :soccerform, :mobilealerts,
-                                              :alertupdate]
+                                              :alertupdate, :selectvisitingteam, :visitingteamselected, :lacrossescoresheet, :lacrosstimeout,
+                                              :lacrosse_score_entry, :lacrosse_add_penalty, :delete_visiting_score, :delete_visiting_penalty,
+                                              :lacrosse_add_shot, :delete_visiting_playershot, :delete_visiting_player_stats, :lacrosse_player_stats,
+                                              :lacrosse_extra_man, :lacrosse_clears, :lacrosse_goalstats, :delete_lacrosse_player_shot, :lacrosse_game_summary,
+                                              :update_lacrosse_game_summary]
   before_filter only: [:destroy, :update, :create, :edit, :new, :createlogo, :updatelogo, :alertupdate] do |controller| 
     controller.SiteOwner?(@team.id)
   end
-#  before_filter only: [:passinggamestats, :allfootballgamestats, :rushinggamestats, :receivinggamestats, :defensegamestats, 
-#                       :kickergamestats, :returnergamestats, :footballteamgametotals, :addfootballqb, :footballdefensestats, 
-#                       :footballspecialteamstats, :addfootballrb, :addfootballrec, :addfootballdef, :addfootballpk, :addfootballret, 
-#                       :addfootballkicker, :addfootballpunter, :footballform, :basketballteamscorestats, 
-#                       :basketballteamotherstats,] do |check|
-#    check.packageEnabled?(current_site)
-#  end
   
   def new
     @gameschedule = Gameschedule.new
@@ -65,12 +63,19 @@ class GameschedulesController < ApplicationController
       else
         schedule.current_game_time = params[:gameminutes].to_s + ":" + params[:gameseconds].to_s
       end
-      
-      schedule.save!
 
       if @sport.name == "Lacrosse"
         schedule.lacross_game = LacrossGame.new
+        schedule.lacross_game.home_1stperiod_timeouts = Array.new(3) { "" }
+        schedule.lacross_game.home_2ndperiod_timeouts = Array.new(3) { "" }
+        schedule.lacross_game.visitor_1stperiod_timeouts = Array.new(3) { "" }
+        schedule.lacross_game.visitor_2ndperiod_timeouts = Array.new(3) { "" }
+        schedule.lacross_game.extraman_fail = Array.new(5) { 0 }
+        schedule.lacross_game.clears = Array.new(5) { 0 }
+        schedule.lacross_game.failedclears = Array.new(5) { 0 }
       end
+      
+      schedule.save!
 
       respond_to do |format|
         format.html { redirect_to [@sport, @team, schedule] }
@@ -595,6 +600,36 @@ class GameschedulesController < ApplicationController
     end
   end
 
+  def selectvisitingteam
+    @visiting_teams = @sport.visiting_teams.all.desc(:title)
+  end
+
+  def visitingteamselected
+    begin
+      visiting_team = @sport.visiting_teams.find(params[:visiting_team_id])
+
+      if @sport.name == "Lacrosse"
+        visiting_team.lacross_game_id = @gameschedule.lacross_game.id
+        visiting_team.save!
+
+        @gameschedule.visitor_clears = Array.new(5) { 0 }
+        @gameschedule.visitor_failedclears = Array.new(5) { 0 }
+        @gameschedule.visitor_extraman_fail = Array.new(5) { 0 }
+        @gameschedule.save!
+      end
+
+      respond_to do |format|
+        format.html { redirect_to sport_team_gameschedule_path(@sport, @team, @gameschedule), notice: "Visiting Team Added - " + visiting_team.getname }
+        format.json { render status: 200, json: { visiting_team: visiting_team } }
+      end
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to sport_team_gameschedule_path(@sport, @team, @gameschedule), alert: "Error adding visiting team - " + e.message }
+        format.json { render status: 404, json: { error: e.message } }
+      end
+    end
+  end
+
   private
   
     def get_sport
@@ -649,15 +684,12 @@ class GameschedulesController < ApplicationController
     end
 
     def showlacrosse
-#      begin
+      begin
         @gamelogs = @gameschedule.gamelogs.asc(:period)
 
         if @gamelogs.nil?
           @gamelogs = []
         end
-
-        @homepenalties = @gameschedule.lacross_game.homepenaltybox
-        @visitorpenalties = @gameschedule.lacross_game.visitorpenaltybox
 
         @homescores = lacrossehomescore(@gameschedule)
         @visitorscores = lacrossevisitorscore(@gameschedule)
@@ -669,9 +701,9 @@ class GameschedulesController < ApplicationController
         @totalhomegoals = lacrossehomescore(@gameschedule).inject{|sum,x| sum + x }
         @totalhomeassists = lacrosshomeassists(@gameschedule).inject{|sum,x| sum + x }
 
-#      rescue Exception => e
-#        raise "Error processing Lacrosse Statistics - " + e.message
-#      end
+      rescue Exception => e
+        raise "Error processing Lacrosse Statistics - " + e.message
+      end
     end
 
 end

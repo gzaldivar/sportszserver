@@ -1,0 +1,32 @@
+<table class="table table-striped table-bordered table-hover">
+	<thead>
+		<th>Period <%= period %></th>
+	</thead>
+	<tbody>
+		<% if stats.empty? %>
+			<tr>
+				<td></td>
+			</tr>
+		<% else %>
+			<% stats.each do |stat| %>
+				<% stat.shot.each do |shot| %>
+					<tr>
+						<td>
+							<% if team == "Home" %>
+								<%= link_to Athlete.find(stat.lacrosstat.athlete_id).number.to_s + " - " + shot, "#", 
+														data: {toggle: "modal", target: "#addshotmodal" + stat.id } %>
+								<%= render 'gameschedules/lacrosse/playershotmodal', modalid: 'addshotmodal' + stat.id, home: team, 
+											playerstat: stat, players: nil %>
+							<% else %>
+								<%= link_to VisitorRoster.find(stat.lacrosstat.visitor_roster).number.to_s + " - " + shot, "#", 
+														data: {toggle: "modal", target: "#addshotmodal" + stat.id } %>
+								<%= render 'gameschedules/lacrosse/playershotmodal', modalid: 'addshotmodal' + stat.id, home: team, 
+											playerstat: stat, players: nil %>
+							<% end %>
+						</td>
+					</tr>
+				<% end %>
+			<% end %>
+		<% end %>
+	</tbody>
+</table>

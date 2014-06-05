@@ -11,7 +11,7 @@ end
 node :eazesportzOpponent, :if => lambda { |a| a.opponent_team_id? } do
 	true
 end
-node :opponentpic, :if => lambda { |a| !a.opponent_team_id? and a.opponentpic? } do |a|
+node :opponentpic, :if => lambda { |a| !a.opponent_team_id? and a.opponentpic } do |a|
 	a.opponentpic.url(:tiny)
 end
 node :opponentpicthumb, :if => lambda { |a| !a.opponent_team_id? and a.opponentpic } do |a|
@@ -25,14 +25,14 @@ node(:starttime) { |t| t.starttime.strftime("%I:%M%p") }
 node(:startdate) { |t| t.gamedate.strftime("%m-%d-%Y") }
 node(:gamedatetime) { |t| t.starttime }
 attributes :gamedate, :location, :opponent, :event, :homeaway, :game_name, :homeq1, :homeq2, :homeq3, :homeq4, :opponentq1, :opponentq2, 
-		   :opponentq3, :opponentq4, :possession, :lastplay, :final, :opponent_mascot, :current_game_time,
+		   :opponentq3, :opponentq4, :possession, :lastplay, :final, :opponent_mascot, :current_game_time, :currentperiod,
 		   :opponent_name, :hometimeouts, :opponenttimeouts, :league, :opponent_sport_id, :opponent_team_id,
 		   :opponent_league_wins, :opponent_league_losses, :opponent_nonleague_wins, :opponent_nonleague_losses
 if @sport.name == "Football"
 	node(:opponentscore) { |t| t.opponentq1 + t.opponentq2 + t.opponentq3 + t.opponentq4 }
 	node(:homescore) { |t| footballhomescore(@sport, t) }
 	node(:firstdowns) { |f| totalfirstdowns(@sport, f) }
-	attributes :currentqtr, :penaltyyards, :down, :own, :ballon, :our, :togo, :penalty, :penaltyyards, :currentperiod
+	attributes :currentqtr, :penaltyyards, :down, :own, :ballon, :our, :togo, :penalty, :penaltyyards
 	child :gamelogs do
 		attributes :period, :time, :score, :logentry, :yards, :logentrytext
 		node(:id) { |o| o.id.to_s }
@@ -68,12 +68,26 @@ if @sport.name == "Football"
 		end
 	end
 elsif @sport.name == "Basketball"
-	attributes :opponentfouls, :currentperiod, :homebonus, :visitorbonus, :opponentscore
+	attributes :opponentfouls, :homebonus, :visitorbonus, :opponentscore
 	node(:homescore) { |g| basketball_home_score(@sport, g) }
 	node(:homefouls) { |g| basketball_home_fouls(g) }
 elsif @sport.name == "Soccer"
-	attributes :socceroppck, :socceroppsog, :socceroppsaves, :currentperiod, :opponentscore
+	attributes :socceroppck, :socceroppsog, :socceroppsaves, :opponentscore
 	node(:homescore) { |g| soccer_home_score(@sport, g) }
+elsif @sport.name == "Lacrosse"
+	node(:lacrosse_home_score) { |g| get_lacrosse_home_score(g) }
+	node(:lacrosse_home_score_by_period) { |g| get_lacrosse_home_score_by_period(g) }
+	node(:lacrosse_visitor_score) { |g| get_lacrosse_visitor_score(g) }
+	node(:lacrosse_visitor_score_by_period) { |g| get_lacrosse_visitor_score_by_period(g) }
+
+	child :lacross_game, :object_root => false do
+		node(:gameschedule_id) { |g| g.gameschedule.id.to_s }
+		node(:lacross_game_id) { |g| g.id.to_s }
+		node(:visiting_team_id) { |v| v.visiting_team.id.to_s }
+
+		attributes :clears, :failedclears, :visitor_clears, :visitor_failedclears, :free_position_sog, 
+					:home_1stperiod_timeouts, :home_2ndperiod_timeouts, :visitor_1stperiod_timeouts, :visitor_2ndperiod_timeouts, :extraman_fail, :visitor_extraman_fail, :home_penaltyone_number, :home_penaltyone_minutes, :home_penaltyone_seconds, :home_penaltytwo_number, :home_penaltytwo_minutes, :home_penaltytwo_seconds, :visitor_penaltyone_number, :visitor_penaltyone_minutes, :visitor_penaltyone_seconds, :visitor_penaltytwo_number, :visitor_penaltytwo_minutes, :visitor_penaltytwo_seconds
+	end
 end
 node :liveevent, :if => lambda { |e| !@sport.events.where(gameschedule_id: e.id.to_s, videoevent: 1).empty? } do
 	true

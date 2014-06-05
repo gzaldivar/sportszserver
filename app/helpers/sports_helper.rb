@@ -151,6 +151,16 @@ module SportsHelper
          [image_tag('slate.png'), 'application'],
          [image_tag('spacelab.png'), 'spacelab']
         ].join()
-  end 
+  end
+
+  def textminutes(upper)
+      minutes = Array.new(upper) { |i| i < 10 ? '0' + i.to_s : i.to_s }
+      return minutes
+  end
+
+  def textseconds
+      seconds = Array.new(60) { |i| i < 10 ? '0' + i.to_s :  i.to_s }
+      return seconds
+  end
 
 end

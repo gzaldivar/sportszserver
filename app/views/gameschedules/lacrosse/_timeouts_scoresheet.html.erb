@@ -1,0 +1,23 @@
+<h4>Time Outs
+<% if user_signed_in? and isAdmin? %>
+	<%= link_to "Edit", "#lacrossetimeouts-" + home, :class => "btn btn-xs btn-primary", "data-toggle" => "modal" %>
+<% end %>
+</h4>
+<table class="table table-striped table-bordered table-hover">
+	<thead>
+		<th></th>
+		<th>1st</th>
+		<th>2nd</th>
+	</thead>
+	<tbody>
+		<% for i in 0 .. 2 %>
+			<tr>
+				<td><%= (i + 1).to_s %></td>
+				<td><%= firstperiodtimeouts.count > i ? firstperiodtimeouts[i].to_s : "" %></td>
+				<td><%= secondperiodtimeouts.count > i ? secondperiodtimeouts[i].to_s : "" %></td>
+			</tr>
+		<% end %>
+	</tbody>
+</table>
+<%= render 'gameschedules/lacrosse/timeoutsmodal', modalid: "lacrossetimeouts-" + home, home: home, firsttimeouts: firstperiodtimeouts, 
+			secondtimeouts: secondperiodtimeouts %>

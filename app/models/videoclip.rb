@@ -42,6 +42,7 @@ class Videoclip
   belongs_to :user
   belongs_to :gamelog
   belongs_to :team
+  belongs_to :lacross_scoring
   has_many :alerts, dependent: :destroy
   has_one :newsfeed, dependent: :destroy
   

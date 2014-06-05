@@ -21,19 +21,4 @@ class Lacrosstat
 		lacross_scorings.count
 	end
 
-	def getgoals
-		lacross_scorings.each do |s|
-			if s.scoretype == "Goal"
-				goals += 1
-			end
-		end		
-	end
-
-	def getassists
-		lacross_scorings.each do |s|
-			if s.scoretype == "Assist"
-				goals += 1
-			end
-		end		
-	end
 end

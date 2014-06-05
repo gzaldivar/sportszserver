@@ -7,8 +7,8 @@ module LacrosseStatistics
 
 		if game.lacross_game and game.lacross_game.lacrosstats
 			game.lacross_game.lacrosstats.each do |l|
-				score.each_with_index do |s, i|
-					s = l.lacross_scorings.where(scoretype: "Goal", period: i).count if l.lacross_scorings
+				for i in 0 .. 4
+					score[i] += l.lacross_scorings.where(period: i + 1).count
 				end
 			end
 		end
@@ -21,8 +21,8 @@ module LacrosseStatistics
 
 		if game.lacross_game and game.lacross_game.lacrosstats
 			game.lacross_game.lacrosstats.each do |l|
-				score.each_with_index do |s, i|
-					s = l.lacross_scorings.where(scoretype: "Assist", period: i).count if l.lacross_scorings
+				for i in 0 .. 4
+					score[i] += l.lacross_scorings.where(:assist.exists => true, period: i + 1).count
 				end
 			end
 		end
@@ -35,8 +35,8 @@ module LacrosseStatistics
 
 		if game.lacross_game and game.lacross_game.lacrosstats
 			game.lacross_game.lacrosstats.each do |l|
-				score.each_with_index do |s, i|
-					s = l.lacross_penalties.where(period: i).count if l.lacross_penalties
+				for i in 1 .. 5
+					penalty += l.lacross_penalties.where(period: i).count
 				end
 			end
 		end
@@ -44,14 +44,48 @@ module LacrosseStatistics
 		return penalty
 	end
 
+	def lacrossehomesteals(game)
+		steals = 0
+
+		if game.lacross_game and game.lacross_game.lacrosstats
+			game.lacross_game.lacrosstats.each do |l|
+				for i in 1 .. 5
+					stats = l.lacross_player_stats.find_by(period: i)
+					if stats
+						steals += stats.steals
+					end
+				end
+			end
+		end
+
+		return steals
+	end
+
+	def lacrossehometurnovers(game)
+		turnovers = 0
+
+		if game.lacross_game and game.lacross_game.lacrosstats
+			game.lacross_game.lacrosstats.each do |l|
+				for i in 1 .. 5
+					stats = l.lacross_player_stats.find_by(period: i)
+					if stats
+						turnovers += stats.turnover
+					end
+				end
+			end
+		end
+
+		return turnovers
+	end
+
 	def lacrossevisitorscore(game)
 		score = Array.new(5) { 0 }
 
-		if game.lacross_game and game.lacross_game.visiting_team and game.lacross_game.visiting_team.visitor_rosters
+		if game.lacross_game and game.lacross_game.visiting_team
 			game.lacross_game.visiting_team.visitor_rosters.each do |v|
-				if v.lacross and v.lacross.lacross_scorings.any?
-					score.each_with_index do |s, i|
-						s += v.lacross.lacross_scorings.where(scoretype: "Goal", period: i).count if v.lacross.lacross_scorings.any?
+				if v.lacrosstat
+					for i in 0 .. 4
+						score[i] += v.lacrosstat.lacross_scorings.where(period: i + 1).count
 					end
 				end
 			end
@@ -60,8 +94,46 @@ module LacrosseStatistics
 		return score
 	end
 
+	def lacrossevisitorsteals(game)
+		steals = 0
+
+		if game.lacross_game and game.lacross_game.visiting_team
+			game.lacross_game.visiting_team.visitor_rosters.each do |v|
+				if v.lacrosstat
+					for i in 1 .. 5
+						stats = v.lacrosstat.lacross_player_stats.find_by(period: i)
+						if stats
+							steals += stats.steals
+						end
+					end
+				end
+			end
+		end
+
+		return steals
+	end
+
+	def lacrossevisitorturnovers(game)
+		turnovers = 0
+
+		if game.lacross_game and game.lacross_game.visiting_team
+			game.lacross_game.visiting_team.visitor_rosters.each do |v|
+				if v.lacrosstat
+					for i in 1 .. 5
+						stats = v.lacrosstat.lacross_player_stats.find_by(period: i)
+						if stats
+							turnovers += stats.turnover
+						end
+					end
+				end
+			end
+		end
+
+		return turnovers
+	end
+
 	def lacrosse_clearing_percentage(game)
-		game.lacrosse_clears/(lacrosse_clears + game.lacrosse_badclears)
+		game.clears.inject{|sum,x| sum + x }/(game.clears.inject{|sum,x| sum + x} + game.failedclears.inject{|sum,x| sum + x})
 	end
 
 	def lacrosse_points_per_game(sport, player)
@@ -215,9 +287,8 @@ module LacrosseStatistics
 				stat = g.lacrosstats.find_by(athlete_id: anobject.id)
 
 				if !stat.nil?
-					statgoals = stat.lacross_scorings.where(scoretype: "Goal")
-					goals += statgoals.count
-					shots += stat.lacross_player_stats.shots
+					goals += stat.lacross_scorings.count
+					shots += stat.lacross_player_stats.shots.count
 				end
 			end
 		else								# computing stats for game from players
@@ -225,9 +296,8 @@ module LacrosseStatistics
 				stat = athlete.lacrosstats.find_by(gameschedule_id: anobject.id)
 
 				if !stat.nil?
-					statgoals = stat.lacross_scorings.where(scoretype: "Goal")
-					goals += statgoals.goal
-					shots += l.lacross_player_stats.shot
+					goals += stat.lacross_scorings.count
+					shots += l.lacross_player_stats.shot.count
 				end
 			end
 		end
@@ -262,7 +332,7 @@ module LacrosseStatistics
 						end
 					end
 					if !found
-						@stats << Lacrosstat.new(gameschedule_id: g.id, athlete_id: anobject.id)
+						@stats << Lacrosstat.new(lacross_game_id: g.lacross_game_id, athlete_id: anobject.id)
 					end
 				end
 			else
@@ -281,7 +351,7 @@ module LacrosseStatistics
 							end
 						end
 						if !found
-							@stats << Lacrosstat.new(gameschedule_id: anobject.id, athlete_id: p.id)
+							@stats << Lacrosstat.new(lacross_game_id: anobject.lacross_game.id, athlete_id: p.id)
 						end
 					end
 				else
@@ -298,31 +368,38 @@ module LacrosseStatistics
 
 				if s.lacross_player_stats.any?
 					s.lacross_player_stats.asc(:period).each do |p|
-						thestats[:shot] = p.shot
+						thestats[:shot] = p.shot.count
 						thestats[:face_off_won] = p.face_off_won
 						thestats[:face_off_lost] = p.face_off_lost
 						thestats[:ground_ball] = p.ground_ball
 						thestats[:interception] = p.interception
 						thestats[:turnover] = p.turnover
 						thestats[:caused_turnover] = p.caused_turnover
+						thestats[:steals] = p.steals
 					end
 				else
 					thestats = { :shot => 0, :face_off_won => 0, :face_off_lost => 0, :ground_ball => 0, :interception => 0, :turnover => 0, 
-								:caused_turnover => 0 }
+								:caused_turnover => 0, :steals => 0 }
 				end
 
 				if s.lacross_scorings.any?
+					goals = 0
+					assists = 0
+
 					s.lacross_scorings.each do |stat|
-						thestats[:goal] += 1 if stat.scoretype == "Goal"
-						thestats[:assist] += 1 if stat.scoretype == "Assist"
+						goals += 1 
+						assists += 1 if stat.assist
 					end
+
+					thestats[:goal] = goals
+					thestats[:assist] = assists
 				else
 					thestats[:goal] = 0
 					thestats[:assist] = 0
 				end
 
 				thestats[:athlete_id] = s.athlete_id.to_s
-				thestats[:gameschedule_id] = s.gameschedule_id.to_s
+#				thestats[:gameschedule_id] = s.lacross_game.gameschedule_id.to_s
 
 				gamestats << thestats
 			end
@@ -333,23 +410,24 @@ module LacrosseStatistics
 
 		def playertotals
 			totals = { :shot => 0, :face_off_won => 0, :face_off_lost => 0, :ground_ball => 0, :interception => 0, :turnover => 0, 
-						:caused_turnover => 0, :goal => 0, :assist => 0 }
+						:caused_turnover => 0, :steals => 0, :goal => 0, :assist => 0 }
 
 			@stats.each do |s|
 				s.lacross_player_stats.each do |stat|
-					totals[:shot] += stat.shot
+					totals[:shot] += stat.shot.count
 					totals[:face_off_won] += stat.face_off_won
 					totals[:face_off_lost] += stat.face_off_lost
 					totals[:ground_ball] += stat.ground_ball
 					totals[:interception] += stat.interception
 					totals[:turnover] += stat.turnover
 					totals[:caused_turnover] += stat.caused_turnover
+					totals[:steals] += stat.steals
 				end
 
 				if s.lacross_scorings.any?
 					s.lacross_scorings.each do |stat|
-						totals[:goal] += 1 if stat.scoretype == "Goal"
-						totals[:assist] += 1 if stat.scoretype == "Assist"
+						totals[:goal] += 1
+						totals[:assist] += 1 if stat.assist
 					end
 				end
 			end
@@ -372,6 +450,5 @@ module LacrosseStatistics
 
 			return totals
 		end
-
 	end
 end

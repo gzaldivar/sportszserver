@@ -1,0 +1,36 @@
+<table class="table table-striped table-bordered table-hover">
+	<thead>
+		<% total = 0 %>
+		<th></th>
+
+		<% if period == 5 %>
+			<th>OT</th>
+		<% else %>
+			<th><%= period %></th>
+		<% end %>
+	</thead>
+	<tbody>
+		<% stats.each do |stat| %>
+			<% if stat.saves > 0 %>
+				<tr>
+					<td>Saves</td>
+					<% if team == lacrosse_home_team %>
+						<td><%= link_to Athlete.find(stat.lacrosstat.athlete_id).number.to_s + " - " + stat.saves.to_s, "#",
+										data: {toggle: "modal", target: "#savesmodal" + stat.id.to_s } %></td>
+						<%= render 'gameschedules/lacrosse/goalstatmodal', modalid: 'savesmodal' + stat.id, home: team, 
+									playerstat: stat, players: nil %>
+					<% else %>
+						<td><%= link_to VisitorRoster.find(stat.lacrosstat.visitor_roster).number.to_s + " - " + stat.saves.to_s, "#",
+										data: {toggle: "modal", target: "#savesmodal" + stat.id.to_s } %></td>
+						<%= render 'gameschedules/lacrosse/goalstatmodal', modalid: 'savesmodal' + stat.id, home: team, 
+									playerstat: stat, players: nil %>
+					<% end %>
+				</tr>
+			<% end %>
+		<% end %>
+		<tr>
+			<td>Total</td>
+			<td><%= total %></td>
+		</tr>
+	</tbody>
+</table>

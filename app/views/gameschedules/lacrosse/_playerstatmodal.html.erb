@@ -1,0 +1,89 @@
+<div class="modal" id="<%= modalid %>">
+	<div class="modal-dialog">
+      	<div class="modal-content">
+        	<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          		<h4 class="modal-title"><%= statname %></h4>
+        	</div>
+        	<div class="modal-body">
+        		<%= form_tag lacrosse_player_stats_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "form-horizontal", method: 'put' do %>
+        			<%= hidden_field_tag "home", home %>
+                    <% if playerstat %>
+                        <%= hidden_field_tag "lacrosstat_id", playerstat.lacrosstat.id %>
+                        <%= hidden_field_tag "lacross_player_stat_id", playerstat.id %>
+                    <% end %>
+                    <div class="row">
+                    	<div class="col-xs-3 col-xs-offset-1">
+                    		<%= label_tag 'Player' %>
+                            <% if playerstat %>
+                                <%= home == "Home" ? Athlete.find(playerstat.lacrosstat.athlete_id).numlogname :
+                                                     VisitorRoster.find(playerstat.lacrosstat.visitor_roster).numlogname %>
+                            <% else %>
+                                <%= select_tag 'player', options_from_collection_for_select(players, "id", "numlogname"), include_blank: true, 
+                                                class: 'form-control' %>
+                            <% end %>
+                    	</div>
+
+                        <% if statname == "Face Off" %>
+                            <div class="col-xs-2">
+                                <%= label_tag 'Won' %>
+                                <%= text_field_tag 'face_off_won', playerstat ? playerstat.face_off_won : 0, class: 'form-control' %>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= label_tag 'Lost' %>
+                                <%= text_field_tag 'face_off_lost', playerstat ? playerstat.face_off_lost : 0, class: 'form-control' %>
+                            </div>
+                             <div class="col-xs-2">
+                                <%= label_tag 'Violation' %>
+                                <%= text_field_tag 'violation', playerstat ? playerstat.face_off_violation : 0, class: 'form-control' %>
+                            </div>
+                        <% elsif statname == "Ground Ball" %>
+                            <div class="col-xs-2">
+                                <%= label_tag 'Number' %>
+                                <%= text_field_tag 'groundball', playerstat ? playerstat.ground_ball : 0, class: 'form-control' %>
+                            </div>
+                        <% elsif statname == "Steals" %>
+                            <div class="col-xs-2">
+                                <%= label_tag 'Steals' %>
+                                <%= text_field_tag 'steals', playerstat ? playerstat.steals : 0, class: 'form-control' %>
+                            </div>
+                        <% elsif statname == "Turnovers" %>
+                            <div class="col-xs-2">
+                                <%= label_tag 'Turnovers' %>
+                                <%= text_field_tag 'turnovers', playerstat ? playerstat.turnover : 0, class: 'form-control' %>
+                            </div>
+                        <% end %>
+
+                        <div class="col-xs-2">
+                            <%= label_tag 'Period' %>
+
+                            <% if playerstat %>
+                                <h4><%= lacrosse_display_period(playerstat.period) %></h4>
+                            <% else %>
+                                <%= select_tag "period", options_for_select(lacrosse_periods, '1'), class: 'form-control' %>
+                            <% end %>
+                        </div>
+                    </div>
+                    <p>
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-5">
+                            <%= submit_tag "Submit", class: 'btn btn-primary' %>
+                        </div>
+                    </div>
+                <% end %>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
+                <% if playerstat and home == "Home" %>
+                    <%= link_to "Delete", sport_athlete_lacrosstat_path(@sport, athlete_id: playerstat.lacrosstat.athlete_id, id: playerstat.lacrosstat.id,
+                                          lacross_player_stat_id: playerstat.id), method: :delete, class: "btn btn-danger", 
+                                          data: { confirm: "You sure? All player stats will be deleted. Not just Face Off stats." } %>
+                <% elsif playerstat %>
+                    <%= link_to "Delete", delete_visiting_player_stats_sport_team_gameschedule_path(@sport, @team, @gameschedule, 
+                                        lacrosstat_id: playerstat.lacrosstat, lacross_player_stat_id: playerstat.id), class: "btn btn-danger", 
+                                        data: { confirm: "You sure?  All player stats will be deleted. Not just Face Off stats." } %>
+                <% end %>
+            </div>
+        </div>
+    </div> 
+</div>

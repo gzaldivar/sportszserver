@@ -34,6 +34,7 @@ class Photo
   belongs_to :gamelog
   belongs_to :team
   has_many :alerts, dependent: :destroy
+  belongs_to :lacross_scoring
   
   validates_presence_of :filename
   validates_presence_of :filepath

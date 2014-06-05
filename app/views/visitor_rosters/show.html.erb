@@ -1,0 +1,32 @@
+<% provide(:title, 'Visiting Player') %>
+<p>
+<div class="row">
+	<div class="col-xs-6 col-xs-offset-2">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>Number</th>
+				<th>Last Name</th>
+				<th>First Name</th>
+				<th>Position</th>
+				<% if user_signed_in? and isAdmin? %>
+					<th>Edit</th>
+				<% end %>
+			</thead>
+			<tbody>
+				<td><%= @visitor_roster.number %></td>
+				<td><%= @visitor_roster.lastname %></td>
+				<td><%= @visitor_roster.firstname %></td>
+				<td><%= @visitor_roster.position %></td>
+				<% if user_signed_in? and isAdmin? %>
+					<td><%= link_to "Edit", edit_sport_visiting_team_visitor_roster_path(@sport, @visiting_team, @visitor_roster), 
+						class: "btn btn-xs btn-primary" %></td>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-6 col-xs-offset-4">
+		<%= link_to "Roster", sport_visiting_team_visitor_rosters_path(@sport, @visiting_team), class: "btn btn-sm btn-primary" %>
+	</div>
+</div>

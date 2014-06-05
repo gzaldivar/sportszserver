@@ -1,0 +1,6 @@
+<% provide(:title, current_site.sitename + " vs. " + @gameschedule.opponent_mascot + " - Select Visiting Team" ) %>
+<div class="row">
+	<div class="col-xs-11">
+		<%= render 'visiting_teams/visitingteamlist', visiting_teams: @visiting_teams, select: "Select Team" %>
+	</div>
+</div>

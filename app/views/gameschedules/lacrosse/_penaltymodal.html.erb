@@ -1,0 +1,107 @@
+<div class="modal" id="<%= modalid %>">
+	<div class="modal-dialog">
+      	<div class="modal-content">
+        	<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          		<h4 class="modal-title"><%= home %> Penalty</h4>
+        	</div>
+        	<div class="modal-body">
+        		<%= form_tag lacrosse_add_penalty_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "form-horizontal", method: 'put' do %>
+        			<%= hidden_field_tag "home", home %>
+                    <% if penalty %>
+                        <%= hidden_field_tag "lacrosstat_id", penalty.lacrosstat.id %>
+                        <%= hidden_field_tag "lacross_penalty_id", penalty.id %>
+                    <% end %>
+                    <div class="row">
+                    	<div class="col-xs-4">
+                    		<%= label_tag 'Player' %>
+
+                            <% if penalty %>
+                                <%= select_tag 'player', options_from_collection_for_select(players, "id", "numlogname", penalty.lacrosstat.athlete_id), 
+                                				class: 'form-control' %>
+                            <% else %>
+                                <%= select_tag 'player', options_from_collection_for_select(players, "id", "numlogname"), include_blank: true, class: 'form-control' %>
+                            <% end %>
+                    	</div>
+                        <div class="col-xs-4">
+                            <%= label_tag 'Personal' %>
+
+                             <% if penalty and penalty.type == 'P' %>
+                                <%= select_tag 'personal', options_for_select(lacrosse_personal_fouls, penalty.infraction), class: 'form-control' %>
+                            <% else %>
+                                <%= select_tag 'personal', options_for_select(lacrosse_personal_fouls), include_blank: true, class: 'form-control' %>
+                            <% end %>
+                        </div>
+                    	<div class="col-xs-4">
+                    		<%= label_tag 'Technical' %>
+
+                             <% if penalty and penalty.type == 'T' %>
+                                <%= select_tag 'technical', options_for_select(lacrosse_technical_fouls, penalty.infraction),include_blank: true,
+                                                 class: 'form-control' %>
+                            <% else %>
+                                <%= select_tag 'technical', options_for_select(lacrosse_technical_fouls), include_blank: true, class: 'form-control' %>
+                            <% end %>
+                    	</div>
+                    </div>
+                    <div class="row">
+                    	<div class="col-xs-6">
+                    		<h4>Period and Game Time</h4>
+                    	</div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                           <h5>Period</h5>
+                        </div>
+                        <div class="col-xs-2">
+                           <h5>Minutes</h5>
+                        </div>
+                         <div class="col-xs-2">
+                           <h5>Seconds</h5>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <% if penalty %>
+                                <%= select_tag "period", options_for_select(lacrosse_periods, penalty.period), class: 'form-control' %>
+                            <% else %>
+                                <%= select_tag "period", options_for_select(lacrosse_periods, '1'), class: 'form-control' %>
+                            <% end %>
+                        </div>
+                        <% if penalty %>
+                            <% time = penalty.gametime.split(':') %>
+                            <div class="col-xs-2">
+                                <%= select_tag 'minutes', options_for_select(textminutes(15), time[0]), class: 'form-control' %>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= select_tag 'seconds', options_for_select(textseconds, time[1]), class: 'form-control' %>
+                            </div>
+                        <% else %>
+                            <div class="col-xs-2">
+                                <%= select_tag 'minutes', options_for_select(textminutes(15)), include_blank:true, class: 'form-control' %>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= select_tag 'seconds', options_for_select(textseconds), include_blank:true, class: 'form-control' %>
+                            </div>
+                        <% end %>
+                    </div>
+                    <p>
+                    <div class="row">
+                        <div class="col-xs-2 col-xs-offset-5">
+                            <%= submit_tag "Submit", class: 'btn btn-primary' %>
+                        </div>
+                    </div>
+                <% end %>
+         	</div>
+        	<div class="modal-footer">
+          		<a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
+                <% if penalty and home == "Home" %>
+          		    <%= link_to "Delete", sport_athlete_lacrosstat_path(@sport, athlete_id: penalty.lacrosstat.athlete_id, id: penalty.lacrosstat.id,
+                                            lacross_penalty_id: penalty.id), method: :delete, class: "btn btn-danger", data: { confirm: "You sure?" } %>
+                <% elsif penalty %>
+                    <%= link_to "Delete", delete_visiting_penalty_sport_team_gameschedule_path(@sport, @team, @gameschedule, lacrosstat_id: penalty.lacrosstat, 
+                                        lacross_penalty_id: penalty.id), class: "btn btn-danger", data: { confirm: "You sure?" } %>
+                <% end %>
+        	</div>
+        </div>
+	</div> 
+</div>

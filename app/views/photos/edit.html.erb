@@ -57,16 +57,23 @@
 	    			{ id: "athletes_select", class: 'form-control' } ) %>
 	        </div>
 	    </div>
-	    <% if @sport.name == "Football" %>
+	    <% if @sport.name == "Football" or @sport.name == "Lacrosse" %>
 			 <div class="row">
 			     <div class="col-xs-4">
 					<h5>Play Tagging:</h5>
-		   			<% if !@gamelogs.empty? %>
-		   				<%= f.label :game_play, "Game Play" %>
-				    	<%= f.select :gamelog_id, @gamelogs.collect{ |t| [t.logentrytext, t.id] }, { include_blank: true }, 
-				    				{ id: "gamelogs_select", class: 'form-control' } %>
-					<% else %>
+		   			<% if @photo.gameschedule_id.nil? %>
 						No game tagged. Tag game before tagging play!
+					<% elsif (@sport.name == "Football" and @gamelogs.empty?) or (@sport.name == "Lacrosse" and @scores.empty?) %>
+						No scoring plays to tag
+					<% else %>
+		   				<%= f.label :game_play, "Game Play" %>
+		   				<% if @sport.name == "Football" %>
+				    		<%= f.select :gamelog_id, @gamelogs.collect{ |t| [t.logentrytext, t.id] }, { include_blank: true }, 
+				    														{ id: "gamelogs_select", class: 'form-control' } %>
+				    	<% elsif @sport.name == "Lacrosse" %>
+				    		<%= f.select :lacross_scoring_id, @scores.collect{ |t| [t.scorelog, t.id] }, { include_blank: true }, 
+				    														{ id: "gamelogs_select", class: 'form-control' } %>
+				    	<% end %>
 					<% end %>
 		        </div>
 		     </div>

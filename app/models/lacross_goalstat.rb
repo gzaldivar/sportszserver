@@ -1,9 +1,9 @@
 class LacrossGoalstat
 	include Mongoid::Document
 
-    field :saves, type: Array.new(5) { 0 }
-    field :minutesplayed, type: Integer
-    field :goals_allowed, type: Array.new(5) { 0 }
+    field :saves, type: Integer, default: 0
+    field :minutesplayed, type: Integer, default: 0
+    field :goals_allowed, type: Integer, default: 0
     field :period, type: Integer, default: 1
 
 	embedded_in :lacrosstat

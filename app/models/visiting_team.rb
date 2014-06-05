@@ -11,4 +11,7 @@ class VisitingTeam
 	belongs_to :sport
 	belongs_to :lacross_game
 	
+	def getname
+		title + " " + mascot
+	end
 end

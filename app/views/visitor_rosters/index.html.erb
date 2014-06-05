@@ -1,0 +1,32 @@
+<% provide(:title, 'Visiting Teams Roster') %>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+	<h2>Visiting Team <%= @visiting_team.title + " " + @visiting_team.mascot %> Roster</h2>
+
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>Number</th>
+				<th>Last Name</th>
+				<th>First Name</th>
+				<th>Position</th>
+			</thead>
+			<tbody>
+				<% @visitor_rosters.each do |v| %>
+					<tr>
+						<td><%= link_to v.number, sport_visiting_team_visitor_roster_path(@sport, @visiting_team, v) %></td>
+						<td><%= link_to v.lastname, sport_visiting_team_visitor_roster_path(@sport, @visiting_team, v) %></td>
+						<td><%= link_to v.firstname, sport_visiting_team_visitor_roster_path(@sport, @visiting_team, v) %></td>
+						<td><%= link_to v.position, sport_visiting_team_visitor_roster_path(@sport, @visiting_team, v) %></td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-2 col-xs-offset-4">
+		<%= link_to "Add Player", new_sport_visiting_team_visitor_roster_path(@sport, @visiting_team), class: "btn btn-sm btn-primary" %>
+	</div>
+</div>

@@ -1,0 +1,39 @@
+<div class="row">
+	<div class="col-xs-11">
+		Enter Player information.
+		<p>
+		<%= form_for [@sport, @visiting_team, @visitor_roster], :defaults => { :input_html => { :class => "form-control" } } do |t| %>
+			<div class="row">
+				<div class="col-xs-1">
+					<%= t.label :number %>
+					<%= t.text_field :number, class: 'form-control' %>
+				</div>
+				<div class="col-xs-3">
+					<%= t.label :lastname, "Last Name" %>
+					<%= t.text_field :lastname, class: 'form-control' %>
+				</div>
+				<div class="col-xs-3">
+					<%= t.label :firstname, "First Name" %>
+					<%= t.text_field :firstname, class: 'form-control' %>
+				</div>
+				<div class="col-xs-3">
+					<%= t.label :position %>
+					<%= t.select :position, lacrosse_positions, { include_blank: true }, { class: 'form-control' } %>
+				</div>
+			</div>
+			<div id="loading">
+				<div id="loadingcontent">
+					<p id="loadingspinner">
+					    Updating Team...
+					</p>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-1 col-xs-offset-4">
+					<%= t.submit :submit, class:  "btn btn-sm btn-primary", id: "submitbtn" %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>

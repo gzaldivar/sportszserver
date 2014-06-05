@@ -9,3 +9,4 @@ node(:gameschedule) { |o| o.gameschedule_id.to_s }
 node(:gamelog) { |o| o.gamelog_id.to_s }
 node(:sport_id) { |s| s.sport_id.to_s }
 node(:team_id) { |t| t.team_id.to_s }
+node(:lacross_scoring_id) { |p| p.lacross_scoring_id.to_s }

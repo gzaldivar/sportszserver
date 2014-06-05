@@ -1,0 +1,466 @@
+<div class="row">
+	<div class="col-xs-11">
+		<h3><%= team %></h3>
+		<div class="row">
+			<div class="col-xs-4">
+				<h4 class="text-center">Scoring</h4>
+
+				<table class="table table-striped table-bordered table-hover">
+					<thead>
+						<th>Pos</th>
+						<th>No.</th>
+						<th>Name</th>
+						<th>G</th>
+						<th>A</th>
+					</thead>
+					<tbody>
+						<% players.each do |p| %>
+							<% if team == lacrosse_home_team %> 
+								<%  lacrosstat = @gameschedule.lacross_game.lacrosstats.find_by(athlete_id: p.id) %>
+							<% else %>
+								<% lacrosstat = p.lacrosstat %>
+							<% end %>
+							<% if lacrosstat and lacrosstat.lacross_scorings %>
+								<tr>
+									<td><%= p.position %></td>
+									<td><%= p.number %></td>
+									<td><%= p.logname %></td>
+									<td><%= lacrosstat.lacross_scorings ? lacrosstat.lacross_scorings.count : 0  %></td>
+									<td><%= team == lacrosse_home_team ? lacrosse_player_assists(p, @gameschedule) : 
+											lacrosstat.lacross_scorings ? lacrosstat.lacross_scorings.where(assist: p.id).count : 0 %></td>
+								</tr>
+							<% end %>
+						<% end %>
+					</tbody>
+				</table>
+				<div class="row">					
+					<div class="col-xs-2">
+						<h4>Saves</h4>
+					</div>
+					<div class="col-xs-2 col-xs-offset-8">
+						<% if isAdmin? %>
+							<%= link_to "Add", "#", data: {toggle: "modal", target: "#savesmodal" + team }, class: "btn btn-xs btn-primary" %>
+						<% end %>
+					</div>
+				</div>
+
+				<div class="row">
+					<% for i in 1 .. 3 %>
+						<% if i == 1 %>
+							<div class="col-xs-4">
+								<%= render 'gameschedules/lacrosse/goalscoresheet', team: team, stats: goalstats1, period: i %>
+							</div>
+						<% elsif i == 2 %>
+							<div class="col-xs-4">
+								<%= render 'gameschedules/lacrosse/goalscoresheet', team: team, stats: goalstats2, period: i %>
+							</div>
+						<% else %>
+							<div class="col-xs-4">
+								<%= render 'gameschedules/lacrosse/goalscoresheet', team: team, stats: goalstats3, period: i %>
+							</div>
+						<% end %>
+					<% end %>
+				</div>
+
+				<div class="row">
+					<% for i in 4 .. 6 %>
+						<% if i == 4 %>
+							<div class="col-xs-4">
+								<%= render 'gameschedules/lacrosse/goalscoresheet', team: team, stats: goalstats4, period: i %>
+							</div>
+						<% elsif i == 5 %>
+							<div class="col-xs-4">
+								<%= render 'gameschedules/lacrosse/goalscoresheet', team: team, stats: goalstats5, period: i %>
+							</div>
+						<% else %>
+							<tr>
+								<td><%= %></td>
+							</tr>
+						<% end %>
+					<% end %>
+				</div>
+			</div>
+
+			<div class="col-xs-4">
+				<div class="row">					
+					<div class="col-xs-2">
+						<h4>Penalty</h4>
+					</div>
+					<div class="col-xs-2 col-xs-offset-8">
+						<% if isAdmin? %>
+							<%= link_to "Add", "#", data: {toggle: "modal", target: "#addpenaltymodal" + team }, class: "btn btn-xs btn-primary" %>
+						<% end %>
+					</div>
+
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<th>PT</th>
+							<th>No.</th>
+							<th>Infraction</th>
+							<th>Per</th>
+							<th>Time</th>
+						</thead>
+						<tbody>
+							<% penalties.each do |p| %>
+								<tr>
+									<td><%= p.type %></td>
+									<% if team == lacrosse_home_team %>
+										<td><%= link_to @sport.athletes.find(p.lacrosstat.athlete_id).number , '#', 
+															data: {toggle: "modal", target: "#penalty" + p.id.to_s } %></td>
+									<% else %>
+										<td><%= link_to VisitorRoster.find(p.lacrosstat.visitor_roster).number , '#', 
+															data: {toggle: "modal", target: "#penalty" + p.id.to_s } %></td>
+									<% end %>
+									<td><%= link_to p.infraction, '#', data: {toggle: "modal", target: "#penalty" + p.id.to_s } %></td>
+									<td><%= p.period %></td>
+									<td><%= p.gametime %></td>
+								</tr>
+								<%= render 'gameschedules/lacrosse/penaltymodal', modalid: 'penalty' + p.id.to_s, home: team, 
+											penalty: p, players: players %>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-4">
+						<h4>Extra Man</h4>
+					</div>
+					<div class="col-xs-2 col-xs-offset-6">
+						<% if isAdmin? %>
+							<%= link_to "Add", "#", data: {toggle: "modal", target: "#extramanmodal-responsive" + team }, class: "btn btn-xs btn-primary" %>
+						<% end %>
+					</div>
+
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<th>Per</th>
+							<th>Score</th>
+							<th>Fail</th>
+							<th>T</th>
+						</thead>
+						<tbody>
+							<% extramangoals = 0 %>
+							<% extramanfails = 0 %>
+
+							<% if team == lacrosse_home_team %>
+								<% for i in 1 .. 6 %>
+									<% extramangoals += lacrosse_extraman_scores_by_period(@gameschedule, i, lacrosse_home_team)
+									   extramanfails += @gameschedule.lacross_game.extraman_fail[i-1] if i < 6 %>
+									<tr>
+										<td><%= i < 6 ? i < 5 ? i : 'OT' : 'T' %></td>
+										<td><%= i < 6 ? lacrosse_extraman_scores_by_period(@gameschedule, i, lacrosse_home_team) : extramangoals %></td>
+										<td><%= i < 6 ? @gameschedule.lacross_game.extraman_fail[i-1] : extramanfails %></td>
+										<td><%= i < 6 ? lacrosse_extraman_scores_by_period(@gameschedule, i, lacrosse_home_team) + 
+														@gameschedule.lacross_game.extraman_fail[i-1] : extramangoals + extramanfails %></td>
+									</tr>
+								<% end %>
+							<% else %>
+								<% for i in 1 .. 6 %>
+									<% extramangoals += lacrosse_extraman_scores_by_period(@gameschedule, i, lacrosse_visitor_team)
+									   extramanfails += @gameschedule.lacross_game.visitor_extraman_fail[i-1] if i < 6 %>
+									<tr>
+										<td><%= i < 6 ? i < 5 ? i : 'OT' : 'T' %></td>
+										<td><%= i < 6 ? lacrosse_extraman_scores_by_period(@gameschedule, i, lacrosse_visitor_team) : extramangoals %></td>
+										<td><%= i < 6 ? @gameschedule.lacross_game.visitor_extraman_fail[i-1] : extramanfails %></td>
+										<td><%= i < 6 ? lacrosse_extraman_scores_by_period(@gameschedule, i, lacrosse_visitor_team) + 
+														@gameschedule.lacross_game.visitor_extraman_fail[i-1] : extramangoals + extramanfails %></td>
+									</tr>
+								<% end %>
+							<% end %>
+
+						</tbody>
+					</table>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-2">
+						<h4>Clears
+					</div>
+					<div class="col-xs-2 col-xs-offset-8">
+						<% if isAdmin? %>
+							<%= link_to "Add", "#", data: {toggle: "modal", target: "#clearmodal-responsive" + team }, class: "btn btn-xs btn-primary" %>
+						<% end %>
+					</div>
+
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+							<th>Per</th>
+							<th>Clear</th>
+							<th>Fail</th>
+							<th>T</th>
+						</thead>
+						<tbody>
+							<% if team == lacrosse_home_team %>
+								<% for i in 1 .. 6 %>
+									<tr>
+										<td><%= i < 6 ? i < 5 ? i : 'OT' : 'T' %></td>
+										<td><%= i < 6 ? @gameschedule.lacross_game.clears[i-1] : @gameschedule.lacross_game.clears.inject{|sum,x| sum + x} %></td>
+										<td><%= i < 6 ? @gameschedule.lacross_game.failedclears[i-1] : 
+														@gameschedule.lacross_game.failedclears.inject{|sum,x| sum + x} %></td>
+										<td><%= i < 6 ? @gameschedule.lacross_game.clears[i-1] + @gameschedule.lacross_game.failedclears[i-1] :
+														@gameschedule.lacross_game.clears.inject{|sum,x| sum + x} + 
+														@gameschedule.lacross_game.failedclears.inject{|sum,x| sum + x} %></td>
+									</tr>
+								<% end %>
+							<% else %>
+								<% for i in 1 .. 6 %>
+									<tr>
+										<td><%= i < 6 ? i < 5 ? i : 'OT' : 'T' %></td>
+										<td><%= i < 6 ? @gameschedule.lacross_game.visitor_clears[i-1] :
+														@gameschedule.lacross_game.visitor_clears.inject{|sum,x| sum + x} %></td>
+										<td><%= i < 6 ? @gameschedule.lacross_game.visitor_failedclears[i-1] : 
+														@gameschedule.lacross_game.visitor_failedclears.inject{|sum,x| sum + x} %></td>
+										<td><%= i < 6 ? @gameschedule.lacross_game.visitor_clears[i-1] + @gameschedule.lacross_game.visitor_failedclears[i-1] :
+														@gameschedule.lacross_game.visitor_clears.inject{|sum,x| sum + x} + 
+														@gameschedule.lacross_game.visitor_failedclears.inject{|sum,x| sum + x} %></td>
+									</tr>
+								<% end %>
+							<% end %>
+						</tbody>
+					</table>
+				</div>
+
+			</div>
+			<div class="col-xs-3 col-xs-offset-1">
+				<div class="row">
+					<div class="col-xs-2">
+						<h4>Shots</h4>
+					</div>
+					<div class="col-xs-2 col-xs-offset-8">
+						<% if isAdmin? %>
+							<%= link_to "Add", "#", data: {toggle: "modal", target: "#addshotmodal" + team }, class: "btn btn-xs btn-primary" %>
+						<% end %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6">
+						<%= render 'gameschedules/lacrosse/shotscoresheet', team: team, stats: statperiod1, period: 1 %>
+					</div>
+					<div class="col-xs-6">
+						<%= render 'gameschedules/lacrosse/shotscoresheet', team: team, stats: statperiod2, period: 2 %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6">
+						<%= render 'gameschedules/lacrosse/shotscoresheet', team: team, stats: statperiod3, period: 3 %>
+					</div>
+					<div class="col-xs-6">
+						<%= render 'gameschedules/lacrosse/shotscoresheet', team: team, stats: statperiod4, period: 4 %>
+					</div>
+				</div>
+
+				<% if overtimestats.any? %>
+					<div class="row">
+						<div class="col-xs-6">
+							<%= render 'gameschedules/lacrosse/shotscoresheet', team: team, stats: statperiod5, period: 'OT' %>
+						</div>
+					</div>
+				<% end %>
+
+				<div class="row">
+					<div class="col-xs-12">
+						<h4>Shot Legend</h4>
+						<table class="table table-striped table-bordered table-hover">
+							<thead>
+								<th>Shot</th>
+								<th>Code</th>
+							</thead>
+							<tbody>
+		                        <% lacrosse_shots.each do |s| %>
+		                        	<tr>
+		                            	<td><%= s[0] %></td>
+		                            	<td><%= s[1] %></td>
+		                            </tr>
+		                        <% end %>
+							</tbody>
+						</table>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6">
+						<h4>Ground Balls</h4>
+					</div>
+					<div class="col-xs-2 col-xs-offset-4">
+						<% if isAdmin? %>
+							<%= link_to "Add", "#", data: {toggle: "modal", target: "#groundballmodal" + team }, class: "btn btn-xs btn-primary" %>
+						<% end %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6">
+						<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod1, period: 1, statname: "Ground Ball" %>
+					</div>
+					<div class="col-xs-6">
+						<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod2, period: 2, statname: "Ground Ball" %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6">
+						<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod3, period: 3, statname: "Ground Ball" %>
+					</div>
+					<div class="col-xs-6">
+						<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod4, period: 4 , statname: "Ground Ball"%>
+					</div>
+				</div>
+
+				<% if overtimestats.any? %>
+					<div class="row">
+						<div class="col-xs-6">
+							<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod5, period: 'OT', statname: "Ground Ball" %>
+						</div>
+					</div>
+				<% end %>
+
+				<div class="row">
+					<div class="col-xs-6">
+						<h4>Face Offs</h4>
+					</div>
+					<div class="col-xs-2 col-xs-offset-4">
+						<% if isAdmin? %>
+							<%= link_to "Add", "#", data: {toggle: "modal", target: "#faceoffmodal" + team }, class: "btn btn-xs btn-primary" %>
+						<% end %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6">
+						<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod1, period: 1, statname: "Face Off" %>
+					</div>
+					<div class="col-xs-6">
+						<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod2, period: 2, statname: "Face Off" %>
+					</div>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6">
+						<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod3, period: 3, statname: "Face Off" %>
+					</div>
+					<div class="col-xs-6">
+						<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod4, period: 4, statname: "Face Off" %>
+					</div>
+				</div>
+
+				<% if overtimestats.any? %>
+					<div class="row">
+						<div class="col-xs-6">
+							<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod5, period: 'OT', statname: "Face Off" %>
+						</div>
+					</div>
+				<% end %>
+
+				<div class="row">
+					<div class="col-xs-6">
+						<h4>Steals</h4>
+					</div>
+					<div class="col-xs-2 col-xs-offset-4">
+						<% if isAdmin? %>
+							<%= link_to "Add", "#", data: {toggle: "modal", target: "#stealsmodal" + team }, class: "btn btn-xs btn-primary" %>
+						<% end %>
+					</div>
+				</div>
+
+				<div class="row">
+					<% for i in 1 .. 3 %>
+						<div class="col-xs-4">
+							<% if i == 1 %>
+								<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod1, period: i, statname: "Steals"  %>
+							<% elsif i == 2 %>
+								<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod2, period: i, statname: "Steals" %>
+							<% elsif i == 3 %>
+								<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod3, period: i, statname: "Steals" %>
+							<% end %>
+						</div>
+					<% end %>
+				</div>
+				<div class="row">
+					<% for i in 4 .. 6 %>
+						<div class="col-xs-4">
+							<% if i == 4 %>
+								<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod4, period: i, statname: "Steals" %>
+							<% elsif i == 5 %>
+								<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: overtimestats, period: i, statname: "Steals" %>
+							<% else %>
+								<table class="table table-striped table-bordered table-hover">
+									<thead>
+										<th>Total</th>
+									</thead>
+									<tbody>
+										<tr>
+											<td><%= team == lacrosse_home_team ? getlacrosse_home_steals(@gameschedule) : 
+															getlacrosse_visitor_steals(@gameschedule) %></td>
+										</tr>
+									</tbody>
+								</table>
+							<% end %>
+						</div>
+					<% end %>
+				</div>
+
+				<div class="row">
+					<div class="col-xs-6">
+						<h4>Turnovers</h4>
+					</div>
+					<div class="col-xs-2 col-xs-offset-4">
+						<% if isAdmin? %>
+							<%= link_to "Add", "#", data: {toggle: "modal", target: "#turnoversmodal" + team }, class: "btn btn-xs btn-primary" %>
+						<% end %>
+					</div>
+				</div>
+
+
+				<div class="row">
+					<% for i in 1 .. 3 %>
+						<div class="col-xs-4">
+							<% if i == 1 %>
+								<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod1, period: i, statname: "Turnovers"  %>
+							<% elsif i == 2 %>
+								<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod2, period: i, statname: "Turnovers" %>
+							<% elsif i == 3 %>
+								<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod3, period: i, statname: "Turnovers" %>
+							<% end %>
+						</div>
+					<% end %>
+				</div>
+				<div class="row">
+					<% for i in 4 .. 6 %>
+						<div class="col-xs-4">
+							<% if i == 4 %>
+								<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: statperiod4, period: i, statname: "Turnovers" %>
+							<% elsif i == 5 %>
+								<%= render 'gameschedules/lacrosse/playerstatscoresheet', team: team, stats: overtimestats, period: i, statname: "Turnovers" %>
+							<% else %>
+								<table class="table table-striped table-bordered table-hover">
+									<thead>
+										<th>Total</th>
+									</thead>
+									<tbody>
+										<tr>
+											<td><%= team == lacrosse_home_team ? getlacrosse_home_turnovers(@gameschedule) : 
+															getlacrosse_visitor_turnovers(@gameschedule) %></td>
+										</tr>
+									</tbody>
+								</table>
+							<% end %>
+						</div>
+					<% end %>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>
+<%= render 'gameschedules/lacrosse/penaltymodal', modalid: 'addpenaltymodal' + team, home: team, penalty: nil, players: players %>
+<%= render 'gameschedules/lacrosse/playershotmodal', modalid: 'addshotmodal' + team, home: team, playerstat: nil, players: players %>
+<%= render 'gameschedules/lacrosse/playerstatmodal', modalid: 'groundballmodal' + team, home: team, playerstat: nil, players: players, statname: "Ground Ball" %>
+<%= render 'gameschedules/lacrosse/playerstatmodal', modalid: 'faceoffmodal' + team, home: team, playerstat: nil, players: players, statname: "Face Off" %>
+<%= render 'gameschedules/lacrosse/playerstatmodal', modalid: 'stealsmodal' + team, home: team, playerstat: nil, players: players, statname: "Steals" %>
+<%= render 'gameschedules/lacrosse/playerstatmodal', modalid: 'turnoversmodal' + team, home: team, playerstat: nil, players: players, statname: "Turnovers" %>
+<%= render 'gameschedules/lacrosse/extraman_clear_modal', modalid: 'extramanmodal-responsive' + team, home: team, statname: "Extra Man Fails" %>
+<%= render 'gameschedules/lacrosse/extraman_clear_modal', modalid: 'clearmodal-responsive' + team, home: team, statname: "Clears" %>
+<%= render 'gameschedules/lacrosse/goalstatmodal', modalid: 'savesmodal' + team, home: team, playerstat: nil, players: players %>

@@ -1,0 +1,12 @@
+<% provide(:title, 'Visiting Teams List') %>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		<%= render 'visitingteamlist', visiting_teams: @visiting_teams, select: nil %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-2 col-xs-offset-4">
+		<%= link_to "Add Team", new_sport_visiting_team_path(@sport), class: "btn btn-sm btn-primary" %>
+	</div>
+</div>

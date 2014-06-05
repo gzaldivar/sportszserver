@@ -29,7 +29,7 @@
           <th>Team</th>
           <th>Athletes</th>
           <th>Game</th>
-          <% if @sport.name == "Football" %>
+          <% if @sport.name == "Football" or @sport.name == "Lacrosse" %>
             <th>Play</th>
           <% end %>
           <th>Date</th>
@@ -59,8 +59,10 @@
     		  <% end %>
           <% if @sport.name == "Football" and !@photo.gamelog_id.nil?  %>
                   <td><%= @sport.teams.find(@photo.team_id).gameschedules.find(@photo.gameschedule_id).gamelogs.find(@photo.gamelog_id).logentrytext %></td>
+          <% elsif @sport.name == "Lacrosse" and !@photo.lacross_scoring_id.nil? %>
+              <td><%= Lacrosstat.where('lacross_scorings._id' => @photo.lacross_scoring_id).first.lacross_scorings.find(@photo.lacross_scoring_id).scorelog %></td>
           <% else %>
-            <td></td>
+              <td></td>
           <% end %>
           <td><%= @photo.updated_at.localtime.strftime("%m/%d/%Y") %></td>
         </tr>
@@ -74,7 +76,7 @@
 </div>
 <br/>
 <div class="row">
-  <div class="col-xs-2 col-xs-offset-5">
+  <div class="col-xs-2 col-xs-offset-4">
     <% if isAdmin? or (user_signed_in? and (current_user.id == @photo.user_id) and enable_user_pics? ) %>
       <%= link_to	"Edit Photo", edit_sport_photo_path(@sport, @photo), class:	"btn btn-md btn-primary" %>
     <% end %>

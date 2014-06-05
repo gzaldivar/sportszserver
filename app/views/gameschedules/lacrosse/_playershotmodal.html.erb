@@ -1,0 +1,95 @@
+<div class="modal" id="<%= modalid %>">
+	<div class="modal-dialog">
+      	<div class="modal-content">
+        	<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          		<h4 class="modal-title"><%= home %> Shot</h4>
+        	</div>
+        	<div class="modal-body">
+                <% if players %>
+            		<%= form_tag lacrosse_add_shot_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "form-horizontal", method: 'put' do %>
+            			<%= hidden_field_tag "home", home %>
+                        <% if playerstat %>
+                            <%= hidden_field_tag "lacrosstat_id", playerstat.lacrosstat.id %>
+                            <%= hidden_field_tag "lacross_player_stat_id", playerstat.id %>
+                        <% end %>
+                        <div class="row">
+                        	<div class="col-xs-4 col-xs-offset-1">
+                        		<%= label_tag 'Player' %>
+                                <%= select_tag 'player', options_from_collection_for_select(players, "id", "numlogname"), include_blank: true, 
+                                                    class: 'form-control' %>
+                        	</div>
+                            <div class="col-xs-2">
+                                <%= label_tag 'Add Shot' %>
+                                <%= select_tag 'addshot', options_for_select(lacrosse_shots), include_blank: true, class: 'form-control' %>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= label_tag 'Period' %>
+
+                                <% if playerstat %>
+                                    <%= select_tag "period", options_for_select(lacrosse_periods, playerstat.period), class: 'form-control' %>
+                                <% else %>
+                                    <%= select_tag "period", options_for_select(lacrosse_periods, '1'), class: 'form-control' %>
+                                <% end %>
+                            </div>
+                        </div>
+                        <p>
+                        <div class="row">
+                            <div class="col-xs-2 col-xs-offset-5">
+                                <%= submit_tag "Submit", class: 'btn btn-primary' %>
+                            </div>
+                        </div>
+                    <% end %>
+                <% else %>
+                    <%= form_tag delete_lacrosse_player_shot_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "form-horizontal", 
+                                        method: 'put' do %>
+                        <%= hidden_field_tag "home", home %>
+                        <% if playerstat %>
+                            <%= hidden_field_tag "lacrosstat_id", playerstat.lacrosstat.id %>
+                            <%= hidden_field_tag "lacross_player_stat_id", playerstat.id %>
+                            <%= hidden_field_tag "period", playerstat.period.to_s %>
+                        <% end %>
+                        <div class="row">
+                            <div class="col-xs-4 col-xs-offset-1">
+                                <h4><%= home == lacrosse_home_team ? Athlete.find(playerstat.lacrosstat.athlete_id).numlogname : 
+                                                                    VisitorRoster.find(playerstat.lacrosstat.visitor_roster_id).numlogname %></h4>
+                            </div>
+                            <div class="col-xs-4">
+                                <h4><%= "Shots for period: " + playerstat.period.to_s %></h4>
+                            </div>
+                        </div>
+                        <p>
+                         <div class="row">
+                            <div class="col-xs-4 col-xs-offset-1">
+                                <h5>Select shot to remove.</h5>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= label_tag 'Shot' %>
+                                <%= select_tag 'shot', options_for_select(playerstat.shot), class: 'form-control' %>
+                            </div>
+                        </div>
+                        <p>
+                        <div class="row">
+                            <div class="col-xs-2 col-xs-offset-5">
+                                <%= submit_tag "Submit", class: 'btn btn-primary' %>
+                            </div>
+                        </div>
+                    <% end %>
+                <% end %>
+                <p>
+         	</div>
+        	<div class="modal-footer">
+          		<a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
+                <% if playerstat and home == lacrosse_home_team %>
+          		    <%= link_to "Delete", sport_athlete_lacrosstat_path(@sport, athlete_id: playerstat.lacrosstat.athlete_id, id: playerstat.lacrosstat,
+                                          lacross_player_stat_id: playerstat.id), method: :delete, class: "btn btn-danger", 
+                                          data: { confirm: "You sure? All player stats will be deleted. Not just shots." } %>
+                <% elsif playerstat %>
+                     <%= link_to "Delete", delete_visiting_player_stats_sport_team_gameschedule_path(@sport, @team, @gameschedule, 
+                                        lacrosstat_id: playerstat.lacrosstat, lacross_player_stat_id: playerstat.id), class: "btn btn-danger", 
+                                        data: { confirm: "You sure? All player stats will be deleted. Not just shots." } %>
+                <% end %>
+        	</div>
+        </div>
+	</div> 
+</div>

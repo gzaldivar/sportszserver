@@ -66,16 +66,17 @@ module ApplicationHelper
 		if !sport.nil? and user_signed_in? and !current_user.godmode
 			payment = Payment.find_by(sport_id: sport.id)
 
-			if payment.nil?
-				raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
-			elsif payment.isSilver? and sport.mediasize > sport.silverMedia
+			if payment.nil? and sport.mediasize < sport.silverMedia
+				return true
+#				raise ActionController::RoutingError.new('Game Tracker upgrade needed for this functionality. You can upgrade from the Tools menu!')
+			elsif !payment.nil? and payment.isSilver? and sport.mediasize > sport.silverMedia
 			 	return false
-			elsif payment.isGold? and sport.mediasize > sport.goldMedia
+			elsif !payment.nil? and payment.isGold? and sport.mediasize > sport.goldMedia
 			 	return false
-			elsif payment.isPlatinum? and sport.mediasize > sport.platinumMedia
+			elsif !payment.nil? and payment.isPlatinum? and sport.mediasize > sport.platinumMedia
 			 	return true
 			else
-			 	return true
+			 	return false
 			end
 		elsif user_signed_in? and current_user.godmode
 			return true

@@ -16,10 +16,10 @@
           </script>
         <% end %>
         <li><%= link_to "News", sport_path(@sport) %></li>
-        <% if current_team? and user_signed_in? and (is_package_enabled?(@sport) or site_owner?(@sport)) %>
+        <% if current_team? and (user_signed_in? or site_owner?(@sport)) %>
           <li><%= link_to "Blog", sport_blogs_path(current_site, team_id: current_team.id) %></li>
         <% end %>
-        <% if current_team? and (is_package_enabled?(@sport) or site_owner?(@sport)) %>
+        <% if current_team? or site_owner?(@sport) %>
           <li><%= link_to "Media", photoshome_sport_photos_path(@sport) %></li>
         <% end %>
       </ul>

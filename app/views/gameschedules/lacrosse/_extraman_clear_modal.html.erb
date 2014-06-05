@@ -1,0 +1,120 @@
+<div class="modal" id="<%= modalid %>">
+	<div class="modal-dialog">
+      	<div class="modal-content">
+        	<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          		<h4 class="modal-title"><%= statname %></h4>
+        	</div>
+        	<div class="modal-body">
+                <% if statname == "Extra Man Fails" %>
+            		<%= form_tag lacrosse_extra_man_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "form-horizontal", method: 'put' do %>
+            			<%= hidden_field_tag "home", home %>
+            			<div class="row">
+            				<div class="col-xs-2 col-xs-offset-1">
+            					<%= label_tag "Period 1" %>
+                                <%= text_field_tag "xman1", home == lacrosse_home_team ? @gameschedule.lacross_game.extraman_fail[0] :
+                                                                    @gameschedule.lacross_game.visitor_extraman_fail[0], class: 'form-control' %>
+            				</div>
+            				<div class="col-xs-2">
+            					<%= label_tag "Period 2" %>
+                                <%= text_field_tag "xman2", home == lacrosse_home_team ? @gameschedule.lacross_game.extraman_fail[1] :
+                                                                    @gameschedule.lacross_game.visitor_extraman_fail[1], class: 'form-control' %>
+            				</div>
+            				<div class="col-xs-2">
+            					<%= label_tag "Period 3" %>
+                                <%= text_field_tag "xman3", home == lacrosse_home_team ? @gameschedule.lacross_game.extraman_fail[2] :
+                                                            @gameschedule.lacross_game.visitor_extraman_fail[2], class: 'form-control' %>
+            				</div>
+            				<div class="col-xs-2">
+            					<%= label_tag "Period 4" %>
+                                <%= text_field_tag "xman4", home == lacrosse_home_team ? @gameschedule.lacross_game.extraman_fail[3] :
+                                                            @gameschedule.lacross_game.visitor_extraman_fail[3], class: 'form-control' %>
+            				</div>
+                            <div class="col-xs-2">
+                                <%= label_tag "Overtime" %>
+                                <%= text_field_tag "xman5", home == lacrosse_home_team ? @gameschedule.lacross_game.extraman_fail[4] :
+                                                            @gameschedule.lacross_game.visitor_extraman_fail[4], class: 'form-control' %>
+                            </div>
+            			</div>
+                        <p>
+                        <div class="row">
+                            <div class="col-xs-2 col-xs-offset-5">
+                                <%= submit_tag "Submit", class: 'btn btn-primary' %>
+                            </div>
+                        </div>
+                    <% end %>
+                <% else %>
+                    <%= form_tag lacrosse_clears_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "form-horizontal", method: 'put' do %>
+                        <%= hidden_field_tag "home", home %>
+                        <h4 class="text-center">Clears</h4>
+                        <div class="row">
+                            <div class="col-xs-2 col-xs-offset-1">
+                                <%= label_tag "Period 1" %>
+                                <%= text_field_tag "clear1", home == lacrosse_home_team ? @gameschedule.lacross_game.clears[0] :
+                                                            @gameschedule.lacross_game.visitor_clears[0], class: 'form-control' %>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= label_tag "Period 2" %>
+                                <%= text_field_tag "clear2", home == lacrosse_home_team ? @gameschedule.lacross_game.clears[1] :
+                                                            @gameschedule.lacross_game.visitor_clears[1], class: 'form-control' %>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= label_tag "Period 3" %>
+                                <%= text_field_tag "clear3", home == lacrosse_home_team ? @gameschedule.lacross_game.clears[2] :
+                                                            @gameschedule.lacross_game.visitor_clears[2], class: 'form-control' %>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= label_tag "Period 4" %>
+                                <%= text_field_tag "clear4", home == lacrosse_home_team ? @gameschedule.lacross_game.clears[3] :
+                                                            @gameschedule.lacross_game.visitor_clears[3], class: 'form-control' %>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= label_tag "Overtime" %>
+                                <%= text_field_tag "clear5", home == lacrosse_home_team ? @gameschedule.lacross_game.clears[4] :
+                                                            @gameschedule.lacross_game.visitor_clears[4], class: 'form-control' %>
+                            </div>
+                        </div>
+                        <p>
+                        <h4 class="text-center">Failed Clears</h4>
+                        <div class="row">
+                            <div class="col-xs-2 col-xs-offset-1">
+                                <%= label_tag "Period 1" %>
+                                <%= text_field_tag "failedclear1", home == lacrosse_home_team ? @gameschedule.lacross_game.failedclears[0] :
+                                                            @gameschedule.lacross_game.visitor_failedclears[0], class: 'form-control' %>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= label_tag "Period 2" %>
+                                <%= text_field_tag "failedclear2", home == lacrosse_home_team ? @gameschedule.lacross_game.failedclears[1]:
+                                                            @gameschedule.lacross_game.visitor_failedclears[1], class: 'form-control' %>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= label_tag "Period 3" %>
+                                <%= text_field_tag "failedclear3", home == lacrosse_home_team ? @gameschedule.lacross_game.failedclears[2]:
+                                                            @gameschedule.lacross_game.visitor_failedclears[2], class: 'form-control' %>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= label_tag "Period 4" %>
+                                <%= text_field_tag "failedclear4", home == lacrosse_home_team ? @gameschedule.lacross_game.failedclears[3]:
+                                                            @gameschedule.lacross_game.visitor_failedclears[3], class: 'form-control' %>
+                            </div>
+                            <div class="col-xs-2">
+                                <%= label_tag "Overtime" %>
+                                <%= text_field_tag "failedclear5", home == lacrosse_home_team ? @gameschedule.lacross_game.failedclears[4]:
+                                                            @gameschedule.lacross_game.visitor_failedclears[4], class: 'form-control' %>
+                            </div>
+                        </div>
+                        <p>
+                        <div class="row">
+                            <div class="col-xs-2 col-xs-offset-5">
+                                <%= submit_tag "Submit", class: 'btn btn-primary' %>
+                            </div>
+                        </div>
+                    <% end %>
+                <% end %>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
+            </div>
+        </div>
+    </div> 
+</div>

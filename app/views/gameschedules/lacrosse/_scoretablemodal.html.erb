@@ -1,0 +1,118 @@
+<div class="modal" id="<%= scoremodalid %>">
+	<div class="modal-dialog">
+      	<div class="modal-content">
+        	<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          		<h4 class="modal-title"><%= home %> Score Entry</h4>
+        	</div>
+        	<div class="modal-body">
+                <% if isAdmin? %>
+            		<%= form_tag lacrosse_score_entry_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "form-horizontal", method: 'put' do %>
+            			<%= hidden_field_tag "home", home %>
+                        <%= hidden_field_tag "index", index %>
+                        <% if score %>
+                            <%= hidden_field_tag "lacrosstat_id", score.lacrosstat.id %>
+                            <%= hidden_field_tag "lacross_scoring_id", score.id %>
+                        <% end %>
+                        <div class="row">
+                            <div class="col-xs-2">
+                               <h5>Minutes</h5>
+                            </div>
+                            <div class="col-xs-2 ">
+                               <h5>Seconds</h5>
+                            </div>
+                            <div class="col-xs-6">
+                               <h5>Score Code</h5>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <% if score %>
+                                <% time = score.gametime.split(':') %>
+                                <div class="col-xs-2">
+                                    <%= select_tag 'minutes', options_for_select(textminutes(15), time[0]), class: 'form-control' %>
+                                </div>o
+                                <div class="col-xs-2">
+                                    <%= select_tag 'seconds', options_for_select(textseconds, time[1]), class: 'form-control' %>
+                                </div>
+                            <% else %>
+                                <div class="col-xs-2">
+                                    <%= select_tag 'minutes', options_for_select(textminutes(15)), include_blank:true, class: 'form-control' %>
+                                </div>
+                                <div class="col-xs-2">
+                                    <%= select_tag 'seconds', options_for_select(textseconds), include_blank:true, class: 'form-control' %>
+                                </div>
+                            <% end %>
+                            <div class="col-xs-6">
+                                <% if score %>
+                                    <%= select_tag 'scorecode', options_for_select(lacrosse_score_codes, score.scorecode), class: 'form-control' %>
+                                <% else %>
+                                    <%= select_tag 'scorecode', options_for_select(lacrosse_score_codes), include_blank: true, class: 'form-control' %>
+                                <% end %>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                               <h5>Goal</h5>
+                            </div>
+                            <div class="col-xs-4">
+                               <h5>Assist</h5>
+                            </div>
+                            <div class="col-xs-2">
+                               <h5>Period</h5>
+                            </div>
+                		</div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <% if score %>
+                                    <%= select_tag 'player', options_from_collection_for_select(players, "id", "numlogname", 
+                                                    home == lacrosse_home_team ? score.lacrosstat.athlete_id : score.lacrosstat.visitor_roster_id), 
+                                                    class: 'form-control' %>
+                                <% else %>
+                                    <%= select_tag 'player', options_from_collection_for_select(players, "id", "numlogname"), include_blank:true, class: 'form-control' %>
+                                <% end %>
+                            </div>
+                            <div class="col-xs-4">
+                                <% if score and score.assist %>
+                                    <%= select_tag 'assist', options_from_collection_for_select(players, "id", "numlogname", score.assist), class: 'form-control' %>
+                                <% else %>
+                                    <%= select_tag 'assist', options_from_collection_for_select(players, "id", "numlogname"), include_blank:true, class: 'form-control' %>
+                                <% end %>
+                            </div>
+                            <div class="col-xs-2">
+                                <% if score %>
+                                    <%= select_tag "period", options_for_select(lacrosse_periods, score.period), class: 'form-control' %>
+                                <% else %>
+                                    <%= select_tag "period", options_for_select(lacrosse_periods, '1'), class: 'form-control' %>
+                                <% end %>
+                            </div>
+                        </div>
+            			<p>
+           				<div class="row">
+            				<div class="col-xs-2 col-xs-offset-4">
+            					<%= submit_tag "Submit", class: 'btn btn-primary' %>
+            				</div>
+            			</div>
+            		<% end %>
+                <% else %>
+                    <% if score %>
+                        <% lacrosse_score_codes.each do |c| %>
+                                <h5><%= c[1] + " - " + c[0] %></h5>
+                        <% end %>
+                    <% else %>
+                        <%= "No Score Entry" %>
+                    <% end %>
+                <% end %>
+         	</div>
+        	<div class="modal-footer">
+          		<a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
+                <% if score and home == "Home" %>
+          		    <%= link_to "Delete", sport_athlete_lacrosstat_path(@sport, athlete_id: score.lacrosstat.athlete_id, id: score.lacrosstat.id,
+                                            lacross_scoring_id: score.id), method: :delete, class: "btn btn-danger", data: { confirm: "You sure?" } %>
+                <% elsif score %>
+                    <%= link_to "Delete", delete_visiting_score_sport_team_gameschedule_path(@sport, @team, @gameschedule, lacrosstat_id: score.lacrosstat, 
+                                        lacross_scoring_id: score.id), class: "btn btn-danger", data: { confirm: "You sure?" } %>
+                <% end %>
+        	</div>
+        </div>
+	</div> 
+</div>

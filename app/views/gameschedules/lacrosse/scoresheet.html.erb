@@ -1,0 +1,36 @@
+<% provide(:title, current_team.mascot + " vs. " + @gameschedule.opponent_mascot + " - Lacrosse Scoresheet" ) %>
+<div class="row">
+	<div class="col-xs-4 col-xs-offset-7">
+		<h4><%= link_to current_team.mascot + " vs. " + @gameschedule.opponent_mascot, sport_team_gameschedule_path(@sport, @team, @gameschedule) %></h4>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-2">
+		<%= render 'gameschedules/lacrosse/timeouts_scoresheet', firstperiodtimeouts: @gameschedule.lacross_game.home_1stperiod_timeouts, 
+																secondperiodtimeouts: @gameschedule.lacross_game.home_2ndperiod_timeouts, home: lacrosse_home_team %>
+	</div>
+	<div class="col-xs-9">
+		<%= render 'gameschedules/lacrosse/scoretable', scores: @homescores, start: 0, home: lacrosse_home_team %>
+		<%= render 'gameschedules/lacrosse/scoretable', scores: @homescores, start: 10, home: lacrosse_home_team %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-2">
+		<%= render 'gameschedules/lacrosse/timeouts_scoresheet', firstperiodtimeouts: @gameschedule.lacross_game.visitor_1stperiod_timeouts, 
+																secondperiodtimeouts: @gameschedule.lacross_game.visitor_2ndperiod_timeouts, 
+																home: lacrosse_visitor_team %>
+	</div>
+	<div class="col-xs-9">
+		<%= render 'gameschedules/lacrosse/scoretable', scores: @visitorscores, start: 0, home: lacrosse_visitor_team %>
+		<%= render 'gameschedules/lacrosse/scoretable', scores: @visitorscores, start: 11, home: lacrosse_visitor_team %>
+	</div>
+</div>
+<%= render 'gameschedules/lacrosse/scoresheetstats', team: lacrosse_home_team, players: @players, penalties: @homepenalties, statperiod1: @homeplayerstats_period1,
+										statperiod2: @homeplayerstats_period2, statperiod3: @homeplayerstats_period3, statperiod4: @homeplayerstats_period4,
+										overtimestats: @homeplayerstats_overtime, goalstats1: @goalstats_period1, goalstats2: @goalstats_period2, 
+										goalstats3: @goalstats_period3, goalstats4: @goalstats_period4, goalstats5: @goalstats_overtime %>
+<%= render 'gameschedules/lacrosse/scoresheetstats', team: lacrosse_visitor_team, players: @visiting_roster, penalties: @visitorpenalties, 
+										statperiod1: @visitorplayerstats_period1, statperiod2: @visitorplayerstats_period2, statperiod3: @visitorplayerstats_period3, 
+										statperiod4: @visitorplayerstats_period4, overtimestats: @visitorplayerstats_overtime, 
+										goalstats1: @visitor_goalstats_period1, goalstats2: @visitor_goalstats_period2, goalstats3: @visitor_goalstats_period3,
+										goalstats4: @visitor_goalstats_period4, goalstats5: @visitor_goalstats_overtime %>

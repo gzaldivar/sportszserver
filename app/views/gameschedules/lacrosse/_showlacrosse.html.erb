@@ -2,7 +2,7 @@
 	<div class="col-xs-11">
 		<%if site_owner?(@sport) or isTeamManager?(@gameschedule) %>
 			<ul class="nav nav-pills">
-				<li><%= link_to "Update Scoreboard", "#" %></li>
+				<li><%= link_to "Update Scoreboard", lacrosse_game_summary_sport_team_gameschedule_path(@sport, @team, @gameschedule, @lacrossgame) %></li>
 			</ul>
 		<% end %>
 		<div class="well">
@@ -32,7 +32,7 @@
 			</h3>
 			<div class="row">
 				<div class="col-xs-2">
-					<h1 class="text-danger text-center"><%= @gameschedule.EditHomeScore ? @gameschedule.homescore : 0 %></h1>
+					<h1 class="text-danger text-center"><%= @gameschedule.EditHomeScore ? @gameschedule.homescore : @homescores.inject{|sum,x| sum + x } %></h1>
 				</div>
 				<div class="col-xs-2 col-xs-offset-2">
 					<h3>Period</h3>
@@ -41,7 +41,7 @@
 					<h2 class="text-danger text-center"><%= @gameschedule.currentperiod %></h3>
 				</div>
 				<div class="col-xs-2 col-xs-offset-3">
-					<h1 class="text-danger text-center"><%= @gameschedule.opponentscore %></h1>
+					<h1 class="text-danger text-center"><%= @visitorscores.inject{|sum,x| sum + x } %></h1>
 				</div>
 			</div>
 			</font>
@@ -51,25 +51,23 @@
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 							<th>Player</th>
-							<th>Penalty</th>
-
-							<% if isAdmin? %>
-								<th><%= link_to "Add", "#", class: "btn btn-xs btn-primary" %></th>
-							<% end %>
-
+							<th>Time</th>
 						</thead>
 						<tbody>
-							<% if !@homepenalties.nil? %>
-								<% @homepenalties.each do |key, value| %>
-									<td><%= key %></td>
-									<td><%= value %></td>
-
-									<% if isAdmin? %>
-										<td><%= link_to "Delete", "#", class: "btn btn-xs btn-primary" %></td>
-									<% end %>
-
-								<% end %>
-							<% end %>
+							<tr>
+								<% seconds = @gameschedule.lacross_game.home_penaltyone_seconds < 10 ? 
+											'0' + @gameschedule.lacross_game.home_penaltyone_seconds.to_s :
+											@gameschedule.lacross_game.home_penaltyone_seconds.to_s %>
+								<td><%= @gameschedule.lacross_game.home_penaltyone_number %></td>
+								<td><%= @gameschedule.lacross_game.home_penaltyone_minutes.to_s + ':' + seconds %></td>
+							</tr>
+							<tr>
+								<% seconds = @gameschedule.lacross_game.home_penaltytwo_seconds < 10 ? 
+											'0' + @gameschedule.lacross_game.home_penaltytwo_seconds.to_s :
+											@gameschedule.lacross_game.home_penaltytwo_seconds.to_s %>
+								<td><%= @gameschedule.lacross_game.home_penaltytwo_number %></td>
+								<td><%= @gameschedule.lacross_game.home_penaltytwo_minutes.to_s + ':' + seconds %></td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -80,22 +78,12 @@
 						<thead>
 							<th>Player</th>
 							<th>Penalty</th>
-
-							<% if isAdmin? %>
-								<th><%= link_to "Add", "#", class: "btn btn-xs btn-primary" %></th>
-							<% end %>
-
 						</thead>
 						<tbody>
 							<% if !@visitorpenalties.nil? %>
 								<% @visitorpenalties.each do |key, value| %>
 									<td><%= key %></td>
 									<td><%= value %></td>
-
-									<% if isAdmin? %>
-										<td><%= link_to "Delete", "#", class: "btn btn-xs btn-primary" %></td>
-									<% end %>
-
 								<% end %>
 							<% end %>
 						</tbody>
@@ -106,7 +94,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-4">
+	<div class="col-xs-6">
 		<h4>Game Summary</h4>
 		<table class="table-striped table-bordered table-hover">
 			<% for i in 0 .. 1 %>
@@ -140,44 +128,26 @@
 			<% end %>
 		</table>
 	</div>
-	<div class="col-xs-5">
-		<h4>Game Score Log</h4>
-		<table class="table-striped table-bordered table-hover">
-			<thead>
-				<th>Period</th>
-				<th>Player</th>
-
-				<% if site_owner?(@sport) or isTeamManager?(@gameschedule) %>
-					<th>Edit</th>
-					<th>Delete</th>
-				<% end %>
-			</thead>
-			<tbody>
-				<% @gamelogs.each do |g| %>
-					<td><%= g.period %></td>
-					<td><%= g.logentrytext %></td>
-					
-				 	<% if site_owner?(@sport) or isTeamManager?(@gameschedule) %>
-				 		<td><%= link_to "Edit", edit_sport_team_gameschedule_gamelog_path(@sport, @team, @gameschedule, g), 
-				 					class: "btn btn-xs btn-warning" %></td>
-				 		<td><%= link_to "Delete", [@sport, @team, @gameschedule, g], method: :delete,
-				 					class: "btn btn-xs btn-danger", data: { confirm: "You sure?" } %></td>
-				 	<% end %>
-				<% end %>
-			</tbody>
-		</table>
-	</div>
-	<% if user_signed_in? and isAdmin? %>
-		<div class="col-xs-2">
-			<div class="row">
-				<%= link_to "Scoresheet", "", class: "btn btn-md btn-primary" %>
-			</div>
-			<p>
-			<div class="row">
-				<%= link_to "Ad Visiting Team", "", class: "btn btn-md btn-primary" %>
-			</div>
+	<div class="col-xs-4 col-xs-offset-1">
+		<div class="row">
+			<%= link_to "Scoresheet", lacrossescoresheet_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "btn btn-sm btn-primary" %>
 		</div>
-	<% end %>
+		<p>
+		<div class="row">
+			<% if @gameschedule.lacross_game.visiting_team %>
+				<h5 class="text-info">Visiting team roster.</h5>
+				<% if user_signed_in? and isAdmin? %>
+					<%= link_to @gameschedule.lacross_game.visiting_team.getname, selectvisitingteam_sport_team_gameschedule_path(@sport, @team, @gameschedule),
+													class: "btn btn-sm btn-primary" %>
+				<% else %>
+					<%= @gameschedule.lacross_game.visiting_team.getname %>
+				<% end %>
+			<% else %>
+				<%= link_to "Add Visiting Team", selectvisitingteam_sport_team_gameschedule_path(@sport, @team, @gameschedule), 
+													class: "btn btn-sm btn-primary" %>
+			<% end %>
+		</div>
+	</div>
 </div>
 <p>
 <div class="row">
@@ -195,12 +165,12 @@
 <div class="row">
 	<div class="col-xs-11">
 		<h4 class="text-info"><%= @team.mascot + " Statistics" %></h4>
-		<%= render 'lacrosses/lacrossestats', name: "Player", anobject: @gameschedule, playerstats: @playerstats %>
+		<%= render 'lacrosstats/lacrossestats', name: "Player", anobject: @gameschedule, playerstats: @playerstats %>
 		<p>
-		<%= render 'lacrosses/lacrossestats', name: "", anobject: nil, playerstats: @homeplayertotals %>
+		<%= render 'lacrosstats/lacrossestats', name: "", anobject: nil, playerstats: @homeplayertotals %>
 		<p>
 		<h4 class="text-info"><%= @gameschedule.opponent_mascot + " Statistics" %></h4>
-		<%= render 'lacrosses/lacrossestats', name: "Player", anobject: @gameschedule, playerstats: @visitorstats %>
+		<%= render 'lacrosstats/lacrossestats', name: "Player", anobject: @gameschedule, playerstats: @visitorstats %>
 	</div>
 </div>
 <%= render 'layouts/messagemodal', modalid: 'upgradestatsmodal', modaltitle: 'Upgrade for Stats', 

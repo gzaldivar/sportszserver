@@ -1,0 +1,42 @@
+<h4>Home</h4>
+<table class="table-striped table-bordered table-hover">
+	<thead>
+		<th>%= @team.mascot %></th>
+
+		<% @scoringtabletimes.each_with_index do |s, index| %>
+			<th><%=  s %></th>
+			<th><%= @scoringtablecodes[index] %></th>
+		<% end %>
+
+	</thead>
+	<tbody>
+		<td><%= "Coach " + @coach.full_name + @record %></td>
+
+		<% @scoreingtableplayers.each do |s,| %>
+			<td><%= s[0] %></td>
+			<td><%= s[1] %></td>
+		<% end %>
+
+	</tbody>
+</table>
+<h4>Visitor</h4>
+<table class="table-striped table-bordered table-hover">
+	<thead>
+		<th>%= @gameschedule.opponent_mascot %></th>
+
+		<% @fisitorscoringtabletimes.each_with_index do |s, index| %>
+			<th><%=  s %></th>
+			<th><%= @svisitorcoringtablecodes[index] %></th>
+		<% end %>
+
+	</thead>
+	<tbody>
+		<td><%= "Coach " + @visitorcoach.full_name + @record %></td>
+
+		<% @visitorscoreingtableplayers.each do |s,| %>
+			<td><%= s[0] %></td>
+			<td><%= s[1] %></td>
+		<% end %>
+
+	</tbody>
+</table>

@@ -1,0 +1,70 @@
+<% provide(:title, current_site.sitename + " " + @sport.name + " - Lacrosse Stats") %>
+<p>
+<div class="row">
+	<div class="col-xs-10">
+		<%= link_to image_tag(@athlete.pic.url(:thumb)), sport_athlete_path(@sport, @athlete) %>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-10">
+		<% elsif !@athlete.nil? %>
+			<% if @lacrossestats.empty? %>
+				<%= render 'layouts/messagemodal', modalid: "nolacrossestatsmodal", modaltitle: "No lacrossestats", 
+							messagetext: "No lacrossestats for " + @athlete.numlogname %>
+				<script>
+			        $(document).ready(function() {
+			          $('#nolacrossestatsmodal').modal('show');
+			        });
+				</script>
+			<% else %>
+				<h4>Stats for <%= @athlete.logname %></h4>
+				<table class="table table-bordered">
+					<%= render "lacrossestatsheader", name: "Player" %>
+					<% @gameschedules.each do |g| %>
+						<% @thestat = nil %>
+						<% @lacrossestats.each do |b| %>
+							<% if g.id == b.gameschedule_id %>
+								<% @thestat = b %>
+								<% break %>
+							<% end %>
+						<% end %>
+						<% if @thestat %>
+							<%= render "lacrossestatsbody", stat: @thestat, name: "Game" %>
+						<% else %>
+							<%= render "lacrossestatsbody", stat: Soccer.new(gameschedule: g.id, athlete: @athlete.id), name: "Game" %>
+						<% end %>
+					<% end %>
+				</table>
+			<% end %>
+		<% elsif !@gameschedule.nil? %>
+			<% if @lacrossestats.empty? %>
+				<%= render 'layouts/messagemodal', modalid: "nolacrossestatsmodal", modaltitle: "No lacrossestats", 
+							messagetext: "No lacrossestats for " + @athlete.numlogname %>
+				<script>
+			        $(document).ready(function() {
+			          $('#nolacrossestatsmodal').modal('show');
+			        });
+				</script>
+			<% else %>
+				<h4>Stats for game <%= @gameschedule.game_name %></h4>
+				<table class="table table-bordered">
+					<%= render "lacrossestatsheader", name: "Player" %>
+					<% @athletes.each do |a| %>
+						<% @thestat = nil %>
+						<% @lacrossestats.each do |b| %>
+							<% if a.id == b.athlete_id %>
+								<% @thestat = b %>
+								<% break %>
+							<% end %>
+						<% end %>
+						<% if @thestat and hasSoccerPlayerlacrossestats?(@thestat) %>
+							<%= render "lacrossestatsbody", stat: b, name: "Player" %>
+						<% else %>
+							<%= render "lacrossestatsbody", stat: Soccer.new(gameschedule: @gameschedule.id, athlete: a.id), name: "Player" %>
+						<% end %>
+					<% end %>
+				</table>
+			<% end %>
+		<% end %>
+	</div>
+</div>

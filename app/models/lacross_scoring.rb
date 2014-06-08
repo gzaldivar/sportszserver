@@ -1,6 +1,8 @@
 class LacrossScoring
 	include Mongoid::Document
 
+	after_save :send_notification
+
     field :gametime, type: String
     field :assist, type: String
     field :scorecode, type: String, default: ""
@@ -9,6 +11,7 @@ class LacrossScoring
     embedded_in :lacrosstat
     has_many :photos, dependent: :nullify
     has_many :videoclips, dependent: :nullify
+    has_one :alert, dependent: :destroy
 
 	index({ period: 1 }, { unique: true } )
 
@@ -24,9 +27,19 @@ class LacrossScoring
 		end
 
 		if assist
-			log = log + ', Assist ' + Athlete.find(assist).numlogname
+			if lacrosstat.athlete_id
+				log = log + ', Assist ' + Athlete.find(assist).numlogname
+			else
+				log = log + ', Assist ' + VisitorRoster.find(assist).numlogname
+			end
 		end
 
 		return log
 	end
+
+	private
+
+		def send_notification
+        	self.alerts.create!(sport_id: sport_id, users: self.fans, message: self.scorelog, team_id: team_id)
+		end
  end

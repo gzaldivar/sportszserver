@@ -92,6 +92,14 @@ elsif @sport.name == "Lacrosse"
 			node :assist, :if => lambda { |a| !a.assist.nil? } do |g|
 				g.assist
 			end
+			child :photos, :object_root => false do |p|
+				node(:id) { |p| p.id.to_s }
+				attributes :displayname
+			end
+			child :videoclips, :object_root => false do |p|
+				node(:id) { |p| p.id.to_s }
+				attributes :displayname
+			end
 		end
 
 		child :lacross_player_stats, :object_root => false do

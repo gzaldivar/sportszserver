@@ -17,10 +17,10 @@ class Alert
 	belongs_to :videoclip
 
 	belongs_to :gamelog
+	belongs_to :lacross_scoring
 	
  	belongs_to :basketball_stat
 	belongs_to :soccer
-	belongs_to :lacross
 
 	belongs_to :football_defense
 	belongs_to :football_kicker

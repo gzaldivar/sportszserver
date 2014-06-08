@@ -70,7 +70,7 @@ class SendApnNotification
 
 		team.apn_notifications.each do |n|
 
-			if n.scorealerts and alert.gamelog_id or alert.athlete_id.nil?
+			if n.scorealerts and (alert.gamelog_id or alert.lacross_scoring_id) or alert.athlete_id.nil?
 				send_notification(n, connection, ipadconection, alert)
 			elsif !alert.athlete_id.nil?
 				athlete = sport.athletes.find(alert.athlete_id)

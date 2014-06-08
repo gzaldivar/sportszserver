@@ -209,7 +209,12 @@ class PhotosController < ApplicationController
         
         @photos = @sport.photos.where(team_id: @team.id).and(gameschedule_id: params[:gameschedule_id]).desc(:updated_at).paginate(per_page: 10, :page=>params[:page])
 
+      elsif !params[:lacross_scoring_id].blank?
+
+        @photos = @sport.photos.where(lacross_scoring_id: params[:lacross_scoring_id]).desc(:updated_at).paginate(per_page: 10, page: params[:page])
+
       elsif params[:all].to_i == 0 and !params[:updated_at].nil? or !params[:updated_at].blank?
+        
         @photos = @sport.photos.where(:updated_at.lt => params[:updated_at].any_of({athlete_id: params[:athlete_id]}, 
                               {coach_id: params[:coach_id]}, {user_id: params[:user_id]}, {gameschedule: params[:gameschedule_id]}, 
                               {gamelog: params[:gamelog_id]}).to_s.to_datetime).limit(20).desc(:updated_at)

@@ -60,7 +60,11 @@ Sportzserver::Application.routes.draw do
 
     resources :visiting_teams do
 
-      resources :visitor_rosters 
+      resources :visitor_rosters  do
+
+        resources :lacrosstats, only: [:destroy, :create, :update]
+        
+      end
       
     end
 
@@ -158,7 +162,7 @@ Sportzserver::Application.routes.draw do
 
       resources :soccers
 
-      resources :lacrosstats , only: [:destroy]
+      resources :lacrosstats , only: [:destroy, :create, :update]
       
       member do
         get :follow, :unfollow, :stats, :playerstats, :mobilefollow, :mobileunfollow

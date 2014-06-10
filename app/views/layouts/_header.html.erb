@@ -25,7 +25,7 @@
 					<% else %>
 						<li><%= link_to "Contact", contacts_path %></li>
 					<% end %>
-					<li><%= link_to "Find Teams", sports_path if (!user_signed_in? and current_site?) or !current_site? %></li>
+					<li><%= link_to "Find Teams", sports_path if (user_signed_in? and current_site?) or !current_site? %></li>
 					<% if user_signed_in? and current_site? and site_owner?(current_site) %>
 						<li><a href="#adsponsor-responsive" data-toggle="modal">Ads and Sponsors</a></li>
 						<li><a href="#toolselect-responsive" data-toggle="modal">Tools</a></li>

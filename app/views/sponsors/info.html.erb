@@ -2,10 +2,11 @@
 <p>
 <div class="row">
 	<div class="col-xs-11">
-		<h4 class="text-info">Welcome to <%= @sport.sitename %>. We thank you for your interest in potentially buying ad space on our mobile app and web site.</h4>
+		<h4 class="text-info">Welcome to <%= @sport.sitename %>. We thank you for your interest in buying ad space on our mobile app and web site.</h4>
 		<p>
-		<h4 class="text-success">Higher priced ads appear more often than lower priced ads. Choose the level of ad that best fits the exposure you want on <%= @sport.sitename %>. We thank you for advertising on to our fans.</h4>
-		<h5 class="text-warning"><em><%= @sport.sitename %></em> currently has <%= @sportadinvs.count.to_s %> ad level for you to choose from.</h5>
+		<h4 class="text-success">Higher priced ads appear more often than lower priced ads. Choose the level of ad that best fits the exposure you want on <strong><%= @sport.sitename %> <%= @sport.name %></strong>.</h4>
+		<h4 class="text-success">We thank you for advertising on <strong><%= @sport.sitename %> <%= @sport.name %></strong>.</h4>
+		<h5 class="text-info"><em><%= @sport.sitename %></em> currently has <%= @sportadinvs.count.to_s %> ad level for you to choose from.</h5>
 
 		<div class="row">
 			<div class="col-xs-6">
@@ -27,20 +28,20 @@
 				</table>
 			</div>
 		</div>
-		<h5 class="text-success">Remember, the higher the price of the ad level the more often your ad will appear.</h5>
+		<h5 class="text-info">Remember, the higher the price of the ad level the more often your ad will appear.</h5>
 		<p>
 		<% if @sport.sportadinvs.where(playerad: true).count > 0 %>
-			<h5 class="text-warning">When you create a player ad you will have the opportuninty to attach it to a particular player. The ad will appear when fans visit the players bio page. This is a great way to show support for your favorite player and to support the team!</h5>
+			<h5 class="text-warning">Player ads are attached to a particular player. The ad will appear when fans visit the players ino and bio page. This is a great way to show support for your favorite player and to support the team!</h5>
 		<% end %>
 		<% if !user_signed_in? %>
-			<h4 class="text-danger">You will need to login to advertise on <%= @sport.sitename %>. If you do not have a login, select the "Sign Up" when you are prompted to login.</h4>
+			<h4 class="text-danger">You will need to login to advertise on <%= @sport.sitename %>. If you do not have a login, select "Sign Up" on the login page.</h4>
 		<% end %>
 		<p>
 		<% if user_signed_in? %>
 			<div class="row">
-				<div class="col-xs-2">
-					<h5><%= link_to "Click here to get started!", new_sport_sponsor_path(@sport) %></h5>
-					<%= link_to "Click Here", sport_sponsors_path(@sport), class: "btn btn-sm btn-primary" %>
+				<div class="col-xs-6">
+					<h5><%= link_to "Click here to advertise on #{@sport.sitename} #{@sport.name}!", new_sport_sponsor_path(@sport) %>
+					<%= link_to "Click Here", sport_sponsors_path(@sport), class: "btn btn-sm btn-primary" %></h5>
 				</div>
 			</div>
 		<% end %>

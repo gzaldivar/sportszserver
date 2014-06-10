@@ -216,7 +216,7 @@ Sportzserver::Application.routes.draw do
     collection do
       get   :feed, :mobileinfo, :allnews, :pricing, :admin_info, :websiteinfo, :ipadexample_path, :approve, :eazefootball, :eazebasketball,
             :infobasketball, :webbballinfo, :iphone_basketballinfo, :about, :eazesoccer, :testcss, :faqs, :get_usstates, :highlightsinfo,
-            :broadcastinfo, :clientapp, :mobileadmin, :privacy, :terms
+            :broadcastinfo, :clientapp, :mobileadmin, :privacy, :terms, :adinfo
     end
 
     member do
@@ -246,9 +246,10 @@ Sportzserver::Application.routes.draw do
   match '/ipadexample', to: 'sports#ipadexample_info'
   match '/user/root',  to: 'sports#show'
   match '/approve', to: 'sports#approve'
-  match '/eazefootball', to: 'sports#eazefootball'
-  match '/eazebasketball', to: 'sports#eazebasketball'
-  match '/eazesoccer', to: 'sports#eazesoccer'
+  match '/football', to: 'sports#eazefootball'
+  match '/basketball', to: 'sports#eazebasketball'
+  match '/soccer', to: 'sports#eazesoccer'
+  match '/lacrosse', to: 'sports#eazelacrosse'
   match '/infobasketball', to: 'sports#infobasketball'
   match '/iphone_basketball', to: 'sports#iphone_basketballinfo'
   match '/webbballinfo', to: 'sports#webbballinfo'
@@ -257,6 +258,7 @@ Sportzserver::Application.routes.draw do
   match '/faqs', to: 'sports#faqs'
   match "/clientapp", to: 'sports#clientapp'
   match '/mobileadmin', to: 'sports#mobileadmin'
+  match '/privacy', to: 'sports#privacy'
  
   authenticate :user, lambda {|u| u.admin == true} do
     mount Resque::Server, :at => "/resque"

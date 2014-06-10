@@ -1,0 +1,69 @@
+<% provide(:title, "Game Tracker Lacrosse - Mobile Sports Lacrosse") %>
+<p>
+<div class="row">
+	<div class="col-xs-5">
+		<div class="well">
+			<h4 class="text-info">Game Tracker - Lacrosse</h4>
+			<h5 class="text-success">Admin Features<p>
+			<ul>
+				<li>Update live stats for every game!</li><p>
+				<li>Game Tracker creates automatice score entries from stats.</li><p>
+				<li>Upload Photo's and Video's of your team during the game</li><p>
+				<li><strong>Tag Photo's and Video clips by Game, Player and by PLAY!</strong></li><p>
+				<li>Create and manage individual player metadata and roster</li><p>
+				<li>Browse and Manage Game Stats after the game</li><p>
+				<li>Monitor and Mangage your fans live Blog. You never know what they will enter...</li><p>
+				<li>Manage your programs news feed</li><p>
+				<li>Manage your teams Coaches</li><p>
+				<li>Allow your fans to upload photos and videos</li><p>
+				<li>Much, much more ......</li><p>
+			</ul>
+			</h5>
+			<h4 class="text-info">Fans use Game Tracker to follow your lacrosse program.</h4>
+			<h5 class="text-success">
+			<ul>
+				<li>Follow live game updates</li><p>
+				<li>Access live game stats</li><p>
+				<li>Access live game photos and videos</li><p>
+				<li>Track season stats</li><p>
+				<li>Follow players and receive score/stat alerts</li><p>
+				<li>Live blog support</li><p>
+				<li>Much, much more ....</li><p>
+			</ul>
+			</h5>
+			<h4 class="text-primary">Only the site administrator can edit the site data.</h4>
+		</div>
+	</div>
+	<div class="col-xs-6">
+		<div class="row">
+			<div class="col-xs-12">
+				<%= link_to (image_tag "fanapp/IOSFootballInfo1.png", class: 'img-responsive'), mobileinfo_path %>
+			</div>
+		</div>
+		<p>
+		<div class="well">
+			<div class="row">
+				<div class="col-xs-4">
+					<h5 class="text-info">Click to learn more about Game Tracker for iPhone</h5>
+				</div>
+				<div class="col-xs-2">
+					<%= link_to image_tag("fanapp/Icon-Small-50.png", class: 'img-responsive'), 
+											"https://itunes.apple.com/us/app/gametracker-live-sports/id876025780?mt=8" %>
+				</div>
+				<div class="col-xs-4">
+					<h5 class="text-info">Click to learn more about Game Tracker for iPad</h5>
+				</div>
+				<div class="col-xs-2">
+					<%= link_to image_tag("fanapp/Icon-Small-50.png", class: 'img-responsive'), 
+											"https://itunes.apple.com/us/app/gametracker-hd-live-sports/id876081145?mt=8" %>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-12">
+		<h4><em><p class="text-info">Don't have an mobile device? Use our web site! 
+		<%= link_to "Web Site", websiteinfo_path, class: "btn btn-sm btn-primary" %></p></em></h4>
+	</div>
+</div>

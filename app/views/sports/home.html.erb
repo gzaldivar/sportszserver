@@ -9,43 +9,60 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-11" style="background-color:#fffff0;">
+	<div class="col-xs-11">
 		<h2 class="text-center text-danger">Supported Sports! More on the way ....</h2>
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-11" style="background-color:#fffff0;">
+	<div class="col-xs-11">
 		<div class="row">
 			<div class="col-xs-4">
-				<%= link_to (image_tag "fanapp/FootballButton.png", class: "img-responsive"), eazefootball_path %>
+				<%= link_to (image_tag "fanapp/FootballButton.png", class: "img-responsive"), football_path %>
 			</div>
 			<div class="col-xs-4">
-				<%= link_to (image_tag "fanapp/BasketballButton.png", class: "img-responsive"), eazebasketball_path %>
+				<%= link_to (image_tag "fanapp/BasketballButton.png", class: "img-responsive"), basketball_path %>
 			</div>
 			<div class="col-xs-4">
-				<%= link_to (image_tag "fanapp/SoccerButton.png", class: "img-responsive"), eazesoccer_path %>
+				<%= link_to (image_tag "fanapp/SoccerButton.png", class: "img-responsive"), soccer_path %>
 			</div>
 		</div>
 		<p>
  	</div>
 </div>
 <div class="row">
-	<div class="col-xs-11" style="background-color:#ffffff;">
+	<!--div class="col-xs-11" style="background-color:#fffff0;"-->
+	<div class="col-xs-11">
+		<div class="row">
+			<div class="col-xs-4">
+				<%= link_to (image_tag "fanapp/Lacrossebutton.png", class: "img-responsive"), lacrosse_path %>
+			</div>
+		</div>
+		<p>
+ 	</div>
+</div>
+<div class="row">
+	<div class="col-xs-11">
 		<h2 class="text-center text-danger">Use our mobile apps to raise funds for your program. Sell ads on your site!</h2>
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-11" style="background-color:#ffffff;">
+	<div class="col-xs-11">
 		<div class="row">
 			<div class="col-xs-3">
 				<%= image_tag "fanapp/banner_ad_pic2.png", class: "img-responsive" %>
 			</div>
 			<div class="col-xs-9">
-				<h3 class="text-danger">Create a log in and select the "Ads and Sponsors" tab for more information!</h3>
+				<div class="well">
+					<h5 class="text-info">How it works<p>
+					<ul>
+						<li>Create your ad inventory for your program!</li><p>
+						<li>Sponsors select from available ad inventory.</li><p>
+						<li>You collect the ad revenue from your sposors.</li><p>
+					</ul>
+					</h5>
+					<h5 ><%= link_to "Click here form more info!", adinfo_sports_path %></h5>
+				</div>
 			</div>
-		</div>
-		<div class="row">
-			<h5 class="text-success">Use our site to monetize your content and raise funds for your program!</h5>
 		</div>
 	</div>
 </div>

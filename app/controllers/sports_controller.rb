@@ -27,7 +27,7 @@ class SportsController < ApplicationController
         @sport.contactemail = current_user.email
         @sport.adminid = current_user.id
 
-        if @sport.name.nil? or @sport.name.blank?
+        if !@sport.name.nil? and !@sport.name.blank?
           @sport.sportname = @sport.name  # Keep capability to allow non stat sports. Mobile sends name not sportname
           @sport.has_stats = true
         else

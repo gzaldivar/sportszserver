@@ -122,7 +122,7 @@ class Sport
   validates :year, presence: true, format: { with: /^[0-9]{4}$/ }
   validates_presence_of :season
 #  validates :sex, presence: true, format: { with: /Male|Female/ }
-  validates :state, presence: true
+#  validates :state, presence: true
   validates :contactemail, presence: true
    
   validates_attachment_content_type :sport_banner, content_type: ['image/jpg', 'image/jpeg', 'image/png']

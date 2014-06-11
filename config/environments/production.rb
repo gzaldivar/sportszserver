@@ -78,7 +78,7 @@ Sportzserver::Application.configure do
       :address              => 'smtp.gmail.com',
       :port                 => 587,
       :domain               => 'gmail.com',
-      :user_name            => 'gametracker.livesports',
+      :user_name            => 'gametracker.info',
       :password             => 'gametracker1020',
       :authentication       => 'login',
       :enable_starttls_auto => true 

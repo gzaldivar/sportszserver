@@ -37,7 +37,7 @@ class Sport
   field :state,         type: String
   field :city,          type: String
   field :address,       type: String
-  field :country, type: String
+  field :country, type: String, default: "United States"
 
   field :adminid, type: String
   field :beta, type: Boolean, default: false

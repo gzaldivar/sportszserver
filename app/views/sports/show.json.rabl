@@ -8,6 +8,10 @@ node(:sport_logo_tiny) { |t| t.sport_logo(:tiny) }
 node(:banner_url) { |b| b.sport_banner.url(:thumb) }
 node(:teamcount) { |t| t.teams.count }
 
+node :teamcount, :if => lambda { |a| a.teams.count == 0 } do
+	"1"
+end
+
 if root_object.name == "Football"
 	node(:football_offense_position) { offense_football_positions }
 	node(:football_defense_position) { defense_football_positions } 

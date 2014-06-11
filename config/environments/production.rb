@@ -71,16 +71,18 @@ Sportzserver::Application.configure do
       :user_name            => 'gametrackersports',
       :password             => 'gametracker1020',
       :authentication       => 'login',
-      :enable_starttls_auto => true  }
+      :enable_starttls_auto => true 
+  }
 =end
   config.action_mailer.smtp_settings = {
       :address              => 'smtp.mail.me.com',
       :port                 => 587,
-      :domain               => 'icloud.com',
+      :domain               => 'me.com',
       :user_name            => 'gametracker.support@icloud.com',
       :password             => 'Bryan3187',
-      :authentication       => 'login',
-      :enable_starttls_auto => true  }
+      :authentication       => 'plain',
+      :enable_starttls_auto => true
+  }
   # sportzteams password 'bryan101'
   # Disable delivery errors, bad email addresses will be ignored
   config.action_mailer.raise_delivery_errors = false

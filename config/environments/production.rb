@@ -69,7 +69,7 @@ Sportzserver::Application.configure do
       :address              => 'smtp.gmail.com',
       :port                 => 587,
       :domain               => 'gmail.com',
-      :user_name            => 'gametrackersports@gmail.com',
+      :user_name            => 'gametrackersports',
       :password             => 'gametracker1020',
       :authentication       => 'login',
       :enable_starttls_auto => true  }

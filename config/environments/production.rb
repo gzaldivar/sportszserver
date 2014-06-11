@@ -65,16 +65,6 @@ Sportzserver::Application.configure do
     :authentication => :plain
   }
   config.action_mailer.smtp_settings = {
-      :address              => 'smtp.gmail.com',
-      :port                 => 587,
-      :domain               => 'gmail.com',
-      :user_name            => 'gametrackersports',
-      :password             => 'gametracker1020',
-      :authentication       => 'login',
-      :enable_starttls_auto => true 
-  }
-=end
-  config.action_mailer.smtp_settings = {
       :address              => 'smtp.mail.me.com',
       :port                 => 587,
       :domain               => 'me.com',
@@ -82,6 +72,16 @@ Sportzserver::Application.configure do
       :password             => 'Bryan3187',
       :authentication       => 'plain',
       :enable_starttls_auto => true
+  }
+=end
+  config.action_mailer.smtp_settings = {
+      :address              => 'smtp.gmail.com',
+      :port                 => 587,
+      :domain               => 'gmail.com',
+      :user_name            => 'gametracker.livesports',
+      :password             => 'gametracker1020',
+      :authentication       => 'login',
+      :enable_starttls_auto => true 
   }
   # sportzteams password 'bryan101'
   # Disable delivery errors, bad email addresses will be ignored

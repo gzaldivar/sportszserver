@@ -64,13 +64,21 @@ Sportzserver::Application.configure do
     :password => 'Cjz121699',
     :authentication => :plain
   }
-=end
   config.action_mailer.smtp_settings = {
       :address              => 'smtp.gmail.com',
       :port                 => 587,
       :domain               => 'gmail.com',
       :user_name            => 'gametrackersports',
       :password             => 'gametracker1020',
+      :authentication       => 'login',
+      :enable_starttls_auto => true  }
+=end
+  config.action_mailer.smtp_settings = {
+      :address              => 'smtp.mail.me.com',
+      :port                 => 587,
+      :domain               => 'icloud.com',
+      :user_name            => 'gametracker.support@icloud.com',
+      :password             => 'Bryan3187',
       :authentication       => 'login',
       :enable_starttls_auto => true  }
   # sportzteams password 'bryan101'

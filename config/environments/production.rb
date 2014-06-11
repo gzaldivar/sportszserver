@@ -57,9 +57,9 @@ Sportzserver::Application.configure do
   config.action_mailer.smtp_settings = {
     :enable_starttls_auto => true,
     :address => 'smtpout.secureserver.net',
-    :domain  => 'www.gametrackerpro.com',
+    :domain  => 'www.eazesportz.com',
     :port      => 80,
-    :user_name => 'info@gametrackerpro.com',
+    :user_name => 'info@eazesportz.com',
     :password => 'Cjz121699',
     :authentication => :plain
   }

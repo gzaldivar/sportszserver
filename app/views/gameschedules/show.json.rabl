@@ -83,7 +83,10 @@ elsif @sport.name == "Lacrosse"
 	child :lacross_game, :object_root => false do
 		node(:gameschedule_id) { |g| g.gameschedule.id.to_s }
 		node(:lacross_game_id) { |g| g.id.to_s }
-		node(:visiting_team_id) { |v| v.visiting_team.id.to_s }
+
+		node :visiting_team_id, :if => lambda { |v| v.visiting_team.id } do |v|
+			v.visiting_team.id.to_s
+		end
 
 		attributes :clears, :failedclears, :visitor_clears, :visitor_failedclears, :free_position_sog, 
 					:home_1stperiod_timeouts, :home_2ndperiod_timeouts, :visitor_1stperiod_timeouts, :visitor_2ndperiod_timeouts, :extraman_fail, :visitor_extraman_fail, :home_penaltyone_number, :home_penaltyone_minutes, :home_penaltyone_seconds, :home_penaltytwo_number, :home_penaltytwo_minutes, :home_penaltytwo_seconds, :visitor_penaltyone_number, :visitor_penaltyone_minutes, :visitor_penaltyone_seconds, :visitor_penaltytwo_number, :visitor_penaltytwo_minutes, :visitor_penaltytwo_seconds

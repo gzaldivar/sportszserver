@@ -84,7 +84,7 @@ elsif @sport.name == "Lacrosse"
 		node(:gameschedule_id) { |g| g.gameschedule.id.to_s }
 		node(:lacross_game_id) { |g| g.id.to_s }
 
-		node :visiting_team_id, :if => lambda { |v| v.visiting_team.id } do |v|
+		node :visiting_team_id, :if => lambda { |v| v.visiting_team } do |v|
 			v.visiting_team.id.to_s
 		end
 

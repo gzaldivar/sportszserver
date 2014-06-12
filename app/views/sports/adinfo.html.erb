@@ -3,7 +3,7 @@
 <div class="row">
 	<div class="col-xs-11">
 		<div class="well">
-			<h4 class="text-info">Step one - Administrator of the sports program creates ad inventory.</h4>
+			<h4 class="text-info">Step one - Administrator of the sports program creates ad inventory. Pick the price points that you think your supporters will pay for. Keep in mind that GameTracker will take <%= Admin.first.adpercentage %>%.</h4>
 			<%= image_tag "fanapp/AdInventoryImage.png", class: 'img-responsive' %>
 		</div>
 	</div>
@@ -15,14 +15,21 @@
 	</div>
 	<div class="col-xs-11">
 		<div class="well">
-			<h4 class="text-info">Step three - Sponsors can change their info or update their digital media at any time .....</h4>
+			<h4 class="text-info">Step three - Sponsors purchase the ad on your site .....</h4>
+			<h5 class="text-success">Paypal is used to maximize your ad revenue. It is possible to allow purchase of ad inventroy from mobile devices but Apple and Google will take a 30% of the total. That's a big hit when you factor in the GameTracker revenue split of <%= Admin.first.adpercentage %>%!</h5>
+			<%= image_tag "fanapp/ad-paypal-payment.png", class: 'img-responsive' %>
+		</div>
+	</div>
+	<div class="col-xs-11">
+		<div class="well">
+			<h4 class="text-info">Step four - Sponsors can change their info or update their digital media at any time .....</h4>
 			<%= image_tag "fanapp/adinfo-upload.png", class: 'img-responsive' %>
 		</div>
 	</div>
 	<div class="col-xs-11">
 		<div class="well">
 			<h5 class="text-info">Advertisers can choose not to upload digital media. Your team logo will be used instead of sponsor supplied digital media if no digital media is uploaded.</h5>
-			<h5 class="text-info">Advertisers also choose to upload a custom banner for display on mobile devices. They can also choose to allow GameTracker to create a banner automatically.</h5>
+			<h5 class="text-info">Advertisers may also choose to upload a custom banner for display on mobile devicesor they can also choose to allow GameTracker to create a banner automatically.</h5>
 		</div>
 	</div>
 </div>

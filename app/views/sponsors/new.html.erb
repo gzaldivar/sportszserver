@@ -2,13 +2,15 @@
 <div class="row">
   <div class="col-xs-12">
 		<div class="hero-unit">
-			<h5>Below you will be able to upload your sponsors image. You will be able to change them at anytime. 
+			<h5>Below you will be able to upload your ad image and banner for display on GameTracker mobile apps. You will be able to change the ad images at anytime. 
       <p>
-      You must use jpg/jpeg/png images for the sponsor image.
+      You must use jpg/jpeg/png images for all ad images.
        <p>
-      <em>Sponsor Image</em> - Sponsor images will be automatically resized for mobile devices.
+      <em>Digital Images</em> - All digital images will be automatically resized for mobile devices.
       <p>
-      You may create as many sponsors as you like.  They will be cycled on our mobile app automatically. They will also be automatically cycled in a queue and presented on your web site.
+      <% if site_owner?(@sport) %>
+        You may create as many sponsors as you like.  They will be cycled on our mobile app automatically. They will also be automatically cycled in a queue and presented on your web site.
+      <% end %>
       <p>
       </h5><br/>
 		</div>

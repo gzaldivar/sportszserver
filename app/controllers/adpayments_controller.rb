@@ -35,7 +35,8 @@ class AdpaymentsController < ApplicationController
   	end
 
 	def cancel
-		@sportadinv = @sport.sportadinvs.find(params[:custom])
+#		@sportadinv = @sport.sportadinvs.find(params[:custom])
+		@sponsor.destroy
 
 		redirect_to sport_sponsors_path(@sport), notice: "Ad Order Canceled"
   	end

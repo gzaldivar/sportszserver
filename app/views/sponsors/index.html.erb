@@ -16,7 +16,7 @@
 				<%= render 'sponsors', sponsors:  @sponsors %>
 			</div>
 		</div>
-		<% if isAdmin? %>
+		<% if isAdmin? and site_owner?(@sport) %>
 			<div class="row">
 				<div class="col-xs-3">
 					<h4 class="text-danger">Total ad sales to date: </h4>
@@ -28,7 +28,7 @@
 		<% end %>
 		<div class="row">
       		<div class="col-xs-2 col-xs-offset-5">
-      			<% if isAdmin? %>
+      			<% if isAdmin? and site_owner?(@sport) %>
 					<%= link_to "Add Sponsor", new_sport_sponsor_path(@sport), class: "btn btn-sm btn-primary" %>
 				<% else %>
 					<%= link_to "Add Sponsor", add_sport_sponsors_path(@sport), class: "btn btn-sm btn-primary" %>

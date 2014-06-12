@@ -41,7 +41,7 @@
 			<div class="row">
 				<div class="col-xs-6">
 					<h5><%= link_to "Click here to advertise on #{@sport.sitename} #{@sport.name}!", new_sport_sponsor_path(@sport) %>
-					<%= link_to "Click Here", sport_sponsors_path(@sport), class: "btn btn-sm btn-primary" %></h5>
+					<%= link_to "Click Here", new_sport_sponsor_path(@sport), class: "btn btn-sm btn-primary" %></h5>
 				</div>
 			</div>
 		<% end %>

@@ -91,7 +91,7 @@
           <% if @sponsor.adminentered %>
             <td>None</td>
           <% else %>
-            <td><%= @sponsor.adpayment.expiration.strftime("%m/%d/%Y")  %></td>
+            <td><%= @sponsor.adpayment.expiration.strftime("%m/%d/%Y") if @sponsor.adpayment  %></td>
           <% end %>
         </tbody>
       </table>

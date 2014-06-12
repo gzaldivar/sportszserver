@@ -63,7 +63,7 @@ class Athlete
 
     has_many :apn_notifications, dependent: :destroy
 
-    validates :number, presence: true, numericality: { greater_than: 0 }
+    validates_numericality_of :number, greater_than_or_equal_to: 0
     validates :lastname, presence: true, format: { with: /^[a-zA-Z\d\s]*$/ }
     validates :firstname, presence: true, format: { with: /^[a-zA-Z\d\s]*$/ }
     validates_presence_of :year

@@ -1,0 +1,34 @@
+<div class="row">
+	<div class="col-xs-10 col-xs-offset-1">
+		<%= form_for [@admin, @product],  :input_html => { :class => 'form-horizontal' } do |f| %>
+			<%= render 'shared/error_messages', object: f.object %>
+			<div class="row">
+				<div class="col-xs-4">
+					<%= f.label :referencename, "Reference Name" %>
+					<%= f.text_field :referencename, class: 'form-control' %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= f.label :adtype, "Ad Type" %>
+					<%= f.text_field :adtype, class: 'form-control' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-4">
+					<%= f.label :productid, "Product Id" %>
+					<%= f.text_field :productid, class: 'form-control' %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= f.label :appleid, "Apple Id" %>
+					<%= f.text_field :appleid, class: 'form-control' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-4 col-xs-offset-4">
+					<%= f.submit 'Submit', class: "btn btn-md btn-primary" %>
+				</div>
+			</div>
+	    <% end %>
+	</div>
+</div>

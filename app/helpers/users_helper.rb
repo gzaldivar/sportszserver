@@ -68,4 +68,13 @@ module UsersHelper
 		current_user.disable
 	end
 	
+	def isGod?
+		if !current_user.godmode
+			raise ActionController::RoutingError.new('You are not Authorized for this!')
+		end
+
+	end
+
+
+	
 end

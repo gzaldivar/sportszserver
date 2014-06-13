@@ -71,7 +71,7 @@ module Sportzserver
     end
     config.autoload_paths += Dir["#{config.root}/lib/**/"]
     if Rails.env.production?
-        config.middleware.use Rack::SslEnforcer, :only => ['/users'], 
+        config.middleware.use Rack::SslEnforcer, :only => ['/users', '/admins'], 
                                                  :ignore => ['/users/sign_out', '/users/password/new', '/users/confirmation/new'],
                                                  :except => ['/sports', ], :strict => true
     end

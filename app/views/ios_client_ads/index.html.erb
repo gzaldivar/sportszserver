@@ -1,0 +1,33 @@
+<% provide(:title, "IOS Products") %>
+<p>
+<div class="row">
+	<div class="col-xs-11">
+		<table class="table table-striped table-bordered table-hover">
+		    <thead>
+		    	<th>Reference Name</th>
+		    	<th>Product Id</th>
+		    	<th>Ad Type</th>
+		    	<th>Apple Id</th>
+		    	<th>Edit</th>
+		    </thead>
+		    <tbody>
+		    	<% if !@products.nil? %>
+		    		<% @products.each do |p| %>
+		    			<tr>
+		    				<td><%= p.referencename %></td>
+		    				<td><%= p.productid %></td>
+		    				<td><%= p.adtype %></td>
+		    				<td><%= p.appleid %></td>
+		    				<td><%= link_to "Edit", edit_admin_ios_client_ad_path(@admin, p), class: "btn btn-xs btn-primary" %></td>
+		    			</tr>
+		    		<% end %>
+		    	<% end %>
+		    </tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-2 col-xs-offset-4">
+		<%= link_to "Add IOS Product", new_admin_ios_client_ad_path(@admin), class: "btn btn-md btn-pimary" %>
+	</div>
+</div>

@@ -12,6 +12,7 @@ class AdminsController < ApplicationController
 	end
 
 	def index
+		@admin = Admin.first
 		render 'show'
 	end
 
@@ -47,10 +48,6 @@ class AdminsController < ApplicationController
 	end
 
 	private
-
-		def isGod?
-			current_user.godmode
-		end
 
 		def getAdmin
 			@admin = Admin.all.first

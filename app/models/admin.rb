@@ -25,4 +25,6 @@ class Admin
                          access_key_id: S3DirectUpload.config.access_key_id,
                          secret_access_key: S3DirectUpload.config.secret_access_key }
 
+  has_many :ios_client_ads, dependent: :destroy
+
 end

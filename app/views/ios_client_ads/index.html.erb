@@ -8,7 +8,9 @@
 		    	<th>Product Id</th>
 		    	<th>Ad Type</th>
 		    	<th>Apple Id</th>
+		    	<th>Price</th>
 		    	<th>Edit</th>
+		    	<th>Delete</th>
 		    </thead>
 		    <tbody>
 		    	<% if !@products.nil? %>
@@ -18,7 +20,10 @@
 		    				<td><%= p.productid %></td>
 		    				<td><%= p.adtype %></td>
 		    				<td><%= p.appleid %></td>
+		    				<td><%= number_with_precision(p.price, precision: 2) %></td>
 		    				<td><%= link_to "Edit", edit_admin_ios_client_ad_path(@admin, p), class: "btn btn-xs btn-primary" %></td>
+		    				<td><%= link_to "Delete", admin_ios_client_ad_path(@admin, p), method: :delete, 
+		    						class: "btn btn-xs btn-danger" %></td>
 		    			</tr>
 		    		<% end %>
 		    	<% end %>

@@ -32,7 +32,7 @@ class IosClientAdsController < ApplicationController
 
 	def update
 		begin
-			@product = @admin.ios_client_ads.create!(params[:ios_client_ad])
+			@product.update_attributes!(params[:ios_client_ad])
 
 			respond_to do |format|
 				format.html { redirect_to admin_ios_client_ad_path(@admin, @product), notice: "IOS product created!" }
@@ -55,7 +55,7 @@ class IosClientAdsController < ApplicationController
 			@product.destroy
 
 			respond_to do |format|
-				format.html { redirect_to admin_ios_client_ad_path(@admin), notice: "Delete Succesful" }
+				format.html { redirect_to admin_ios_client_ads_path(@admin), notice: "Delete Succesful" }
 				format.json { render status: 200, json: { success: "Delete Succesful" } }
 			end
 		rescue Exception => e

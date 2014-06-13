@@ -16,3 +16,4 @@ end
 	node(:awskey) { S3DirectUpload.config.secret_access_key }
 	node(:awskeyid) { S3DirectUpload.config.access_key_id }
 # end
+node(:adminsid) { Admin.first.id.to_s }

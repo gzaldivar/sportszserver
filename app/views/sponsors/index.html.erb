@@ -10,7 +10,12 @@
 <p>
 <div class="row">
   <div class="col-xs-11">
-		<h4 class="text-success">List of advertisers you have entered.</h4>
+		<h4 class="text-success">List of advertisers you have entered.
+			
+		<% if user_signed_in? %>
+			<%= link_to "My Ads", sport_sponsors_path(@sport, user: current_user.id), class: "btn btn-md btn-primary" %></h4>
+		<% end %>
+
 		<div class="row">
 			<div class="col-xs-12">
 				<%= render 'sponsors', sponsors:  @sponsors %>
@@ -37,5 +42,3 @@
 		</div>
 	</div>
 </div>
-
-

@@ -86,8 +86,8 @@ class SponsorsController < ApplicationController
 	def index
 		begin
 			if !isAdmin?
-				if user_signed_in?
-					@sponsors = @sport.sponsors.where(user_id: current_user.id).all.paginate(page: params[:page])
+				if params[:user]
+					@sponsors = @sport.sponsors.where(user_id: params[:user]).all.paginate(page: params[:page])
 				else
 					@sponsors = @sport.sponsors.all.paginate(page: params[:page])
 				end

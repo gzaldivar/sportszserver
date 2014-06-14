@@ -16,11 +16,11 @@
 		    	<% if !@products.nil? %>
 		    		<% @products.each do |p| %>
 		    			<tr>
-		    				<td><%= p.referencename %></td>
-		    				<td><%= p.productid %></td>
-		    				<td><%= p.adtype %></td>
-		    				<td><%= p.appleid %></td>
-		    				<td><%= number_with_precision(p.price, precision: 2) %></td>
+		    				<td><%= link_to p.referencename, admin_ios_client_ad_path(@admin, p) %></td>
+		    				<td><%= link_to p.productid, admin_ios_client_ad_path(@admin, p) %></td>
+		    				<td><%= link_to p.adtype, admin_ios_client_ad_path(@admin, p) %></td>
+		    				<td><%= link_to p.appleid, admin_ios_client_ad_path(@admin, p) %></td>
+		    				<td><%= link_to number_with_precision(p.price, precision: 2), admin_ios_client_ad_path(@admin, p) %></td>
 		    				<td><%= link_to "Edit", edit_admin_ios_client_ad_path(@admin, p), class: "btn btn-xs btn-primary" %></td>
 		    				<td><%= link_to "Delete", admin_ios_client_ad_path(@admin, p), method: :delete, 
 		    						class: "btn btn-xs btn-danger" %></td>

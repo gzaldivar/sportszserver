@@ -6,8 +6,11 @@
 			<div class="col-xs-4">
 				<h4>Reference Name - <%= @product.referencename %></h4>
 			</div>
-			<div class="col-xs-2 col-xs-offset-1">
+			<div class="col-xs-3 col-xs-offset-1">
 				<h4>Ad Type - <%= @product.adtype %></h4>
+			</div>
+			<div class="col-xs-2 col-xs-offset-1">
+				<h4><%= image_tag @product.iosadimage(:tiny) %></h4>
 			</div>
 		</div>
 		<p>
@@ -15,7 +18,7 @@
 			<div class="col-xs-4">
 				<h4>Product Id - <%= @product.productid %></h4>
 			</div>
-			<div class="col-xs-2 col-xs-offset-1">
+			<div class="col-xs-3 col-xs-offset-1">
 				<h4>Apple Id - <%= @product.appleid %></h4>				
 			</div>
 			<div class="col-xs-2 col-xs-offset-1">
@@ -24,12 +27,15 @@
 		</div>
 		<p>
 		<div class="row">
-			<div class="col-xs-1 col-xs-offset-3">
+			<div class="col-xs-1 col-xs-offset-4">
 				<%= link_to "Edit", edit_admin_ios_client_ad_path(@admin, @product), class: "btn btn-md btn-primary" %>
 			</div>
 			<div class="col-xs-1">
 				<%= link_to "Delete", admin_ios_client_ad_path(@admin, @product), method: :delete,
 							class: "btn btn-md btn-danger" %>
+			</div>
+			<div class="col-xs-1">
+				<%= link_to "All IOS Ads", admin_ios_client_ads_path(@admin), class: "btn btn-md btn-info" %>
 			</div>
 		</div>
 	</div>

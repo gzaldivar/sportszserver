@@ -13,7 +13,14 @@
 <div class="row">
 	<div class="col-xs-9">
 		<%= f.hidden_field :user_id, value: current_user.id.to_s %>
-		<%= f.label :sponsor_name %>
+
+		<% if @playerad %>
+			<%= hidden_field_tag "playerad", @playerad %>
+			<%= f.label :name, "Sponsor Name of Message" %>
+		<% else %>
+			<%= f.label :name, "Sponsor Name" %>
+		<% end %>
+
 		<%= f.text_field :name, class: 'form-control' %>
 	</div>
 </div>
@@ -95,23 +102,28 @@
   			<h6 class="text-info">New sponsor info must be submitted before uploading pic!</h6>
   		<% end %>
 	</div>
-	<div class="col-xs-2 col-xs-offset-1">
+	<% if @playerad %>
+		<div class="col-xs-2 ">
+			<%= f.label :athlete, "Athlete" %>
+			<%= f.select :athlete, @sport.athletes.asc(:number).collect { |t| [t.numlogname, t.id] }, { include_blank: true }, 
+						class: "form-control" %>
+		</div>
+	<% end %>
+	<div class="col-xs-2 ">
 		<%= f.label :select_team, "Select Team" %>
 		<%= f.select :team_id, @sport.teams.collect { |t| [t.team_name, t.id] }, {}, class: "form-control" %>
 	</div>
-	<div class="col-xs-3 col-xs-offset-1">
+	<div class="col-xs-3">
 		<% if isAdmin? and @sponsor.sportadinv_id.nil? %>
 			<p class="text-info">Non advertiser sale inventory<p>
 			<%= f.label :sportadinv_id, "Sponsor Level" %>
-			<%= f.select :sportadinv_id, @sport.sportadinvs.where(active: false).collect { |s| [s.adlevelname, s.id] }, { include_blank: true },
-										 class: 'form-control' %>
+			<%= f.select :sportadinv_id, @sport.sportadinvs.where(active: false).collect { |s| [s.adlevelname, s.id] }, 
+										{ include_blank: true }, class: 'form-control' %>
 			<%= f.hidden_field :adminentered, value: true %>
 		<% else %>
 			<% if @sponsor.sportadinv_id.nil? %>
 				<p class="text-info">Ad inventory for general sale.<p>
 				<p class="text-info">Select the ad level to advertise on <%= @sport.sitename %><p>
-			<% else %>
-				<p class="text-info">Current Ad Level<p>
 			<% end %>
 			<%= f.hidden_field :adminentered, value: false if @sponsor.sportadinv_id.nil? %>
 		<% end %>

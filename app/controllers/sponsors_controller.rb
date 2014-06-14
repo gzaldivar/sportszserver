@@ -34,19 +34,28 @@ class SponsorsController < ApplicationController
 
 	def new
 		@sponsor = Sponsor.new
+		@sponsor.sportadinv_id = params[:sportadinv_id] if params[:sportadinv_id]
+		@playerad = true if params[:playerad]
 	end
 
 	def create
 		begin
 			@sponsor = @sport.sponsors.build(params[:sponsor])
-			@sponsor.city = @sponsor.zip.to_region(city: true)
-        	@sponsor.state = @sponsor.zip.to_region(state: true)
+
+			if params[:zip]
+				@sponsor.city = @sponsor.zip.to_region(city: true)
+        		@sponsor.state = @sponsor.zip.to_region(state: true)
+        	end
 
 			if !params[:team_id].nil? and !params[:team_id].blank?
 				@sponsor.team_id = params[:team_id]
 			end
 
-			@sponsor.save!
+			if params[:playerad]
+				@sponsor.save(validate: false)
+			else
+				@sponsor.save!
+			end
 
 			respond_to do |format|
 				format.html { redirect_to [@sport, @sponsor], notice: "Added #{@sponsor.name}!" }

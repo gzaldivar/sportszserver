@@ -10,14 +10,16 @@
     <% if @sponsor.processing %>
       <h4><em><font color="red">Processing Replacement Photo ...</font></em></h4>
     <% end %>
-    <h4>Change Sponsor Image:</h4>
-    <h5 class="text-info">If you do not enter an image for your ad, the team logo will appear as the ad copy!</h5>
+    <% if site_owner?(@sport) or @sponsor.user_id == current_user.id %>
+      <h4>Change Sponsor Image:</h4>
+      <h5 class="text-info">If you do not enter an image for your ad, the team logo will appear as the ad copy!</h5>
+    <% end %>
     <% if @sponsor.sponsorpic? %> 
       <%= image_tag @sponsor.sponsorpic.url(:medium), class: 'img-responsive' %>
     <% else %>
       <%= image_tag 'Photo_Not_Available.jpg', class: 'img-responsive' %>
     <% end %>
-    <% if isAdmin? or @sponsor.user_id == current_user.id %>
+    <% if site_owner?(@sport) or @sponsor.user_id == current_user.id %>
       <%= s3_uploader_form callback_url: createphoto_sport_sponsors_path, callback_param: "sponsor[image_url]", 
                  key: "uploads/sponsorsphotos/#{@sponsor.id}/${filename}", id:  "myS3Uploader" do %>
           <%= file_field_tag :file %>
@@ -99,78 +101,75 @@
   </div>
   <p>
 </div>
-<div class="row">
-  <div class="col-xs-4">
-    <% if @sponsor.processing %>
-      <h4><em><font color="red">Processing Replacement Banner ...</font></em></h4>
-    <% end %>
-    <h4>Change Sponsor Banner:</h4>
-    <% if @sponsor.adbanner? %> 
-      <%= image_tag @sponsor.adbanner.url(:portraitbanner), class: 'img-responsive' %>
-    <% else %>
-      <%= image_tag 'Tiny_Photo_Not_Available.png', class: 'img-responsive' %>
-    <% end %>
-    <% if isAdmin? or @sponsor.user_id == current_user.id %>
-      <%= form_for [@sport, @sponsor], :input_html => { :class => 'form-horizontal' } do |f| %>
-        <div class= "row">
-          <div class="col-xs-11">
-            <%= f.file_field  :adbanner, class: 'form-control' %>
-          </div>
-        </div>
-        <p>
-        <div class="row">
-          <div class="col-xs-2">
-            <%= f.submit :submit, class:  "btn btn-sm btn-primary", id: "submitbtn" %>
-          </div>
-        </div>
-      <% end %>
-    <% end %>
-  </div>
-  <div class="col-xs-6">
-    <div class="row">
-      <div class="col-xs-12">
-        <h5 class="text-info">You can upload a banner ad for display on our mobile app. Banner ads for phones should be 320x50 pixels and for iPad's they will be 640x50 pixels. You should create a banner that is 640x50. Our software will automatically resize it for display on phones. If you create a banner ad that is only 320x50, it will be upsized for display on an iPad but the result may look blurry. If you choose not download a banner ad the default banner ad will be displayed. The default banner will use the ad copy above in addition to your sponsor name. Here is an example of the default banner ad.</h5>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-xs-6">
-        <%= image_tag "fanapp/iPhoneBannerAd.png", class: 'img-responsive' %>
-      </div>
-    </div>
-    <h5>The mobile app will automatically use the default banner if one is not uploaded.</h5>
-  </div>
-</div>
-<p>
-<% if @sponsor.sportadinv.playerad %>
+<% if site_owner?(@sport) or @sponsor.user_id == current_user.id %>
   <div class="row">
-    <div class="col-xs-11">
-      <% if @sponsor.athlete_id.nil? %>
+    <div class="col-xs-4">
+      <% if @sponsor.processing %>
+        <h4><em><font color="red">Processing Replacement Banner ...</font></em></h4>
+      <% end %>
+      <h4>Change Sponsor Banner:</h4>
+      <% if @sponsor.adbanner? %> 
+        <%= image_tag @sponsor.adbanner.url(:portraitbanner), class: 'img-responsive' %>
+      <% else %>
+        <%= image_tag 'Tiny_Photo_Not_Available.png', class: 'img-responsive' %>
+      <% end %>
+      <% if isAdmin? or @sponsor.user_id == current_user.id %>
         <%= form_for [@sport, @sponsor], :input_html => { :class => 'form-horizontal' } do |f| %>
-          <div class="row">
-            <div class="col-xs-4">
-              <%= f.label :athlete_id, "This is a player ad. Please select the player you want the ad displayed on. Your player ad will not be displayed until you attach the ad to a player." %>
-              <%= f.select :athlete_id, @sport.athletes.all.asc(:number).collect { |a| [a.numlogname, a.id] }, { include_blank: true }, 
-                          class: "form-control" %>
+          <div class= "row">
+            <div class="col-xs-11">
+              <%= f.file_field  :adbanner, class: 'form-control' %>
             </div>
           </div>
           <p>
           <div class="row">
-            <div class="col-xs-2 col-xs-offset-1">
-              <%= f.submit "Attach Player to Ad", class:  "btn btn-sm btn-primary", id: "submitbtn" %>
+            <div class="col-xs-2">
+              <%= f.submit :submit, class:  "btn btn-sm btn-primary", id: "submitbtn" %>
             </div>
           </div>
         <% end %>
-      <% else %>
-        <h3 class="text-success">This Player Advertisement attached to number <%= @sport.athletes.find(@sponsor.athlete_id).numlogname %></h3>
       <% end %>
-     </div>
+    </div>
+    <div class="col-xs-6">
+      <div class="row">
+        <div class="col-xs-12">
+          <h5 class="text-info">You can upload a banner ad for display on our mobile app. Banner ads for phones should be 320x50 pixels and for iPad's they will be 640x50 pixels. You should create a banner that is 640x50. Our software will automatically resize it for display on phones. If you create a banner ad that is only 320x50, it will be upsized for display on an iPad but the result may look blurry. If you choose not download a banner ad the default banner ad will be displayed. The default banner will use the ad copy above in addition to your sponsor name. Here is an example of the default banner ad.</h5>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-xs-6">
+          <%= image_tag "fanapp/iPhoneBannerAd.png", class: 'img-responsive' %>
+        </div>
+      </div>
+      <h5>The mobile app will automatically use the default banner if one is not uploaded.</h5>
+    </div>
   </div>
+  <p>
+  <% if @sponsor.sportadinv.playerad %>
+    <div class="row">
+      <div class="col-xs-11">
+        <% if @sponsor.athlete_id.nil? %>
+          <%= form_for [@sport, @sponsor], :input_html => { :class => 'form-horizontal' } do |f| %>
+            <div class="row">
+              <div class="col-xs-4">
+                <%= f.label :athlete_id, "This is a player ad. Please select the player you want the ad displayed on. Your player ad will not be displayed until you attach the ad to a player." %>
+                <%= f.select :athlete_id, @sport.athletes.all.asc(:number).collect { |a| [a.numlogname, a.id] }, { include_blank: true }, 
+                            class: "form-control" %>
+              </div>
+            </div>
+            <p>
+            <div class="row">
+              <div class="col-xs-2 col-xs-offset-1">
+                <%= f.submit "Attach Player to Ad", class:  "btn btn-sm btn-primary", id: "submitbtn" %>
+              </div>
+            </div>
+          <% end %>
+        <% else %>
+          <h3 class="text-success">This Player Advertisement is attached to number <%= @sport.athletes.find(@sponsor.athlete_id).numlogname %></h3>
+        <% end %>
+       </div>
+    </div>
+  <% end %>
 <% end %>
-<p>
-<div class="row">
-  <div class="col-xs-4 col-xs-offset-4">
-  </div>
-</div>
 <p>
 <% if (user_signed_in? and @sponsor.user_id.to_s == current_user.id.to_s) or isAdmin? %>
   <div class="row">

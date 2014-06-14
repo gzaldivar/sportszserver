@@ -6,7 +6,7 @@
 		<p>
 		<h4 class="text-success">Higher priced ads appear more often than lower priced ads. Choose the level of ad that best fits the exposure you want on <strong><%= @sport.sitename %> <%= @sport.name %></strong>.</h4>
 		<h4 class="text-success">We thank you for advertising on <strong><%= @sport.sitename %> <%= @sport.name %></strong>.</h4>
-		<h5 class="text-info"><em><%= @sport.sitename %></em> currently has <%= @sportadinvs.count.to_s %> ad level for you to choose from.</h5>
+		<h5 class="text-info"><em><%= @sport.sitename %></em> currently has <%= @sportadinvs.count.to_s %> ad level for you to choose from. Select one to advertise!</h5>
 
 		<div class="row">
 			<div class="col-xs-6">
@@ -19,8 +19,20 @@
 						<% if !@sportadinvs.nil? %>
 						 	<% @sportadinvs.each do |s| %>
 						 		<tr>
-									<td><%= s.adlevelname %></td>
-									<td><%= s.price %></td>
+						 			<% if user_signed_in? %>
+							 			<% if s.playerad %>
+											<td><%= link_to s.adlevelname, new_sport_sponsor_path(@sport, sportadinv_id: s.id,
+													 playerad: true) %></td>
+											<td><%= link_to s.price, new_sport_sponsor_path(@sport, sportadinv_id: s.id, 
+													playerad: true) %></td>
+										<% else %>
+											<td><%= link_to s.adlevelname, new_sport_sponsor_path(@sport, sportadinv_id: s.id) %></td>
+											<td><%= link_to s.price, new_sport_sponsor_path(@sport, sportadinv_id: s.id) %></td>
+										<% end %>
+									<% else %>
+										<td><%= link_to s.adlevelname %></td>
+										<td><%= link_to s.price %></td>
+									<% end %>
 								</tr>
 					 		<% end %>
 					 	<% end %>
@@ -37,13 +49,5 @@
 			<h4 class="text-danger">You will need to login to advertise on <%= @sport.sitename %>. If you do not have a login, select "Sign Up" on the login page.</h4>
 		<% end %>
 		<p>
-		<% if user_signed_in? %>
-			<div class="row">
-				<div class="col-xs-6">
-					<h5><%= link_to "Click here to advertise on #{@sport.sitename} #{@sport.name}!", new_sport_sponsor_path(@sport) %>
-					<%= link_to "Click Here", new_sport_sponsor_path(@sport), class: "btn btn-sm btn-primary" %></h5>
-				</div>
-			</div>
-		<% end %>
 	</div>
 </div>

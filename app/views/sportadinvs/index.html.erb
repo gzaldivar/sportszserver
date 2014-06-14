@@ -1,5 +1,11 @@
 <% provide(:title, "Adminstor Ad Inventroy") %>
 <p>
+<div clas="row">
+	<div class="col-xs-11">
+		<h2>How to sell ads on your site!</h2>
+		<p class="text-info">Ad inventory can be created and sold using the web or your fans can purchase sponsorship ads using the mobile app. Keep in mind that Apple will take <font color="red">30%</font> of all in app purchases. GameTracker will take an additional <font color="red"><%= Admin.first.adpercentage %>%</font>. The in app purchase capability is there to make it easier to raise revenue for your program. It is ideal for having your players sign up individual sponsors etc. You may want to have your corporate/major sponsors use the web since Paypal is processed as a standard credit card transaction and GameTracker <font color="red"><%= Admin.first.adpercentage %>%</font>.</p>
+	</div>
+</div>
 <% if !current_user.paypal_email and isAdmin? %>
 	<div class="row">
 		<div class="col-xs-11">
@@ -11,23 +17,49 @@
 <p>
 <div class="row">
 	<div class="col-xs-11">
-		<h3 class="text-center">Enter your ad inventory for sale below.</h3>
+		<h3 class="text-center">These are the ad classes below for sale in the GameTracker mobile app.</h3>
 		<p>
-		<h5 class="text-info">If you sell ad space or have corporate sponsors that you deal with directly, create an inventory item to attach that sponsor to the newly created ad inventory. You will not be able to enter the sponsor data and have the sponsor's ad appear on the mobile device or web site until you do so.</h5>
+		<table class="table table-striped table-bordered table-hover">
+		    <thead>
+		    	<th>Image</th>
+		    	<th>Name</th>
+		    	<th>Price</th>
+		    	<th>Player Ad</th>
+		    </thead>
+		    <tbody>
+		    	<% @inapp_products.each do |i| %>
+		    		<tr>
+		    			<td><%= image_tag i.iosadimage(:tiny) %></td>
+		    			<td><%= i.referencename %></td>
+		    			<td><%= i.price %></td>
+		    			<td><%= i.playerad %></td>
+		    		</tr>
+		    	<% end %>
+		    </tbody>
+		</table>
 		<p>
-		<h5 class="text-info">Advertisers will choose from the diferent types of ads and purchase ads based on how often they want their ad to appear. The higher the price of the ad, the more often the ad will be displayed. You may create as many classes of ad at any price as you like but less is better. The more classes of ads you create the longer the queue cycle will be for them to appear on our mobile app. Web site ads on your page will be displayed in the same manner.</h5>
+		<p class="text-info">Remember that all in app purchases will be subject to Apples 30% charge.</p>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-11">
+		<h3 class="text-center">Enter your ad inventory for sale from the web below.</h3>
 		<p>
-		<h5 class="text-info">If you choose not to create ad inventory or enter sponsor information, ads will still appear when your fans visit your site on our mobile app. We encourage you to take advantage of this service to rasie funds for your program. There is a fee for using this service. Currently, we take a <%= Admin.all.first.adpercentage.to_s %>% of the ad price.</h5>
+		<p class="text-info">If you sell ad space or have corporate sponsors that you deal with directly, create an inventory item to attach that sponsor to the newly created ad inventory. You will not be able to enter the sponsor data and have the sponsor's ad appear on the mobile device or web site until you do so.</p>
 		<p>
-		<h5 class="text-success">You can pick any name for your ad inventory tiers. Try and pick names that your advertisers can easily associate with their respective tiers. For example ....
+		<p class="text-info">Advertisers will choose from the diferent types of ads and purchase ads based on how often they want their ad to appear. The higher the price of the ad, the more often the ad will be displayed. You may create as many classes of ad at any price as you like but less is better. The more classes of ads you create the longer the queue cycle will be for them to appear on our mobile app. Web site ads on your page will be displayed in the same manner.</p>
+		<p>
+		<p class="text-info">If you choose not to create ad inventory or enter sponsor information, ads will still appear when your fans visit your site on our mobile app. We encourage you to take advantage of this service to rasie funds for your program. There is a fee for using this service. Currently, we take a <font color="red"><%= Admin.all.first.adpercentage.to_s %>%</font> of the ad price.</p>
+		<p>
+		<p class="text-success">You can pick any name for your ad inventory tiers. Try and pick names that your advertisers can easily associate with their respective tiers. For example ....
 		<ul>
 			<li>High, Platinum, ....</li>
 			<li>Medium ,Gold, ....</li>
 			<li>Low, Silver, ....</li>
 		</ul>
-		</h5>
-		<h5 class="text-info">Because our software is sport's oriented, you can also create a player ad that is displayed only on pages associated with that player. For example, these ads would be displayed as a banner ad on the players bio page and stat's page. This is useful for  fundraising. There can only be one class of this ad and it can be priced at any price point you desire. All ads of this class will be cycled on the mobile app on the player's respective pages. Advertisers can choose this ad type to target ads associated with a specific player. 
-		</h5>
+		</p>
+		<p class="text-info">Because our software is sport's oriented, you can also create a player ad that is displayed only on pages associated with that player. For example, these ads would be displayed as a banner ad on the players bio page and stat's page. This is useful for fundraising. There can only be one class of this ad and it can be priced at any price point you desire. All ads of this class will be cycled on the mobile app on the player's respective pages. Advertisers can choose this ad type to target ads associated with a specific player. 
+		</p>
 		<h4 class="text-center">Ad classes for <%= @sport.sitename %></h4>
 		<table class="table table-striped table-bordered table-hover">
 		    <thead>

@@ -39,6 +39,7 @@ class SportadinvsController < ApplicationController
 	def index
 		begin
 			@sportadinvs = @sport.sportadinvs.all.asc(:price).paginate( page: params[:page])
+			@inapp_products = Admin.first.ios_client_ads.asc(:price)
 		rescue Exception => e
 			redirect_to :back, alert: e.message + " You can so by editing you user profile."
 		end

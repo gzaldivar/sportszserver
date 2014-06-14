@@ -1,8 +1,8 @@
 <% provide(:title, 'New Sponsor') %>
 <div class="row">
-  <div class="col-xs-12">
-		<div class="hero-unit">
-			<h5>Below you will be able to upload your ad image and banner for display on GameTracker mobile apps. You will be able to change the ad images at anytime. 
+  <div class="col-xs-11">
+		<div class="well">
+			<p class="text-info">Below you will be able to upload your ad image and banner for display on GameTracker mobile apps. You will be able to change the ad images at anytime. 
       <p>
       You must use jpg/jpeg/png images for all ad images.
        <p>
@@ -10,6 +10,12 @@
       <p>
       <% if site_owner?(@sport) %>
         You may create as many sponsors as you like.  They will be cycled on our mobile app automatically. They will also be automatically cycled in a queue and presented on your web site.
+      <% end %>
+      <p>
+      <% if params[:playerad] %>
+        <p class="text-success">Player ads do not require location information. You can create a player ad to simply simply support the team. If you choose to not upload an image, the team image will be used with your message when your ad is shown on the GameTracker app.</p>
+      <% else %>
+        <p class="text-success">Make sure you add your contact information. You want fans of <%= current_site.sitename %> to be able to find your business.</p>
       <% end %>
       <p>
       </h5><br/>

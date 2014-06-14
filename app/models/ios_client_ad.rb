@@ -10,6 +10,7 @@ class IosClientAd
 	field :playerad, type: Boolean, default: false
 
 	belongs_to :admin
+	has_many :sponsors, dependent: :destroy
 
 	has_mongoid_attached_file :iosadimage,
 	    :storage        => :s3,

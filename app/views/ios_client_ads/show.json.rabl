@@ -1,6 +1,6 @@
 object @product
 node(:id) { |o| o.id.to_s }
-attributes :referencename, :productid, :adtype, :appleid, :price
+attributes :referencename, :productid, :adtype, :appleid, :price, :playerad
 node(:thumb) { |t| t.iosadimage(:thumb) }
 node(:tiny) { |t| t.iosadimage(:tiny) }
 node(:medium) { |t| t.iosadimage(:medium) }

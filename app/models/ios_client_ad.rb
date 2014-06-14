@@ -7,6 +7,7 @@ class IosClientAd
 	field :adtype, type: String
 	field :appleid, type: String
 	field :price, type: Float, default: 0.0
+	field :playerad, type: Boolean, default: false
 
 	belongs_to :admin
 

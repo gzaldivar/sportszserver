@@ -11,6 +11,10 @@
 					<%= f.label :adtype, "Ad Type" %>
 					<%= f.text_field :adtype, class: 'form-control' %>
 				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= f.label :price, "Price" %>
+					<%= f.text_field :price, class: 'form-control' %>
+				</div>
 			</div>
 			<p>
 			<div class="row">
@@ -22,12 +26,11 @@
 					<%= f.label :appleid, "Apple Id" %>
 					<%= f.text_field :appleid, class: 'form-control' %>
 				</div>
-				<div class="col-xs-2 col-xs-offset-1">
-					<%= f.label :price, "Price" %>
-					<%= f.text_field :price, class: 'form-control' %>
-				</div>
-			</div>
-			<p>
+		        <div class="col-xs-4 col-xs-offset-1">
+		        	<%= f.label :iosadimage, "IOS Ad Image" %>
+		          	<%= f.file_field  :iosadimage, class: 'form-control' %>
+		        </div>
+		    </div>
 			<div class="row">
 				<div class="col-xs-4 col-xs-offset-4">
 					<%= f.submit 'Submit', class: "btn btn-md btn-primary" %>

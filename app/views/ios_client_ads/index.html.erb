@@ -2,33 +2,7 @@
 <p>
 <div class="row">
 	<div class="col-xs-11">
-		<table class="table table-striped table-bordered table-hover">
-		    <thead>
-		    	<th>Reference Name</th>
-		    	<th>Product Id</th>
-		    	<th>Ad Type</th>
-		    	<th>Apple Id</th>
-		    	<th>Price</th>
-		    	<th>Edit</th>
-		    	<th>Delete</th>
-		    </thead>
-		    <tbody>
-		    	<% if !@products.nil? %>
-		    		<% @products.each do |p| %>
-		    			<tr>
-		    				<td><%= link_to p.referencename, admin_ios_client_ad_path(@admin, p) %></td>
-		    				<td><%= link_to p.productid, admin_ios_client_ad_path(@admin, p) %></td>
-		    				<td><%= link_to p.adtype, admin_ios_client_ad_path(@admin, p) %></td>
-		    				<td><%= link_to p.appleid, admin_ios_client_ad_path(@admin, p) %></td>
-		    				<td><%= link_to number_with_precision(p.price, precision: 2), admin_ios_client_ad_path(@admin, p) %></td>
-		    				<td><%= link_to "Edit", edit_admin_ios_client_ad_path(@admin, p), class: "btn btn-xs btn-primary" %></td>
-		    				<td><%= link_to "Delete", admin_ios_client_ad_path(@admin, p), method: :delete, 
-		    						class: "btn btn-xs btn-danger" %></td>
-		    			</tr>
-		    		<% end %>
-		    	<% end %>
-		    </tbody>
-		</table>
+		<%= render 'productlist', products: @products %>
 	</div>
 </div>
 <div class="row">

@@ -96,17 +96,24 @@ class SponsorsController < ApplicationController
 		begin
 			if !isAdmin?
 				if params[:user]
-					@sponsors = @sport.sponsors.where(user_id: params[:user]).all.paginate(page: params[:page])
+					@sponsors = @sport.sponsors.where(user_id: params[:user], :sportadinv.exists => true).paginate(page: params[:page])
+					@inapsponsors = @sport.sponsors.where(user_id: params[:user], :ios_client_ad.exists => true).all.paginate(page: params[:page])
 				else
-					@sponsors = @sport.sponsors.all.paginate(page: params[:page])
+					@sponsors = @sport.sponsors.where(:sportadinv.exists => true).paginate(page: params[:page])
+					@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true).paginate(page: params[:page])
 				end
 			else
-				@sponsors = @sport.sponsors.all.paginate(page: params[:page])
-
+				@sponsors = @sport.sponsors.where(:sportadinv.exists => true).paginate(page: params[:page])
+				@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true).paginate(page: params[:page])
+	
 				@totals = 0
 				
 				@sponsors.each do |s|
 					@totals += s.sportadinv.price
+				end
+
+				@inapsponsors.each do |s|
+					@totals += s.ios_client_ad.price
 				end
 			end
 			

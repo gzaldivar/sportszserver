@@ -15,8 +15,9 @@ end
 node :forsale, :if => lambda { |a| !a.sportadinv.nil? } do |a|
 	a.sportadinv.active
 end
-node :playerad, :if => lambda { |a| !a.sportadinv.nil? } do |a|
-	a.sportadinv.playerad
+node :playerad, :if => lambda { |a| (!a.sportadinv.nil? and a.sportadinv.playerad == true ) or 
+									(!a.ios_client_ad.nil? and a.ios_client_ad.playerad == true) } do |a|
+	true
 end
 node :thumb, :if => lambda { |t| t.sponsorpic? } do |s|
 	s.sponsorpic(:thumb)

@@ -51,7 +51,7 @@ class SponsorsController < ApplicationController
 				@sponsor.team_id = params[:team_id]
 			end
 
-			if params[:playerad]
+			if (!@sponsor.ios_client_ad.nil? and @sponsor.ios_client_ad.playerad) or (!@sponsor.sportadinv.nil? and @sponsor.sportadinv.playerad)
 				@sponsor.save(validate: false)
 			else
 				@sponsor.save!
@@ -78,7 +78,12 @@ class SponsorsController < ApplicationController
 			@sponsor.update_attributes!(params[:sponsor])
 			@sponsor.city = @sponsor.zip.to_region(city: true)
         	@sponsor.state = @sponsor.zip.to_region(state: true)
-        	@sponsor.save!
+
+			if (!@sponsor.ios_client_ad.nil? and @sponsor.ios_client_ad.playerad) or (!@sponsor.sportadinv.nil? and @sponsor.sportadinv.playerad)
+				@sponsor.save(validate: false)
+			else
+				@sponsor.save!
+			end
 
 			respond_to do |format|
 				format.html { redirect_to [@sport, @sponsor], notice: "Sponsor updated!" }

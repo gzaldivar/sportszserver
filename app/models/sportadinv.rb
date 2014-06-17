@@ -8,7 +8,7 @@ class Sportadinv
 	field :adlevelname, type: String
 	field :active, type: Boolean
 	field :expiration, type: DateTime
-	field :playerad, type: Boolean
+	field :playerad, type: Boolean, default: false
 
 	belongs_to :sport
 	has_many :sponsors

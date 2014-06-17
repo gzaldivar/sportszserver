@@ -33,7 +33,7 @@ class Sponsor
   belongs_to :user
   belongs_to :athlete
   has_one :adpayment
-  has_one :ios_client_ad
+  belongs_to :ios_client_ad
 
   has_mongoid_attached_file :sponsorpic,
     :storage        => :s3,

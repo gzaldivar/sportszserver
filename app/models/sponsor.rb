@@ -3,7 +3,7 @@ class Sponsor
   include Mongoid::Timestamps
   include Mongoid::Paperclip
 
-  attr_accessor :content_type, :original_filename, :image_data
+  attr_accessor :content_type, :original_filename, :image_data, :imagetype
 
   before_save :decode_base64_image
 
@@ -78,7 +78,11 @@ class Sponsor
         data.content_type = self.content_type
         data.original_filename = File.basename(self.original_filename)
  
-        self.sponsorpic = data
+        if sponsor.imagetype == "sponsorbanner"
+          self.adbanner = data
+        else
+          self.sponsorpic = data
+        end
       end
     end
 

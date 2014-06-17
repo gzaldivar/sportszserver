@@ -176,8 +176,14 @@ class SponsorsController < ApplicationController
 
 			@sponsor.save!
 
-			queue = @sport.photo_queues.new(modelid: @sponsor.id, modelname: "sponsors", filename: params[:filename], filetype: params[:filetype], 
-			                              filepath: params[:filepath])
+			if params[:sponsorbanner] == "sponsorbanner"
+				queue = @sport.photo_queues.new(modelid: @sponsor.id, modelname: "sponsorbanner", filename: params[:filename], filetype: params[:filetype], 
+			                            		filepath: params[:filepath])
+			else
+				queue = @sport.photo_queues.new(modelid: @sponsor.id, modelname: "sponsors", filename: params[:filename], filetype: params[:filetype], 
+			                            		filepath: params[:filepath])
+			end
+
 			if queue.save!
 				Resque.enqueue(PhotoProcessor, queue.id)
 			end

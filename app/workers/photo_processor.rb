@@ -125,6 +125,33 @@ class PhotoProcessor
         sponsor.image_data = obj.read
         sponsor.original_filename = item.filename
         sponsor.content_type = item.filetype
+        sponsor.imagetype = "sponsorimage"
+        sponsor.save!
+        sponsor.processing = false
+        sponsor.save!
+        
+        obj.delete
+        item.delete
+      rescue Exception => e
+        error = item.sport.photo_errors.new
+        error.error_message = e.message
+        error.modelname = item.modelname
+        error.modelid = item.modelid
+        error.sport = item.sport
+        error.save
+        item.delete
+      end
+    elsif item.modelname == "sponsorbanner"
+      begin
+        sponsor = Sponsor.find(item.modelid)    
+        s3 = AWS::S3.new
+        bucket = s3.buckets[S3DirectUpload.config.bucket]
+        obj = bucket.objects[item.filepath]
+
+        sponsor.image_data = obj.read
+        sponsor.original_filename = item.filename
+        sponsor.content_type = item.filetype
+        sponsor.imagetype = "sponsorbanner"
         sponsor.save!
         sponsor.processing = false
         sponsor.save!

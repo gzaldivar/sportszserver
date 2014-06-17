@@ -9,8 +9,12 @@ attributes :name, :addrnum, :street, :city,  :state,  :zip, :phone,  :fax,  :mob
 node :adsponsorlevel, :if => lambda { |a| !a.sportadinv.nil? } do |a|
 	a.sportadinv.adlevelname
 end
-node :price, :if => lambda { |a| !a.sportadinv.nil? } do |a|
-	a.sportadinv.price
+node :price, :if => lambda { |a| !a.sportadinv.nil? or !a.ios_client_ad.nil? } do |a|
+	if a.sportadinv
+		a.sportadinv.price
+	else
+		a.ios_client_ad.price
+	end
 end
 node :forsale, :if => lambda { |a| !a.sportadinv.nil? } do |a|
 	a.sportadinv.active

@@ -76,8 +76,11 @@ class SponsorsController < ApplicationController
 	def update
 		begin
 			@sponsor.update_attributes!(params[:sponsor])
-			@sponsor.city = @sponsor.zip.to_region(city: true)
-        	@sponsor.state = @sponsor.zip.to_region(state: true)
+
+			if params[:zip]
+				@sponsor.city = @sponsor.zip.to_region(city: true)
+        		@sponsor.state = @sponsor.zip.to_region(state: true)
+        	end
 
 			if (!@sponsor.ios_client_ad.nil? and @sponsor.ios_client_ad.playerad) or (!@sponsor.sportadinv.nil? and @sponsor.sportadinv.playerad)
 				@sponsor.save(validate: false)

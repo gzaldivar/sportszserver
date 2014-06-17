@@ -126,7 +126,7 @@ class SponsorsController < ApplicationController
 
 			respond_to do |format|
 				format.html
-				format.json
+				format.json { @sponsors = (@sponsors << @inapsponsors).flatten }
 			end	
 		rescue Exception => e
 			respond_to do |format|

@@ -40,8 +40,9 @@
           <tr>
       			<th>Name</th>
       			<th>Email</th>
-            <th>Team?</th> 
-            <th>Admin Entered</th>          
+            <th>Team</th> 
+            <th>Price</th>      
+            <th>Admin</th>    
          </tr>
         </thead>
         <tbody>
@@ -53,6 +54,7 @@
             <% else %>
               <td>None</td>
             <% end %>
+            <td><%= @sponsor.sportadinv.nil? ? @sponsor.ios_client_ad.price : @sponsor.sportadinv.price %></td>
             <td><%= @sponsor.adminentered if isAdmin? %></td>
          </tr>
         </tbody>
@@ -70,7 +72,7 @@
       	</thead>
       	<tbody>
           <tr>
-      			<td><%= @sponsor.addrnum.to_s + " " + @sponsor.street %></td>
+      			<td><%= @sponsor.addrnum.nil? || @sponsor.street.nil? ? "" : @sponsor.addrnum.to_s + " " + @sponsor.street %></td>
       			<td><%= @sponsor.city %></td>
         		<td><%= @sponsor.state %></td>
         		<td><%= @sponsor.phone %></td>

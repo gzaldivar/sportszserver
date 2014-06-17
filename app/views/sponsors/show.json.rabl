@@ -2,10 +2,17 @@ object @sponsor
 node(:id) { |o| o.id.to_s }
 node(:teamid) { |o| o.team_id.to_s }
 node(:sportadinv_id) { |s| s.sportadinv_id.to_s }
-node(:ios_client_ad) { |s| s.ios_client_ad.to_s }
+node(:ios_client_ad) { |s| s.ios_client_ad_id.to_s }
 node(:user_id) { |s| s.user_id.to_s }
 node(:athlete_id) { |s| s.athlete_id.to_s }
-attributes :name, :addrnum, :street, :city,  :state,  :zip, :phone,  :fax,  :mobile,  :contactemail, :sponsorlevel, :teamonly, :adurl, :email
+node :addrnum do |a|
+	if a.addrnum == 0
+		""
+	else
+		a.addrnum
+	end
+end
+attributes :name, :street, :city,  :state,  :zip, :phone,  :fax,  :mobile,  :contactemail, :sponsorlevel, :teamonly, :adurl, :email
 node :adsponsorlevel, :if => lambda { |a| !a.sportadinv.nil? } do |a|
 	a.sportadinv.adlevelname
 end

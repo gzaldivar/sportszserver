@@ -126,7 +126,13 @@ class PhotoProcessor
         sponsor.original_filename = item.filename
         sponsor.content_type = item.filetype
         sponsor.imagetype = "sponsorimage"
-        sponsor.save!
+
+        if (!sponsor.ios_client_ad.nil? and sponsor.ios_client_ad.playerad) or (!sponsor.sportadinv.nil? and sponsor.sportadinv.playerad)
+          sponsor.save(validate: false)
+        else
+          sponsor.save!
+        end
+
         sponsor.processing = false
         sponsor.save!
         
@@ -152,7 +158,13 @@ class PhotoProcessor
         sponsor.original_filename = item.filename
         sponsor.content_type = item.filetype
         sponsor.imagetype = "sponsorbanner"
-        sponsor.save!
+
+        if (!sponsor.ios_client_ad.nil? and sponsor.ios_client_ad.playerad) or (!sponsor.sportadinv.nil? and sponsor.sportadinv.playerad)
+          sponsor.save(validate: false)
+        else
+          sponsor.save!
+        end
+        
         sponsor.processing = false
         sponsor.save!
         

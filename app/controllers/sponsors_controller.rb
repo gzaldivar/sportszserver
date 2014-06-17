@@ -179,7 +179,11 @@ class SponsorsController < ApplicationController
 		begin    
 			@sponsor.processing = true
 
-			@sponsor.save!
+			if (!@sponsor.ios_client_ad.nil? and @sponsor.ios_client_ad.playerad) or (!@sponsor.sportadinv.nil? and @sponsor.sportadinv.playerad)
+				@sponsor.save(validate: false)
+			else
+				@sponsor.save!
+			end
 
 			if params[:sponsorbanner] == "sponsorbanner"
 				queue = @sport.photo_queues.new(modelid: @sponsor.id, modelname: "sponsorbanner", filename: params[:filename], filetype: params[:filetype], 

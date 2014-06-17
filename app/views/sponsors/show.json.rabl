@@ -5,7 +5,19 @@ node(:sportadinv_id) { |s| s.sportadinv_id.to_s }
 node(:ios_client_ad) { |s| s.ios_client_ad_id.to_s }
 node(:user_id) { |s| s.user_id.to_s }
 node(:athlete_id) { |s| s.athlete_id.to_s }
-attributes :name, :street, :addrnum, :city,  :state,  :zip, :phone,  :fax,  :mobile,  :contactemail, :sponsorlevel, :teamonly, :adurl, :email
+
+node :street, :if => lambda { |s| !s.street.nil? }
+node :city, :if => lambda { |s| !s.city.nil? }
+node :state, :if => lambda { |s| !s.state.nil? }
+node :zip, :if => lambda { |s| !s.zip.nil? }
+node :phone, :if => lambda { |s| !s.phone.nil? }
+node :fax, :if => lambda { |s| !s.fax.nil? }
+node :mobile, :if => lambda { |s| !s.mobile.nil? }
+node :contactemail, :if => lambda { |s| !s.contactemail.nil? }
+node :sponsorlevel, :if => lambda { |s| !s.sponsorlevel.nil? }
+node :adurl, :if => lambda { |s| !s.adurl.nil? }
+
+attributes :name, :addrnum, :teamonly
 node :adsponsorlevel, :if => lambda { |a| !a.sportadinv.nil? } do |a|
 	a.sportadinv.adlevelname
 end

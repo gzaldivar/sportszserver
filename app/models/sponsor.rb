@@ -10,7 +10,7 @@ class Sponsor
   field :name, type: String
   field :addrnum, type: Integer, default: 0
   field :street, type: String
-  field :city, type: String,
+  field :city, type: String
   field :state, type: String
   field :zip, type: String
   field :phone, type: String

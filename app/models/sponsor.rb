@@ -9,17 +9,17 @@ class Sponsor
 
   field :name, type: String
   field :addrnum, type: Integer, default: 0
-  field :street, type: String
-  field :city, type: String
-  field :state, type: String
-  field :zip, type: String
-  field :phone, type: String
-  field :fax, type: String
-  field :mobile, type: String
-  field :contactemail, type: String
+  field :street, type: String, default: ""
+  field :city, type: String, default: ""
+  field :state, type: String, default: ""
+  field :zip, type: String, default: ""
+  field :phone, type: String, default: ""
+  field :fax, type: String, default: ""
+  field :mobile, type: String, default: ""
+  field :contactemail, type: String, default: ""
   field :teamonly, type: Boolean, default: false
-  field :adurl, type: String
-  field :sponsorlevel, type: String
+  field :adurl, type: String, default: ""
+  field :sponsorlevel, type: String, default: ""
   field :adminentered, type: Boolean, default: false
 
   field :processing, type: Boolean, default: false

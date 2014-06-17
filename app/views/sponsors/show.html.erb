@@ -94,6 +94,8 @@
           <td><%= User.find(@sponsor.user_id).email if @sponsor.user_id %></td>
           <% if @sponsor.adminentered %>
             <td>None</td>
+          <% elsif @sponsor.ios_client_ad %>
+            <td>Season In app add</td>
           <% else %>
             <td><%= @sponsor.adpayment.expiration.strftime("%m/%d/%Y") if @sponsor.adpayment  %></td>
           <% end %>

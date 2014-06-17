@@ -148,31 +148,6 @@
     </div>
   </div>
   <p>
-  <% if @sponsor.sportadinv.playerad %>
-    <div class="row">
-      <div class="col-xs-11">
-        <% if @sponsor.athlete_id.nil? %>
-          <%= form_for [@sport, @sponsor], :input_html => { :class => 'form-horizontal' } do |f| %>
-            <div class="row">
-              <div class="col-xs-4">
-                <%= f.label :athlete_id, "This is a player ad. Please select the player you want the ad displayed on. Your player ad will not be displayed until you attach the ad to a player." %>
-                <%= f.select :athlete_id, @sport.athletes.all.asc(:number).collect { |a| [a.numlogname, a.id] }, { include_blank: true }, 
-                            class: "form-control" %>
-              </div>
-            </div>
-            <p>
-            <div class="row">
-              <div class="col-xs-2 col-xs-offset-1">
-                <%= f.submit "Attach Player to Ad", class:  "btn btn-sm btn-primary", id: "submitbtn" %>
-              </div>
-            </div>
-          <% end %>
-        <% else %>
-          <h3 class="text-success">This Player Advertisement is attached to number <%= @sport.athletes.find(@sponsor.athlete_id).numlogname %></h3>
-        <% end %>
-       </div>
-    </div>
-  <% end %>
 <% end %>
 <p>
 <% if (user_signed_in? and @sponsor.user_id.to_s == current_user.id.to_s) or isAdmin? %>

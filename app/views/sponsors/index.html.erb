@@ -1,9 +1,9 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + " - Sponsors") %>
 <p>
-<% if !User.find(@sport.adminid).paypal_email and isAdmin? %>
+<% if !User.find(@sport.adminid).paypal_email %>
 	<div class="row">
 		<div class="col-xs-11">
-			<h3 class="text-warning"><%= current_site.sitename %> does not support advertising. Please contact the site administrator with questions.</h3>
+			<h3 class="text-warning"><%= current_site.sitename %> does not support user purchased advertising. Please contact the site administrator with questions.</h3>
 		</div>
 	</div>
 <% end %>

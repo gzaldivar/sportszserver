@@ -44,3 +44,7 @@ node (:highlightAppVersion) { admin.highlightAppVersion }
 node (:pricingurl) { admin.pricingurl }
 node (:supportedsports) { admin.supportedsports }
 node (:adurl) { admin.adurl }
+
+node :purchaseads, :if => lambda { |s| User.find(@sport.adminid).paypal_email } do
+	true
+end

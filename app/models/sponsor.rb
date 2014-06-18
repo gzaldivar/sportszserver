@@ -78,7 +78,7 @@ class Sponsor
         data.content_type = self.content_type
         data.original_filename = File.basename(self.original_filename)
  
-        if sponsor.imagetype == "sponsorbanner"
+        if self.imagetype == "sponsorbanner"
           self.adbanner = data
         else
           self.sponsorpic = data

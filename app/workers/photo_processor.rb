@@ -117,6 +117,7 @@ class PhotoProcessor
 
     elsif item.modelname == "sponsors"
       begin
+        puts 'processing sponsor'
         sponsor = Sponsor.find(item.modelid)    
         s3 = AWS::S3.new
         bucket = s3.buckets[S3DirectUpload.config.bucket]
@@ -126,15 +127,13 @@ class PhotoProcessor
         sponsor.original_filename = item.filename
         sponsor.content_type = item.filetype
         sponsor.imagetype = "sponsorimage"
+        sponsor.processing = false
 
         if (!sponsor.ios_client_ad.nil? and sponsor.ios_client_ad.playerad) or (!sponsor.sportadinv.nil? and sponsor.sportadinv.playerad)
           sponsor.save(validate: false)
         else
           sponsor.save!
         end
-
-        sponsor.processing = false
-        sponsor.save!
         
         obj.delete
         item.delete
@@ -149,6 +148,7 @@ class PhotoProcessor
       end
     elsif item.modelname == "sponsorbanner"
       begin
+        puts 'processing sponsor banner'
         sponsor = Sponsor.find(item.modelid)    
         s3 = AWS::S3.new
         bucket = s3.buckets[S3DirectUpload.config.bucket]
@@ -158,15 +158,13 @@ class PhotoProcessor
         sponsor.original_filename = item.filename
         sponsor.content_type = item.filetype
         sponsor.imagetype = "sponsorbanner"
+        sponsor.processing = false
 
         if (!sponsor.ios_client_ad.nil? and sponsor.ios_client_ad.playerad) or (!sponsor.sportadinv.nil? and sponsor.sportadinv.playerad)
           sponsor.save(validate: false)
         else
           sponsor.save!
         end
-        
-        sponsor.processing = false
-        sponsor.save!
         
         obj.delete
         item.delete

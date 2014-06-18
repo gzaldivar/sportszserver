@@ -188,7 +188,7 @@ class SponsorsController < ApplicationController
 				@sponsor.save!
 			end
 
-			if params[:sponsorbanner] == "sponsorbanner"
+			if params[:sponsorimage] == "sponsorbanner"
 				queue = @sport.photo_queues.new(modelid: @sponsor.id, modelname: "sponsorbanner", filename: params[:filename], filetype: params[:filetype], 
 			                            		filepath: params[:filepath])
 			else

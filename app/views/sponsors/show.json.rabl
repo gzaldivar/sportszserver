@@ -6,7 +6,19 @@ node(:ios_client_ad) { |s| s.ios_client_ad_id.to_s }
 node(:user_id) { |s| s.user_id.to_s }
 node(:athlete_id) { |s| s.athlete_id.to_s }
 
-attributes :name, :addrnum, :street, :city, :state, :zip, :phone, :fax, :mobile, :contactemail, :sponsorlevel, :adurl, :teamonly
+attributes :name, :addrnum
+
+attribute :street, :if => lambda { |s| s.street.present? }
+attribute :city, :if => lambda { |s| s.city.present? }
+attribute :state, :if => lambda { |s| s.state.present? }
+attribute :zip, :if => lambda { |s| s.zip.present? }
+attribute :phone, :if => lambda { |s| s.phone.present? }
+attribute :fax, :if => lambda { |s| s.fax.present? }
+attribute :mobile, :if => lambda { |s| s.mobile.present? }
+attribute :contactemail, :if => lambda { |s| s.contactemail.present? }
+attribute :sponsorlevel, :if => lambda { |s| s.sponsorlevel.present? }
+attribute :adurl, :if => lambda { |s| s.adurl.present? }
+attribute :teamonly, :if => lambda { |s| s.teamonly.present? }
 
 node :adsponsorlevel, :if => lambda { |a| !a.sportadinv.nil? } do |a|
 	a.sportadinv.adlevelname

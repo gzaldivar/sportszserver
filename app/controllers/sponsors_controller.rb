@@ -125,10 +125,8 @@ class SponsorsController < ApplicationController
 				end
 			end
 			
-			@sponsors.sort! { |a,b| a.sportadinv.price <=> b.sportadinv.price }				
-
 			respond_to do |format|
-				format.html
+				format.html { @sponsors.sort! { |a,b| a.sportadinv.price <=> b.sportadinv.price } }
 				format.json { @sponsors = (@sponsors << @inapsponsors).flatten }
 			end	
 		rescue Exception => e

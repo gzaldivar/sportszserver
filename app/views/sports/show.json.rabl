@@ -45,6 +45,6 @@ node (:pricingurl) { admin.pricingurl }
 node (:supportedsports) { admin.supportedsports }
 node (:adurl) { admin.adurl }
 
-node :purchaseads, :if => lambda { |s| User.find(@sport.adminid).paypal_email } do
+node :purchaseads, :if => lambda { |s| User.find(s.adminid).paypal_email } do
 	true
 end

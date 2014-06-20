@@ -1,6 +1,6 @@
 <% provide(:title, current_site.sitename + " " + @sport.sportname + " - Standings") %>
 <div class="row">
-  	<div class="col-xs-11">
+  	<div class="col-xs-12">
   		<% if user_signed_in? and site_owner?(@sport) %>
 	  		<h4>You can import records from other Game Tracker programs. Hopefully, they keep their data up to date!</h4>
 		<% end %>

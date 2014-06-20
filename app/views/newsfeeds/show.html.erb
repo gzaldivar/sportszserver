@@ -1,7 +1,7 @@
 <% provide(:title, current_site.sitename + " - News Item") %>
 <p>
 <div class ="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
     <div class="row">
       	<p class="text-success"><%= @newsfeed.title %></p>
     </div>
@@ -53,7 +53,7 @@
 			    <%= image_tag get_sport_logo(@sport), class: "img-responsive" %>
 			<% end %>
 		</div>
-      	<div class="col-xs-6">
+      	<div class="col-xs-8">
         	<p class="text-info">
           	<% if site_owner?(@sport) %>
             	<%= link_to @newsfeed.news, sport_newsfeed_path(@sport, @newsfeed) %>
@@ -64,23 +64,23 @@
       	</div>
     </div>
     <div class="row">
-      	<div class="col-xs-4">
+      	<div class="col-xs-6">
             <h5><%= link_to @newsfeed.sport.name, sport_path(@sport) %></h5>
         </div>
-        <div class="col-xs-4>"
+        <div class="col-xs-6>"
 			<% if !@newsfeed.team_id.nil? and !@newsfeed.team_id.blank? %>
 				<%= @newsfeed.sport.teams.find(@newsfeed.team_id).team_name %>
 			<% end %>
 		</div>
 	</div>
 	<div class="row">
-		<div class="col-xs-4">
+		<div class="col-xs-6">
             <% if !@newsfeed.athlete_id.nil? and !@newsfeed.athlete_id.blank? %>
             	<font color="red">Athlete:</font>
             	<%= link_to @sport.athletes.find(@newsfeed.athlete_id).full_name, sport_athlete_path(@sport, @newsfeed.athlete_id) %>&nbsp
             <% end %>
         </div>
-        <div class="col-xs-4">
+        <div class="col-xs-6">
             <% if !@newsfeed.coach_id.nil? and !@newsfeed.coach_id.blank? %>
                 <font color="red">Coach:</font>
                 <%= link_to @sport.coaches.find(@newsfeed.coach_id).full_name, sport_coach_path(@sport, @newsfeed.coach_id) %>
@@ -88,7 +88,7 @@
         </div>
     </div>
     <div class="row">
-    	<div class="col-xs-10">
+    	<div class="col-xs-12">
             <% if !@newsfeed.external_url.nil? and !@newsfeed.external_url.blank? %>
                 <font color="red">More Info:</font>
                 <%= link_to @newsfeed.external_url, @newsfeed.external_url %>

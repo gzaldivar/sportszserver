@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
 		<%if site_owner?(@sport) or isTeamManager?(@gameschedule) %>
 			<ul class="nav nav-pills">
 				<li><%= link_to "Update Scoreboard", lacrosse_game_summary_sport_team_gameschedule_path(@sport, @team, @gameschedule, @lacrossgame) %></li>
@@ -100,10 +100,10 @@
 			<% for i in 0 .. 1 %>
 				<thead>
 					<th><%= i == 0 ? "Home" : "Visitors" %></th>
-					<th>1</th>
-					<th>2</th>
-					<th>3</th>
-					<th>4</th>
+					<th>1st</th>
+					<th>2nd</th>
+					<th>3rd</th>
+					<th>4th</th>
 					<th>OT</th>
 					<th>Total</th>
 				</thead>
@@ -128,7 +128,7 @@
 			<% end %>
 		</table>
 	</div>
-	<div class="col-xs-4 col-xs-offset-1">
+	<div class="col-xs-5 col-xs-offset-1">
 		<div class="row">
 			<%= link_to "Scoresheet", lacrossescoresheet_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "btn btn-sm btn-primary" %>
 		</div>
@@ -151,7 +151,7 @@
 </div>
 <p>
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
 		<table class="table table-striped table-bordered table-hover">
 			<thead>
 				<th>Last Play:</th>
@@ -163,7 +163,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
 		<h4 class="text-info"><%= @team.mascot + " Statistics" %></h4>
 		<%= render 'lacrosstats/lacrossestats', name: "Player", anobject: @gameschedule, playerstats: @playerstats %>
 		<p>

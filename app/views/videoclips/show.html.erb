@@ -3,7 +3,7 @@
 <h4>Video - <%= @videoclip.displayname %></h4>
 </p>
 <div class="row">   
-    <div class="col-xs-10 col-xs-offset-1">
+    <div class="col-xs-10 col-xs-offset-2">
         <video width="640" height="360" poster= "<%= image_path @videoclip.poster_url %>" controls="controls">
             <source src= <%= image_path(@videoclip.video_url) %> type="video/mp4">
         </video>
@@ -20,7 +20,7 @@ $('video,audio').mediaelementplayer({
 </script>
 <br/>
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
     <table class="table table-hover">
       <thead>
         <tr>
@@ -73,7 +73,7 @@ $('video,audio').mediaelementplayer({
 </div>
 <br/>
 <div class="row">
-  <div class="col-xs-5 col-xs-offset-4">
+  <div class="col-xs-1 col-xs-offset-5">
     <% if isAdmin? or (user_signed_in? and (current_user.id == @videoclip.user_id) and enable_user_pics? ) %>
       <%= link_to "Edit ", edit_sport_videoclip_path(@sport, @videoclip), class:	"btn btn-md btn-primary" %>
     <% end %>

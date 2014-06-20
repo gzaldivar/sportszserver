@@ -4,7 +4,7 @@
 </div>
 <p>
 <div class="row">
-  <div class="col-xs-7">
+  <div class="col-xs-8">
       <ul class="nav nav-pills">
         <% if @sport.teams.count > 1 %>
           <li><a href="#teamselect-responsive" data-toggle="modal">Teams</a></li>
@@ -47,13 +47,13 @@
 <p>
 <% if !current_team.nil? %>
   <div class="row">
-    <div class="col-xs-5">
+    <div class="col-xs-6">
       <% if @teamalerts %>
         <%= render "alerts/alertlist", teamalerts: @teamalerts %>
       <% end %>
       <%= render 'gameschedules/gamelist', gameschedules: @schedules %>
     </div>
-    <div class="col-xs-5 col-xs-offset-1">
+    <div class="col-xs-6">
       <ul class="nav nav-pills">
         <% if !@followed.nil? and @followed.any? %>
           <li><%= link_to "Following", "#", :class => 'following_players' %></li>

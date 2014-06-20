@@ -1,27 +1,27 @@
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
 		<%= form_for [@sport, @coach], :input_html => { :class => 'form-horizontal' } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 			<div class="row">
-				<div class="col-xs-2">
+				<div class="col-xs-3">
 					<%= f.label :last_name, "Last Name" %>
 					<%= f.text_field :lastname, class: 'form-control' %>
 				</div>
-				<div class="col-xs-2 col-xs-offset-1">
+				<div class="col-xs-3 col-xs-offset-1">
 					<%= f.label :first_name, "First Name" %>
 					<%= f.text_field :firstname, class: 'form-control' %>
 				</div>
-				<div class="col-xs-2 col-xs-offset-1">
+				<div class="col-xs-3 col-xs-offset-1">
 					<%= f.label :middle_name, "Middle name" %>
 					<%= f.text_field :middlename, class: 'form-control' %>
 				</div>
 			</div>
 			<div class="row">
-				<div class="col-xs-4">
+				<div class="col-xs-5">
 					<%= f.label "Coordinator, coach,, etc." %>
 					<%= f.text_field :speciality, class: 'form-control' %>
 				</div>
-				<div class="col-xs-4 col-xs-offset-1">
+				<div class="col-xs-2 col-xs-offset-1">
 					<%=f.label :years_on_staff,  "Years on staff" %>
 					<%= f.text_field :years_on_staff, class: 'form-control' %>
 				</div>
@@ -34,7 +34,7 @@
 	          </div>
 	        </div>
 		    <div class="row">
-				<div class="col-xs-9">
+				<div class="col-xs-12">
 					<%= f.label "Some info about the coach" %>
 					<%= f.text_area	:bio, class: 'form-control' %>
 				</div>
@@ -54,8 +54,8 @@
 		        </div>
 			</div>
 			<div class="row">
-				<div class="col-xs-4 col-xs-offset-4">
-					<%= f.submit 'Submit', class: "btn btn-sm btn-primary", id: "submitbtn" %>
+				<div class="col-xs-1 col-xs-offset-5">
+					<%= f.submit 'Submit', class: "btn btn-md btn-primary", id: "submitbtn" %>
 				</div>
 			</div>
 		<% end %>	

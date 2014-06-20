@@ -1,7 +1,7 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + " - New Photo") %>
 <p>
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
 		<h3>
 		<% if @team %>
 			<%= @team.team_name %>
@@ -20,12 +20,12 @@
 </div>
 <p>
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
     <br/>
     <h4>Upload Video Clips.</h4><p><p>
       	Video clip should already be processed as h.264 in an MP4 container with AAC audio which is what iPhone, iPad and other mobile devices expect. This will also allow the video to be played in all HTML5 browsers. Use our highlights manager to process your video. It supports game, player and play tagging and automatically uploads the video for you!
       	<p>
-      	<%= image_tag "clientapps/HighlightManager.png" %>
+      	<%= image_tag "clientapps/HighlightManager.png", class: 'img-responsive' %>
 		<p>
 		<div class="row">
 			<div class="col-xs-2 col-xs-offset-5">

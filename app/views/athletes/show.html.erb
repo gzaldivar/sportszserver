@@ -1,13 +1,13 @@
 <% provide(:title, current_site.sitename + " " + @sport.name + ' - ' + @athlete.full_name) %>
 <p>
 <div class="row">   
-  <div class="col-xs-11">
+  <div class="col-xs-12">
 		<%= render 'shared/error_messages', object:	@athlete %>
 	</div>
 </div>
 <div class="row">
   <%= render 'athletes/photo', athlete: @athlete %>
-  <div class="col-xs-7">
+  <div class="col-xs-8">
     <ul class="nav nav-pills">
       <% if @sport.sportname == "Football" %>
         <li><%= link_to "Stats", playerstats_sport_athlete_path(@sport, @athlete) %></li>

@@ -92,7 +92,7 @@
 			</h4>
 		</div>
 	</div>
-	<div class="col-xs-3">
+	<div class="col-xs-4">
 		<h4>Game Score Log</h4>
 		<table class="table-striped table-bordered table-hover">
 			<thead>
@@ -121,7 +121,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
 		<table class="table table-striped table-bordered table-hover">
 			<thead>
 				<th>Last Play:</th>
@@ -133,7 +133,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
 	    <% if Time.now > @gameschedule.starttime + 5.hours or @gameschedule.final and isAdmin? %>
 	      	<h4 class="text-warning">Game is past end time. Turn of mobile alerts?</h4>
 	      	<p class="text-danger">If you update scoreing stats with alerts enabled after the games end and your fans have scoreing alerts enabled, they will get a scoring alert notification sent to their mobile device.</p>
@@ -148,7 +148,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
 			<h4>Goalie Stats</h4>
 			<h4>Stats for game <%= @gameschedule.game_name %></h4>
 			<table class="table table-striped table-bordered table-hover">
@@ -172,7 +172,7 @@
 	</div>
 </div>
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
 			<h4>Player Stats</h4>
 			<table class="table table-striped table-bordered table-hover">
 				<%= render "soccers/playerstatsheader", name: "Player" %>

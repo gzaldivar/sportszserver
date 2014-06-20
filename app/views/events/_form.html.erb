@@ -1,5 +1,5 @@
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
 		<%= form_for [@sport, @event], :input_html => { :class => 'form-horizontal' } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
             <% if @event.gameschedule_id.nil? %>
@@ -74,13 +74,13 @@
                 </div>
             <% end %>
             <div class="row">
-                <div class="col-xs-11">
+                <div class="col-xs-12">
                     <%= f.label :event_name, "Event Name" %>
                     <%= f.text_field :name, class: 'form-control' %>
                 </div>
             </div>
             <div class="row">
-                <div class="col-xs-11">
+                <div class="col-xs-12">
                     <%= f.label :event_description, "Event Description" %>
                     <%= f.text_area :desc, class: 'form-control' %>
                 </div>

@@ -2,21 +2,21 @@
 <p>
 <% if !User.find(@sport.adminid).paypal_email %>
 	<div class="row">
-		<div class="col-xs-11">
+		<div class="col-xs-12">
 			<h3 class="text-warning"><%= current_site.sitename %> does not support user purchased advertising. Please contact the site administrator with questions.</h3>
 		</div>
 	</div>
 <% end %>
 <p>
 <div class="row">
-  	<div class="col-xs-11">
+  	<div class="col-xs-12">
 		<h4 class="text-success">List of advertisers who purchased using the GameTracker app.</h4>		
 		<%= render 'sponsors', sponsors:  @inapsponsors %>
   	</div>
 </div>
 <p>
 <div class="row">
-  	<div class="col-xs-11">
+  	<div class="col-xs-12">
 		<h4 class="text-success">List of advertisers using your inventory.			
 			<% if user_signed_in? %>
 				<%= link_to "My Ads", sport_sponsors_path(@sport, user: current_user.id), class: "btn btn-md btn-primary" %>

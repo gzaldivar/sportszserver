@@ -44,7 +44,7 @@
   });
 </script>
 <div class="row">
-  <div class="col-xs-11">
+  <div class="col-xs-12">
     <h4><em>Game Statistics vs. <%= link_to @gameschedule.opponent_mascot, sport_team_gameschedule_path(@sport, @team, @gameschedule) %></em></h4>
     <p>
     <ul class="nav nav-pills">
@@ -56,7 +56,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-11">
+  <div class="col-xs-12">
     <h5>Place Kicker Stats</h5>
     <table class="table table-bordered">
         <%= render "football_place_kickers/fieldgoal_header", name: "Player" %>
@@ -91,7 +91,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-11">
+  <div class="col-xs-12">
 
       <h5>Punt Returns</h5>
     <table class="table table-bordered">
@@ -124,7 +124,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-11">
+  <div class="col-xs-12">
     <h5>Kickoffs</h5>
     <table class="table table-bordered">
         <%= render "football_kickers/stat_header", name: "Player" %>
@@ -145,7 +145,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-11">
+  <div class="col-xs-12">
 
       <h5>Punters</h5>
     <table class="table table-bordered">

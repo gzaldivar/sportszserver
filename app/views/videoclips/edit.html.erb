@@ -2,7 +2,7 @@
 <p>
 <div class="row">
 	<div class="col-xs-10 col-xs-offset-1">
-		<%= image_tag @videoclip.poster_url, :height => '360', :width => '640' %>
+		<%= image_tag @videoclip.poster_url, class: 'img-responsive' %>
   	</div>
 </div>
 <p>
@@ -20,7 +20,7 @@
   });
 </script>
 <div class="row">
-  <div class="col-xs-10 col-xs-offset-1">
+  <div class="col-xs-12">
     <%= form_for [@sport, @videoclip], :input_html => { :class => "form-horizontal" }  do |f| %>
 		<%= render 'shared/error_messages', object: f.object %>
 	      <div class="row">

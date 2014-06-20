@@ -45,6 +45,14 @@
 					<%= f.label :blog_alert, "Blog Alerts" %>
 					<%= f.check_box :blog_alert, class: 'form-control' %>
 				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= f.label :score_alert, "Score Alerts" %>
+					<%= f.check_box :score_alert, class: 'form-control' %>
+				</div>
+				<div class="col-xs-2 col-xs-offset-1">
+					<%= f.label :media_alert, "Photo and Video" %>
+					<%= f.check_box :media_alert, class: 'form-control' %>
+				</div>
 			</div>
 			<p>
 		      <div id="loading">
@@ -55,31 +63,17 @@
 		        </div>
 		      </div>
 		      <p>
-			<div class="row">
-				<div class="col-xs-2">
-					<%= f.label :score_alert, "Score Alerts" %>
-					<%= f.check_box :score_alert, class: 'form-control' %>
-				</div>
-				<div class="col-xs-3 col-xs-offset-1">
-					<%= f.label :media_alert, "Photo and Video Alerts" %>
-					<%= f.check_box :media_alert, class: 'form-control' %>
-				</div>
-			</div>
 			<p>
 			<div class="row">
 				<% if isAdmin? and current_user != @user %>
 					<div class="col-xs-2 ">
+						<%= f.label :teamid, "Team" %>
 						<%= f.select :teamid, @teams.collect{ |t| [t.team_name, t.id] }, { include_blank: true }, class: "form-control"  %>
-					</div>
-					<div class="col-xs-2 col-xs-offset-1">
-						<%= f.input :is_active, as: :boolean %>
-						<%= f.label :media_alert, "Photo and Video Alerts" %>
-						<%= f.check_box :media_alert, class: 'form-control' %>
 					</div>
 				<% end %>
 			</div>
 			<div class="row">
-				<div class="col-xs-2 col-xs-offset-3">
+				<div class="col-xs-2 col-xs-offset-4">
 					<%= f.submit 'Update Profile', class: "btn btn-md btn-primary", id: "submitbtn" %>
 				</div>
 			</div>

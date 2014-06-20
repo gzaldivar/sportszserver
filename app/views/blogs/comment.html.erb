@@ -1,8 +1,8 @@
 <% provide(:title, @sport.sport_name + " - Blog Comment") %>
 <p>
 <div class="row">
-	<div class="col-xs-10 col-xs-offset-1">
-		<%= simple_form_for [@sport, @blog], :url => sport_blogs_path, :method => :post do |f| %>
+	<div class="col-xs-11 col-xs-offset-1">
+		<%= form_for [@sport, @blog], :url => sport_blogs_path, :method => :post, :input_html => { :class => 'form-horizontal' } do |f| %>
 			<%= render 'shared/error_messages', object: f.object %>
 			<div class="row">
 				<div class="col-xs-4">
@@ -11,28 +11,29 @@
 					Blog Entry:<p>
 					<%= @oldblog.entry %>
 				</div>
-				<%= f.input :title, as: :hidden, input_html: { value:  @oldblog.title } %>
-				<%= f.input :user, as: :hidden, input_html: { value: current_user.id.to_s } %>
-				<%= f.input :external_url, as: :hidden, input_html: { value: @oldblog.external_url } %>
+				<%= f.hidden_field :title, value:  @oldblog.title %>
+				<%= f.hidden_field :user, value: current_user.id.to_s %>
+				<%= f.hidden_field :external_url, value: @oldblog.external_url %>
 				<% if !@oldblog.team_id.nil? and !@oldblog.team_id.blank? %>
-					<%= f.input :team_id, as: :hidden, input_html: { value: @oldblog.team_id } %>
+					<%= f.hidden_field :team_id, value: @oldblog.team_id %>
 				<% end %>
 				<% if !@oldblog.athlete_id.nil? and !@oldblog.athlete_id.blank? %>
-					<%= f.input :athlete_id, as: :hidden, input_html: { value: @oldblog.athlete_id } %>
+					<%= f.hidden_field :athlete_id, value: @oldblog.athlete_id %>
 				<% end %>
 				<% if !@oldblog.coach.nil? and !@oldblog.coach.blank? %>
-					<%= f.input :coach_id, as: :hidden, input_html: { value: @oldblog.coach_id } %>
+					<%= f.hidden_field :coach_id, value: @oldblog.coach_id %>
 				<% end %>
 				<% if !@oldblog.gameschedule.nil? and !@oldblog.gameschedule.blank? %>
-					<%= f.input :gameschedule_id, as: :hidden, input_html: { value: @oldblog.gameschedule_id } %>
+					<%= f.hidden_field :gameschedule_id, value: @oldblog.gameschedule_id %>
 				<% end %>
 				<div class="col-xs-4 col-xs-offset-1">
-					<%= f.input	:entry, as: :text, label:	"Add Comment:" %>
+					<%= f.label :entry, "Comment" %>
+					<%= f.text_field :entry, class: "form-control" %>
 				</div>
 			</div>
       		<div class="row">
   				<div class="col-xs-1 col-xs-offset-4">
-  					<%= f.button :submit, "Submit", class: "btn btn-sm btn-primary" %>
+  					<%= f.submit :submit, class: "btn btn-sm btn-primary" %>
   				</div>
       		</div>
 		<% end %>	

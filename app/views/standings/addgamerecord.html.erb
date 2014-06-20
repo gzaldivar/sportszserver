@@ -1,34 +1,32 @@
 <% provide(:title, current_site.sitename + " " + @sport.sportname + " - Update Standings") %>
 <div class="row">
- 	<div class="col-xs-9 col-xs-offset-1">
+ 	<div class="col-xs-12">
  		<h4><%= @gameschedule.opponent_name %></h4>
 		<%= form_tag savegamerecord_sport_team_standings_path(@sport, @team), method: :put, html: { class: 'form-horizontal' } do %>
 			<%= render 'shared/error_messages', object: @gameschedule %>
 			<%= hidden_field_tag "gameschedule_id", @gameschedule.id %>
 			<div class="row">
-				<div class="col-xs-3">
+				<div class="col-xs-2">
 					<%= label_tag "League Wins" %>
 					<%= text_field_tag "league_wins", @gameschedule.opponent_league_wins, options= { class: 'form-control' } %>
 				</div>
-				<div class="col-xs-3 col-xs-offset-1">
+				<div class="col-xs-2 col-xs-offset-1">
 					<%= label_tag "League Losses" %>
 					<%= text_field_tag "league_losses", @gameschedule.opponent_league_losses, options= { class: 'form-control' } %>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-xs-3">
+				<div class="col-xs-2 col-xs-offset-1">
 					<%= label_tag "Non League Wins" %>
 					<%= text_field_tag "nonleague_wins", @gameschedule.opponent_nonleague_wins, options= { class: 'form-control' } %>
 				</div>
-				<div class="col-xs-3 col-xs-offset-1">
+				<div class="col-xs-2 col-xs-offset-1">
 					<%= label_tag "Non League Losses" %>
 					<%= text_field_tag "nonleague_losses", @gameschedule.opponent_nonleague_losses, options= { class: 'form-control' } %>
 				</div>
 			</div>
 			<p>
 			<div class="row">
-				<div class="col-xs-1 col-xs-offset-2">
-					<%= submit_tag "Submit", class: "btn btn-sm btn-primary" %>
+				<div class="col-xs-1 col-xs-offset-5">
+					<%= submit_tag "Submit", class: "btn btn-md btn-primary" %>
 				</div>
 			</div>
 		<% end %>	

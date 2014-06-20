@@ -1,7 +1,7 @@
 <% provide(:title, "Easy Sports Mobile - Upgrade Package") %>
 <p>
 <div class="row">
-	<div class="col-xs-11">
+	<div class="col-xs-12">
 		<h3>Current Game Tracker Package - <%= @order.package %></h3>
 
 		<% if !@order.expiration.nil? %>
@@ -29,7 +29,7 @@
 		<p>
 		<h5 class="text-success">
 		<div class="row">
-			<div class="col-xs-11">
+			<div class="col-xs-12">
 				<%= render "sports/pricingtable", newuser: false %>
 			</div>
 		</div>

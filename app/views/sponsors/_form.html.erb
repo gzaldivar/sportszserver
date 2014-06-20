@@ -11,7 +11,7 @@
 	</div>
 <% end %>
 <div class="row">
-	<div class="col-xs-9">
+	<div class="col-xs-12">
 		<%= f.hidden_field :user_id, value: current_user.id.to_s %>
 
 		<% if @playerad %>
@@ -30,7 +30,7 @@
 		<%= f.label :number %>
 		<%= f.text_field :addrnum, class: 'form-control' %>
 	</div>
-	<div class="col-xs-4">
+	<div class="col-xs-5">
 		<%= f.label :street %>
 		<%= f.text_field :street, class: 'form-control' %>
 	</div>
@@ -42,7 +42,7 @@
 </div>
 <p>
 <div class="row">
-	<div class="col-xs-3">
+	<div class="col-xs-4">
 		<%= f.label :state, "State - state is computed from zip." %>
 		<!--%= f.select :state, us_states, { include_blank: true }, class: 'form-control' %-->
 		<h4 class="text-info"><%= @sponsor.state %></h4>
@@ -69,7 +69,7 @@
 </div>
 <p>
 <div class="row">
-	<div class="col-xs-8">
+	<div class="col-xs-12">
 		<%= f.label :sponsors_url, "Sponsors URL" %>
 		<%= f.text_field :adurl, class: 'form-control' %>
 	</div>
@@ -109,11 +109,11 @@
 						class: "form-control" %>
 		</div>
 	<% end %>
-	<div class="col-xs-2 ">
+	<div class="col-xs-2 col-xs-offset-1">
 		<%= f.label :select_team, "Select Team" %>
 		<%= f.select :team_id, @sport.teams.collect { |t| [t.team_name, t.id] }, {}, class: "form-control" %>
 	</div>
-	<div class="col-xs-3">
+	<div class="col-xs-3 col-xs-offset-1">
 		<% if isAdmin? and @sponsor.sportadinv_id.nil? %>
 			<p class="text-info">Non advertiser sale inventory<p>
 			<%= f.label :sportadinv_id, "Sponsor Level" %>

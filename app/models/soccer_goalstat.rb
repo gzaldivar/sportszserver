@@ -1,4 +1,4 @@
-class LacrossGoalstat
+class SoccerGoalstat
 	include Mongoid::Document
 	include Mongoid::Timestamps
 
@@ -7,7 +7,7 @@ class LacrossGoalstat
     field :goals_allowed, type: Integer, default: 0
     field :period, type: Integer, default: 1
 
-	embedded_in :lacrosstat
+	embedded_in :soccer_stat
 
 	index({ period: 1 }, { unique: true } )
 

@@ -1,4 +1,4 @@
-class LacrossPenalty
+class SoccerPenalty
 	include Mongoid::Document
 	include Mongoid::Timestamps
 
@@ -7,7 +7,7 @@ class LacrossPenalty
 	field :gametime, type: String
 	field :period, type: Integer, default: 1
 
-	embedded_in :lacrosstat
+	embedded_in :soccer_stat
 
 	index( { period: 1 }, { unique: true } )
 

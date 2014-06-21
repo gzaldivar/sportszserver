@@ -1,5 +1,6 @@
 class LacrossGame
 	include Mongoid::Document
+    include Mongoid::Timestamps
 
     field :clears, type: Array, default: []
     field :failedclears, type: Array, default: []

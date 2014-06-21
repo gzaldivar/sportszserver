@@ -1,5 +1,6 @@
 class LacrossPlayerStat
 	include Mongoid::Document
+	include Mongoid::Timestamps
 
     field :shot, type: Array, default: []
 

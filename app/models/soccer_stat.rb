@@ -8,5 +8,5 @@ class SoccerStat
 	embeds_many :soccer_goalstats
 
 	belongs_to :athlete
-	belogns_to :soccer_game
+	belongs_to :soccer_game
 end

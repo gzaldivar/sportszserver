@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:o="urn:schemas-microsoft-com:office:office"
+  xmlns:x="urn:schemas-microsoft-com:office:excel"
+  xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"
+  xmlns:html="http://www.w3.org/TR/REC-html40">
+  <Worksheet ss:Name="Sheet1">
+    <Table>
+      <Row>
+        <Cell><Data ss:Type="String">Name</Data></Cell>
+        <Cell><Data ss:Type="String">Address</Data></Cell>
+        <Cell><Data ss:Type="String">Street</Data></Cell>
+        <Cell><Data ss:Type="String">City</Data></Cell>
+        <Cell><Data ss:Type="String">State</Data></Cell>
+        <Cell><Data ss:Type="String">Zip</Data></Cell>
+        <Cell><Data ss:Type="String">Phone</Data></Cell>
+        <Cell><Data ss:Type="String">Mobile</Data></Cell>
+        <Cell><Data ss:Type="String">Fax</Data></Cell>
+        <Cell><Data ss:Type="String">Email</Data></Cell>
+        <Cell><Data ss:Type="String">URL</Data></Cell>
+        <Cell><Data ss:Type="String">Price</Data></Cell>
+        <Cell><Data ss:Type="String">Web/App</Data></Cell>
+        <Cell><Data ss:Type="String">Last Update</Data></Cell>
+      </Row>
+    <% @sponsors.each do |product| %>
+      <Row>
+        <Cell><Data ss:Type="String"><%= product.name %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.addrnum %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.street %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.city %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.state %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.zip %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.phone %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.mobile %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.fax %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.contactemail %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.adurl %></Data></Cell>
+        <Cell><Data ss:Type="Number"><%= product.ios_client_ad.nil? ? product.sportadinv.price : product.ios_client_ad.price %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.ios_client_ad.nil? ? "Web" : "App" %></Data></Cell>
+        <Cell><Data ss:Type="String"><%= product.updated_at %></Data></Cell>
+      </Row>
+    <% end %>
+    </Table>
+  </Worksheet>
+</Workbook>

@@ -53,7 +53,7 @@ class Sponsor
                          access_key_id: S3DirectUpload.config.access_key_id,
                          secret_access_key: S3DirectUpload.config.secret_access_key },
     :styles => {
-      :landscapebanner  => ['768x50',   :jpg],
+      :landscapebanner  => ['768x100',   :jpg],
       :portraitbanner   => ['320x50',   :jpg]
     }
 
@@ -62,7 +62,24 @@ class Sponsor
   validates_presence_of :name
   validates :phone, format: { with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})?([ .-]?)([0-9]{4})/ }
   validates_format_of :mobile, allow_blank: true, with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})?([ .-]?)([0-9]{4})/  
-  validates_format_of :fax, allow_blank: true, with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})?([ .-]?)([0-9]{4})/  
+  validates_format_of :fax, allow_blank: true, with: /\(?([0-9]{3})\)?([ .-]?)([0-9]{3})?([ .-]?)([0-9]{4})/
+
+  def self.to_csv(options = {})
+    CSV.generate(options) do |csv|
+      csv << column_names
+#      csv = []
+#      csv += [:name, :addrnum, :street, :city, :state, :zip, :phone, :mobile, :fax, :contactemail, :adurl, :updated_at].map { |f| self[f] }
+      if self.sportadinv.nil?
+        csv += [:price].map { |f| self.sportadinv[f] }
+      elsif self.ios_client_ad.nil?
+        csv += [:price].map { |f| self.ios_client_ad[f] }
+      end
+
+      all.each do |product|
+        csv << product.attributes.values_at(*column_names)
+      end
+    end
+  end
 
   private
 

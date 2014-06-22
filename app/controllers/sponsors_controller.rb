@@ -104,34 +104,44 @@ class SponsorsController < ApplicationController
 		begin
 			if !isAdmin?
 				if params[:user]
-					@sponsors = @sport.sponsors.where(user_id: params[:user], :sportadinv.exists => true).paginate(page: params[:page])
-					@inapsponsors = @sport.sponsors.where(user_id: params[:user], :ios_client_ad.exists => true).all.paginate(page: params[:page])
+					@websponsors = @sport.sponsors.where(user_id: params[:user], :sportadinv.exists => true).paginate(page: params[:page])
+					@inapsponsors = @sport.sponsors.where(user_id: params[:user], :ios_client_ad.exists => true).paginate(page: params[:page])
 				else
-					@sponsors = @sport.sponsors.where(:sportadinv.exists => true).paginate(page: params[:page])
-					@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true).paginate(page: params[:page])
+					sortsponsors
 				end
 			else
-				@sponsors = @sport.sponsors.where(:sportadinv.exists => true).paginate(page: params[:page])
-				@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true).paginate(page: params[:page])
-	
-				@totals = 0
+				sortsponsors
+				@webtotals = @inaptotals = @totals = 0
 				
-				@sponsors.each do |s|
-					@totals += s.sportadinv.price
+				if !@websponsors.nil?
+					@websponsors.each do |s|
+						@webtotals += s.sportadinv.price
+					end
 				end
 
-				@inapsponsors.each do |s|
-					@totals += s.ios_client_ad.price
+				if !@inapsponsors.nil?
+					@inapsponsors.each do |s|
+						@inaptotals += s.ios_client_ad.price
+					end
 				end
+
+				@totals = @webtotals + @inaptotals
 			end
-			
+
 			respond_to do |format|
-				format.html { @sponsors.sort! { |a,b| a.sportadinv.price <=> b.sportadinv.price } }
-				format.json { @sponsors = (@sponsors << @inapsponsors).flatten }
+				format.html { 	if !@websponsors.nil?
+									@websponsors.sort! { |a,b| a.sportadinv.price <=> b.sportadinv.price }
+							  	end
+							  	if !@inapsponsors.nil?
+							  		@inapsponsors.sort! { |a,b| a.ios_client_ad.price <=> b.ios_client_ad.price }
+							  	end }
+				format.json { @sponsors = (@websponsors << @inapsponsors).flatten }
+#			    format.csv { send_data @websponsors.to_csv }
+			    format.xls { @sponsors = (@websponsors << @inapsponsors).flatten }
 			end	
 		rescue Exception => e
 			respond_to do |format|
-				format.html { redirect_to :back, alert: e.message }
+				format.html { flash[:alert] = e.message }
 				format.json { render status: 404, json: { error: e.message } }
 			end
 		end
@@ -207,7 +217,7 @@ class SponsorsController < ApplicationController
 			end
 		end
 	end
-  
+
 	private
 
 		def get_sport
@@ -216,5 +226,70 @@ class SponsorsController < ApplicationController
 
 		def get_sponsor
 			@sponsor = @sport.sponsors.find(params[:id])
+		end
+
+		def sortsponsors
+			@websponsors = nil
+			@inapsponsors = nil
+
+			if !params[:sortcriteria].blank? and !params[:month].blank? and !params[:year].blank?
+
+				if params[:sortcriteria] == "Ap Purchased"
+					@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true, 
+											:updated_at.gte => DateTime.new(params[:year].to_i, params[:month].to_i, 1)).paginate(page: params[:page])
+				elsif params[:sortcriteria] == "Web Purchased"
+					@websponsors = @sport.sponsors.where(:sportadinv.exists => true, 
+											:updated_at.gte => DateTime.new(params[:year].to_i, params[:month].to_i, 1)).paginate(page: params[:page])
+				elsif params[:sortcriteria] == "All"
+					@websponsors = @sport.sponsors.where(:sportadinv.exists => true, 
+											:updated_at.gte => DateTime.new(params[:year].to_i, params[:month].to_i, 1)).paginate(page: params[:page])
+					@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true, 
+											:updated_at.gte => DateTime.new(params[:year].to_i, params[:month].to_i, 1)).paginate(page: params[:page])
+				end
+
+			elsif !params[:sortcriteria].blank? and !params[:year].blank?
+
+				if params[:sortcriteria] == "Ap Purchased"
+					@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true, 
+											:updated_at.gte => DateTime.new(params[:year].to_i, 1, 1)).paginate(page: params[:page])
+				elsif params[:sortcriteria] == "Web Purchased"
+					@websponsors = @sport.sponsors.where(:sportadinv.exists => true, 
+											:updated_at.gte => DateTime.new(params[:year].to_i, 1, 1)).paginate(page: params[:page])
+				elsif params[:sortcriteria] == "All"
+					@websponsors = @sport.sponsors.where(:sportadinv.exists => true, 
+											:updated_at.gte => DateTime.new(params[:year].to_i, 1, 1)).paginate(page: params[:page])
+					@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true, 
+											:updated_at.gte => DateTime.new(params[:year].to_i, 1, 1)).paginate(page: params[:page])
+				end
+
+			elsif !params[:sortcriteria].blank? and !params[:month].blank?
+				raise 'Please enter a year!'
+			elsif !params[:month].blank? and !params[:year].blank?
+				@websponsors = @sport.sponsors.where(:sportadinv.exists => true, 
+											:updated_at.gte => DateTime.new(params[:year].to_i, params[:month].to_i, 1)).paginate(page: params[:page])
+				@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true, 
+											:updated_at.gte => DateTime.new(params[:year].to_i, params[:month].to_i, 1)).paginate(page: params[:page])
+			elsif !params[:sortcriteria].blank?
+
+				if params[:sortcriteria] == "Ap Purchased"
+					@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true).paginate(page: params[:page])
+				elsif params[:sortcriteria] == "Web Purchased"
+					@websponsors = @sport.sponsors.where(:sportadinv.exists => true).paginate(page: params[:page])
+				elsif params[:sortcriteria] == "All"
+					@websponsors = @sport.sponsors.where(:sportadinv.exists => true).paginate(page: params[:page])
+					@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true).paginate(page: params[:page])
+				end
+
+			elsif !params[:month].blank?
+				raise 'Please enter a year!'
+			elsif !params[:year].blank?
+				@websponsors = @sport.sponsors.where(:sportadinv.exists => true, 
+											:updated_at.gte => DateTime.new(params[:year].to_i, 1, 1)).paginate(page: params[:page])
+				@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true, 
+											:updated_at.gte => DateTime.new(params[:year].to_i, 1, 1)).paginate(page: params[:page])
+			else
+				@websponsors = @sport.sponsors.where(:sportadinv.exists => true).paginate(page: params[:page])
+				@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true).paginate(page: params[:page])
+			end
 		end
 end

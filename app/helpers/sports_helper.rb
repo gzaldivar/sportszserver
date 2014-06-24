@@ -180,4 +180,17 @@ module SportsHelper
       return seconds
   end
 
+  def waterpolo_abbreviations
+    [
+      ['Goal', 'G'],
+      ['Exclusion', 'E'],
+      ['Penalty', 'P'],
+      ['Brutality', 'B'],
+      ['Misconduct', 'M'],
+      ['Time-out', 'TO'],
+      ['Yellow Card', 'YC'],
+      ['Red Card', 'RC']
+    ]
+  end
+
 end

@@ -11,12 +11,6 @@ class Lacrosstat
 	embeds_many :lacross_penalties
 	embeds_many :lacross_goalstats
 
-	has_many :gamelogs, dependent: :destroy
-
-	def shooting_accuracy
-		getgoals / self.shot
-	end
-
 	def points_per_game
 		lacross_scorings.count
 	end

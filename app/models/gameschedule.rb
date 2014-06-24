@@ -113,6 +113,7 @@ class Gameschedule
   has_many :events, dependent: :destroy
 
   embeds_one :lacross_game
+  embeds_one :soccer_game
 
 
   validates_presence_of :starttime

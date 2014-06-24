@@ -18,12 +18,12 @@ gem 'json'
 gem 'unf'
 
 group :development do
-  gem 'sqlite3', '1.3.5'
-  gem 'rspec-rails', '2.9.0'
-#  gem 'better_errors'
+  gem 'sqlite3'
+  gem 'rspec-rails'
+  gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
-	gem 'annotate', '2.5.0'
+	gem 'annotate'
 end
 
 gem 'sass-rails',   '~> 3.2.3'
@@ -69,6 +69,7 @@ gem 's3_direct_upload'
 gem "mediaelement_rails"
 gem 'momentjs-rails'
 gem 'bootstrap-timepicker-rails'
+gem 'bootstrap-multiselect-rails'
 # gem 'videojs_rails'
 
 group :test do
@@ -87,7 +88,6 @@ group :production do
   gem 'whenever', :require => false
 end
 
-#gem 'resque', :require => "resque/server"
 gem 'resque', "~> 1.22.0", :require => "resque/server"
 gem 'rmagick'
 gem 'rabl'
@@ -95,7 +95,6 @@ gem 'streamio-ffmpeg'
 gem "simple_calendar", "~> 0.1.5"
 gem 'browser-timezone-rails'
 gem 'rails_12factor'
-# gem 'paypal-express'
 gem 'activemerchant'
 gem 'houston'
 

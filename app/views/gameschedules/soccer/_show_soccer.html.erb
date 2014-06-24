@@ -120,6 +120,28 @@
 		</table>
 	</div>
 </div>
+<% if @gameschedule.soccer_game %>
+	<div class="row">
+		<div class="col-xs-4">
+			<%= link_to "Scoresheet", sport_team_gameschedule_soccer_games_path(@sport, @team, @gameschedule), class: "btn btn-sm btn-primary" %>
+		</div>
+		<div class="col-x-8">
+			<% if @gameschedule.soccer_game.visiting_team %>
+				<h5 class="text-info">Visiting team roster.</h5>
+				<% if user_signed_in? and isAdmin? %>
+					<%= link_to @gameschedule.soccer_game.visiting_team.getname, 
+								selectvisitingteam_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "btn btn-sm btn-primary" %>
+				<% else %>
+					<%= @gameschedule.soccer_game.visiting_team.getname %>
+				<% end %>
+			<% else %>
+				<%= link_to "Add Visiting Team", selectvisitingteam_sport_team_gameschedule_path(@sport, @team, @gameschedule), 
+													class: "btn btn-sm btn-primary" %>
+			<% end %>
+		</div>
+	</div>
+<% end %>
+<p>
 <div class="row">
 	<div class="col-xs-12">
 		<table class="table table-striped table-bordered table-hover">

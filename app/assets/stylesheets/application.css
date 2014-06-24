@@ -12,6 +12,7 @@
  *= require mediaelement_rails
  *= require mediaelement_rails/mejs-skins
  *= require bootstrap-timepicker
+ *= require bootstrap-multiselect
  *= require_self
  *= require_tree ./normal/
 */

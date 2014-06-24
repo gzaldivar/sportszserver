@@ -12,9 +12,12 @@ class SoccerGoalstat
 	index({ period: 1 }, { unique: true } )
 
 	validates_numericality_of :period, greater_than_or_equal_to: 0
+	validates_numericality_of :saves, greater_than_or_equal_to: 0
+	validates_numericality_of :goals, greater_than_or_equal_to: 0
+	validates_numericality_of :minutesplayed, greater_than_or_equal_to: 0
 
 	def save_percentage
-		self.save/(self.save + self.goal)
+		self.save/(self.saves + self.goals_allowed)
 	end
 
 	def goal_average

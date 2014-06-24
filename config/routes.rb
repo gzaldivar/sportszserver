@@ -114,6 +114,8 @@ Sportzserver::Application.routes.draw do
             get :gamelogs
           end
         end
+ 
+        resources :soccer_games, only: [:index, :update]
       end
 
       resources :standings, only: [:index] do

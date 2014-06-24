@@ -25,4 +25,189 @@ module SoccersHelper
     return player
   end
 
+  def soccer_yellowcard
+    [
+      ['Unsporting Behavior', 'UB'],
+      ['Dissent', 'DT'],
+      ['Persistent Infringement', 'PI'],
+      ['Delaying restart of play', 'DR'],
+      ['Failure to Respect the Required Distance', 'FRD'],
+      ['Entering or re-entering the field of play without referee permission', 'E'],
+      ['Deliberately leaving the field of play without referee permission', 'L']
+    ]
+  end
+
+  def soccer_redcard
+    [
+      ['Unsporting Behavior', 'UB'],
+      ['Dissent by word or action', 'DT'],
+      ['Delaying the restart of play', 'DR'],
+      ['Serious foul play', 'SFP'],
+      ['Violent conduct', 'VC'],
+      ['Spitting at an opponent or any other person', 'S'],     
+      ['Denying the opposing team a goal', 'DGH'],
+      ['Denies an obvious goal-scoring opportunity', 'DGF'],
+      ['Using offensive, insulting or abusive language and/or gestures', 'AL'],     
+      ['Receiving a second caution in the same match', '2CT']
+    ]
+  end
+
+  def soccergame_home_score(game)
+    playerscores = game.soccer_game.soccer_stats
+    score = 0
+
+    playerscores.each do |s|
+      score += s.soccer_scorings.count
+    end
+
+    return score
+  end
+
+  def soccergame_visitor_score(game)
+    if game.soccer_game.visiting_team
+      roster = game.soccer_game.visiting_team.visitor_rosters
+      score = 0
+
+      roster.each do |s|
+        score += s.soccer_stat.soccer_scorings.count if s.soccer_stat
+      end
+
+      return score
+    else
+      0
+    end
+  end
+
+  def soccergame_periodhomescore(game, period)
+    scores = game.soccer_game.soccer_stats
+    score = 0
+
+    scores.each do |s|
+      score += s.soccer_scorings.where(period: period).count
+    end
+
+    return score
+  end
+
+  def soccergame_periodvisitorscore(game, period)
+    if game.soccer_game.visiting_team
+      roster = game.soccer_game.visiting_team.visitor_rosters
+
+      score = 0
+
+      roster.each do |s|
+        score += s.soccer_stat.soccer_scorings.where(period: period).count if s.soccer_stat
+      end
+
+      return score
+    else
+      0
+    end
+  end
+
+  def soccergame_homeshots(game)
+    stats = game.soccer_game.soccer_stats
+    shots = 0
+
+    stats.each do |s|
+      s.soccer_playerstats.each do |astat|
+        shots += astat.shots
+      end
+    end
+
+    return shots
+  end
+
+  def soccergame_visitorshots(game)
+    if game.soccer_game.visiting_team
+      roster = game.soccer_game.visiting_team.visitor_rosters
+
+      shots = 0
+
+      roster.each do |s|
+        stats = s.soccer_stat.soccer_playerstats.where(period: period) if s.soccer_stat
+
+        if stats
+          stats.each do |astat|
+            shots += astat.shots
+          end
+        end
+      end
+
+      return shots
+    else
+      0
+    end
+  end
+
+  def soccergame_homecornerkicks(game)
+    stats = game.soccer_game.soccer_stats
+    shots = 0
+
+    stats.each do |s|
+      s.soccer_playerstats.each do |astat|
+        shots += astat.cornerkick
+      end
+    end
+
+    return shots
+  end
+
+  def soccergame_visitorcornerkicks(game)
+    if game.soccer_game.visiting_team
+      roster = game.soccer_game.visiting_team.visitor_rosters
+
+      shots = 0
+
+      roster.each do |s|
+        stats = s.soccer_stat.soccer_playerstats.where(period: period) if s.soccer_stat
+
+        if stats
+          stats.each do |astat|
+            shots += astat.cornerkick
+          end
+        end
+      end
+
+      return shots
+    else
+      0
+    end
+  end
+
+  def soccergame_homesaves(game)
+    stats = game.soccer_game.soccer_stats
+    shots = 0
+
+    stats.each do |s|
+      s.soccer_goalstats.each do |astat|
+        shots += astat.saves
+      end
+    end
+
+    return shots
+  end
+
+  def soccergame_visitorsaves(game)
+    if game.soccer_game.visiting_team
+      roster = game.soccer_game.visiting_team.visitor_rosters
+
+      shots = 0
+
+      roster.each do |s|
+        stats = s.soccer_stat.soccer_goalstats.where(period: period) if s.soccer_stat
+
+        if stats
+          stats.each do |astat|
+            shots += astat.saves
+          end
+        end
+      end
+
+      return shots
+    else
+      0
+    end
+  end
+
 end

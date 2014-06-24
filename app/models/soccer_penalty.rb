@@ -3,7 +3,7 @@ class SoccerPenalty
 	include Mongoid::Timestamps
 
 	field :infraction, type: String
-	field :type, type: String
+	field :card, type: String
 	field :gametime, type: String
 	field :period, type: Integer, default: 1
 

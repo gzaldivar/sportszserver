@@ -1,0 +1,449 @@
+<% provide(:title, current_team.mascot + " vs. " + @gameschedule.opponent_mascot + " - Soccer Scoresheet" ) %>
+<div class="row">
+	<div class="col-xs-4 col-xs-offset-8">
+		<h5><%= link_to current_team.mascot + " vs. " + @gameschedule.opponent_mascot, sport_team_gameschedule_path(@sport, @team, @gameschedule) %></h5>
+	</div>
+</div>
+<p>
+<div class="row">
+	<div class="col-xs-8">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th><%= @gameschedule.starttime.strftime("%m/%d/%Y") %></th>
+				<th>1</th>
+				<th>2</th>
+				<th>OT 1</th>
+				<th>OT 2</th>
+				<th>Final</th>
+			</thead>
+			<tbody>
+				<tr>
+					<td>HOME</td>
+					<td><%= soccergame_periodhomescore(@gameschedule, 1) %></td>
+					<td><%= soccergame_periodhomescore(@gameschedule, 2) %></td>
+					<td><%= soccergame_periodhomescore(@gameschedule, 3) %></td>
+					<td><%= soccergame_periodhomescore(@gameschedule, 4) %></td>
+					<td><%= soccergame_home_score(@gameschedule) %></td>
+				</tr>
+				<tr>
+					<td>VISITOR</td>
+					<td><%= soccergame_periodvisitorscore(@gameschedule, 1) %></td>
+					<td><%= soccergame_periodvisitorscore(@gameschedule, 2) %></td>
+					<td><%= soccergame_periodvisitorscore(@gameschedule, 3) %></td>
+					<td><%= soccergame_periodvisitorscore(@gameschedule, 4) %></td>
+					<td><%= soccergame_visitor_score(@gameschedule) %></td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-4">
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-2">
+		<h5>SHOTS</h5>
+	</div>
+	<div class="col-xs-4">
+		<h5>VISITOR
+			<% if @visiting_team %>
+				<%= link_to "#", data: { toggle: 'modal', target: "#editvisitingplayers-modal" } do %>
+			    	<i class="glyphicon glyphicon-edit">Edit</i>
+			    <% end %>
+			<% else %>
+				<%= link_to "#", data: { toggle: 'modal', target: "#visitorinfo-modal" } do %>
+			    	<i class="glyphicon glyphicon-info-sign">Info</i>
+			    <% end %>
+			<% end %>
+		</h5>
+	</div>
+	<div class="col-xs-4">
+		<h5>HOME
+			<%= link_to "#", data: { toggle: 'modal', target: '#addhomeplayers-modal' } do %>
+			    <i class="glyphicon glyphicon-edit">Edit</i>
+			<% end %>
+		</h5>
+	</div>
+	<div class="col-xs-2">
+		<h5>SHOTS</h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-2">
+		<div class="row">
+			<div class="col-xs-4 col-xs-offset-1">
+				<h5 class="text-success"><%= soccergame_homeshots(@gameschedule) %></h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h5> 
+					<%= link_to "#" do %>
+					    <i class="glyphicon glyphicon-edit">CORNER KICKS</i>
+					<% end %>
+				</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-1">
+				<h5 class="text-success"><%= soccergame_homecornerkicks(@gameschedule) %></h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h5>
+					<%= link_to "#" do %>
+					    <i class="glyphicon glyphicon-edit">KEEPER SAVES</i>
+					<% end %>
+				</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-1">
+				<h5 class="text-success"><%= soccergame_homesaves(@gameschedule) %></h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h5>
+					<%= link_to "#" do %>
+					    <i class="glyphicon glyphicon-edit">FOULS</i>
+					<% end %>
+				</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-1">
+				<h5 class="text-success"><%= @gameschedule.soccer_game.homefouls %></h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-8">
+				<h5>
+					<%= link_to "#" do %>
+					    <i class="glyphicon glyphicon-edit">OFFSIDES</i>
+					<% end %>
+				</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-1">
+				<h5 class="text-success"><%= @gameschedule.soccer_game.homeoffsides %></h5>
+			</div>
+		</div>
+	</div>
+	<div class="col-xs-4">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>No.</th>
+				<th>Pos</th>
+				<th>Name</th>
+				<th>Shots</th>
+				<th>G</th>
+				<th>A</th>
+			</thead>
+			<tbody>
+				<tr>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-4">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>No.</th>
+				<th>Pos</th>
+				<th>Name</th>
+				<th>Shots</th>
+				<th>G</th>
+				<th>A</th>
+			</thead>
+			<tbody>
+				<% if !@soccer_game.homeplayers.nil? %>
+					<% @soccer_game.homeplayers.each do |p| %>
+						<% player = Athlete.find(p) %>
+						<tr>
+							<td><%= player.number %></td>
+							<td><%= player.position %></td>
+							<td><%= player.logname %></td>
+							<td></td>
+							<td></td>
+							<td></td>
+						</tr>
+					<% end %>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-2">
+		<div class="row">
+			<div class="col-xs-4 col-xs-offset-1">
+				<h5 class="text-success"><%= soccergame_visitorshots(@gameschedule) %></h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h5>
+					<%= link_to "#" do %>
+					    <i class="glyphicon glyphicon-edit">CORNER KICKS</i>
+					<% end %>
+				</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-1">
+				<h5 class="text-success"><%= soccergame_visitorcornerkicks(@gameschedule) %></h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h5>
+					<%= link_to "#" do %>
+					    <i class="glyphicon glyphicon-edit">KEEPER SAVES</i>
+					<% end %>
+				</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-1">
+				<h5 class="text-success"><%= soccergame_visitorsaves(@gameschedule) %></h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-12">
+				<h5>
+					<%= link_to "#" do %>
+					    <i class="glyphicon glyphicon-edit">FOULS</i>
+					<% end %>
+				</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-1">
+				<h5 class="text-success"><%= @gameschedule.soccer_game.visitorfouls %></h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-8">
+				<h5>
+					<%= link_to "#" do %>
+					    <i class="glyphicon glyphicon-edit">OFFSIDES</i>
+					<% end %>
+				</h5>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-xs-8 col-xs-offset-1">
+				<h5 class="text-success"><%= @gameschedule.soccer_game.visitoroffsides %></h5>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-4 col-xs-offset-2">
+		<h5>GOALKEEPERS
+			<%= link_to "#", data: { toggle: 'modal', target: '#visitorinfo-modal' } do %>
+			    <i class="glyphicon glyphicon-info-sign">Info</i>
+			<% end %>
+		</h5>
+	</div>
+	<div class="col-xs-4">
+		<h5>GOALKEEPERS 
+			<%= link_to "#", data: { toggle: 'modal', target: '#homegoalies-modal' } do %>
+			    <i class="glyphicon glyphicon-info-sign">Info</i>
+			<% end %>
+		</h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-4 col-xs-offset-2">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>No.</th>
+				<th>Pos</th>
+				<th>Name</th>
+				<th>Saves</th>
+				<th>Goals</th>
+				<th>Min</th>
+			</thead>
+			<tbody>
+				<tr>
+					<td>4</td>
+					<td>M</td>
+					<td>C. Zaldivar</td>
+					<td>4</td>
+					<td>2</td>
+					<td>23</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-4">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>No.</th>
+				<th>Pos</th>
+				<th>Name</th>
+				<th>Saves</th>
+				<th>Goals</th>
+				<th>Min</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-2">
+		<h5>SUBS 
+			<%= link_to "#" do %>
+			    <i class="glyphicon glyphicon-edit">Edit</i>
+			<% end %>
+		</h5>
+	</div>
+	<div class="col-xs-4">
+		<h5>SUBSTITUTES 
+			<% if @visiting_team %>
+				<%= link_to "#", data: { toggle: 'modal', target: "#editvisitingsubstitutes-modal" } do %>
+			    	<i class="glyphicon glyphicon-edit">Edit</i>
+			    <% end %>
+			<% else %>
+				<%= link_to "#", data: { toggle: 'modal', target: "#visitorinfo-modal" } do %>
+			    	<i class="glyphicon glyphicon-info-sign">Info</i>
+			    <% end %>
+			<% end %>
+		</h5>
+	</div>
+	<div class="col-xs-4">
+		<h5>SUBSTITUTES 
+			<%= link_to "#" do %>
+			    <i class="glyphicon glyphicon-info-sign">Info</i>
+			<% end %>
+		</h5>
+	</div>
+	<div class="col-xs-2">
+		<h5>SUBS 
+			<%= link_to "#" do %>
+			    <i class="glyphicon glyphicon-edit">Edit</i>
+			<% end %>
+		</h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-2">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>In</th>
+				<th>Out</th>
+				<th>Time</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-4">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>No.</th>
+				<th>Pos</th>
+				<th>Name</th>
+				<th>Shots</th>
+				<th>G</th>
+				<th>A</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-4">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>No.</th>
+				<th>Pos</th>
+				<th>Name</th>
+				<th>Shots</th>
+				<th>G</th>
+				<th>A</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-2">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>In</th>
+				<th>Out</th>
+				<th>Time</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-3">
+		<h5>CAUTIONS/EJECTIONS 
+			<%= link_to "#" do %>
+			    <i class="glyphicon glyphicon-edit">Edit</i>
+			<% end %>
+		</h5>
+	</div>
+	<div class="col-xs-6">
+		<h5 class="text-center">SCORING 
+			<%= link_to "#" do %>
+			    <i class="glyphicon glyphicon-edit">Edit</i>
+			<% end %>
+		</h5>
+	</div>
+	<div class="col-xs-3">
+		<h5>CAUTIONS/EJECTIONS 
+			<%= link_to "#" do %>
+			    <i class="glyphicon glyphicon-edit">edit</i>
+			<% end %>
+		</h5>
+	</div>
+</div>
+<div class="row">
+	<div class="col-xs-3">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>Player</th>
+				<th>Y/R</th>
+				<th>Offense</th>
+				<th>Time</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-6">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>Goal By</th>
+				<th>Team</th>
+				<th>Time</th>
+				<th>Assist</th>
+				<th>Description</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+	<div class="col-xs-3">
+		<table class="table table-striped table-bordered table-hover">
+			<thead>
+				<th>Player</th>
+				<th>Y/R</th>
+				<th>Offense</th>
+				<th>Time</th>
+			</thead>
+			<tbody>
+			</tbody>
+		</table>
+	</div>
+</div>
+<%= render 'layouts/messagemodal', modalid: 'visitorinfo-modal', modaltitle: 'Visiting Team', 
+									messagetext: @visiting_team ? @visiting_team.mascot : "No visiting team. No players to display" %>
+<%= render 'layouts/messagemodal', modalid: 'homegoalies-modal', modaltitle: 'Home Team', 
+									messagetext: "Players are assisgned based on position. To add a goalie add the position to the players bio." %>
+<%= render 'addplayersmodal', modalid: 'addhomeplayers-modal', home: 'Home', players: @players %>

@@ -73,6 +73,9 @@ class GameschedulesController < ApplicationController
         schedule.lacross_game.extraman_fail = Array.new(5) { 0 }
         schedule.lacross_game.clears = Array.new(5) { 0 }
         schedule.lacross_game.failedclears = Array.new(5) { 0 }
+      elsif @sport.name == "Soccer"
+        schedule.soccer_game = SoccerGame.new
+        schedule.soccer_game.homeplayers = Array.new(11) { "" }
       end
       
       schedule.save!
@@ -612,10 +615,16 @@ class GameschedulesController < ApplicationController
         visiting_team.lacross_game_id = @gameschedule.lacross_game.id
         visiting_team.save!
 
-        @gameschedule.visitor_clears = Array.new(5) { 0 }
-        @gameschedule.visitor_failedclears = Array.new(5) { 0 }
-        @gameschedule.visitor_extraman_fail = Array.new(5) { 0 }
-        @gameschedule.save!
+        @gameschedule.lacross_game.visitor_clears = Array.new(5) { 0 }
+        @gameschedule.lacross_game.visitor_failedclears = Array.new(5) { 0 }
+        @gameschedule.lacross_game.visitor_extraman_fail = Array.new(5) { 0 }
+        @gameschedule.lacross_game.save!
+      elsif @sport.name == "Scoccer"
+        visiting_team.soccer_game_id = @gameschedule.soccer_game.id
+        visiting_team.save!
+
+        @gameschedule.soccer_game.visitorplayers = Array.new(11) { "" }
+        @gameschedule.soccer_game.save!
       end
 
       respond_to do |format|

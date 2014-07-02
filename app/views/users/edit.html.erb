@@ -27,8 +27,11 @@
 			<p>
 			<% if @user.admin and current_site? and @user.adminsite == current_site.id.to_s %>
 				<div class="row">
-					<div class="col-xs-11">
-						<h5 class="text-warning">Paypal email used to deposit your program's ad revenue. If you do not enter a PayPal eaccount mail , there will be no account to deposit revenue from advertisers who advertise on your site. You create ad inventory for advertisors by selecting the Ads and Sponsors tab the tab bar.</h5>
+					<div class="col-xs-12">
+						<h3 class="text-warning">Notice - Administrator</h3>
+						<h5 class="text-danger">Enter Paypal email to deposit your program's ad revenue.</h5>
+						<p class="text-info">If you do not enter a PayPal eaccount mail , there will be no account to deposit revenue from advertisers who advertise on your site. You can create ad inventory for advertisors to purchase from the web by selecting the Ads and Sponsors tab the tab bar.</p>
+						<p class="text-info">GameTracker apps allow users to sponsor your site from the app. Remember that Apple will take 30% of all apps purchased via GameTracker.</p>
 						<%= f.label :paypal_email, "Paypal Email Account" %>
 						<%= f.text_field :paypal_email, class: "form-control" %> 
 					</div>

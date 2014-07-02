@@ -1,6 +1,6 @@
 <script type="text/javascript">
    $(document).ready(function() {
-     $('.multiselect').multiselect({
+     $('.playerselect').multiselect({
        nonSelectedText: 'You have not selected any players'
      });
    });
@@ -16,8 +16,9 @@
         		<%= form_for [@sport, @team, @gameschedule, @soccer_game], class: "form-horizontal" do |f| %>
         			<%= f.hidden_field :home, value: home %>
                     <%= label_tag 'Select Players' %>
-                    <%= f.select :homeplayers, options_for_select(players.collect{ |x| [x.numlogname, x.id] } ), {},
-                                            { class: 'multiselect', multiple: true } %>
+                    <!--%= f.select :homeplayers, options_for_select(players.collect{ |x| [x.numlogname, x.id] } ), {},
+                                            { class: 'multiselect', multiple: true } %-->
+                    <%= select_tag :players, options_for_select(players.collect{ |x| [x.numlogname, x.id] } ), { class: 'playerselect', multiple: true } %>
                     <p>
                     <div class="row">
                         <div class="col-xs-2 col-xs-offset-5">

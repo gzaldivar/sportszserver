@@ -115,7 +115,16 @@ Sportzserver::Application.routes.draw do
           end
         end
  
-        resources :soccer_games, only: [:index, :update]
+        resources :soccer_games, only: [:index, :update] do
+
+          resources :soccer_stats
+
+          member do
+            get   :substitute_players, :deletesub
+            put   :changeperiod, :addsubstitute_player
+          end
+          
+        end
       end
 
       resources :standings, only: [:index] do
@@ -168,7 +177,9 @@ Sportzserver::Application.routes.draw do
 
       resources :soccers
 
-      resources :lacrosstats , only: [:destroy, :create, :update]
+      resources :lacrosstats, only: [:destroy, :create, :update]
+
+      resources :soccer_stats
       
       member do
         get :follow, :unfollow, :stats, :playerstats, :mobilefollow, :mobileunfollow

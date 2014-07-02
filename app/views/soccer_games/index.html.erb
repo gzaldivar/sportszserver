@@ -19,24 +19,35 @@
 			<tbody>
 				<tr>
 					<td>HOME</td>
-					<td><%= soccergame_periodhomescore(@gameschedule, 1) %></td>
-					<td><%= soccergame_periodhomescore(@gameschedule, 2) %></td>
-					<td><%= soccergame_periodhomescore(@gameschedule, 3) %></td>
-					<td><%= soccergame_periodhomescore(@gameschedule, 4) %></td>
-					<td><%= soccergame_home_score(@gameschedule) %></td>
+					<td><%= @gameschedule.soccer_game.periodscore(sport_home_team, 1) %></td>
+					<td><%= @gameschedule.soccer_game.periodscore(sport_home_team, 2) %></td>
+					<td><%= @gameschedule.soccer_game.periodscore(sport_home_team, 3) %></td>
+					<td><%= @gameschedule.soccer_game.periodscore(sport_home_team, 4) %></td>
+					<td><%= @gameschedule.soccer_game.score(sport_home_team) %></td>
 				</tr>
 				<tr>
 					<td>VISITOR</td>
-					<td><%= soccergame_periodvisitorscore(@gameschedule, 1) %></td>
-					<td><%= soccergame_periodvisitorscore(@gameschedule, 2) %></td>
-					<td><%= soccergame_periodvisitorscore(@gameschedule, 3) %></td>
-					<td><%= soccergame_periodvisitorscore(@gameschedule, 4) %></td>
-					<td><%= soccergame_visitor_score(@gameschedule) %></td>
+					<td><%= @gameschedule.soccer_game.periodscore(sport_visitor_team, 1) %></td>
+					<td><%= @gameschedule.soccer_game.periodscore(sport_visitor_team, 2) %></td>
+					<td><%= @gameschedule.soccer_game.periodscore(sport_visitor_team, 3) %></td>
+					<td><%= @gameschedule.soccer_game.periodscore(sport_visitor_team, 4) %></td>
+					<td><%= @gameschedule.soccer_game.score(sport_visitor_team) %></td>
 				</tr>
 			</tbody>
 		</table>
 	</div>
 	<div class="col-xs-4">
+        <%= form_tag changeperiod_sport_team_gameschedule_soccer_game_path(@sport, @team, @gameschedule, @soccer_game), method: :put,
+        			 class: "form-horizontal" do %>
+			<%= label_tag "Period for stats entry" %>
+	        <%= select_tag :period, options_for_select(soccer_periods, @period), { class: 'periodselect', multiple: false } %>
+            <p>
+            <div class="row">
+                <div class="col-xs-2 col-xs-offset-5">
+                    <%= submit_tag "Submit", class: 'btn btn-primary' %>
+                </div>
+            </div>
+        <% end %>
 	</div>
 </div>
 <div class="row">
@@ -71,21 +82,21 @@
 	<div class="col-xs-2">
 		<div class="row">
 			<div class="col-xs-4 col-xs-offset-1">
-				<h5 class="text-success"><%= soccergame_homeshots(@gameschedule) %></h5>
+				<h5 class="text-success"><%= @gameschedule.soccer_game.shots(sport_home_team) %></h5>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-12">
 				<h5> 
-					<%= link_to "#" do %>
-					    <i class="glyphicon glyphicon-edit">CORNER KICKS</i>
+					<%= link_to "#", data: { toggle: 'modal', target: '#playerstatinfo-modal' } do %>
+					    <i class="glyphicon glyphicon-info-sign">CORNER KICKS</i>
 					<% end %>
 				</h5>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-8 col-xs-offset-1">
-				<h5 class="text-success"><%= soccergame_homecornerkicks(@gameschedule) %></h5>
+				<h5 class="text-success"><%= @gameschedule.soccer_game.cornerkicks(sport_home_team) %></h5>
 			</div>
 		</div>
 		<div class="row">
@@ -99,7 +110,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-8 col-xs-offset-1">
-				<h5 class="text-success"><%= soccergame_homesaves(@gameschedule) %></h5>
+				<h5 class="text-success"><%= @gameschedule.soccer_game.saves(sport_home_team) %></h5>
 			</div>
 		</div>
 		<div class="row">
@@ -113,7 +124,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-8 col-xs-offset-1">
-				<h5 class="text-success"><%= @gameschedule.soccer_game.homefouls %></h5>
+				<h5 class="text-success"><%= @gameschedule.soccer_game.fouls(sport_home_team) %></h5>
 			</div>
 		</div>
 		<div class="row">
@@ -142,8 +153,19 @@
 				<th>A</th>
 			</thead>
 			<tbody>
-				<tr>
-				</tr>
+				<% if @gameschedule.soccer_game.visiting_team and !@soccer_game.visitorplayers.nil? %>
+					<% @soccer_game.visitorplayers.each do |v| %>
+						<% player = VisitorRoster.find(v) %>
+						<tr>
+							<td><%= player.number %></td>
+							<td><%= player.position %></td>
+							<td><%= player.logname %></td>
+							<td><%= soccergame_visiting_player_shots(@gameschedule, player) %></td>
+							<td><%=  %></td>
+							<td><%=  %></td>
+						</tr>
+					<% end %>
+				<% end %>
 			</tbody>
 		</table>
 	</div>
@@ -161,13 +183,18 @@
 				<% if !@soccer_game.homeplayers.nil? %>
 					<% @soccer_game.homeplayers.each do |p| %>
 						<% player = Athlete.find(p) %>
+						<% playerstat = @soccer_game.soccer_stats.find_by(athlete_id: player.id) %>
 						<tr>
 							<td><%= player.number %></td>
 							<td><%= player.position %></td>
-							<td><%= player.logname %></td>
-							<td></td>
-							<td></td>
-							<td></td>
+							<td><%= link_to player.logname, sport_athlete_path(@sport, player) %></td>
+							<td><%= link_to soccergame_player_shots(@gameschedule, player), '#', 
+																data: { toggle: 'modal', target: '#shotmodal' + player.id.to_s} %>
+								<%= render 'soccer_shot_modal', modalid: 'shotmodal' + player.id.to_s, home: sport_home_team, thestat: 'Shot',
+											stat: playerstat.nil? ? @soccer_game.soccer_stats.new(athlete_id: player.id) : 
+											playerstat, athlete: player %></td>
+							<td><%= soccergame_player_goals(@gameschedule, player) %></td>
+							<td><%= soccergame_player_assists(@gameschedule, player) %></td>
 						</tr>
 					<% end %>
 				<% end %>
@@ -177,21 +204,21 @@
 	<div class="col-xs-2">
 		<div class="row">
 			<div class="col-xs-4 col-xs-offset-1">
-				<h5 class="text-success"><%= soccergame_visitorshots(@gameschedule) %></h5>
+				<h5 class="text-success"><%= @gameschedule.soccer_game.shots(sport_visitor_team) %></h5>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-12">
 				<h5>
-					<%= link_to "#" do %>
-					    <i class="glyphicon glyphicon-edit">CORNER KICKS</i>
+					<%= link_to "#", data: { toggle: 'modal', target: '#playerstatinfo-modal' } do %>
+					    <i class="glyphicon glyphicon-info-sign">CORNER KICKS</i>
 					<% end %>
 				</h5>
 			</div>
 		</div>
 		<div class="row">
 			<div class="col-xs-8 col-xs-offset-1">
-				<h5 class="text-success"><%= soccergame_visitorcornerkicks(@gameschedule) %></h5>
+				<h5 class="text-success"><%= @gameschedule.soccer_game.cornerkicks(sport_visitor_team) %></h5>
 			</div>
 		</div>
 		<div class="row">
@@ -205,7 +232,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-8 col-xs-offset-1">
-				<h5 class="text-success"><%= soccergame_visitorsaves(@gameschedule) %></h5>
+				<h5 class="text-success"><%= @gameschedule.soccer_game.saves(sport_visitor_team) %></h5>
 			</div>
 		</div>
 		<div class="row">
@@ -219,7 +246,7 @@
 		</div>
 		<div class="row">
 			<div class="col-xs-8 col-xs-offset-1">
-				<h5 class="text-success"><%= @gameschedule.soccer_game.visitorfouls %></h5>
+				<h5 class="text-success"><%= @gameschedule.soccer_game.fouls(sport_visitor_team) %></h5>
 			</div>
 		</div>
 		<div class="row">
@@ -266,14 +293,6 @@
 				<th>Min</th>
 			</thead>
 			<tbody>
-				<tr>
-					<td>4</td>
-					<td>M</td>
-					<td>C. Zaldivar</td>
-					<td>4</td>
-					<td>2</td>
-					<td>23</td>
-				</tr>
 			</tbody>
 		</table>
 	</div>
@@ -288,6 +307,20 @@
 				<th>Min</th>
 			</thead>
 			<tbody>
+				<% if !@players.nil? %>
+					<% @players.each do |p| %>
+						<% if is_soccer_goalie?(p.position) %>
+							<tr>
+								<td><%= p.number %></td>
+								<td><%= p.position %></td>
+								<td><%= p.logname %></td>
+								<td></td>
+								<td></td>
+								<td></td>
+							</tr>
+						<% end %>
+					<% end %>
+				<% end %>
 			</tbody>
 		</table>
 	</div>
@@ -295,7 +328,7 @@
 <div class="row">
 	<div class="col-xs-2">
 		<h5>SUBS 
-			<%= link_to "#" do %>
+			<%= link_to "#", data: { toggle: 'modal', target: '#homesubs-modal' } do %>
 			    <i class="glyphicon glyphicon-edit">Edit</i>
 			<% end %>
 		</h5>
@@ -314,15 +347,11 @@
 		</h5>
 	</div>
 	<div class="col-xs-4">
-		<h5>SUBSTITUTES 
-			<%= link_to "#" do %>
-			    <i class="glyphicon glyphicon-info-sign">Info</i>
-			<% end %>
-		</h5>
+		<h5>SUBSTITUTES</h5>
 	</div>
 	<div class="col-xs-2">
 		<h5>SUBS 
-			<%= link_to "#" do %>
+			<%= link_to "#", data: { toggle: 'modal', target: '#homesubs-modal' } do %>
 			    <i class="glyphicon glyphicon-edit">Edit</i>
 			<% end %>
 		</h5>
@@ -337,6 +366,17 @@
 				<th>Time</th>
 			</thead>
 			<tbody>
+				<% if !@visitorsubs.nil? %>
+					<% @visitorsubs.each do |v| %>
+						<tr>
+							<td><%= link_to v.get_inplayer.number, sport_athlete_path(@sport, v.get_inplayer) %></td>
+							<td><%= link_to v.get_outplayer.number, sport_athlete_path(@sport, v.get_outplayer) %></td>
+							<td><%= link_to v.gametime, 
+									deletesub_sport_team_gameschedule_soccer_game_path(@sport, @team, @gameschedule, @soccer_game, subs: v),
+												 data: { confirm: "Delete Sub Entry?" } %></td>
+						</tr>
+					<% end %>
+				<% end %>
 			</tbody>
 		</table>
 	</div>
@@ -365,6 +405,25 @@
 				<th>A</th>
 			</thead>
 			<tbody>
+				<% if !@players.nil? %>
+					<% @players.each do |p| %>
+						<% unless @gameschedule.soccer_game.homeplayers.include?(p.id.to_s) %>
+							<% playerstat = @soccer_game.soccer_stats.find_by(athlete_id: p.id) %>
+							<tr>
+								<td><%= p.number %></td>
+								<td><%= p.position %></td>
+								<td><%= p.logname %></td>
+								<td><%= link_to soccergame_player_shots(@gameschedule, p), '#', 
+																	data: { toggle: 'modal', target: '#shotmodal' + p.id.to_s} %>
+									<%= render 'soccer_shot_modal', modalid: 'shotmodal' + p.id.to_s, home: sport_home_team, thestat: 'Shot',
+												stat: playerstat.nil? ? @soccer_game.soccer_stats.new(athlete_id: p.id) : 
+												playerstat, athlete: p %></td>
+								<td><%= soccergame_player_goals(@gameschedule, p) %></td>
+								<td><%= soccergame_player_assists(@gameschedule, p) %></td>
+							</tr>
+						<% end %>
+					<% end %>
+				<% end %>
 			</tbody>
 		</table>
 	</div>
@@ -376,6 +435,17 @@
 				<th>Time</th>
 			</thead>
 			<tbody>
+				<% if !@homesubs.nil? %>
+					<% @homesubs.each do |h| %>
+						<tr>
+							<td><%= link_to h.get_inplayer.number, sport_athlete_path(@sport, h.get_inplayer) %></td>
+							<td><%= link_to h.get_outplayer.number, sport_athlete_path(@sport, h.get_outplayer) %></td>
+							<td><%= link_to h.gametime, 
+									deletesub_sport_team_gameschedule_soccer_game_path(@sport, @team, @gameschedule, @soccer_game, subs: h),
+												 data: { confirm: "Delete Sub Entry?" } %></td>
+						</tr>
+					<% end %>
+				<% end %>
 			</tbody>
 		</table>
 	</div>
@@ -390,14 +460,23 @@
 	</div>
 	<div class="col-xs-6">
 		<h5 class="text-center">SCORING 
-			<%= link_to "#" do %>
-			    <i class="glyphicon glyphicon-edit">Edit</i>
+			<%= link_to "#", data: { toggle: 'modal', target: "#addhomescore-modal" } do %>
+			    <i class="glyphicon glyphicon-edit">Home</i>
+			<% end %>
+			<% if !@visitingplayers.nil? %>
+				<%= link_to "#", data: { toggle: 'modal', target: "#addvisitorscore-modal" } do %>
+				    <i class="glyphicon glyphicon-edit">Visitor</i>
+				<% end %>
+			<% else %>
+				<%= link_to "#", data: { toggle: 'modal', target: "#visitingteam-score_penalty-modal" } do %>
+				    <i class="glyphicon glyphicon-info-sign">Visitor</i>
+				<% end %>
 			<% end %>
 		</h5>
 	</div>
 	<div class="col-xs-3">
 		<h5>CAUTIONS/EJECTIONS 
-			<%= link_to "#" do %>
+			<%= link_to "#", data: { toggle: 'modal', target: '#homepenalty-modal' } do %>
 			    <i class="glyphicon glyphicon-edit">edit</i>
 			<% end %>
 		</h5>
@@ -426,6 +505,29 @@
 				<th>Description</th>
 			</thead>
 			<tbody>
+				<% if !@totalscores.nil? %>
+				<%= @totalscores[1].kind_of?(SoccerScoring) %>
+					<% @totalscores.each do |t| %>
+						<% t.soccer_stat.athlete_id ? player = Athlete.find(t.soccer_stat.athlete_id) : player = VisitorRoster.find(t.soccer_stat.visitor_roster_id) %>
+						<tr>
+							<td><%= link_to player.numlogname, sport_athlete_path(@sport, player) %></td>
+							<td><%= t.soccer_stat.athlete_id ? "H" : "V" %></td>
+							<td><%= link_to t.gametime, 
+											sport_team_gameschedule_soccer_game_path(@sport, @team, @gameschedule, @soccer_game, 
+													t.soccer_stat, soccer_scoring: t.id), data: { confirm: "Delete Score Entry?" } %></td>
+
+							<% if t.assist and t.soccer_stat.athlete_id %>
+								<td><%= Athlete.find(t.assist).numlogname %></td>
+							<% elsif t.assist and t.soccer_stat.visitor_roster_id %>
+								<td><%= VisitorRoster.find(t.assist).numlogname %></td>
+							<% else %>
+								<td></td>
+							<% end %>
+
+							<td><%= %></td>
+						</tr>
+					<% end %>
+				<% end %>
 			</tbody>
 		</table>
 	</div>
@@ -438,12 +540,46 @@
 				<th>Time</th>
 			</thead>
 			<tbody>
+				<% if !@homepenalties.nil? %>
+					<% @homepenalties.each do |h| %>
+						<tr>
+							<td><%= Athlete.find(h.soccer_stat.athlete_id).number %></td>
+							<td><%= h.card %></td>
+							<td><%= link_to h.infraction, '#', data: { toggle: 'modal', target: '#redpenalty-lookup-modal' } %></td>
+							<td><%= link_to h.gametime, 
+									sport_team_gameschedule_soccer_game_soccer_stat_path(@sport, @team, @gameschedule, @soccer_game, 
+													h.soccer_stat, soccer_penalty: h.id), method: :delete,data: { confirm: "Delete Penalty?" } %>
+						</tr>
+					<% end %>
+				<% end %>
 			</tbody>
 		</table>
 	</div>
 </div>
+<%= render 'penalty-lookup-modal', modalid: 'redpenalty-lookup-modal', card: 'Red' %>
+<%= render 'penalty-lookup-modal', modalid: 'yellowpenalty-lookup-modal', card: 'Yellow' %>
+<%= render 'addpenaltymodal', modalid: 'homepenalty-modal', modaltitle: 'Add Penalty', home: sport_home_team, players: @players, penalty: nil %>
+<%= render 'substitute-modal', modalid: 'homesubs-modal', modaltitle: 'Add Sub', players: @players, home: sport_home_team %>
+<%= render 'layouts/messagemodal', modalid: 'playerstatinfo-modal', modaltitle: 'Edit Player Stats', 
+									messagetext: "Select Player Shot in Roster or Substitute to add stat!" %>
 <%= render 'layouts/messagemodal', modalid: 'visitorinfo-modal', modaltitle: 'Visiting Team', 
 									messagetext: @visiting_team ? @visiting_team.mascot : "No visiting team. No players to display" %>
-<%= render 'layouts/messagemodal', modalid: 'homegoalies-modal', modaltitle: 'Home Team', 
-									messagetext: "Players are assisgned based on position. To add a goalie add the position to the players bio." %>
+<%= render 'layouts/messagemodal', modalid: 'visitorinfo-modal', modaltitle: 'Visiting Team', 
+									messagetext: @visiting_team ? @visiting_team.mascot : "No visiting team. No players to display" %>
+<%= render 'layouts/messagemodal', modalid: 'visitingteam-score_penalty-modal', modaltitle: 'No Visiting Team', 
+									messagetext: "Add score visitor scores in Game Summary page! Penalties for visiting team are not available." %>
 <%= render 'addplayersmodal', modalid: 'addhomeplayers-modal', home: 'Home', players: @players %>
+<% if !@visitingplayers.nil? %>
+	<%= render 'addplayersmodal', modalid: 'addvisitorplayers-modal', home: 'Visitor', players: @visitingplayers %>
+<% end %>
+<%= render 'editscore-modal', modalid: 'addhomescore-modal', home: sport_home_team, players: @players, score: nil %>
+<% if !@visitingplayers.nil? %>
+	<%= render 'editscore-modal', modalid: 'addvisitorscore-modal', home: sport_visitor_team, players: @visitingplayers, score: nil %>
+<% end %>
+<script type="text/javascript">
+   $(document).ready(function() {
+     $('.periodselect').multiselect({
+       nonSelectedText: 'Select Period to update stats'
+     });
+   });
+ </script>

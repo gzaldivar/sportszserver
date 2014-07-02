@@ -4,8 +4,16 @@
 	<div class="col-xs-12">
       	<% if @user.admin and !current_site.nil?%>
       		<div class="row">
-      			<div class="col-xs-8 ">
+      			<div class="col-xs-8">
       				<h4>Administrator for <%= current_site.sitename %></h4>
+      			</div>
+      		</div>
+      		<div class="row">
+      			<div class="col-xs-4">
+		      		<strong>Revenue Enabled: </strong><em><font color="red"><%= @user.paypal_email.nil? ? "No" : "Yes" %></font></em><p>
+      			</div>
+      			<div class="col-xs-8">
+		      		<h4 class="text-danger">You need to enter a paypal email to receive ad revenue! Click Edit to set up.</h4>
       			</div>
       		</div>
       	<% end %>
@@ -37,10 +45,6 @@
 		    <div class="col-xs-2">
 		      	<strong>Username: </strong><em><%= @user.name %></em><p>
 		      	<strong>Mobile Tier: </strong><em><font color="red"><%= @user.tier %></font></em><p>
-		      	<% if @user.admin %>
-		      		<strong>Revenue Enabled: </strong><em><font color="red"><%= @user.paypal_email.nil? ? "No" : "Yes" %></font></em><p>
-		      		<p class="text-info">You need to enter a paypal email to receive ad revenue!</p>
-		      	<% end %>
 		    </div>
 		    <div class="col-xs-2 col-xs-offset-1">
 	      		<strong>Email: </strong><em><%= @user.email %></em><p>
@@ -101,7 +105,7 @@
 		<div class="row">
 			<div class="col-xs-4 col-xs-offset-4">
 				<% if (!current_user.nil?  and !current_site.nil? and (@user.id == current_user.id)) or isAdmin? %>
-				    <%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-sm btn-primary" %>
+				    <%= link_to 'Edit', edit_user_path(id: @user.id), class: "btn btn-lg btn-primary" %>
 				<% end %>
 				<% if isUserAdmin?(@user) or isAdmin? %>
 					<% if @user.is_active and !@user.admin %>

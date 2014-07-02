@@ -1,0 +1,42 @@
+<div class="modal" id="<%= modalid %>">
+	<div class="modal-dialog">
+      	<div class="modal-content">
+        	<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          		<h4 class="modal-title"><%= card %> Card Lookup</h4>
+        	</div>
+        	<div class="modal-body">
+            <div class="row">
+              <div class="col-xs-12">
+                <table class="table table-striped table-bordered table-hover">
+                  <thead>
+                    <th>Code</th>
+                    <th>Description</th>
+                  </thead>
+                  <tbody>
+                    <% if card == "Yellow" %>
+                      <% soccer_yellowcard.each do |s| %>
+                        <tr>
+                          <td><%= s[1] %></td>
+                          <td><%= s[0] %></td>
+                        </tr>
+                      <% end %>
+                    <% else %>  
+                      <% soccer_redcard.each do |s| %>
+                        <tr>
+                          <td><%= s[1] %></td>
+                          <td><%= s[0] %></td>
+                        </tr>
+                      <% end %>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+              <a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
+          </div>
+        </div>
+    </div> 
+</div>

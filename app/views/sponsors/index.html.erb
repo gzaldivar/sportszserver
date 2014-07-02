@@ -4,6 +4,14 @@
 	<div class="row">
 		<div class="col-xs-12">
 			<h3 class="text-warning"><%= current_site.sitename %> does not support user purchased advertising. Please contact the site administrator with questions.</h3>
+		</div> 
+	</div>
+	<p>
+	<div class="row">
+		<div class="col-xs-12">
+			<% if site_owner?(@sport) %>
+				<%= link_to "Set Up Sport for Ads", user_path(current_user), class: "btn btn-lg btn-danger" %>
+			<% end %>
 		</div>
 	</div>
 <% end %>

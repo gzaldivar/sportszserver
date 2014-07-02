@@ -19,6 +19,10 @@ class Sponsor
   field :contactemail, type: String
   field :teamonly, type: Boolean, default: false
   field :adurl, type: String
+  field :country, type: String
+
+  field :userhash, type: String, default: nil
+
   field :sponsorlevel, type: String
   field :adminentered, type: Boolean, default: false
 
@@ -26,6 +30,8 @@ class Sponsor
 
   field :sharepaid, type: Boolean, default: true
   field :sharetime, type: DateTime
+
+  index( { userhash: 1 }, { unique: true } )
 
   belongs_to :team
   belongs_to :sport

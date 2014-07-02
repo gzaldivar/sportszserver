@@ -37,7 +37,7 @@ module UsersHelper
 			if current_user.adminsite == team.sport.id.to_s
 				return true
 			else
-				return false
+		  		raise ActionController::RoutingError.new('you are not Authorized for this')
 			end
 	  	else
 	  		raise ActionController::RoutingError.new('you are not Authorized for this')

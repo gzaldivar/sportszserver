@@ -292,4 +292,5 @@ class SponsorsController < ApplicationController
 				@inapsponsors = @sport.sponsors.where(:ios_client_ad.exists => true).paginate(page: params[:page])
 			end
 		end
+
 end

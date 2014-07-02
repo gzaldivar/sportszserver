@@ -52,6 +52,15 @@ module SoccersHelper
     ]
   end
 
+  def soccer_periods
+    [
+      ['1', '1'],
+      ['2', '2'],
+      ['OT1', '3'],
+      ['OT2', '4']
+    ]
+  end
+
   def soccergame_home_score(game)
     playerscores = game.soccer_game.soccer_stats
     score = 0
@@ -103,6 +112,52 @@ module SoccersHelper
     else
       0
     end
+  end
+
+  def soccergame_player_shots(game, player)
+    shots = 0
+
+    stat = game.soccer_game.soccer_stats.find_by(athlete_id: player.id)
+
+    if !stat.nil?
+      stat.soccer_playerstats.each do |s|
+        shots += s.shots
+      end
+    end
+
+    return shots
+  end
+
+  def soccergame_visiting_player_shots(game, player)
+    shots = 0
+
+    player.soccer_stats.find_by(soccer_game_id: game.soccer_game).soccer_playerstats.each do |stat|
+      shots += stat.shots
+    end
+    
+    return shots
+  end
+
+  def soccergame_player_goals(game, player)
+    goals = 0
+
+    stat = game.soccer_game.soccer_stats.find_by(athlete_id: player.id)
+
+    if stat
+      goals = stat.soccer_scorings.count
+    end
+
+    return goals
+  end
+
+  def soccergame_player_assists(game, player)
+    assists = 0
+
+    game.soccer_game.soccer_stats.each do |stat|
+      assists = stat.soccer_scorings.where(assist: player.id).count
+    end
+
+    return assists
   end
 
   def soccergame_homeshots(game)

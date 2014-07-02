@@ -19,6 +19,9 @@ attribute :contactemail, :if => lambda { |s| s.contactemail.present? }
 attribute :sponsorlevel, :if => lambda { |s| s.sponsorlevel.present? }
 attribute :adurl, :if => lambda { |s| s.adurl.present? }
 attribute :teamonly, :if => lambda { |s| s.teamonly.present? }
+attribute :country, :if => lambda { |s| s.country.present? }
+
+attribute :userhash, :if => lambda { |s| s.userhash.present? }
 
 node :adsponsorlevel, :if => lambda { |a| !a.sportadinv.nil? } do |a|
 	a.sportadinv.adlevelname

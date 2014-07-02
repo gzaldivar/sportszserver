@@ -1,0 +1,51 @@
+<div class="modal" id="<%= modalid %>">
+	<div class="modal-dialog">
+      	<div class="modal-content">
+        	<div class="modal-header">
+          		<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+          		<h4 class="modal-title">Subsititue Player</h4>
+        	</div>
+        	<div class="modal-body">
+        		<%= form_tag addsubstitute_player_sport_team_gameschedule_soccer_game_path(@sport, @team, @gameschedule, @soccer_game), method: :put,
+                         class: "form-horizontal" do %>
+        			<%= hidden_field_tag :home, home %>
+              <div class="row">
+                <div class="col-xs-4">
+                  <%= label_tag 'Select Player' %>
+                  <!--%= f.select :homeplayers, options_for_select(players.collect{ |x| [x.numlogname, x.id] } ), {},
+                                          { class: 'multiselect', multiple: true } %-->
+                  <%= select_tag :inplayer, options_for_select(players.collect{ |x| [x.numlogname, x.id] } ), { include_blank: true, class: 'form-control' } %>
+                </div>
+                <div class="col-xs-4">
+                  <%= label_tag 'Select Substitute' %>
+              <!--%= f.select :homeplayers, options_for_select(players.collect{ |x| [x.numlogname, x.id] } ), {},
+                                      { class: 'multiselect', multiple: true } %-->
+                  <%= select_tag :outplayer, options_for_select(players.collect{ |x| [x.numlogname, x.id] } ), { include_blank: true, class: 'form-control' } %>
+                </div>
+                <div class="col-xs-4">
+                  <div class="row">
+                    <div class="col-xs-6">
+                      <%= label_tag :minutes %>
+                      <%= select_tag 'minutes', options_for_select(textminutes(110)), class: 'form-control' %>
+                    </div>
+                    <div class="col-xs-6">
+                      <%= label_tag :seconds %>
+                      <%= select_tag 'seconds', options_for_select(textseconds), class: 'form-control' %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <p>
+              <div class="row">
+                  <div class="col-xs-2 col-xs-offset-5">
+                      <%= submit_tag "Submit", class: 'btn btn-primary' %>
+                  </div>
+              </div>
+            <% end %>
+            </div>
+            <div class="modal-footer">
+                <a href="#" data-dismiss="modal" class="btn btn-default">Close</a>
+            </div>
+        </div>
+    </div> 
+</div>

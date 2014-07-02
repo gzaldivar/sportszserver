@@ -33,6 +33,14 @@ module SportsHelper
     return site
   end
 
+    def sport_home_team
+        "Home"
+    end
+
+    def sport_visitor_team
+        "Visitor"
+    end
+
   def months
     [
       ["January", "1"],

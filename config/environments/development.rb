@@ -32,8 +32,6 @@ Sportzserver::Application.configure do
     :password => 'gametrackertest'
   }
 
- config.action_mailer.register_interceptor(DevelopmentMailInterceptor)
-
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log
 

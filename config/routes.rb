@@ -26,7 +26,8 @@ Sportzserver::Application.routes.draw do
   resources :admins, only: [:edit, :update, :index] do
     
     collection do
-      get   :users, :deleteuser, :sports, :admonitoring
+      get   :users, :deleteuser, :sports, :admonitoring, :email
+      post  :sendemail
     end
 
     resources :ios_client_ads

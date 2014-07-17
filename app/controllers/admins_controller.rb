@@ -47,6 +47,33 @@ class AdminsController < ApplicationController
 		end
 	end
 
+	def email
+		
+	end
+
+	def sendemail
+		@users = []
+
+		if params[:sportname]
+			if params[:admin].to_i == 1
+				Sport.where(name: params[:sportname]).each_with_index do |s, cnt|
+					@users[cnt] = User.find(s.adminid)
+				end
+			else
+				Sport.where(name: params[:sportname]).each_with_index do |s, cnt|
+					sportusers = User.where(default_site: s.id.to_s)
+					(@users << sportusers).flatten
+				end
+			end
+		elsif params[:admin].to_i == 1
+			@users = User.where(admin: true)
+		else
+			@users = User.all
+		end
+
+		UserMailer.gametracker_news(@users, params[:paragraphone], params[:paragraphtwo], params[:paragraphthree])
+	end
+
 	private
 
 		def getAdmin

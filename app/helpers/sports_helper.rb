@@ -162,12 +162,19 @@ module SportsHelper
   def soccer_positions
     [
       ['Goal Keeper','GK'],
-      ['Sweeper', 'SWEP'],
-      ['Defender', 'D'],
-      ['Mid Fielder', 'MF'],
-      ['Forward', 'FORW'],
-      ['Fullback', 'FB'],
-      ['Stryker', 'STRK']
+      ['Sweeper', 'SW'],
+      ['Left Back', 'LB'],
+      ['Right Back', 'RB'],
+      ['Full Back', 'FB'],
+      ['Left Wing Back', 'LWB'],
+      ['Right Wing Back', 'RWB'],
+      ['Defending Midfielder ', 'DM'],
+      ['Central Midfielder', 'CM'],
+      ['Attacking Midfielder', 'AM'],
+      ['Left Wing Back', 'LWB'],
+      ['Right Wing Back', 'RWB'],
+      ['Center Forward', 'CF'],
+      ['Stryker', 'ST']
     ]
   end
 

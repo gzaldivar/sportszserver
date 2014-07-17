@@ -28,9 +28,11 @@ Sportzserver::Application.configure do
     :port => '587',
     :authentication => :plain,
     :domain => 'gmail.com',
-    :user_name => 'spsites01@gmail.com',
-    :password => 'bryan101'
+    :user_name => 'gametracker.usertest@gmail.com',
+    :password => 'gametrackertest'
   }
+
+ config.action_mailer.register_interceptor(DevelopmentMailInterceptor)
 
   # Print deprecation notices to the Rails logger
   config.active_support.deprecation = :log

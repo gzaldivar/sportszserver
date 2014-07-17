@@ -1,9 +1,6 @@
 class AlertsController < ApplicationController
 	before_filter :authenticate_user!,	only: [:index, :destroy, :clearall]
 	before_filter :get_athlete
-	before_filter do |check|
-		check.packageEnabled?(current_site)
-	end
 
 	def index
 		if params[:alerttype] == "Blog"

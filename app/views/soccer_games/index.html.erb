@@ -309,14 +309,27 @@
 			<tbody>
 				<% if !@players.nil? %>
 					<% @players.each do |p| %>
+						<% playerstat = @soccer_game.soccer_stats.find_by(athlete_id: p.id) %>
 						<% if is_soccer_goalie?(p.position) %>
 							<tr>
 								<td><%= p.number %></td>
 								<td><%= p.position %></td>
-								<td><%= p.logname %></td>
-								<td></td>
-								<td></td>
-								<td></td>
+								<td><%= link_to p.logname, sport_athlete_path(@sport, p) %></td>
+								<td><%= link_to soccergame_home_goalie_saves(@gameschedule, p), '#', 
+																	data: { toggle: 'modal', target: '#goalkeepermodal' + p.id.to_s} %>
+									<%= render 'soccer_goalie_modal', modalid: 'goalkeepermodal' + p.id.to_s, home: sport_home_team, thestat: 'Shot',
+												stat: playerstat.nil? ? @soccer_game.soccer_stats.new(athlete_id: p.id) : 
+												playerstat, athlete: p %></td>
+								<td><%= link_to soccergame_home_goalie_saves(@gameschedule, p), '#', 
+																	data: { toggle: 'modal', target: '#goalkeepermodal' + p.id.to_s} %>
+									<%= render 'soccer_goalie_modal', modalid: 'goalkeepermodal' + p.id.to_s, home: sport_home_team, thestat: 'Shot',
+												stat: playerstat.nil? ? @soccer_game.soccer_stats.new(athlete_id: p.id) : 
+												playerstat, athlete: p %></td>
+								<td><%= link_to soccergame_home_goalie_minutesplayed(@gameschedule, p), '#', 
+																	data: { toggle: 'modal', target: '#goalkeepermodal' + p.id.to_s} %>
+									<%= render 'soccer_goalie_modal', modalid: 'goalkeepermodal' + p.id.to_s, home: sport_home_team, thestat: 'Shot',
+												stat: playerstat.nil? ? @soccer_game.soccer_stats.new(athlete_id: p.id) : 
+												playerstat, athlete: p  %></td>
 							</tr>
 						<% end %>
 					<% end %>
@@ -506,17 +519,16 @@
 			</thead>
 			<tbody>
 				<% if !@totalscores.nil? %>
-				<%= @totalscores[1].kind_of?(SoccerScoring) %>
 					<% @totalscores.each do |t| %>
 						<% t.soccer_stat.athlete_id ? player = Athlete.find(t.soccer_stat.athlete_id) : player = VisitorRoster.find(t.soccer_stat.visitor_roster_id) %>
 						<tr>
 							<td><%= link_to player.numlogname, sport_athlete_path(@sport, player) %></td>
 							<td><%= t.soccer_stat.athlete_id ? "H" : "V" %></td>
 							<td><%= link_to t.gametime, 
-											sport_team_gameschedule_soccer_game_path(@sport, @team, @gameschedule, @soccer_game, 
-													t.soccer_stat, soccer_scoring: t.id), data: { confirm: "Delete Score Entry?" } %></td>
+											sport_team_gameschedule_soccer_game_soccer_stat_path(@sport, @team, @gameschedule, @soccer_game, 
+													t.soccer_stat, soccer_scoring: t.id), method: :delete, data: { confirm: "Delete Score Entry?" } %></td>
 
-							<% if t.assist and t.soccer_stat.athlete_id %>
+							<% if t.assist and !t.assist.blank? and t.soccer_stat.athlete_id %>
 								<td><%= Athlete.find(t.assist).numlogname %></td>
 							<% elsif t.assist and t.soccer_stat.visitor_roster_id %>
 								<td><%= VisitorRoster.find(t.assist).numlogname %></td>
@@ -563,19 +575,23 @@
 <%= render 'layouts/messagemodal', modalid: 'playerstatinfo-modal', modaltitle: 'Edit Player Stats', 
 									messagetext: "Select Player Shot in Roster or Substitute to add stat!" %>
 <%= render 'layouts/messagemodal', modalid: 'visitorinfo-modal', modaltitle: 'Visiting Team', 
-									messagetext: @visiting_team ? @visiting_team.mascot : "No visiting team. No players to display" %>
+									messagetext: @visiting_team ? @visiting_team.mascot : "No visiting team. No players to display. You can set up a visiting team by selecting a GameTracker opponet when you create add a game to the schedule." %>
 <%= render 'layouts/messagemodal', modalid: 'visitorinfo-modal', modaltitle: 'Visiting Team', 
-									messagetext: @visiting_team ? @visiting_team.mascot : "No visiting team. No players to display" %>
+									messagetext: @visiting_team ? @visiting_team.mascot : "No visiting team. No players to display. You can set up a visiting team by selecting a GameTracker opponet when you create add a game to the schedule." %>
 <%= render 'layouts/messagemodal', modalid: 'visitingteam-score_penalty-modal', modaltitle: 'No Visiting Team', 
-									messagetext: "Add score visitor scores in Game Summary page! Penalties for visiting team are not available." %>
+									messagetext: "No visiting team was added during when the game was created. You can add avisitor scores in Game Summary page!" %>
 <%= render 'addplayersmodal', modalid: 'addhomeplayers-modal', home: 'Home', players: @players %>
+
 <% if !@visitingplayers.nil? %>
 	<%= render 'addplayersmodal', modalid: 'addvisitorplayers-modal', home: 'Visitor', players: @visitingplayers %>
 <% end %>
+
 <%= render 'editscore-modal', modalid: 'addhomescore-modal', home: sport_home_team, players: @players, score: nil %>
+
 <% if !@visitingplayers.nil? %>
 	<%= render 'editscore-modal', modalid: 'addvisitorscore-modal', home: sport_visitor_team, players: @visitingplayers, score: nil %>
 <% end %>
+
 <script type="text/javascript">
    $(document).ready(function() {
      $('.periodselect').multiselect({

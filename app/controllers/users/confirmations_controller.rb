@@ -1,7 +1,9 @@
 class Users::ConfirmationsController < Devise::ConfirmationsController
   protected
     def after_confirmation_path_for(resource_name, resource)
-    	if resource.mobile == "Web"
+		UserMailer.welcome_mail(@user).deliver
+		
+     	if resource.mobile == "Web"
 			if resource.default_site.nil?
 				root_path
 			else
@@ -11,5 +13,5 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
 			clientapp_path(mobile: resource.mobile, email: resource.email, admin: resource.admin)
 #			render js: "window.location = '#{resource.mobile}://#{resource.email}'"
 		end
-    end
+   end
 end

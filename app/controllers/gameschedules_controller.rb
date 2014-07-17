@@ -94,7 +94,7 @@ class GameschedulesController < ApplicationController
   end
 
   def show
-#    begin
+    begin
       @players = @sport.athletes.where(team_id: @team.id.to_s).asc(:number)
 
       if @gameschedule.opponent_team_id?
@@ -169,12 +169,12 @@ class GameschedulesController < ApplicationController
         format.html
         format.json
       end
-#    rescue Exception => e
-#     respond_to do |format|
-#        format.html { redirect_to :back, alert: "Error: " + e.message }
-#        format.json { render status: 404, json: { error: e.message } }
-#      end
-#    end
+    rescue Exception => e
+     respond_to do |format|
+        format.html { redirect_to :back, alert: "Error: " + e.message }
+        format.json { render status: 404, json: { error: e.message } }
+      end
+    end
   end
   
   def edit

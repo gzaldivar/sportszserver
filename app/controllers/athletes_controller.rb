@@ -8,9 +8,6 @@ class AthletesController < ApplicationController
   before_filter only: [:destroy, :update, :create, :edit, :new, :playerstats, :selectedstat] do |controller| 
     controller.SiteOwner?(@athlete.nil? ? nil : @athlete.team_id)
   end
-  before_filter only: [:follow, :unfollow] do |controller|
-    controller.packageEnabled?(current_site)
-  end
   
   def new    
     @athlete = Athlete.new

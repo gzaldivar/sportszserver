@@ -130,7 +130,7 @@ class SoccerGamesController < ApplicationController
 		begin
 			respond_to do |format|
 				format.html { redirect_to sport_team_gameschedule_soccer_games_path(@sport, @team, @gameschedule, @soccer_game) }
-				format.json { render status: 200, json: { soccer_game: subs } }
+				format.json { render status: 200, json: { soccer_subs: subs } }
 			end
 		rescue Exception => e
 			respond_to do |format|

@@ -20,6 +20,8 @@ elsif root_object.name == "Basketball"
 	node(:basketball_positions) { basketball_positions }
 elsif root_object.name == "Soccer"
 	node(:soccer_positions) { soccer_positions }
+	node(:soccer_yellowcard) { soccer_yellowcard }
+	node(:soccer_redcard) { soccer_redcard }
 elsif root_object.name == "Lacrosse"
 	node(:lacrosse_positions) { lacrosse_positions }
 	node(:lacrosse_score_codes) { lacrosse_score_codes }

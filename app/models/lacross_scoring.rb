@@ -41,6 +41,8 @@ class LacrossScoring
 	private
 
 		def send_notification
-        	self.alerts.create!(sport_id: sport_id, users: self.fans, message: self.scorelog, team_id: team_id)
+ 			sport = self.lacrosstat.athlete.sport
+			team = sport.teams.find(self.lacrosstat.athlete.team_id)
+        	Alert.create!(laccross_scoring_id: self.id, sport_id: sport.id, users: team.fans, message: self.scorelog, team_id: team.id)
 		end
  end

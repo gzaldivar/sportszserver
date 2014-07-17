@@ -3,8 +3,10 @@
 		<%if site_owner?(@sport) or isTeamManager?(@gameschedule) %>
 			<ul class="nav nav-pills">
 				<li><%= link_to "Update Scoreboard", soccerform_sport_team_gameschedule_path(@sport, @team, @gameschedule) %></li>
+				<li><%= link_to "Scoresheet", sport_team_gameschedule_soccer_games_path(@sport, @team, @gameschedule), class: "btn btn-sm btn-primary" %></li>
 			</ul>
 		<% end %>
+		<p>
 		<div class="well">
 			<h3 class="text-center">
 			<div class="row">
@@ -121,6 +123,8 @@
 	</div>
 </div>
 <% if @gameschedule.soccer_game %>
+<%
+=begin %>
 	<div class="row">
 		<div class="col-xs-4">
 			<%= link_to "Scoresheet", sport_team_gameschedule_soccer_games_path(@sport, @team, @gameschedule), class: "btn btn-sm btn-primary" %>
@@ -138,6 +142,8 @@
 				<%= link_to "Add Visiting Team", selectvisitingteam_sport_team_gameschedule_path(@sport, @team, @gameschedule), 
 													class: "btn btn-sm btn-primary" %>
 			<% end %>
+<% 
+=end %>
 		</div>
 	</div>
 <% end %>

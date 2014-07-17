@@ -7,7 +7,7 @@ class SoccerSub
     field :gametime, type: String
     field :home, type: Boolean, default: true
 
-    belongs_to :soccer_game
+    embedded_in :soccer_game
 
     validates :inplayer, presence: true
     validates :outplayer, presence: true

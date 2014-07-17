@@ -30,7 +30,7 @@
                 </div>
                 <div class="col-xs-3">
                   <%= label_tag :assist_id %>
-                  <%= select_tag :playerassist, options_for_select(players.collect{ |x| [x.numlogname, x.id] }),
+                  <%= select_tag :assist, options_for_select(players.collect{ |x| [x.numlogname, x.id] }),
                                  { include_blank: true, class: 'scoreplayerselect', multiple: false } %>
                 </div>
                 <div class="col-xs-6">

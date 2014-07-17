@@ -24,10 +24,15 @@ class SoccerStatsController < ApplicationController
 	def create
 		begin
 			if @athlete
-				@soccer_stat = @athlete.soccer_stats.create!(params[:soccer_stat])
+				@soccer_stat = @athlete.soccer_stats.new(soccer_game_id: params[:soccer_game_id])
+				game = Gameschedule.find_by('soccer_game._id' => Moped::BSON::ObjectId(params[:soccer_game_id]))
+				@soccer_game = game.soccer_game
 			else
-				@soccer_stat = @soccer_game.soccer_stats.new(athlete_id: params[:player_id])
-#				@soccer_stat = @soccer_game.soccer_stats.create!(params[:soccer_stat])
+				@soccer_stat = @soccer_game.soccer_stats.find_by(athlete_id: params[:player_id])
+
+				if @soccer_stat.nil?
+					@soccer_stat = @soccer_game.soccer_stats.new(athlete_id: params[:player_id])
+				end
 			end
 
 			@soccer_stat.save!
@@ -44,17 +49,17 @@ class SoccerStatsController < ApplicationController
 
 			respond_to do |format|
 				format.html { 	if @athlete
-									redirect_to sport_athletes_soccer_stats_path(@sport, @athlete), notice: "Stats Updated!" 
+									redirect_to sport_athlete_soccer_stat_path(@sport, @athlete, @soccer_stat), notice: "Stats Updated!" 
 								else
 									redirect_to sport_team_gameschedule_soccer_games_path(@sport, @team, @gameschedule, @soccer_game), notice: "Stats Updated!"
 								end
 							}
-				format.json { render 'show' }
+				format.json
 			end			
 		rescue Exception => e
 			respond_to do |format|
 				format.html { 	if @athlete
-									redirect_to sport_athletes_soccer_stats_path(@sport, @athlete), alert: e.message
+									redirect_to sport_athlete_soccer_stat_path(@sport, @athlete), alert: e.message
 								else
 									redirect_to sport_team_gameschedule_soccer_games_path(@sport, @team, @gameschedule, @soccer_game), alert: e.message
 								end
@@ -67,13 +72,14 @@ class SoccerStatsController < ApplicationController
 	def show	
 	end
 
-	def edit
-		
+	def edit		
 	end
 
 	def update
 		begin
 			@soccer_stat.update_attributes!(params[:soccer_stat])
+			game = Gameschedule.find_by('soccer_game._id' => Moped::BSON::ObjectId(params[:soccer_game_id]))
+			@soccer_game = game.soccer_game
 
 			if params[:playerstat]
 				process_playerstats(@soccer_stat, params[:period].to_i)
@@ -87,17 +93,17 @@ class SoccerStatsController < ApplicationController
 
 			respond_to do |format|
 				format.html { 	if @athlete
-									redirect_to sport_athletes_soccer_stats_path(@sport, @athlete), notice: "Stats Updated!"
+									redirect_to sport_athlete_soccer_stat_path(@sport, @athlete, @soccer_stat), notice: "Stats Updated!"
 								else
 									redirect_to sport_team_gameschedule_soccer_games_path(@sport, @team, @gameschedule, @soccer_game), notice: "Stats Updated!"
 								end 
 							}
-				format.json { render 'show' }
+				format.json 
 			end			
 		rescue Exception => e
 			respond_to do |format|
 				format.html { 	if @athlete
-									redirect_to sport_athletes_soccer_stats_path(@sport, @athlete), alert: e.message
+									redirect_to sport_athlete_soccer_stat_path(@sport, @athlete), alert: e.message
 								else
 									redirect_to sport_team_gameschedule_soccer_games_path(@sport, @team, @gameschedule, @soccer_game), alert: e.message
 								end
@@ -126,7 +132,7 @@ class SoccerStatsController < ApplicationController
 
 			respond_to do |format|
 				format.html { redirect_to sport_team_gameschedule_soccer_games_path(@sport, @team, @gameschedule, @soccer_game), notice: "Delete Succesful!" }
-				format.json { render status: 200, json: { success: 'success' } }
+				format.json 
 			end
 		rescue Exception => e
 			respond_to do |format|
@@ -179,8 +185,8 @@ class SoccerStatsController < ApplicationController
 				scorestat = stats.soccer_scorings.new(period: period)
 			end
 
-			if params[:assist_id]
-				scorestat.assist = params[:assist_id]
+			if params[:assist] and !params[:assist].blank?
+				scorestat.assist = params[:assist]
 			end
 
 			scorestat.gametime = params[:minutes] + ':' + params[:seconds]
@@ -197,7 +203,7 @@ class SoccerStatsController < ApplicationController
 			goalstat.saves = params[:saves].to_i
 			goalstat.minutesplayed = params[:minutesplayed].to_i
 			goalstat.goals_allowed = params[:goals_allowed].to_i
-			scorestat.save!
+			goalstat.save!
 		end
 
 		def process_playerpenalty(stats, period)

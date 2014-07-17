@@ -6,9 +6,7 @@
 <div class="row">
 	<div class="col-xs-8">
       	<ul class="nav nav-pills">
-      		<% if site_owner?(@sport) %>
-				<li><%= link_to "Videos", videoclipshome_sport_videoclips_path(@sport, team_id: current_team.id) %></li>
-			<% end %>
+			<li><%= link_to "Videos", videoclipshome_sport_videoclips_path(@sport, team_id: current_team.id) %></li>
 		</ul>
 		<div id="displaythephoto">
 			<%= render 'thephoto', photo: @thephoto %>

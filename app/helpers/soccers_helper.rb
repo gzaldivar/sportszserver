@@ -265,4 +265,43 @@ module SoccersHelper
     end
   end
 
+  def soccergame_home_goalie_saves(game, player)
+    stats = game.soccer_game.soccer_stats.find_by(athlete_id: player.id)
+    saves = 0
+
+    if !stats.nil? and !stats.soccer_goalstats.nil?
+      stats.soccer_goalstats.each do |astat|
+        saves += astat.saves
+      end
+    end
+
+    return saves
+  end
+
+  def soccergame_home_goalie_goals_allowed(game, player)
+    stats = game.soccer_game.soccer_stats.find_by(athlete_id: player.id)
+    goals = 0
+
+    if !stats.nil? and !stats.soccer_goalstats.nil?
+      stats.soccer_goalstats.each do |astat|
+        goals += astat.goals_allowed
+      end
+    end
+
+    return goals
+  end
+
+  def soccergame_home_goalie_minutesplayed(game, player)
+    stats = game.soccer_game.soccer_stats.find_by(athlete_id: player.id)
+    minutes = 0
+
+    if !stats.nil? and !stats.soccer_goalstats.nil?
+      stats.soccer_goalstats.each do |astat|
+        minutes += astat.minutesplayed
+      end
+    end
+    
+    return minutes
+  end
+
 end

@@ -21,7 +21,7 @@ class SoccerGame
 
 	has_many :soccer_stats, dependent: :destroy
 	has_one :visiting_team
-    has_many :soccer_subs, dependent: :destroy
+    embeds_many :soccer_subs
 
     validates_numericality_of :socceroppfouls, greater_than_or_equal_to: 0
     validates_numericality_of :socceroppck, greater_than_or_equal_to: 0

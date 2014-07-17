@@ -12,10 +12,10 @@ class UserMailer < ActionMailer::Base
 		@paragraphtwo = paragraphtwo
 		@paragraphthree = paragraphthree
 
+		attachments["GameTracker.png"] = File.read("#{Rails.root}/public/iTunesArtwork.png")
+		
 		users.each do |user|
-			puts user.email
 			@user = user
-			attachments["GameTracker.png"] = File.read("#{Rails.root}/public/iTunesArtwork.png")
 			mail(:to => "#{user.name} <#{user.email}>", :subject => "GameTracker News")
 		end
 	end

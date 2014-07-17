@@ -71,7 +71,7 @@ class AdminsController < ApplicationController
 			@users = User.all
 		end
 
-		UserMailer.gametracker_news(@users, params[:paragraphone], params[:paragraphtwo], params[:paragraphthree])
+		UserMailer.gametracker_news(@users, params[:paragraphone], params[:paragraphtwo], params[:paragraphthree]).deliver
 	end
 
 	private

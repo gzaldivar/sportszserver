@@ -126,6 +126,15 @@ Sportzserver::Application.routes.draw do
           end
           
         end
+
+        resources :water_polo_games, only: [:index, :update] do
+
+          resources :waterpolo_stats
+
+          member do
+            put   :changeperiod
+          end
+        end
       end
 
       resources :standings, only: [:index] do
@@ -181,6 +190,8 @@ Sportzserver::Application.routes.draw do
       resources :lacrosstats, only: [:destroy, :create, :update]
 
       resources :soccer_stats
+
+      resources :waterpolo_stats
       
       member do
         get :follow, :unfollow, :stats, :playerstats, :mobilefollow, :mobileunfollow

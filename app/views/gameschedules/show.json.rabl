@@ -98,7 +98,10 @@ elsif @sport.name == "Lacrosse"
 		attributes :clears, :failedclears, :visitor_clears, :visitor_failedclears, :free_position_sog, 
 					:home_1stperiod_timeouts, :home_2ndperiod_timeouts, :visitor_1stperiod_timeouts, :visitor_2ndperiod_timeouts, :extraman_fail, :visitor_extraman_fail, :home_penaltyone_number, :home_penaltyone_minutes, :home_penaltyone_seconds, :home_penaltytwo_number, :home_penaltytwo_minutes, :home_penaltytwo_seconds, :visitor_penaltyone_number, :visitor_penaltyone_minutes, :visitor_penaltyone_seconds, :visitor_penaltytwo_number, :visitor_penaltytwo_minutes, :visitor_penaltytwo_seconds
 	end
-
+elsif @sport.name == "Water Polo"
+	child :water_polo_game, :object_root => false do |water_polo_game|
+		extends 'water_polo_game/show'
+	end
 end
 node :liveevent, :if => lambda { |e| !@sport.events.where(gameschedule_id: e.id.to_s, videoevent: 1).empty? } do
 	true

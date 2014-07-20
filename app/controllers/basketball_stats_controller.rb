@@ -36,16 +36,17 @@ class BasketballStatsController < ApplicationController
 				live = params[:basketball_stat][:livestats].to_s
 			end
 
+			bbstats = @athlete.basketball_stats.find_by(gameschedule_id: game.id)
+
 			if live == "Totals"
-				bbstats = @athlete.basketball_stats.create!(params[:basketball_stat])
-#				game.homescore = (bbstats.ftmade * 1) + (bbstats.twomade * 2) + (bbstats.threemade * 3)
-#				game.homefouls = bbstats.fouls
+				if bbstats
+					bbstats.update_attributes!(params[:basketball_stat])
+				else
+					bbstats = @athlete.basketball_stats.create!(params[:basketball_stat])
+				end
 			else
 				bbstats = @athlete.basketball_stats.new(gameschedule_id: game.id.to_s)
-				livestats(bbstats, @athlete, params)
-#				game.homescore += params[:ftmade].to_i + (params[:twomade].to_i * 2) + (params[:threemade].to_i * 3)
-#				game.homefouls += params[:fouls].to_i
-				
+				livestats(bbstats, @athlete, params)				
 			end
 
 			if params[:threemade]

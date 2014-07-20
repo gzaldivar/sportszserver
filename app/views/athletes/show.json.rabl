@@ -81,7 +81,10 @@ elsif @sport.name == "Soccer"
 	child :soccer_stats, :object_root => false do
 		extends 'soccer_stats/show'
 	end
-
+elsif @sport.name == "Water Polo"
+	child :waterpolo_stats, :object_root => false do
+		extends 'waterpolo_stats/show'
+	end
 elsif @sport.name == "Lacrosse"
 	child :lacrosstats, :object_root => false do
 		node(:lacrosstat_id) { |l| l.id.to_s }

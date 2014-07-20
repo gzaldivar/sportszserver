@@ -80,6 +80,7 @@ module SportsHelper
       ['Basketball', 'Basketball'],
       ['Lacrosse', 'Lacrosse'],
       ['Soccer', 'Soccer']
+#      ['Water Polo', 'Water Polo']
 #      ['Baseball', 'Baseball']
     ]
   end
@@ -176,6 +177,16 @@ module SportsHelper
       ['Center Forward', 'CF'],
       ['Stryker', 'ST']
     ]
+  end
+
+  def waterpolo_positions
+    [
+      ['Hole Set', 'HS'],
+      ['Driver', 'DR'],
+      ['Hole Guard', 'HG'],
+      ['Goalie', 'G']
+    ]
+    
   end
 
   def themes

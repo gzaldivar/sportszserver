@@ -6,7 +6,6 @@ class WaterpoloScoring
 
     field :gametime, type: String
     field :assist, type: String
-    field :scorecode, type: String, default: ""
     field :period, type: Integer, default: 1
 
     embedded_in :waterpolo_stat

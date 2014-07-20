@@ -29,6 +29,8 @@ elsif root_object.name == "Lacrosse"
 	node(:lacrosse_periods) { lacrosse_periods }
 	node(:lacrosse_personal_fouls) { lacrosse_personal_fouls }
 	node(:lacrosse_technical_fouls) { lacrosse_technical_fouls }
+elsif root_object.name == "Water Polo"
+	node(:waterpolo_positions) { waterpolo_positions }
 end
 
 node :package, :if => lambda { |s| !Payment.find_by(sport_id: s.id).nil? } do |a|

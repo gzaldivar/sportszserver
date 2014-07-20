@@ -2,7 +2,9 @@
 <p>
 <div class="row">
 	<div class="col-xs-12">
-		<h4>Select criteria for sending email</h4>
+		<h4 class="text-info">Select criteria for sending email. Check admin to send to all administrators.</h4>
+		<h4 class="text-info">Check unconfirmed to send to all users who have registered but not confirmed their accounts.</h4>
+		<h4 class="text-info">Check no site to send to all users who have registered as an administrator but have not created a site.</h4>
 		<%= form_tag sendemail_admins_path, :input_html => { :class => 'form-horizontal' } do %>
 			<div class="row">
 				<div class="col-xs-2">
@@ -12,6 +14,20 @@
 				<div class="col-xs-2">
 					<%= label_tag 'Admin' %>
 					<%= check_box_tag 'admin' %>
+				</div>
+				<div class="col-xs-2">
+					<%= label_tag 'Unconfirmed' %>
+					<%= check_box_tag 'unconfirmed' %>
+				</div>
+				<div class="col-xs-2">
+					<%= label_tag 'Confirmed No Site' %>
+					<%= check_box_tag 'nosite' %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-4">
+					<%= label_tag 'Enter email' %>
+					<%= text_field_tag 'useremail', '', class: 'form-control' %>
 				</div>
 			</div>
 			<div class="row">

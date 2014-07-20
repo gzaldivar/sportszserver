@@ -65,8 +65,18 @@ class AdminsController < ApplicationController
 					(@users << sportusers).flatten
 				end
 			end
+		elsif params[:nosite].to_i == 1
+			User.where(admin: true, :confirmed_at.exists => true).each do |u|
+				if !Sport.find_by(adminid: u.id.to_s)
+					@users << u
+				end
+			end
 		elsif params[:admin].to_i == 1
 			@users = User.where(admin: true)
+		elsif params[:unconfirmed]
+			@users = User.where(:confirmed_at.exists => false)
+		elsif params[:useremail]
+			@users = User.where(email: params[:useremail])
 		else
 			@users = User.all
 		end

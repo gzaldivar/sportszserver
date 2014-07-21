@@ -3,7 +3,9 @@
 		<%if site_owner?(@sport) or isTeamManager?(@gameschedule) %>
 			<ul class="nav nav-pills">
 				<li><%= link_to "Update Scoreboard", soccerform_sport_team_gameschedule_path(@sport, @team, @gameschedule) %></li>
-				<li><%= link_to "Scoresheet", sport_team_gameschedule_soccer_games_path(@sport, @team, @gameschedule), class: "btn btn-sm btn-primary" %></li>
+				<% if @gameschedule.soccer_game %>
+					<li><%= link_to "Scoresheet", sport_team_gameschedule_soccer_games_path(@sport, @team, @gameschedule), class: "btn btn-sm btn-primary" %></li>
+				<% end %>
 			</ul>
 		<% end %>
 		<p>

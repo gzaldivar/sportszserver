@@ -7,7 +7,7 @@ node :visiting_team_id, :if => lambda { |v| v.visiting_team } do |v|
 end
 
 node(:waterpolo_game_home_score) { |sg| sg.score(sport_home_team) }
-# node(:waterpolo_game_home_score_period1) { |sg| sg.periodscore(sport_home_team, 1) }
+node(:waterpolo_game_home_score_period1) { |sg| sg.periodscore(sport_home_team, 1) }
 node(:waterpolo_game_home_score_period2) { |sg| sg.periodscore(sport_home_team, 2) }
 node(:waterpolo_game_home_score_periodOT1) { |sg| sg.periodscore(sport_home_team, 3) }
 node(:waterpolo_game_home_score_periodOT2) { |sg| sg.periodscore(sport_home_team, 4) }

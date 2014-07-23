@@ -36,6 +36,7 @@ class Photo
   has_many :alerts, dependent: :destroy
   belongs_to :lacross_scoring
   belongs_to :soccer_scoring
+  belongs_to :waterpolo_scoring
   
   validates_presence_of :filename
   validates_presence_of :filepath

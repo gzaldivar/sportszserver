@@ -1,0 +1,60 @@
+<% provide(:title, "Send Admin Email to GameTracker Users") %>
+<p>
+<div class="row">
+	<div class="col-xs-12">
+		<h4 class="text-info">Select criteria for sending email. Check admin to send to all administrators.</h4>
+		<h4 class="text-info">Check unconfirmed to send to all users who have registered but not confirmed their accounts.</h4>
+		<h4 class="text-info">Check no site to send to all users who have registered as an administrator but have not created a site.</h4>
+		<%= form_tag sendemail_admins_path, :input_html => { :class => 'form-horizontal' } do %>
+			<div class="row">
+				<div class="col-xs-2">
+					<%= label_tag 'Sport' %>
+					<%= select_tag 'sportname', options_for_select(sports_list), include_blank: true, class: 'form-control' %>
+				</div>
+				<div class="col-xs-2">
+					<%= label_tag 'Admin' %>
+					<%= check_box_tag 'admin' %>
+				</div>
+				<div class="col-xs-2">
+					<%= label_tag 'Unconfirmed' %>
+					<%= check_box_tag 'unconfirmed' %>
+				</div>
+				<div class="col-xs-2">
+					<%= label_tag 'Confirmed No Site' %>
+					<%= check_box_tag 'nosite' %>
+				</div>
+			</div>
+			<h4>Send email to a specific user. Don't check any of the boxes above boxes</h4>
+			<div class="row">
+				<div class="col-xs-4">
+					<%= label_tag 'Enter email' %>
+					<%= text_field_tag 'useremail', '', class: 'form-control' %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<%= label_tag 'Paragraph One' %>
+					<%= text_area_tag 'paragraphone', '', class: 'form-control' %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<%= label_tag 'Paragraph Two' %>
+					<%= text_area_tag 'paragraphtwo', '', class: 'form-control' %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-12">
+					<%= label_tag 'Paragraph Three' %>
+					<%= text_area_tag 'paragraphthree', '', class: 'form-control' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-2 col-xs-offset-4">
+					<%= submit_tag :submit, class: 'btn btn-md btn-primary' %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>

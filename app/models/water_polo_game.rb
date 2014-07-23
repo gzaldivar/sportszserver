@@ -9,8 +9,7 @@ class WaterPoloGame
     field :waterpolo_oppsaves, type: Integer, default: 0
     field :waterpolo_oppfouls, type: Integer, default: 0
 
-    field :home_exclusions, type: Array
-    field :visitor_exclusions, type: Array
+    field :exclusions, type: Array
 
     field :home_time_outs_left, type: Integer, default: 3
     field :visitor_time_outs_left, type: Integer, default: 3

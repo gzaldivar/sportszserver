@@ -22,6 +22,7 @@ class Alert
  	belongs_to :basketball_stat
 	belongs_to :soccer
 	belongs_to :soccer_scoring
+	belongs_to :waterpolo_scoring
 
 	belongs_to :football_defense
 	belongs_to :football_kicker

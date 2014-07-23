@@ -47,6 +47,9 @@ class AdminsController < ApplicationController
 		end
 	end
 
+	def create_email
+	end
+
 	def email
 		
 	end

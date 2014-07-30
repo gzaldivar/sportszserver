@@ -79,8 +79,8 @@ module SportsHelper
       ['Football', 'Football'],
       ['Basketball', 'Basketball'],
       ['Lacrosse', 'Lacrosse'],
-      ['Soccer', 'Soccer']
-#      ['Water Polo', 'Water Polo']
+      ['Soccer', 'Soccer'],
+      ['Water Polo', 'Water Polo']
 #      ['Baseball', 'Baseball']
     ]
   end

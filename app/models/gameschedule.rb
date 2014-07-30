@@ -114,6 +114,7 @@ class Gameschedule
 
   embeds_one :lacross_game
   embeds_one :soccer_game
+  embeds_one :water_polo_game
 
 
   validates_presence_of :starttime

@@ -78,7 +78,7 @@ class GameschedulesController < ApplicationController
         schedule.soccer_game.homeplayers = Array.new(11) { "" }
       elsif @sport.name == "Water Polo"
         schedule.water_polo_game = WaterPoloGame.new
-        schedule.exclusions = Array.new(8) { 0 }
+        schedule.water_polo_game.exclusions = Array.new(8) { 0 }
       end
       
       schedule.save!

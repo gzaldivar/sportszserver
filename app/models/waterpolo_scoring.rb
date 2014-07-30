@@ -40,6 +40,8 @@ class WaterpoloScoring
 	private
 
 		def send_notification
-        	self.alerts.create!(sport_id: sport_id, users: self.fans, message: self.scorelog, team_id: team_id)
+			sport = self.waterpolo_stat.athlete.sport
+			team = sport.teams.find(self.waterpolo_stat.athlete.team_id)
+        	Alert.create!(soccer_scoring_id: self.id, sport_id: sport.id, users: team.fans, message: self.scorelog, team_id: team.id)
 		end
  end

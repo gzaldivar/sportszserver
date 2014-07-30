@@ -158,7 +158,7 @@ class WaterpoloStatsController < ApplicationController
 			end
 		end
 
-		def stat
+		def get_stat
 			if @athlete.nil?
 				@waterpolo_stat = @water_polo_game.waterpolo_stats.find(params[:id])
 			else

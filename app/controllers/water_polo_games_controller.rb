@@ -10,8 +10,24 @@ class WaterPoloGamesController < ApplicationController
 		
 	end
 
-	def update
+	def show
 		
+	end
+
+	def update
+		begin
+			@water_polo_game.update_attributes!(params[:soccer_game])
+
+			respond_to do |format|
+				format.html { redirect_to sport_team_gameschedule_water_polo_games_path(@sport, @team, @gameschedule, @water_polo_game), notice: 'Update Succesful!' }
+				format.json { render status: 200, json: { water_polo_game: @water_polo_game } }
+			end
+		rescue Exception => e
+			respond_to do |format|
+				format.html { redirect_to :back, alert: e.message }
+				format.json { render status: 404, json: { error: e.message } }
+			end
+		end
 	end
 
 	private

@@ -20,7 +20,7 @@ class WaterPoloGame
 	has_one :visiting_team
 
     validates_numericality_of :waterpolo_oppsog, greater_than_or_equal_to: 0
-    validates_numericality_of :waterpolo_assists, greater_than_or_equal_to: 0
+    validates_numericality_of :waterpolo_oppassists, greater_than_or_equal_to: 0
     validates_numericality_of :waterpolo_oppsaves, greater_than_or_equal_to: 0
     validates_numericality_of :waterpolo_oppfouls, greater_than_or_equal_to: 0
     validates_numericality_of :home_time_outs_left, greater_than_or_equal_to: 0

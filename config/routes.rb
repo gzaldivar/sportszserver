@@ -127,7 +127,7 @@ Sportzserver::Application.routes.draw do
           
         end
 
-        resources :water_polo_games, only: [:index, :update] do
+        resources :water_polo_games, only: [:show, :index, :update] do
 
           resources :waterpolo_stats
 

@@ -100,7 +100,7 @@ elsif @sport.name == "Lacrosse"
 	end
 elsif @sport.name == "Water Polo"
 	child :water_polo_game, :object_root => false do |water_polo_game|
-		extends 'water_polo_game/show'
+		extends 'water_polo_games/show'
 	end
 end
 node :liveevent, :if => lambda { |e| !@sport.events.where(gameschedule_id: e.id.to_s, videoevent: 1).empty? } do

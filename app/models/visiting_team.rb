@@ -9,8 +9,9 @@ class VisitingTeam
 	has_many :visitor_rosters, dependent: :destroy
 
 	belongs_to :sport
-	belongs_to :lacross_game
-	belongs_to :soccer_game
+	belongs_to :lacross_game, dependent: :nullify
+	belongs_to :soccer_game, dependent: :nullify
+	belongs_to :water_polo_game, dependent: :nullify
 	
 	def getname
 		title + " " + mascot

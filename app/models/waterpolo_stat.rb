@@ -9,6 +9,7 @@ class WaterpoloStat
 
 	belongs_to :athlete
 	belongs_to :waterpolo_game
+	belongs_to :visitor_roster
 
   	def player_shots
     	shots = 0

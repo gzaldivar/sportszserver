@@ -283,7 +283,7 @@ module LacrosseScoresheet
 			@gameschedule.lacross_game.save!
 
 			respond_to do |format|
-				format.html { redirect_to sport_team_gameschedule_path(@sport, @team, @gameschedule), motice: 'Game Updated!' }
+				format.html { redirect_to sport_team_gameschedule_path(@sport, @team, @gameschedule), notice: 'Game Updated!' }
 				format.json { render status: 200, json: { lacross_game: @gameschedule.lacross_game } }
 			end			
 		rescue Exception => e

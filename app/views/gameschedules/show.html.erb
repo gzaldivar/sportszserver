@@ -41,6 +41,8 @@
         	<%= render 'gameschedules/soccer/show_soccer' %>
         <% elsif @sport.sportname == "Lacrosse" %>
         	<%= render 'gameschedules/lacrosse/showlacrosse' %>
+        <% elsif @sport.sportname == "Water Polo" %>
+        	<%= render 'gameschedules/water_polo/show_water_polo' %>
 		<% end %>
 		<p>
 	  	<% if site_owner?(@sport) or isTeamManager?(@gameschedule) %>

@@ -104,10 +104,10 @@ Sportzserver::Application.routes.draw do
                 :addfootballqb, :addfootballrb, :addfootballrec, :addfootballdef, :addfootballkicker, :addfootballpunter, :addfootballpk,
                 :addfootballret, :footballform, :basketballteamscorestats, :basketballteamotherstats, :basketballform, :soccerform, :selectvisitingteam, 
                 :visitingteamselected, :lacrossescoresheet, :delete_visiting_score, :delete_visiting_penalty, :delete_visiting_playershot, 
-                :delete_visiting_player_stats, :lacrosse_game_summary
+                :delete_visiting_player_stats, :lacrosse_game_summary, :water_polo_game_summary
           put   :updatelogo, :mobilealerts, :alertupdate, :lacrosstimeout, :lacrosse_score_entry, :lacrosse_add_penalty, :lacrosse_add_shot, 
                 :lacrosse_player_remove_allshots, :lacrosse_player_stats, :lacrosse_extra_man, :lacrosse_clears, :lacrosse_goalstats, :delete_lacrosse_player_shot,
-                :update_lacrosse_game_summary
+                :update_lacrosse_game_summary, :update_water_polo_game_summary
         end
 
         resources :gamelogs, only: [:new, :create, :edit, :destroy, :show, :update, :index] do

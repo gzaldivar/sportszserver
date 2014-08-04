@@ -1,0 +1,82 @@
+<% provide(:title, current_site.sitename + " " + @sport.sportname + " - Edit Water Polo Game" ) %>
+<p>
+<div class="row">
+	<div class="col-xs-12">
+		<%= form_tag update_water_polo_game_summary_sport_team_gameschedule_path(@sport, @team, @gameschedule), class: "form-horizontal", method: 'put' do %>
+			<div class="row">
+				<div class="col-xs-4">
+					<h3>Game Time</h3>
+				</div>
+				<div class="col-xs-4">
+					<h3>Home Exclusions</h3>
+				</div>
+				<div class="col-xs-4">
+					<h3>Visitor Exclusions</h3>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-1">
+					<%= label_tag 'Minutes' %>
+					<%= select_tag 'minutes', options_for_select((00 .. 20), @gameschedule.current_game_time.split(':')[0].to_i), class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Seconds' %>
+					<%= select_tag 'seconds', options_for_select((00 .. 59), @gameschedule.current_game_time.split(':')[1].to_i), class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'period' %>
+					<%= text_field_tag 'period', @gameschedule.currentperiod, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1 col-xs-offset-1">
+					<%= label_tag 'Number' %>
+					<%= text_field_tag 'homeonenumber', @gameschedule.water_polo_game.exclusions[0], class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Minutes' %>
+					<%= text_field_tag 'homeoneminutes', @gameschedule.water_polo_game.exclusions[1], class: 'form-control' %>
+				</div>
+				<div class="col-xs-1 col-xs-offset-2">
+					<%= label_tag 'Number' %>
+					<%= text_field_tag 'visitoronenumber', @gameschedule.water_polo_game.exclusions[4], class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Minutes' %>
+					<%= text_field_tag 'visitoroneminutes', @gameschedule.water_polo_game.exclusions[5], class: 'form-control' %>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-xs-1">
+					<%= label_tag :home_to, "Home TO" %>
+					<%= text_field_tag 'home_time_outs_left', @gameschedule.water_polo_game.home_time_outs_left, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag :visitor_to, "Visitor TO" %>
+					<%= text_field_tag 'visitor_time_outs_left', @gameschedule.water_polo_game.visitor_time_outs_left, class: 'form-control' %>
+				</div>
+				<div class="col-xs-1 col-xs-offset-2">
+					<%= label_tag 'Number' %>
+					<%= text_field_tag 'hometwonumber', @gameschedule.water_polo_game.exclusions[2], class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Minutes' %>
+					<%= text_field_tag 'hometwominutes', @gameschedule.water_polo_game.exclusions[3], class: 'form-control' %>
+				</div>
+				<div class="col-xs-1 col-xs-offset-2">
+					<%= label_tag 'Number' %>
+					<%= text_field_tag 'visitortwonumber', @gameschedule.water_polo_game.exclusions[6], class: 'form-control' %>
+				</div>
+				<div class="col-xs-1">
+					<%= label_tag 'Minutes' %>
+					<%= text_field_tag 'visitortwominutes', @gameschedule.water_polo_game.exclusions[7], class: 'form-control' %>
+				</div>
+			</div>
+			<p>
+			<div class="row">
+				<div class="col-xs-2 col-xs-offset-4">
+					<%= submit_tag 'submit', class: 'btn btn-md btn-primary' %>
+				</div>
+			</div>
+		<% end %>
+	</div>
+</div>

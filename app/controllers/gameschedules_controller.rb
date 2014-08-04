@@ -16,7 +16,7 @@ class GameschedulesController < ApplicationController
                                               :lacrosse_score_entry, :lacrosse_add_penalty, :delete_visiting_score, :delete_visiting_penalty,
                                               :lacrosse_add_shot, :delete_visiting_playershot, :delete_visiting_player_stats, :lacrosse_player_stats,
                                               :lacrosse_extra_man, :lacrosse_clears, :lacrosse_goalstats, :delete_lacrosse_player_shot, :lacrosse_game_summary,
-                                              :update_lacrosse_game_summary]
+                                              :update_lacrosse_game_summary, :water_polo_game_summary]
   before_filter only: [:destroy, :update, :create, :edit, :new, :createlogo, :updatelogo, :alertupdate] do |controller| 
     controller.SiteOwner?(@team.id)
   end
@@ -166,6 +166,8 @@ class GameschedulesController < ApplicationController
         end
       elsif @sport.name == "Lacrosse"
         showlacrosse
+      elsif @sport.name == "Water Polo"
+        showwaterpolo
       end
 
       respond_to do |format|
@@ -642,6 +644,38 @@ class GameschedulesController < ApplicationController
     end
   end
 
+  def water_polo_game_summary
+    render 'gameschedules/water_polo/water_polo_game_summary'
+  end
+
+  def update_water_polo_game_summary
+    begin
+      @gameschedule.update_attributes!(params[:gameschedule])
+
+      @gameschedule.water_polo_game.exclusions[0] = params[:homeonenumber]
+      @gameschedule.water_polo_game.exclusions[1] = params[:homeoneminutes]
+      @gameschedule.water_polo_game.exclusions[2] = params[:hometwonumber]
+      @gameschedule.water_polo_game.exclusions[3] = params[:hometwominutes]
+      @gameschedule.water_polo_game.exclusions[4] = params[:visitoronenumber]
+      @gameschedule.water_polo_game.exclusions[5] = params[:visitoroneminutes]
+      @gameschedule.water_polo_game.exclusions[6] = params[:visitortwonumber]
+      @gameschedule.water_polo_game.exclusions[7] = params[:visitortwominutes]
+      @gameschedule.water_polo_game.home_time_outs_left = params[:home_time_outs_left]
+      @gameschedule.water_polo_game.visitor_time_outs_left = params[:visitortimeoutsleft]
+      @gameschedule.save!
+
+      respond_to do |format|
+        format.html { redirect_to sport_team_gameschedule_path(@sport, @team, @gameschedule), notice: 'Game Updated!' }
+        format.json { render status: 200, json: { water_polo_game: @gameschedule.water_polo_game } }
+      end     
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to sport_team_gameschedule_path(@sport, @team, @gameschedule), alert: e.message }
+        format.json { render status: 404, json: { error: e.message } }
+      end
+    end
+  end
+
   private
   
     def get_sport
@@ -715,6 +749,25 @@ class GameschedulesController < ApplicationController
 
       rescue Exception => e
         raise "Error processing Lacrosse Statistics - " + e.message
+      end
+    end
+
+    def showwaterpolo
+      begin
+        @homescores = []
+
+        for i in 1 .. 4
+          @homescores << @gameschedule.water_polo_game.periodscore(sport_home_team, i)
+        end
+
+        @visitorscores = []
+
+        for i in 1 .. 4
+          @visitorscores << @gameschedule.water_polo_game.periodscore(sport_visitor_team, i)
+        end
+        
+      rescue Exception => e
+        raise "Error processing Water Polo Statistics - " + e.message
       end
     end
 

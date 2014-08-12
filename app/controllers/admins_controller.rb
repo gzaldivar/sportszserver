@@ -1,5 +1,5 @@
 class AdminsController < ApplicationController
-	before_filter :authenticate_user!,	only: [:update, :edit, :index, :sports, :users, :admonitoring]
+	before_filter :authenticate_user!,	only: [:update, :edit, :index, :sports, :users, :admonitoring, :process_payments]
 	before_filter :isGod?
 	before_filter :getAdmin, only: [:edit, :update, :index]
 
@@ -87,10 +87,44 @@ class AdminsController < ApplicationController
 		UserMailer.gametracker_news(@users, params[:paragraphone], params[:paragraphtwo], params[:paragraphthree]).deliver
 	end
 
+	def process_payments
+		@iosads = Sponsor.where(:ios_client_ad.exists => true)
+#		transfer_ad_payements(@iosads)
+	end
+
 	private
 
 		def getAdmin
 			@admin = Admin.all.first
+		end
+
+		def transfer_ad_payements(iosads)
+			adpercentage = (100 - Admin.first.adpercentage) / Float(100)
+			payout = sponsor.sportadinv.price * adpercentage
+
+			if Rails.env.production?
+				gateway = ActiveMerchant::Billing::PaypalGateway.new({
+					      login: "gzaldivar_api1.icloud.com",
+					      password: "1388935614",
+					      signature: "AFcWxV21C7fd0v3bYYYRCpSSRl31Am0NwfOHNMcHaKUsemcqiBUkF" })
+				response = gateway.transfer(payout * 100, email, subject: sponsor.name, note: "Purchased ad level" + sponsor.sportadinv.adlevelname)
+			else
+				gateway = ActiveMerchant::Billing::PaypalGateway.new({
+					      login: "gzaldivar-facilitator_api1.icloud.com",
+					      password: "1388935614",
+					      signature: "AHUvrj4LS85hez4e0oNOt.ng8k.sApA9qsWrgVikPTlU8RdriVeo8t3a" })
+				response = gateway.transfer(payout * 100, email, subject: sponsor.name, note: "Purchased ad level" + sponsor.sportadinv.adlevelname)
+			end
+
+			sponsor.sharetime = DateTime.parse(response.params["timestamp"])
+			
+			if response.success?
+				sponsor.sharepaid = true
+			else
+				sponsor.sharepaid = false
+			end
+
+			sponsor.save!
 		end
 
 end

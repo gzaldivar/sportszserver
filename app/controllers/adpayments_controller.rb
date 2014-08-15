@@ -1,5 +1,7 @@
 class AdpaymentsController < ApplicationController
 
+	include AdsponsorPayout
+
 	before_filter :get_sport
 
 	def new
@@ -56,7 +58,8 @@ class AdpaymentsController < ApplicationController
 
 				if @order.save
 					payment.destroy if !payment.nil?
-					transfer_funds_to_program(@sponsor, User.find(@sport.adminid).paypal_email)
+#					transfer_funds_to_program(@sponsor, User.find(@sport.adminid).paypal_email)
+					transfer_ad_payment(@sponsor, User.find(@sport.adminid).paypal_email)
 
 					redirect_to sport_sponsor_path(@sport, @sponsor)
 				else

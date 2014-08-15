@@ -1,8 +1,10 @@
 class IosClientAdsController < ApplicationController
-	before_filter :authenticate_user!,	only: [:update, :edit, :create, :destroy]
+	before_filter :authenticate_user!,	only: [:update, :edit, :create, :destroy, :process_payments]
 	before_filter :isGod?, only: [:update, :edit, :create, :destroy]
 	before_filter :getAdmin
 	before_filter :getIOSAd, only: [:show, :update, :destroy, :edit]
+
+	include AdsponsorPayout
 
 	def new
 		@product = IosClientAd.new
@@ -63,6 +65,14 @@ class IosClientAdsController < ApplicationController
 				format.html { redirect_to admin_ios_client_ad_path(@admin), alert: "Error Deleting IOS Product - " + e.message }
 				format.json { render status: 404, json: { error: e.message } }
 			end
+		end
+	end
+
+	def process_payments
+		@iosads = Sponsor.where(:ios_client_ad.exists => true, sharepaid: false)
+
+		@iosads.each do |adsponsor|
+			transfer_ad_payment(adsponsor, User.find(adsponsor.sport.adminid).paypal_email)
 		end
 	end
 

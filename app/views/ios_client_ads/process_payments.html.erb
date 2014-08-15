@@ -1,0 +1,27 @@
+<% provide(:title, 'Process IOS Ad Payments') %>
+<p>
+<div class="row">
+	<div class="col-xs-12">
+		<% if !@iosads.nil? and !@iosads.empty? %>
+			<table class="table table-striped table-bordered table-hover">
+				<thead>
+					<th>Sitename</th>
+					<th>Ad</th>
+					<th>Price</th>
+				</thead>
+				<tbody>
+					<% @iosads.each do |ad| %>
+						<tr>
+							<% iosad = IosClientAd.find(ad.ios_client_ad_id) %>
+							<td><%= Sport.find(ad.sport_id).sitename %></td>
+							<td><%= iosad.referencename %></td>
+							<td><%= iosad.price %></td>
+						</tr>
+					<% end %>
+				</tbody>
+			</table>
+		<% else %>
+			<h4>No mobile ads to process!</h4>
+		<% end %>
+	</div>
+</div>

@@ -7,31 +7,31 @@ module SportsHelper
 
   def find_a_sport(thesport)
     if !params[:zip].blank? and !params[:city].blank? and !params[:state].blank? and !params[:sitename].blank? and !params[:country].blank?
-#      site = Sport.where(name: thesport).full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s + " " + 
-#            params[:sitename].to_s + " " + params[:country].to_s, match: :all)      
-      site = Sport.where(name: thesport, city: params[:city], state: params[:state], country: params[:country]).full_text_search(params[:sitename].to_s, match: :all)
+      site = Sport.where(name: thesport).full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s + " " + 
+            params[:sitename].to_s + " " + params[:country].to_s, match: :all)      
+#      site = Sport.where(name: thesport, city: params[:city], state: params[:state], country: params[:country]).full_text_search(params[:sitename].to_s, match: :all)
     elsif !params[:zip].blank? and !params[:city].blank? and !params[:state].blank? and !params[:country].blank?
-#      site = Sport.where(name: thesport).full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s +
-#            " " + params[:country].to_s, match: :all)
-      site = Sport.where(name: thesport, city: params[:city], state: params[:state], country: params[:country])
+      site = Sport.where(name: thesport).full_text_search(params[:zip].to_s + " " + params[:city].to_s + " " + params[:state].to_s +
+            " " + params[:country].to_s, match: :all)
+#      site = Sport.where(name: thesport, city: params[:city], state: params[:state], country: params[:country])
     elsif !params[:country].blank? and !params[:city].blank?
-#      site = Sport.where(name: thesport).full_text_search(params[:country].to_s + " " + params[:city].to_s, match: :all)
-      site = Sport.where(name: thesport, country: params[:country], city: params[:city])
+      site = Sport.where(name: thesport).full_text_search(params[:country].to_s + " " + params[:city].to_s, match: :all)
+#      site = Sport.where(name: thesport, country: params[:country], city: params[:city])
     elsif !params[:country].blank? and !params[:state].blank?
-      site = Sport.where(name: thesport, country: params[:country], state: params[:state])
-#      site = Sport.where(name: thesport).full_text_search(params[:country].to_s + " " + params[:state].to_s, match: :all)
+#      site = Sport.where(name: thesport, country: params[:country], state: params[:state])
+      site = Sport.where(name: thesport).full_text_search(params[:country].to_s + " " + params[:state].to_s, match: :all)
     elsif !params[:zip].blank?
-      site = Sport.where(name: thesport, zip: params[:zip])
-#      site = Sport.where(name: thesport).full_text_search(params[:zip].to_s)
+#      site = Sport.where(name: thesport, zip: params[:zip])
+      site = Sport.where(name: thesport).full_text_search(params[:zip].to_s)
     elsif !params[:city].blank?
-      site = Sport.where(name: thesport, city: params[:city])
-#      site = Sport.where(name: thesport).full_text_search(params[:city].to_s)
+#      site = Sport.where(name: thesport, city: params[:city])
+      site = Sport.where(name: thesport).full_text_search(params[:city].to_s)
     elsif !params[:state].blank?
-      site = Sport.where(name: thesport, state: params[:state])
-#      site = Sport.where(name: thesport).full_text_search(params[:state].to_s)
+#      site = Sport.where(name: thesport, state: params[:state])
+      site = Sport.where(name: thesport).full_text_search(params[:state].to_s)
     elsif !params[:country].blank?
-      site = Sport.where(name: thesport, country: params[:country])
-#      site = Sport.where(name: thesport).full_text_search(params[:country].to_s)
+#      site = Sport.where(name: thesport, country: params[:country])
+      site = Sport.where(name: thesport).full_text_search(params[:country].to_s)
     elsif !params[:sitename].blank?
       site = Sport.where(name: thesport).full_text_search(params[:sitename].to_s)
     elsif !params[:searchkeyword]

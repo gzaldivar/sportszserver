@@ -1,4 +1,4 @@
-class WaterpoloScoring
+class HockeyScoring
 	include Mongoid::Document
 	include Mongoid::Timestamps
 
@@ -7,8 +7,9 @@ class WaterpoloScoring
     field :gametime, type: String
     field :assist, type: String
     field :period, type: Integer, default: 1
+    field :goaltype, type: String, default: "Even Strength"
 
-    embedded_in :waterpolo_stat
+    embedded_in :hockey_game
     has_many :photos, dependent: :nullify
     has_many :videoclips, dependent: :nullify
     has_one :alert, dependent: :destroy
@@ -20,14 +21,14 @@ class WaterpoloScoring
 	scope :by_period, order_by(period: :asc, gametime: :desc) 
 
 	def scorelog
-		if waterpolo_stat.athlete_id
-			log = gametime + ' - Goal ' + Athlete.find(waterpolo_stat.athlete_id).numlogname
+		if hockey_stat.athlete_id
+			log = gametime + ' - Goal ' + Athlete.find(hockey_stat.athlete_id).numlogname
 		else
-			log = gametime + ' - Goal ' + VisitorRoster.find(waterpolo_stat.visitor_roster_id).numlogname
+			log = gametime + ' - Goal ' + VisitorRoster.find(hockey_stat.visitor_roster_id).numlogname
 		end
 
 		if assist
-			if waterpolo_stat.athlete_id
+			if hockey_stat.athlete_id
 				log = log + ', Assist ' + Athlete.find(assist).numlogname
 			else
 				log = log + ', Assist ' + VisitorRoster.find(assist).numlogname
@@ -40,8 +41,8 @@ class WaterpoloScoring
 	private
 
 		def send_notification
-			sport = self.waterpolo_stat.athlete.sport
-			team = sport.teams.find(self.waterpolo_stat.athlete.team_id)
-        	Alert.create!(waterpolo_scoring_id: self.id, sport_id: sport.id, users: team.fans, message: self.scorelog, team_id: team.id)
+			sport = self.hockey_stat.athlete.sport
+			team = sport.teams.find(self.hockey_stat.athlete.team_id)
+        	Alert.create!(hockey_scoring_id: self.id, sport_id: sport.id, users: team.fans, message: self.scorelog, team_id: team.id)
 		end
  end

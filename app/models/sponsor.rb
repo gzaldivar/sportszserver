@@ -28,7 +28,7 @@ class Sponsor
 
   field :processing, type: Boolean, default: false
 
-  field :sharepaid, type: Boolean, default: true
+  field :sharepaid, type: Boolean, default: false
   field :sharetime, type: DateTime
 
   index( { userhash: 1 }, { unique: true } )

@@ -7,14 +7,20 @@ node :visiting_team_id, :if => lambda { |v| v.visiting_team } do |v|
 end
 
 node(:soccergame_home_score) { |sg| sg.score(sport_home_team) }
-# node(:soccergame_home_score_period1) { |sg| sg.periodscore(sport_home_team, 1) }
+node(:soccergame_home_score_period1) { |sg| sg.periodscore(sport_home_team, 1) }
 node(:soccergame_home_score_period2) { |sg| sg.periodscore(sport_home_team, 2) }
 node(:soccergame_home_score_periodOT1) { |sg| sg.periodscore(sport_home_team, 3) }
 node(:soccergame_home_score_periodOT2) { |sg| sg.periodscore(sport_home_team, 4) }
-node(:soccergame_visitor_score_period1) { |sg| sg.periodscore(sport_visitor_team, 1) }
-node(:soccergame_visitor_score_period2) { |sg| sg.periodscore(sport_visitor_team, 2) }
-node(:soccergame_visitor_score_periodOT1) { |sg| sg.periodscore(sport_visitor_team, 3) }
-node(:soccergame_visitor_score_periodOT2) { |sg| sg.periodscore(sport_visitor_team, 4) }
+
+# node(:soccergame_visitor_score_period1) { |sg| sg.periodscore(sport_visitor_team, 1) }
+# node(:soccergame_visitor_score_period2) { |sg| sg.periodscore(sport_visitor_team, 2) }
+# node(:soccergame_visitor_score_periodOT1) { |sg| sg.periodscore(sport_visitor_team, 3) }
+# node(:soccergame_visitor_score_periodOT2) { |sg| sg.periodscore(sport_visitor_team, 4) }
+
+node(:soccergame_visitor_score_period1) { |sg| sg.visitor_score_period1 }
+node(:soccergame_visitor_score_period2) { |sg| sg.visitor_score_period2 }
+node(:soccergame_visitor_score_periodOT1) { |sg| sg.visitor_score_periodOT1 }
+node(:soccergame_visitor_score_periodOT2) { |sg| sg.visitor_score_periodOT2 }
 
 child :soccer_subs, :object_root => false do
 	node(:soccer_sub_id) { |s| s.id.to_s }

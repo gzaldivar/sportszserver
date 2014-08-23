@@ -27,11 +27,20 @@
 				</tr>
 				<tr>
 					<td>VISITOR</td>
-					<td><%= @gameschedule.soccer_game.periodscore(sport_visitor_team, 1) %></td>
-					<td><%= @gameschedule.soccer_game.periodscore(sport_visitor_team, 2) %></td>
-					<td><%= @gameschedule.soccer_game.periodscore(sport_visitor_team, 3) %></td>
-					<td><%= @gameschedule.soccer_game.periodscore(sport_visitor_team, 4) %></td>
-					<td><%= @gameschedule.soccer_game.score(sport_visitor_team) %></td>
+					<% if @visiting_team %>
+						<td><%= @gameschedule.soccer_game.periodscore(sport_visitor_team, 1) %></td>
+						<td><%= @gameschedule.soccer_game.periodscore(sport_visitor_team, 2) %></td>
+						<td><%= @gameschedule.soccer_game.periodscore(sport_visitor_team, 3) %></td>
+						<td><%= @gameschedule.soccer_game.periodscore(sport_visitor_team, 4) %></td>
+						<td><%= @gameschedule.soccer_game.score(sport_visitor_team) %></td>
+					<% else %>
+						<td><%= @gameschedule.soccer_game.visitor_score_period1 %></td>
+						<td><%= @gameschedule.soccer_game.visitor_score_period2 %></td>
+						<td><%= @gameschedule.soccer_game.visitor_score_periodOT1 %></td>
+						<td><%= @gameschedule.soccer_game.visitor_score_periodOT2 %></td>
+						<td><%= @gameschedule.soccer_game.visitor_score_period1 + @gameschedule.soccer_game.visitor_score_period2 +
+								@gameschedule.soccer_game.visitor_score_periodOT1 + @gameschedule.soccer_game.visitor_score_periodOT2 %></td>
+					<% end %>
 				</tr>
 			</tbody>
 		</table>

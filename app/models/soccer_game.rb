@@ -17,6 +17,11 @@ class SoccerGame
     field :homeplayers, type: Array
     field :visitorplayers, type: Array
 
+    field :visitor_score_period1, type: Integer, default: 0
+    field :visitor_score_period2, type: Integer, default: 0
+    field :visitor_score_periodOT1, type: Integer, default: 0
+    field :visitor_score_periodOT2, type: Integer, default: 0
+
 	embedded_in :gameschedule
 
 	has_many :soccer_stats, dependent: :destroy

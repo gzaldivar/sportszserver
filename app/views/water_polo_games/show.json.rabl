@@ -9,13 +9,25 @@ end
 node(:waterpolo_game_home_score) { |sg| sg.score(sport_home_team) }
 node(:waterpolo_game_home_score_period1) { |sg| sg.periodscore(sport_home_team, 1) }
 node(:waterpolo_game_home_score_period2) { |sg| sg.periodscore(sport_home_team, 2) }
-node(:waterpolo_game_home_score_periodOT1) { |sg| sg.periodscore(sport_home_team, 3) }
-node(:waterpolo_game_home_score_periodOT2) { |sg| sg.periodscore(sport_home_team, 4) }
-node(:waterpolo_game_visitor_score) { |sg| sg.score(sport_visitor_team) }
-node(:waterpolo_game_visitor_score_period1) { |sg| sg.periodscore(sport_visitor_team, 1) }
-node(:waterpolo_game_visitor_score_period2) { |sg| sg.periodscore(sport_visitor_team, 2) }
-node(:waterpolo_game_visitor_score_periodOT1) { |sg| sg.periodscore(sport_visitor_team, 3) }
-node(:waterpolo_game_visitor_score_periodOT2) { |sg| sg.periodscore(sport_visitor_team, 4) }
+node(:waterpolo_game_home_score_period3) { |sg| sg.periodscore(sport_home_team, 3) }
+node(:waterpolo_game_home_score_period4) { |sg| sg.periodscore(sport_home_team, 4) }
+node(:waterpolo_game_home_score_periodOT1) { |sg| sg.periodscore(sport_home_team, 5) }
+
+node(:waterpolo_game_visitor_score_period1) { |sg| sg.visitor_score_period1 }
+node(:waterpolo_game_visitor_score_period2) { |sg| sg.visitor_score_period2 }
+node(:waterpolo_game_visitor_score_period3) { |sg| sg.visitor_score_period3 }
+node(:waterpolo_game_visitor_score_period4) { |sg| sg.visitor_score_period4 }
+node(:waterpolo_game_visitor_score_periodOT1) { |sg| sg.visitor_score_periodOT1 }
+
+node(:waterpolo_game_visitor_score) { |sg| sg.visitor_score_period1 + sg.visitor_score_period2 + sg.visitor_score_period3 + sg.visitor_score_period4 +
+											sg.visitor_score_periodOT1 }
+
+# node(:waterpolo_game_visitor_score) { |sg| sg.score(sport_visitor_team) }
+# node(:waterpolo_game_visitor_score_period1) { |sg| sg.periodscore(sport_visitor_team, 1) }
+# node(:waterpolo_game_visitor_score_period2) { |sg| sg.periodscore(sport_visitor_team, 2) }
+# node(:waterpolo_game_visitor_score_period3) { |sg| sg.periodscore(sport_home_team, 3) }
+# node(:waterpolo_game_visitor_score_period4) { |sg| sg.periodscore(sport_home_team, 4) }
+# node(:waterpolo_game_visitor_score_periodOT1) { |sg| sg.periodscore(sport_visitor_team, 3) }
 
 node(:waterpolo_home_shots) { |sg| sg.shots(sport_home_team) }
 node(:waterpolo_visitor_shots) { |sg| sg.shots(sport_visitor_team) }

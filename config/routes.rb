@@ -141,6 +141,12 @@ Sportzserver::Application.routes.draw do
             put   :changeperiod
           end
         end
+
+        resources :hockey_games, only: [:show, :index, :update] do
+
+          resources :hockey_stats
+
+        end
       end
 
       resources :standings, only: [:index] do
@@ -198,6 +204,8 @@ Sportzserver::Application.routes.draw do
       resources :soccer_stats
 
       resources :waterpolo_stats
+
+      resources :hockey_stats
       
       member do
         get :follow, :unfollow, :stats, :playerstats, :mobilefollow, :mobileunfollow

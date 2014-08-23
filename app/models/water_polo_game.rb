@@ -14,6 +14,12 @@ class WaterPoloGame
     field :home_time_outs_left, type: Integer, default: 3
     field :visitor_time_outs_left, type: Integer, default: 3
 
+    field :visitor_score_period1, type: Integer, default: 0
+    field :visitor_score_period2, type: Integer, default: 0
+    field :visitor_score_period3, type: Integer, default: 0
+    field :visitor_score_period4, type: Integer, default: 0
+    field :visitor_score_periodOT1, type: Integer, default: 0
+
 	embedded_in :gameschedule
 
 	has_many :waterpolo_stats, dependent: :destroy

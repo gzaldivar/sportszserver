@@ -31,6 +31,12 @@ class LacrossGame
     field :visitor_1stperiod_timeouts, type: Array, default: []
     field :visitor_2ndperiod_timeouts, type: Array, default: []
 
+    field :visitor_score_period1, type: Integer, default: 0
+    field :visitor_score_period2, type: Integer, default: 0
+    field :visitor_score_period3, type: Integer, default: 0
+    field :visitor_score_period4, type: Integer, default: 0
+    field :visitor_score_periodOT1, type: Integer, default: 0
+
 	embedded_in :gameschedule
 
 	has_many :lacrosstats, dependent: :destroy

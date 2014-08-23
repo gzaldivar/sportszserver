@@ -5,11 +5,12 @@ class HockeyScoring
 	after_save :send_notification
 
     field :gametime, type: String
-    field :assist, type: String
+    field :assist, type: String			# player id
+    field :assist_type, type: String, type: "Even Strength Assist"
     field :period, type: Integer, default: 1
     field :goaltype, type: String, default: "Even Strength"
 
-    embedded_in :hockey_game
+    embedded_in :hockey_stat
     has_many :photos, dependent: :nullify
     has_many :videoclips, dependent: :nullify
     has_one :alert, dependent: :destroy

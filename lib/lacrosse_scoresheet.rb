@@ -279,6 +279,12 @@ module LacrosseScoresheet
 			@gameschedule.lacross_game.visitor_penaltytwo_minutes = params[:visitortwominutes].to_i
 			@gameschedule.lacross_game.visitor_penaltytwo_seconds = params[:visitortwoseconds].to_i
 
+			@gameschedule.lacross_game.visitor_score_period1 = params[:visitor_score_period1].to_i
+			@gameschedule.lacross_game.visitor_score_period2 = params[:visitor_score_period2].to_i
+			@gameschedule.lacross_game.visitor_score_period3 = params[:visitor_score_period3].to_i
+			@gameschedule.lacross_game.visitor_score_period4 = params[:visitor_score_period4].to_i
+			@gameschedule.lacross_game.visitor_score_periodOT1 = params[:visitor_score_periodOT1].to_i
+
 			@gameschedule.save!
 			@gameschedule.lacross_game.save!
 

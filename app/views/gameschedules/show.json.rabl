@@ -96,11 +96,16 @@ elsif @sport.name == "Lacrosse"
 #		end
 
 		attributes :clears, :failedclears, :visitor_clears, :visitor_failedclears, :free_position_sog, 
-					:home_1stperiod_timeouts, :home_2ndperiod_timeouts, :visitor_1stperiod_timeouts, :visitor_2ndperiod_timeouts, :extraman_fail, :visitor_extraman_fail, :home_penaltyone_number, :home_penaltyone_minutes, :home_penaltyone_seconds, :home_penaltytwo_number, :home_penaltytwo_minutes, :home_penaltytwo_seconds, :visitor_penaltyone_number, :visitor_penaltyone_minutes, :visitor_penaltyone_seconds, :visitor_penaltytwo_number, :visitor_penaltytwo_minutes, :visitor_penaltytwo_seconds
+					:home_1stperiod_timeouts, :home_2ndperiod_timeouts, :visitor_1stperiod_timeouts, :visitor_2ndperiod_timeouts, :extraman_fail, :visitor_extraman_fail, :home_penaltyone_number, :home_penaltyone_minutes, :home_penaltyone_seconds, :home_penaltytwo_number, :home_penaltytwo_minutes, :home_penaltytwo_seconds, :visitor_penaltyone_number, :visitor_penaltyone_minutes, :visitor_penaltyone_seconds, :visitor_penaltytwo_number, :visitor_penaltytwo_minutes, :visitor_penaltytwo_seconds, :visitor_score_period1, :visitor_score_period2,
+					:visitor_score_period3, :visitor_score_period4, :visitor_score_periodOT1
 	end
 elsif @sport.name == "Water Polo"
 	child :water_polo_game, :object_root => false do |water_polo_game|
 		extends 'water_polo_games/show'
+	end
+elsif @sport.name == "Hockey"
+	child :hockey_game, :object_root => false do |hockey_game|
+		extends 'hockey_games/show'
 	end
 end
 node :liveevent, :if => lambda { |e| !@sport.events.where(gameschedule_id: e.id.to_s, videoevent: 1).empty? } do

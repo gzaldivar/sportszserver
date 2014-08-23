@@ -168,6 +168,8 @@ class GameschedulesController < ApplicationController
         showlacrosse
       elsif @sport.name == "Water Polo"
         showwaterpolo
+      elsif @sport.name == "Hockey"
+        showhockey
       end
 
       respond_to do |format|
@@ -676,6 +678,38 @@ class GameschedulesController < ApplicationController
     end
   end
 
+  def hockey_game_summary
+    render 'gameschedules/hockey/hockey_game_summary'
+  end
+
+  def update_hockey_game_summary
+    begin
+      @gameschedule.update_attributes!(params[:gameschedule])
+
+      @gameschedule.hockey_game.penalties[0] = params[:homeonenumber]
+      @gameschedule.hockey_game.penalties[1] = params[:homeoneminutes]
+      @gameschedule.hockey_game.penalties[2] = params[:hometwonumber]
+      @gameschedule.hockey_game.penalties[3] = params[:hometwominutes]
+      @gameschedule.hockey_game.penalties[4] = params[:visitoronenumber]
+      @gameschedule.hockey_game.penalties[5] = params[:visitoroneminutes]
+      @gameschedule.hockey_game.penalties[6] = params[:visitortwonumber]
+      @gameschedule.hockey_game.penalties[7] = params[:visitortwominutes]
+      @gameschedule.hockey_game.home_time_outs_left = params[:home_time_outs_left]
+      @gameschedule.hockey_game.visitor_time_outs_left = params[:visitortimeoutsleft]
+      @gameschedule.save!
+
+      respond_to do |format|
+        format.html { redirect_to sport_team_gameschedule_path(@sport, @team, @gameschedule), notice: 'Game Updated!' }
+        format.json { render status: 200, json: { water_polo_game: @gameschedule.water_polo_game } }
+      end     
+    rescue Exception => e
+      respond_to do |format|
+        format.html { redirect_to sport_team_gameschedule_path(@sport, @team, @gameschedule), alert: e.message }
+        format.json { render status: 404, json: { error: e.message } }
+      end
+    end
+  end
+
   private
   
     def get_sport
@@ -768,6 +802,24 @@ class GameschedulesController < ApplicationController
         
       rescue Exception => e
         raise "Error processing Water Polo Statistics - " + e.message
+      end
+    end
+
+    def showhockey
+      begin
+        @homescores = []
+
+        for i in 1 .. 4
+          @homescores << @gameschedule.hockey_game.periodscore(sport_home_team, i)
+        end
+
+        @visitorscores = []
+
+        for i in 1 .. 4
+          @visitorscores << @gameschedule.hockey_game.periodscore(sport_visitor_team, i)
+        end
+      rescue Exception => e
+        raise "Error processing Hockey Statistics - " + e.message
       end
     end
 

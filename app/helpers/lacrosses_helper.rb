@@ -166,7 +166,9 @@ module LacrossesHelper
     end
 
     def get_lacrosse_visitor_score(game)
-        lacrossevisitorscore(game).inject{ |sum, x| sum + x }
+#        lacrossevisitorscore(game).inject{ |sum, x| sum + x }
+        game.lacross_game.visitor_score_period1 + game.lacross_game.visitor_score_period2 + game.lacross_game.visitor_score_period3 +
+        game.lacross_game.visitor_score_period4 + game.lacross_game.visitor_score_periodOT1
     end
 
     def get_lacrosse_visitor_score_by_period(game)

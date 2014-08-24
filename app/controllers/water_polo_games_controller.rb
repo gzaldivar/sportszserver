@@ -16,7 +16,7 @@ class WaterPoloGamesController < ApplicationController
 
 	def update
 		begin
-			@water_polo_game.update_attributes!(params[:soccer_game])
+			@water_polo_game.update_attributes!(params[:water_polo_game])
 
 			respond_to do |format|
 				format.html { redirect_to sport_team_gameschedule_water_polo_games_path(@sport, @team, @gameschedule, @water_polo_game), notice: 'Update Succesful!' }

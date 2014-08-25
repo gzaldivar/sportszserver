@@ -33,7 +33,11 @@
 			</h3>
 			<div class="row">
 				<div class="col-xs-2">
-					<h1 class="text-danger text-center"><%= @gameschedule.EditHomeScore ? @gameschedule.homescore : @homescores.inject{|sum,x| sum + x } %></h1>
+					<h1 class="text-danger text-center"><!--%= @gameschedule.EditHomeScore ? @gameschedule.homescore : @homescores.inject{|sum,x| sum + x } %-->
+						<%= @gameschedule.EditHomeScore ? @gameschedule.homescore : @gameschedule.water_polo_game.visitor_score_period1 + 
+							@gameschedule.water_polo_game.visitor_score_period2 + @gameschedule.water_polo_game.visitor_score_period3 +
+							@gameschedule.water_polo_game.visitor_score_period4 + @gameschedule.water_polo_game.visitor_score_periodOT1
+						</h1>
 				</div>
 				<div class="col-xs-2 col-xs-offset-2">
 					<h3>Period</h3>

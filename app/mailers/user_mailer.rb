@@ -7,6 +7,12 @@ class UserMailer < ActionMailer::Base
 		mail(:to => "#{user.name} <#{user.email}>", :subject => "Welcome to GameTracker!")
 	end
 
+	def welcome_admin_mail(user)
+		@user = user
+		attachments["GameTracker.png"] = File.read("#{Rails.root}/public/iTunesArtwork.png")
+		mail(:to => "#{user.name} <#{user.email}>", :subject => "Welcome to GameTracker!")
+	end
+
 	def gametracker_news(users, paragraphone, paragraphtwo, paragraphthree)
 		@paragraphone = paragraphone
 		@paragraphtwo = paragraphtwo

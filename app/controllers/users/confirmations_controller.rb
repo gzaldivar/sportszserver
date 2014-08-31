@@ -1,7 +1,11 @@
 class Users::ConfirmationsController < Devise::ConfirmationsController
   protected
     def after_confirmation_path_for(resource_name, resource)
-		UserMailer.welcome_mail(@user).deliver
+    	if resource.admin
+			UserMailer.welcome_admin_mail(resource).deliver
+		else
+			UserMailer.welcome_mail(resource).deliver
+		end
 		
      	if resource.mobile == "Web"
 			if resource.default_site.nil?

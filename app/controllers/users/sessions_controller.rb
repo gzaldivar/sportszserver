@@ -31,7 +31,8 @@ class Users::SessionsController < Devise::SessionsController
 	def destroy
 		respond_to do |format|
 			format.html {
-				 super 
+				super
+				session.delete(:current_team)
 			}
 			format.json { render status: 200, json: { success: true } }
 		end

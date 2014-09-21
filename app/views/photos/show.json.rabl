@@ -11,3 +11,5 @@ node(:sport_id) { |s| s.sport_id.to_s }
 node(:team_id) { |t| t.team_id.to_s }
 node(:lacross_scoring_id) { |p| p.lacross_scoring_id.to_s }
 node(:soccer_scoring_id) { |p| p.soccer_scoring_id.to_s }
+node(:waterpolo_scoring_id) { |p| p.waterpolo_scoring_id.to_s }
+node(:hockey_scoring_id) { |p| p.hockey_scoring_id.to_s }

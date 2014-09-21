@@ -449,7 +449,7 @@ class PhotosController < ApplicationController
       @gameschedules[cnt] = g
     end
 
-    @game = Gameschedule.find(@photo.gameschedule_id)
+    @game = Gameschedule.find(@photo.gameschedule_id) if @photo.gameschedule_id
 
     if @game
       @gamelogs = @game.gamelogs
@@ -465,7 +465,7 @@ class PhotosController < ApplicationController
   end
   
   def update
-    begin 
+  #  begin 
       @photo.update_attributes(params[:photo])
 
       if @photo.players.nil?
@@ -484,12 +484,12 @@ class PhotosController < ApplicationController
         format.json { render json: { photo: @photo, request: [@sport, @photo] } }
         format.js
       end
-    rescue Exception => e
-      respond_to do |format|
-        format.html { redirect_to [@sport, @photo], alert: "Update failed!" }
-        format.json { render status: 404, json: { error: e.message, request: [@sport, @photo] } }
-      end
-    end
+#    rescue Exception => e
+#      respond_to do |format|
+#        format.html { redirect_to [@sport, @photo], alert: "Update failed! " + e.message }
+#        format.json { render status: 404, json: { error: e.message, request: [@sport, @photo] } }
+#      end
+#    end
   end
   
   def destroy

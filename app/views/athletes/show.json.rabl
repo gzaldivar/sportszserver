@@ -131,6 +131,10 @@ elsif @sport.name == "Lacrosse"
 			attributes :saves, :minutesplayed, :goals_allowed, :period
 		end
 	end
+elsif @sport.name == "Hockey"
+	child :hockey_stats, :object_root => false do
+		extends 'hockey_stats/show'
+	end
 end
 node :hasphotos, :if => lambda { |a| !@sport.photos.where(players: a.id.to_s).empty? } do
 	true

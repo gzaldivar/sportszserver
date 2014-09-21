@@ -81,17 +81,17 @@ module LacrossesHelper
     def lacrosse_personal_fouls
         ['Slashing', 'Tripping', 'Cross Checking', 'Unsportsmanlike Conduct', 'Unnecessary Roughness', 'Illegal Crosse', 'Illegal Body Checking',
          'Illegal Gloves']
-     end
+    end
 
-     def lacrosse_technical_fouls
-         ['Holding', 'Interference', 'Off Sides', 'Pushing', 'Screening', 'Stalling', 'Warding Off']
-     end
+    def lacrosse_technical_fouls
+        ['Holding', 'Interference', 'Off Sides', 'Pushing', 'Screening', 'Stalling', 'Warding Off']
+    end
 
-     def lacrosse_fouls
+    def lacrosse_fouls
         lacrosse_personal_fouls + lacrosse_technical_fouls
-     end
+    end
 
-     def lacrosse_shotlist(stats, period, home)
+    def lacrosse_shotlist(stats, period, home)
         shots = ''
 
         if home == "Home"

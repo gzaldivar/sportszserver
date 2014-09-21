@@ -55,6 +55,17 @@
 				<!--%= f.input :athlete, collection: @athletes.collect{ |t| [t.full_name, t.id] }, label: "Tag athletes", prompt: "Tag Athlete", hint: "Tag athletes" %-->
 	    		<%= collection_select(:athlete,	:id, @athletes, :id, :full_name, { prompt: "Tag Athlete" }, 
 	    			{ id: "athletes_select", class: 'form-control' } ) %>
+
+	    		<% if @photo.players.any? %>
+		    		<h5>Currently tagged athletes:</h5>
+		    		<p class="text-info">
+
+		    			<% @photo.players.each do |p| %>
+		    				<%= Athlete.find(p).numlogname %>
+		    			<% end %>
+		    		</p>
+		    	<% end %>
+
 	        </div>
 	    </div>
 	    <% if @sport.name == "Football" or @sport.name == "Lacrosse" %>

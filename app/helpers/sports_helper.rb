@@ -88,7 +88,7 @@ module SportsHelper
     [
       ['Football', 'Football'],
       ['Basketball', 'Basketball'],
-#      ['Hockey', 'Hockey'],
+      ['Hockey', 'Hockey'],
       ['Lacrosse', 'Lacrosse'],
       ['Soccer', 'Soccer'],
       ['Water Polo', 'Water Polo']
@@ -196,8 +196,7 @@ module SportsHelper
       ['Driver', 'DR'],
       ['Hole Guard', 'HG'],
       ['Goalie', 'G']
-    ]
-    
+    ]    
   end
 
   def themes

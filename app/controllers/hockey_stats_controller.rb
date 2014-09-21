@@ -174,6 +174,13 @@ class HockeyStatsController < ApplicationController
 			end
 
 			playerstat.shots = params[:shots].to_i if params[:shots]
+		  	playerstat.plusminus = params[:plusminus].to_i
+		  	playerstat.faceoffwon = params[:faceoffwon].to_i
+		  	playerstat.faceofflost = params[:faceofflost].to_i
+		  	playerstat.timeonice = params[:timeonice]
+		  	playerstat.hits = params[:hits].to_i
+		  	playerstat.blockedshots = params[:blockedshots].to_i
+
 			playerstat.save!
 		end
 
@@ -214,15 +221,9 @@ class HockeyStatsController < ApplicationController
 				penaltystat = stats.hockey_penalties.new(period: period)
 			end
 
-			if params[:yellowcard]
-				penaltystat.infraction = params[:yellowcard]
-				penaltystat.card = 'Y'
-			elsif params[:redcard]
-				penaltystat.infraction = params[:redcard]
-				penaltystat.card = 'R'
-			end
-
 			penaltystat.gametime = params[:minutes] + ':' + params[:seconds]
+			penaltystat.penaltytime = params[:penaltytime]
+			penaltystat.infraction = params[:infraction]
 			penaltystat.save!
 		end
 

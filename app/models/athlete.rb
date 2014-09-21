@@ -51,6 +51,7 @@ class Athlete
     has_many :soccers, dependent: :destroy
     has_many :soccer_stats, dependent: :destroy
     has_many :waterpolo_stats, dependent: :destroy
+    has_many :hockey_stats, dependent: :destroy
 
     has_many :lacrosstats, dependent: :destroy
 

@@ -9,3 +9,5 @@ node(:gamelog) { |o| o.gamelog_id.to_s }
 node(:teamid) { |t| t.team_id.to_s }
 node(:lacross_scoring_id) { |v| v.lacross_scoring_id.to_s }
 node(:soccer_scoring_id) { |v| v.soccer_scoring_id.to_s }
+node(:waterpolo_scoring_id) { |p| p.waterpolo_scoring_id.to_s }
+node(:hockey_scoring_id) { |v| v.hockey_scoring_id.to_s }

@@ -37,6 +37,7 @@ class Photo
   belongs_to :lacross_scoring
   belongs_to :soccer_scoring
   belongs_to :waterpolo_scoring
+  belongs_to :hockey_scoring
   
   validates_presence_of :filename
   validates_presence_of :filepath
@@ -85,7 +86,7 @@ class Photo
         if !self.players.nil?
             self.players.each do |p|
               player = Athlete.find(p)
-              player.alerts.create!(sport_id: sport, users: player.fans, photo_id: self.id, message: "Photo updated!", team_id: team_id)
+              player.alerts.create!(sport_id: sport_id, users: player.fans, photo_id: self.id, message: "Photo updated!", team_id: team_id)
             end
         end
     end

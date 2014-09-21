@@ -9,7 +9,7 @@ class HockeyGame
     field :hockey_oppsaves, type: Integer, default: 0
     field :hockey_opppenalties, type: Integer, default: 0
 
-    field :penalties, type: Array
+#    field :penalties, type: Array
 
     field :home_time_outs_left, type: Integer, default: 3
     field :visitor_time_outs_left, type: Integer, default: 3
@@ -19,6 +19,20 @@ class HockeyGame
     field :visitor_score_period3, type: Integer, default: 0
     field :visitor_score_periodOT, type: Integer, default: 0
 
+    field :home_penalty_one_number, type: Integer, default: 0
+    field :home_penalty_one_minutes, type: Integer, default: 0
+    field :home_penalty_one_seconds, type: Integer, default: 0
+    field :home_penalty_two_number, type: Integer, default: 0
+    field :home_penalty_two_minutes, type: Integer, default: 0
+    field :home_penalty_two_seconds, type: Integer, default: 0
+
+    field :visitor_penalty_one_number, type: Integer, default: 0
+    field :visitor_penalty_one_minutes, type: Integer, default: 0
+    field :visitor_penalty_one_seconds, type: Integer, default: 0
+    field :visitor_penalty_two_number, type: Integer, default: 0
+    field :visitor_penalty_two_minutes, type: Integer, default: 0
+    field :visitor_penalty_two_seconds, type: Integer, default: 0
+
 	embedded_in :gameschedule
 
 	has_many :hockey_stats, dependent: :destroy
@@ -27,7 +41,6 @@ class HockeyGame
     validates_numericality_of :hockey_oppsog, greater_than_or_equal_to: 0
     validates_numericality_of :hockey_oppassists, greater_than_or_equal_to: 0
     validates_numericality_of :hockey_oppsaves, greater_than_or_equal_to: 0
-    validates_numericality_of :hockey_oppfouls, greater_than_or_equal_to: 0
     validates_numericality_of :home_time_outs_left, greater_than_or_equal_to: 0
     validates_numericality_of :visitor_time_outs_left, greater_than_or_equal_to: 0
 

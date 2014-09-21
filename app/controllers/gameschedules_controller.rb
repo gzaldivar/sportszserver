@@ -79,6 +79,8 @@ class GameschedulesController < ApplicationController
       elsif @sport.name == "Water Polo"
         schedule.water_polo_game = WaterPoloGame.new
         schedule.water_polo_game.exclusions = Array.new(8) { 0 }
+      elsif @sport.name == "Hockey"
+        schedule.hockey_game = HockeyGame.new
       end
       
       schedule.save!
@@ -813,11 +815,6 @@ class GameschedulesController < ApplicationController
           @homescores << @gameschedule.hockey_game.periodscore(sport_home_team, i)
         end
 
-        @visitorscores = []
-
-        for i in 1 .. 4
-          @visitorscores << @gameschedule.hockey_game.periodscore(sport_visitor_team, i)
-        end
       rescue Exception => e
         raise "Error processing Hockey Statistics - " + e.message
       end

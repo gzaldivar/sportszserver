@@ -6,9 +6,10 @@ class HockeyScoring
 
     field :gametime, type: String
     field :assist, type: String			# player id
-    field :assist_type, type: String, type: "Even Strength Assist"
+    field :assist_type, type: String, default: "Even Strength Assist" # can be Short Handed Assist, Even Strength Assist or Power Play Assist
     field :period, type: Integer, default: 1
-    field :goaltype, type: String, default: "Even Strength"
+    field :goaltype, type: String, default: "Even Strength" # can be Short Handed, Even Strength or Power Play
+    field :game_winning_goal, type: Boolean, default: false
 
     embedded_in :hockey_stat
     has_many :photos, dependent: :nullify

@@ -45,6 +45,8 @@ class Videoclip
   belongs_to :lacross_scoring
   belongs_to :soccer_scoring
   belongs_to :waterpolo_scoring
+  belongs_to :hockey_scoring
+
   has_many :alerts, dependent: :destroy
   has_one :newsfeed, dependent: :destroy
   

@@ -20,6 +20,7 @@ class ApplicationController < ActionController::Base
   include SoccersHelper
   include GameschedulesHelper
   include LacrossesHelper
+  include HockeyStatsHelper
 
   unless Rails.application.config.consider_all_requests_local
 #    rescue_from Exception, with: lambda { |exception| render_error 500, exception }

@@ -1,19 +1,19 @@
 module HockeyStatsHelper
 
-	def hockey_positions
+	def hockey_penalties
 		[
-			["Butt Ending", "Butt Ending"],
-			["Checking from Behind", "Checking from Behind"],
-			["Cross Checking", "Cross Checking"],
-			["Elbowing", "Elbowing"],
-			["Fighting", "Fighting"],
-			["Hooking", "Hooking"],
-			["Interference", "Interference"],
-			["Kneeing", "Kneeing"],
-			["Roughing", "Roughing"],
-			["Slashing", "Slashing"],
-			["Spearing", "Spearing"],
-			["Tripping", "Tripping"]
+			["Butt Ending", "BE"],
+			["Checking from Behind", "CB"],
+			["Cross Checking", "CC"],
+			["Elbowing", "E"], 
+			["Fighting", "F"],
+			["Hooking", "H"],
+			["Interference", "I"],
+			["Kneeing", "K"],
+			["Roughing", "R"], 
+			["Slashing", "SL"], 
+			["Spearing", "SP"], 
+			["Tripping", "T"]
 		]
 	end
 
@@ -22,8 +22,7 @@ module HockeyStatsHelper
 			["Goalie", "G"],
 			["Center", "C"],
 			["Defensemen", "D"],
-			["Center", "C"],
-			["Right Wing" "RW"],
+			["Right Wing", "RW"],
 			["Left Wing", "LW"]
 		]
 	end

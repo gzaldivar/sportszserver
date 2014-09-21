@@ -2,8 +2,9 @@ class HockeyPenalty
 	include Mongoid::Document
 	include Mongoid::Timestamps
 
-	field :infraction, type: String
-	field :gametime, type: String
+	field :infraction, type: String, default: ""
+	field :gametime, type: String, default: "00:00"
+	field :penaltytime, type: String, default: "0:00"
 	field :period, type: Integer, default: 1
 
 	embedded_in :hockey_stat

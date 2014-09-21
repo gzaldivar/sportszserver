@@ -58,7 +58,11 @@
 							<td>None</td>
 						<% end %>
 						<% if current_user.godmode and !u.default_site.nil? %>
-							<td><%= link_to Sport.find(u.default_site).sitename, sport_path(u.default_site) %></td>
+							<% if Sport.find(u.default_site).nil? %>
+								<td><%= u.default_site %>/td?
+							<% else %>
+								<td><%= link_to Sport.find(u.default_site).sitename, sport_path(u.default_site) %></td>
+							<% end %>
 						<% else %>
 							<td></td>
 						<% end %>

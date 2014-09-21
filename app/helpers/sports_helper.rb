@@ -1,7 +1,7 @@
 module SportsHelper
     
   def deletesport(sport)
-    current_user.default_site = ""
+    current_user.default_site = nil
     current_user.save!
   end
 

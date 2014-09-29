@@ -31,6 +31,11 @@ class WaterPoloGame
     validates_numericality_of :waterpolo_oppfouls, greater_than_or_equal_to: 0
     validates_numericality_of :home_time_outs_left, greater_than_or_equal_to: 0
     validates_numericality_of :visitor_time_outs_left, greater_than_or_equal_to: 0
+    validates_numericality_of :visitor_score_period1, greater_than_or_equal_to: 0
+    validates_numericality_of :visitor_score_period2, greater_than_or_equal_to: 0
+    validates_numericality_of :visitor_score_period3, greater_than_or_equal_to: 0
+    validates_numericality_of :visitor_score_period4, greater_than_or_equal_to: 0
+    validates_numericality_of :visitor_score_periodOT1, greater_than_or_equal_to: 0
 
     def score(home)
         score = 0

@@ -13,6 +13,8 @@ describe Contact do
 	    }
   	end
 
+  it { should validate_presence_of(:email) }
+
   it "should create a new instance given a valid attribute" do
     Contact.create!(@attr)
   end

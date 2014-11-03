@@ -11,19 +11,25 @@ gem 'nokogiri'
 gem 'thin'
 gem 'rack-ssl-enforcer', :git => 'git://github.com/tobmatth/rack-ssl-enforcer.git'
 gem 'aws-sdk'
-gem 'mongoid', "~> 3.0.0"
+gem 'mongoid'
 gem 'mongoid_search'
 gem 'multi_json'
 gem 'json'
 gem 'unf'
 
+gem 'rspec-rails', group: [:test, :development]
+
 group :development do
   gem 'sqlite3'
-  gem 'rspec-rails'
   gem 'better_errors'
   gem 'binding_of_caller'
   gem 'meta_request'
 	gem 'annotate'
+
+  gem 'mongoid-rspec', '~> 1.11.0'
+  gem 'capybara'
+  gem 'factory_girl_rails'
+#  gem 'shoulda-matchers'
 end
 
 gem 'sass-rails',   '~> 3.2.3'
@@ -73,10 +79,7 @@ gem 'bootstrap-multiselect-rails'
 # gem 'videojs_rails'
 
 group :test do
-  gem 'mongoid-rspec'
-  gem 'capybara', '1.1.2'
-  gem 'factory_girl_rails'
-  gem 'cucumber-rails', '1.2.1', :require => false
+  gem 'cucumber-rails'
 #  gem 'database_cleaner'
 end
 

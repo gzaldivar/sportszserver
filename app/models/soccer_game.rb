@@ -40,7 +40,7 @@ class SoccerGame
 
     def score(home)
         score = 0
-
+        
         soccer_stats.where(:visiting_roster_id.exists => home == sport_home_team ? false : true).each do |s|
             score += s.soccer_scorings.count
         end

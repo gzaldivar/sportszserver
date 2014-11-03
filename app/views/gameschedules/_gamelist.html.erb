@@ -21,6 +21,7 @@
             <% gameschedules.each do |g| %>
                 <tr>
                     <td><%= g.gamedate.strftime("%m/%d") %></td>
+
                     <% if g.homeaway == "Away" %>
                         <td><%= link_to g.league ? "@" + g.opponent_mascot + "*" : "@" + g.opponent_mascot, 
                                 sport_team_gameschedule_path(@sport, current_team, g) %></td>
@@ -28,13 +29,76 @@
                         <td><%= link_to g.league ? g.opponent_mascot + "*" : g.opponent_mascot, 
                                 sport_team_gameschedule_path(@sport, current_team, g) %></td>
                     <% end %>
-                    <td><%= footballhomescore(@sport, g).to_s + "-" + (g.opponentq1 + g.opponentq2 + g.opponentq3 + g.opponentq4).to_s %></td>
-                    <td>
-                        <% if g.starttime < Time.now or g.final %>
-                            <%= footballhomescore(@sport, g) > (g.opponentq1 + g.opponentq2 + g.opponentq3 + g.opponentq4) ? "W" : 
-                                footballhomescore(@sport, g) == (g.opponentq1 + g.opponentq2 + g.opponentq3 + g.opponentq4) ? "T" : "L" %>
-                        <% end %>
-                    </td>
+
+                    <% if @sport.name == "Football" %>
+                        <td><%= footballhomescore(@sport, g).to_s + "-" + (g.opponentq1 + g.opponentq2 + g.opponentq3 + g.opponentq4).to_s %></td>                    <% elsif @sport.name == "Basketball" %>
+                    <% elsif @sport.name == "Soccer" %>
+                        <td><%= g.soccer_game.score(sport_home_team).to_s + "-" + (g.soccer_game.visitor_score_period1 + 
+                                g.soccer_game.visitor_score_period2 + g.soccer_game.visitor_score_periodOT1 + 
+                                g.soccer_game.visitor_score_periodOT2).to_s %></td>
+                    <% elsif @sport.name == "Lacrosse" %>
+                        <td><%= get_lacrosse_home_score(g).to_s + "-" + (g.lacross_game.visitor_score_period1 + g.lacrosse_game.visitor_score_period2 + 
+                                g.lacrosse_game.visitor_score_period3 + g.lacrosse_game.visitor_score_period4 + 
+                                g.lacrosse_game.visitor_score_periodOT1).to_s %></td>
+                    <% elsif @sport.name == "Water Polo" %>
+                        <td><%= g.water_polo_game.score(sport_home_team).to_s + "-" + (g.water_polo_game.visitor_score_period1 +
+                                g.water_polo_game.visitor_score_period2 + g.water_polo_game.visitor_score_period3 + 
+                                g.water_polo_game.visitor_score_period4 + g.water_polo_game.visitor_score_periodOT1).to_s %></td>
+                    <% elsif @sport.name == "Hockey" %>
+                        <td><%= g.hockey_game.score(sport_home_team).to_s + "-" + (g.hockey_game.visitor_score_period1 + 
+                                g.hockey_game.visitor_score_period2 +  g.hockey_game.visitor_score_period3 + 
+                                g.hockey_game.visitor_score_periodOT).to_s %></td>
+                    <% end %>
+
+                    <% if @sport.name == "Football" %>
+                        <td>
+                            <% if g.starttime < Time.now or g.final %>
+                                <%= footballhomescore(@sport, g) > (g.opponentq1 + g.opponentq2 + g.opponentq3 + g.opponentq4) ? "W" : 
+                                    footballhomescore(@sport, g) == (g.opponentq1 + g.opponentq2 + g.opponentq3 + g.opponentq4) ? "T" : "L" %>
+                            <% end %>
+                        </td>
+                    <% elsif @sport.name == "Soccer" %>
+                        <td>
+                            <% if g.starttime < Time.now or g.final %>
+                                <%= g.soccer_game.score(sport_home_team) > (g.soccer_game.visitor_score_period1 + 
+                                    g.soccer_game.visitor_score_period2 + g.soccer_game.visitor_score_periodOT1 + 
+                                    g.soccer_game.visitor_score_periodOT2) ? "W" : 
+                                    g.soccer_game.score(sport_home_team) == (g.soccer_game.visitor_score_period1 + 
+                                    g.soccer_game.visitor_score_period2 + g.soccer_game.visitor_score_periodOT1 + 
+                                    g.soccer_game.visitor_score_periodOT2) ? "T" : "L" %>
+                            <% end %>
+                        </td>
+                    <% elsif @sport.name == "Lacrosse" %>
+                        <td>
+                            <% if g.starttime < Time.now or g.final %>
+                                <%= get_lacrosse_home_score(g) > (g.lacross_game.visitor_score_period1 + g.lacrosse_game.visitor_score_period2 + 
+                                    g.lacrosse_game.visitor_score_period3 + g.lacrosse_game.visitor_score_period4 + 
+                                    g.lacrosse_game.visitor_score_periodOT1) ? "W" : 
+                                    get_lacrosse_home_score(g) == (g.lacross_game.visitor_score_period1 + 
+                                    g.lacrosse_game.visitor_score_period2 + g.lacrosse_game.visitor_score_period3 + 
+                                    g.lacrosse_game.visitor_score_period4 + g.lacrosse_game.visitor_score_periodOT1) ? "T" : "L" %>
+                            <% end %>
+                        </td>
+                    <% elsif @sport.name == "Water Polo" %>
+                        <td>
+                            <% if g.starttime < Time.now or g.final %>
+                                <%= g.water_polo_game.score(sport_home_team) > (g.water_polo_game.visitor_score_period1 +
+                                    g.water_polo_game.visitor_score_period2 + g.water_polo_game.visitor_score_period3 + 
+                                    g.water_polo_game.visitor_score_period4 + g.water_polo_game.visitor_score_periodOT1) ? "W" : 
+                                    g.water_polo_game.score(sport_home_team) == (g.water_polo_game.visitor_score_period1 +
+                                    g.water_polo_game.visitor_score_period2 + g.water_polo_game.visitor_score_period3 + 
+                                    g.water_polo_game.visitor_score_period4 + g.water_polo_game.visitor_score_periodOT1) ? "T" : "L" %>
+                            <% end %>
+                        </td>
+                    <% elsif @sport.name == "Hockey" %>
+                        <td>
+                            <% if g.starttime < Time.now or g.final %>
+                                <%= g.hockey_game.score(sport_home_team) > (g.hockey_game.visitor_score_period1 +  g.hockey_game.visitor_score_period2 + g.hockey_game.visitor_score_period3 + g.hockey_game.visitor_score_periodOT) ? "W" : 
+                                    g.hockey_game.score(sport_home_team) == (g.hockey_game.visitor_score_period1 + g.hockey_game.visitor_score_period2 + 
+                                    g.hockey_game.visitor_score_period3 + g.hockey_game.visitor_score_periodOT) ? "T" : "L" %>
+                            <% end %>
+                        </td>
+                    <% end %>
                 </tr>
             <% end %>
         </tbody>

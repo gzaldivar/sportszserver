@@ -1,6 +1,7 @@
 require 'spec_helper'
 
-describe WaterPoloGame do
+describe WaterPoloGame do 
+
     before(:each) do
       @sport = Sport.new(
         :name => "Water Polo",
@@ -27,8 +28,24 @@ describe WaterPoloGame do
         live: "live", 
         live_url: "http://www.example.com/hereitis")
 
+  end
+
+#  it { should validate_numericality_of(:waterpolo_oppsog).to_allow(:greater_than => 0) }
+
+  it "should create a new instance given a valid attribute" do
       @schedule.water_polo_game = WaterPoloGame.new
       @water_polo_game = @schedule.water_polo_game
+  end
+
+  it "should make sure waterpolo_oppassists is greater than zero" do
+      @schedule.water_polo_game = WaterPoloGame.new(waterpolo_oppassists: -1)
+      expect ( @schedule.save!).to  raise_error(Mongoid::Errors::DocumentNotFound)
+  end
+
+=begin
+
+  describe WaterPoloGame do
+    it { should validate_numericality_of(:waterpolo_oppsog).on(:create, :update) }
   end
 
   describe "initialized in before(:each)" do
@@ -38,6 +55,7 @@ describe WaterPoloGame do
 
     it "opposition shots on goal must not be negative" do
       @water_polo_game.waterpolo_oppsog = -1
+
       expect (@water_polo_game.save!).to raise_error
     end
 
@@ -72,5 +90,5 @@ describe WaterPoloGame do
     end
 
   end
-
+=end
 end

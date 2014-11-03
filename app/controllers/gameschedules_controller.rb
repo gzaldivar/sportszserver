@@ -795,12 +795,6 @@ class GameschedulesController < ApplicationController
         for i in 1 .. 4
           @homescores << @gameschedule.water_polo_game.periodscore(sport_home_team, i)
         end
-
-        @visitorscores = []
-
-        for i in 1 .. 4
-          @visitorscores << @gameschedule.water_polo_game.periodscore(sport_visitor_team, i)
-        end
         
       rescue Exception => e
         raise "Error processing Water Polo Statistics - " + e.message

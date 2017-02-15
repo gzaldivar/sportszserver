@@ -18,7 +18,7 @@
 	<% else %>
     	<body>
 	<% end %>
-  <%= render 'layouts/header' %>
+  <!--%= render 'layouts/header' %-->
   <p>
   <div class="row">
   </div>
@@ -133,8 +133,8 @@
   		<% end %>
   		<%= yield %>
       <p>
-      <%= render 'layouts/sponsor' if current_site? %>
-  		<%= render 'layouts/footer' %>
+      <!--%= render 'layouts/sponsor' if current_site? %-->
+  		<!--%= render 'layouts/footer' %-->
   		<%= debug(params) if Rails.env.development? %>
       <%= render 'layouts/moreselectmodal' if current_team? %>
       <%= render 'layouts/toolsselectmodal' if user_signed_in? and current_site? and site_owner?(current_site) %>
